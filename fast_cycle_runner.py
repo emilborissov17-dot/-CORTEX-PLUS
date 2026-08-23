@@ -125,8 +125,8 @@ def beat(step, step_index=None, cycle_id=None):
     try:
         from core.homeostasis import tick as _homeo_tick
         _homeo_tick()
-    except Exception:
-        pass
+    except Exception as e:
+        _hot_path_failed("homeostasis.tick", e)
 
     # ── PROPRIOCEPTION: THE STEP BOUNDARY IS THE TICK (23 Aug 2026) ────────
     # Every other sensor here reads the machine as an object. This one reads
@@ -142,8 +142,39 @@ def beat(step, step_index=None, cycle_id=None):
     # is not a sense worth having.
     try:
         _tick_boundary()
-    except Exception:
-        pass
+    except Exception as e:
+        _hot_path_failed("proprioception.tick", e)
+
+# ── FAIL-OPEN IS NOT THE SAME AS FAIL-SILENT (23 Aug 2026) ─────────────────
+# beat() fires ~63 times a night, so anything that raises in here raises 63
+# times, and `except Exception: pass` was the right instinct with the wrong
+# ending: a sampler that has been broken since the first step of the night
+# leaves no trace at all, and tomorrow the numbers are simply missing with no
+# reason attached.
+#
+# So: LOUD ONCE, then quiet. The first failure of each kind prints with its
+# exception type and message; the rest are counted, and the count is printed at
+# the end of the cycle by _hot_path_report(). Nothing here can stop a step.
+_HOT_PATH_FAILURES = {}
+
+
+def _hot_path_failed(what: str, exc: Exception) -> None:
+    rec = _HOT_PATH_FAILURES.setdefault(what, {"n": 0, "first": None})
+    rec["n"] += 1
+    if rec["n"] == 1:
+        rec["first"] = "{}: {}".format(type(exc).__name__, exc)
+        print(f"[FAST_CYCLE] HOT PATH {what} FAILED: {rec['first']} — the cycle "
+              f"continues; further failures of this kind will be counted, not "
+              f"printed")
+
+
+def _hot_path_report() -> dict:
+    """Printed once at seal. Silence here means every step sampled cleanly."""
+    for what, rec in sorted(_HOT_PATH_FAILURES.items()):
+        print(f"[FAST_CYCLE] HOT PATH {what}: {rec['n']} failure(s) this cycle; "
+              f"first was {rec['first']}")
+    return dict(_HOT_PATH_FAILURES)
+
 
 # ── the tick meter, one per process ────────────────────────────────────────
 # Built lazily so that importing this module does not construct a bus publisher,
@@ -464,6 +495,14 @@ def _seal_cycle_record() -> None:
             if t0.tzinfo is None:
                 t0 = t0.replace(tzinfo=timezone.utc)
             duration = round((datetime.now(timezone.utc) - t0).total_seconds(), 1)
+    except Exception:
+        pass
+
+    # What the hot-path samplers cost tonight, BEFORE the seal line, so a broken
+    # one is read in the morning next to the cycle it degraded. Silence is the
+    # good outcome and it means every step sampled cleanly.
+    try:
+        _hot_path_report()
     except Exception:
         pass
 

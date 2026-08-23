@@ -229,3 +229,55 @@ def test_a_subscriber_cannot_probe_a_sensor_from_this_topic(meter):
 
 def test_the_selftest_passes():
     assert pp._selftest() == 0
+
+
+# ── fail-open is not the same as fail-silent ────────────────────────────────
+
+def test_a_broken_hot_path_sampler_is_loud_once_then_counted(capfd):
+    """beat() fires ~63 times a night, so a raise in there raises 63 times.
+    `except Exception: pass` was the right instinct with the wrong ending: a
+    sampler broken since the first step leaves no trace at all.
+
+    capfd, not capsys: fast_cycle_runner calls faulthandler.enable() at import
+    and that needs a real file descriptor, which capsys does not leave it."""
+    import fast_cycle_runner as f
+    f._HOT_PATH_FAILURES.clear()
+    for _ in range(63):
+        f._hot_path_failed("homeostasis.tick", OSError("sensor gone"))
+    out = capfd.readouterr().out
+    assert out.count("HOT PATH homeostasis.tick FAILED") == 1, out
+    assert "OSError: sensor gone" in out
+
+    rec = f._hot_path_report()
+    assert rec["homeostasis.tick"]["n"] == 63
+    assert "63 failure(s)" in capfd.readouterr().out
+    f._HOT_PATH_FAILURES.clear()
+
+
+def test_a_clean_cycle_reports_nothing(capfd):
+    import fast_cycle_runner as f
+    f._HOT_PATH_FAILURES.clear()
+    assert f._hot_path_report() == {}
+    assert capfd.readouterr().out == "", "silence is the good outcome"
+
+
+def test_both_hot_path_calls_in_beat_route_through_it():
+    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    body = src.split("def beat(", 1)[1].split("\n# \u2500\u2500 FAIL-OPEN", 1)[0]
+    assert body.count("_hot_path_failed(") == 2, (
+        "a hot-path call is still swallowing its exception silently")
+    assert "except Exception:\n        pass" not in body
+
+
+def test_the_report_prints_before_the_cycle_seals():
+    """A broken sampler must be readable next to the cycle it degraded."""
+    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    seal = src.split("def _seal_cycle_record(", 1)[1]
+    assert "_hot_path_report()" in seal
+    assert seal.index("_hot_path_report()") < seal.index("CYCLE_FINISHED, cycle_id=")
+
+
+def test_the_reporter_can_never_stop_a_step():
+    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    fn = src.split("def _hot_path_failed(", 1)[1].split("\ndef ", 1)[0]
+    assert "raise" not in fn
