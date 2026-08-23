@@ -49,9 +49,13 @@ def runner(monkeypatch):
 
     import core.cycle_checkpoint as cc
 
-    def _fake_record(cycle_id, step, step_index, base=None):
+    def _fake_record(cycle_id, step, step_index, base=None, how="returned"):
+        # `how` distinguishes _run()'s "fn() returned" from the step boundary's
+        # weaker "the block reached the next beat()" (23 Aug 2026). A stub that
+        # does not accept it silently turns every checkpoint into a swallowed
+        # TypeError and the test reads as "the step was not checkpointed".
         recorded.append({"cycle_id": cycle_id, "step": step,
-                         "step_index": step_index})
+                         "step_index": step_index, "how": how})
         return recorded[-1]
 
     monkeypatch.setattr(cc, "record_step_complete", _fake_record)
