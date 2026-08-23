@@ -647,11 +647,11 @@ def brief_cycle() -> dict | None:
     Планът е негов — не му се дава списък със стъпки за подреждане. Пише се в
     memory/brain_cycle_plan.json и стъпките могат да го четат."""
     d = think(
-        role="стопанин на този цикъл",
-        question=("Днешният цикъл започва сега. Прочети състоянието си и кажи ти какво "
-                  "искаш от него: кое е важното днес, кое подозираш, че е сгрешено, и "
-                  "по какво ще познаеш накрая дали цикълът е бил успешен. Това е твой "
-                  "план, не чужда задача."),
+        role="owner of this cycle",
+        question=("Today's cycle begins now. Read your own state and say what YOU "
+                  "want from it: what matters today, what you suspect is wrong, and "
+                  "how you will know at the end whether the cycle succeeded. This is "
+                  "your plan, not somebody else's task."),
         evidence=_state_for_briefing(),
         schema={
             "focus": "in a word or two: what your focus is this cycle",
@@ -709,14 +709,14 @@ def debrief_cycle(cycle_log_tail: str = "") -> dict | None:
     if not plan:
         return None
     d = think(
-        role="съдия на собствения си план",
-        question=("Ето плана, който ти написа в началото на този цикъл, и какво излезе "
-                  "накрая. Сбъдна ли се тестът ти за успех? Къде планът ти беше сляп? "
-                  "Какво да помниш за следващия цикъл? Съди себе си честно — "
-                  "самопоздравления не помагат на никого."),
-        evidence=("ТВОЯТ ПЛАН:\n" + json.dumps(plan, ensure_ascii=False, indent=2) +
-                  "\n\nКРАЯТ НА ЦИКЪЛА:\n" + str(cycle_log_tail)[-3000:] +
-                  "\n\nСЪСТОЯНИЕ СЕГА:\n" + _state_for_briefing()),
+        role="judge of your own plan",
+        question=("Here is the plan you wrote at the start of this cycle, and what "
+                  "came out at the end. Did your success test come true? Where was "
+                  "your plan blind? What should you remember for the next cycle? "
+                  "Judge yourself honestly — self-congratulation helps nobody."),
+        evidence=("YOUR PLAN:\n" + json.dumps(plan, ensure_ascii=False, indent=2) +
+                  "\n\nTHE END OF THE CYCLE:\n" + str(cycle_log_tail)[-3000:] +
+                  "\n\nSTATE NOW:\n" + _state_for_briefing()),
         schema={
             "success": "true/false — did your success_test come true",
             "verdict": "1-3 sentences: what actually happened",

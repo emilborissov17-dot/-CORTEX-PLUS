@@ -174,12 +174,12 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
     try:
         from core import brain as _brain
         d = _brain.think(
-            role="дежурен инженер на цикъла",
-            question=(f"Наблюдателят твърди, че цикълът е бил убит на стъпка "
-                      f"'{step}'. Ти решаваш какво показва логът: има ли изобщо "
-                      f"повреда, как се казва причината (кръсти я ти), минава ли "
-                      f"сама с време и какво да се направи."),
-            evidence=blob or "(празно — няма редове)",
+            role="duty engineer of the cycle",
+            question=(f"The watchdog claims the cycle was killed at step "
+                      f"'{step}'. You decide what the log shows: is there a fault "
+                      f"at all, what the cause is called (you name it), whether it "
+                      f"passes on its own with time, and what should be done."),
+            evidence=blob or "(empty — no lines)",
             schema={
                 "failure": "true/false — is there a fault here at all",
                 "cause": "you name the cause, CAPITALS_WITH_UNDERSCORES",
@@ -202,14 +202,15 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
             if wide and wide != blob:
                 _NOTE["widened"] = f"{len(wide)} знака вместо {len(blob)}"
                 d = _brain.think(
-                    role="дежурен инженер на цикъла (широк поглед)",
-                    question=(f"Първият ти извод не се заземи в късия откъс. Ето "
-                              f"ЦЕЛИЯ лог. Причината може да е далеч преди '{step}' "
-                              f"или изобщо да не е в лога (напр. процесът е убит "
-                              f"отвън). Ако е така — кажи го и цитирай каквото има. "
-                              f"ВАЖНО: това НЕ е целият лог, а подбрани редове със "
-                              f"сигнал за отказ плюс края — ако ти трябва нещо, "
-                              f"което го няма тук, кажи го вместо да гадаеш."),
+                    role="duty engineer of the cycle (wide view)",
+                    question=(f"Your first conclusion did not ground itself in the "
+                              f"short extract. Here is the WHOLE log. The cause may "
+                              f"be far before '{step}', or not in the log at all (the "
+                              f"process killed from outside, say). If so — say it and "
+                              f"quote what there is. IMPORTANT: this is NOT the whole "
+                              f"log but selected lines carrying a failure signal plus "
+                              f"the tail — if you need something that is not here, "
+                              f"say so instead of guessing."),
                     evidence=wide,
                     schema={
                         "failure": "true/false", "cause": "you name it",

@@ -297,7 +297,7 @@ def read_the_mirror(thinker=None, mirror=None, out_path=None) -> dict:
         if thinker is None:
             from core.brain import think as thinker      # noqa: N806
         said = thinker(
-            role="читател на собственото си огледало",
+            role="reader of your own mirror",
             question=READ_PROMPT.format(
                 mirror=json.dumps(m, ensure_ascii=False, indent=1)[:6000]),
             schema={"saw": "", "worries": "", "numbers": ""},

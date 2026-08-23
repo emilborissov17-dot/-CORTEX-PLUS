@@ -107,7 +107,7 @@ def ask_local(brief: str) -> dict:
     """Резервният опонент: собственият мозък на системата. Безплатен, но не е
     независим — това се казва изрично в записа, за да не мине за второ мнение."""
     from core import brain
-    d = brain.think(role="независим опонент на архитектурно решение",
+    d = brain.think(role="independent opponent of an architectural decision",
                     question=SYSTEM, evidence=brief, kind="consult")
     if not d:
         return {"ok": False, "error": "local brain silent", "backend": "local"}

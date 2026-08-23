@@ -357,7 +357,7 @@ def ask_local(phase: str, evidence: dict, model: str | None = None,
                 PROMPT_BG.format(phase=phase, evidence=ev))
     try:
         said = think(
-            role=f"съдия на фаза {phase}",
+            role=f"judge of phase {phase}",
             question=question,
             schema={f: "" for f in FIELDS},
             kind="phase_debrief",

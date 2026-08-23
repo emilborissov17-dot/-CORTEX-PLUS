@@ -9,11 +9,12 @@ The failure mode of a 3B model handed two exemplars instead of eight is not
 which is how empty cells got filled with plausible prose in the first place.
 
 COMMAND 24 Part 3 names the kind "stance". The kind that actually reaches
-_memory() with a seed behind it is `constancy`; `step_stance` is deliberately
-unseeded because attend()'s schema demands a Bulgarian enum
-("върви|следи|пропусни") that core/brain.py:927 and :956 compare against, and
-an all-English seed there would teach the model to break that contract. Both are
-asserted below rather than left as prose.
+_memory() is `constancy`; `step_stance` was deliberately unseeded for one day,
+because attend()'s schema demanded a Bulgarian enum ("върви|следи|пропусни")
+that core/brain.py compared against, and an all-English seed would have taught
+the model to break that contract. COMMAND 25 Part 5 moved the enum to
+go|watch|skip behind normalise_stance(), so the seed is there now and the test
+below asserts the blocker is gone rather than that it still stands.
 
     venv/Scripts/python.exe -m pytest test/test_amnesia_mode.py -v
 """
@@ -170,15 +171,20 @@ def test_every_seed_is_valid_json_in_its_call_sites_shape():
                 "{}: seed keys {} != schema {}".format(kind, set(parsed), want))
 
 
-def test_step_stance_is_unseeded_on_purpose_and_says_why():
+def test_step_stance_is_seeded_now_that_the_enum_moved():
+    """COMMAND 24 left it out because attend()'s schema demanded a Bulgarian
+    enum and core/brain.py compared against those literals. COMMAND 25 Part 5
+    migrated the enum to go|watch|skip and put the consumers behind
+    normalise_stance(), so the blocker is gone and the seed is here."""
     blob = json.loads(SEED_FILE.read_text(encoding="utf-8"))
-    assert "step_stance" not in blob
-    readme = " ".join(blob["_README"])
-    assert "step_stance IS DELIBERATELY ABSENT" in readme
-    # the reason has to still be true
+    assert "step_stance" in blob
+    assert 3 <= len(blob["step_stance"]) <= 5
+    # and the reason it WAS blocked is no longer true
     src = (REPO / "core" / "brain.py").read_text(encoding="utf-8")
-    assert "върви|следи|пропусни" in src
-    assert 'startswith("пропусни")' in src
+    code = "\n".join(l for l in src.splitlines()
+                     if not l.lstrip().startswith("#"))
+    assert '"stance": "go|watch|skip"' in code
+    assert 'startswith("пропусни")' not in code
 
 
 def test_a_missing_seed_file_does_not_break_the_memory(tmp_path, monkeypatch):

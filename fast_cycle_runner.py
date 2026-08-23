@@ -1919,14 +1919,16 @@ def main():
             print("[FAST_CYCLE] само локалният мозък е жив — питам него, не себе си")
             from core import brain as _brain
             _d = _brain.think(
-                role="стопанин на цикъла, останал без външни доставчици",
-                question=("Всички външни доставчици са мъртви. Жив си само ти — локален "
-                          "модел на 4GB VRAM. Пред теб са 25 оси и 217 държави.\n"
-                          "Въпросът е твой: този цикъл струва ли си сега, или е по-честно "
-                          "да не се прави, отколкото да се напълни паметта с плитки "
-                          "преценки, които утре ще се четат като истина?\n"
-                          "Ако продължиш — кажи какво СЪКРАЩАВАШ, за да остане каквото "
-                          "правиш смислено. Ако спреш — това не е провал, а преценка."),
+                role="owner of the cycle, left without external providers",
+                question=("Every external provider is dead. You alone are alive — a "
+                          "local model on 4GB of VRAM. In front of you are 25 axes "
+                          "and 217 countries.\n"
+                          "The question is yours: is this cycle worth running now, or "
+                          "is it more honest not to run it than to fill the memory "
+                          "with shallow judgements that will read as truth tomorrow?\n"
+                          "If you continue — say what you are CUTTING, so that what "
+                          "you do keeps meaning. If you stop — that is not a failure, "
+                          "it is a judgement."),
                 evidence=json.dumps(_dep, ensure_ascii=False)[:2000],
                 kind="degraded_mode")
             _ans = str((_d or {}).get("action", "")).strip().lower()

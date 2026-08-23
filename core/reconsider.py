@@ -231,19 +231,22 @@ def run() -> dict:
         return rep
 
     d = brain.think(
-        role="стопанин на цикъла, по средата на пътя",
+        role="owner of the cycle, halfway through",
         question=(
-            "Сутринта ти написа план, преди да си видял каквото и да е. Сега си "
-            "минал сетивата, оценяването и дедукцията. Въпросът е прост и е твой: "
-            "тази картина обезсмисля ли нещо, което вече е направено?\n\n"
-            "Ако да — можеш да върнеш ЕДНА стъпка за преизчисление, ЕДИН път за "
-            "цикъл. Ето какво е преизчислимо и колко струва:\n" + menu + "\n\n"
-            "Цената е реална: тези минути се вадят от нощта и забавят всичко "
-            "надолу. Връщане, което не променя извод, е загубено време. Ако "
-            "нищо не е сгрешено — кажи 'forward' без свян; това също е решение.\n"
-            "Ако ти трябва нещо, което НЕ е в списъка (напр. ново обхождане на "
-            "мрежата), кажи го в 'wants' — няма да се изпълни сега, но ще стигне "
-            "до човека."),
+            "This morning you wrote a plan, before you had seen anything. You "
+            "have now been through the senses, the scoring and the deduction. The "
+            "question is simple and it is yours: does this picture make anything "
+            "already done pointless?\n\n"
+            "If so — you may roll back ONE step for recomputation, ONCE per "
+            "cycle. Here is what can be recomputed and what it costs:\n"
+            + menu + "\n\n"
+            "The cost is real: those minutes come out of the night and delay "
+            "everything downstream. A rollback that changes no conclusion is "
+            "wasted time. If nothing is wrong — say 'forward' without "
+            "embarrassment; that is a decision too.\n"
+            "If you need something that is NOT on the list (a fresh web sweep, "
+            "say), put it in 'wants' — it will not happen now, but it will reach "
+            "the human."),
         evidence=_state(),
         schema={
             "action": "forward or rollback",

@@ -150,17 +150,18 @@ def judge_series(limit: int = 24) -> dict:
             r["verdict"] = None
             continue
         d = brain.think(
-            role="тълкувател на показател",
+            role="interpreter of an indicator",
             question=(
-                f"Показателят '{r['metric']}' на ос {r['axis']} "
-                f"({r.get('unit') or 'без обявена единица'}) се държи така, както е "
-                f"описано в материала. Въпросът НЕ е 'мърда ли' — а В КАКЪВ РЕЖИМ "
-                f"ТРЯБВА да бъде този показател по своята природа, и здраво ли е "
-                f"видяното спрямо това.\n\n"
-                f"Помни: неподвижността не е липса на сигнал. Има величини, чиято "
-                f"постоянност Е добрата новина (делът на кислорода в атмосферата), "
-                f"и други, чиято неподвижност е симптом (замръзнал сензор или "
-                f"застой). Ти решаваш кое от двете е това — и как се казва режимът."),
+                f"The indicator '{r['metric']}' on axis {r['axis']} "
+                f"({r.get('unit') or 'no declared unit'}) behaves as described in "
+                f"the material. The question is NOT 'does it move' — it is WHAT "
+                f"REGIME this indicator SHOULD be in by its nature, and whether "
+                f"what you see is healthy against that.\n\n"
+                f"Remember: stillness is not the absence of a signal. There are "
+                f"quantities whose constancy IS the good news (the share of oxygen "
+                f"in the atmosphere), and others whose stillness is a symptom (a "
+                f"frozen sensor, or stagnation). You decide which of the two this "
+                f"is — and what the regime is called."),
             evidence=json.dumps(r, ensure_ascii=False, indent=2),
             schema={
                 "expected_regime": "what YOU call the regime this indicator "
@@ -212,13 +213,14 @@ def judge_together(rows: list | None = None) -> dict | None:
         for r in rows)
 
     d = brain.think(
-        role="четец на цялата картина",
-        question=("Досега си съдил всеки показател поотделно. Сега ги виж ЗАЕДНО. "
-                  "Какво казва СЪЧЕТАНИЕТО им, което нито един поотделно не казва? "
-                  "Търси: показатели, които би трябвало да се движат заедно, а не се "
-                  "движат; неподвижност на едно място, която придобива смисъл заради "
-                  "движение на друго; и обратното. Всяка връзка трябва да назове поне "
-                  "ДВА конкретни показателя от таблицата — иначе не я казвай."),
+        role="reader of the whole picture",
+        question=("So far you have judged each indicator on its own. Now see them "
+                  "TOGETHER. What does their COMBINATION say that none of them says "
+                  "alone? Look for: indicators that ought to move together and do "
+                  "not; stillness in one place that acquires meaning because of "
+                  "movement in another; and the reverse. Every relation must name at "
+                  "least TWO specific indicators from the table — otherwise do not "
+                  "state it."),
         evidence=table,
         schema={
             "relations": "a list of relations; each names at least two indicators "

@@ -201,14 +201,25 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None) -> dict
     try:
         from core import brain
         digest = "\n".join(
-            f"{r['step']}: обещание={r['promise']}; каза={' | '.join(r['said'])[:160]}"
+            f"{r['step']}: promise={r['promise']}; said={' | '.join(r['said'])[:160]}"
             for r in rows)
         d = brain.think(
-            role="отчитащ се пред човека",
-            question=("Това е твоят цикъл — какво направи всяка стъпка и удържа ли тя "
-                      "обещания си файл. Обясни на човека С ТВОИ ДУМИ какво се случи "
-                      "днес и какво реши ти. Без ласкателство: ако нещо е било кухо, "
-                      "кажи го. Пиши на български, кратко и разбираемо."),
+            role="reporting to the human",
+            # THE "Пиши на български" INSTRUCTION IS GONE (23 Aug 2026), and it
+            # is the one deletion in COMMAND 25 that changes something Emil
+            # reads. It sat directly against the language pin, in the same
+            # prompt, and a prompt that says both is worse than either.
+            #
+            # What changes: the PROSE inside the morning report is English now.
+            # What does not: every header, label and section title in
+            # output/reports/ is written by this module in Bulgarian and is
+            # untouched — same arrangement core/phase_debrief.py has always had,
+            # where render_telegram() wraps the model's words in "Какво:" and
+            # "Риск:" and the words themselves are the model's.
+            question=("This is your cycle — what each step did and whether it kept "
+                      "the promise of its own file. Explain to the human IN YOUR OWN "
+                      "WORDS what happened today and what you decided. No flattery: "
+                      "if something was hollow, say so. Be short and plain."),
             evidence=("ТВОЯТ ПЛАН:\n" + json.dumps(plan, ensure_ascii=False)[:800] +
                       "\n\nСТЪПКИТЕ:\n" + digest[-4000:]),
             schema={"opening": "3-4 sentences: what happened today, in your own words",
