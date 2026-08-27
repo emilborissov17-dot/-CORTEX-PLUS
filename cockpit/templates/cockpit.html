@@ -152,6 +152,11 @@
   .unrow{padding:3px 4px;border-bottom:1px solid #171c22;cursor:pointer;
          display:flex;gap:8px;align-items:baseline}
   .unrow:hover{background:#1a2028}
+  /* an unread line whose timeline row is not on screen says so, rather than
+     answering a click with nothing */
+  .unrow.orphan{border-left:2px solid var(--yel);padding-left:6px}
+  .unrow.orphan::after{content:'not on this cycle\'s timeline';
+        color:var(--yel);font-size:10px;margin-left:auto;white-space:nowrap}
   .unrow .src{color:var(--mag);font-size:10px;min-width:82px}
   p.tl.landed{background:#1e2a18;outline:1px solid var(--grn)}
 
@@ -1226,9 +1231,22 @@ function wirePanel(){
   document.querySelectorAll('.unrow').forEach(row =>
     row.onclick = () => {
       const el = document.getElementById('tl-' + tsKey(row.dataset.uts));
-      if(el){ try{ el.scrollIntoView({behavior:'smooth', block:'center'}); }
-              catch(e){ el.scrollIntoView(); }
-              el.classList.add('landed'); }
+      if(el){
+        try{ el.scrollIntoView({behavior:'smooth', block:'center'}); }
+        catch(e){ el.scrollIntoView(); }
+        el.classList.add('landed');
+        row.classList.remove('orphan');
+        return;
+      }
+      /* FOUND BY THE RENDER SWEEP. The timeline is scoped to ONE cycle; an
+         unread line written during a different one has no row to jump to, and
+         this silently did nothing at all — a click into the void, which is the
+         complaint the whole of COMMAND 30 started from. Say so on the line
+         itself, where the reader is looking. */
+      row.classList.add('orphan');
+      row.setAttribute('title',
+        'this line is not on the timeline of the cycle currently selected — '
+        + 'pick another cycle above to find it in place');
     });
   /* ontoggle, not addEventListener: this function now runs after every render
      and a stacking listener would fire once per render it survived. */
@@ -1605,10 +1623,18 @@ function connectTab(tab){
   const s = ensureSession(tab);
   if(isConnected(tab)){ setTermState(tab, 'connected', 'already connected'); return; }
   const token = ($('#tok') ? $('#tok').value.trim() : '');
+  /* EVERY PRESS ACKNOWLEDGES, even one that cannot succeed. Found by the render
+     sweep: with no bridge running, pressing reconnect changed nothing on screen
+     at all, because the status already said what it was about to say again. A
+     control that answers silence to a press is the whole complaint COMMAND 30
+     started from, so the attempt is stamped with its own time. */
+  s.attempts = (s.attempts || 0) + 1;
+  const at = new Date().toTimeString().slice(0, 8);
   if(!token){
     setTermState(tab, 'closed',
                  'no session token — the server injects it; an empty one means '
-                 + 'the bridge did not start (see the launch console)');
+                 + 'the bridge did not start (see the launch console) · '
+                 + 'attempt ' + s.attempts + ' at ' + at);
     return;
   }
   setTermState(tab, 'connecting', 'opening the bridge on 127.0.0.1:5056');
