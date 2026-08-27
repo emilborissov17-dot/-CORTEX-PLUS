@@ -780,6 +780,7 @@ def tick_sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "EXTRAORDINARY_PATH", tmp_path / "extraordinary_request.json")
     monkeypatch.setattr(sup, "METTA_CHECK_FILE", tmp_path / "metta_bridge_check.json")
     monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(sup, "CYCLE_EXIT_LOG", tmp_path / "cycle_exits.jsonl")
     monkeypatch.setattr(sup, "OUTBOX", tmp_path / "outbox")
     # 21 Aug 2026: tick() now appends a telemetry row per call
     # (core/body_sensorium.py). It was wired calling tick() with no argument, so

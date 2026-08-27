@@ -119,6 +119,12 @@ CYCLE_LOG_KEEP  = 14      # ~two weeks; a cycle log is a few hundred KB
 # on 17 Aug 2026 a cycle died and four explanations survived the autopsy purely
 # because Popen's handle was discarded before anyone read a number off it.
 CYCLE_EXIT_PATH = BASE / "memory" / "cycle_exit.json"
+# The durable companion to the single slot above. CYCLE_EXIT_PATH holds only the
+# LATEST exit code — every cycle overwrites the last — so eight of the nine exit
+# codes between 23 and 27 Aug 2026 no longer existed anywhere. Both are passed
+# down explicitly, for the same reason: the reaper is detached and cannot be
+# monkeypatched from inside a test.
+CYCLE_EXIT_LOG = BASE / "memory" / "cycle_exits.jsonl"
 # How long the reaper waits, after the cycle is gone, for a killer to sign the
 # heartbeat before it concludes nobody will. A watchdog kill signs within
 # milliseconds; this is slack, not a budget. A knob because the end-to-end test
@@ -1271,6 +1277,7 @@ def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
              "--pid", str(pid),
              "--cycle-id", str(cycle_id),
              "--exit-record", str(CYCLE_EXIT_PATH),
+             "--exit-log", str(CYCLE_EXIT_LOG),
              "--night-log", str(NIGHT_LOG),
              "--settle-sec", str(REAPER_SETTLE_SEC)],
             cwd=str(BASE), env={**os.environ, "PYTHONIOENCODING": "utf-8"},

@@ -34,7 +34,7 @@ test_a_reaper_killed_mid_wait_leaves_its_watching_record kills the reaper while
 it waits. Move the provisional write back to after wait_for_exit() — where it
 used to be — and the file is absent, exactly as it was for the 17:59 cycle.
 
-Everything here writes to tmp_path via --exit-record and --night-log. Nothing
+Everything here writes to tmp_path via --exit-record, --exit-log and --night-log. Nothing
 touches memory/cycle_exit.json or memory/night_events.jsonl, which is the point
 of those flags existing (see the 16 Aug 2026 incident note in cycle_reaper.py).
 
@@ -64,11 +64,16 @@ def _spawn_victim(seconds: int = 120) -> subprocess.Popen:
 
 
 def _spawn_reaper(pid: int, cycle_id: str, exit_record: pathlib.Path,
-                  night_log: pathlib.Path, settle: float = 0.5) -> subprocess.Popen:
+                  night_log: pathlib.Path, settle: float = 0.5,
+                  exit_log: pathlib.Path | None = None) -> subprocess.Popen:
+    # --exit-log is NOT optional in practice: the reaper is a real subprocess
+    # here, so a sink left to its default is the LIVE memory/cycle_exits.jsonl.
+    exit_log = exit_log or (exit_record.parent / "cycle_exits.jsonl")
     return subprocess.Popen(
         [sys.executable, "-m", "memory.cycle_reaper",
          "--pid", str(pid), "--cycle-id", cycle_id,
          "--exit-record", str(exit_record), "--night-log", str(night_log),
+         "--exit-log", str(exit_log),
          "--settle-sec", str(settle)],
         cwd=str(REPO),
         env={**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"},

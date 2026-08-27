@@ -79,6 +79,13 @@ BASE = Path(__file__).resolve().parent.parent
 # from argv, because the reaper runs as a DETACHED process where monkeypatching
 # cannot reach it — the supervisor passes its own (redirectable) constants down.
 EXIT_RECORD = BASE / "memory" / "cycle_exit.json"
+# THE DURABLE ONE. EXIT_RECORD is a single slot: every cycle overwrites the last,
+# so on 27 Aug 2026 the only exit code that still existed anywhere was the one
+# from that morning's run. Nine cycles had been reaped since 23 Aug and eight of
+# their exit codes were gone — the one question the reaper exists to answer had
+# no history at all. EXIT_RECORD is kept, unchanged, because supervisor.py and
+# core/cycle_report.py read that exact path for "the latest".
+EXIT_LOG = BASE / "memory" / "cycle_exits.jsonl"
 NIGHT_LOG = BASE / "memory" / "night_events.jsonl"
 
 # How long to wait, AFTER the process is gone, for its killer to sign the
@@ -349,7 +356,7 @@ def _detail(record: dict) -> str:
 
 def reap(pid: int, cycle_id: str | None = None,
          exit_record: Path | None = None, night_log: Path | None = None,
-         settle_sec: float = SETTLE_SEC) -> dict:
+         settle_sec: float = SETTLE_SEC, exit_log: Path | None = None) -> dict:
     """Wait for `pid`, then record how it ended. Returns the record.
 
     Never raises: a reaper that dies while recording a death is worse than no
@@ -358,6 +365,7 @@ def reap(pid: int, cycle_id: str | None = None,
     record on disk, and the record says which sinks landed.
     """
     exit_record = Path(exit_record) if exit_record else EXIT_RECORD
+    exit_log = Path(exit_log) if exit_log else EXIT_LOG
     night_log = Path(night_log) if night_log else NIGHT_LOG
 
     # ── THE RECORD MUST EXIST BEFORE IT CAN BE LOST (20 Aug 2026) ───────────
@@ -428,6 +436,20 @@ def reap(pid: int, cycle_id: str | None = None,
     except Exception as e:
         record["exit_record_written"] = f"{type(e).__name__}: {e}"
 
+    # APPEND-ONLY, and written independently of the slot above for the same
+    # reason the night log is: a failure in one sink must not cost the others.
+    # This is the copy that survives the next cycle.
+    try:
+        exit_log.parent.mkdir(parents=True, exist_ok=True)
+        with open(exit_log, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())   # an exit code lost in the page cache when
+                                    # the machine dies is not a record at all
+        record["exit_log_written"] = True
+    except Exception as e:
+        record["exit_log_written"] = f"{type(e).__name__}: {e}"
+
     # The night log keeps ts/subject/detail because core/cycle_report.py reads
     # exactly those three for the "what happened while you slept" section. The
     # structured fields ride alongside for anything that wants the number.
@@ -470,7 +492,11 @@ def selftest() -> dict:
                 [sys.executable, "-c", "import sys,time; time.sleep(0.2); sys.exit(7)"],
                 stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL)
+            # exit_log MUST be redirected too, or the selftest appends a
+            # fabricated "selftest / ended_by=death" record to the real durable
+            # log — the same class of leak as the 16 Aug 2026 night-log incident.
             rec = reap(probe.pid, cycle_id="selftest",
+                       exit_log=tmpdir / "cycle_exits.jsonl",
                        exit_record=tmpdir / "cycle_exit.json",
                        night_log=tmpdir / "night_events.jsonl",
                        settle_sec=0.0)
@@ -521,6 +547,7 @@ def selftest() -> dict:
                                     "error": f"{type(e).__name__}: {e}"}
 
     rep["writes_to"] = {"exit_record": str(EXIT_RECORD),
+                        "exit_log": str(EXIT_LOG),
                         "night_log": str(NIGHT_LOG)}
     return rep
 
@@ -535,13 +562,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--exit-record", default=None,
                     help="where to write the latest exit record "
                          "(default memory/cycle_exit.json)")
+    ap.add_argument("--exit-log", default=None,
+                    help="where to APPEND the durable exit record "
+                         "(default memory/cycle_exits.jsonl)")
     ap.add_argument("--night-log", default=None,
                     help="where to append the night event "
                          "(default memory/night_events.jsonl)")
     ap.add_argument("--settle-sec", type=float, default=SETTLE_SEC)
     a = ap.parse_args(argv)
 
-    rec = reap(a.pid, a.cycle_id, a.exit_record, a.night_log, a.settle_sec)
+    rec = reap(a.pid, a.cycle_id, a.exit_record, a.night_log, a.settle_sec,
+               exit_log=a.exit_log)
     print(json.dumps(rec, ensure_ascii=False))
     return 0
 
@@ -557,6 +588,7 @@ if __name__ == "__main__":
             print(f"  {'LIVE ' if d.get('LIVE') else 'INERT'}  {key}: "
                   f"{ {k: v for k, v in d.items() if k != 'LIVE'} }")
         print(f"  writes to: {r['writes_to']['exit_record']}")
+        print(f"             {r['writes_to']['exit_log']}")
         print(f"             {r['writes_to']['night_log']}")
         sys.exit(0 if all(r.get(k, {}).get("LIVE")
                           for k in ("wait_and_exit_code", "both_sinks",

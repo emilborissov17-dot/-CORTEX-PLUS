@@ -58,9 +58,11 @@ def sandbox(tmp_path, monkeypatch):
     reap() in-process, where the constants are what it falls back to.
     """
     monkeypatch.setattr(reaper, "EXIT_RECORD", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(reaper, "EXIT_LOG", tmp_path / "cycle_exits.jsonl")
     monkeypatch.setattr(reaper, "NIGHT_LOG", tmp_path / "night_events.jsonl")
     monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")
     monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(sup, "CYCLE_EXIT_LOG", tmp_path / "cycle_exits.jsonl")
     monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
     monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
