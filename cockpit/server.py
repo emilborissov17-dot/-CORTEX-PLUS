@@ -334,9 +334,31 @@ def api_cycles():
 
     steps_blob = contract.get("steps") if isinstance(contract, dict) else None
     degraded = 0
+    degraded_rows = []
     if isinstance(steps_blob, list):
-        degraded = sum(1 for x in steps_blob
-                       if isinstance(x, dict) and x.get("verdict") == "DEGRADED")
+        # THE NAMES WERE ALWAYS HERE. This used to return the count alone, so the
+        # page could say "DEGRADED 2" and nothing else — while every entry in
+        # steps_blob already carried the step, the fallback that actually ran,
+        # how long it took and the files it touched. A count that names nothing
+        # sends the reader to a terminal to find out what it meant.
+        for x in steps_blob:
+            if not isinstance(x, dict) or x.get("verdict") != "DEGRADED":
+                continue
+            degraded_rows.append({
+                "step": x.get("step"),
+                # `degraded` is the fallback's own sentence, e.g. "answered by
+                # local_3b (qwen2.5:3b) after the cloud tier was abandoned at
+                # its slice of B=122s". `why` usually repeats it; keep the
+                # second only when it differs, so nothing is printed twice.
+                "fallback": x.get("degraded") or x.get("why"),
+                "why": (x.get("why") if x.get("why") != x.get("degraded") else None),
+                "calls": x.get("degraded_calls"),
+                "seconds": x.get("seconds"),
+                "ts": x.get("ts"),
+                "artifacts": (x.get("touched") or [])[:6],
+                "artifact_count": x.get("touched_count"),
+            })
+        degraded = len(degraded_rows)
 
     sealed_done = by_cycle.get(sealed["cycle_id"], set()) if sealed else set()
     sealed_unmapped = sorted(unmapped_by_cycle.get(sealed["cycle_id"], set())) if sealed else []
@@ -378,6 +400,8 @@ def api_cycles():
             "survival_latched": bool(survival.get("active")),
             "survival_reason": survival.get("reason"),
             "degraded_steps": degraded,
+            "degraded_rows": degraded_rows,
+            "degraded_source": "memory/step_contract_latest.json",
         },
     })
 
@@ -495,6 +519,17 @@ def api_pending():
             "author": str(r.get("generated_by") or "(unattributed)"),
             "age_days": _age_days(r.get("timestamp")),
             "priority": r.get("priority"),
+            # THE WHOLE PROPOSAL, so a row can open in place. `title` is the
+            # problem truncated to 120 characters and was the only text the page
+            # had: the solution, the measurable goal and the root cause were
+            # read off disk, dropped here, and never shown to the human being
+            # asked to approve them.
+            "source": "memory/improvement_proposals.json",
+            "index": i,
+            "detail": {k: r.get(k) for k in (
+                "problem", "solution", "measurable_goal", "root_cause",
+                "component", "priority", "real_world_signal", "generated_by",
+                "timestamp") if r.get(k) is not None},
             "prefill": "venv\\Scripts\\python.exe cortex_approval_server.py",
         })
     proposals.sort(key=lambda x: -(x["age_days"] or 0))
@@ -507,6 +542,7 @@ def api_pending():
         "target": t.get("target"),
         "basis": t.get("basis"),
         "direction": t.get("direction"),
+        "source": "memory/threshold_proposals.json",
         "prefill": "venv\\Scripts\\python.exe -c \"import json;print(json.load("
                    "open('memory/threshold_proposals.json',encoding='utf-8'))"
                    "['proposals'])\"",

@@ -119,6 +119,18 @@
      never reached the reader. It must not look like `done`: a hollow outline in
      the same green says "we assume so", a filled square says "it is on record". */
   .step.passed{background:transparent;box-shadow:inset 0 0 0 1.5px #245c33}
+  /* PART 1 — doors, and the landing they scroll to */
+  .jump{background:none;border:none;color:var(--blu);font:inherit;cursor:pointer;
+        padding:0 2px;text-decoration:underline dotted}
+  .jump:hover{color:#8ecbf5}
+  .panel.landed{outline:1px solid var(--blu);outline-offset:2px}
+  button.degchip{cursor:pointer;font-family:inherit}
+  button.degchip.on{color:var(--yel);border-color:var(--yel)}
+  .degcard{border-left:2px solid #5c4d24;padding:4px 0 4px 8px;margin-bottom:8px}
+  tr.deghit td{background:#2a2110}
+  tr.prow{cursor:pointer}
+  tr.prow.open td{background:#161c24}
+  tr.detail td{background:#0e1218}
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -233,7 +245,10 @@ function switchTo(id){
   active = id;
   localStorage.setItem(KEY, id);
   drawTabs();
-  render();
+  /* RETURNED, so a caller can wait for the tab it just asked for. render() is
+     async and replaces #view wholesale; without the promise, anything that acts
+     on the new tab acts on the old tab's HTML. */
+  return render();
 }
 
 document.addEventListener('keydown', e => {
@@ -243,13 +258,53 @@ document.addEventListener('keydown', e => {
   if(n >= 1 && n <= TABS.length) switchTo(TABS[n-1].id);
 });
 
+/* A count that is also its own door. A zero is NOT a door: there is nothing to
+   look at, and a control that leads to an empty list teaches the reader to
+   distrust the ones that do not. */
+function jumpRow(label, n, tab, anchor){
+  const has = Number(n) > 0;
+  return `<tr><td>${esc(label)}</td><td>${has
+    ? `<button class="jump" data-tab="${esc(tab)}" data-anchor="${esc(anchor)}"><b>${esc(n)}</b></button>`
+    : `<b class="meta">${esc(n)}</b>`}</td></tr>`;
+}
+
 function nodata(d){
   return `<div class="nodata"><b>no data yet</b><br>
     missing: ${esc((d.missing||[]).join(", ")) || "(unknown)"}<br>
     <span class="meta">${esc(d.why||d.note||"")}</span></div>`;
 }
-const panel = (title, body, wide) =>
-  `<section class="panel ${wide?'wide':''}"><h2>${esc(title)}</h2>${body}</section>`;
+const panel = (title, body, wide, id) =>
+  `<section class="panel ${wide?'wide':''}"${id?` id="${esc(id)}"`:''}><h2>${esc(title)}</h2>${body}</section>`;
+
+/* ── EVERY MENTION IS A DOOR ────────────────────────────────────────────────
+   The rule for the whole cockpit: if a panel names a thing, clicking the name
+   goes to the thing. Before this, OVERVIEW said "improvement proposals 22" and
+   that was the end of the sentence — the reader had 22 of something, no way to
+   see them, and a tab bar to guess with.
+
+   render() is async and replaces #view wholesale, so the scroll target does not
+   exist at the moment the click is handled. goTo() therefore leaves the anchor
+   here and wirePanel() — which runs AFTER the new HTML is in the document —
+   spends it. */
+let pendingAnchor = null;
+
+function goTo(tab, anchor){
+  pendingAnchor = anchor || null;
+  return switchTo(tab);
+}
+
+function takePendingAnchor(){
+  if(!pendingAnchor) return;
+  const el = document.getElementById(pendingAnchor);
+  pendingAnchor = null;
+  if(!el) return;
+  try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  catch(e){ el.scrollIntoView(); }
+  /* A brief outline, because a smooth scroll that lands mid-page leaves the
+     reader asking which panel it meant. */
+  el.classList.add('landed');
+  setTimeout(() => el.classList.remove('landed'), 1600);
+}
 
 /* ─────────────────────────── renderers ─────────────────────────── */
 
@@ -277,28 +332,53 @@ async function tabOverview(){
       <div class="needle ${bad?'bad':'ok'}">${v===null?'—':esc(v)}</div>
       <div class="meta">red zone below ${f.red_below}${f.computed_not_recalled?' · computed now, not recalled':''}</div>`)}
     ${panel('Pending human', `<table>
-      <tr><td>improvement proposals</td><td><b>${p.improvement_proposals.open}</b></td></tr>
-      <tr><td>threshold proposals unsigned</td><td><b>${p.threshold_proposals.unsigned}</b></td></tr>
-      <tr><td>quarantined patches</td><td><b>${p.quarantined_patches.count}</b></td></tr>
-      </table>`)}
+      ${jumpRow('improvement proposals', p.improvement_proposals.open, 'pending', 'anchor-proposals')}
+      ${jumpRow('threshold proposals unsigned', p.threshold_proposals.unsigned, 'pending', 'anchor-thresholds')}
+      ${jumpRow('quarantined patches', p.quarantined_patches.count, 'pending', 'anchor-quarantine')}
+      </table>
+      <div class="meta" style="margin-top:6px">click a count to open it</div>`)}
   </div>`;
 }
 
 async function tabCycle(){
   const c = await get('/api/cycles');
   const b = c.badges||{};
+  /* Which checklist rows the DEGRADED chip should light. Matched by step name,
+     which is the only key the two sides share: the checklist comes from
+     cycle_map, the verdicts from step_contract_latest.json. */
+  const degNames = new Set((b.degraded_rows||[]).map(r => r.step));
   const rows = c.checklist.map(s =>
-    `<tr><td style="width:56px" class="meta">${esc(s.index)}</td>
+    `<tr class="${degOpen && degNames.has(s.step) ? 'deghit' : ''}">
+      <td style="width:56px" class="meta">${esc(s.index)}</td>
       <td><span class="pill ${s.state==='done'?'on':s.state==='current'?'warn':''}"
         title="${esc(s.evidence||'')}">${s.state}</span>${s.state==='passed'?'<span class="meta"> inferred</span>':''}</td>
-      <td>${esc(s.step)}</td><td class="meta">${esc((s.what||'').slice(0,70))}</td></tr>`).join('');
+      <td>${esc(s.step)}</td><td class="full">${esc(s.what||'')}</td></tr>`).join('');
+
+  /* The chip's own panel: for each degraded step, WHICH FALLBACK RAN and WHERE
+     ITS ARTIFACT IS. Every field here was already in the API payload and was
+     being thrown away at render time in favour of the integer 2. */
+  const degPanel = !degOpen ? '' : panel('Degraded — what ran instead', `
+    <div class="meta" style="margin-bottom:6px">from ${esc(b.degraded_source||'')}</div>
+    ${(b.degraded_rows||[]).map(r => `
+      <div class="degcard">
+        <div><b>${esc(r.step)}</b>
+          <span class="meta">${esc(r.seconds)}s${r.calls?` · ${esc(r.calls)} degraded call(s)`:''}</span></div>
+        <div class="full">${esc(r.fallback||'')}</div>
+        ${r.why?`<div class="meta full">${esc(r.why)}</div>`:''}
+        <div class="meta" style="margin-top:3px">artifacts (${esc(r.artifact_count)}):</div>
+        ${(r.artifacts||[]).map(a=>`<div class="meta full">${esc(a)}</div>`).join('')}
+      </div>`).join('') || '<div class="meta">no degraded step on record</div>'}`,
+    true, 'anchor-degraded');
   const sealed = c.last_sealed;
   return `<div class="grid">
     ${panel('Cycle · '+esc(c.label), `
       <div class="meta">${esc(c.current_cycle||'—')} · current step <b>${esc(c.current_step||'—')}</b></div>
       <div>
         <span class="pill ${b.survival_latched?'bad':'on'}">survival ${b.survival_latched?'LATCHED':'off'}</span>
-        <span class="pill ${b.degraded_steps?'warn':''}">DEGRADED ${b.degraded_steps}</span>
+        ${b.degraded_steps
+          ? `<button class="pill warn degchip ${degOpen?'on':''}" data-deg="1"
+               title="show which steps degraded and what ran instead">DEGRADED ${b.degraded_steps}</button>`
+          : `<span class="pill">DEGRADED 0</span>`}
         <span class="pill on">${esc((c.counts||{}).done||0)} on record</span>
         <span class="pill">${esc((c.counts||{}).passed||0)} passed (inferred)</span>
         <span class="pill">${esc(c.covered)}/${c.total_steps} covered</span>
@@ -308,6 +388,7 @@ async function tabCycle(){
         <tr><td>duration</td><td>${esc(sealed.duration_sec)} s</td></tr>
         <tr><td>ticks recorded</td><td>${esc(sealed.ticks)}</td></tr>
         <tr><td>outcome</td><td>${esc(sealed.outcome)}</td></tr></table>`:''}`, true)}
+    ${degPanel}
     ${panel('Steps', `<table>${rows}</table>`, true)}
   </div>`;
 }
@@ -381,6 +462,13 @@ async function tabBody(){
     ' '+d.state_vector.measured+'/'+d.state_vector.dims, html, true)}</div>`;
 }
 
+/* Which proposal rows are open, and whether the DEGRADED chip is showing its
+   detail. Held here rather than in the DOM because render() rebuilds #view from
+   scratch on every 15-second tick, and a disclosure that closes itself under the
+   reader is worse than one that never opened. */
+const openProposals = new Set();
+let degOpen = false;
+
 let exFilter = 'ALL';
 let tlCycle = '';        // '' = the last cycle that sealed
 
@@ -428,10 +516,34 @@ async function tabPending(){
   const q = p.queues;
   const pf = c => `<button class="pf" data-cmd="${esc(c)}">prefill</button>`;
 
-  const proposals = q.proposals.rows.map(r =>
-    `<tr><td class="meta">${esc(r.id)}</td><td>${esc(r.title)}</td>
+  /* EXPANDS IN PLACE, BEFORE ANY PREFILL. The row used to show `title`, which
+     is the problem truncated to 120 characters — and the solution, the
+     measurable goal and the root cause were on disk the whole time. A human is
+     being asked to approve these; reading one should not require a terminal. */
+  const proposals = q.proposals.rows.map(r => {
+    const open = openProposals.has(r.id);
+    const d = r.detail || {};
+    const field = (k, label) => d[k] === undefined || d[k] === null ? '' :
+      `<tr><td class="meta" style="width:130px;vertical-align:top">${esc(label)}</td>
+        <td class="full">${esc(String(d[k]))}</td></tr>`;
+    const body = !open ? '' : `<tr class="detail"><td colspan="5">
+      <table>
+        ${field('problem','problem')}
+        ${field('solution','solution')}
+        ${field('measurable_goal','measurable goal')}
+        ${field('root_cause','root cause')}
+        ${field('component','component')}
+        ${field('priority','priority')}
+        ${field('generated_by','generated by')}
+        ${field('timestamp','written')}
+        <tr><td class="meta">source</td><td class="meta">${esc(r.source||'')}
+          ${r.index!==undefined?` · proposals[${esc(r.index)}]`:''}</td></tr>
+      </table></td></tr>`;
+    return `<tr class="prow ${open?'open':''}" data-prop="${esc(r.id)}">
+      <td class="meta">${open?'v':'>'} ${esc(r.id)}</td><td class="full">${esc(r.title)}</td>
       <td class="meta">${esc(r.author)}</td><td class="meta">${esc(r.age_days)}d</td>
-      <td>${pf(r.prefill)}</td></tr>`).join('');
+      <td>${pf(r.prefill)}</td></tr>` + body;
+  }).join('');
   const thresholds = q.thresholds.rows.map(r =>
     `<tr><td>${esc(r.axis)}</td><td><b>${esc(r.suggested)}</b></td>
       <td class="meta">target ${esc(r.target)}</td><td class="meta">${esc(r.basis)}</td>
@@ -455,12 +567,15 @@ async function tabPending(){
 
   return `<div class="grid">
     ${panel('Proposals waiting — '+q.proposals.count, `
-      <div class="meta" style="margin-bottom:6px">${esc(p.prefill_note)}</div>
-      <table><tr><th>id</th><th>problem</th><th>author</th><th>age</th><th></th></tr>${proposals}</table>`, true)}
+      <div class="meta" style="margin-bottom:6px">${esc(p.prefill_note)} · click a row to read it in full</div>
+      <table><tr><th>id</th><th>problem</th><th>author</th><th>age</th><th></th></tr>${proposals}</table>`,
+      true, 'anchor-proposals')}
     ${panel('Thresholds unsigned — '+q.thresholds.count,
-      `<table><tr><th>axis</th><th>suggested</th><th></th><th>basis</th><th></th></tr>${thresholds}</table>`)}
+      `<table><tr><th>axis</th><th>suggested</th><th></th><th>basis</th><th></th></tr>${thresholds}</table>`,
+      false, 'anchor-thresholds')}
     ${panel('Quarantine — '+q.quarantine.count,
-      `<table><tr><th>file</th><th>triage</th><th></th><th></th></tr>${quarantine}</table>`)}
+      `<table><tr><th>file</th><th>triage</th><th></th><th></th></tr>${quarantine}</table>`,
+      false, 'anchor-quarantine')}
     ${panel('Telegram approvals — '+q.telegram.count,
       `<table><tr><th>id</th><th>what</th><th>axis</th><th></th><th></th></tr>${telegram}</table>`)}
     ${panel('Proposals by author', `<div class="meta">grouped on <code>${esc(pr.field_used)}</code> · ${pr.total} total</div>
@@ -747,6 +862,24 @@ function wirePanel(){
     b.onclick = () => toggleDevice(b.dataset.sw));
   document.querySelectorAll('.pf').forEach(b =>
     b.onclick = () => prefill(b.dataset.cmd));
+
+  /* every mention that is a door */
+  document.querySelectorAll('.jump').forEach(b =>
+    b.onclick = () => goTo(b.dataset.tab, b.dataset.anchor));
+  document.querySelectorAll('.degchip').forEach(b =>
+    b.onclick = () => { degOpen = !degOpen;
+                        pendingAnchor = degOpen ? 'anchor-degraded' : null;
+                        return render(); });
+  document.querySelectorAll('.prow').forEach(row =>
+    row.onclick = (e) => {
+      /* the prefill button inside the row keeps its own job */
+      if(e.target && e.target.closest && e.target.closest('.pf')) return;
+      const id = row.dataset.prop;
+      if(openProposals.has(id)) openProposals.delete(id); else openProposals.add(id);
+      return render();
+    });
+
+  takePendingAnchor();
 }
 
 /* ── forks refresh needs to survive a re-render ── */
