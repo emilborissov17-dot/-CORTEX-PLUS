@@ -764,6 +764,10 @@ def api_expression():
         "line_count": len(filtered),
         "total_in_stream": len(lines),
         "unread": ex.pending_unread(STREAM_PATH, PENDING_PATH),
+        # THE ROWS, not only the tally. The page could show a number and, on
+        # click, nothing but a zero — the one control that said "I have read
+        # this" was also the one that made it unreadable.
+        "unread_rows": ex.pending_unread_rows(STREAM_PATH, PENDING_PATH),
         "populated_cells": sorted("{}+{}".format(s, d)
                                   for s, d in ex.POPULATED_CELLS),
         "rejected": ex.read_rejected(QUARANTINE_ROOT),

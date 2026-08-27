@@ -148,6 +148,13 @@
   tr.detail:hover > td{background:#0e1218}
   tr.prow.open:hover > td{background:#1d242e}
 
+  /* PART 3 — the unread list */
+  .unrow{padding:3px 4px;border-bottom:1px solid #171c22;cursor:pointer;
+         display:flex;gap:8px;align-items:baseline}
+  .unrow:hover{background:#1a2028}
+  .unrow .src{color:var(--mag);font-size:10px;min-width:82px}
+  p.tl.landed{background:#1e2a18;outline:1px solid var(--grn)}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -278,6 +285,10 @@ document.addEventListener('keydown', e => {
 /* A count that is also its own door. A zero is NOT a door: there is nothing to
    look at, and a control that leads to an empty list teaches the reader to
    distrust the ones that do not. */
+/* An id a timestamp can be found by. Colons and dots are legal in an id but
+   awkward in a selector, so they go. */
+function tsKey(ts){ return String(ts||'').replace(/[^0-9A-Za-z]/g, ''); }
+
 function jumpRow(label, n, tab, anchor){
   const has = Number(n) > 0;
   return `<tr><td>${esc(label)}</td><td>${has
@@ -500,8 +511,10 @@ async function tabExpression(){
   const q = tlCycle ? ('?cycle='+encodeURIComponent(tlCycle)) : '';
   const [d, t] = await Promise.all([get('/api/expression?filter='+exFilter),
                                     get('/api/timeline'+q)]);
+  /* ANCHORED BY TIMESTAMP, so a line in the unread list can be found at its
+     place in the timeline rather than merely quoted out of it. */
   const rows = (t.rows||[]).map(r =>
-    `<p class="tl r${esc(r.reflexivity)} s-${esc(r.source)}"><span class="pre">${esc((r.ts||'').slice(11,19))} r${esc(r.reflexivity)}</span> <span class="src">${esc(r.source)}</span> ${esc(r.text)}</p>`).join('');
+    `<p class="tl r${esc(r.reflexivity)} s-${esc(r.source)}" id="tl-${esc(tsKey(r.ts))}"><span class="pre">${esc((r.ts||'').slice(11,19))} r${esc(r.reflexivity)}</span> <span class="src">${esc(r.source)}</span> ${esc(r.text)}</p>`).join('');
   const counts = Object.entries(t.counts_by_source||{}).sort()
     .map(([k,v])=>`<span class="pill">${esc(k)} ${esc(v)}</span>`).join('');
   const srcs = (t.sources||[]).map(x =>
@@ -513,7 +526,24 @@ async function tabExpression(){
     `<tr><td class="meta">${esc((r.timestamp||'').slice(11,19))}</td>
      <td>${esc(String(r.raw_output).slice(0,70))}</td><td class="invalid">${esc(r.rejection_reason)}</td></tr>`).join('');
   const warm = d.lexicon || {};
-  return `<div class="grid">${panel('Expression window · one timeline, every stream', `
+
+  /* WHAT WAS UNREAD, kept on screen after the count has gone to zero. The rows
+     were captured at click time, so this panel does not change under the reader
+     when the next 15-second tick arrives having marked them seen. */
+  const unreadPanel = !unreadShown.length ? '' : panel(
+    'Unread — ' + unreadShown.length + ' line(s), now marked seen',
+    `<div class="meta" style="margin-bottom:6px">shown first, marked after ·
+       click a line to find it in the timeline below</div>
+     ${unreadShown.map(l => `
+       <div class="unrow" data-uts="${esc(l.ts||'')}">
+         <span class="pre">${esc((l.ts||'').slice(11,19))}</span>
+         <span class="src">${esc(l.stream || l.depth || 'expression')}</span>
+         <span class="full">${esc(l.text || l.line || '')}</span>
+       </div>`).join('')}
+     <button class="jump" id="unreaddone">dismiss this list</button>`,
+    true, 'anchor-unread');
+
+  return `<div class="grid">${unreadPanel}${panel('Expression window · one timeline, every stream', `
     <div class="ctlrow" style="margin-bottom:6px">
       <select id="tlcycle">${cycles}</select>
       <span class="meta">${esc(t.started||'')} → ${esc(t.finished||'still running')}</span>
@@ -914,6 +944,16 @@ function wirePanel(){
       return render();
     });
 
+  document.querySelectorAll('.unrow').forEach(row =>
+    row.onclick = () => {
+      const el = document.getElementById('tl-' + tsKey(row.dataset.uts));
+      if(el){ try{ el.scrollIntoView({behavior:'smooth', block:'center'}); }
+              catch(e){ el.scrollIntoView(); }
+              el.classList.add('landed'); }
+    });
+  const ud = $('#unreaddone');
+  if(ud) ud.onclick = () => { unreadShown = []; return render(); };
+
   takePendingAnchor();
 }
 
@@ -938,13 +978,38 @@ async function refreshUnread(){
    the timestamps of the expression lines CURRENTLY IN THE STREAM and nothing
    else — never "mark everything", which would silently swallow lines written
    between the last poll and the click. */
-async function markSeen(){
+/* SHOWN, THEN CLEARED. Clicking the count used to mark every line seen and
+   render nothing — the click destroyed the only pointer to what had been
+   written, which is the opposite of what a cockpit is for. "Seen" is still
+   append-only and still a fact about a moment; the change is that the moment now
+   comes AFTER the reader has been shown the lines.
+
+   ORDER IS THE WHOLE POINT and is asserted by a test: the list is on screen
+   before /api/expression/seen is called. If the render throws, nothing is
+   marked, and the count is still there to click again. */
+let unreadShown = [];
+
+async function showThenClear(){
   const el = $('#unread');
   try{
     const d = await get('/api/expression');
-    const ts = (d.lines||[]).filter(l => l.depth === 'expression')
-                            .map(l => l.ts).filter(Boolean);
-    if(!ts.length){ return; }
+    const rows = d.unread_rows || [];
+    if(!rows.length){
+      unreadShown = [];
+      el.textContent = '0 unread';
+      el.className = 'unread zero';
+      el.disabled = true;
+      return;
+    }
+
+    /* 1 — SHOW. Rendered into the panel area, and only then marked. */
+    unreadShown = rows;
+    await switchTo('expression');
+
+    /* 2 — CLEAR, with the timestamps of exactly the rows just displayed. Never
+       "mark everything": a line written between the poll and the click would be
+       swallowed without ever having been on screen. */
+    const ts = rows.map(l => l.ts).filter(Boolean);
     const r = await fetch('/api/expression/seen', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ts})});
@@ -954,6 +1019,7 @@ async function markSeen(){
     el.disabled = !out.unread;
   }catch(e){ el.textContent = 'seen failed'; }
 }
+const markSeen = showThenClear;   // the old name, kept for the control bar
 
 $('#asksend').onclick = async () => {
   const t = $('#askbox').value.trim(); if(!t) return;

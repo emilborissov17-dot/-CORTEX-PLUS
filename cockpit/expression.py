@@ -463,6 +463,25 @@ def pending_unread(stream_path: pathlib.Path, pending_path: pathlib.Path) -> int
                if l.get("depth") == EXPRESSION and l.get("ts") not in seen)
 
 
+def pending_unread_rows(stream_path: pathlib.Path,
+                        pending_path: pathlib.Path, limit: int = 200) -> list:
+    """The unread EXPRESSION lines THEMSELVES, oldest first. Both paths REQUIRED.
+
+    pending_unread() answers "how many", which is all the cockpit could ever
+    show. Clicking that number marked everything seen and rendered nothing, so
+    the click DESTROYED the only pointer to what had been written — the exact
+    opposite of what a cockpit is for. This returns the rows so they can be put
+    on screen BEFORE anything is marked.
+
+    Same predicate as pending_unread(), deliberately: two definitions of "unread"
+    that can disagree is how a list of three ends up clearing a count of four.
+    """
+    seen = set(pending_read(pending_path).get("seen") or [])
+    rows = [l for l in read_stream(stream_path, limit=2000)
+            if l.get("depth") == EXPRESSION and l.get("ts") not in seen]
+    return rows[-limit:]
+
+
 def pending_mark_seen(ts_list: Iterable[str], path: pathlib.Path) -> dict:
     """APPEND-ONLY mark-as-seen. `path` is REQUIRED — no default.
 

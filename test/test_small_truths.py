@@ -85,9 +85,19 @@ def test_the_unread_count_is_a_control_with_a_handler():
 
 
 def test_marking_seen_sends_only_the_lines_on_screen():
-    """Never 'mark everything': that swallows lines written since the poll."""
-    body = PAGE.split("async function markSeen(")[1].split("\n}")[0]
-    assert "l.depth === 'expression'" in body
+    """Never 'mark everything': that swallows lines written since the poll.
+
+    RE-POINTED 27 Aug 2026, not weakened. markSeen() was renamed showThenClear()
+    when the click stopped destroying what it cleared — the list is rendered
+    first and marked afterwards — and `markSeen` survives as an alias so the
+    control bar keeps working. The property under test is unchanged and still
+    the important one: the POST carries the timestamps of the rows that were
+    actually put on screen, never a blanket mark that would swallow a line
+    written between the poll and the click.
+    """
+    body = PAGE.split("async function showThenClear(")[1].split("\n}")[0]
+    assert "rows.map(l => l.ts)" in body, (
+        "the mark no longer derives from the rows that were shown")
     assert "JSON.stringify({ts})" in body
 
 
