@@ -124,13 +124,22 @@ def ask(lines: list, model=None, timeout=None, url: str = OLLAMA_URL,
 
     prompt = QUESTION.format(lines=body_lines)
     out["prompt"] = prompt
-    payload = json.dumps({"model": model, "prompt": prompt, "stream": False,
-                          "options": {"num_predict": 120}}).encode("utf-8")
+    # THROUGH THE ONE DOOR (COMMAND 33 part 5). This built its own request and
+    # passed no keep_alive at all, so a timed-out reaction left the model
+    # resident and the GPU busy for the next regular step. core/extra_calls.py
+    # owns the four guards; nothing here builds an Ollama request any more.
     try:
-        req = urllib.request.Request(
-            url, data=payload, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            d = json.loads(r.read().decode("utf-8"))
+        from core.extra_calls import guarded_extra_call, COMPLETED
+        rec = guarded_extra_call("reaction", prompt, model=model, url=url,
+                                 timeout=timeout)
+        out["guard"] = {k: rec.get(k) for k in
+                        ("outcome", "why", "queue_wait_ms", "extra_time_ms",
+                         "ram_free_mb", "vram_free_mb", "vram_check")}
+        if rec["outcome"] != COMPLETED:
+            out["asked"] = False
+            out["why"] = "{}: {}".format(rec["outcome"], rec.get("why") or "")
+            return out
+        d = rec.get("raw") or {"response": rec.get("text")}
         out["asked"] = True
     except Exception as exc:
         out["why"] = "{}: {}".format(type(exc).__name__, exc)

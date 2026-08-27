@@ -161,11 +161,20 @@ def measure(vector=None, model=None, num_predict=None, timeout=None,
         "options": {"num_predict": num_predict, "temperature": 0},
     }).encode("utf-8")
 
+    # THROUGH THE ONE DOOR (COMMAND 33 part 5). logprobs travels as extra_body;
+    # the three guards — keep_alive, num_predict, the HTTP timeout — are not
+    # overridable from here, which is the point of there being one door.
     try:
-        req = urllib.request.Request(
-            url, data=body, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            d = json.loads(r.read().decode("utf-8"))
+        from core.extra_calls import guarded_extra_call, COMPLETED
+        _rec = guarded_extra_call("perplexity", PROMPT.format(state=sentence),
+                                  model=model, url=url, timeout=timeout,
+                                  num_predict=num_predict,
+                                  extra_body={"logprobs": True,
+                                              "options": {"temperature": 0}})
+        if _rec["outcome"] != COMPLETED:
+            raise RuntimeError("{}: {}".format(_rec["outcome"],
+                                               _rec.get("why") or ""))
+        d = _rec.get("raw") or {}
     except Exception as exc:
         out["why"] = "{}: {}".format(type(exc).__name__, exc)
         return out
