@@ -45,6 +45,8 @@
   .spdrow{display:flex;gap:4px;margin:4px 0}
   .spd{font-size:10px;padding:1px 6px;opacity:.6}
   .spd.on{opacity:1;font-weight:bold}
+  .snd{margin-left:10px;border-left:1px solid #2a323c;padding-left:10px}
+  .snd.on{color:var(--yel)}
   .sline{white-space:pre;font-size:11px;line-height:1.3}
   .sline.ch-S{color:#e8b04b}
   .quiet{padding:8px 0;font-size:12px;opacity:.75}
@@ -965,6 +967,7 @@ async function drawStream(){
     const body = (d.lines||[]).slice().reverse()
       .map(l => `<div class="sline ch-${esc(l.channel)}">${esc(l.text)}</div>`).join('');
     el.innerHTML = head + quiet + `<pre class="raw">${body}</pre>`;
+    sonify(d.lines || [], Number(d.seen) || 0);
   }catch(e){
     el.innerHTML = `<div class="invalid">${esc(e.message||e)}</div>`;
   }
@@ -974,7 +977,69 @@ function streamControls(){
   const speeds = [[0.5,'0.5/s'],[1,'1/s'],[4,'4/s'],[12,'12/s — texture']];
   return speeds.map(([hz,label]) =>
     `<button class="spd ${hz===streamHz?'on':''}" data-hz="${hz}">${label}</button>`
-  ).join('');
+  ).join('') +
+  `<button class="spd snd ${soundOn?'on':''}" id="soundtoggle"
+     aria-pressed="${soundOn?'true':'false'}"
+     title="client-side only: the lines already on this page, as tones">
+     ${soundOn ? 'SOUND ON' : 'SOUND OFF'}</button>`;
+}
+
+/* ── SOUND — the stream you are already reading, heard ─────────────────────
+   OFF BY DEFAULT AND IT STAYS OFF UNTIL ASKED. There is no autoplay here and
+   there cannot be: the AudioContext is not constructed at load, it is
+   constructed inside the click handler. A page that has never been clicked has
+   no audio object at all, which is a stronger guarantee than an unused one.
+
+   IT SONIFIES WHAT IS ALREADY DISPLAYED. No new fetch, no new route, no new
+   server surface — drawStream() has the lines in hand and hands the new ones
+   here. If the panel is not drawing, nothing sounds; leaving GLASS stops the
+   timer and the sound stops with it.
+
+   Pitch carries the CHANNEL, not the severity. A tone that got shriller when
+   something was wrong would be a second opinion about the data, and this panel
+   is the one place that shows the stream with no opinion in it at all. */
+let soundOn = false;
+let audioCtx = null;
+let lastHeard = null;
+
+function soundToggle(){
+  soundOn = !soundOn;
+  try{
+    if(soundOn){
+      /* Constructed on the gesture — this line is why there is no autoplay. */
+      if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      lastHeard = null;              /* do not replay the backlog in one burst */
+    }else if(audioCtx){
+      audioCtx.suspend();
+    }
+  }catch(e){
+    soundOn = false;                 /* no Web Audio here: say so, do not throw */
+  }
+  render();
+}
+
+function blip(freq, when){
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = 'sine'; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, when);
+  g.gain.exponentialRampToValueAtTime(0.06, when + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + 0.09);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(when); o.stop(when + 0.1);
+}
+
+function sonify(lines, seen){
+  if(!soundOn || !audioCtx || audioCtx.state !== 'running') return;
+  /* Only what arrived since the last draw. `seen` is the bus's own monotonic
+     count, so a slow tab that missed 400 lines plays a handful, not 400. */
+  const fresh = (lastHeard === null) ? 0 : Math.max(0, Math.min(seen - lastHeard, 6));
+  lastHeard = seen;
+  const now = audioCtx.currentTime;
+  lines.slice(-fresh).forEach((l, i) => {
+    const ch = String(l.channel || '?').charCodeAt(0) || 63;
+    blip(220 * Math.pow(2, (ch % 12) / 12), now + i * 0.06);
+  });
 }
 
 /* ── the reaction: shown verbatim, or not shown at all ────────────────────
@@ -1227,6 +1292,11 @@ function wireStatic(){
 function wirePanel(){
   document.querySelectorAll('.spd').forEach(b =>
     b.onclick = () => { streamHz = parseFloat(b.dataset.hz); render(); });
+  /* AFTER the .spd loop, and deliberately: the toggle carries both classes so
+     it inherits the row's look, and this rebinds it to its own handler rather
+     than to a speed change. Bound here for the same reason as everything else
+     — one answer to "where do controls get their handlers". */
+  const snd = $('#soundtoggle'); if(snd) snd.onclick = soundToggle;
   if(active === 'glass'){
     get('/api/free').then(d => {
       const el = document.getElementById('freeBody');

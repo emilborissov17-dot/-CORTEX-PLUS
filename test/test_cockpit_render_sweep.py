@@ -271,6 +271,12 @@ CONTROLS = {
                        mutates="memory/pending_expression.json"),
 
     "spd":      dict(tab="glass",    sel=".spd",      what="the stream speed changes"),
+    # The SOUND toggle carries BOTH classes so it inherits the row's look, so
+    # ".spd" above would pick it up first and press the wrong thing. ".snd" is
+    # the specific selector, and what changes is its own label.
+    "snd":      dict(tab="glass",    sel=".snd",      what="the label flips SOUND OFF/ON"),
+    "soundtoggle": dict(tab="glass", sel="#soundtoggle",
+                        what="the label flips SOUND OFF/ON"),
 
     "asksend":  dict(tab="overview", sel="#asksend",  what="a receipt appears under the box",
                      arrange="document.querySelector('#askbox').value='sweep probe';",
