@@ -980,6 +980,40 @@ def api_reaction():
                         "rows": []})
 
 
+# ── THE FREE STREAM (27 Aug 2026) — UNVALIDATED, AND SAID SO ───────────────
+# Every other path a model's words take through this system is validated: the
+# language gate reads them, the purity census counts them, the exemplar flag
+# decides whether they were fit to show. This is the one place you can read what
+# the model actually said.
+#
+# READ ONLY, like every panel on this tab. The files are written by
+# core/reaction.py at the moment of the answer; this never asks the model and
+# never writes. THE COCKPIT IS THE ONLY READER OF expression/free/ — there is an
+# AST test that fails if anything else reads it, because the instant something
+# in the cycle starts consuming unvalidated text it stops being expression and
+# becomes an input nobody gated.
+@app.get("/api/free")
+def api_free():
+    from core import free_stream as fs
+    try:
+        rows = fs.read(20)
+        return jsonify({
+            "label": "FREE STREAM - unvalidated model expression",
+            "why": ("one file per answer that came back, unjudged: no language "
+                    "gate, no purity verdict, no exemplar flag. Newest first."),
+            "dir": str(fs.FREE_DIR),
+            "count": len(rows),
+            "validated": False,
+            "rows": rows,
+            "empty_why": ("nothing yet - reaction.enabled is false in "
+                          "config/reactions.json, so no answer has been asked "
+                          "for"),
+        })
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "rows": []})
+
+
 # ── THE RAW RECEPTOR STREAM (24 Aug 2026) ──────────────────────────────────
 # A SUBSCRIBER, not a prober. It drains what the bus already carried and
 # renders it; it never calls a sensor, and core/event_bus.py raises if anything

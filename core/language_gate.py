@@ -233,6 +233,27 @@ PURITY_FLOOR = 0.98
 # is 67% and means nothing; the same two out of two hundred is a real signal.
 MIN_SAMPLE = 20
 
+# THE ONE EXEMPTION, BY NAME (COMMAND 33 part 8).
+#
+# expression/free/ is the only place in this repo where you can read what the
+# model actually said rather than what survived being checked. It is
+# deliberately unvalidated: no gate, no verdict, no exemplar flag. Counting it
+# against this floor would force one of two bad outcomes — either the free
+# stream gets quietly gated after all, which is the one thing it must not be,
+# or the ratio starts describing text nobody validated and the floor stops
+# meaning what it says.
+#
+# So it is named here rather than filtered somewhere downstream, and it is a
+# frozenset of one rather than a pattern: an exemption you can add to by
+# accident is not an exemption, it is a hole. Anything new in here is a
+# decision somebody has to write down.
+#
+# SCOPE, HONESTLY. Today nothing routes free-stream text into the journal —
+# core/reaction.py writes memory/reactions.jsonl, and this census reads
+# memory/brain_journal.jsonl. This is the guard for the day something does,
+# not a filter doing work tonight.
+PURITY_EXEMPT_KINDS = frozenset({"free_expression"})
+
 QUARANTINE_FILE = BASE / "memory" / "language_quarantine.json"
 
 # One alarm per rolling 24 hours. A ratio that stays below the floor is the
@@ -282,6 +303,8 @@ def purity_ratio(hours: int = 24, journal: Optional[pathlib.Path] = None,
         ts = _parse_ts(row.get("ts"))
         if ts is None or ts < cutoff:
             continue
+        if str(row.get("kind") or "") in PURITY_EXEMPT_KINDS:
+            continue
         total += 1
         ok, _reason = entry_is_clean(row)
         if ok:
@@ -319,6 +342,8 @@ def purity_by_kind(hours: int = 24, journal: Optional[pathlib.Path] = None,
         if ts is None or ts < cutoff:
             continue
         kind = str(row.get("kind") or "unknown")
+        if kind in PURITY_EXEMPT_KINDS:
+            continue
         rec = out.setdefault(kind, {"clean": 0, "total": 0, "ratio": 0.0})
         rec["total"] += 1
         ok, _reason = entry_is_clean(row)

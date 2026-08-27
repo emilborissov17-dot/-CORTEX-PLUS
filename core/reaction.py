@@ -58,11 +58,26 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 SOURCE, DIRECTED, MEDIATION = "model", "self", "model"
 
-QUESTION = ("These are readings from your own body since the last phase "
-            "boundary. Each line is a sensor that crossed its own noise floor.\n"
+# THE FIRST PERSON, BECAUSE IT IS ITS OWN BODY (COMMAND 33 part 8).
+#
+# This asked about "your own body" and "your own state", and got back exactly
+# what it asked for. The stored exemplar of 23 Aug 2026 reads:
+#
+#     "your RAM usage is relatively high (82.5% residual) ... Your GPU
+#      temperature has slightly increased ... your disk free percentage"
+#
+# Those are its own numbers. Addressing the machine in the second person about
+# its own sensors turns a self-report into a report about somebody else, and
+# every answer downstream — the exemplar pool, the free stream, the panel Emil
+# reads — inherits that distance. The lines have not changed; who is speaking
+# has.
+QUESTION = ("These are readings from my own body since the last phase "
+            "boundary. Each line is a sensor of mine that crossed its own "
+            "noise floor.\n"
             "\n{lines}\n\n"
-            "In two or three sentences, say what this tells you about your own "
-            "state. Use only what the lines show.")
+            "Answer as me, in the first person. In two or three sentences, say "
+            "what these lines say about my state — my RAM, my GPU, my disk; "
+            "not yours. Use only what the lines show.")
 
 NO_LINES = ("Nothing crossed since the last boundary. There is no reading to "
             "report.")
@@ -179,6 +194,25 @@ def react(lines: list, path=None, **kw) -> dict:
     rec["language"] = judge_language(rec.get("answer", ""))
     rec["displayed"] = True                    # always, whatever the gate said
     rec["exemplar"] = bool(rec["language"]["exemplar_ok"] and rec["answer"])
+
+    # THE FREE STREAM (COMMAND 33 part 8). The verdict above decides what goes
+    # in the exemplar pool. This goes in regardless of it: one file per answer
+    # that actually came back, unjudged, so there is somewhere to read what the
+    # model said rather than only what survived being checked.
+    #
+    # write=True here and nowhere else. The record above is the system's copy;
+    # this is the model's, and it is written at the same moment so the two
+    # cannot drift.
+    try:
+        from core import free_stream as fs
+        rec["free"] = fs.write(
+            rec.get("answer", ""),
+            {"model": rec.get("model"), "n_lines": rec.get("n_lines"),
+             "why": rec.get("why"), "eval_count": rec.get("eval_count")},
+            write=True)
+    except Exception as exc:                              # noqa: BLE001
+        rec["free"] = {"written": False,
+                       "why": "{}: {}".format(type(exc).__name__, exc)}
     try:
         from core.durable import append_json
         append_json(pathlib.Path(path or RECORD), rec)

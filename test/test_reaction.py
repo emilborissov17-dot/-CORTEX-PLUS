@@ -26,6 +26,33 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 from core import reaction as rx        # noqa: E402
+from core import extra_calls as ec  # noqa: E402
+
+@pytest.fixture(autouse=True)
+def a_machine_with_room(monkeypatch, tmp_path):
+    """The four guards read THIS laptop; these tests are not about it.
+
+    COMMAND 33 part 5 routed this module through core/extra_calls.py, and the
+    resource guard declines when free RAM is under 600MB or free VRAM under
+    400MB. So every test below silently became a question about whether Emil
+    had a browser open: with the GPU at 282MB free, seven of them failed while
+    the door was working perfectly and the reaction logic was untouched.
+
+    Tests that ARE about the guards live in test_extra_calls.py and set their
+    own values there.
+    """
+    monkeypatch.setattr(ec, "_ram_free_mb", lambda: 8000.0)
+    monkeypatch.setattr(ec, "_vram_free_mb", lambda: (8000.0, None))
+    monkeypatch.setattr(ec, "_models_running", lambda *a, **k: (0, None))
+
+    # AND THE FREE STREAM GOES SOMEWHERE ELSE. react() writes one file per
+    # answer (COMMAND 33 part 8), so without this every test in this file
+    # writes fabricated model speech — "steady", "ok" — into the real
+    # expression/free/. Eleven files got there before the guard in
+    # test_free_stream.py caught it.
+    from core import free_stream as _fs
+    monkeypatch.setattr(_fs, "FREE_DIR", tmp_path / "free")
+
 
 LINES = [
     {"text": "12345.678  receptor.ram_percent    R  residual  82.5% "

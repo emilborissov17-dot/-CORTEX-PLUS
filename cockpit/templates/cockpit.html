@@ -40,6 +40,7 @@
   h1{font-size:13px;margin:0;letter-spacing:.14em;white-space:nowrap}
   .meta{color:var(--dim);font-size:11px;white-space:nowrap}
   nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .freeitem{border-left:2px solid var(--muted);padding-left:.6rem;margin:.5rem 0}
   /* GLASS: raw means raw. No wrapping, no prettifying. */
   .spdrow{display:flex;gap:4px;margin:4px 0}
   .spd{font-size:10px;padding:1px 6px;opacity:.6}
@@ -1136,6 +1137,8 @@ async function tabGlass(){
     ${panel('GLASS', `<div class="muted">${esc(d.label)}</div>`)}
     ${panel('raw receptor stream', streamPanel)}
     ${panel('the reaction', `<div id="reactionBody"><div class="muted">loading...</div></div>`)}
+    ${panel('FREE STREAM - unvalidated model expression',
+            `<div id="freeBody"><div class="muted">loading...</div></div>`)}
     ${panel('raw stdout', stdoutBody)}
     ${panel('blocked connections', `<div id="blockedBody"><div class="muted">loading...</div></div>`)}
     ${panel('traffic counters', trafficBody)}
@@ -1225,6 +1228,20 @@ function wirePanel(){
   document.querySelectorAll('.spd').forEach(b =>
     b.onclick = () => { streamHz = parseFloat(b.dataset.hz); render(); });
   if(active === 'glass'){
+    get('/api/free').then(d => {
+      const el = document.getElementById('freeBody');
+      if(!el) return;
+      if(d.error){ el.innerHTML = `<div class="invalid">${esc(d.error)}</div>`; return; }
+      const rows = d.rows || [];
+      if(!rows.length){ el.innerHTML = `<div class="muted">${esc(d.empty_why||'nothing yet')}</div>`; return; }
+      /* NEWEST FIRST is the server's order and it is not re-sorted here: the
+         question a reader has when they open this is what it just said. */
+      el.innerHTML = `<div class="muted">${esc(d.why)}</div>` +
+        rows.map(r => `<div class="freeitem">
+            <div class="muted">${esc(r.ts||r.name)} - unvalidated</div>
+            <pre class="raw">${esc(r.text)}</pre>
+          </div>`).join('');
+    }).catch(()=>{});
     drawStream(); drawReaction(); startStream();
     blockedOffset = null; drawBlocked();
     stopBlocked(); blockedTimer = setInterval(drawBlocked, 3000);

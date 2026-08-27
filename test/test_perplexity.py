@@ -31,6 +31,25 @@ if str(REPO) not in sys.path:
 
 from core import event_bus as eb          # noqa: E402
 from core import perplexity as px         # noqa: E402
+from core import extra_calls as ec  # noqa: E402
+
+@pytest.fixture(autouse=True)
+def a_machine_with_room(monkeypatch):
+    """The four guards read THIS laptop; these tests are not about it.
+
+    COMMAND 33 part 5 routed this module through core/extra_calls.py, and the
+    resource guard declines when free RAM is under 600MB or free VRAM under
+    400MB. So every test below silently became a question about whether Emil
+    had a browser open: with the GPU at 282MB free, seven of them failed while
+    the door was working perfectly and the reaction logic was untouched.
+
+    Tests that ARE about the guards live in test_extra_calls.py and set their
+    own values there.
+    """
+    monkeypatch.setattr(ec, "_ram_free_mb", lambda: 8000.0)
+    monkeypatch.setattr(ec, "_vram_free_mb", lambda: (8000.0, None))
+    monkeypatch.setattr(ec, "_models_running", lambda *a, **k: (0, None))
+
 from core import receptors as rc          # noqa: E402
 
 
