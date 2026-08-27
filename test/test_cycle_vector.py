@@ -54,9 +54,12 @@ def test_the_line_carries_29_measurable_keys(store):
     assert v["dims"] == 25
     assert len(v["vector"]) == 25
     assert len(v["fields"]) == 25
-    assert set(v["cycle"]) == {"flow_score", "degraded_steps",
-                               "steps_completed", "duration_sec"}
-    assert len(v["vector"]) + len(v["cycle"]) == 29
+    # Derived, not restated: this named flow_score literally, and flow_score is
+    # gone. The property is unchanged — the cycle block travels with the vector
+    # and every declared field is in it.
+    from cockpit import vector as vmod
+    assert set(v["cycle"]) == set(vmod.CYCLE_FIELDS)
+    assert len(v["vector"]) + len(v["cycle"]) == 25 + len(vmod.CYCLE_FIELDS)
 
 
 def test_warming_moves_from_zero_to_one(store):

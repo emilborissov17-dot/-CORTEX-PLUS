@@ -62,8 +62,13 @@ MIN_CYCLES = 20
 # The cycle-side dimensions. They arrive from the cycle's own metrics rather
 # than from hardware, and they are named here so the vector's provenance is
 # readable in one place.
-CYCLE_FIELDS = ("flow_score", "degraded_steps", "steps_completed",
-                "duration_sec")
+# FIVE ORTHOGONAL SCALARS, 27 Aug 2026. flow_score was here, and it was a
+# completeness ratio MULTIPLIED BY a speed — so the learning trace could not
+# separate "did less work" from "took longer", and any lexicon fitted on it
+# would have clustered the two together forever. Confounding is not a feature.
+CYCLE_FIELDS = ("integrity_ratio", "degraded_ratio", "failed_ratio",
+                "cloud_success_ratio", "pace_median_s",
+                "steps_completed", "duration_sec")
 
 
 def _now() -> str:

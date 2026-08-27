@@ -88,7 +88,7 @@ def _duration_from_lock(lock_path=None):
 
 
 def cycle_metrics(cycle_id=None, duration_sec=None,
-                  steps_completed=None, degraded_steps=None,
+                  steps_completed=None, degraded_ratio=None,
                   flow_score=None, lock_path=None, contract=None) -> dict:
     """The 4 CYCLE_FIELDS, read from the repo where they are not supplied.
 
@@ -112,27 +112,43 @@ def cycle_metrics(cycle_id=None, duration_sec=None,
     """
     out = {"cycle_id": cycle_id, "duration_sec": duration_sec,
            "steps_completed": steps_completed,
-           "degraded_steps": degraded_steps, "flow_score": flow_score}
+           "integrity_ratio": None, "degraded_ratio": None,
+           "failed_ratio": None, "cloud_success_ratio": None,
+           "pace_median_s": None}
 
     if out["duration_sec"] is None:
         out["duration_sec"] = _duration_from_lock(lock_path)
 
-    if any(out[k] is None for k in
-           ("flow_score", "steps_completed", "degraded_steps")):
-        try:
-            from core import flow_score as fs
-            score = fs.compute(contract=contract, cycle_id=cycle_id or "")
-            if out["flow_score"] is None:
-                out["flow_score"] = score.flow_score
-            if out["steps_completed"] is None:
-                # steps_full, not steps_total: a step that raised or degraded
-                # ran, but it did not complete anything worth having, and the
-                # lexicon should not read it as work done.
-                out["steps_completed"] = score.steps_full
-            if out["degraded_steps"] is None:
-                out["degraded_steps"] = len(score.not_full)
-        except Exception:
-            pass
+    # NO COMPOSITE ENTERS THE VECTOR. flow_score was written here — a
+    # completeness ratio multiplied by a speed — so the learning trace could not
+    # tell "did less work" from "took longer" and a lexicon fitted on it would
+    # cluster the two together permanently. The five arrive separately and stay
+    # separate; `pace_median_s` is the speed, as its own dimension, never folded
+    # into a quality.
+    try:
+        from core import cycle_integrity as ci
+        m = ci.scalars(contract_path=contract)
+        out["integrity_ratio"] = m["integrity_ratio"]
+        out["degraded_ratio"] = m["degraded_ratio"]
+        out["failed_ratio"] = m["failed_ratio"]
+        out["cloud_success_ratio"] = m["cloud_success_ratio"]
+        out["pace_median_s"] = m["median_step_seconds"]
+        if out["steps_completed"] is None:
+            # steps_FULL under the stricter definition: completed, not degraded,
+            # not timed out, answered by the expected source.
+            out["steps_completed"] = m.get("steps_full")
+    except Exception:
+        pass
+
+    if degraded_ratio is not None:
+        out["degraded_ratio"] = degraded_ratio
+    if flow_score is not None:
+        # An explicit fs from an old caller is REFUSED rather than silently
+        # dropped: writing it would put a composite back into the trace.
+        raise ValueError(
+            "flow_score is no longer a vector field. It was a completeness "
+            "ratio multiplied by a speed; use core.cycle_integrity.scalars() "
+            "and pass the scalars you mean.")
     return out
 
 
@@ -254,11 +270,15 @@ def _selftest() -> int:
     check("one line", len(rows) == 1)
     v = rows[0]
     check("25 dims", v.get("dims") == 25)
-    check("the 4 cycle fields travel with it",
-          set(v.get("cycle", {})) == {"flow_score", "degraded_steps",
-                                      "steps_completed", "duration_sec"})
-    check("29 measurable keys in all",
-          len(v.get("vector", [])) + len(v.get("cycle", {})) == 29)
+    # Derived from CYCLE_FIELDS rather than restated, so the next change to the
+    # schema cannot leave this assertion describing the previous one. It used to
+    # name the four fields literally, and flow_score was one of them.
+    from cockpit import vector as _vf
+    check("the {} cycle fields travel with it".format(len(_vf.CYCLE_FIELDS)),
+          set(v.get("cycle", {})) == set(_vf.CYCLE_FIELDS))
+    check("{} measurable keys in all".format(25 + len(_vf.CYCLE_FIELDS)),
+          len(v.get("vector", [])) + len(v.get("cycle", {}))
+          == 25 + len(_vf.CYCLE_FIELDS))
     check("fields and vector line up",
           len(v.get("fields", [])) == len(v.get("vector", [])) == 25)
     nones = [f for f, x in zip(v["fields"], v["vector"]) if x is None]
@@ -289,4 +309,27 @@ def _selftest() -> int:
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         raise SystemExit(_selftest())
-    print(json.dumps(write(store_path=STORE), indent=2, default=str))
+
+    # DRY RUN BY DEFAULT, --write TO APPEND (27 Aug 2026).
+    #
+    # Running this module bare used to APPEND A ROW TO THE LIVE LEARNING TRACE.
+    # It did exactly that during this command's own development: a row with
+    # cycle_id=None, from no cycle, landed in memory/state_vectors.jsonl simply
+    # because somebody ran the file to see what it did. The row was removed, but
+    # the foot-gun is the bug — a module whose default action mutates the
+    # evidence is one keystroke from corrupting it, and the lexicon fits on
+    # exactly these rows.
+    #
+    # Looking is now free; writing is a decision.
+    if "--write" in sys.argv:
+        print(json.dumps(write(store_path=STORE), indent=2, default=str))
+    else:
+        from cockpit import vector as _v
+        preview = _v.assemble(cycle_metrics=cycle_metrics())
+        print("DRY RUN — nothing was written. Pass --write to append.\n")
+        print(json.dumps({"would_append_to": str(STORE),
+                          "dims": preview.get("dims"),
+                          "measured": preview.get("measured"),
+                          "cycle": preview.get("cycle"),
+                          "unresolved_fields": preview.get("unresolved_fields")},
+                         indent=2, default=str))

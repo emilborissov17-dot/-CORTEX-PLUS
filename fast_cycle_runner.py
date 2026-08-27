@@ -512,13 +512,24 @@ def _seal_cycle_record() -> None:
     # identically to one that completed all 31. Derived from the same function
     # the state vector uses, so the ledger and the lexicon cannot disagree about
     # the same night.
-    steps_completed = degraded_steps = flow = None
+    steps_completed = degraded_steps = None
+    integrity = degraded_ratio = failed_ratio = cloud_ok = pace = None
     try:
         from core.cycle_vector import cycle_metrics as _cm
         m = _cm(cycle_id=cycle_id, duration_sec=duration)
         steps_completed = m.get("steps_completed")
-        degraded_steps = m.get("degraded_steps")
-        flow = m.get("flow_score")
+        integrity = m.get("integrity_ratio")
+        degraded_ratio = m.get("degraded_ratio")
+        failed_ratio = m.get("failed_ratio")
+        cloud_ok = m.get("cloud_success_ratio")
+        pace = m.get("pace_median_s")
+        # kept as a COUNT beside the ratio: the ledger has recorded
+        # degraded_steps since COMMAND 28 and a reader of old lines should not
+        # have to divide to compare them with new ones.
+        from core import cycle_integrity as _ci
+        _s = _ci.scalars()
+        degraded_steps = (None if _s["steps_total"] == 0 else
+                          round(_s["degraded_ratio"] * _s["steps_total"]))
     except Exception as e:
         print(f"[FAST_CYCLE] existence: step counts unavailable "
               f"({type(e).__name__}: {e}) — sealing without them")
@@ -527,10 +538,19 @@ def _seal_cycle_record() -> None:
         from memory.existence_ledger import append as _el_append, CYCLE_FINISHED
         _el_append(CYCLE_FINISHED, cycle_id=cycle_id or "unknown", pid=pid,
                    duration_sec=duration, steps_completed=steps_completed,
-                   degraded_steps=degraded_steps, flow_score=flow)
+                   degraded_steps=degraded_steps,
+                   # THE FIVE, SEPARATELY. flow_score was sealed here — a
+                   # completeness ratio multiplied by a speed — so the permanent
+                   # record of every night carried a number from which neither
+                   # fact could be recovered.
+                   integrity_ratio=integrity, degraded_ratio=degraded_ratio,
+                   failed_ratio=failed_ratio, cloud_success_ratio=cloud_ok,
+                   pace_median_s=pace)
         print(f"[FAST_CYCLE] existence: CYCLE_FINISHED sealed (cycle_id={cycle_id}, "
               f"duration={duration}s, steps_completed={steps_completed}, "
-              f"degraded={degraded_steps}, flow={flow})")
+              f"degraded={degraded_steps}, integrity="
+              f"{'—' if integrity is None else format(integrity * 100, '.1f') + '%'}, "
+              f"pace_median={pace}s)")
     except Exception as e:
         print(f"[FAST_CYCLE] existence: CYCLE_FINISHED -> FAILED: {type(e).__name__}: {e}")
 

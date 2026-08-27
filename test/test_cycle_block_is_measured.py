@@ -63,8 +63,13 @@ def test_the_four_fields_are_measured_not_none(tmp_path):
                          contract=_contract(tmp_path))
     assert [k for k, v in m.items() if v is None] == [], m
     assert m["steps_completed"] == 3      # 4 steps, one DEGRADED
-    assert m["degraded_steps"] == 1
-    assert m["flow_score"] > 0
+    # RE-POINTED 27 Aug 2026: degraded_steps (a count) and flow_score (a
+    # composite) became degraded_ratio and four other independent scalars. The
+    # property is unchanged and stricter — every field is measured, none None.
+    assert m["degraded_ratio"] == 0.25
+    assert m["integrity_ratio"] == 0.75
+    assert m["failed_ratio"] == 0.0
+    assert m["pace_median_s"] > 0
     assert 6543.0 < m["duration_sec"] < 6600.0
 
 
@@ -89,10 +94,15 @@ def test_duration_comes_from_the_lock_because_the_ledger_does_not_know_yet(tmp_p
 def test_an_explicit_value_still_wins(tmp_path):
     """Filling gaps must never overwrite what the caller measured."""
     m = cv.cycle_metrics(cycle_id="c", duration_sec=42.0, steps_completed=7,
-                         degraded_steps=0, flow_score=9.9,
+                         degraded_ratio=0.0,
                          lock_path=_lock(tmp_path), contract=_contract(tmp_path))
     assert (m["duration_sec"], m["steps_completed"],
-            m["degraded_steps"], m["flow_score"]) == (42.0, 7, 0, 9.9)
+            m["degraded_ratio"]) == (42.0, 7, 0.0)
+
+    # and a caller still passing the composite is REFUSED, not silently ignored
+    import pytest as _p
+    with _p.raises(ValueError):
+        cv.cycle_metrics(cycle_id="c", flow_score=9.9)
 
 
 def test_a_missing_lock_leaves_duration_none_rather_than_zero(tmp_path):
@@ -122,8 +132,8 @@ def test_a_written_vector_carries_the_block(tmp_path):
                    ledger_rows=[])
     assert rec["written"] is True, rec["why"]
     row = json.loads(store.read_text(encoding="utf-8").splitlines()[-1])
-    assert set(row["cycle"]) == {"flow_score", "degraded_steps",
-                                 "steps_completed", "duration_sec"}
+    from cockpit import vector as vmod
+    assert set(row["cycle"]) == set(vmod.CYCLE_FIELDS)
     assert [k for k, v in row["cycle"].items() if v is None] == []
 
 
