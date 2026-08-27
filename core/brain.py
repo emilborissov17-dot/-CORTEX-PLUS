@@ -1031,6 +1031,62 @@ def stance(step: str | None = None) -> dict:
         return {}
 
 
+# The graph speaks a Bulgarian protocol (core.cycle_graph.can_skip returns
+# РАЗРЕШЕНО / ЗАБРАНЕНО / НЕИЗВЕСТНО and a `why` from a closed set of four).
+# That protocol is the contract other code compares against and is NOT changed
+# here. What IS changed is the journal line: remember() writes into
+# memory/brain_journal.jsonl, which core/language_gate.py reads and scores as
+# though every row were model output. A hardcoded Bulgarian template therefore
+# counted as the model answering in the wrong language, and skip_decision was
+# 0/N clean on every day it fired — a floor breach manufactured by our own
+# logging, not by the model.
+#
+# Unmapped values fall through VERBATIM on purpose. Emitting the raw token is
+# honest about what the graph actually said, and the gate will flag it — which
+# is exactly the alarm we want if cycle_graph grows a fifth reason and this map
+# goes stale. Silently substituting English for an unknown token would hide it.
+_VERDICT_EN = {
+    "РАЗРЕШЕНО":  "ALLOWED",
+    "ЗАБРАНЕНО":  "FORBIDDEN",
+    "НЕИЗВЕСТНО": "UNKNOWN",
+}
+
+_WHY_EN = {
+    "надолу по реда има стъпка, която чете неин продукт, а той липсва или е стар":
+        "a step further down the order reads its product, and that product is "
+        "missing or stale",
+    "никой надолу не чака неин продукт":
+        "nothing downstream is waiting on its product",
+    "за тази стъпка няма изведени нито входове, нито изходи — "
+    "незнанието не е разрешение":
+        "this step has neither derived inputs nor derived outputs — not "
+        "knowing is not permission",
+}
+
+
+def _verdict_en(v) -> str:
+    """The graph's verdict token in English, or the token itself if unmapped."""
+    return _VERDICT_EN.get(v, "" if v is None else str(v))
+
+
+def _why_en(w) -> str:
+    """The graph's reason in English, or the reason itself if unmapped.
+
+    The MeTTa-did-not-load reason is built with an exception name inside it, so
+    it is matched by prefix rather than by equality.
+    """
+    if w is None:
+        return ""
+    w = str(w)
+    if w in _WHY_EN:
+        return _WHY_EN[w]
+    if w.startswith("MeTTa не се зарежда"):
+        tail = w.split("(", 1)[1].split(")", 1)[0] if "(" in w else "?"
+        return (f"MeTTa does not load ({tail}) — without the graph there is "
+                f"no permission")
+    return w
+
+
 def skipped_by_brain(step: str) -> bool:
     """Мозъкът ИСКА да пропусне; графът казва МОЖЕ ЛИ. Действие само при двете.
 
@@ -1059,11 +1115,13 @@ def skipped_by_brain(step: str) -> bool:
             since = None
         v = can_skip(step, since)
     except Exception as e:
-        remember("skip_denied", f"{step}: графът не се зареди ({type(e).__name__})")
+        remember("skip_denied",
+                 f"{step}: the graph did not load ({type(e).__name__})")
         return False
     ok = v.get("verdict") == "РАЗРЕШЕНО"
     remember("skip_decision",
-             f"{step}: мозъкът иска пропускане; графът казва {v.get('verdict')} — {v.get('why')}",
+             f"{step}: the brain wants to skip; the graph says "
+             f"{_verdict_en(v.get('verdict'))} — {_why_en(v.get('why'))}",
              {"blockers": v.get("blockers", [])})
     return ok
 
