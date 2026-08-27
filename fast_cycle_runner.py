@@ -2045,6 +2045,20 @@ def main():
     try:
         from core import step_budget as _sb0
         _was = _sb0.reset_cycle()
+        # ONE CYCLE, ONE WINDOW. The step contract used to accumulate across
+        # nights, so "this cycle's steps" included steps from three nights ago.
+        # Emptied here, at boot, with the old contents filed under their own
+        # cycle id first.
+        try:
+            from core.step_contract import open_cycle as _open_window
+            _w = _open_window(_cycle_id or "unknown")
+            print(f"[FAST_CYCLE] step window opened for {_w['cycle_id']} — "
+                  f"archived {_w['archived']} row(s) from "
+                  f"{_w['previous_cycle_id'] or 'an unnamed previous window'}"
+                  + (f" -> {_w['archive']}" if _w['archive'] else "")
+                  + (f" ({_w['why']})" if _w['why'] else ""))
+        except Exception as _e:
+            print(f"[FAST_CYCLE] step window NOT opened: {type(_e).__name__}: {_e}")
         if _was.get("cloud_demoted"):
             print(f"[FAST_CYCLE] step_budget: cloud demotion from the previous "
                   f"run cleared ({_was['cloud_empty']} empty tiers)")

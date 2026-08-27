@@ -383,6 +383,9 @@ class StepContract:
             except Exception:
                 blob = {"steps": []}
             blob["ts"] = _now()
+            # the id set by open_cycle() survives every append, so the window
+            # can always say WHICH cycle it is the window of
+            blob.setdefault("cycle_id", None)
             blob["steps"] = [s for s in blob.get("steps", [])
                              if s.get("step") != self.label][-200:]
             blob["steps"].append(self.result)
@@ -390,6 +393,71 @@ class StepContract:
                             encoding="utf-8")
         except Exception:
             pass
+
+
+ARCHIVE_DIR = BASE / "memory" / "steps"
+
+
+def open_cycle(cycle_id: str, report_path=None, archive_dir=None) -> dict:
+    """Empty the active window, flushing what was in it to its own file.
+
+    THE BUG THIS FIXES. _append_report() never reset. It dropped the previous
+    entry for a label and kept the last 200, so the file was "the latest run of
+    each step label, WHENEVER it happened" — not a cycle. A step that stopped
+    running three nights ago still sat in the window, still counted toward the
+    flow score, and nothing said so. Every consumer that called it "this cycle"
+    was wrong, including the needle on the OVERVIEW tab.
+
+    The old contents are written to memory/steps/{cycle_id}_steps.jsonl BEFORE
+    the new cycle's first step, under the id of the cycle they belong to — so
+    the history is not destroyed to make the window honest, it is filed.
+
+    Never raises. A cycle must not die because it could not archive.
+    """
+    out = {"cycle_id": cycle_id, "archived": 0, "archive": None,
+           "why": "", "previous_cycle_id": None}
+    report = pathlib.Path(report_path or REPORT)
+    adir = pathlib.Path(archive_dir or ARCHIVE_DIR)
+
+    try:
+        blob = json.loads(report.read_text(encoding="utf-8"))
+    except Exception:
+        blob = None
+
+    steps = (blob or {}).get("steps") or []
+    prev = (blob or {}).get("cycle_id")
+    out["previous_cycle_id"] = prev
+
+    if steps:
+        # Named for the cycle the rows CAME FROM. Where the previous window
+        # carries no id — every window written before this change — the rows are
+        # filed under the timestamp they were last written, and said to be
+        # pre-cycle-id rather than quietly attributed to this cycle.
+        stamp = prev or ("pre-cycle-id_" + str((blob or {}).get("ts", ""))[:19]
+                         .replace(":", "").replace("-", ""))
+        safe = "".join(c if (c.isalnum() or c in "-_.") else "_" for c in str(stamp))
+        target = adir / f"{safe}_steps.jsonl"
+        try:
+            adir.mkdir(parents=True, exist_ok=True)
+            with target.open("a", encoding="utf-8") as fh:
+                for s in steps:
+                    fh.write(json.dumps(s, ensure_ascii=False) + "\n")
+            out["archived"] = len(steps)
+            out["archive"] = str(target)
+        except Exception as exc:                          # noqa: BLE001
+            out["why"] = "archive failed ({}: {})".format(type(exc).__name__, exc)
+    else:
+        out["why"] = "the window was already empty"
+
+    try:
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text(json.dumps({"cycle_id": cycle_id, "ts": _now(),
+                                      "steps": []},
+                                     ensure_ascii=False, indent=2) + "\n",
+                          encoding="utf-8")
+    except Exception as exc:                              # noqa: BLE001
+        out["why"] += " ; could not empty the window ({})".format(type(exc).__name__)
+    return out
 
 
 def _selftest() -> int:
