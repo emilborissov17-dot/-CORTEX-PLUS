@@ -158,6 +158,26 @@ def go(b, tab: str, settle: float = 1.2):
     time.sleep(max(settle, SLOW_TABS.get(tab, 0.0)))
 
 
+def wait_for(b, selector: str, timeout: float = 12.0) -> int:
+    """Wait until `selector` exists, or give up. Returns how many there are.
+
+    WAIT FOR THE CONDITION, NOT FOR A DURATION. Fixed sleeps produced
+    intermittent "NOT EXERCISED" skips — #closebtn on the terminal tab appeared
+    on most runs and not on others — and an intermittent skip is the worst of
+    both worlds: it reads as "this machine cannot exercise that control" when
+    the truth is that the sweep did not wait long enough, and it hides the
+    control on exactly the runs where it hides.
+    """
+    deadline = time.time() + timeout
+    n = 0
+    while time.time() < deadline:
+        n = b.count(selector)
+        if n:
+            return n
+        time.sleep(0.4)
+    return n
+
+
 # ── 2.4  every tab renders, and can be left again ───────────────────────────
 
 @pytest.mark.parametrize("tab", cs.tabs())
@@ -328,7 +348,34 @@ def _snapshot(b) -> dict:
             "orphan": b.js("return document.querySelectorAll('.unrow.orphan').length;"),
             "stream_scroll": b.js("""
                 const s = document.querySelector('.stream');
-                return s ? Math.round(s.scrollTop) : null;""")}
+                return s ? Math.round(s.scrollTop) : null;"""),
+            # The page's own refresh counter. 2.7 requires the 15-second tick to
+            # keep running DURING the sweep, and a tick re-renders #view — so a
+            # measurement that straddles one cannot tell "the control did
+            # something" from "the page refreshed underneath us".
+            "tick": b.js("return (typeof tickCount === 'number') ? tickCount : -1;")}
+
+
+def _stable_snapshot(b, tries: int = 6, gap: float = 0.35) -> dict:
+    """A snapshot the page has stopped changing on its own.
+
+    scrollIntoView({behavior:'smooth'}) ANIMATES. A snapshot taken while one is
+    still running differs from the next one for reasons that have nothing to do
+    with the control under test — which made the unbound-control negative
+    control fail in a full run and pass on its own, the classic shape of a test
+    that cannot be trusted in either direction.
+
+    Sampling until two consecutive reads agree costs a few hundred milliseconds
+    and removes the whole class.
+    """
+    prev = _snapshot(b)
+    for _ in range(tries):
+        time.sleep(gap)
+        cur = _snapshot(b)
+        if cur == prev:
+            return cur
+        prev = cur
+    return prev
 
 
 @pytest.mark.parametrize("name", sorted(CONTROLS))
@@ -355,13 +402,13 @@ def test_a_control_changes_something_the_renderer_can_see(page, name, pass_no):
         # operating it. The unread flow makes two round-trips and switches tab.
         time.sleep(spec.get("arrange_settle", spec.get("settle", 1.2)))
 
-    n = page.count(selector)
+    n = wait_for(page, selector)
     if n == 0:
         pytest.skip(
             f"NOT EXERCISED: no {selector} rendered on the {tab} tab with this "
             f"machine's data — {what}")
 
-    before = _snapshot(page)
+    before = _stable_snapshot(page)
     mark = page.request_mark()
 
     ev = spec.get("event")
@@ -500,43 +547,84 @@ def test_every_api_route_answers_on_the_happy_path(sweep, route):
 
 
 def test_a_failing_endpoint_leaves_a_visible_error_not_a_silent_blank(page):
-    """An endpoint failing must never leave the reader looking at nothing."""
+    """An endpoint failing must never leave the reader looking at nothing.
+
+    THE FIRST VERSION OF THIS TEST WAS VACUOUS and is worth recording. It called
+    js("render()"), which AWAITS the render promise; the promise waited on
+    /api/cycles; the request was paused by the interceptor waiting for this test
+    to answer it. Deadlock — so the interception never fired, the page rendered
+    normally, and the assertion passed on a page that had suffered nothing.
+    Exactly the failure this whole sweep exists to prevent, committed by the
+    sweep itself.
+
+    So the trigger no longer waits, and the FIRST assertion is that a request
+    really was failed.
+    """
     go(page, "overview", settle=1.5)
+    before = page.text("#view").strip()
+
     page.fail_route("/api/cycles", status=500)
-    page.js("return render(), true;")
-    page.pump_intercepts(seconds=3.0)
+    page.js_nowait("render();")            # must not await: see the docstring
+    page.pump_intercepts(seconds=4.0)
     time.sleep(1.5)
 
     text = page.text("#view").strip()
     view = page.visible("#view")
+    broke = page.failed_count()
     page.stop_failing()
 
+    assert broke > 0, (
+        "no request was actually failed — the interception did not fire, so "
+        "this test proves nothing about how the page handles a 500")
     assert view["visible"] and view["h"] > 40, (
         "a 500 left the view with no height at all")
     assert text, "a 500 left the view completely blank"
     assert len(text) > 10, f"a 500 left only {text!r} on screen"
+    assert text != before or "error" in text.lower(), (
+        "a 500 changed nothing the reader can see — the failure is silent")
 
 
 # ── 2.8  negative controls ──────────────────────────────────────────────────
 
 def test_negative_control_an_unbound_control_is_caught(page):
-    """A button with no handler must fail the 2.1 assertion."""
-    go(page, "overview", settle=1.5)
-    page.js("""
-      const b = document.createElement('button');
-      b.className = 'sweep-deadctl';
-      b.textContent = 'dead';
-      document.querySelector('#view').appendChild(b);
-      return true;
-    """)
-    before = _snapshot(page)
-    mark = page.request_mark()
-    page.click(".sweep-deadctl", settle=0.8)
-    after = _snapshot(page)
-    reqs = page.requests_since(mark)
-    assert after == before and not reqs, (
-        "a control with NO handler appeared to change something — the sweep's "
-        "own change-detector is too loose to be trusted")
+    """A button with no handler must fail the 2.1 assertion.
+
+    Measured across an interval with NO tick in it. The 15-second refresh is
+    deliberately left running (2.7) and it re-renders #view, which removes the
+    injected button and changes the very fields this asserts are unchanged. A
+    measurement that straddles a tick is not evidence about the control, so the
+    attempt is simply retried — the tick is 15s apart and the measurement takes
+    about two.
+    """
+    last = None
+    for attempt in range(4):
+        go(page, "overview", settle=1.5)
+        page.js("""
+          document.querySelectorAll('.sweep-deadctl').forEach(e => e.remove());
+          const b = document.createElement('button');
+          b.className = 'sweep-deadctl';
+          b.textContent = 'dead';
+          document.querySelector('#view').appendChild(b);
+          return true;
+        """)
+        before = _stable_snapshot(page)
+        mark = page.request_mark()
+        page.click(".sweep-deadctl", settle=0.8)
+        after = _stable_snapshot(page)
+        reqs = page.requests_since(mark)
+
+        if after["tick"] != before["tick"]:
+            continue                      # a refresh landed mid-measurement
+        last = (before, after, reqs)
+        assert after == before and not reqs, (
+            "a control with NO handler appeared to change something — the "
+            "sweep's own change-detector is too loose to be trusted.\n"
+            f"  before={before}\n  after ={after}\n  requests={reqs}")
+        return
+
+    pytest.fail(
+        "could not measure an unbound control without the 15-second refresh "
+        f"landing in the middle of it, in 4 attempts (last={last})")
 
 
 def test_negative_control_a_property_flip_with_no_visible_change_is_caught(page):

@@ -172,6 +172,19 @@ class Browser:
         self.cmd("Page.navigate", url=url)
         time.sleep(settle)
 
+    def js_nowait(self, expression: str) -> None:
+        """Start something in the page WITHOUT waiting for its promise.
+
+        Needed whenever Fetch interception is on: js() awaits the promise, the
+        promise waits on a request, and the request waits on us to answer it —
+        a deadlock in which the interception silently never fires and the test
+        passes because the page rendered normally. That is exactly how the
+        first version of the 500 test came to be vacuous.
+        """
+        self.cmd("Runtime.evaluate",
+                 expression=f"(() => {{ {expression} }})()",
+                 returnByValue=True, awaitPromise=False)
+
     def js(self, expression: str, settle: float = 0.0):
         """Evaluate in the page and return the value. Raises page exceptions."""
         r = self.cmd("Runtime.evaluate",
@@ -244,6 +257,14 @@ class Browser:
         """) or ""
 
     # ── breaking a route on purpose (2.5) ──────────────────────────────────
+    def failed_count(self) -> int:
+        """How many requests this browser has actually answered with a failure.
+
+        A test that breaks a route must be able to PROVE it broke one. Without
+        this the 500 test passed while intercepting nothing at all.
+        """
+        return getattr(self, "_failed_n", 0)
+
     def fail_route(self, url_substring: str, status: int = 500) -> None:
         """Make one endpoint fail, at the network layer, for real.
 
@@ -284,6 +305,7 @@ class Browser:
                                                "value": "text/plain"}],
                              body="")
                     failed += 1
+                    self._failed_n = getattr(self, "_failed_n", 0) + 1
                 else:
                     self.cmd("Fetch.continueRequest", requestId=rid)
                 self.ws.settimeout(0.25)
