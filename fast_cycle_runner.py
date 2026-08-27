@@ -525,6 +525,83 @@ def _seal_cycle_record() -> None:
     except Exception as e:
         print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
 
+def _seal_refusal_record(gate: str, reasons, needs=None) -> None:
+    """A cycle the machine refused to start says so, and lets go of its lock.
+
+    THE BUG THIS FIXES (24 Aug 2026)
+    --------------------------------
+    The homeostatic gate below refused a night at 03:04 — RAM 93%, 1.0GB free —
+    and returned. A bare return writes nothing: no ledger line, no retired
+    heartbeat, and the supervisor's lock still on disk. Fifteen minutes later
+    the stale-lock reaper found that lock, asked existence_ledger.has_finished()
+    (which only ever matched CYCLE_FINISHED), got False, and wrote
+
+        CYCLE_DIED ... last step 'body_scan'
+
+    A deliberate safety abort is not a death. It went into the permanent record
+    as one, the morning autopsy attributed it to a crash on body_scan, and it
+    consumed a restart from the day's budget.
+
+    This is the same shape of bug as the 2026-07-14 one in _seal_cycle_record():
+    the event existed, core.unclean_stop already listed it as terminal, and
+    core/survival_gate.py already defined it — but NOTHING PRODUCED IT on this
+    path. A constant with no producer is not wiring.
+
+    Never raises. Refusing is the important part; recording it is what makes the
+    refusal legible tomorrow, and a failure here must not turn a clean refusal
+    into a crash.
+    """
+    pid = os.getpid()
+    lock = None
+    cycle_id = None
+
+    try:
+        if LOCK_PATH.exists():
+            lock = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
+            cycle_id = lock.get("cycle_id")
+    except Exception:
+        lock = None
+
+    if not cycle_id:
+        try:
+            from memory.heartbeat import read as _hb_read
+            cycle_id = (_hb_read() or {}).get("cycle_id")
+        except Exception:
+            pass
+
+    reasons = [r for r in (reasons or []) if r]
+    if needs:
+        reasons.append("needs: {}".format(needs))
+
+    try:
+        from core.survival_gate import record_refusal
+        rec = record_refusal(cycle_id=cycle_id, gate=gate, reasons=reasons)
+        if rec:
+            print(f"[FAST_CYCLE] existence: CYCLE_REFUSED_SURVIVAL_GATE sealed "
+                  f"(seq={rec.get('seq')}, gate={gate}, cycle_id={cycle_id})")
+    except Exception as e:
+        print(f"[FAST_CYCLE] existence: CYCLE_REFUSED_SURVIVAL_GATE -> FAILED: "
+              f"{type(e).__name__}: {e}")
+
+    # Retire, do not delete: the refusal is where this cycle stopped, and the
+    # morning autopsy should still be able to read the step it never got past.
+    try:
+        from memory import heartbeat as _hb
+        _hb.retire(f"refused by {gate}: " + "; ".join(reasons) or gate,
+                   by=f"runner:{gate}", ended_cycle_id=cycle_id)
+    except Exception as e:
+        print(f"[FAST_CYCLE] heartbeat retire -> FAILED: {type(e).__name__}: {e}")
+
+    # Release OUR lock, under exactly the guard _seal_cycle_record() uses: if the
+    # supervisor already replaced us, the lock on disk belongs to the new cycle.
+    try:
+        if lock is not None and lock.get("pid") == pid:
+            LOCK_PATH.unlink(missing_ok=True)
+            print("[FAST_CYCLE] lock released (refusal)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] lock release -> FAILED: {type(e).__name__}: {e}")
+
+
 # ── --resume: OFF UNLESS SOMEBODY SAYS OTHERWISE (22 авг 2026) ───────────────
 # Populated once by _decide_resume() at the top of main(); read by _run(). A dict
 # rather than a bare set so that "no decision was taken" and "the decision was to
@@ -1977,6 +2054,12 @@ def main():
         if not homeo.get("can_start"):
             print(f"[FAST_CYCLE] СПРЯН — {homeo.get('abort_reason')}")
             print(f"[FAST_CYCLE] Нужди: {homeo.get('resource_needs')}")
+            # A refusal is an ENDING and must be recorded as one. Without this
+            # the supervisor finds a lock with no end record and calls it a
+            # death. See _seal_refusal_record().
+            _seal_refusal_record(gate="homeostasis",
+                                 reasons=[homeo.get("abort_reason")],
+                                 needs=homeo.get("resource_needs"))
             return
         # Override cycle_mode if homeostasis is more conservative
         h_mode = homeo.get("cycle_mode", "FULL")

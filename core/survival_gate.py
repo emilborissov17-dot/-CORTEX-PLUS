@@ -158,22 +158,49 @@ def _human_line(v: dict) -> str:
 # The refusal — ledger, siren, and a loud exit
 # ---------------------------------------------------------------------------
 
-def _to_ledger(cycle_id, decision: dict) -> Optional[dict]:
+def record_refusal(cycle_id=None, gate: str = NAME, reasons=None,
+                   variables=None, config_sha256=None) -> Optional[dict]:
+    """THE producer of EVENT. Append the end record for a refused cycle.
+
+    Public because this gate is not the only one that can refuse a night.
+    core.homeostasis has its own, stricter, threshold — on 24 Aug 2026 this
+    gate read 917MB free and called it `notice` while homeostasis called the
+    same machine unrunnable and returned. That return wrote NOTHING, so the
+    supervisor found a lock with no end record behind it and recorded
+    CYCLE_DIED: a deliberate safety abort entered the permanent history as a
+    death, and the morning autopsy blamed a crash that never happened.
+
+    `gate` names WHICH gate refused, so two refusals with different thresholds
+    stay distinguishable in the ledger instead of both reading as this module.
+
+    Never raises. A refusal that cannot write its record must still refuse —
+    the failure mode we are fixing is a missing record, not a missing exit.
+    """
     try:
         from memory import existence_ledger as ledger
         return ledger.append(
             EVENT,
             cycle_id=cycle_id,
             pid=os.getpid(),
-            gate=NAME,
-            config_sha256=decision.get("config_sha256"),
-            variables=_offending(decision.get("variables", {})),
-            reasons=decision.get("reasons", []),
+            gate=gate,
+            config_sha256=config_sha256,
+            variables=list(variables or []),
+            reasons=list(reasons or []),
         )
     except Exception as exc:
         print("[{}] LEDGER WRITE FAILED: {}: {}".format(
             NAME, type(exc).__name__, exc))
         return None
+
+
+def _to_ledger(cycle_id, decision: dict) -> Optional[dict]:
+    return record_refusal(
+        cycle_id=cycle_id,
+        gate=NAME,
+        reasons=decision.get("reasons", []),
+        variables=_offending(decision.get("variables", {})),
+        config_sha256=decision.get("config_sha256"),
+    )
 
 
 def _to_siren(cycle_id, decision: dict) -> bool:

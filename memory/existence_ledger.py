@@ -91,7 +91,21 @@ MISSED_SKIPPED   = "MISSED_RUN_SKIPPED"
 # human's choice for its own.
 CATCHUP_SUPPRESSED = "CATCHUP_SUPPRESSED_BY_HUMAN"
 BUDGET_EXHAUSTED = "CYCLE_FAILED_BUDGET_EXHAUSTED"
+# A gate read a threshold, found it crossed, and declined to start the night.
+# This is an ENDING, not a death: nothing ran, nothing crashed, and a human
+# decision — a threshold somebody set — is the whole cause. It was terminal in
+# core.unclean_stop and defined in core/survival_gate.py long before any code on
+# the homeostasis path produced it, which is how the 24 Aug 2026 refusal came to
+# be recorded as CYCLE_DIED.
+CYCLE_REFUSED    = "CYCLE_REFUSED_SURVIVAL_GATE"
 LOCK_STALE       = "LOCK_STALE_CLEARED"
+# THE ONLY WAY TO CORRECT THIS LEDGER. A line already written is never edited and
+# never deleted — the chain is the whole value, and a history that can be revised
+# to match today's understanding is not evidence of anything. When a past event
+# is found to have been misclassified, the correction is APPENDED: it names the
+# seq and the hash of the line it corrects and what the event should have been.
+# Both readings stay on the record, and which one is later is not in doubt.
+CORRECTION       = "LEDGER_CORRECTION"
 SUPERVISOR_BOOT  = "SUPERVISOR_STARTED_AFTER_REBOOT"
 
 
@@ -259,6 +273,56 @@ def has_finished(cycle_id: Optional[str]) -> bool:
         return False
     for e in read_all():
         if e.get("event") == CYCLE_FINISHED and e.get("cycle_id") == cycle_id:
+            return True
+    return False
+
+
+def record_correction(corrects_seq: int, should_have_been: str, detail: str,
+                      recorded_by: str, cycle_id: Optional[str] = None) -> dict:
+    """Append one correction for an earlier, misclassified event.
+
+    Refuses to write a correction for a seq that is not there, or one whose hash
+    cannot be read: a correction pointing at nothing is worse than no correction,
+    because it looks like the record has been reconciled when it has not.
+    """
+    target = None
+    for e in read_all():
+        if e.get("seq") == corrects_seq:
+            target = e
+            break
+    if target is None:
+        raise ValueError(f"no event with seq {corrects_seq} — refusing to "
+                         f"correct a line that is not on the record")
+    return append(
+        CORRECTION,
+        corrects_seq=corrects_seq,
+        corrects_event=target.get("event"),
+        corrects_hash=target.get("hash"),
+        corrects_ts=target.get("ts"),
+        should_have_been=should_have_been,
+        cycle_id=cycle_id if cycle_id is not None else target.get("cycle_id"),
+        detail=detail,
+        recorded_by=recorded_by,
+    )
+
+
+def was_refused(cycle_id: Optional[str]) -> bool:
+    """True iff a gate recorded CYCLE_REFUSED_SURVIVAL_GATE for this cycle.
+
+    The companion to has_finished(), and the reason it is separate rather than
+    folded in: both mean "this cycle's ending is already accounted for, do not
+    write a death for it", but they mean OPPOSITE things about the day. A
+    FINISHED cycle did the night's work and must not be retried. A REFUSED cycle
+    did none of it — the night is still owed — so the supervisor clears the lock
+    and lets the ordinary daily logic start a replacement.
+
+    Answering False for a nameless cycle for the same reason has_finished() does:
+    we cannot prove a nameless cycle was refused, so we do not claim it was.
+    """
+    if not cycle_id:
+        return False
+    for e in read_all():
+        if e.get("event") == CYCLE_REFUSED and e.get("cycle_id") == cycle_id:
             return True
     return False
 

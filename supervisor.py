@@ -145,6 +145,14 @@ CLEAR_STALE_LOCK = "CLEAR_STALE_LOCK"
 # spent, it fails loudly like any exhausted budget.
 DEAD_LOCK_RETRY       = "DEAD_LOCK_CLEARED_RETRY"
 DEAD_LOCK_BUDGET_DONE = "DEAD_LOCK_BUDGET_EXHAUSTED"
+# A stale lock left by a cycle a GATE REFUSED TO START. Distinct from both of the
+# above: nothing died, so no CYCLE_DIED is written and no restart is spent — the
+# refusal already wrote its own end record, and writing a second account of the
+# same stop would double-count it. Distinct from CLEAR_STALE_LOCK too, because
+# that one means the night's work is DONE and must not be retried, while a
+# refusal means none of it happened and the night is still owed.
+CLEAR_REFUSED_LOCK    = "CLEAR_REFUSED_LOCK"
+REFUSED_BUDGET_DONE   = "REFUSED_RETRIES_EXHAUSTED"
 
 
 @dataclass
@@ -753,6 +761,7 @@ def kill_tree(pid: int) -> bool:
 def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            lock: Optional[dict], cfg: dict, lock_pid_alive: bool = False,
            lock_cycle_finished: bool = False,
+           lock_cycle_refused: bool = False,
            extraordinary: Optional[dict] = None,
            heartbeat_pid_alive: bool = False) -> Action:
     """What should this tick do? Exactly one thing.
@@ -888,6 +897,14 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
                                      f"(pid={lock.get('pid')} is gone; CYCLE_FINISHED "
                                      f"is on record) — clearing, not retrying",
                               pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
+            if lock_cycle_refused:
+                # A GATE REFUSED THIS NIGHT and said so in the ledger. The lock
+                # outliving the refusal is the same benign race as above (the
+                # record lands, the unlink does not), and the ending is already
+                # accounted for — so nothing is written here. But unlike a clean
+                # finish, no work was done, so the day is NOT satisfied and a
+                # replacement may run once the threshold clears.
+                return _refused_cycle_action(now, state, today, cfg, lock)
             # No CYCLE_FINISHED on record: the cycle DIED mid-run — OOM, power loss,
             # an uncaught crash. A death is not a completed run, so it must not
             # satisfy the day. Record it and retry, within the restart budget.
@@ -1091,6 +1108,40 @@ def _last_step_of(lock: Optional[dict], heartbeat: Optional[dict]) -> str:
     if hb_cid and lock_cid and hb_cid != lock_cid:
         return "unknown"
     return heartbeat.get("step") or "unknown"
+
+
+def refusals_today(state, today) -> int:
+    return int((state.get("refusals") or {}).get(today, 0))
+
+
+def _refused_cycle_action(now, state, today, cfg, lock) -> Action:
+    """A stale lock behind a refusal: clear it, write nothing, owe the night.
+
+    BOUNDED, and deliberately by its own counter rather than the restart budget.
+    A refusal is not a restart and must not spend one — a night that the machine
+    declined three times should not also leave the system unable to recover from
+    a real death. But it cannot be unbounded either: un-satisfying the day makes
+    the next tick spawn a replacement, and if the threshold is still crossed that
+    replacement refuses too. Without a ceiling that is a spawn loop for as long
+    as the RAM stays full.
+
+    At the ceiling the day stays satisfied and the refusal stands as the night's
+    outcome — visible, not silently retried forever.
+    """
+    used = refusals_today(state, today)
+    budget = int(cfg.get("max_refusal_retries_per_day",
+                         cfg.get("max_restarts_per_day", 2)))
+    kind = CLEAR_REFUSED_LOCK if used < budget else REFUSED_BUDGET_DONE
+    reason = (f"stale lock from a cycle a gate REFUSED to start "
+              f"(pid={lock.get('pid')} is gone; CYCLE_REFUSED_SURVIVAL_GATE is "
+              f"on record) — not a death: clearing without a death record")
+    if kind == CLEAR_REFUSED_LOCK:
+        reason += f"; the night is still owed (refusal retry {used + 1}/{budget})"
+    else:
+        reason += (f"; refusal retries for today are spent ({used}/{budget}) — "
+                   f"the night stands refused")
+    return Action(kind, reason=reason, pid=lock.get("pid"),
+                  cycle_id=lock.get("cycle_id"))
 
 
 def _dead_cycle_action(now, state, today, cfg, lock, heartbeat) -> Action:
@@ -1527,9 +1578,15 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # from a cycle that finished cleanly (CYCLE_FINISHED sealed) or one that died
     # mid-run (no seal). A live cycle needs no such lookup.
     finished = ledger.has_finished(lock.get("cycle_id")) if (lock and not alive) else False
+    # Only asked when the lock is dead AND unsealed: a refusal and a death look
+    # identical from here (dead pid, no CYCLE_FINISHED) and only the ledger can
+    # tell them apart. Before this existed every refusal was recorded as a death.
+    refused = (ledger.was_refused(lock.get("cycle_id"))
+               if (lock and not alive and not finished) else False)
     extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
-                    lock_cycle_finished=finished, extraordinary=extra,
+                    lock_cycle_finished=finished, lock_cycle_refused=refused,
+                    extraordinary=extra,
                     heartbeat_pid_alive=beat_alive)
 
     if dry_run:
@@ -1590,6 +1647,23 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                   ended_cycle_id=action.cycle_id)
         ledger.append(ledger.LOCK_STALE, pid=action.pid, cycle_id=action.cycle_id,
                       detail=action.reason)
+        return action
+
+    if action.kind in (CLEAR_REFUSED_LOCK, REFUSED_BUDGET_DONE):
+        # NOTHING IS WRITTEN TO THE LEDGER HERE. That is the point: the refusing
+        # gate already recorded the ending, and this path exists precisely so the
+        # supervisor stops adding a contradictory second account of it.
+        clear_lock()
+        hb.retire(action.reason, by="supervisor:clear_refused_lock",
+                  ended_cycle_id=action.cycle_id)
+        log(action.reason)
+        if action.kind == CLEAR_REFUSED_LOCK:
+            state.setdefault("refusals", {})[today] = refusals_today(state, today) + 1
+            # The night was refused, not run. Un-satisfy the day so the ordinary
+            # daily logic can start a replacement once the threshold clears.
+            state["last_run_date"] = None
+            state["last_run_utc"] = None
+            save_state(state)
         return action
 
     if action.kind in (DEAD_LOCK_RETRY, DEAD_LOCK_BUDGET_DONE):
