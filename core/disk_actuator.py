@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 core/disk_actuator.py â€” THE ONLY THING HERE THAT DELETES, AND IT ALMOST NEVER DOES.
@@ -175,7 +175,15 @@ class ManifestRefused(Exception):
 # git
 # ---------------------------------------------------------------------------
 
-_tracked_cache: Optional[frozenset] = None
+# KEYED BY THE RESOLVED BASE, and cleared when git fails.
+#
+# This was a single unkeyed global. Two consequences, both found the first time
+# anything in this repo actually called sweep(apply=True) (COMMAND 33 part 7):
+# a sweep of one base could be answered with another base's file list, and a
+# git that stopped answering left the previous answer in place — so the sweep
+# proceeded on a stale list instead of refusing, which is the one thing the
+# docstring above promises it will never do.
+_tracked_cache: dict = {}
 
 
 def tracked_files(base=None, refresh: bool = False) -> Optional[frozenset]:
@@ -185,21 +193,27 @@ def tracked_files(base=None, refresh: bool = False) -> Optional[frozenset]:
     refusal, not as an empty set. An empty set would say "nothing is tracked",
     which would remove the single broadest protection this module has.
     """
-    global _tracked_cache
-    if _tracked_cache is not None and not refresh:
-        return _tracked_cache
+    key = str(pathlib.Path(base or BASE).resolve()).lower()
+    if key in _tracked_cache and not refresh:
+        return _tracked_cache[key]
     try:
         out = subprocess.run(["git", "ls-files"], cwd=str(base or BASE),
                              capture_output=True, text=True, timeout=60)
         if out.returncode != 0:
+            _tracked_cache.pop(key, None)
             return None
         files = frozenset(l.strip().lower().replace("\\", "/")
                           for l in out.stdout.splitlines() if l.strip())
         if not files:
+            _tracked_cache.pop(key, None)
             return None                     # a repo with zero tracked files is
-        _tracked_cache = files               # not a repo we should sweep
+        _tracked_cache[key] = files          # not a repo we should sweep
         return files
     except Exception:
+        # THE ANSWER IS FORGOTTEN, NOT KEPT. Returning None while a previous
+        # answer stayed cached meant the next caller got the stale list and
+        # swept on it.
+        _tracked_cache.pop(key, None)
         return None
 
 

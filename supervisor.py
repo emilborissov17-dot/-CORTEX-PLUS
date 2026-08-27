@@ -158,7 +158,11 @@ DEAD_LOCK_BUDGET_DONE = "DEAD_LOCK_BUDGET_EXHAUSTED"
 # that one means the night's work is DONE and must not be retried, while a
 # refusal means none of it happened and the night is still owed.
 CLEAR_REFUSED_LOCK    = "CLEAR_REFUSED_LOCK"
-REFUSED_BUDGET_DONE   = "REFUSED_RETRIES_EXHAUSTED"
+# At the ceiling the system stops trying until the next daily_hour. That is not
+# a failure to be retried, it is a decision to stop — so it is named for what it
+# is rather than for the budget that ran out.
+SURVIVAL_SLEEP        = "SURVIVAL_SLEEP"
+REFUSED_BUDGET_DONE   = SURVIVAL_SLEEP   # the old name; kept so importers hold
 
 
 @dataclass
@@ -1116,6 +1120,31 @@ def _last_step_of(lock: Optional[dict], heartbeat: Optional[dict]) -> str:
     return heartbeat.get("step") or "unknown"
 
 
+def cycle_day(now, cfg) -> str:
+    """The night this moment belongs to: 03:00 to 03:00, not midnight.
+
+    THE POOL IS SHARED AND IT RUNS WITH THE NIGHT. catchup_grace_hours is 20,
+    so a catch-up start at 01:00 belongs to the night that began at 03:00 the
+    previous day — but a calendar key rolled over at midnight and handed that
+    still-refusing night a second full allowance of three. daily_hour is the
+    boundary because daily_hour is what starts the night.
+    """
+    hour = int(cfg.get("daily_hour", 3))
+    d = now.date() - (timedelta(days=1) if now.hour < hour else timedelta(0))
+    return d.isoformat()
+
+
+def refusal_budget(cfg) -> int:
+    """Three, since 27 Aug 2026, and its own — not the restart budget.
+
+    The fallback below is what was actually in force until that date: the key
+    was absent from config/scheduler.json, so every comment saying refusals had
+    their own budget was describing an intention, not the running system.
+    """
+    return int(cfg.get("max_refusal_retries_per_day",
+                       cfg.get("max_restarts_per_day", 2)))
+
+
 def refusals_today(state, today) -> int:
     return int((state.get("refusals") or {}).get(today, 0))
 
@@ -1134,20 +1163,24 @@ def _refused_cycle_action(now, state, today, cfg, lock) -> Action:
     At the ceiling the day stays satisfied and the refusal stands as the night's
     outcome — visible, not silently retried forever.
     """
-    used = refusals_today(state, today)
-    budget = int(cfg.get("max_refusal_retries_per_day",
-                         cfg.get("max_restarts_per_day", 2)))
-    kind = CLEAR_REFUSED_LOCK if used < budget else REFUSED_BUDGET_DONE
+    day = cycle_day(now, cfg)
+    used = refusals_today(state, day)
+    budget = refusal_budget(cfg)
+    kind = CLEAR_REFUSED_LOCK if used < budget else SURVIVAL_SLEEP
     reason = (f"stale lock from a cycle a gate REFUSED to start "
               f"(pid={lock.get('pid')} is gone; CYCLE_REFUSED_SURVIVAL_GATE is "
               f"on record) — not a death: clearing without a death record")
     if kind == CLEAR_REFUSED_LOCK:
-        reason += f"; the night is still owed (refusal retry {used + 1}/{budget})"
+        reason += (f"; the night is still owed (refusal retry {used + 1}/{budget} "
+                   f"for the night of {day}) — cleaning first")
     else:
-        reason += (f"; refusal retries for today are spent ({used}/{budget}) — "
-                   f"the night stands refused")
+        reason += (f"; {used}/{budget} refusals for the night of {day} — "
+                   f"SURVIVAL SLEEP: no further attempt until the next "
+                   f"{int(cfg.get('daily_hour', 3)):02d}:00")
     return Action(kind, reason=reason, pid=lock.get("pid"),
-                  cycle_id=lock.get("cycle_id"))
+                  cycle_id=lock.get("cycle_id"),
+                  details={"refusals_used": used, "refusal_budget": budget,
+                           "night": day})
 
 
 def _dead_cycle_action(now, state, today, cfg, lock, heartbeat) -> Action:
@@ -1705,13 +1738,51 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         hb.retire(action.reason, by="supervisor:clear_refused_lock",
                   ended_cycle_id=action.cycle_id)
         log(action.reason)
+        night = cycle_day(now, cfg)
         if action.kind == CLEAR_REFUSED_LOCK:
-            state.setdefault("refusals", {})[today] = refusals_today(state, today) + 1
+            # CLEANING BEFORE THE REFUSAL — Emil, 27 Aug 2026, verbatim:
+            # "одобрявам таван 3 с чистене преди отказ".
+            #
+            # Until now nothing ever tried to make the crossed threshold false:
+            # the night was refused, the lock was cleared, and the next tick
+            # refused again for exactly the same reason until the budget ran
+            # out. This sweeps what is safe to sweep and asks the gate again.
+            # A REFUSAL THAT CLEANING CURED IS NOT COUNTED, because in the end
+            # nothing was refused. Nothing is killed to achieve it.
+            cured = None
+            try:
+                from core.aggressive_cleanup import cure_refusal
+                cured = cure_refusal(apply=True)
+                log(f"refusal cleanup: cured={cured['cured']} "
+                    f"counted={cured['counted']} — {cured['why']}")
+            except Exception as e:
+                log(f"refusal cleanup unavailable ({type(e).__name__}: {e}) — "
+                    f"the refusal is counted, which is the safe direction")
+
+            if cured is None or cured.get("counted", True):
+                state.setdefault("refusals", {})[night] = \
+                    refusals_today(state, night) + 1
             # The night was refused, not run. Un-satisfy the day so the ordinary
             # daily logic can start a replacement once the threshold clears.
             state["last_run_date"] = None
             state["last_run_utc"] = None
             save_state(state)
+        else:
+            # SURVIVAL SLEEP. The day stays satisfied, so nothing respawns; the
+            # state says so in words rather than leaving the silence to be read
+            # as health, and the bell rings because a lost night is news.
+            state["survival_sleep"] = {
+                "since": datetime.now(timezone.utc).isoformat(),
+                "night": night,
+                "refusals": refusals_today(state, night),
+                "budget": refusal_budget(cfg),
+                "until": f"the next {int(cfg.get('daily_hour', 3)):02d}:00",
+                "reason": action.reason,
+            }
+            save_state(state)
+            _ring_death_bell("SURVIVAL_SLEEP", action,
+                             restarts_used=refusals_today(state, night),
+                             restart_budget=refusal_budget(cfg))
         return action
 
     if action.kind in (DEAD_LOCK_RETRY, DEAD_LOCK_BUDGET_DONE):

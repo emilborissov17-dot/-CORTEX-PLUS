@@ -38,9 +38,9 @@ from core import disk_actuator as da  # noqa: E402
 @pytest.fixture(autouse=True)
 def _no_cache():
     """The tracked-file cache is module-global; each test gets its own repo."""
-    da._tracked_cache = None
+    da._tracked_cache = {}
     yield
-    da._tracked_cache = None
+    da._tracked_cache = {}
 
 
 @pytest.fixture
@@ -111,7 +111,7 @@ def test_a_tracked_file_inside_a_temp_dir_survives(repo):
     tracked.write_text("tracked rubbish is not rubbish\n", encoding="utf-8")
     subprocess.run(["git", "add", "-f", "cache/important.tmp"], cwd=str(repo),
                    check=True, capture_output=True)
-    da._tracked_cache = None
+    da._tracked_cache = {}
 
     da.sweep(level="action", apply=True, base=repo, log_path=repo / "s.jsonl")
     assert tracked.exists(), "a git-tracked file was deleted"

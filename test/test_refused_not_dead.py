@@ -90,7 +90,11 @@ def test_refusal_retries_are_bounded_so_a_full_disk_cannot_spawn_forever():
                    lock_pid_alive=False, lock_cycle_finished=False,
                    lock_cycle_refused=True)
     assert a.kind == sup.REFUSED_BUDGET_DONE
-    assert "spent" in a.reason
+    assert a.kind == sup.SURVIVAL_SLEEP, (
+        "the old name and the new one must be the same kind, or a caller that "
+        "imports one will silently stop matching the other")
+    assert "SURVIVAL SLEEP" in a.reason
+    assert "2/2" in a.reason, "the reason does not say how many were spent"
 
 
 def test_refusals_are_counted_separately_from_restarts():
