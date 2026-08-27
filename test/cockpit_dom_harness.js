@@ -96,8 +96,13 @@ function elFor(id) {
 
 /* class/tag selectors resolve against the HTML currently on the page, so
  * querySelectorAll('.tab') finds what drawTabs() just wrote. */
+/* The page as it stands: the STATIC markup the server sent, plus everything an
+ * innerHTML assignment has written since. Omitting the static half made the
+ * whole control bar invisible to querySelectorAll — the footer's buttons are
+ * markup, not something a renderer produced — so a handler attached to them
+ * looked like a button that was never there. */
 function currentHTML() {
-  let out = '';
+  let out = staticPart;
   for (const el of cache.values()) out += el.innerHTML || '';
   return out;
 }

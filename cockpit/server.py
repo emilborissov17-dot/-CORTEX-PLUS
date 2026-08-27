@@ -56,6 +56,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import subprocess
 import sys
 import time
 from datetime import datetime, timezone
@@ -1051,6 +1052,76 @@ def api_ask():
 @app.get("/api/ask")
 def api_ask_read():
     return jsonify({"ts": _now(), "queue": ex.queue_read(db_path=QUEUE_DB)})
+
+
+# ── THE TWO READ-ONLY COMMANDS THE BOTTOM BAR MAY RUN ────────────────────────
+# A STRICT ALLOWLIST KEYED BY NAME, and that is the whole security argument. The
+# endpoint takes a KEY, never a command: there is no string from the browser that
+# reaches a process, so there is nothing to inject into. shell=False, a fixed
+# argv, a timeout, and both commands only READ.
+#
+# Why this exists at all: `supervisor status` and `git status` are questions, not
+# actions. Sending a question through the terminal — switch tab, connect a
+# websocket, type, press Enter — costs four gestures and a live shell to learn
+# whether the watchdog is running. The two ACTION commands (run full cycle,
+# claude code) deliberately do NOT live here; they still go to the terminal,
+# where a human presses Enter.
+READ_ONLY_COMMANDS = {
+    "supervisor_status": {
+        "label": "supervisor status",
+        "argv": [sys.executable, "supervisor.py", "--status"],
+        "what": "what the watchdog thinks is running, and when it last ran",
+    },
+    "git_status": {
+        "label": "git status",
+        "argv": ["git", "status", "--short", "--branch"],
+        "what": "what is modified in the working tree",
+    },
+}
+
+
+@app.get("/api/run/<key>")
+def api_run(key: str):
+    """Run ONE allowlisted read-only command and return its output.
+
+    GET, because it changes nothing. Never raises: a command that is missing, or
+    slow, or angry is reported as text in the panel rather than as a 500 that
+    takes the page down.
+    """
+    spec = READ_ONLY_COMMANDS.get(key)
+    if spec is None:
+        return jsonify({"ok": False, "key": key,
+                        "error": "not an allowlisted read-only command",
+                        "allowed": sorted(READ_ONLY_COMMANDS)}), 404
+    t0 = time.monotonic()
+    try:
+        proc = subprocess.run(spec["argv"], capture_output=True, text=True,
+                              timeout=25, encoding="utf-8", errors="replace",
+                              cwd=str(BASE), shell=False)
+        out, err, code = proc.stdout, proc.stderr, proc.returncode
+    except subprocess.TimeoutExpired:
+        out, err, code = "", "timed out after 25s", None
+    except Exception as exc:                                  # noqa: BLE001
+        out, err, code = "", "{}: {}".format(type(exc).__name__, exc), None
+    return jsonify({
+        "ok": code == 0,
+        "key": key,
+        "label": spec["label"],
+        "what": spec["what"],
+        # The argv is SHOWN, so the panel never has to be believed about what it
+        # ran. It is not accepted from anywhere.
+        "argv": spec["argv"],
+        "exit_code": code,
+        # HEAD, not tail. `git status --short --branch` puts the branch on the
+        # first line and `supervisor.py --status` leads with its verdict; taking
+        # the last 20k of a long output threw away exactly the part being asked
+        # for. Truncation is reported rather than silent.
+        "stdout": out[:20000],
+        "stdout_truncated": len(out) > 20000,
+        "stderr": err[:4000],
+        "seconds": round(time.monotonic() - t0, 2),
+        "ts": _now(),
+    })
 
 
 TOGGLE_KEYS = ("mic_enabled", "camera_enabled")

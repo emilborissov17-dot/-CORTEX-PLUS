@@ -160,6 +160,20 @@
   #asknote .invalid{color:var(--red)}
   #asknote .meta{color:var(--dim)}
 
+  /* PART 5 — read-only buttons look different, because they ARE different */
+  .ask-run{text-decoration:underline dotted;text-underline-offset:3px}
+  #runwrap{position:fixed;inset:var(--bar) 0 var(--ctl) 0;z-index:40;
+           background:rgba(6,8,11,.72);display:flex;align-items:flex-start;
+           justify-content:center;padding:26px 14px;overflow:auto}
+  #runpanel{background:var(--panel);border:1px solid var(--line);border-radius:5px;
+            padding:10px 12px;width:min(1000px,96vw);max-height:100%;
+            display:flex;flex-direction:column}
+  .runhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .runhead b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  .runhead button{margin-left:auto}
+  #runargv{font-size:10px;margin-bottom:6px;color:var(--dim)}
+  #runout{max-height:none;flex:1;white-space:pre-wrap;overflow:auto}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -216,21 +230,37 @@
 
 <main id="view"><div class="grid"><section class="panel">loading…</section></div></main>
 
+<!-- WHERE A READ-ONLY COMMAND ANSWERS. Outside #view on purpose: render()
+     replaces #view every 15 seconds, and an answer that vanished on the next
+     tick would be worse than no answer. -->
+<div id="runwrap" hidden>
+  <div id="runpanel">
+    <div class="runhead">
+      <b id="runtitle">—</b>
+      <span class="meta" id="runmeta"></span>
+      <button id="runclose">close</button>
+    </div>
+    <div class="meta" id="runargv"></div>
+    <pre class="raw" id="runout"></pre>
+  </div>
+</div>
+
 <footer>
   <div class="ctlrow">
     <input type="text" id="askbox" placeholder="ask — prefix DEEP: to send it to the 8b batch window">
     <button id="asksend">ask</button>
     <button class="unread zero" id="unread" title="mark every expression line on screen as seen">0 unread</button>
     <span style="width:12px"></span>
-    <button class="cmd" data-cmd="venv\Scripts\python.exe supervisor.py --status">supervisor status</button>
+    <button class="ask-run" data-run="supervisor_status">supervisor status</button>
     <button class="cmd" data-cmd="venv\Scripts\python.exe fast_cycle_runner.py">run full cycle</button>
     <button class="cmd" data-cmd="claude">claude code</button>
-    <button class="cmd" data-cmd="git status">git status</button>
+    <button class="ask-run" data-run="git_status">git status</button>
     <span style="width:12px"></span>
     <button class="sw" id="swmic">MIC OFF</button>
     <button class="sw" id="swcam">CAM OFF</button>
   </div>
-  <div class="ctlnote" id="asknote">buttons type the command; you press Enter. &nbsp;·&nbsp;
+  <div class="ctlnote" id="asknote">underlined buttons READ and show the answer here;
+    the others type into the terminal and you press Enter. &nbsp;·&nbsp;
     keys 1-7 switch tabs &nbsp;·&nbsp; mic and camera ask before switching on</div>
 </footer>
 
@@ -1105,9 +1135,66 @@ function prefill(cmd){
        prompt and the cursor lands at the end of the line. NO newline: the human
        presses Enter. */
     SESSIONS[curTab].ws.send(JSON.stringify({type:'in', data: cmd}));
-    setTermStatus(curTab, 'typed into the shell — press Enter to run it');
+    setTermStatus(curTab, 'command typed — press Enter to run');
+    /* THE CURSOR GOES WHERE THE COMMAND WENT. Without this the text appeared in
+       a terminal that did not have focus, so the Enter the banner asks for went
+       to the page instead of to the shell. */
+    focusTerminal(curTab);
+    banner('command typed — press Enter to run');
   }, 120);
 }
+
+/* A line that says what just happened and what the human does next. Uses the
+   same strip as the ask receipt: one place for the cockpit to speak. */
+function banner(msg, cls){ askNote(msg, cls || 'ok'); }
+
+/* THE KEYBOARD FOLLOWS THE COMMAND. xterm only receives keystrokes when its
+   textarea has focus, and nothing ever gave it focus — so a prefilled command
+   sat in a terminal that could not hear the Enter it was asking for. */
+function focusTerminal(tab){
+  const s = SESSIONS[tab];
+  if(s && s.term){ try{ s.term.focus(); }catch(e){} }
+}
+/* SPLIT BY RISK, which is the only split that matters here.
+
+   A QUESTION (supervisor status, git status) is run by the server against a
+   strict allowlist and answered in the overlay above. It changes nothing, so
+   making the human open a terminal, connect a websocket and press Enter to ask
+   it was four gestures of ceremony around a read.
+
+   AN ACTION (run full cycle, claude code) still goes to the terminal and the
+   human still presses Enter. What changes is that they can now SEE where it
+   went and what it says: the tab switches, the input takes focus, and a banner
+   names the next gesture. The rights are untouched. */
+async function runReadOnly(key, label){
+  const wrap = $('#runwrap');
+  $('#runtitle').textContent = label || key;
+  $('#runmeta').textContent = 'running…';
+  $('#runargv').textContent = '';
+  $('#runout').textContent = '';
+  wrap.hidden = false;
+  try{
+    const d = await get('/api/run/' + encodeURIComponent(key));
+    if(d.ok === false && d.error){
+      $('#runmeta').textContent = 'refused';
+      $('#runout').textContent = d.error + '\nallowed: ' + (d.allowed||[]).join(', ');
+      return;
+    }
+    $('#runmeta').textContent =
+      `exit ${d.exit_code} · ${d.seconds}s${d.stdout_truncated?' · output truncated':''}`;
+    $('#runargv').textContent = (d.argv||[]).join(' ');
+    const body = (d.stdout || '') + (d.stderr ? ('\n--- stderr ---\n' + d.stderr) : '');
+    $('#runout').textContent = body.trim() || '(the command printed nothing)';
+  }catch(e){
+    $('#runmeta').textContent = 'failed';
+    $('#runout').textContent = String(e.message||e);
+  }
+}
+
+document.querySelectorAll('.ask-run').forEach(b =>
+  b.onclick = () => runReadOnly(b.dataset.run, b.textContent));
+$('#runclose').onclick = () => { $('#runwrap').hidden = true; };
+
 document.querySelectorAll('.cmd').forEach(b => b.onclick = () => prefill(b.dataset.cmd));
 
 async function toggleDevice(which){

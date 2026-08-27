@@ -776,9 +776,29 @@ def test_the_ask_box_lives_in_the_control_bar_not_inside_a_panel():
     assert 'id="unread"' in footer, "the unread count is not beside the ask box"
 
 
-def test_the_control_bar_says_the_buttons_only_type():
+def test_the_control_bar_says_which_buttons_type_and_which_ones_read():
+    """RE-POINTED 27 Aug 2026, and made stricter rather than looser.
+
+    The bar used to hold one kind of button and said so: "buttons type the
+    command; you press Enter". It now holds two — read-only questions answered
+    in place, and actions that still go to the terminal for a human to run — so
+    a note claiming all of them merely type would be false about half of them.
+
+    The load-bearing half of the old claim is unchanged and still asserted here:
+    the note must promise that an ACTION is typed and the human presses Enter.
+    test_prefill_sends_the_command_without_a_newline is what enforces it.
+    """
     html = PAGE.read_text(encoding="utf-8")
-    assert "buttons type the command; you press Enter" in html
+    note = html.split('id="asknote"')[1].split("</div>")[0]
+    assert "press Enter" in note, (
+        "the control bar no longer promises that an action waits for the human")
+    assert "READ" in note or "read" in note, (
+        "the bar does not distinguish the buttons that only read from the ones "
+        "that type a command into a live shell")
+
+    footer = html.split("<footer>")[1].split("</footer>")[0]
+    assert 'class="ask-run"' in footer, "no read-only buttons in the control bar"
+    assert 'class="cmd"' in footer, "no action buttons in the control bar"
 
 
 def test_prefill_sends_the_command_without_a_newline():
