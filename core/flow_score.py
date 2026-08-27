@@ -103,7 +103,27 @@ class FlowScore:
         return asdict(self)
 
 
-def band(fs: float) -> str:
+def band(fs: float = None) -> str:
+    """REMOVED 27 Aug 2026. Raises rather than being deleted silently.
+
+    It called anything above 4.0 "flowing", and fs is a completeness ratio
+    MULTIPLIED BY a speed with an unbounded upper term — so a cycle whose steps
+    all returned in milliseconds, one that did nothing, banded as maximally
+    flowing. A band on a confounded number is a verdict on a quantity that does
+    not mean anything.
+
+    Deleting it would let a caller get None and carry on. This says where to go:
+    core.cycle_integrity.scalars() returns five independent scalars, and the
+    red/amber/green thresholds now live in the cockpit, where the colour is
+    chosen, and nowhere else.
+    """
+    raise NotImplementedError(
+        "flow_score.band() is gone with the composite. Use "
+        "core.cycle_integrity.scalars()['integrity_ratio']; the thresholds "
+        "belong to the display, not to the metric.")
+
+
+def _band_unused(fs: float) -> str:
     if fs > 4.0:
         return FLOWING
     if fs >= 2.0:
@@ -145,7 +165,7 @@ def compute(steps: Optional[list] = None,
 
     total = len(steps)
     if total == 0:
-        return FlowScore(cycle_id or "unknown", _now(), 0, 0, 0.0, 0.0, GRINDING, [])
+        return FlowScore(cycle_id or "unknown", _now(), 0, 0, 0.0, 0.0, "", [])
 
     full = [s for s in steps if is_full(s)]
     not_full = [{"step": s.get("step"), "verdict": s.get("verdict"),
@@ -162,8 +182,12 @@ def compute(steps: Optional[list] = None,
     speed = (SECONDS_PER_STEP_UNIT / median) if median > 0 else 0.0
     fs = completeness * speed
 
+    # BAND REMOVED from the record: it was a verdict on a confounded number.
+    # compute() survives because steps_full and the median are honest INPUTS —
+    # core.cycle_integrity consumes them — but nothing here calls anything a
+    # quality any more.
     return FlowScore(cycle_id or "unknown", _now(), total, len(full),
-                     round(median, 2), round(fs, 4), band(fs), not_full)
+                     round(median, 2), round(fs, 4), "", not_full)
 
 
 def append(score: FlowScore, path: Optional[pathlib.Path] = None) -> FlowScore:

@@ -160,8 +160,11 @@ def current_state(stream_path: pathlib.Path, glyph_info: dict,
         "step": (heartbeat or {}).get("step"),
         "step_index": (heartbeat or {}).get("step_index"),
         "cycle_id": (heartbeat or {}).get("cycle_id"),
-        "flow_score": (flow or {}).get("flow_score"),
-        "flow_band": (flow or {}).get("band"),
+        # integrity, not the composite: a share of work done, which is a thing
+        # the model can reason about. "flow score 2.5272 (working)" was a
+        # product of a ratio and a speed and meant nothing on its own.
+        "integrity_pct": (flow or {}).get("integrity_pct"),
+        "median_step_seconds": (flow or {}).get("median_step_seconds"),
         "degraded_steps": degraded,
     }
 
@@ -180,9 +183,10 @@ def render_state(state: dict) -> str:
     if state.get("step"):
         cyc.append("step {} {}".format(state.get("step_index") or "",
                                        state["step"]).strip())
-    if state.get("flow_score") is not None:
-        cyc.append("flow score {} ({})".format(
-            state["flow_score"], state.get("flow_band") or "unbanded"))
+    if state.get("integrity_pct") is not None:
+        cyc.append("{}% of steps did their work".format(state["integrity_pct"]))
+    if state.get("median_step_seconds") is not None:
+        cyc.append("median step {}s".format(state["median_step_seconds"]))
     if state.get("degraded_steps") is not None:
         cyc.append("{} DEGRADED step(s)".format(state["degraded_steps"]))
     out.append("CYCLE: {}".format("; ".join(cyc) if cyc else "no cycle is running"))

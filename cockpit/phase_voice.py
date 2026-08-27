@@ -103,9 +103,13 @@ def state_from_disk(stream_path: pathlib.Path = STREAM,
                     if isinstance(x, dict) and x.get("verdict") == "DEGRADED")
                 if isinstance(steps, list) else None)
     try:
-        from core import flow_score as fs
-        score = fs.compute()
-        flow = score.as_dict() if hasattr(score, "as_dict") else dict(score)
+        # the five scalars, not the composite this used to hand on
+        from core import cycle_integrity as ci
+        m = ci.scalars()
+        flow = {"integrity_pct": (None if m["integrity_ratio"] is None
+                                  else round(m["integrity_ratio"] * 100, 1)),
+                "median_step_seconds": m["median_step_seconds"],
+                "degraded_ratio": m["degraded_ratio"]}
     except Exception:
         flow = None
     # READ, never probe. The cockpit already samples every 15 seconds and

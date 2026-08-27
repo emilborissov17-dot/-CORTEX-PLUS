@@ -45,9 +45,11 @@ def S(step="s", seconds=60.0, verdict="OK", error=None, why=""):
 # ---------------------------------------------------------------------------
 
 def test_everything_full_at_a_minute_a_step_scores_one():
+    """The ARITHMETIC still holds; compute() survives as an input to
+    core.cycle_integrity. What it no longer does is attach a verdict."""
     fs = fsm.compute([S(seconds=60.0) for _ in range(10)])
     assert fs.flow_score == pytest.approx(1.0)
-    assert fs.band == fsm.LABOURED
+    assert fs.band == "", "compute() still bands a confounded number"
 
 
 def test_twice_as_fast_scores_twice_as_high():
@@ -94,7 +96,8 @@ def test_the_median_ignores_an_outlier_in_both_directions():
 def test_a_genuinely_slow_night_still_scores_low():
     """The median must not launder real slowness either."""
     fs = fsm.compute([S(seconds=600.0) for _ in range(20)])
-    assert fs.flow_score < 1.0 and fs.band == fsm.GRINDING
+    assert fs.flow_score < 1.0
+    assert fs.band == "", "the band came back"
 
 
 # ---------------------------------------------------------------------------
@@ -137,10 +140,16 @@ def test_the_steps_that_were_not_full_are_named():
 # Degenerate cycles
 # ---------------------------------------------------------------------------
 
-def test_a_cycle_with_no_steps_is_grinding_not_an_error():
+def test_a_cycle_with_no_steps_is_zero_not_an_error():
+    """Renamed with the band. core.cycle_integrity is stricter still: an empty
+    cycle returns integrity None with a reason, because measuring nothing is not
+    the same as measuring badly."""
     fs = fsm.compute([])
-    assert fs.flow_score == 0.0 and fs.band == fsm.GRINDING
+    assert fs.flow_score == 0.0 and fs.band == ""
     assert fs.steps_total == 0
+
+    from core import cycle_integrity as ci
+    assert ci.scalars(steps=[])["integrity_ratio"] is None
 
 
 def test_a_zero_median_does_not_make_the_score_infinite():
@@ -155,22 +164,33 @@ def test_steps_with_no_duration_do_not_break_the_median():
     assert fs.median_step_sec == 30.0
 
 
-def test_a_missing_contract_file_yields_a_grinding_score(tmp_path):
+def test_a_missing_contract_file_yields_an_empty_score(tmp_path):
     fs = fsm.compute(contract=tmp_path / "nope.json")
-    assert fs.steps_total == 0 and fs.band == fsm.GRINDING
+    assert fs.steps_total == 0 and fs.band == ""
 
 
 # ---------------------------------------------------------------------------
 # Bands
 # ---------------------------------------------------------------------------
 
-@pytest.mark.parametrize("score,expected", [
-    (10.0, fsm.FLOWING), (4.01, fsm.FLOWING), (4.0, fsm.WORKING),
-    (2.0, fsm.WORKING), (1.99, fsm.LABOURED), (1.0, fsm.LABOURED),
-    (0.99, fsm.GRINDING), (0.0, fsm.GRINDING),
-])
-def test_the_bands_are_where_the_command_put_them(score, expected):
-    assert fsm.band(score) == expected
+@pytest.mark.parametrize("score", [10.0, 4.01, 4.0, 2.0, 1.99, 1.0, 0.99, 0.0])
+def test_the_bands_are_gone_and_say_where_to_go(score):
+    """REPLACED 27 Aug 2026, not weakened — the thing it guarded is gone.
+
+    It asserted that 4.01 bands as FLOWING and 0.99 as GRINDING. Both were true
+    and both were meaningless: fs is a completeness ratio MULTIPLIED BY a speed
+    with an unbounded upper term, so a cycle whose steps all returned in
+    milliseconds — one that did nothing — banded FLOWING. A verdict on a
+    confounded number is a verdict on nothing.
+
+    band() now raises rather than being deleted, so a caller cannot get None and
+    carry on. That is the property worth guarding, and it is guarded for every
+    value the old table covered.
+    """
+    with pytest.raises(NotImplementedError) as e:
+        fsm.band(score)
+    assert "cycle_integrity" in str(e.value), (
+        "the removal does not say where to go instead")
 
 
 # ---------------------------------------------------------------------------
@@ -276,10 +296,16 @@ def test_no_logs_yields_unknown_rather_than_a_guess(tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_the_live_contract_produces_a_plausible_score():
+    """And the honest reading beside it, which is the one that ships now."""
     fs = fsm.compute()
     assert fs.steps_total > 0, "memory/step_contract_latest.json has no steps"
     assert 0.0 <= fs.flow_score < 100.0
-    assert fs.band in (fsm.FLOWING, fsm.WORKING, fsm.LABOURED, fsm.GRINDING)
+    assert fs.band == ""
+
+    from core import cycle_integrity as ci
+    m = ci.scalars()
+    assert 0.0 <= m["integrity_ratio"] <= 1.0, (
+        "integrity is a SHARE and cannot leave 0-1; fs could reach 12000")
 
 
 def test_the_live_record_really_is_median_skewed():

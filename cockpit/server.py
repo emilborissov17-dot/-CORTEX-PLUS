@@ -410,25 +410,44 @@ def api_cycles():
 @app.get("/api/flow")
 def api_flow():
     """Flow Score needle. Red zone below 2.0."""
-    hist_path = ds.BASE / "memory" / "flow_score.jsonl"
-    history = _read_jsonl(hist_path, limit=100)
-    computed_now = None
-    if not history:
-        try:
-            from core import flow_score as fs
-            score = fs.compute()
-            computed_now = score.as_dict() if hasattr(score, "as_dict") else dict(score)
-        except Exception as e:
-            computed_now = {"error": "{}: {}".format(type(e).__name__, e)}
+    """The needle. integrity_ratio, and the pace beside it as a plain number.
+
+    WHAT CHANGED, 27 Aug 2026. This used to return a composite — a completeness
+    ratio multiplied by 60/median_step_seconds — with a band attached. The
+    product is unbounded above (the ceiling is 12000) and band() called anything
+    over 4.0 "flowing", so a cycle whose steps all returned in milliseconds,
+    one that did NOTHING, was the best score the endpoint could produce.
+
+    Now: five independent scalars from core.cycle_integrity, and the needle
+    shows one of them. The pace sits beside it, labelled, with no colour and no
+    verdict — it is a fact about the night, not a judgement of it.
+    """
+    from core import cycle_integrity as ci
+    m = ci.scalars()
+    pct = (None if m["integrity_ratio"] is None
+           else round(m["integrity_ratio"] * 100, 1))
     return jsonify({
         "ts": _now(),
-        "history": history,
-        "computed_now": computed_now,
-        "computed_not_recalled": bool(computed_now),
-        "red_below": 2.0,
-        "note": ("memory/flow_score.jsonl has never been written; the number "
-                 "shown is computed from memory/step_contract_latest.json right "
-                 "now, and is labelled so."),
+        "cycle_id": m.get("cycle_id"),
+        "integrity_pct": pct,
+        "integrity_ratio": m["integrity_ratio"],
+        "degraded_ratio": m["degraded_ratio"],
+        "failed_ratio": m["failed_ratio"],
+        "cloud_success_ratio": m["cloud_success_ratio"],
+        # the pace, beside the needle and never inside it
+        "median_step_seconds": m["median_step_seconds"],
+        "steps_total": m["steps_total"],
+        "steps_full": m.get("steps_full"),
+        "not_full": m.get("not_full", [])[:12],
+        "suspect_pace": m.get("suspect_pace"),
+        # the display owns the colour; the metric does not
+        "red_below_pct": 60.0,
+        "amber_below_pct": 85.0,
+        "empty_because": m.get("empty_because"),
+        "source": "memory/step_contract_latest.json",
+        "note": ("integrity_ratio is the share of steps that COMPLETED, were "
+                 "not degraded, did not time out and were answered by the "
+                 "expected source. It is not multiplied by anything."),
     })
 
 

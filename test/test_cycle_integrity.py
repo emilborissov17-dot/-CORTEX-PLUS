@@ -51,7 +51,7 @@ def test_a_cycle_of_degraded_but_fast_steps_scores_low_and_raises_suspect_pace(t
               "why": "answered by local_3b after the cloud tier was abandoned"}]
     base = _baseline(tmp_path, {"alpha": 40.0, "beta": 30.0, "gamma": 20.0})
 
-    m = ci.measure(steps=steps, baseline_path=base)
+    m = ci.scalars(steps=steps, baseline_path=base)
 
     assert m["integrity_ratio"] == 0.0, (
         f"a cycle in which nothing did its work scored "
@@ -74,7 +74,7 @@ def test_a_normal_cycle_raises_neither(tmp_path):
              {"step": "gamma", "seconds": 22.0, "verdict": "OK"}]
     base = _baseline(tmp_path, {"alpha": 40.0, "beta": 30.0, "gamma": 20.0})
 
-    m = ci.measure(steps=steps, baseline_path=base)
+    m = ci.scalars(steps=steps, baseline_path=base)
     assert m["integrity_ratio"] == 1.0
     assert m["degraded_ratio"] == 0.0
     assert m["failed_ratio"] == 0.0
@@ -105,7 +105,7 @@ def test_full_is_all_four_conditions(step, expected, fragment):
 def test_unknown_no_longer_counts_as_full():
     """It used to. A new step inflated the score for three nights, precisely
     when a human was most likely to be watching it."""
-    m = ci.measure(steps=[{"step": "brand_new", "seconds": 1.0,
+    m = ci.scalars(steps=[{"step": "brand_new", "seconds": 1.0,
                            "verdict": "UNKNOWN"}])
     assert m["integrity_ratio"] == 0.0
     assert m["failed_ratio"] == 0.0, (
@@ -157,7 +157,7 @@ def test_the_floor_is_ten_percent_and_bounds_are_tested(tmp_path):
 # ── no composite may come back ──────────────────────────────────────────────
 
 def test_the_five_are_independent_and_no_product_is_returned():
-    m = ci.measure(steps=[{"step": "a", "seconds": 1.0, "verdict": "OK"}])
+    m = ci.scalars(steps=[{"step": "a", "seconds": 1.0, "verdict": "OK"}])
     for banned in ("flow_score", "fs", "score", "composite", "band"):
         assert banned not in m, (
             f"measure() returned {banned!r} — the whole point is that these "
@@ -174,7 +174,7 @@ def test_band_is_gone_loudly_not_silently():
 
 
 def test_an_empty_cycle_says_why_rather_than_scoring_zero():
-    m = ci.measure(steps=[])
+    m = ci.scalars(steps=[])
     assert m["integrity_ratio"] is None, (
         "an empty cycle scored 0.0 integrity — that is a measurement of "
         "nothing presented as a bad result")
@@ -184,7 +184,7 @@ def test_an_empty_cycle_says_why_rather_than_scoring_zero():
 def test_every_step_that_is_not_full_says_why():
     """'42% integrity' with no account of the other 58% can only be believed
     or ignored."""
-    m = ci.measure(steps=[{"step": "a", "verdict": "OK", "seconds": 1.0},
+    m = ci.scalars(steps=[{"step": "a", "verdict": "OK", "seconds": 1.0},
                           {"step": "b", "verdict": "RAISED", "seconds": 1.0},
                           {"step": "c", "verdict": "UNKNOWN", "seconds": 1.0}])
     assert m["integrity_ratio"] == pytest.approx(1 / 3, abs=1e-4)
@@ -195,7 +195,7 @@ def test_every_step_that_is_not_full_says_why():
 
 def test_it_reads_the_live_contract_without_raising():
     """Against the real file, because the shape is the repo's, not the test's."""
-    m = ci.measure()
+    m = ci.scalars()
     assert m["steps_total"] >= 0
     if m["steps_total"]:
         assert 0.0 <= m["integrity_ratio"] <= 1.0

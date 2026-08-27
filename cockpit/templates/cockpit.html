@@ -227,6 +227,10 @@
 
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
+  .needle.warn{color:var(--yel)}
+  /* the pace: a number, deliberately with no colour and no verdict */
+  .pace{margin-top:6px;font-size:12px;color:var(--dim)}
+  .pace b{color:var(--ink);font-weight:600}
   a{color:var(--blu)}
   .invalid{color:var(--red);font-weight:700}
   .cols{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
@@ -433,9 +437,19 @@ async function tabOverview(){
   const squares = c.checklist.map(s =>
     `<div class="step ${s.state}" title="${esc(s.index+' '+s.step+' — '+s.state+(s.evidence?': '+s.evidence:''))}"></div>`).join('');
   const k = c.counts||{};
-  const n = f.computed_now||{};
-  const v = n.flow_score!==undefined?n.flow_score:null;
-  const bad = v!==null && v < f.red_below;
+  /* THE NEEDLE MEASURES WORK DONE, NOT SECONDS ELAPSED (27 Aug 2026).
+     It used to show flow_score: a completeness ratio MULTIPLIED BY
+     60/median_step_seconds. Unbounded above — the ceiling is 12000 — and banded
+     "flowing" above 4.0, so a cycle whose steps all returned in milliseconds,
+     one that did nothing at all, was the best reading the page could show.
+     Now it is integrity_ratio as a percentage: the share of steps that
+     COMPLETED, were not degraded, did not time out, and were answered by the
+     source that was supposed to answer them. Nothing is multiplied by it. */
+  const v = (f.integrity_pct === null || f.integrity_pct === undefined)
+              ? null : f.integrity_pct;
+  const grade = v === null ? '' :
+                v < (f.red_below_pct ?? 60) ? 'bad' :
+                v < (f.amber_below_pct ?? 85) ? 'warn' : 'ok';
   return `<div class="grid">
     ${panel('Cycle · '+esc(c.label), `
       <div class="meta">${esc(c.current_cycle||'—')}</div>
@@ -447,9 +461,23 @@ async function tabOverview(){
       <span class="pill">${esc(c.covered)}/${c.total_steps} covered</span></div>
       <div class="meta">filled = a checkpoint in cycle_resume.jsonl · outline =
       inferred from the heartbeat's position, not on record</div>`)}
-    ${panel('Flow score', `
-      <div class="needle ${bad?'bad':'ok'}">${v===null?'—':esc(v)}</div>
-      <div class="meta">red zone below ${f.red_below}${f.computed_not_recalled?' · computed now, not recalled':''}</div>`)}
+    ${panel('Integrity — the share of steps that did their work', `
+      <div class="needle ${grade}">${v===null?'—':esc(v)+'%'}</div>
+      <div class="meta">${esc(f.steps_full ?? '—')} of ${esc(f.steps_total ?? '—')} steps
+        · red below ${esc(f.red_below_pct ?? 60)}% · amber to ${esc(f.amber_below_pct ?? 85)}%</div>
+      <!-- PACE SITS BESIDE THE NEEDLE, NEVER INSIDE IT. A plain labelled
+           number with no colour and no verdict: it is a fact about the night,
+           not a judgement of it. Folding it into the needle is exactly what
+           made the old score meaningless. -->
+      <div class="pace">median step
+        <b>${f.median_step_seconds===null||f.median_step_seconds===undefined
+             ? '—' : esc(f.median_step_seconds)+'s'}</b></div>
+      ${(f.suspect_pace && f.suspect_pace.alarm)
+        ? `<div class="invalid" style="margin-top:6px">SUSPECT PACE — ` +
+          f.suspect_pace.steps.map(s=>esc(s.step)).join(', ') +
+          ` finished far under their own median; a probable fail-open, not an achievement</div>`
+        : ''}
+      ${f.empty_because?`<div class="meta">${esc(f.empty_because)}</div>`:''}`)}
     ${panel('Pending human', `<table>
       ${jumpRow('improvement proposals', p.improvement_proposals.open, 'pending', 'anchor-proposals')}
       ${jumpRow('threshold proposals unsigned', p.threshold_proposals.unsigned, 'pending', 'anchor-thresholds')}

@@ -185,9 +185,17 @@ def suspect_pace(steps: list, baseline_path=None) -> dict:
 
 # ── the five scalars ────────────────────────────────────────────────────────
 
-def measure(steps=None, contract_path=None, baseline_path=None,
+def scalars(steps=None, contract_path=None, baseline_path=None,
             local_planned=LOCAL_PLANNED) -> dict:
-    """The five, computed independently. No product, no composite, no band."""
+    """The five, computed independently. No product, no composite, no band.
+
+    NAMED scalars(), NOT measure(). test_perplexity.py bans every call to a
+    method named `measure` outside core/perplexity.py, because that one makes a
+    model call and must sit behind an enabled() check. A second, unrelated
+    measure() would have made that guard ambiguous — and a guard that cannot
+    tell a model call from an arithmetic one is not a guard. This function makes
+    no call to anything; it reads two files.
+    """
     if steps is None:
         try:
             blob = json.loads(pathlib.Path(contract_path or CONTRACT)
@@ -276,7 +284,7 @@ def _selftest() -> int:
                       "degraded": "answered by local_3b after the cloud tier "
                                   "was abandoned"},
                      {"step": "b", "seconds": 0.01, "verdict": "OK"}]
-    m = measure(steps=fast_degraded, baseline_path=None)
+    m = scalars(steps=fast_degraded, baseline_path=None)
     check("a degraded step is not full", m["integrity_ratio"] == 0.5)
     check("degraded_ratio counts it", m["degraded_ratio"] == 0.5)
     check("cloud_success_ratio counts the fallback",
@@ -299,7 +307,7 @@ def _selftest() -> int:
     except NotImplementedError:
         check("band() is gone and says so", True)
 
-    live = measure()
+    live = scalars()
     print("\n  LIVE, from {}:".format(CONTRACT.name))
     for k in ("steps_total", "integrity_ratio", "degraded_ratio",
               "failed_ratio", "median_step_seconds", "cloud_success_ratio"):
