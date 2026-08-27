@@ -162,6 +162,15 @@
 
   /* PART 5 — read-only buttons look different, because they ARE different */
   .ask-run{text-decoration:underline dotted;text-underline-offset:3px}
+  /* THE CLOSE BUTTON BUG (27 Aug 2026). `#runwrap{display:flex}` is an ID
+     selector, specificity (1,0,0). The `hidden` attribute is only ever a UA
+     stylesheet rule, `[hidden]{display:none}`, specificity (0,1,0). The author
+     rule wins, so setting .hidden = true flipped the property and changed
+     nothing on screen: the handler ran, the overlay stayed.
+     The Part 5 test asserted `wrap.hidden === true` and passed — it verified the
+     PROPERTY and never the VISIBILITY, which is exactly how this shipped.
+     This rule is (1,1,0) and beats the display below. */
+  #runwrap[hidden]{display:none}
   #runwrap{position:fixed;inset:var(--bar) 0 var(--ctl) 0;z-index:40;
            background:rgba(6,8,11,.72);display:flex;align-items:flex-start;
            justify-content:center;padding:26px 14px;overflow:auto}
@@ -171,6 +180,7 @@
   .runhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .runhead b{font-size:12px;letter-spacing:.1em;text-transform:uppercase}
   .runhead button{margin-left:auto}
+  .runstale{color:var(--yel);font-size:11px}
   #runargv{font-size:10px;margin-bottom:6px;color:var(--dim)}
   #runout{max-height:none;flex:1;white-space:pre-wrap;overflow:auto}
 
@@ -277,6 +287,7 @@
       <button id="runclose">close</button>
     </div>
     <div class="meta" id="runargv"></div>
+    <div class="runstale" id="runstale"></div>
     <pre class="raw" id="runout"></pre>
   </div>
 </div>
@@ -347,6 +358,10 @@ function switchTo(id){
 }
 
 document.addEventListener('keydown', e => {
+  /* ESCAPE CLOSES THE OVERLAY, before the tab shortcuts get a look: a reader
+     whose whole screen is covered should not have to find a button first.
+     Bound on `document`, which is the one ancestor that is never replaced. */
+  if(e.key === 'Escape' && runOpen){ closeRun(); return; }
   if(document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
   if(e.target && e.target.closest && e.target.closest('#term')) return;
   const n = parseInt(e.key, 10);
@@ -1106,6 +1121,10 @@ async function tabGlass(){
    jump-and-return. An anchor from goTo() wins — the reader asked for that. */
 let lastRenderedTab = null;
 
+/* How many times the page has refreshed. Read by ageRun() so an open overlay
+   can say how stale its snapshot has become without re-running anything. */
+let tickCount = 0;
+
 async function render(){
   const view = $('#view');
   const sameTab = (lastRenderedTab === active);
@@ -1115,6 +1134,12 @@ async function render(){
   if(active === 'terminal'){
     view.innerHTML = tabTerminal();
     wireTerminal();
+    /* THE TERMINAL PATH RETURNS EARLY, and used to return before anything wired
+       the control bar. That was survivable only because the control bar was
+       wired once at load; the moment wiring moved here it became the difference
+       between a working ask box and a dead one. */
+    wireControls();
+    ageRun();
     return;
   }
   try { view.innerHTML = await RENDER[active](); }
@@ -1123,7 +1148,44 @@ async function render(){
   if(keepY && !pendingAnchor){
     try{ window.scrollTo(0, keepY); }catch(e){}
   }
+  wireControls();
+  ageRun();
+}
+
+/* ─────────────────────── ONE WIRING MECHANISM ───────────────────────────
+   Until 30.1 there were two. Controls in the STATIC page were bound once, at
+   load, at the bottom of this script; controls injected by a renderer were
+   bound in wirePanel(), which runs after every innerHTML swap. Both were
+   correct, and nothing said which a NEW control should use — so a control added
+   at the bottom of the file but rendered into #view would be dead on the second
+   tick, silently, and no test would notice.
+
+   Now there is one function, it wires everything, and it runs after EVERY
+   injection including the terminal path. Handlers are assigned as properties
+   (`el.onclick = ...`), never addEventListener, so re-wiring the same static
+   node forty times an hour is idempotent rather than forty stacked listeners.
+
+   test_cockpit_wiring.py asserts that no control is bound anywhere else. */
+function wireControls(){
+  wireStatic();
   wirePanel();
+}
+
+/* The control bar and the overlay. Same nodes for the life of the page — but
+   wired HERE so that there is exactly one answer to "where do controls get
+   their handlers". */
+function wireStatic(){
+  const send = $('#asksend'); if(send) send.onclick = askSend;
+  const box  = $('#askbox');
+  if(box) box.onkeydown = e => { if(e.key === 'Enter') askSend(); };
+  const un   = $('#unread'); if(un) un.onclick = markSeen;
+  const mic  = $('#swmic');  if(mic) mic.onclick = () => toggleDevice('mic');
+  const cam  = $('#swcam');  if(cam) cam.onclick = () => toggleDevice('camera');
+  const rc   = $('#runclose'); if(rc) rc.onclick = () => closeRun();
+  document.querySelectorAll('.ask-run').forEach(b =>
+    b.onclick = () => runReadOnly(b.dataset.run, b.textContent, b));
+  document.querySelectorAll('.cmd').forEach(b =>
+    b.onclick = () => prefill(b.dataset.cmd));
 }
 
 function wirePanel(){
@@ -1168,8 +1230,10 @@ function wirePanel(){
               catch(e){ el.scrollIntoView(); }
               el.classList.add('landed'); }
     });
+  /* ontoggle, not addEventListener: this function now runs after every render
+     and a stacking listener would fire once per render it survived. */
   document.querySelectorAll('.legend').forEach(d =>
-    d.addEventListener('toggle', () => { legendOpen = !!d.open; }));
+    d.ontoggle = () => { legendOpen = !!d.open; });
 
   document.querySelectorAll('.axis').forEach(b =>
     b.onclick = () => { openAxis = (openAxis === b.dataset.axis) ? null : b.dataset.axis;
@@ -1267,7 +1331,7 @@ function askNote(msg, cls){
   if(el){ el.innerHTML = `<span class="${cls||'ok'}">${esc(msg)}</span>`; }
 }
 
-$('#asksend').onclick = async () => {
+async function askSend(){
   const box = $('#askbox');
   const t = box.value.trim(); if(!t) return;
   const deep = /^DEEP:/i.test(t);
@@ -1290,8 +1354,7 @@ $('#asksend').onclick = async () => {
     askNote('not queued: ' + (e.message||e), 'invalid');
   }
   refreshUnread();
-};
-$('#askbox').addEventListener('keydown', e => { if(e.key === 'Enter') $('#asksend').click(); });
+}
 
 /* PREFILL: switch to TERMINAL and TYPE the command. Never sends a newline. */
 function prefill(cmd){
@@ -1338,12 +1401,49 @@ function focusTerminal(tab){
    human still presses Enter. What changes is that they can now SEE where it
    went and what it says: the tab switches, the input takes focus, and a banner
    names the next gesture. The rights are untouched. */
-async function runReadOnly(key, label){
+/* WHAT THE OVERLAY IS SHOWING, and what opened it. `openedBy` is the control
+   the focus goes back to on close: sending focus to the top of the document
+   would lose a keyboard reader's place in the control bar. `tickAt` is the
+   value of the page's refresh counter when the output was taken, which is how
+   1.3 is answered — the overlay does not re-run itself and does not swap its
+   contents underneath the reader; it says how old what it is showing has
+   become. */
+let runOpen = false;
+let runOpenedBy = null;
+let runTickAt = 0;
+
+function closeRun(){
+  const wrap = $('#runwrap');
+  if(wrap) wrap.hidden = true;
+  runOpen = false;
+  const back = runOpenedBy;
+  runOpenedBy = null;
+  /* FOCUS GOES BACK TO THE CONTROL THAT OPENED IT. */
+  if(back && typeof back.focus === 'function'){ try{ back.focus(); }catch(e){} }
+}
+
+/* THE 15-SECOND TICK MUST NOT REOPEN A CLOSED OVERLAY and must not rewrite an
+   open one. It only ages the line. */
+function ageRun(){
+  if(!runOpen) return;
+  const el = $('#runstale');
+  if(!el) return;
+  const n = tickCount - runTickAt;
+  el.textContent = n <= 0 ? '' :
+    `the page has refreshed ${n} time(s) since this ran — this output is a `
+    + `snapshot, press the button again for a fresh one`;
+}
+
+async function runReadOnly(key, label, opener){
   const wrap = $('#runwrap');
   $('#runtitle').textContent = label || key;
   $('#runmeta').textContent = 'running…';
   $('#runargv').textContent = '';
   $('#runout').textContent = '';
+  $('#runstale').textContent = '';
+  runOpen = true;
+  runOpenedBy = opener || null;
+  runTickAt = tickCount;
   wrap.hidden = false;
   try{
     const d = await get('/api/run/' + encodeURIComponent(key));
@@ -1363,11 +1463,7 @@ async function runReadOnly(key, label){
   }
 }
 
-document.querySelectorAll('.ask-run').forEach(b =>
-  b.onclick = () => runReadOnly(b.dataset.run, b.textContent));
-$('#runclose').onclick = () => { $('#runwrap').hidden = true; };
-
-document.querySelectorAll('.cmd').forEach(b => b.onclick = () => prefill(b.dataset.cmd));
+/* .ask-run, .cmd and #runclose are wired by wireStatic(). */
 
 async function toggleDevice(which){
   const state = await get('/api/toggle');
@@ -1383,9 +1479,7 @@ async function toggleDevice(which){
   refreshSwitches();
   if(active === 'body') render();
 }
-$('#unread').onclick = markSeen;
-$('#swmic').onclick = () => toggleDevice('mic');
-$('#swcam').onclick = () => toggleDevice('camera');
+/* #unread, #swmic and #swcam are wired by wireStatic(). */
 
 async function refreshSwitches(){
   try{
@@ -1585,6 +1679,7 @@ window.addEventListener('resize', () => {
 
 /* ─────────────────────────── boot ─────────────────────────── */
 async function tick(){
+  tickCount += 1;
   $('#clock').textContent = new Date().toISOString().slice(0,19)+'Z';
   try{
     const p = await get('/api/panels');

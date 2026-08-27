@@ -37,6 +37,9 @@ let m;
 const staticPart = html.slice(0, html.indexOf('<script>'));
 while ((m = idRe.exec(staticPart))) live.add(m[1]);
 
+/* handlers the page attached to `document` itself, keyed by event type */
+const docListeners = {};
+
 /* what the page did, for a test to assert on */
 const LOG = {
   fetches: [],          // every URL the page asked for, in order
@@ -183,7 +186,13 @@ const doc = {
   },
   createElement(t) { return makeEl(t); },
   getElementById(i) { return live.has(i) ? elFor(i) : null; },
-  addEventListener() {},
+  /* DOCUMENT-LEVEL LISTENERS ARE KEPT, not swallowed. `document` is the one
+   * ancestor a page can rely on, so keyboard shortcuts and Escape-to-close live
+   * there — and a harness that dropped them could not test any of it. */
+  addEventListener(type, fn) {
+    if (typeof fn === 'function') (docListeners[type] = docListeners[type] || []).push(fn);
+  },
+  activeElement: null,
   body: makeEl('body'),
   documentElement: makeEl('html'),
 };
@@ -207,6 +216,15 @@ const sandbox = {
   location: { host: '127.0.0.1:5055', protocol: 'http:' },
   navigator: { userAgent: 'node', clipboard: { writeText: () => Promise.resolve() } },
   confirm: (msg) => { LOG.confirms.push(String(msg)); return true; },
+  /* A probe dispatches a real key through the page's own document handler:
+   *     KEYDOWN({key:'Escape'})
+   * Returns how many handlers saw it, so a test can tell "nothing is listening"
+   * from "something listened and declined". */
+  KEYDOWN: (ev) => {
+    const list = docListeners['keydown'] || [];
+    for (const fn of list) fn(Object.assign({ preventDefault() {}, target: null }, ev));
+    return list.length;
+  },
   setInterval: () => 0, clearInterval() {}, clearTimeout() {},
   /* REAL TIMERS, not an immediate stub. The page schedules genuinely ordered
    * work — prefill() waits 120ms for the tab to mount, the socket reports

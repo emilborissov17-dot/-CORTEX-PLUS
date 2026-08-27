@@ -79,7 +79,14 @@ def test_a_metric_nobody_has_judged_gets_no_band_rather_than_green():
 def test_the_unread_count_is_a_control_with_a_handler():
     assert 'id="unread"' in PAGE
     assert "<button class=\"unread" in PAGE, "still a label nobody can click"
-    assert "$('#unread').onclick = markSeen;" in PAGE
+    # RE-POINTED 27 Aug 2026: bindings moved into wireStatic(), which runs after
+    # every render, so there is ONE place controls get their handlers. The
+    # property is unchanged — the count must be a control with a handler.
+    assert "un.onclick = markSeen" in PAGE, (
+        "the unread count is no longer wired to markSeen")
+    assert "function wireStatic()" in PAGE, (
+        "the single wiring function is gone; a binding somewhere else will go "
+        "stale on the first re-render of its node")
     assert "'/api/expression/seen'" in PAGE, (
         "the endpoint is still never called by the page")
 

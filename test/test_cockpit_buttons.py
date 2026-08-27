@@ -91,6 +91,18 @@ FINALIZE = async () => {
 
 @needs_node
 def test_the_panel_closes(tmp_path):
+    """THE PROPERTY ONLY. This test passed while CLOSE was visibly broken.
+
+    27 Aug 2026: it asserted `hidden is True`, the handler set `hidden = True`,
+    and the overlay stayed on screen anyway — because `#runwrap{display:flex}`
+    (specificity 1,0,0) overrode the UA rule `[hidden]{display:none}` (0,1,0).
+    A DOM harness has no CSS engine, so no amount of clicking here could have
+    caught it.
+
+    Kept, because the property still has to flip. The VISIBILITY is asserted
+    where it was actually decided:
+    test_cockpit_wiring.py::test_the_cascade_lets_hidden_hide.
+    """
     r = run_probe(tmp_path, FIXTURES + RUN_FIXTURE + """
 /*---RUN---*/
 FINALIZE = async () => {

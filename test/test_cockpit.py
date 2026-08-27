@@ -732,11 +732,22 @@ def test_only_the_active_tab_is_built():
     them would destroy it. That is the opposite trade-off from the outer tabs and
     it is made on purpose, so the assertion names it instead of banning the
     string outright.
+
+    THE SECOND EXCEPTION, 27 Aug 2026: `#runwrap[hidden]{display:none}`. That is
+    not a hidden tab, it is the rule that makes the `hidden` ATTRIBUTE mean
+    anything at all on the read-only overlay — and its absence is what broke the
+    CLOSE button. `#runwrap{display:flex}` is an ID selector and outranks the
+    user-agent's `[hidden]{display:none}`, so without an explicit [hidden] rule
+    the overlay could be marked hidden and stay on screen. Excluded by matching
+    `[hidden]`, which is narrow: it only exempts a rule the page toggles
+    deliberately, never a tab that is built and then covered up.
     """
     html = PAGE.read_text(encoding="utf-8")
     assert "view.innerHTML = await RENDER[active]()" in html
     offenders = [l.strip() for l in html.splitlines()
-                 if "display:none" in l and "pane-" not in l]
+                 if "display:none" in l and "pane-" not in l
+                 and "[hidden]" not in l and not l.strip().startswith("/*")
+                 and not l.strip().startswith("*")]
     assert offenders == [], (
         "a hidden-but-rendered tab still fetches and still paints: {}".format(
             offenders))

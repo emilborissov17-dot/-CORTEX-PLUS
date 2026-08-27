@@ -126,4 +126,6 @@ def test_the_legend_survives_a_re_render_if_it_was_open():
     assert "legendOpen" in script, (
         "nothing remembers whether the legend was unfolded, so it refolds itself "
         "twice a minute")
-    assert "'toggle'" in script, "the open state is never recorded"
+    # ontoggle, not addEventListener('toggle'): wirePanel() now runs after every
+    # render, and a stacking listener would fire once per render it survived.
+    assert "ontoggle" in script, "the open state is never recorded"
