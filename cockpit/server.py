@@ -1020,7 +1020,30 @@ def api_ask():
         row = ex.queue_append(text, db_path=QUEUE_DB, tag=body.get("tag"))
     except ValueError as e:
         return jsonify({"ok": False, "error": str(e)}), 400
+    # WHERE IT WENT AND HOW MANY ARE AHEAD OF IT. The endpoint used to answer
+    # with a route string and a sentence about routes in general, and the page
+    # showed neither — typing a question and pressing Enter looked exactly like
+    # typing a question and pressing nothing. route_of() is deterministic and
+    # consults no model, so the answer is knowable here and now.
+    queue = ex.queue_read(db_path=QUEUE_DB)
+    waiting = [q for q in queue if not q.get("answered")]
+    try:
+        position = [q.get("id") for q in waiting].index(row.get("id")) + 1
+    except ValueError:                       # answered between insert and read
+        position = len(waiting)
+    where = {
+        ex.ROUTE_8B_DEFERRED: "the 8b batch window — it returns later, tagged "
+                              "8b-deferred",
+        ex.ROUTE_3B: "the next cycle — answered by the warm 3b model, inside "
+                     "the grammar",
+        ex.ROUTE_SYS_DIRECT: "answered by code straight from the sensors, no "
+                             "model consulted",
+    }.get(row.get("route"), "the queue")
     return jsonify({"ok": True, **row,
+                    "position": position,
+                    "waiting": len(waiting),
+                    "where": where,
+                    "queue_path": "memory/human_input_queue.db",
                     "note": "answered on the next cycle or micro-cycle; "
                             "DEEP questions return later tagged 8b-deferred"})
 

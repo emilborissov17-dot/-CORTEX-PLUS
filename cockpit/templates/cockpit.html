@@ -155,6 +155,11 @@
   .unrow .src{color:var(--mag);font-size:10px;min-width:82px}
   p.tl.landed{background:#1e2a18;outline:1px solid var(--grn)}
 
+  /* PART 4 — the ask receipt */
+  #asknote .ok{color:var(--grn)}
+  #asknote .invalid{color:var(--red)}
+  #asknote .meta{color:var(--dim)}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -225,7 +230,7 @@
     <button class="sw" id="swmic">MIC OFF</button>
     <button class="sw" id="swcam">CAM OFF</button>
   </div>
-  <div class="ctlnote">buttons type the command; you press Enter. &nbsp;·&nbsp;
+  <div class="ctlnote" id="asknote">buttons type the command; you press Enter. &nbsp;·&nbsp;
     keys 1-7 switch tabs &nbsp;·&nbsp; mic and camera ask before switching on</div>
 </footer>
 
@@ -494,6 +499,11 @@ async function tabBody(){
    detail. Held here rather than in the DOM because render() rebuilds #view from
    scratch on every 15-second tick, and a disclosure that closes itself under the
    reader is worse than one that never opened. */
+/* What this session has asked. The queue itself is read from /api/ask, so a
+   question survives a reload; this list is what makes the newest one visible
+   immediately, without waiting for a poll. */
+let askedNow = [];
+
 const openProposals = new Set();
 let degOpen = false;
 
@@ -509,8 +519,9 @@ let tlCycle = '';        // '' = the last cycle that sealed
    it unchanged — one source among several, not the only one. */
 async function tabExpression(){
   const q = tlCycle ? ('?cycle='+encodeURIComponent(tlCycle)) : '';
-  const [d, t] = await Promise.all([get('/api/expression?filter='+exFilter),
-                                    get('/api/timeline'+q)]);
+  const [d, t, aq] = await Promise.all([get('/api/expression?filter='+exFilter),
+                                        get('/api/timeline'+q),
+                                        get('/api/ask')]);
   /* ANCHORED BY TIMESTAMP, so a line in the unread list can be found at its
      place in the timeline rather than merely quoted out of it. */
   const rows = (t.rows||[]).map(r =>
@@ -543,7 +554,26 @@ async function tabExpression(){
      <button class="jump" id="unreaddone">dismiss this list</button>`,
     true, 'anchor-unread');
 
-  return `<div class="grid">${unreadPanel}${panel('Expression window · one timeline, every stream', `
+  /* THE HUMAN SIDE OF THE CONVERSATION. Questions were written to an
+     append-only sqlite queue and appeared nowhere on the page, so the operator
+     could see every answer the system produced and none of the asking. */
+  const asked = (aq.queue || []).slice().reverse();
+  const askPanel = !asked.length ? '' : panel(
+    'Asked by you — ' + asked.length + ' in the queue',
+    `<div class="meta" style="margin-bottom:6px">memory/human_input_queue.db ·
+       append-only · an answered question keeps its row</div>
+     <table><tr><th>#</th><th>asked</th><th>question</th><th>route</th><th></th></tr>
+     ${asked.map(r => `<tr>
+       <td class="meta">${esc(r.id)}</td>
+       <td class="meta">${esc(String(r.ts||'').slice(11,19))}</td>
+       <td class="full">${esc(r.text||'')}</td>
+       <td class="meta">${esc(r.route||'')}</td>
+       <td>${r.answered
+             ? '<span class="pill on">answered</span>'
+             : '<span class="pill warn">waiting</span>'}</td></tr>`).join('')}
+     </table>`, true, 'anchor-asked');
+
+  return `<div class="grid">${unreadPanel}${askPanel}${panel('Expression window · one timeline, every stream', `
     <div class="ctlrow" style="margin-bottom:6px">
       <select id="tlcycle">${cycles}</select>
       <span class="meta">${esc(t.started||'')} → ${esc(t.finished||'still running')}</span>
@@ -1021,12 +1051,42 @@ async function showThenClear(){
 }
 const markSeen = showThenClear;   // the old name, kept for the control bar
 
+/* IT USED TO LOOK EXACTLY LIKE PRESSING NOTHING. The question went to
+   memory/human_input_queue.db, which is the right place, and the page said
+   nothing at all: no confirmation, no route, no position. A write with no
+   acknowledgement teaches the operator that the control is broken, and the
+   second symptom of that is asking the same question three times.
+
+   The line under the box is the receipt. It reports what the SERVER decided,
+   never what the page guessed: route_of() is deterministic and consults no
+   model, so "where" is knowable at the moment of the write. */
+function askNote(msg, cls){
+  const el = $('#asknote');
+  if(el){ el.innerHTML = `<span class="${cls||'ok'}">${esc(msg)}</span>`; }
+}
+
 $('#asksend').onclick = async () => {
-  const t = $('#askbox').value.trim(); if(!t) return;
+  const box = $('#askbox');
+  const t = box.value.trim(); if(!t) return;
   const deep = /^DEEP:/i.test(t);
-  await fetch('/api/ask', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({text: deep ? t.slice(5).trim() : t, tag: deep ? 'DEEP' : null})});
-  $('#askbox').value = '';
+  askNote('sending…', 'meta');
+  try{
+    const r = await fetch('/api/ask', {method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({text: deep ? t.slice(5).trim() : t,
+                            tag: deep ? 'DEEP' : null})});
+    const d = await r.json();
+    if(!d.ok){ askNote('not queued: ' + (d.error||'refused'), 'invalid'); return; }
+    box.value = '';
+    askNote(`queued for ${d.where} · position ${d.position} of ${d.waiting} waiting `
+            + `· #${d.id} in ${d.queue_path}`);
+    askedNow.unshift({id:d.id, text:d.text, route:d.route, where:d.where,
+                      position:d.position, ts:new Date().toISOString()});
+    /* the conversation gets a visible trace, not just a row in a database */
+    if(active === 'expression') render();
+  }catch(e){
+    askNote('not queued: ' + (e.message||e), 'invalid');
+  }
   refreshUnread();
 };
 $('#askbox').addEventListener('keydown', e => { if(e.key === 'Enter') $('#asksend').click(); });
