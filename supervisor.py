@@ -1184,7 +1184,46 @@ def _age(now: datetime, ts: Optional[str]) -> Optional[float]:
 # The effectful shell
 # ---------------------------------------------------------------------------
 
-def cycle_log_path(now: Optional[datetime] = None) -> Path:
+def cycle_log_path(now: Optional[datetime] = None,
+                   cycle_id: Optional[str] = None) -> Path:
+    """The log path for a cycle. PASS THE cycle_id — the wall clock is a fallback.
+
+    TWO LOGS A NIGHT (found 27 Aug 2026). This function and
+    core.cycle_log.path_for() computed the same STAMP from different INPUTS, and
+    the difference was one or two seconds:
+
+        supervisor  spawn_cycle() -> cycle_log_path()  -> wall clock AT SPAWN
+        runner      tee_stdio()   -> path_for(cycle_id) -> the cycle_id itself
+
+    The cycle_id is minted, the process is spawned, and by the time the runner
+    asks for its own log name the second has ticked over. So the runner looked
+    for cycle_..._030401.log, did not find the supervisor's cycle_..._030403.log,
+    concluded nobody was capturing it, and tee'd a SECOND file. Every line was
+    then written twice, into two files, for the same run — and
+    memory/cycle_logs/ held 2 files a night for 5 straight nights while
+    tee_stdio()'s "IDEMPOTENT UNDER THE SUPERVISOR" contract quietly did not hold.
+
+    The equivalence WAS tested — test_cycle_log_by_id.py asserts these two
+    produce the same name — but it tested them on the same input, which is not
+    the thing that differed. core/cycle_log.py:190 says the two formulas "must
+    agree"; they did. There is now only one of them, so agreement is structural
+    rather than asserted: the stamp is computed by core.cycle_log.path_for() and
+    nowhere else.
+    """
+    try:
+        from core.cycle_log import path_for
+        if cycle_id is not None:
+            p = path_for(cycle_id, CYCLE_LOG_DIR)
+            if p is not None:
+                return p
+        now = now or datetime.now().astimezone()
+        p = path_for(now.isoformat(), CYCLE_LOG_DIR)
+        if p is not None:
+            return p
+    except Exception:
+        pass
+    # Last resort only. Losing the log must not cost the cycle, and an import
+    # that fails here must not stop a night from starting.
     now = now or datetime.now().astimezone()
     return CYCLE_LOG_DIR / f"cycle_{now:%Y-%m-%d_%H%M%S}.log"
 
@@ -1295,7 +1334,9 @@ def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[in
     try:
         CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
         prune_cycle_logs()
-        log_file = cycle_log_path()
+        # BY cycle_id, not by the clock: the runner derives its own log name
+        # from the same id, and a one-second drift made it tee a second copy.
+        log_file = cycle_log_path(cycle_id=cycle_id)
         fh = log_file.open("w", encoding="utf-8", errors="replace")
     except Exception as e:
         # Losing the log must not cost us the cycle. Fall back to the old
