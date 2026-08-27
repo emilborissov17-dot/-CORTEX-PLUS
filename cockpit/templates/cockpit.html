@@ -174,6 +174,14 @@
   #runargv{font-size:10px;margin-bottom:6px;color:var(--dim)}
   #runout{max-height:none;flex:1;white-space:pre-wrap;overflow:auto}
 
+  /* PART 6 — the session state, as one word */
+  .tstate{font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+          padding:1px 8px;border:1px solid var(--line);border-radius:9px}
+  .tstate.st-connected{color:var(--grn);border-color:#245c33}
+  .tstate.st-connecting,.tstate.st-reconnecting{color:var(--yel);border-color:#5c4d24}
+  .tstate.st-closed{color:var(--dim)}
+  .pane{cursor:text}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -699,10 +707,14 @@ function tabTerminal(){
   return `<div class="grid">${panel('Terminal', `
     <div class="ctlrow" style="margin-bottom:6px">
       ${btns}
-      <input type="text" id="tok" value="${esc(SESSION_TOKEN)}"
-             placeholder="session token (injected by the server)"
-             style="flex:1;min-width:200px;background:#0a0d11;border:1px solid var(--line);color:var(--ink);padding:4px 8px;border-radius:3px;font:inherit">
-      <button id="connect">connect</button>
+      <!-- OUT OF SIGHT, NOT OUT OF USE. The bridge still requires this token on
+           the handshake and still verifies the Origin; what changes is that it
+           stops occupying a third of the control row. server.py already argues
+           the point: making a human copy a hex string from a console into a
+           field protects nothing and guarantees it is sometimes pasted wrong. -->
+      <input type="hidden" id="tok" value="${esc(SESSION_TOKEN)}">
+      <span class="tstate" id="tstate">—</span>
+      <button id="connect">reconnect</button>
       <button id="closebtn" disabled>close session</button>
     </div>
     <div id="termstatus" class="termstatus">—</div>
@@ -710,7 +722,8 @@ function tabTerminal(){
     <div class="foot">This terminal has exactly the user's own rights, the same as opening
       PowerShell directly. Bound to 127.0.0.1; a session token and a loopback Origin are
       required; all I/O is appended to memory/cockpit_terminal.log (never the token).
-      No command parsing and no allowlist. Each tab is its own session, in the repo root.</div>`, true)}</div>`
+      No command parsing and no allowlist. Each tab is its own session, in the repo root.
+      Opening this tab connects it; the token is injected and never displayed.</div>`, true)}</div>`
 }
 
 const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
@@ -1242,9 +1255,27 @@ const SESSIONS = {};          // tab -> {term, fit, ws, mounted, status}
 function sessionOf(tab){
   if(!SESSIONS[tab]){
     SESSIONS[tab] = {term:null, fit:null, ws:null, mounted:false,
-                     status:'not started — click connect'};
+                     state:'closed', tried:0,
+                     status:'not started'};
   }
   return SESSIONS[tab];
+}
+
+/* ONE VISIBLE WORD. The status line said things like "not started — click
+   connect" and "closed: — click connect to start a new session", which are
+   sentences about what to do, not a state. The state is now a word — connected,
+   connecting, reconnecting, closed — and the sentence stays beside it as the
+   detail. A reader should be able to answer "is it up?" without parsing prose. */
+function setTermState(tab, word, msg){
+  const s = sessionOf(tab);
+  s.state = word;
+  if(msg !== undefined) s.status = msg;
+  if(active === 'terminal' && curTab === tab){
+    const w = $('#tstate');
+    if(w){ w.textContent = word; w.className = 'tstate st-' + word; }
+    const el = $('#termstatus');
+    if(el) el.textContent = s.status || '';
+  }
 }
 
 /* THE ONLY PLACE COCKPIT TEXT IS ALLOWED TO GO. Never term.write(). */
@@ -1264,7 +1295,11 @@ function isConnected(tab){
 function ensureSession(tab){
   const s = sessionOf(tab);
   if(!s.term){
-    s.term = new Terminal({fontSize:12, theme:{background:'#080a0d'}, convertEol:true});
+    /* cursorBlink: a terminal with no visible cursor reads as a dead pane, and
+       Emil's report was exactly that — clicking and typing produced nothing and
+       nothing on screen suggested where the keystrokes were meant to go. */
+    s.term = new Terminal({fontSize:12, theme:{background:'#080a0d'},
+                           convertEol:true, cursorBlink:true});
     s.fit = new FitAddon.FitAddon();
     s.term.loadAddon(s.fit);
     s.term.onData(d => {
@@ -1279,7 +1314,14 @@ function ensureSession(tab){
 function mountSession(tab){
   const s = ensureSession(tab);
   const host = document.getElementById('pane-' + tab);
-  if(host && !s.mounted){ s.term.open(host); s.mounted = true; }
+  if(host && !s.mounted){
+    s.term.open(host);
+    /* ANYWHERE IN THE PANE, not just on the one-pixel textarea xterm hides
+       inside itself. Clicking a terminal and having nothing happen is the
+       clearest possible way to tell a human the thing is broken. */
+    host.addEventListener('mousedown', () => focusTerminal(tab));
+    s.mounted = true;
+  }
   try{ s.fit.fit(); }catch(e){}
 }
 
@@ -1292,28 +1334,39 @@ function showTerminalTab(tab){
   document.querySelectorAll('.tabbtn').forEach(b =>
     b.classList.toggle('active', b.dataset.tt === tab));
   mountSession(tab);
-  const el = $('#termstatus');
-  if(el) el.textContent = sessionOf(tab).status;
+  const s = sessionOf(tab);
+  setTermState(tab, s.state || 'closed');
   const close = $('#closebtn');
   if(close) close.disabled = !isConnected(tab);
+
+  /* OPENING THE TAB IS THE INTENT. There was never a reason to make the human
+     say it twice: the bridge is already running, the token is already in the
+     page, and a tab whose first instruction is "click connect" is a tab that
+     does nothing on arrival. The security model is untouched — same token, same
+     loopback Origin check, same logged I/O. */
+  if(!isConnected(tab) && s.state !== 'connecting') connectTab(tab);
+  focusTerminal(tab);
 }
 
 function connectTab(tab){
   const s = ensureSession(tab);
-  if(isConnected(tab)){ setTermStatus(tab, 'already connected'); return; }
+  if(isConnected(tab)){ setTermState(tab, 'connected', 'already connected'); return; }
   const token = ($('#tok') ? $('#tok').value.trim() : '');
   if(!token){
-    setTermStatus(tab, 'no session token — the server injects it; if this field is '
-                     + 'empty the bridge did not start (see the launch console)');
+    setTermState(tab, 'closed',
+                 'no session token — the server injects it; an empty one means '
+                 + 'the bridge did not start (see the launch console)');
     return;
   }
-  setTermStatus(tab, 'connecting…');
+  setTermState(tab, 'connecting', 'opening the bridge on 127.0.0.1:5056');
   const ws = new WebSocket('ws://127.0.0.1:5056');
   s.ws = ws;
   ws.onopen = () => {
     ws.send(JSON.stringify({token, tab, cols:s.term.cols, rows:s.term.rows}));
-    setTermStatus(tab, 'connected · cwd is the repo root');
+    s.tried = 0;
+    setTermState(tab, 'connected', 'connected · cwd is the repo root');
     const c = $('#closebtn'); if(c && curTab === tab) c.disabled = false;
+    focusTerminal(tab);
   };
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
@@ -1324,19 +1377,37 @@ function connectTab(tab){
   };
   ws.onclose = e => {
     s.ws = null;
-    setTermStatus(tab, 'closed' + (e.reason ? (': ' + e.reason) : '')
-                       + ' — click connect to start a new session');
     const c = $('#closebtn'); if(c && curTab === tab) c.disabled = true;
+    if(s.closedByYou){
+      s.closedByYou = false;
+      setTermState(tab, 'closed', 'closed by you — the scrollback is kept');
+      return;
+    }
+    /* ONE retry, not a loop. A bridge that is down stays down, and a page that
+       reconnects forever hides that from the reader while filling the log. */
+    if(s.tried < 1 && active === 'terminal'){
+      s.tried += 1;
+      setTermState(tab, 'reconnecting',
+                   'the bridge dropped the session — retrying once');
+      setTimeout(() => connectTab(tab), 700);
+      return;
+    }
+    setTermState(tab, 'closed', 'closed' + (e.reason ? (': ' + e.reason) : '')
+                                + ' — press reconnect to start a new session');
   };
-  ws.onerror = () => setTermStatus(tab, 'could not reach the bridge on 127.0.0.1:5056');
+  ws.onerror = () => setTermState(tab, 'closed',
+                                  'could not reach the bridge on 127.0.0.1:5056');
 }
 
 function closeTab(tab){
   const s = SESSIONS[tab];
-  if(!s || !s.ws){ setTermStatus(tab, 'nothing to close'); return; }
+  if(!s || !s.ws){ setTermState(tab, 'closed', 'nothing to close'); return; }
+  /* Flagged so onclose can tell a deliberate close from a dropped bridge and
+     does not helpfully reconnect the session the human just ended. */
+  s.closedByYou = true;
   try{ s.ws.close(); }catch(e){}
   s.ws = null;
-  setTermStatus(tab, 'closed by you — the scrollback is kept');
+  setTermState(tab, 'closed', 'closed by you — the scrollback is kept');
 }
 
 function wireTerminal(){

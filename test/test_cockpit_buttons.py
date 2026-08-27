@@ -110,15 +110,13 @@ def test_an_action_button_switches_tab_prefills_and_asks_for_enter(tmp_path):
     r = run_probe(tmp_path, FIXTURES + RUN_FIXTURE + """
 /*---RUN---*/
 FINALIZE = async () => {
-  await switchTo('terminal');
-  // the server injects this into the markup; the strict DOM does not carry
-  // attribute values, so the probe supplies one
-  document.querySelector('#tok').value = 'a-token';
-  connectTab(curTab);                    // the harness's socket opens immediately
+  await switchTo('terminal');            // the tab connects itself now
+  await settle();
   const b = document.querySelectorAll('.cmd').find(
     x => (x.dataset.cmd||'').includes('fast_cycle_runner'));
   if(!b) return {found:false};
   b.onclick();
+  await settle();                        // prefill waits for the tab to mount
   return {found:true, tab: LOG.stored['cortex.cockpit.tab'],
           sends: LOG.socketSends, focused: LOG.focused,
           note: document.querySelector('#asknote').innerHTML,

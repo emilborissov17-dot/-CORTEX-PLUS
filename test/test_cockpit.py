@@ -1464,8 +1464,23 @@ def test_switching_tabs_only_shows_and_never_closes():
 
 
 def test_a_tab_with_no_session_says_so():
+    """RE-POINTED 27 Aug 2026. The property holds; the wording was an
+    instruction that no longer applies.
+
+    It used to assert the literal "not started — click connect". Opening the tab
+    now opens the session, so telling the reader to click connect would be
+    telling them to do again what arriving already did. What must NOT change is
+    that a tab with no session says so rather than looking live — so this now
+    asserts the state itself: a fresh session starts 'closed', and there is a
+    single word on screen reporting it.
+    """
     script = _page_script()
-    assert "not started — click connect" in script
+    assert "state:'closed'" in script.replace(" ", ""), (
+        "a fresh session no longer starts in a stated closed state")
+    assert "setTermState(tab, 'closed'" in script, (
+        "nothing reports a session as closed")
+    assert "'connected'" in script and "'reconnecting'" in script, (
+        "the session no longer has distinguishable states")
 
 
 def test_each_tab_gets_its_own_pane_element():

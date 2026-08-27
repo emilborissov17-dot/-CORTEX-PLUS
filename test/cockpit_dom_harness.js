@@ -48,10 +48,23 @@ const LOG = {
   stored: {},           // localStorage
 };
 
+/* Ids AND the attributes a browser would have parsed with them. `value` matters:
+ * the server injects the terminal token straight into the markup, so in a real
+ * browser #tok has its value the instant the tab renders. A harness that dropped
+ * it forced every probe to fake a token the page already had. */
 function registerIds(h) {
+  const s = String(h);
   let x;
-  const r = /\bid\s*=\s*["']([^"']+)["']/g;
-  while ((x = r.exec(String(h)))) live.add(x[1]);
+  const tag = /<[a-zA-Z]+[^>]*\bid\s*=\s*["']([^"']+)["'][^>]*>/g;
+  while ((x = tag.exec(s))) {
+    const id = x[1];
+    live.add(id);
+    const v = /\bvalue\s*=\s*"([^"]*)"/.exec(x[0]);
+    if (v) elFor(id).value = v[1];
+  }
+  /* ids on tags the pattern above missed (attribute order, quoting) */
+  const bare = /\bid\s*=\s*["']([^"']+)["']/g;
+  while ((x = bare.exec(s))) live.add(x[1]);
 }
 
 /* Elements created for a given id/selector. Not a real DOM tree: a recorder with
@@ -195,7 +208,13 @@ const sandbox = {
   navigator: { userAgent: 'node', clipboard: { writeText: () => Promise.resolve() } },
   confirm: (msg) => { LOG.confirms.push(String(msg)); return true; },
   setInterval: () => 0, clearInterval() {}, clearTimeout() {},
-  setTimeout: (f) => { if (typeof f === 'function') f(); return 0; },
+  /* REAL TIMERS, not an immediate stub. The page schedules genuinely ordered
+   * work — prefill() waits 120ms for the tab to mount, the socket reports
+   * onopen on a later turn — and a setTimeout that fired synchronously ran the
+   * callback BEFORE the thing it was waiting for existed. A probe that needs a
+   * timer to have fired awaits settle(). */
+  setTimeout: (f, ms) => setTimeout(f, Math.min(Number(ms) || 0, 400)),
+  settle: (ms) => new Promise((r) => setTimeout(r, Number(ms) || 250)),
   requestAnimationFrame: () => 0,
   fetch: (u, o) => {
     LOG.fetches.push({ url: String(u), method: (o && o.method) || 'GET',
