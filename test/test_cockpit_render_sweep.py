@@ -250,6 +250,23 @@ CONTROLS = {
     "prow":     dict(tab="pending",  sel=".prow",     what="the row expands"),
     "pf":       dict(tab="pending",  sel=".pf",       what="goes to TERMINAL"),
     "axis":     dict(tab="world",    sel=".axis",     what="an axis panel appears"),
+    "rg":       dict(tab="world",    sel=".rg",       what="the region's panel appears"),
+    "regionclose": dict(tab="world", sel="#regionclose", what="the region panel closes",
+                        # NOT r.click(): SVGElement has no click() method, so
+                        # the arrange step threw and the sweep reported a
+                        # working control unreachable. A real mouse click on a
+                        # polygon fires the handler perfectly; only the
+                        # programmatic shortcut is missing.
+                        # IDEMPOTENT, because the page fixture does not reload
+                        # and openRegion survives between tests: clicking a
+                        # region that is already open CLOSES it, and the
+                        # #regionclose this test is looking for vanishes. The
+                        # arrange opens one only if none is open.
+                        arrange="if(!document.querySelector('#regionclose')){"
+                                "const r=document.querySelector('.rg'); if(r) "
+                                "r.dispatchEvent(new MouseEvent('click',"
+                                "{bubbles:true,cancelable:true}));}",
+                        arrange_settle=3.5),
     "axisclose": dict(tab="world",   sel="#axisclose", what="the axis panel closes",
                       arrange="const a=document.querySelector('.axis'); if(a) a.click();"),
 

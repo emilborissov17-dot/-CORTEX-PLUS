@@ -211,6 +211,22 @@
   .missing{border-top:1px solid var(--line);margin-top:6px}
   .panel.landed{outline:1px solid var(--blu);outline-offset:2px}
 
+  /* THE MAP. Offline, hand-drawn, no tile service and nothing fetched. */
+  .worldmap{width:100%;max-height:34vh;background:#0c1116;border:1px solid var(--line)}
+  .rg{cursor:pointer;stroke:#0c1116;stroke-width:.7;opacity:.78}
+  .rg:hover{opacity:1;stroke:var(--blu);stroke-width:1.2}
+  .rg.on{opacity:1;stroke:var(--yel);stroke-width:1.4}
+  .rg-thriving{fill:#2f6b3a}
+  .rg-dignified{fill:#2f5d7a}
+  .rg-precarious{fill:#8a6a24}
+  .rg-unknown{fill:#3a4048}
+  .rglab{fill:#cfd6de;font-size:7px;pointer-events:none;text-anchor:middle}
+  .maplegend{font-size:10px;margin-top:3px}
+  .maplegend i{display:inline-block;width:9px;height:9px;margin:0 3px 0 9px;
+    vertical-align:middle}
+  .ctry td{padding:1px 5px;font-size:11px}
+  .ctry tr.low td{opacity:.62}
+
   /* PART 8 — the legend */
   .legend{margin:4px 0 8px}
   .legend table{font-size:11px}
@@ -374,6 +390,8 @@ document.addEventListener('keydown', e => {
      whose whole screen is covered should not have to find a button first.
      Bound on `document`, which is the one ancestor that is never replaced. */
   if(e.key === 'Escape' && runOpen){ closeRun(); return; }
+  if(e.key === 'Escape' && openRegion){ openRegion = null; render(); return; }
+  if(e.key === 'Escape' && openAxis){ openAxis = null; render(); return; }
   if(document.activeElement && ['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
   if(e.target && e.target.closest && e.target.closest('#term')) return;
   const n = parseInt(e.key, 10);
@@ -560,6 +578,123 @@ function sparkline(points){
     </svg><div class="meta">${esc(vals.length)} points · low ${esc(lo)} · high ${esc(hi)}</div>`;
 }
 
+/* ── AN OFFLINE MAP (28 Aug 2026) ──────────────────────────────────────────
+   NOTHING IS FETCHED. No tile service, no CDN, no external SVG: the outlines
+   below are hand-written into this file, and the only thing that comes over
+   the wire is the same /api/goal the table beside it already reads. The
+   cockpit binds to 127.0.0.1 and a test asserts it; a map that phoned a tile
+   server would be the one thing on this page that talked to the internet.
+
+   THEY ARE SCHEMATIC AND THE PAGE SAYS SO. These are a dozen points per
+   region, drawn equirectangular by hand. They are accurate enough to point at
+   and nowhere near a survey, and the legend says that rather than letting the
+   reader assume a projection nobody computed.
+
+   The seven shapes are the seven World Bank regions the wellbeing snapshot is
+   actually aggregated by — not continents, which is why Russia sits inside
+   ECS and Egypt inside MEA. Using the real grouping means clicking a shape can
+   hand back the sealed numbers unchanged instead of re-bucketing them here. */
+const REGION_SHAPES = {
+  NAC: "12,24 40,20 85,18 120,22 128,43 110,48 100,65 83,64 63,58 55,42 40,30",
+  LCN: "88,72 97,81 103,82 120,79 145,95 140,112 132,115 122,130 115,145 " +
+       "105,135 110,108 100,90 90,76",
+  ECS: "170,54 180,47 190,53 205,55 220,50 230,48 240,45 260,40 280,38 " +
+       "310,35 340,28 360,24 360,18 320,17 280,14 240,20 210,20 190,30 " +
+       "175,32 170,40",
+  MEA: "163,62 180,54 192,57 205,58 215,59 223,51 228,60 238,65 240,78 " +
+       "225,78 212,68 195,67 175,69 163,69",
+  SSF: "163,76 180,78 195,78 215,78 223,79 231,90 222,106 215,115 205,124 " +
+       "198,124 192,108 189,92 180,85 168,82",
+  SAS: "241,65 248,66 252,70 257,82 260,83 268,69 272,68 272,63 268,63 " +
+       "260,60 254,58 246,54 241,61",
+  EAS: "272,62 280,68 290,70 300,58 308,52 315,55 322,48 325,45 330,46 " +
+       "325,55 315,65 305,80 320,95 330,100 325,115 315,123 300,123 " +
+       "295,110 285,96 280,87 275,80 272,70",
+};
+
+const REGION_LABEL_AT = {
+  NAC: [70, 38], LCN: [118, 108], ECS: [265, 28], MEA: [200, 64],
+  SSF: [200, 98], SAS: [258, 68], EAS: [303, 90],
+};
+
+function zoneClass(zone){
+  const z = String(zone || '').toLowerCase();
+  if(z.includes('thriving')) return 'rg-thriving';
+  if(z.includes('dignified')) return 'rg-dignified';
+  if(z.includes('precarious')) return 'rg-precarious';
+  return 'rg-unknown';
+}
+
+function worldMap(regions){
+  const byId = {};
+  regions.forEach(r => { byId[r.region_id] = r; });
+  const shapes = Object.entries(REGION_SHAPES).map(([id, pts]) => {
+    const r = byId[id];
+    /* A SHAPE WITH NO DATA BEHIND IT IS GREY AND SAYS WHY on hover, rather
+       than being coloured as though it had been measured. */
+    const title = r
+      ? `${id} — ${r.source_name||''}: ${r.zone||'?'}, ${r.countries||0} countries`
+      : `${id}: not in the sealed snapshot`;
+    const at = REGION_LABEL_AT[id] || [0,0];
+    return `<polygon class="rg ${zoneClass(r && r.zone)} ${openRegion===id?'on':''}"
+        data-region="${esc(id)}" points="${pts}"><title>${esc(title)}</title></polygon>
+      <text class="rglab" x="${at[0]}" y="${at[1]}">${esc(id)}</text>`;
+  }).join('');
+  return `<svg class="worldmap" viewBox="0 0 360 180" role="img"
+      aria-label="seven World Bank regions, clickable">${shapes}</svg>
+    <div class="maplegend meta">
+      <i class="rg-thriving" style="background:#2f6b3a"></i>thriving
+      <i class="rg-dignified" style="background:#2f5d7a"></i>dignified life
+      <i class="rg-precarious" style="background:#8a6a24"></i>precarious
+      <i class="rg-unknown" style="background:#3a4048"></i>no data
+      <span style="margin-left:12px">hand-drawn outlines, equirectangular —
+        a schematic to point at, not a survey. Nothing is fetched to draw it.</span>
+    </div>`;
+}
+
+async function regionPanel(){
+  if(!openRegion) return '';
+  const d = await get('/api/region/' + encodeURIComponent(openRegion));
+  if(d.error) return panel('region', `<div class="invalid">${esc(d.error)}</div>`,
+                           true, 'anchor-region');
+  const a = d.aggregate || {};
+  if(!d.found) return panel(esc(openRegion),
+    `<div class="quiet">${esc(d.why_not||'not in the snapshot')}</div>
+     <button class="jump" id="regionclose">close</button>`, true, 'anchor-region');
+
+  const head = [
+    ['zone', `<span class="pill">${esc(a.zone||'?')}</span>`],
+    ['deprivation', esc(a.dep)],
+    ['strain', esc(a.str)],
+    ['flourishing', esc(a.flo)],
+    ['countries', esc(a.countries)],
+    ['population', esc(a.population)],
+  ].map(([k,v]) => `<tr><td style="width:120px" class="meta">${k}</td><td class="full">${v}</td></tr>`).join('');
+
+  /* WORST FIRST, and the confidence beside every row. 11 of 17 axes real is
+     not the same claim as 17 of 17, and a table that showed only the score
+     would present both as the same number. */
+  const rows = (d.countries||[]).map(c =>
+    `<tr class="${c.confidence==='LOW'?'low':''}">
+       <td>${esc(c.name)}</td><td>${esc(c.zone||'')}</td>
+       <td>${esc(c.deprivation)}</td><td>${esc(c.strain)}</td>
+       <td>${esc(c.flourishing)}</td>
+       <td class="meta">${esc(c.confidence||'')} · ${esc(c.completeness||'')}</td>
+     </tr>`).join('');
+
+  return panel(`${esc(openRegion)} — ${esc(a.source_name||'')}`, `
+    <div class="meta">aggregate sealed ${esc(d.computed_at||'?')} ·
+      country rows sealed ${esc(d.sealed_at||'?')}</div>
+    <table>${head}</table>
+    <div class="meta" style="margin:8px 0 2px">${esc(d.country_count)} countries,
+      worst deprivation first</div>
+    <table class="ctry"><thead><tr><th>country</th><th>zone</th><th>dep</th>
+      <th>str</th><th>flo</th><th>confidence</th></tr></thead>
+      <tbody>${rows}</tbody></table>
+    <div class="quiet" style="margin-top:6px">${esc(d.history_why)}</div>
+    <button class="jump" id="regionclose">close</button>`, true, 'anchor-region');
+}
+
 async function tabWorld(){
   const [g, col] = await Promise.all([get('/api/goal'), get('/api/columns')]);
 
@@ -572,6 +707,7 @@ async function tabWorld(){
         data-axis="${esc(a.axis)}">${esc(a.axis)}</button>`).join('')}</div>`).join('');
   const cont = (g.continents||[]).map(c =>
     `<tr><td>${esc(c.region_id||'')}</td><td>${esc(c.zone||'')}</td></tr>`).join('');
+  const mapSvg = worldMap(g.continents||[]);
 
   let axisPanel = '';
   if(openAxis){
@@ -601,6 +737,7 @@ async function tabWorld(){
       <div class="meta" style="margin-top:8px">${Object.values(a.sources||{}).map(esc).join(' · ')}</div>
       <button class="jump" id="axisclose">close</button>`, true, 'anchor-axis');
   }
+  const regionHtml = await regionPanel();
   const heads = col.column_order.map(k => {
     const s = col.column_spec[k];
     return `<div class="col"><h3>${esc(s.title)}</h3>
@@ -620,7 +757,10 @@ async function tabWorld(){
       <div class="meta">${g.composite_history.length} composite history points ·
         click an axis to open what it reads, what it aims at, and its run</div>${tree}`, true)}
     ${axisPanel}
-    ${panel('7 continents', `<table><tr><th>region</th><th>zone</th></tr>${cont}</table>`)}
+    ${panel('7 regions — click one', mapSvg + `
+      <table style="margin-top:6px"><tr><th>region</th><th>zone</th></tr>${cont}</table>`,
+      true)}
+    ${regionHtml}
 
     <h2 class="half designed">DESIGNED, NOT WIRED — nothing below is running</h2>
     ${panel('Five columns', `<div class="cols dim">${heads}</div>${viol}
@@ -732,6 +872,7 @@ let legendOpen = false;
 
 /* Which axis is open on WORLD, or null. */
 let openAxis = null;
+let openRegion = null;
 
 let askedNow = [];
 
@@ -1383,6 +1524,18 @@ function wirePanel(){
                         return render(); });
   const ax = $('#axisclose');
   if(ax) ax.onclick = () => { openAxis = null; return render(); };
+
+  /* THE MAP. Same shape as the axis pills: clicking the open one closes it, so
+     the control that opens is also the control that closes — which is half of
+     what part 14 asks of anything that opens. Escape is the other half and is
+     bound on `document`, the one ancestor a re-render never replaces. */
+  document.querySelectorAll('.rg').forEach(sh =>
+    sh.onclick = () => { openRegion = (openRegion === sh.dataset.region)
+                           ? null : sh.dataset.region;
+                         pendingAnchor = openRegion ? 'anchor-region' : null;
+                         return render(); });
+  const rc2 = $('#regionclose');
+  if(rc2) rc2.onclick = () => { openRegion = null; return render(); };
 
   const bm = $('#bodymissing');
   if(bm) bm.onclick = () => { bodyMissingOpen = !bodyMissingOpen;

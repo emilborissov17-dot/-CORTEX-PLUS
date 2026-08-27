@@ -745,6 +745,57 @@ def api_goal():
     })
 
 
+# ── A REGION YOU CAN ASK (28 Aug 2026) ─────────────────────────────────────
+# The WORLD tab showed seven region codes and a zone word in a two-column
+# table. Every one of those rows is the top of a real pile — 217 countries,
+# each with its own zone and its own three scores — and none of it was
+# reachable from the page that named the region.
+#
+# READ-ONLY, AND FROM THE SEALED SNAPSHOT. Nothing is computed here and nothing
+# is fetched: output/wellbeing_continent.json and output/wellbeing_all_countries.json
+# are what the cycle sealed on 2026-07-02, and this endpoint hands them over
+# unchanged. A panel that recomputed an aggregate could disagree with the
+# snapshot the rest of the system reasons about.
+@app.get("/api/region/<rid>")
+def api_region(rid):
+    try:
+        from core import continents as C
+        regions = {r.get("region_id"): r for r in C.load()}
+        agg = regions.get(rid)
+
+        blob = _read_json(ds.BASE / "output" / "wellbeing_all_countries.json", {}) or {}
+        rows = [c for c in (blob.get("countries") or [])
+                if c.get("region") == rid]
+        # Worst first. A list of 58 countries alphabetical is a list nobody
+        # reads past the A's; the question this panel exists to answer is which
+        # of them are in trouble.
+        rows.sort(key=lambda c: (-(c.get("deprivation") or 0), c.get("name") or ""))
+
+        return jsonify({
+            "region_id": rid,
+            "found": agg is not None,
+            "aggregate": agg,
+            "computed_at": C.computed_at(),
+            "countries": rows,
+            "country_count": len(rows),
+            "sealed_at": blob.get("computed_at"),
+            "total_countries": blob.get("total"),
+            # STATED, NOT IMPLIED BY AN EMPTY CHART. There is no per-country
+            # history anywhere in this repo — wellbeing_all_countries.json is a
+            # single sealed snapshot with no series in it — so a sparkline here
+            # would be a flat line pretending to be a trend.
+            "history": {},
+            "history_why": ("no per-country history exists: "
+                            "output/wellbeing_all_countries.json is one sealed "
+                            "snapshot, not a series"),
+            "why_not": None if agg is not None else
+                       "no region with id {!r} in the sealed snapshot".format(rid),
+        })
+    except Exception as e:                                   # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e),
+                        "region_id": rid, "countries": []})
+
+
 @app.get("/api/columns")
 def api_columns():
     """The FIVE columns. Empty by construction until something writes them."""

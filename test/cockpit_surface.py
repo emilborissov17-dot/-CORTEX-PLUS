@@ -95,10 +95,10 @@ def routes() -> list:
 # A control is something a human can press. Classes carry the handler in this
 # page; ids carry it for the singletons.
 CONTROL_CLASSES = ("tab", "tabbtn", "jump", "degchip", "prow", "unrow", "axis",
-                   "pf", "cmd", "ask-run", "spd", "snd", "fbtn", "sw")
+                   "pf", "cmd", "ask-run", "spd", "snd", "fbtn", "sw", "rg")
 CONTROL_IDS = ("asksend", "askbox", "unread", "swmic", "swcam", "runclose",
                "connect", "closebtn", "tlcycle", "axisclose", "bodymissing",
-               "unreaddone", "soundtoggle")
+               "unreaddone", "soundtoggle", "regionclose")
 
 
 def controls() -> list:
