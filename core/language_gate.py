@@ -390,6 +390,17 @@ def check_purity(hours: int = 24, journal: Optional[pathlib.Path] = None,
                                     else (last_alarm.isoformat()
                                           if last_alarm else None))
         payload["alarmed"] = bool(due)
+        # SET BEFORE THE SNAPSHOT IS WRITTEN, not after. `payload` is copied
+        # from `result` above, and result["written"] was only set once the file
+        # had landed — which is after the copy, so the persisted file said
+        # "written": false EVERY TIME, including the times it wrote perfectly.
+        # A reader checking that field would conclude the quarantine record had
+        # failed to save while holding the saved record in their hand.
+        #
+        # Claiming it before the write is not optimism: if the write raises
+        # there is no file, so there is no false claim on disk to read. The
+        # field can only ever be seen inside a file that exists.
+        payload["written"] = True
 
         try:
             qpath.parent.mkdir(parents=True, exist_ok=True)
