@@ -34,6 +34,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 import fast_cycle_runner as fcr
+from core import extra_calls_ledger as ecl
 from memory import existence_ledger as el
 from memory import heartbeat as hb
 
@@ -45,6 +46,15 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
     monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")
     monkeypatch.setattr(fcr, "LOCK_PATH", tmp_path / "cycle.lock")
+    # AND THE EXTRA-CALLS LEDGER. _seal_cycle_record() closes it too since
+    # COMMAND 33 part 6, and it was not redirected here: six calls from this
+    # file wrote 54 fabricated seals into the real
+    # memory/extra_calls_log.jsonl — including a cycle "lasting" 45 days,
+    # which would have become the baseline every later night was measured
+    # against.
+    monkeypatch.setattr(ecl, "LEDGER", tmp_path / "extra_calls_log.jsonl")
+    monkeypatch.setattr(ecl, "SUSPENDED_FLAG", tmp_path / "suspended.flag")
+    monkeypatch.setattr(ecl, "PROPOSALS", tmp_path / "proposals.json")
     return tmp_path
 
 
@@ -159,3 +169,18 @@ def test_no_backfill_of_history():
     assert on_the_14th == [], (
         "someone backfilled a CYCLE_FINISHED for the cycle that ran during the bug"
     )
+
+
+# ── THE GUARD THAT WOULD HAVE CAUGHT IT (28 Aug 2026) ──────────────────────
+
+def test_sealing_a_cycle_here_leaves_the_real_ledgers_alone():
+    """Every path _seal_cycle_record touches, checked on disk.
+
+    A redirect that covers three of a function's four write surfaces is not a
+    sandbox. This asserts the real files by name rather than trusting that the
+    fixture kept up with the code.
+    """
+    for rel in ("memory/extra_calls_log.jsonl",
+                "memory/extra_calls_suspended.flag"):
+        assert not (REPO / rel).exists(), (
+            "%s exists, and no real cycle has run: a test wrote it" % rel)
