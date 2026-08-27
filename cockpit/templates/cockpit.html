@@ -131,6 +131,23 @@
   tr.prow{cursor:pointer}
   tr.prow.open td{background:#161c24}
   tr.detail td{background:#0e1218}
+  /* PART 2 — A DESCRIPTION IS NOT A LABEL.
+     Step descriptions were cut at 70 characters in JavaScript, so the end of
+     every sentence was destroyed before CSS ever saw it. The slice is gone; this
+     is what lets the rest of the sentence land. `word-break` rather than
+     `break-all` so a path breaks at its separators and stays readable. */
+  td.full{white-space:normal;overflow-wrap:anywhere;word-break:normal;
+          max-width:0;width:100%}
+  .full{white-space:pre-wrap;overflow-wrap:anywhere}
+
+  /* THE WHOLE ROW, BOTH COLUMNS. A hover that lit only the cell under the
+     pointer let the eye pair a step with the description of its neighbour —
+     which on a 31-row table is not a cosmetic problem. Pure CSS: no handler, so
+     it survives every re-render for free. */
+  tbody tr:hover > td, table tr:hover > td{background:#1a2028}
+  tr.detail:hover > td{background:#0e1218}
+  tr.prow.open:hover > td{background:#1d242e}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -831,8 +848,23 @@ async function tabGlass(){
   </div>`;
 }
 
+/* WHERE THE READER WAS. tick() re-renders every 15 seconds and render()
+   replaces #view wholesale, so the page jumped to the top twice a minute — on a
+   31-row step list that meant the row being read walked off the screen while it
+   was being read. The scroll offset is taken before the swap and put back after
+   it, on the SAME tab only: switching tab is a deliberate move to a new document
+   and should land at the top.
+
+   Restored synchronously, before the frame is painted, so there is no visible
+   jump-and-return. An anchor from goTo() wins — the reader asked for that. */
+let lastRenderedTab = null;
+
 async function render(){
   const view = $('#view');
+  const sameTab = (lastRenderedTab === active);
+  const keepY = sameTab ? (window.scrollY || 0) : 0;
+  lastRenderedTab = active;
+
   if(active === 'terminal'){
     view.innerHTML = tabTerminal();
     wireTerminal();
@@ -841,6 +873,9 @@ async function render(){
   try { view.innerHTML = await RENDER[active](); }
   catch(e){ view.innerHTML = `<div class="grid">${panel('error',
     `<div class="invalid">${esc(e.message||e)}</div>`)}</div>`; }
+  if(keepY && !pendingAnchor){
+    try{ window.scrollTo(0, keepY); }catch(e){}
+  }
   wirePanel();
 }
 
