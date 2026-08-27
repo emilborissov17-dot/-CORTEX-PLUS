@@ -108,10 +108,28 @@ class Reading:
     source: str = SOURCE_TAG
     reflexivity: int = REFLEXIVITY
 
+    @property
+    def declined(self) -> bool:
+        """We CHOSE not to read this just now — it is not missing.
+
+        The panel printed the same three words, NOT AVAILABLE, for a sensor this
+        machine does not have and for a sample this module deliberately refused
+        a second ago. On 27 Aug that read as a flat contradiction: the MIC ON
+        toggle was green, the microphone was working (measured: rms 1.4e-05),
+        and mic_rms said NOT AVAILABLE — because acoustic() had sampled 4
+        seconds earlier and CAPTURE_COOLDOWN_SEC is 10. Both statements were
+        true and together they looked like a lie.
+
+        Every refusal this module makes already says REFUSED in its reason;
+        this promotes that to a field so the page never has to sniff a string.
+        """
+        return str(self.reason or "").startswith("REFUSED")
+
     def as_dict(self) -> dict:
         return {"group": self.group, "key": self.key, "value": self.value,
                 "unit": self.unit, "available": self.available,
                 "reason": self.reason, "disabled": self.disabled,
+                "declined": self.declined,
                 "source": self.source, "reflexivity": self.reflexivity,
                 # Computed here so the API and the page cannot disagree about
                 # what colour a number is.

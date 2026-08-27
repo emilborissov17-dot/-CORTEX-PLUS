@@ -182,6 +182,17 @@
   .tstate.st-closed{color:var(--dim)}
   .pane{cursor:text}
 
+  /* PART 7 — the whole body in one look */
+  .bodycols{column-count:2;column-gap:18px}
+  @media (max-width:900px){ .bodycols{column-count:1} }
+  .bodygroup{break-inside:avoid;page-break-inside:avoid;margin-bottom:8px}
+  .bodycols table{font-size:11px}
+  .bodycols td{padding:1px 5px}
+  /* DECLINED reads as a decision, NOT AVAILABLE as an absence. */
+  .declined{color:var(--yel);font-size:11px}
+  .missing{border-top:1px solid var(--line);margin-top:6px}
+  .panel.landed{outline:1px solid var(--blu);outline-offset:2px}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -504,12 +515,23 @@ async function tabBody(){
    <div class="meta" style="margin-bottom:8px">all rows: source <b>hardware</b>,
      reflexivity <b>0</b> — raw sensor, no interpretation. A row shows its own tag
      only when it differs.</div>`;
+  /* TWO COLUMNS, GROUPS KEPT WHOLE. Forty-two rows in one column ran off a
+     1080p screen, so reading the body meant scrolling it — and a body you have
+     to scroll is a body you compare against your memory of the top of it. CSS
+     columns rather than a grid because the groups are variable-length and
+     break-inside:avoid keeps each one intact. */
+  html += `<div class="bodycols">`;
   for(const [g, rows] of Object.entries(d.groups)){
     if(!rows.length) continue;
-    html += `<div style="margin-bottom:6px"><div class="meta" style="font-size:10px;letter-spacing:.1em">${esc(g)}</div><table>`;
+    html += `<div class="bodygroup"><div class="meta" style="font-size:10px;letter-spacing:.1em">${esc(g)}</div><table>`;
     for(const r of rows){
       let cell;
       if(r.disabled) cell = `<span class="pill">DISABLED</span>`;
+      /* DECLINED IS NOT MISSING, and printing the same three words for both is
+         what made the mic look like it was lying: the toggle was green, the
+         microphone was working, and the row said NOT AVAILABLE because the
+         10-second capture cooldown had refused this particular sample. */
+      else if(r.declined) cell = `<span class="declined" title="${esc(r.reason)}">DECLINED</span>`;
       else if(!r.available) cell = `<span class="meta" title="${esc(r.reason)}">NOT AVAILABLE</span>`;
       else if(typeof r.value === 'number' && r.band){
         /* ITEM D — the colour comes from the API's band, which knows whether
@@ -526,11 +548,29 @@ async function tabBody(){
     }
     html += `</table></div>`;
   }
-  html += `<details><summary>NOT AVAILABLE on this machine (${d.not_available.length})</summary><table>` +
-    d.not_available.map(x=>`<tr><td>${esc(x.key)}</td><td class="meta">${esc(x.reason)}</td></tr>`).join('') + `</table></details>`;
-  return `<div class="grid">${panel(
-    'Somatic map · '+d.available_count+'/'+d.total_count+' · vector '+esc(d.state_vector.version)+
-    ' '+d.state_vector.measured+'/'+d.state_vector.dims, html, true)}</div>`;
+  html += `</div>`;
+
+  /* WHY, PER SENSOR. The list existed but was folded into a <details> at the
+     bottom of a page the reader had to scroll to reach, and the header count
+     that raises the question — "31/42" — was not connected to it. */
+  const missing = d.not_available || [];
+  /* BUILT ONLY WHEN OPEN, not hidden with CSS. Same rule as the tabs
+     themselves: a panel nobody is looking at should cost nothing to draw, and
+     test_only_the_active_tab_is_built enforces it across this whole file. */
+  if(bodyMissingOpen){
+    html += `<div id="anchor-missing" class="missing">
+      <div class="meta" style="margin:6px 0 4px">${missing.length} of
+        ${esc(d.total_count)} could not be read on this machine, and why:</div>
+      <table>${missing.map(x=>`<tr><td style="width:30%">${esc(x.key)}</td>
+        <td class="full meta">${esc(x.reason)}</td></tr>`).join('')
+        || '<tr><td class="meta">every sensor answered</td></tr>'}</table></div>`;
+  }
+
+  const head = `<button class="jump" id="bodymissing">${d.available_count}/${d.total_count}</button>`
+    + ` available · vector ${esc(d.state_vector.version)} `
+    + `${d.state_vector.measured}/${d.state_vector.dims}`;
+  return `<div class="grid">${panel('Somatic map', `<div class="meta"
+    style="margin-bottom:6px">${head}</div>` + html, true)}</div>`;
 }
 
 /* Which proposal rows are open, and whether the DEGRADED chip is showing its
@@ -540,6 +580,9 @@ async function tabBody(){
 /* What this session has asked. The queue itself is read from /api/ask, so a
    question survives a reload; this list is what makes the newest one visible
    immediately, without waiting for a poll. */
+/* Whether the BODY tab is showing WHY the missing sensors are missing. */
+let bodyMissingOpen = false;
+
 let askedNow = [];
 
 const openProposals = new Set();
@@ -1024,6 +1067,11 @@ function wirePanel(){
               catch(e){ el.scrollIntoView(); }
               el.classList.add('landed'); }
     });
+  const bm = $('#bodymissing');
+  if(bm) bm.onclick = () => { bodyMissingOpen = !bodyMissingOpen;
+                              pendingAnchor = bodyMissingOpen ? 'anchor-missing' : null;
+                              return render(); };
+
   const ud = $('#unreaddone');
   if(ud) ud.onclick = () => { unreadShown = []; return render(); };
 
