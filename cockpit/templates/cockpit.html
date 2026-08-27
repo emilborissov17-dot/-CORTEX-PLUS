@@ -664,6 +664,15 @@ async function tabBody(){
          what made the mic look like it was lying: the toggle was green, the
          microphone was working, and the row said NOT AVAILABLE because the
          10-second capture cooldown had refused this particular sample. */
+      /* A COOLDOWN ENDS, AND SAYS WHEN. "DECLINED" told the reader it was a
+         decision and left them no way to know whether to wait a second or a
+         minute — so the next thing they did was refresh, which is the exact
+         behaviour the cooldown exists to prevent. A refusal that cannot name
+         its end (a cycle is running) keeps the bare word rather than inventing
+         a promise. */
+      else if(r.declined && r.cooldown_sec_left != null)
+        cell = `<span class="declined" title="${esc(r.reason)}">DECLINED —
+          cooldown, next sample in ${esc(Math.ceil(r.cooldown_sec_left))}s</span>`;
       else if(r.declined) cell = `<span class="declined" title="${esc(r.reason)}">DECLINED</span>`;
       else if(!r.available) cell = `<span class="meta" title="${esc(r.reason)}">NOT AVAILABLE</span>`;
       else if(typeof r.value === 'number' && r.band){

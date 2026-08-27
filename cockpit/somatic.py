@@ -107,6 +107,12 @@ class Reading:
     disabled: bool = False
     source: str = SOURCE_TAG
     reflexivity: int = REFLEXIVITY
+    # HOW LONG THE REFUSAL LASTS, when the refusal is a cooldown. None for
+    # every other kind. "DECLINED" told the reader it was a decision and left
+    # them with no way to know whether to wait one second or a minute, so the
+    # next thing they did was refresh the page — which is the behaviour the
+    # cooldown exists to prevent.
+    cooldown_sec_left: object = None
 
     @property
     def declined(self) -> bool:
@@ -125,11 +131,25 @@ class Reading:
         """
         return str(self.reason or "").startswith("REFUSED")
 
+    @property
+    def declined_kind(self) -> str:
+        """Why it was declined, in one word the page can branch on.
+
+        A cooldown ENDS; a cycle-time refusal ends when the cycle does, which
+        this module cannot put a number on. Printing "next sample in Ns" for
+        the second would be inventing a promise.
+        """
+        if not self.declined:
+            return ""
+        return "cooldown" if self.cooldown_sec_left is not None else "refused"
+
     def as_dict(self) -> dict:
         return {"group": self.group, "key": self.key, "value": self.value,
                 "unit": self.unit, "available": self.available,
                 "reason": self.reason, "disabled": self.disabled,
                 "declined": self.declined,
+                "declined_kind": self.declined_kind,
+                "cooldown_sec_left": self.cooldown_sec_left,
                 "source": self.source, "reflexivity": self.reflexivity,
                 # Computed here so the API and the page cannot disagree about
                 # what colour a number is.
@@ -137,8 +157,10 @@ class Reading:
                 "direction": direction_of(self.key)}
 
 
-def _na(group: str, key: str, reason: str, unit: str = "") -> Reading:
-    return Reading(group, key, None, unit, available=False, reason=reason)
+def _na(group: str, key: str, reason: str, unit: str = "",
+        cooldown_left=None) -> Reading:
+    return Reading(group, key, None, unit, available=False,
+                   cooldown_sec_left=cooldown_left, reason=reason)
 
 
 def _off(group: str, key: str, unit: str = "") -> Reading:
@@ -658,7 +680,8 @@ def acoustic(enabled: bool = False) -> list:
                     "REFUSED: {:.1f}s left of the {:.0f}s capture cooldown — a "
                     "15-second page refresh must not become a device that "
                     "samples the room every 15 seconds".format(
-                        left, CAPTURE_COOLDOWN_SEC), "rms")]
+                        left, CAPTURE_COOLDOWN_SEC), "rms",
+                    cooldown_left=round(left, 1))]
     _stamp("mic")
     rms, err = mic_rms_once()
     if err:
@@ -688,8 +711,10 @@ def optic(enabled: bool = False) -> list:
     if left is not None:
         msg = ("REFUSED: {:.1f}s left of the {:.0f}s capture cooldown".format(
             left, CAPTURE_COOLDOWN_SEC))
-        return [_na("OPTIC", "camera_lux", msg, "lux"),
-                _na("OPTIC", "motion_mse", msg, "mse")]
+        return [_na("OPTIC", "camera_lux", msg, "lux",
+                    cooldown_left=round(left, 1)),
+                _na("OPTIC", "motion_mse", msg, "mse",
+                    cooldown_left=round(left, 1))]
     _stamp("camera")
     lux, mse, err = camera_scalars_once()
     if err:
