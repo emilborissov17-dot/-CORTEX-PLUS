@@ -743,7 +743,19 @@ def test_only_the_active_tab_is_built():
     deliberately, never a tab that is built and then covered up.
     """
     html = PAGE.read_text(encoding="utf-8")
-    assert "view.innerHTML = await RENDER[active]()" in html
+    # THE PROPERTY, NOT THE LINE. This asserted the exact source string
+    # `view.innerHTML = await RENDER[active]()`, which stopped existing when
+    # part 14 split the await from the assignment to discard a stale render.
+    # Nothing about "only the active tab is built" had changed; a test pinned
+    # to one arrangement of a statement fails on a refactor that preserves
+    # everything it cares about.
+    assert "await RENDER[active]()" in html, (
+        "the page no longer builds exactly the active tab and nothing else")
+    for name in ("tabOverview", "tabWorld", "tabBody", "tabGlass",
+                 "tabTerminal"):
+        assert "await %s()" % name not in html, (
+            "%s is awaited by name, so a tab nobody is looking at is being "
+            "built" % name)
     offenders = [l.strip() for l in html.splitlines()
                  if "display:none" in l and "pane-" not in l
                  and "[hidden]" not in l and not l.strip().startswith("/*")

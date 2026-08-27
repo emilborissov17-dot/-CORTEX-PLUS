@@ -121,3 +121,74 @@ def test_the_sweep_never_accepts_an_in_memory_property_as_evidence():
     assert not offenders, (
         "the sweep reads an in-memory property as evidence:\n  "
         + "\n  ".join(offenders))
+
+
+# ── THE GATE ON THE GATE (COMMAND 33 part 14) ──────────────────────────────
+#
+# The rule above is only as good as the inventory, and CONTROL_CLASSES /
+# CONTROL_IDS in cockpit_surface.py are hand-written tuples. A control added
+# with a class nobody thought to add to them is INVISIBLE to the inventory, so
+# the coverage gate stays green while the control goes unexercised — the exact
+# blind spot the sweep was built to remove, one level up.
+#
+# So the wiring is parsed too: everything wireControls() hands a handler to has
+# to be in the inventory. Adding a control and forgetting the tuple now goes
+# red here, naming it.
+
+def test_every_control_the_page_wires_is_in_the_inventory():
+    w = cs.wired_controls()
+    missing_c = sorted(w["classes"] - set(cs.CONTROL_CLASSES)
+                       - set(cs.WIRED_ELSEWHERE))
+    missing_i = sorted(w["ids"] - set(cs.CONTROL_IDS) - set(cs.WIRED_ELSEWHERE))
+    assert not (missing_c or missing_i), (
+        "the page binds handlers to controls the parsed inventory has never "
+        "heard of, so the coverage rule above cannot see them:\n"
+        "  classes: %s\n  ids: %s\n\n"
+        "Add each to CONTROL_CLASSES / CONTROL_IDS in test/cockpit_surface.py, "
+        "or to WIRED_ELSEWHERE with the reason it is bound outside "
+        "wireControls()." % (missing_c, missing_i))
+
+
+def test_the_wiring_parser_actually_finds_things():
+    """Guard on the guard on the guard. A parser that finds nothing passes
+    everything, which is how the sweep was green while exercising 8 of 24."""
+    w = cs.wired_controls()
+    assert len(w["classes"]) >= 10, w["classes"]
+    assert len(w["ids"]) >= 10, w["ids"]
+    # the controls this command added must be among them, or the parse is
+    # reading a stale part of the file
+    assert "rg" in w["classes"], "the map's shapes are not seen as wired"
+    assert {"soundtoggle", "regionclose"} <= w["ids"]
+
+
+def test_the_gate_goes_red_for_an_unlisted_control():
+    """The negative control. A gate nobody has seen fail is a gate nobody has
+    tested — and this one is three levels of indirection from the page."""
+    w = cs.wired_controls()
+    pretend = set(w["classes"]) | {"newthing"}
+    missing = sorted(pretend - set(cs.CONTROL_CLASSES) - set(cs.WIRED_ELSEWHERE))
+    assert missing == ["newthing"], (
+        "adding a wired control the inventory does not list is not detected: "
+        "%s" % missing)
+
+
+def test_every_exemption_carries_its_reason():
+    """WIRED_ELSEWHERE is an escape hatch, so it has to cost a sentence."""
+    for name, why in cs.WIRED_ELSEWHERE.items():
+        assert why and len(why) > 15, (
+            "%r is exempted from the wiring check with no real reason: %r"
+            % (name, why))
+        assert name in covered(), (
+            "%r is exempt from the WIRING check and also absent from the "
+            "sweep, so nothing exercises it at all" % name)
+
+
+def test_everything_this_command_added_is_exercised():
+    """Named rather than derived, so the report can be checked against it."""
+    added = {"snd", "soundtoggle", "rg", "regionclose"}
+    have = covered()
+    missing = sorted(added - have)
+    assert not missing, "controls added by COMMAND 33 that no sweep assertion "\
+                        "touches: %s" % missing
+    names = {name for _k, name, _w in cs.controls()}
+    assert added <= names, "not all of them reached the parsed inventory"

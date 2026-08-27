@@ -1376,7 +1376,27 @@ let lastRenderedTab = null;
    can say how stale its snapshot has become without re-running anything. */
 let tickCount = 0;
 
+/* ONE RENDER AT A TIME, AND THE NEWEST WINS.
+   FOUND BY THE FULL SWEEP (COMMAND 33 part 14). `view.innerHTML = await
+   RENDER[active]()` awaits, and BODY awaits a real sensor read. Switch from
+   BODY to TERMINAL while that is in flight and the sequence is: terminal
+   renders (its path is synchronous), then body's promise resolves and writes
+   ITS html into #view. The tab header says TERMINAL and the page shows the
+   somatic map.
+
+   The sweep reported that as "NOT EXERCISED: no #closebtn rendered on the
+   terminal tab with this machine's data" — a statement about the data, for a
+   control that was never absent. Every control on a fast tab entered from a
+   slow one was one race away from being declared missing, and a reader
+   switching tabs while the body was loading saw the wrong page with no way to
+   know why.
+
+   A counter, not a lock: a stale render is DISCARDED rather than queued,
+   because its content is already out of date by the time it arrives. */
+let renderSeq = 0;
+
 async function render(){
+  const seq = ++renderSeq;
   const view = $('#view');
   const sameTab = (lastRenderedTab === active);
   const keepY = sameTab ? (window.scrollY || 0) : 0;
@@ -1393,9 +1413,15 @@ async function render(){
     ageRun();
     return;
   }
-  try { view.innerHTML = await RENDER[active](); }
-  catch(e){ view.innerHTML = `<div class="grid">${panel('error',
+  let html;
+  try { html = await RENDER[active](); }
+  catch(e){ html = `<div class="grid">${panel('error',
     `<div class="invalid">${esc(e.message||e)}</div>`)}</div>`; }
+  /* CHECKED AFTER THE AWAIT, WHICH IS THE ONLY PLACE IT MATTERS. Another
+     render started while this one was waiting, so this html describes a tab
+     the reader has already left. */
+  if(seq !== renderSeq) return;
+  view.innerHTML = html;
   if(keepY && !pendingAnchor){
     try{ window.scrollTo(0, keepY); }catch(e){}
   }

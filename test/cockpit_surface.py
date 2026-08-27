@@ -95,10 +95,54 @@ def routes() -> list:
 # A control is something a human can press. Classes carry the handler in this
 # page; ids carry it for the singletons.
 CONTROL_CLASSES = ("tab", "tabbtn", "jump", "degchip", "prow", "unrow", "axis",
-                   "pf", "cmd", "ask-run", "spd", "snd", "fbtn", "sw", "rg")
+                   "pf", "cmd", "ask-run", "spd", "snd", "fbtn", "sw", "rg",
+                   "legend")
 CONTROL_IDS = ("asksend", "askbox", "unread", "swmic", "swcam", "runclose",
                "connect", "closebtn", "tlcycle", "axisclose", "bodymissing",
                "unreaddone", "soundtoggle", "regionclose")
+
+
+def wired_controls() -> dict:
+    """Selectors the page ACTUALLY BINDS A HANDLER TO, parsed from the wiring.
+
+    CONTROL_CLASSES and CONTROL_IDS above are a list, and a list is exactly the
+    blind spot the sweep exists to remove: a control added with a class nobody
+    added to that tuple is invisible to the inventory, so the coverage gate
+    stays green while the control goes unexercised. This reads the wiring
+    functions instead — everything wireControls() hands a handler to.
+
+    Returns {"classes": {...}, "ids": {...}}. The comparison against the two
+    tuples is a test, not this function's job.
+    """
+    i = SCRIPT.index("function wireControls()")
+    # to the end of wirePanel, which is the last of the three wiring functions
+    j = SCRIPT.index("function render(", i) if "function render(" in SCRIPT[i:] \
+        else i + 9000
+    block = SCRIPT[i:j]
+
+    classes, ids = set(), set()
+    for m in re.finditer(r"querySelectorAll\(\s*'([^']+)'", block):
+        sel = m.group(1)
+        for c in re.findall(r"\.([\w-]+)", sel):
+            classes.add(c)
+        # [data-sw] is how the body toggles are reached; the class on them is
+        # what a reader sees and what the sweep presses.
+        for a in re.findall(r"\[data-([\w-]+)\]", sel):
+            classes.add(a)
+    for m in re.finditer(r"\$\(\s*'#([\w-]+)'\s*\)", block):
+        ids.add(m.group(1))
+    return {"classes": classes, "ids": ids}
+
+
+# Bound outside wireControls() on purpose, and therefore not discoverable by
+# the parse above. Each one is listed WITH the reason it is elsewhere, so the
+# exemption is a decision on the record rather than a gap.
+WIRED_ELSEWHERE = {
+    "tab": "the tab bar is built and bound once, before wireControls exists",
+    "tabbtn": "the terminal builds its own pane switcher",
+    "connect": "the terminal session controls are bound by the terminal code",
+    "closebtn": "the terminal session controls are bound by the terminal code",
+}
 
 
 def controls() -> list:

@@ -153,9 +153,29 @@ SLOW_TABS = {"body": 6.0, "terminal": 6.0, "glass": 4.0, "expression": 3.5}
 
 
 def go(b, tab: str, settle: float = 1.2):
-    """Switch tab through the page's own control, then let it render."""
+    """Switch tab through the page's own control, and CONFIRM it arrived.
+
+    This used to fire switchTo() and sleep. It asserted nothing, so a switch
+    that did not take left the test looking for controls on a tab that was
+    never built — and the sweep reported that as "NOT EXERCISED: no #closebtn
+    rendered with this machine's data", which is a statement about the machine
+    and not about what happened. A skip that blames the data for a switch that
+    silently failed is worse than a failure.
+    """
     b.js(f"return switchTo({tab!r}), true;")
     time.sleep(max(settle, SLOW_TABS.get(tab, 0.0)))
+    deadline = time.time() + 8.0
+    while time.time() < deadline:
+        if b.js("return active;") == tab:
+            return
+        time.sleep(0.4)
+    # One honest retry, then say plainly which of the two things went wrong.
+    b.js(f"return switchTo({tab!r}), true;")
+    time.sleep(max(settle, SLOW_TABS.get(tab, 0.0)))
+    assert b.js("return active;") == tab, (
+        f"the page would not switch to {tab!r}; it is on "
+        f"{b.js('return active;')!r}. Every control assertion after this would "
+        f"have skipped as NOT EXERCISED and blamed the data.")
 
 
 def wait_for(b, selector: str, timeout: float = 12.0) -> int:
@@ -276,6 +296,13 @@ CONTROLS = {
 
     "tlcycle":  dict(tab="expression", sel="#tlcycle", what="the timeline reloads",
                      event="change"),
+    # FOUND BY THE WIRING PARSER IN PART 14. The legend has had an ontoggle
+    # handler since COMMAND 30 and nothing had ever opened it in a renderer:
+    # it was not in CONTROL_CLASSES, so the coverage gate could not see it.
+    # Clicking the summary expands a table — visible to a renderer as both a
+    # row count and a height change.
+    "legend":   dict(tab="expression", sel=".legend summary",
+                     what="the legend unfolds and its rows appear"),
     "unread":   dict(tab="overview", sel="#unread",   what="the unread list is rendered",
                      mutates="memory/expression_pending.json"),
     "unrow":    dict(tab="overview", sel=".unrow",    what="scrolls to the line in the timeline",
@@ -309,6 +336,14 @@ CONTROLS = {
     "tabbtn":   dict(tab="terminal", sel=".tabbtn",   what="the shell pane changes",
                      pick=1),   # not [0]: that is the pane already showing
     "connect":  dict(tab="terminal", sel="#connect",  what="the session state word changes"),
+    # #closebtn WAS THE SWEEP'S ONE STANDING NOT EXERCISED, reported honestly
+    # every run and never acted on. The comments above show it being fought as
+    # impatience — the terminal's wait was raised twice for it — and it was not
+    # impatience and not the data. It was the render race fixed in part 14:
+    # #view still held the BODY tab while `active` already said terminal. Two
+    # wrong theories were tried first and are recorded here so the third
+    # attempt is not a fourth: it is not an arrange (the button is static
+    # markup, always present once the tab is drawn) and it is not ordering.
     "closebtn": dict(tab="terminal", sel="#closebtn", what="the session state word changes"),
 }
 
@@ -481,6 +516,125 @@ def test_a_control_changes_something_the_renderer_can_see(page, name, pass_no):
         f"{name} on the {tab} tab: operating it changed NOTHING the renderer "
         f"can see and issued no request. Expected: {what}.\n"
         f"  before={before}\n  after ={after}")
+
+
+# ── THE TAB YOU ARE ON IS THE TAB YOU SEE (COMMAND 33 part 14) ─────────────
+
+
+@pytest.mark.render_sweep
+def test_a_slow_tabs_render_cannot_land_on_a_newer_one(page):
+    """The defect the full sweep found, as a test.
+
+    BODY awaits a real sensor read. Leaving it for TERMINAL while that is in
+    flight used to end with `active === 'terminal'` and the somatic map painted
+    into #view — the header saying one thing and the page showing another. The
+    sweep reported it as "NOT EXERCISED: no #closebtn rendered with this
+    machine's data", which blamed the data for a control that was never absent.
+    """
+    go(page, "body", settle=0.0)          # deliberately do NOT wait for it
+    page.js("return switchTo('terminal'), true;")
+    time.sleep(6.0)
+
+    assert page.js("return active;") == "terminal"
+    assert page.count("#closebtn") == 1, (
+        "the terminal tab is active and its own controls are not on the page")
+    head = page.text("#view")[:80]
+    assert "SOMATIC" not in head.upper(), (
+        "the body tab's render landed on top of the terminal's: the header "
+        "says TERMINAL and the page shows %r" % head)
+
+
+@pytest.mark.render_sweep
+def test_the_guard_is_a_counter_and_not_a_lock(page):
+    """A stale render must be DISCARDED, not queued behind the new one — its
+    content is already out of date by the time it arrives."""
+    go(page, "overview", settle=1.2)
+    seq_before = page.js("return renderSeq;")
+    page.js("return render(), true;")
+    time.sleep(2.0)
+    assert page.js("return renderSeq;") > seq_before, (
+        "render() does not stamp itself, so it cannot tell whether it is still "
+        "the newest")
+
+
+# ── WHAT OPENS MUST CLOSE, BOTH WAYS (COMMAND 33 part 14) ──────────────────
+#
+# The overlay tests below have held this contract for #runwrap since COMMAND
+# 30.2. This command adds a second and a third thing that opens — the region
+# panel on WORLD, and the axis panel beside it — and a contract that is only
+# tested on the control it was written for is a contract that quietly stops
+# applying to everything added afterwards.
+
+
+def _open_region(b):
+    """Open the first region, idempotently. Returns True if one is open."""
+    go(b, "world", settle=2.0)
+    if not wait_for(b, ".rg", timeout=8.0):
+        return False
+    if not b.js("return !!document.querySelector('#regionclose');"):
+        b.js("""
+          const r = document.querySelector('.rg');
+          if (r) r.dispatchEvent(new MouseEvent('click',
+                   {bubbles:true, cancelable:true}));
+          return true;""")
+        time.sleep(3.0)
+    return bool(b.js("return !!document.querySelector('#regionclose');"))
+
+
+@pytest.mark.render_sweep
+def test_the_region_panel_closes_by_its_own_control(page):
+    if not _open_region(page):
+        pytest.skip("NOT EXERCISED: no region panel opened on this machine")
+    assert page.click("#regionclose", settle=2.5), "#regionclose is unreachable"
+    assert page.js("return !!document.querySelector('#regionclose');") is False, (
+        "the region panel's own close button leaves it open")
+
+
+@pytest.mark.render_sweep
+def test_the_region_panel_closes_on_escape(page):
+    """A reader who has covered the page should not have to find a button."""
+    if not _open_region(page):
+        pytest.skip("NOT EXERCISED: no region panel opened on this machine")
+    page.js("""
+      document.dispatchEvent(new KeyboardEvent('keydown',
+        {key:'Escape', bubbles:true}));
+      return true;""")
+    time.sleep(2.5)
+    assert page.js("return !!document.querySelector('#regionclose');") is False, (
+        "Escape does not close the region panel")
+
+
+@pytest.mark.render_sweep
+def test_the_axis_panel_closes_on_escape_too(page):
+    """It gained the same handler in the same commit; a contract applied to one
+    of two identical panels is an accident waiting to be noticed."""
+    go(page, "world", settle=2.0)
+    if not wait_for(page, ".axis", timeout=8.0):
+        pytest.skip("NOT EXERCISED: no axis pills on this machine")
+    if not page.js("return !!document.querySelector('#axisclose');"):
+        page.click(".axis", settle=2.5)
+    if not page.js("return !!document.querySelector('#axisclose');"):
+        pytest.skip("NOT EXERCISED: the axis panel did not open")
+    page.js("""
+      document.dispatchEvent(new KeyboardEvent('keydown',
+        {key:'Escape', bubbles:true}));
+      return true;""")
+    time.sleep(2.5)
+    assert page.js("return !!document.querySelector('#axisclose');") is False, (
+        "Escape does not close the axis panel")
+
+
+@pytest.mark.render_sweep
+def test_a_tick_does_not_reopen_a_closed_region_panel(page):
+    """render() runs every 15 seconds and rebuilds #view. State that lives in
+    the DOM comes back; state that lives in a variable does not."""
+    if not _open_region(page):
+        pytest.skip("NOT EXERCISED: no region panel opened on this machine")
+    page.click("#regionclose", settle=2.0)
+    page.js("return render(), true;")
+    time.sleep(2.5)
+    assert page.js("return !!document.querySelector('#regionclose');") is False, (
+        "a re-render brought the closed panel back")
 
 
 # ── THE TWO THAT WERE FOUND DEAD (COMMAND 33 part 13) ──────────────────────
