@@ -69,6 +69,10 @@ FAILED = "FAILED"
 SKIPPED_RESOURCES = "SKIPPED_RESOURCES"
 SKIPPED_BUSY = "SKIPPED_BUSY"
 BREAKER_OFF = "BREAKER_OFF"
+# Set by the PREVIOUS cycle's ledger seal, not by this one. See
+# core/extra_calls_ledger.py: a cycle that cost more than the ceiling allows
+# writes memory/extra_calls_suspended.flag, and this is where it bites.
+SKIPPED_SUSPENDED = "SKIPPED_SUSPENDED"
 
 # IN THIS PROCESS ONLY. Reset by reset_cycle() at boot; never written to disk.
 _consecutive_failures = 0
@@ -174,17 +178,55 @@ def wait_until_free(max_wait: float = BUSY_WAIT_MAX_SEC, ps_url: str = OLLAMA_PS
 
 # ── (c) + (d) the one door ──────────────────────────────────────────────────
 
-def guarded_extra_call(kind: str, prompt: str, model: str = "qwen2.5:3b",
+def guarded_extra_call(kind: str, prompt: str, cycle: Optional[dict] = None,
+                       flag_path=None, ledger_path=None, **kw) -> dict:
+    """The only way an extra model call is made. Never raises.
+
+    outcome is one of COMPLETED, TIMEOUT, FAILED, SKIPPED_RESOURCES,
+    SKIPPED_BUSY, BREAKER_OFF, SKIPPED_SUSPENDED.
+
+    THE LEDGER LINE IS WRITTEN HERE, at the door, not by the callers. Two
+    callers each remembering to log is two chances to forget; and the outcomes
+    worth measuring most are the ones a caller would never think to record —
+    SKIPPED_BUSY spent up to five seconds of the phase not calling anything.
+
+    A row is appended ONLY when `cycle` names a real cycle. Without it this
+    function is exactly as it was, which is what keeps the tests off live state.
+    """
+    from core import extra_calls_ledger as _led
+
+    # THE PREVIOUS NIGHT'S VERDICT, ACTING. Checked before the breaker and
+    # before resources: if the last cycle proved these calls cost too much,
+    # there is nothing to measure and no room to argue about.
+    if _led.suspended(flag_path):
+        rec = {"extra_kind": kind, "model": kw.get("model", "qwen2.5:3b"),
+               "outcome": SKIPPED_SUSPENDED, "text": None, "extra_time_ms": 0,
+               "queue_wait_ms": 0,
+               "why": "extra calls are suspended: the last cycle went over the "
+                      "cost ceiling. Delete memory/extra_calls_suspended.flag, "
+                      "or let one clean cycle clear it."}
+    else:
+        rec = _attempt(kind, prompt, **kw)
+
+    if cycle and cycle.get("cycle_id"):
+        rec["ledger"] = _led.record(
+            rec["outcome"], cycle["cycle_id"], cycle.get("phase") or "UNMAPPED",
+            kind,
+            regular_step_time_ms=cycle.get("regular_step_time_ms"),
+            extra_time_ms=rec.get("extra_time_ms"),
+            queue_wait_ms=rec.get("queue_wait_ms"),
+            phase_total_time_ms=cycle.get("phase_total_time_ms"),
+            path=ledger_path)
+    return rec
+
+
+def _attempt(kind: str, prompt: str, model: str = "qwen2.5:3b",
                        url: str = OLLAMA_GENERATE, ps_url: str = OLLAMA_PS,
                        num_predict: int = NUM_PREDICT,
                        timeout: float = HTTP_TIMEOUT_SEC,
                        extra_body: Optional[dict] = None,
                        sleep=time.sleep, opener=None) -> dict:
-    """The only way an extra model call is made. Never raises.
-
-    Returns a record: outcome is one of COMPLETED, TIMEOUT, FAILED,
-    SKIPPED_RESOURCES, SKIPPED_BUSY, BREAKER_OFF.
-    """
+    """The four guards. Reached only through guarded_extra_call()."""
     global _consecutive_failures, _breaker_open
 
     t0 = time.monotonic()

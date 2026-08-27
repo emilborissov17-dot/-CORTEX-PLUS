@@ -28,8 +28,19 @@ from core import extra_calls as ec  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
-def fresh_breaker():
+def fresh_breaker(monkeypatch):
+    """A clean breaker AND a machine with room.
+
+    The resource guard reads THIS laptop. Without pinning it, every test below
+    that expects a call to go out is really asking "is Emil running anything
+    right now" — nine of them failed under a concurrent test run, with the door
+    behaving perfectly. The three tests that are about resources set their own
+    values inside the test body, which overrides this.
+    """
     ec.reset_cycle()
+    monkeypatch.setattr(ec, "_ram_free_mb", lambda: 8000.0)
+    monkeypatch.setattr(ec, "_vram_free_mb", lambda: (8000.0, None))
+    monkeypatch.setattr(ec, "_models_running", lambda *a, **k: (0, None))
     yield
     ec.reset_cycle()
 

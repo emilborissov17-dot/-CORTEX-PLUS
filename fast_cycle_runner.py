@@ -554,6 +554,23 @@ def _seal_cycle_record() -> None:
     except Exception as e:
         print(f"[FAST_CYCLE] existence: CYCLE_FINISHED -> FAILED: {type(e).__name__}: {e}")
 
+    # THE EXTRA-CALLS LEDGER CLOSES HERE, on EVERY cycle, including the nights
+    # when no extra call was made — because those nights are the control. Both
+    # switches in config/reactions.json are still false, so what accumulates now
+    # is ten baselines of a night WITHOUT extra calls, which is exactly what the
+    # first night with them has to be measured against.
+    try:
+        from core import extra_calls_ledger as _ecl
+        _seal = _ecl.seal_cycle(cycle_id or "unknown", duration)
+        print(f"[FAST_CYCLE] extra calls: {_seal['attempts']} attempt(s), "
+              f"cycle {'—' if _seal['cycle_delta_percent'] is None else str(_seal['cycle_delta_percent']) + '%'} "
+              f"vs baseline {_seal['baseline_cycle_time_s']}s "
+              f"({_seal['baseline_cycles']} cycle(s) of history)"
+              + (" — BREACH, next cycle suspended" if _seal["breach"] else ""))
+    except Exception as e:
+        print(f"[FAST_CYCLE] extra calls: ledger seal failed "
+              f"({type(e).__name__}: {e}) — the cycle is not affected")
+
     # Release OUR lock — and only ours. If the supervisor decided we were hung,
     # killed us, and started a replacement, the lock on disk belongs to the new
     # cycle. Deleting it would leave the live cycle unlocked and invite a second.
