@@ -466,6 +466,183 @@ def test_a_control_changes_something_the_renderer_can_see(page, name, pass_no):
         f"  before={before}\n  after ={after}")
 
 
+# ── THE TWO THAT WERE FOUND DEAD (COMMAND 33 part 13) ──────────────────────
+#
+# COMMAND 30.2 caught #connect and .unrow silently doing nothing, and 24 of 24
+# unread lines inert. Both are fixed, and both are covered above ONLY by the
+# general rule: "operating it changed something the renderer can see, or issued
+# a request." That rule is deliberately broad, which is its strength as a sweep
+# and its weakness as a regression guard — it would still pass if #connect
+# stopped opening a session but happened to repaint a panel, and it presses one
+# .unrow, not the twenty-fourth.
+#
+# So these two name what specifically must be true. A regression here says
+# which control broke and what it stopped doing, instead of "something on the
+# terminal tab changed less than expected".
+
+
+def _landed_within(b, timeout: float = 1.4, gap: float = 0.12) -> int:
+    """Poll for the landing highlight instead of sleeping through it.
+
+    THE HIGHLIGHT IS DELIBERATELY TRANSIENT: cockpit.html removes .landed after
+    1600ms, so a witness that settles for 2.5s and then looks finds nothing and
+    reports a working control as dead. That is the false-accusation failure the
+    sweep's own docstring warns about, and it caught this test first time.
+    """
+    import time as _t
+    deadline = _t.time() + timeout
+    best = 0
+    while _t.time() < deadline:
+        best = max(best, b.js(
+            "return document.querySelectorAll('.landed').length;"))
+        if best:
+            return best
+        _t.sleep(gap)
+    return best
+
+
+@pytest.mark.render_sweep
+def test_connect_changes_the_session_state_word_specifically(page):
+    """Not "something changed" — the status line, which is the whole point.
+
+    The first sweep reported this control dead because the snapshot sliced
+    #termstatus at 120 characters, one character before the only part of the
+    sentence that ever moves. The witness for a control that was falsely
+    accused should be the exact text that exonerated it.
+    """
+    go(page, "terminal", settle=2.0)
+    assert wait_for(page, "#connect"), "there is no #connect to press"
+
+    before_state = page.text("#tstate")
+    before_status = page.text("#termstatus")
+    assert page.click("#connect", settle=1.6), "#connect could not be operated"
+
+    after_state = page.text("#tstate")
+    after_status = page.text("#termstatus")
+    assert (after_state, after_status) != (before_state, before_status), (
+        "#connect no longer changes the terminal's session state.\n"
+        "  #tstate    {!r} -> {!r}\n"
+        "  #termstatus {!r} -> {!r}".format(before_state, after_state,
+                                            before_status, after_status))
+
+
+def _answered(b, index=0) -> dict:
+    """What the page did about the unread row at `index`. Never 'nothing'.
+
+    THE INVARIANT IS NOT "IT LANDS". The timeline is scoped to ONE cycle, and a
+    line written during a different one has no row to jump to — marking it an
+    orphan is the correct answer, not a failure. What must never happen again
+    is the third outcome: a click into the void, which is the complaint the
+    whole of COMMAND 30 started from.
+
+    The landing highlight is removed after 1600ms, so this watches for it
+    rather than settling past it — a witness that sleeps through the evidence
+    reports a working control as dead.
+    """
+    landed = _landed_within(b)
+    orphan = b.js("""
+      const rows = document.querySelectorAll('.unrow');
+      const el = rows[%d] || rows[rows.length - 1];
+      return el ? {orphan: el.classList.contains('orphan'),
+                   title: el.getAttribute('title') || ''} : null;""" % index)
+    return {"landed": landed, "orphan": (orphan or {}).get("orphan"),
+            "title": (orphan or {}).get("title") or ""}
+
+
+@pytest.mark.render_sweep
+def test_an_unread_line_never_clicks_into_the_void(page):
+    """The named witness for the 24-of-24 finding.
+
+    Two outcomes are correct and one is not. It lands on the timeline, or it
+    says on the line itself that the line is not on this cycle's timeline.
+    Silence is the regression.
+    """
+    go(page, "overview", settle=1.5)
+    if not wait_for(page, "#unread", timeout=6.0):
+        pytest.skip("NOT EXERCISED: nothing unread on this machine")
+    page.click("#unread", settle=2.5)
+    n = wait_for(page, ".unrow", timeout=8.0)
+    if not n:
+        pytest.skip("NOT EXERCISED: the unread list rendered no rows")
+
+    assert page.js("return document.querySelectorAll('.landed').length;") == 0, (
+        "something was already landed before any line was clicked")
+    assert page.click(".unrow", settle=0.0), ".unrow could not be operated"
+
+    r = _answered(page, 0)
+    assert r["landed"] >= 1 or (r["orphan"] and r["title"]), (
+        "clicking an unread line did NOTHING a renderer can see: it neither "
+        "landed on the timeline nor marked itself as absent from it. That is "
+        "the 24-of-24 inert finding from COMMAND 30.2, returned.\n"
+        "  %r" % r)
+    if r["orphan"]:
+        assert "not on the timeline" in r["title"], (
+            "the row was marked an orphan without saying why, which reads the "
+            "same as broken: %r" % r["title"])
+
+
+@pytest.mark.render_sweep
+def test_it_is_not_only_the_first_unread_line_that_works(page):
+    """The 30.2 finding was 24 of 24, not 1 of 24.
+
+    The general rule presses the first match. A fix that wired only the first
+    row would satisfy it completely, which is precisely the shape of the bug
+    that was found.
+    """
+    go(page, "overview", settle=1.5)
+    if not wait_for(page, "#unread", timeout=6.0):
+        pytest.skip("NOT EXERCISED: nothing unread on this machine")
+    page.click("#unread", settle=2.5)
+    n = wait_for(page, ".unrow", timeout=8.0)
+    if n < 2:
+        pytest.skip("NOT EXERCISED: fewer than two unread lines on this machine")
+
+    acted = page.js("""
+      const rows = document.querySelectorAll('.unrow');
+      const el = rows[rows.length - 1];
+      el.scrollIntoView({block:'center'});
+      el.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true}));
+      return true;""")
+    assert acted
+    r = _answered(page, n - 1)
+    assert r["landed"] >= 1 or (r["orphan"] and r["title"]), (
+        "the LAST unread line does nothing at all while the first one answers "
+        "— only the row the general rule happens to press was ever wired: %r"
+        % r)
+
+
+@pytest.mark.render_sweep
+def test_an_unread_line_with_no_timeline_entry_says_so_rather_than_failing(page):
+    """The orphan case, named. A line that cannot be landed on must SAY it
+    cannot, not silently do nothing — which is indistinguishable from dead."""
+    go(page, "overview", settle=1.5)
+    if not wait_for(page, "#unread", timeout=6.0):
+        pytest.skip("NOT EXERCISED: nothing unread on this machine")
+    page.click("#unread", settle=2.5)
+    if not wait_for(page, ".unrow", timeout=8.0):
+        pytest.skip("NOT EXERCISED: the unread list rendered no rows")
+
+    # ORPHANS DO NOT EXIST UNTIL A CLICK. The class is added by the handler
+    # when the timeline has no row to jump to, so checking for one before
+    # clicking skipped this test with a reason that was simply untrue: "no
+    # orphan lines in this machine's data".
+    page.js("""
+      document.querySelectorAll('.unrow').forEach(r =>
+        r.dispatchEvent(new MouseEvent('click', {bubbles:true, cancelable:true})));
+      return true;""")
+    time.sleep(1.0)
+    orphans = page.js("return document.querySelectorAll('.unrow.orphan').length;")
+    if not orphans:
+        pytest.skip("NOT EXERCISED: every unread line is on this cycle's "
+                    "timeline, so nothing was orphaned")
+    marked = page.js("""
+      const o = document.querySelector('.unrow.orphan');
+      return getComputedStyle(o, '::after').content || '';""")
+    assert marked and marked not in ("none", '""'), (
+        "an orphan line looks exactly like a working one, so a reader cannot "
+        "tell 'not on this timeline' from 'this control is broken'")
+
+
 # ── 2.2  anything that opens must close, by its control AND by Escape ───────
 
 def test_the_overlay_opens_and_closes_by_its_own_control(page):
