@@ -800,7 +800,10 @@ def api_timeline():
         limit = 600
     blob = tl.collect(cycle, limit=limit,
                       include_pulse=request.args.get("pulse", "1") != "0")
-    return jsonify({**blob, "cycles_available": _timeline_cycles()})
+    # GENERATED from cockpit/timeline.SOURCES, never hand-written: a stream
+    # added to that table gains its legend line, and one deleted loses it.
+    return jsonify({**blob, "cycles_available": _timeline_cycles(),
+                    "legend": tl.legend()})
 
 
 def _timeline_cycles(limit: int = 20) -> list:

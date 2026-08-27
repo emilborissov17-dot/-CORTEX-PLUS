@@ -378,17 +378,94 @@ def read_dreams(root: pathlib.Path = DREAMS) -> list:
 # Order is the order the module docstring lists them in. `feeds` names the row
 # sources this file can produce, so "the file is there and it contributed
 # nothing to THIS cycle" is a statement the status can make.
+#
+# WRITER / WHEN / MEDIATION were added 27 Aug 2026 so the window can EXPLAIN
+# ITSELF. Emil could not tell who writes what or why: seven streams interleaved
+# by timestamp, some of them the machine measuring itself and some of them a
+# language model with an opinion, rendered in the same list with a source tag
+# and nothing else. The legend below is GENERATED from this table, so a stream
+# added here gains its line automatically and one that is deleted loses it —
+# there is no prose to go stale.
+#
+# `mediation` is the load-bearing field: CODE means no model was consulted and
+# the row is a fact about the machine; MODEL means a model wrote the sentence.
 SOURCES = (
-    ("pulse (autonomic)", AUTONOMIC_PULSE, MEASUREMENT, ("pulse",)),
+    ("pulse (autonomic)", AUTONOMIC_PULSE, MEASUREMENT, ("pulse",),
+     "core/pulse (the body's own timer)", "continuously, between steps", "code"),
     ("pulse / expression / mediation", EXPRESSION_STREAM, MEASUREMENT,
-     ("pulse", "expression", "mediation")),
-    ("brain_stance", BRAIN_STEP_LOG, INTERPRETATION, ("brain_stance",)),
-    ("phase_debrief", PHASE_DEBRIEFS, SELF_JUDGEMENT, ("phase_debrief",)),
+     ("pulse", "expression", "mediation"),
+     "cockpit/expression.py", "when a line passes the format grammar", "model"),
+    ("brain_stance", BRAIN_STEP_LOG, INTERPRETATION, ("brain_stance",),
+     "core/brain.py", "once per step (go / watch / skip)", "model 3b"),
+    ("phase_debrief", PHASE_DEBRIEFS, SELF_JUDGEMENT, ("phase_debrief",),
+     "core/phase_tracker.py", "once per phase, at its boundary", "model 8b"),
     ("rationale / autopsy / reconsider / digest", BRAIN_JOURNAL,
-     SELF_JUDGEMENT, ("rationale", "autopsy", "reconsider", "digest")),
-    ("reconsider", RECONSIDER_HISTORY, SELF_JUDGEMENT, ("reconsider",)),
-    ("dream", DREAMS, INTERPRETATION, ("dream",)),
+     SELF_JUDGEMENT, ("rationale", "autopsy", "reconsider", "digest"),
+     "core/brain.py remember()", "whenever the brain records a decision",
+     "model"),
+    ("reconsider", RECONSIDER_HISTORY, SELF_JUDGEMENT, ("reconsider",),
+     "core/reconsider.py", "after a rollback is replayed", "code"),
+    ("dream", DREAMS, INTERPRETATION, ("dream",),
+     "experiments/dreams/dream.py", "manual, off the cycle", "model"),
 )
+
+
+UNSTATED = "not stated in the registry"
+
+
+def _fields(entry) -> tuple:
+    """(name, path, refl, feeds, writer, when, mediation) from a SOURCES row.
+
+    THE LAST THREE ARE OPTIONAL. They were added on 27 Aug 2026 so the window
+    could explain itself, and a source declared with only the original four is
+    still a valid source — it simply has nothing to say about who writes it.
+    Reporting that as UNSTATED is the honest answer and keeps every existing
+    declaration (and every test fixture that builds one) working unchanged.
+    """
+    name, path, refl, feeds = entry[:4]
+    rest = tuple(entry[4:7]) + (UNSTATED,) * 3
+    return (name, path, refl, feeds) + rest[:3]
+
+
+def legend() -> list:
+    """One row per stream, DERIVED — never a hand-written paragraph.
+
+    `gated` is computed rather than declared: core/language_gate.py scores the
+    rows of exactly one file, so a source is filtered out of the exemplar pool
+    if and only if it IS that file. Asking the gate where it reads keeps this
+    true on the day somebody points it somewhere else.
+    """
+    try:
+        from core import language_gate as lg
+        journal = pathlib.Path(lg.JOURNAL).resolve()
+    except Exception:
+        journal = None
+
+    rungs = {MEASUREMENT: "r0 measured",
+             INTERPRETATION: "r1 reading the world",
+             SELF_JUDGEMENT: "r2 reading itself"}
+    out = []
+    for entry in SOURCES:
+        name, path, refl, feeds, writer, when, mediation = _fields(entry)
+        try:
+            gated = journal is not None and pathlib.Path(path).resolve() == journal
+        except Exception:
+            gated = False
+        out.append({
+            "source": name,
+            "path": _rel(path),
+            "writer": writer,
+            "when": when,
+            "mediation": mediation,
+            "reflexivity": refl,
+            "rung": rungs.get(refl, "r?"),
+            "feeds": list(feeds),
+            "gated": gated,
+            "gate_note": ("the language gate scores these and withholds a "
+                          "failing row from the exemplar pool" if gated else
+                          "not read by the language gate"),
+        })
+    return out
 
 
 def sources_status(by_where: Optional[dict] = None) -> list:
@@ -402,7 +479,8 @@ def sources_status(by_where: Optional[dict] = None) -> list:
     """
     by_where = by_where or {}
     out = []
-    for name, path, refl, feeds in SOURCES:
+    for entry in SOURCES:
+        name, path, refl, feeds = _fields(entry)[:4]
         exists = path.exists()
         rows = by_where.get(path.name, 0)
         if not exists:

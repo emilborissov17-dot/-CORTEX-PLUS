@@ -193,6 +193,11 @@
   .missing{border-top:1px solid var(--line);margin-top:6px}
   .panel.landed{outline:1px solid var(--blu);outline-offset:2px}
 
+  /* PART 8 — the legend */
+  .legend{margin:4px 0 8px}
+  .legend table{font-size:11px}
+  .legend td{vertical-align:top}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -583,6 +588,11 @@ async function tabBody(){
 /* Whether the BODY tab is showing WHY the missing sensors are missing. */
 let bodyMissingOpen = false;
 
+/* Whether the EXPRESSION legend is unfolded. Held here because <details> lives
+   inside #view and render() rebuilds that every 15 seconds — an explanation
+   that folds itself away twice a minute is not an explanation. */
+let legendOpen = false;
+
 let askedNow = [];
 
 const openProposals = new Set();
@@ -662,6 +672,17 @@ async function tabExpression(){
     </div>
     <div class="ctlrow" style="margin-bottom:6px">${counts}
       <span class="meta">r0 measured · r1 the system reading the world · r2 the system reading itself</span></div>
+    <details class="legend"${legendOpen?' open':''}>
+      <summary>who writes what, and why (${(t.legend||[]).length} streams) — generated from the registry, not written down</summary>
+      <table><tr><th>stream</th><th>who writes it</th><th>when</th><th>mediation</th><th>rung</th><th>exemplars</th></tr>
+      ${(t.legend||[]).map(l => `<tr>
+        <td><b class="s-${esc(l.source)}">${esc(l.source)}</b><div class="meta">${esc(l.path)}</div></td>
+        <td class="full meta">${esc(l.writer)}</td>
+        <td class="full meta">${esc(l.when)}</td>
+        <td><span class="pill ${l.mediation === 'code' ? 'on' : 'warn'}">${esc(l.mediation)}</span></td>
+        <td class="meta">${esc(l.rung)}</td>
+        <td class="meta" title="${esc(l.gate_note)}">${l.gated ? 'gate-filtered' : '—'}</td></tr>`).join('')}
+      </table></details>
     <div class="stream">${rows || '<span class="meta">'+esc(t.empty_because||'nothing on this cycle\'s timeline')+'</span>'}</div>
     <details style="margin-top:6px"><summary>the streams this window reads (${(t.sources||[]).length}) — a silent source is named, not dropped</summary>
       <table class="srcstate">${srcs}</table></details>
@@ -1067,6 +1088,9 @@ function wirePanel(){
               catch(e){ el.scrollIntoView(); }
               el.classList.add('landed'); }
     });
+  document.querySelectorAll('.legend').forEach(d =>
+    d.addEventListener('toggle', () => { legendOpen = !!d.open; }));
+
   const bm = $('#bodymissing');
   if(bm) bm.onclick = () => { bodyMissingOpen = !bodyMissingOpen;
                               pendingAnchor = bodyMissingOpen ? 'anchor-missing' : null;
