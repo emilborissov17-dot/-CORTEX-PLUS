@@ -20,9 +20,15 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 CYRILLIC = range(0x0400, 0x0500)
 
 # Sites still emitting a Bulgarian journal template. This is a DEBT LEDGER, not
-# an exemption: shrink it when you fix one, and the last line of this module
+# an exemption: shrink it when you fix one, and the last test in this module
 # fails loudly if it is stale in either direction.
-KNOWN_REMAINING = {"core/reconsider.py"}
+#
+# EMPTIED 27 Aug 2026. core/reconsider.py was the last entry; only its wrapper
+# word ("върнах") was ever Bulgarian, which is why those rows scored
+# CYRILLIC_0.03 — barely over the 3% line, on one word. The set stays here
+# rather than being deleted with the last member: it is the shape that makes a
+# NEW offender fail, and an empty ledger is the assertion that there are none.
+KNOWN_REMAINING: set = set()
 
 
 def _has_cyrillic(s: str) -> bool:

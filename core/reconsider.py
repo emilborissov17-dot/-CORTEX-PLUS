@@ -312,9 +312,19 @@ def run() -> dict:
           f"очаква: {str(d.get('expect',''))[:150]} | успех={ok} {err or ''} | "
           f"промени: {before} -> {after}")
 
+    # ENGLISH, because this row is JOURNALED. brain.remember() writes into
+    # memory/brain_journal.jsonl, which core/language_gate.py scores as model
+    # output — so a Bulgarian wrapper here reads as the model answering in the
+    # wrong language and fails the purity floor deterministically, every time
+    # this path runs. Only the wrapper was ever Bulgarian: `why` comes from the
+    # decision and is already English, which is why these rows scored
+    # CYRILLIC_0.03 — just over the 3% line, on one word.
+    #
+    # _note() above is a DIFFERENT sink (the night log, read by a human) and is
+    # deliberately left in Bulgarian.
     try:
         brain.remember("reconsider",
-                       f"върнах {step}: {str(d.get('why',''))[:200]}",
+                       f"rolled back {step}: {str(d.get('why',''))[:200]}",
                        {"expect": d.get("expect"), "ok": ok})
     except Exception:
         pass
