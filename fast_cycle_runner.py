@@ -506,12 +506,31 @@ def _seal_cycle_record() -> None:
     except Exception:
         pass
 
+    # HOW MUCH OF THE NIGHT ACTUALLY LANDED. Before this, CYCLE_FINISHED carried
+    # only a duration, so the ledger could say a cycle ran for two hours but not
+    # whether it did anything — a cycle that completed 4 of 31 steps sealed
+    # identically to one that completed all 31. Derived from the same function
+    # the state vector uses, so the ledger and the lexicon cannot disagree about
+    # the same night.
+    steps_completed = degraded_steps = flow = None
+    try:
+        from core.cycle_vector import cycle_metrics as _cm
+        m = _cm(cycle_id=cycle_id, duration_sec=duration)
+        steps_completed = m.get("steps_completed")
+        degraded_steps = m.get("degraded_steps")
+        flow = m.get("flow_score")
+    except Exception as e:
+        print(f"[FAST_CYCLE] existence: step counts unavailable "
+              f"({type(e).__name__}: {e}) — sealing without them")
+
     try:
         from memory.existence_ledger import append as _el_append, CYCLE_FINISHED
         _el_append(CYCLE_FINISHED, cycle_id=cycle_id or "unknown", pid=pid,
-                   duration_sec=duration)
+                   duration_sec=duration, steps_completed=steps_completed,
+                   degraded_steps=degraded_steps, flow_score=flow)
         print(f"[FAST_CYCLE] existence: CYCLE_FINISHED sealed (cycle_id={cycle_id}, "
-              f"duration={duration}s)")
+              f"duration={duration}s, steps_completed={steps_completed}, "
+              f"degraded={degraded_steps}, flow={flow})")
     except Exception as e:
         print(f"[FAST_CYCLE] existence: CYCLE_FINISHED -> FAILED: {type(e).__name__}: {e}")
 

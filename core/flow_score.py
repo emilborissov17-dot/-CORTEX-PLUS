@@ -38,8 +38,16 @@ function taking the history, so that the decision to act on it stays with
 supervisor.py — which is the only place allowed to latch survival mode, and
 which is not touched today.
 
-NOT WIRED. Nothing computes this per cycle; memory/flow_score.jsonl is written
-only by a caller that asks.
+WIRED SINCE 27 AUG 2026, for the score but NOT for the survival hook. Every
+cycle now computes a score at seal time: core.cycle_vector.cycle_metrics() calls
+compute() and the result reaches both memory/state_vectors.jsonl and the
+CYCLE_FINISHED ledger line. Before that nothing called this module at all — the
+state vector probed for a `latest()` that has never existed, hasattr() said
+False, and all four cycle fields stayed null on every row ever written.
+
+memory/flow_score.jsonl is still written only by a caller that asks: append() has
+no caller, and should_latch_survival() is still nobody's decision but
+supervisor.py's, which is still not touched.
 
     venv\\Scripts\\python.exe core/flow_score.py --selftest
 """
@@ -267,8 +275,9 @@ def _selftest() -> int:
         wired = "flow_score" in runner or "flow_score" in sup
     except OSError:
         wired = False
-    print("  cycle_report         {}".format(
-        "WIRED" if wired else
+    print("  per-cycle score      {}".format(
+        "WIRED — core.cycle_vector.cycle_metrics() computes one at seal time"
+        if wired else
         "NOT WIRED — nothing computes a flow score per cycle, and nothing acts "
         "on should_latch_survival()"))
     return 0 if ok else 1

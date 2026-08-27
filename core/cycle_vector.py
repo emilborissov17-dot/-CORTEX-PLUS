@@ -61,21 +61,76 @@ STORE = BASE / "memory" / "state_vectors.jsonl"
 REFUSED_EVENT = "CYCLE_REFUSED_SURVIVAL_GATE"
 
 
+LOCK_PATH = BASE / "memory" / "cycle.lock"
+
+
+def _duration_from_lock(lock_path=None):
+    """Seconds since this cycle took its lock, or None.
+
+    The ledger holds duration_sec, but it is written by CYCLE_FINISHED and the
+    vector is assembled BEFORE the seal — so at this moment the ledger does not
+    yet know. The lock does: it carries started_utc, and this is the same
+    arithmetic _seal_cycle_record() does a few lines later.
+    """
+    from datetime import datetime, timezone
+    try:
+        raw = json.loads(pathlib.Path(lock_path or LOCK_PATH)
+                         .read_text(encoding="utf-8"))
+        started = raw.get("started_utc")
+        if not started:
+            return None
+        t0 = datetime.fromisoformat(started)
+        if t0.tzinfo is None:
+            t0 = t0.replace(tzinfo=timezone.utc)
+        return round((datetime.now(timezone.utc) - t0).total_seconds(), 1)
+    except Exception:
+        return None
+
+
 def cycle_metrics(cycle_id=None, duration_sec=None,
                   steps_completed=None, degraded_steps=None,
-                  flow_score=None) -> dict:
-    """The 4 CYCLE_FIELDS, read from the repo where they are not supplied."""
+                  flow_score=None, lock_path=None, contract=None) -> dict:
+    """The 4 CYCLE_FIELDS, read from the repo where they are not supplied.
+
+    ALL FOUR WERE None ON EVERY ROW (found 27 Aug 2026, all 7 vectors in
+    memory/state_vectors.jsonl). The 25 sensor dims were fine; the block that
+    says what the CYCLE did was empty, so a lexicon trained on these points
+    could describe the machine's body and nothing about its work.
+
+    Two separate causes, and neither announced itself:
+
+      * nothing was ever passed in. fast_cycle_runner calls write() with a
+        cycle_id and a store path, and every metric defaulted.
+      * the one fallback that existed probed for `core.flow_score.latest()`,
+        which DOES NOT EXIST. hasattr() said False, the branch was skipped, and
+        a missing function is indistinguishable from a missing measurement.
+        core.flow_score has compute()/history(); nothing in the repo calls
+        either, and memory/flow_score.jsonl has never been written — so
+        history() would have been empty too. compute() is the live answer.
+
+    Explicit arguments still win: this only fills what the caller left None.
+    """
     out = {"cycle_id": cycle_id, "duration_sec": duration_sec,
            "steps_completed": steps_completed,
            "degraded_steps": degraded_steps, "flow_score": flow_score}
-    if out["flow_score"] is None:
+
+    if out["duration_sec"] is None:
+        out["duration_sec"] = _duration_from_lock(lock_path)
+
+    if any(out[k] is None for k in
+           ("flow_score", "steps_completed", "degraded_steps")):
         try:
             from core import flow_score as fs
-            got = fs.latest() if hasattr(fs, "latest") else None
-            if isinstance(got, dict):
-                out["flow_score"] = got.get("score")
-            elif isinstance(got, (int, float)):
-                out["flow_score"] = got
+            score = fs.compute(contract=contract, cycle_id=cycle_id or "")
+            if out["flow_score"] is None:
+                out["flow_score"] = score.flow_score
+            if out["steps_completed"] is None:
+                # steps_full, not steps_total: a step that raised or degraded
+                # ran, but it did not complete anything worth having, and the
+                # lexicon should not read it as work done.
+                out["steps_completed"] = score.steps_full
+            if out["degraded_steps"] is None:
+                out["degraded_steps"] = len(score.not_full)
         except Exception:
             pass
     return out

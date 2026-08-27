@@ -296,6 +296,14 @@ def test_the_live_record_really_is_median_skewed():
         "holds but the docstring's numbers are stale")
 
 
-def test_the_selftest_says_NOT_WIRED(capsys):
+def test_the_selftest_says_WIRED(capsys):
+    """It said NOT WIRED until 27 Aug 2026, and that was true: nothing called
+    this module. core.cycle_vector.cycle_metrics() now computes a score at every
+    cycle seal, so the honest answer changed. The assertion is inverted rather
+    than deleted — the day nothing computes a score per cycle again, this must
+    go red, because that is the state in which every vector's flow_score is
+    silently null."""
     fsm._selftest()
-    assert "NOT WIRED" in capsys.readouterr().out
+    out = capsys.readouterr().out
+    assert "WIRED" in out
+    assert "NOT WIRED" not in out
