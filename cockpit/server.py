@@ -1127,6 +1127,76 @@ def api_run(key: str):
     })
 
 
+@app.get("/api/axis/<name>")
+def api_axis(name: str):
+    """One axis, in full: what it reads now, what it is aiming at, and its run.
+
+    Split out rather than folded into /api/goal because the history is 31 axes
+    deep and every one of them is ~90 points — sending all of it on every
+    15-second tick to render 24 chips would be paying for a sparkline nobody has
+    asked for yet.
+    """
+    scores_blob = _read_json(ds.BASE / "output" / "cortex_scores_latest.json", {}) or {}
+    scores = scores_blob.get("scores") or {}
+    hist_blob = _read_json(ds.BASE / "memory" / "axis_history.json", {}) or {}
+    targets = _read_json(ds.BASE / "config" / "target_config.json", {}) or {}
+
+    latest = scores.get(name)
+    history = [h for h in (hist_blob.get(name) or [])
+               if isinstance(h, dict) and isinstance(h.get("score"), (int, float))]
+    points = history[-55:]
+
+    # target_config.json is keyed by SUBGOAL, each holding its axes, so the axis
+    # is found by walking rather than by a direct lookup. The subgoal it turns
+    # up under is worth returning: it is the answer to "what is this axis FOR".
+    target = weight = unit = direction = rationale = None
+    subgoal = None
+    for sg, axes in targets.items():
+        if sg.startswith("_") or not isinstance(axes, dict):
+            continue
+        spec = axes.get(name)
+        if isinstance(spec, dict):
+            subgoal = sg
+            target = spec.get("target_value")
+            weight = spec.get("weight")
+            unit = spec.get("unit")
+            direction = spec.get("direction")
+            rationale = spec.get("rationale")
+            break
+
+    return jsonify({
+        "ts": _now(),
+        "axis": name,
+        "known": latest is not None or bool(points),
+        "latest": latest,
+        "subgoal": subgoal,
+        "target": target,
+        "target_unit": unit,
+        "direction": direction,
+        "rationale": rationale,
+        "weight": weight,
+        # THE TWO SCALES DO NOT MATCH, and pretending otherwise would draw a
+        # cliff that is not there. cortex_scores_latest.json holds 0..1 and
+        # axis_history.json holds 0..100 for the same axis on the same day
+        # (ENERGY_REVIEW: 0.2 and 20.0 on 2026-08-27). Both are reported with
+        # their scale named; the sparkline is drawn against its OWN series.
+        "latest_scale": "0..1",
+        "history_scale": "0..100",
+        # WHERE THE NUMBER COMES FROM, named per point rather than assumed: an
+        # axis scored by the generic fallback and one scored from real metrics
+        # must not look alike on a page.
+        "score_source": (points[-1].get("score_source") if points else None),
+        "history": [{"date": h.get("date"), "score": h.get("score"),
+                     "source": h.get("score_source")} for h in points],
+        "history_len": len(points),
+        "sources": {"scores": "output/cortex_scores_latest.json",
+                    "history": "memory/axis_history.json",
+                    "target": "config/target_config.json"},
+        "empty_because": (None if (latest is not None or points) else
+                          "no score and no history on record for this axis"),
+    })
+
+
 TOGGLE_KEYS = ("mic_enabled", "camera_enabled")
 
 

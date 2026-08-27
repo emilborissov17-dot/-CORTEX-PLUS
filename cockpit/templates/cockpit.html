@@ -198,6 +198,18 @@
   .legend table{font-size:11px}
   .legend td{vertical-align:top}
 
+  /* PART 9 — what flows, and what is only drawn */
+  h2.half{grid-column:1/-1;margin:6px 0 0;font-size:11px;letter-spacing:.18em;
+          color:var(--grn);font-weight:600;border-bottom:1px solid #245c33;
+          padding-bottom:4px}
+  h2.half.designed{color:var(--dim);border-bottom-color:var(--line)}
+  .cols.dim{opacity:.45}
+  .wouldneed{margin-top:8px;border-left:2px solid var(--line);padding-left:8px;
+             font-size:11px;color:var(--dim)}
+  button.pill.axis{cursor:pointer;font-family:inherit;margin-bottom:3px}
+  button.pill.axis.on{color:var(--blu);border-color:var(--blu)}
+  .spark2{width:100%;height:34px;color:var(--blu);display:block}
+
   .needle{font-size:32px;font-weight:700}
   .needle.bad{color:var(--red)} .needle.ok{color:var(--grn)}
   a{color:var(--blu)}
@@ -480,13 +492,64 @@ async function tabCycle(){
   </div>`;
 }
 
+/* A sparkline over the axis's OWN series. Drawn against its own min and max
+   rather than a fixed 0..100, because the point of the line is the SHAPE of the
+   run; the numbers beside it carry the level. */
+function sparkline(points){
+  const vals = points.map(p => Number(p.score)).filter(v => !isNaN(v));
+  if(vals.length < 2) return '<span class="meta">too few points to draw a line</span>';
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const span = (hi - lo) || 1;
+  const W = 260, H = 34;
+  const d = vals.map((v,i) =>
+    `${(i/(vals.length-1)*W).toFixed(1)},${(H - ((v-lo)/span)*H).toFixed(1)}`).join(' ');
+  return `<svg class="spark2" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"
+            role="img" aria-label="${esc(vals.length)} points from ${esc(lo)} to ${esc(hi)}">
+      <polyline points="${d}" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    </svg><div class="meta">${esc(vals.length)} points · low ${esc(lo)} · high ${esc(hi)}</div>`;
+}
+
 async function tabWorld(){
   const [g, col] = await Promise.all([get('/api/goal'), get('/api/columns')]);
+
+  /* AN AXIS IS A DOOR. It was a pill with a name and nothing behind it — 24 of
+     them, each the label of a measurement the system takes every night and
+     would not show. */
   const tree = Object.entries(g.tree).map(([sg,axes]) =>
     `<div style="margin-bottom:6px"><div class="meta">${esc(sg)} <span class="pill">${axes.length}</span></div>
-     ${axes.map(a=>`<span class="pill">${esc(a.axis)}</span>`).join('')}</div>`).join('');
+     ${axes.map(a=>`<button class="pill axis ${openAxis===a.axis?'on':''}"
+        data-axis="${esc(a.axis)}">${esc(a.axis)}</button>`).join('')}</div>`).join('');
   const cont = (g.continents||[]).map(c =>
     `<tr><td>${esc(c.region_id||'')}</td><td>${esc(c.zone||'')}</td></tr>`).join('');
+
+  let axisPanel = '';
+  if(openAxis){
+    const a = await get('/api/axis/' + encodeURIComponent(openAxis));
+    const L = a.latest || {};
+    const rows = [
+      ['reads now', L.score===undefined||L.score===null ? '—'
+        : `${esc(L.score)} <span class="meta">(${esc(a.latest_scale)})</span>
+           <span class="pill ${L.level==='HIGH'?'on':L.level==='LOW'?'bad':''}">${esc(L.level||'?')}</span>
+           <span class="pill">${esc(L.verification||'')}</span>`],
+      ['aiming at', a.target===null||a.target===undefined ? '<span class="meta">no target on record</span>'
+        : `${esc(a.target)} <span class="meta">${esc(a.target_unit||'')} · ${esc(a.direction||'')}</span>`],
+      ['weight', a.weight===null||a.weight===undefined ? '—' : esc(a.weight)],
+      ['subgoal', esc(a.subgoal||'—')],
+      ['scored by', esc(a.score_source||'—')],
+      ['why this target', `<span class="meta">${esc(a.rationale||'—')}</span>`],
+    ].map(([k,v]) => `<tr><td style="width:132px" class="meta">${k}</td><td class="full">${v}</td></tr>`).join('');
+    const metrics = Object.entries(L.metrics_used||{}).map(([k,v]) =>
+      `<tr><td class="meta">${esc(k)}</td><td>${v===null?'<span class="meta">not measured</span>':esc(v)}</td></tr>`).join('');
+    axisPanel = panel(esc(openAxis), `
+      <table>${rows}</table>
+      <div class="meta" style="margin:8px 0 2px">history · ${esc(a.history_scale)}</div>
+      ${sparkline(a.history||[])}
+      ${metrics?`<div class="meta" style="margin-top:8px">metrics it read</div><table>${metrics}</table>`:''}
+      ${(L.signals||[]).length?`<div class="meta" style="margin-top:8px">signals</div>
+        ${(L.signals||[]).map(s=>`<div class="full meta">${esc(s)}</div>`).join('')}`:''}
+      <div class="meta" style="margin-top:8px">${Object.values(a.sources||{}).map(esc).join(' · ')}</div>
+      <button class="jump" id="axisclose">close</button>`, true, 'anchor-axis');
+  }
   const heads = col.column_order.map(k => {
     const s = col.column_spec[k];
     return `<div class="col"><h3>${esc(s.title)}</h3>
@@ -495,15 +558,29 @@ async function tabWorld(){
   const viol = col.independence_violations.length
     ? `<div class="invalid">independence violations: ${esc(col.independence_violations.join('; '))}</div>`
     : `<div class="meta">independence assertion: five distinct pipelines, no echo</div>`;
+  /* TWO HALVES, LABELLED. The five-columns panel already said, honestly,
+     "no data yet — three_columns.py is not wired" — and said it in the same
+     visual register as the goal tree, which DOES flow, three panels along in a
+     uniform grid. Honest text at the same weight as live data still reads as a
+     feature; the reader has to notice the sentence to learn the difference. */
   return `<div class="grid">
-    ${panel('Goal · 5 nerves · 25 axes', `
-      <div class="meta">${g.subgoal_count} subgoals · ${g.axis_count} axes ·
-        ${g.composite_history.length} history points</div>${tree}`, true)}
+    <h2 class="half">LIVE — what flows tonight</h2>
+    ${panel('Goal · '+esc(g.subgoal_count)+' subgoals · '+esc(g.axis_count)+' axes', `
+      <div class="meta">${g.composite_history.length} composite history points ·
+        click an axis to open what it reads, what it aims at, and its run</div>${tree}`, true)}
+    ${axisPanel}
     ${panel('7 continents', `<table><tr><th>region</th><th>zone</th></tr>${cont}</table>`)}
-    ${panel('Five columns', `<div class="cols">${heads}</div>${viol}
+
+    <h2 class="half designed">DESIGNED, NOT WIRED — nothing below is running</h2>
+    ${panel('Five columns', `<div class="cols dim">${heads}</div>${viol}
       <div class="meta" style="margin-top:6px">${esc(col.lifecycle_ladder)}<br>
         <span style="font-size:11px">${esc(col.ladder_note)}</span></div>
-      ${col.record_count?'':nodata({missing:['memory/columns/'],why:col.empty_because})}`)}
+      <div class="wouldneed">TO LIGHT UP THIS PANEL: something must write
+        <code>memory/columns/</code>. The lifecycle is specified and the five
+        pipelines are declared; no producer exists, so every cell here is a
+        design and not a reading.</div>
+      ${col.record_count?'':nodata({missing:['memory/columns/'],why:col.empty_because})}`,
+      true, 'anchor-columns')}
   </div>`;
 }
 
@@ -592,6 +669,9 @@ let bodyMissingOpen = false;
    inside #view and render() rebuilds that every 15 seconds — an explanation
    that folds itself away twice a minute is not an explanation. */
 let legendOpen = false;
+
+/* Which axis is open on WORLD, or null. */
+let openAxis = null;
 
 let askedNow = [];
 
@@ -1090,6 +1170,13 @@ function wirePanel(){
     });
   document.querySelectorAll('.legend').forEach(d =>
     d.addEventListener('toggle', () => { legendOpen = !!d.open; }));
+
+  document.querySelectorAll('.axis').forEach(b =>
+    b.onclick = () => { openAxis = (openAxis === b.dataset.axis) ? null : b.dataset.axis;
+                        pendingAnchor = openAxis ? 'anchor-axis' : null;
+                        return render(); });
+  const ax = $('#axisclose');
+  if(ax) ax.onclick = () => { openAxis = null; return render(); };
 
   const bm = $('#bodymissing');
   if(bm) bm.onclick = () => { bodyMissingOpen = !bodyMissingOpen;
