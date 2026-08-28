@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-28T19:15:00Z
-last_item_done: ITEM 7.1 — K1 is written every cycle and can name its evidence
-current_item: ITEM 7.2 — K3, one field on each claim in knowledge_base.json
+last_updated_utc: 2026-08-28T20:40:00Z
+last_item_done: ITEM 7 — all three steps 7.1, 7.2, 7.3 done
+current_item: ITEM 10 — the suite has no gate while it runs
 current_state: READY
-gate_closed_reason: - (OPEN: memory/cycle.lock absent at 18:15Z and at the commit)
-next_action_needed_from_claude: 7.2 — the shape report is drafted below under 7.2 PREP; decide the carrier and write it
+gate_closed_reason: - (OPEN: memory/cycle.lock absent through every gate run today)
+next_action_needed_from_claude: ITEM 10. Note it is the defect that bit twice today: a human restored a tracked file mid-suite and test_brain_scan reported it as a write by the code under test.
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -17,7 +17,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 4 | Why the cloud tier is abandoned, f)-i) | DONE 2026-08-28 except f) — needs 429 bodies | READONLY |
 | 5 | The voice that never spoke | 5.1 DONE — nothing calls it; 5.3 open | NOCYCLE |
 | 6 | Two lies on the expression panel | DONE — both premises overturned | READONLY |
-| 7 | Make the compass produce a number | 7.1 DONE 2026-08-28; 7.2, 7.3 TODO | NOCYCLE |
+| 7 | Make the compass produce a number | DONE 2026-08-28 — 7.1, 7.2, 7.3 | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | TODO | NOCYCLE |
 | 11 | Wire resolve_ideas into the cycle (deadline 2026-09-02) | TODO | NOCYCLE |
@@ -1197,7 +1197,7 @@ number cannot be quoted free of the thing that makes it true. The gate needs no
 change; the reporting does.
 
 ## ITEM 7 — MAKE THE COMPASS PRODUCE A NUMBER
-STATUS: 7.1 DONE 2026-08-28 (report at the end of this item) · 7.2 TODO · 7.3 TODO
+STATUS: DONE 2026-08-28 — 7.1, 7.2 and 7.3, reports at the end of this item
 GATE: NOCYCLE
 The four needles that define this project's success have produced no number since
 21 August. Verified on disk 2026-08-28: memory/measurement_honesty_latest.json is
@@ -1421,7 +1421,9 @@ metric_details and so has never scored MATERIALS_WASTE_REVIEW as measured; and
 MATERIALS_WASTE_REVIEW being scored by atmospheric CO2 at all is a config
 question, not a 7.1 one.
 
-### 7.2 PREP — the shape report 7.2 asks for FIRST, done 2026-08-28
+### 7.2 REPORT — 2026-08-28
+
+THE SHAPE, WHICH THE ITEM ASKED FOR FIRST
 
 memory/knowledge_base.json is NOT a list of claims. It is keyed by AXIS: 28
 entries, 26 of shape {cycle_count, insight_hashes, key_insights, last_score,
@@ -1441,6 +1443,217 @@ agents/core/self_observer.py:178. The existing `insight_hashes` field is the
 handle that avoids all of it: a parallel map hash -> supporting_source_count
 carries the number without touching key_insights. Recommend that; do not
 convert the list.
+
+THE CARRIER, AND WHY NOT A LIST
+  supporting_source_count is a dict keyed by the claim's md5[:8] — the hash the
+  file already stores in insight_hashes — living beside key_insights in each
+  axis entry. Two alternatives were rejected:
+    objects instead of strings   would break core/hypothesis_search.py's
+                                 recent_claims (whose docstring documents the
+                                 string shape verbatim), get_system_knowledge,
+                                 and agents/core/self_observer.py:178 — three
+                                 readers broken for a counter.
+    a third parallel LIST        index-aligned with key_insights, the way
+                                 insight_hashes already is. Rejected: it would
+                                 have to survive two independent [-10:]
+                                 truncations, and an alignment invariant nobody
+                                 can see is exactly how ITEM 7.1's
+                                 metric_details collision hid nine weight for
+                                 months. A hash cannot silently point at the
+                                 wrong claim.
+  The map is pruned to the live hashes on every write, so a claim that ages out
+  of the window cannot leave its count behind as an orphan.
+
+null IS NOT ZERO, AND THAT IS THE WHOLE POINT
+  Existing claims get None. Nothing on disk records which sources fed an
+  insight, so there is nothing to recover and any number would be invented —
+  the item's own rule. 0 is reserved for "a caller asked and there were none".
+  k3() counts only integers >= 2, so a None can never inflate it.
+
+ACCEPTANCE
+  the field exists on every claim      254 of 254, across 28 axes   PASS
+  K3 computable in one pass            k3() — one loop              PASS
+  no existing key changed              diffed the live file before/after the
+                                       backfill, key by key: PURELY ADDITIVE.
+                                       Only supporting_source_count is new;
+                                       no axis, no cycle_count, no scores, no
+                                       key_insights, no insight_hashes moved.
+  K3 TODAY = 0. 254 claims, 0 with a number, 254 null. Reported, not
+  engineered: the third needle reads zero because nothing records corroboration,
+  not because nothing is corroborated. Those are different findings and only the
+  first one is true today.
+
+THE WIRING I DID NOT DO, AND WHY IT WOULD HAVE BEEN THE WRONG KIND OF PROGRESS
+  after_llm_call now takes `sources=` (distinct ids; the older `source=`
+  parameter is a CALLER LABEL like "learn_from_cycle" and answers a different
+  question). Its callers pass nothing yet, so K3 stays 0 until one does.
+  The obvious move was to wire learn_from_cycle, which is where insights are
+  born — and the only thing at that write site that looks like sources is
+  memory/web_intelligence/latest.json's per-axis `evidence`, e.g. for
+  CLIMATE_GLOBAL_RISK_REVIEW: ["The Bonn climate talks ended in 'gridlock'...",
+  "Experts emphasize the need for a 'major scale up' of carbon removal..."].
+  Those are two SENTENCES A MODEL WROTE IN ONE PASS. Counting them would have
+  published K3 >= 2 for most axes tonight out of a single LLM call — a metric
+  that measures its own prose. It is the exact move this queue exists to stop,
+  so the field ships empty and honest instead. What would make K3 real is a
+  claim carrying the (file, org) pairs behind it; see the conflict below.
+
+CONFLICT BETWEEN THIS ITEM AND ITEM 14, FLAGGED NOT RESOLVED
+  7.2 defines K3 as claims in memory/knowledge_base.json with
+  supporting_source_count >= 2. ITEM 14 defines K3 as "conclusions in
+  memory/deductions_latest.json whose premises cite at least two DIFFERENT
+  (file, org) pairs. Today 2." Two different files, two different populations,
+  two different numbers — 0 here, 2 there. Both are implemented as written; this
+  item was not allowed to redefine ITEM 14's needle and did not.
+  WORTH SAYING PLAINLY: deductions_latest.json already stores what
+  knowledge_base.json cannot — premises with a file and an org. If one of the
+  two has to win, the evidence is on ITEM 14's side, and this item's field then
+  becomes the mechanism by which knowledge_base claims could ever join it. A
+  human decides which K3 the compass publishes; ITEM 14 is where that decision
+  belongs.
+
+A FOURTH RESET CASUALTY, FOUND WHILE READING THE FILE
+  memory/knowledge_base.json is TRACKED and carries mtime 2026-08-28T18:09:22.40
+  — the same reset second as global_indicators_latest.json (.436) and
+  goal_score_history.json. No entry in it is newer than June: last_updated is
+  2026-06-21 on 25 axes, 2026-06-20 on one, 2026-05-08 on two. The 254 claims
+  the field was added to are the June-era committed set; whatever the live file
+  held between June and 28 August is gone. Added to ITEM 12's list.
+  The backfill is idempotent and re-runnable, so if this file is restored the
+  way goal_score_history.json was, `venv\Scripts\python.exe
+  memory/continuous_learner.py --backfill --write` puts the field back and
+  leaves any real count that comes with it untouched.
+
+WRITTEN TO LIVE STATE, DELIBERATELY AND NOT STAGED: memory/knowledge_base.json
+now carries the field on all 254 claims. It is tracked runtime data, so it is
+NOT in the commit — same rule as memory/axis_history.json. A safety copy was
+taken before the write. The backfill dry-runs by default and needed --write.
+
+TESTS: test/test_k3_supporting_sources.py, NEW, 14 tests, all green. They hold
+that null and zero stay apart, that the count is of DISTINCT sources, that a
+claim ageing out leaves no orphan, that key_insights is still a list of strings,
+that hypothesis_search still reads a kb carrying the field, that the backfill is
+dry by default, purely additive and idempotent, and that the live knowledge base
+is byte-identical after the module runs.
+
+### 7.2 PREP — the shape report, written before the work
+
+### 7.3 REPORT — 2026-08-28
+
+(a) WHAT WOULD HAVE TO CHANGE FOR THE TARGET TO BE AN AXIS VALUE
+
+  THE SWITCH ALREADY EXISTS AND IS NEVER THROWN. dataset() at
+  core/interval_head.py:325 takes `target: str = "step_seconds"`. Both callers —
+  train() at :601 and _selftest() at :958 — call `dataset()` with no argument.
+  Changing the target is a one-word edit at two call sites, and that is the
+  SMALLEST part of the job, not the job.
+
+  WHICH FUNCTION SUPPLIES ROWS. dataset() -> core.training_log.rows(target=...,
+  include_asserted=True), then filtered by tl.is_trainable, which keeps only
+  provenance.kind == MEASURED. CARRIED is excluded deliberately: a value carried
+  forward is one reading repeated, and repeating it would weight one observation
+  as several.
+
+  WHAT A ROW CONTAINS. training_log.make_row at :116 produces
+    {ts, target, key, value, provenance{source, how, kind}, features{...}}
+  `key` does double duty and this matters: it is the text that gets EMBEDDED
+  (train():604 builds "CORTEX cycle step: {key}") and it is the unit the holdout
+  splits on (split_by_step at :517 holds out whole KEYS). So for an axis target
+  `key` becomes the axis name, the embedding prompt has to stop saying "cycle
+  step", and the holdout becomes whole AXES.
+
+  WHAT THE LABEL WOULD BE. Today y = np.log(max(value, 1e-3)) — log-seconds.
+  For a duration that is right: positive, heavy-tailed, and a ratio error is the
+  error you care about. FOR A BOUNDED 0-1 AXIS SCORE IT IS WRONG. A score near
+  zero drives the label to -6.9, a legitimate 0 is indistinguishable from the
+  1e-3 floor, and the model would spend its capacity on the bottom of a range
+  that cannot go below 0. An axis label wants identity or a logit, and
+  coverage_and_width at :530 — which reports width as exp(hi)-exp(lo) and says
+  "In SECONDS" in its own docstring — has to change with it or the width is
+  printed in the wrong unit.
+
+  THE PART NOBODY HAS BUILT, and it is the real answer to (a): NO HARVESTER
+  WRITES AXIS ROWS. training_log.py:59 says so itself — "The one target this
+  file harvests today. Others get their own harvester and their own provenance
+  string — never a shared 'misc' bucket, because a bucket is where an asserted
+  number goes to lose its label." Nothing appends target="axis_score". Until
+  something does, pointing dataset() at an axis target returns zero rows and
+  train() answers "only 0 grounded rows — not enough to train".
+  WHAT THAT HARVESTER NOW HAS THAT IT DID NOT HAVE THIS MORNING: ITEM 7.1's
+  axis_observations block gives, per axis and per cycle, the observation key,
+  the source id and the observed value — exactly a MEASURED-classifiable
+  provenance for an axis row. 7.1 was the missing input for 7.3 and neither item
+  said so.
+
+  THE FEATURES ARE STEP-SHAPED. row_features at :453 emits step_ordinal,
+  hour_sin/cos, prev1/2/3 (this STEP's duration in the last three cycles),
+  prev_count, cycles_since_boot, ram_free_gb_at_start. For an axis, prev1/2/3
+  becomes the axis's own prior SCORES — a legitimate and probably strong
+  feature — while ram_free_gb_at_start is meaningless for a quantity about the
+  world, and _cycle_of/CYCLE_GAP_SEC=7200 exists to group step rows into cycles
+  when an axis series is already one point per cycle.
+
+  NOT DONE, AS INSTRUCTED: nothing was retrained, no weights touched, no call
+  site changed. This is the report the item asked for.
+
+(b) THE MISSING RECORD — memory/prediction_resolutions.jsonl
+
+  CHECKED BEFORE BUILDING, per CLAUDE.md: the path appears nowhere in any .py or
+  .json in this repo. Nothing read it, nothing wrote it, it did not exist. K4
+  has had nothing to score because the record it scores was never created.
+
+  NEW: core/prediction_resolutions.py. Two events, one line each:
+    PREDICTION  ts, axis, domain, predicted_centre, predicted_low,
+                predicted_high, alpha
+    RESOLUTION  the same band copied, plus observed_value, resolved_ts, inside
+  The band travels onto the resolution line on purpose, so a single line can be
+  judged without seeking backwards; `inside` is decided once, in one place,
+  rather than by every future reader with its own view on whether the bounds are
+  inclusive. DRY-RUN BY DEFAULT — both writers return the row they WOULD append
+  unless write=True — and it ships --selftest reporting LIVE/INERT.
+
+  prediction_id IS AN ADDITION TO THE FIELD LIST, and the reason is a defect the
+  item's shape allows. Without an id a resolution is matched to its prediction
+  by (axis, domain) and time order, which is correct exactly until two
+  predictions for one axis are open at once and then it silently pairs the wrong
+  ones. The id is a hash of the sealed prediction's own content, so a retry
+  cannot open a second prediction and a resolution that matches nothing is
+  reported as an orphan instead of being guessed at. There is a test that fails
+  on the crossed-wires case specifically.
+
+  pairs() REPORTS THREE POPULATIONS — resolved, open, orphan_resolutions — and
+  returns coverage None rather than 0.0 when nothing has resolved. "Predicted
+  and never resolved" is a finding; averaging it into a coverage number is how
+  such a number flatters itself.
+
+  ADJACENT AND DELIBERATELY NOT MERGED: experiments/prophecy/prophecy_ledger.py
+  already seals axis self-predictions (target_kind "axis_next") and scores them
+  when they mature. It is a hash chain at
+  experiments/prophecy/prophecy_ledger.jsonl and it predicts a LEVEL WORD —
+  "axis X will be LEVEL L next cycle". K4 needs a numeric interval so coverage
+  and Winkler are computable; the two files cannot answer each other's question.
+  THE RISK IS NAMED IN THE MODULE HEADER rather than left to be discovered: two
+  records of what the system predicted about an axis can drift apart, and if one
+  is ever made authoritative it should be the sealed chain, because a record
+  that cannot be edited after the outcome is worth more than one that can. This
+  file is deliberately NOT a chain — K4 must append a resolution to a prediction
+  made days earlier, and in a chain that is a rewrite.
+
+  STILL INERT, AND THE SELFTEST SAYS SO OUT LOUD: nothing calls
+  record_prediction() yet. 7.3(b) asked for the record, not the producer. The
+  file does not exist on disk and will not until a caller writes to it.
+
+ACCEPTANCE, exactly as the item worded it:
+  a fixture writes one prediction row and one resolution row and reads them back
+                                                                          PASS
+  the real file is byte-identical after the fixture run                   PASS
+    — and here byte-identical had to mean STILL ABSENT. The ledger does not
+      exist yet, so the test asserts the digest is "ABSENT" before and after.
+      An absent file that quietly becomes a one-row file during a test run is
+      the same live-state leak, and "unchanged" has to cover creation.
+  --selftest: 5 checks PASS, and it names both integrations INERT.
+
+TESTS: test/test_prediction_resolutions.py, NEW, 11 tests, all green.
 
 ## ITEM 8 — THE THIRTIETH FAILURE
 STATUS: DONE 2026-08-28 — suite back to a byte-identical 29
@@ -1638,6 +1851,13 @@ replaces live measurement with a committed snapshot.
            used." That is why K1 measured 51 of 167 on 2026-08-28 instead of the
            114 that ITEM 3.4 measured against a live fetch the same day. One
            cycle fixes it.
+        4. memory/knowledge_base.json — tracked, rewritten every cycle by
+           memory/continuous_learner.py:after_llm_call, reached from
+           learn_from_cycle at step continuous_learning (index 23). Same reset
+           second, 18:09:22.40. Nothing in it is newer than 2026-06-21; 254
+           claims survive and they are the committed June set. FOUND 2026-08-28
+           while doing ITEM 7.2, which is the point: the audit in (b) is still
+           finding these one at a time, by accident, and that is not an audit.
         3. memory/goal_score_history.json — tracked, appended every cycle by
            agents/core/feedback_loop.py:save_score_snapshot at step
            feedback_loop (index 20). It carries score_sources, the only record of

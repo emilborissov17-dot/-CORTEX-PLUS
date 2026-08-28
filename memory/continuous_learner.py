@@ -118,8 +118,104 @@ def before_llm_call(axis: str, question: str = "") -> str:
 
 # ── 2. СЛЕД LLM CALL ─────────────────────────────────────────────────────────
 
+# ── K3: HOW MANY SOURCES STAND BEHIND A CLAIM (ITEM 7.2, 28 Aug 2026) ────────
+#
+# THE SHAPE THIS HAD TO FIT, because it is not the shape anyone would guess.
+# memory/knowledge_base.json is keyed by AXIS, and a "claim" is a BARE STRING in
+# key_insights — a 200-char truncation of an LLM answer. There is no object to
+# add a field to, and converting the list to objects would break three readers
+# that consume strings: core/hypothesis_search.py:recent_claims (whose docstring
+# documents the string shape verbatim), get_system_knowledge below, and
+# agents/core/self_observer.py:178.
+#
+# So the count travels the way the file ALREADY carries per-claim data: beside
+# key_insights, not inside it. insight_hashes is 1:1 with key_insights today
+# (254 = 254 across all 28 axes, checked) and is truncated to [-10:] in the same
+# breath, so the precedent is there.
+#
+# KEYED BY HASH, NOT BY INDEX, and that is the whole design decision. A third
+# parallel LIST would have to stay index-aligned through two independent
+# truncations, and an alignment invariant nobody can see is how ITEM 7.1's
+# metric_details collision hid nine weight for months. A hash cannot silently
+# point at the wrong claim.
+#
+# null IS NOT ZERO. Existing claims get None: the sources behind them were never
+# recorded and are NOT recoverable from anything on disk, so any number would be
+# invented. 0 means "asked, and there were none". None means "nobody recorded
+# it". K3 counts only integers >= 2, so a None can never inflate it.
+
+def _sync_counts(entry: dict, new_hash: str | None = None,
+                 sources=None) -> dict:
+    """Keep supporting_source_count in step with this axis's live claims.
+
+    Every hash in insight_hashes gets a key — None unless a caller supplied
+    sources for it. Hashes that have fallen out of the [-10:] window are dropped
+    so the map cannot grow orphans forever.
+    """
+    counts = entry.get("supporting_source_count")
+    if not isinstance(counts, dict):
+        counts = {}
+    live = [h for h in (entry.get("insight_hashes") or []) if isinstance(h, str)]
+    counts = {h: counts.get(h) for h in live}
+    if new_hash in counts and sources is not None:
+        # distinct sources, and an empty list is a real zero
+        counts[new_hash] = len({str(s) for s in sources})
+    entry["supporting_source_count"] = counts
+    return entry
+
+
+def backfill_supporting_source_count(write: bool = False, path=None) -> dict:
+    """Give every existing claim the field, as None. DRY-RUN BY DEFAULT.
+
+    Back-filling a GUESS would be worse than the gap: nothing on disk records
+    which sources fed an insight, so None is the only honest value.
+    """
+    p = path or KNOWLEDGE_BASE
+    kb = _load(p, {})
+    added = orphans = 0
+    for _axis, entry in kb.items():
+        if not isinstance(entry, dict):
+            continue
+        before = entry.get("supporting_source_count")
+        before = before if isinstance(before, dict) else {}
+        _sync_counts(entry)
+        after = entry["supporting_source_count"]
+        added += len([h for h in after if h not in before])
+        orphans += len([h for h in before if h not in after])
+    total = sum(len(e.get("supporting_source_count") or {})
+                for e in kb.values() if isinstance(e, dict))
+    if write:
+        _save(p, kb)
+    return {"claims_with_field": total, "added": added,
+            "orphans_dropped": orphans, "written": bool(write),
+            "path": str(p)}
+
+
+def k3(kb: dict = None, path=None) -> dict:
+    """K3 in one pass: claims with two or more distinct supporting sources."""
+    if kb is None:
+        kb = _load(path or KNOWLEDGE_BASE, {})
+    counted = nulls = k = claims = 0
+    for _axis, entry in kb.items():
+        if not isinstance(entry, dict):
+            continue
+        for _h, n in (entry.get("supporting_source_count") or {}).items():
+            claims += 1
+            if isinstance(n, int):
+                counted += 1
+                if n >= 2:
+                    k += 1
+            else:
+                nulls += 1
+    return {"k3": k, "claims": claims, "with_a_number": counted,
+            "null_not_recoverable": nulls}
+
+
 def after_llm_call(axis: str, llm_output: str, score: float = None,
-                   source: str = "agent") -> None:
+                   source: str = "agent", sources=None) -> None:
+    """`source` is WHO CALLED (a label). `sources` is WHAT BACKS THE CLAIM — an
+    iterable of distinct source ids, and the only thing K3 counts. They are two
+    different questions and the older parameter answered neither."""
     if not llm_output or len(llm_output) < 20:
         return
 
@@ -139,6 +235,7 @@ def after_llm_call(axis: str, llm_output: str, score: float = None,
         entry["last_score"] = score
 
     insight = llm_output.strip()[:200].replace("\n", " ")
+    h = None
     if insight:
         insights = entry.get("key_insights", [])
         h = hashlib.md5(insight.encode()).hexdigest()[:8]
@@ -147,6 +244,9 @@ def after_llm_call(axis: str, llm_output: str, score: float = None,
             entry["key_insights"]   = insights[-10:]
             entry.setdefault("insight_hashes", []).append(h)
             entry["insight_hashes"] = entry["insight_hashes"][-10:]
+
+    # Every claim on this axis leaves here carrying the field, new or not.
+    _sync_counts(entry, new_hash=h, sources=sources)
 
     kb[axis] = entry
     _save(KNOWLEDGE_BASE, kb)
@@ -386,7 +486,26 @@ def get_system_knowledge(top_n: int = 5) -> str:
 
 
 if __name__ == "__main__":
+    import sys
+
+    # HANDLED BEFORE THE TEST BLOCK ON PURPOSE. Everything below this branch
+    # WRITES live state — record_problem_solution and learn_from_cycle both do —
+    # so `--k3` must not fall through into it. Reading a number should never
+    # cost a write.
+    if "--k3" in sys.argv:
+        print(json.dumps(k3(), ensure_ascii=False, indent=2))
+        sys.exit(0)
+
+    if "--backfill" in sys.argv:
+        wet = "--write" in sys.argv
+        rep = backfill_supporting_source_count(write=wet)
+        print(json.dumps(rep, ensure_ascii=False, indent=2))
+        if not wet:
+            print("DRY RUN — nothing written. Add --write to apply.")
+        sys.exit(0)
+
     print("=== CONTINUOUS LEARNER TEST ===")
+    print("NOTE: this block WRITES live state. --k3 and --backfill exit above it.")
 
     print("\n1. before_llm_call (ENERGY_REVIEW):")
     block = before_llm_call("ENERGY_REVIEW", "проблеми с енергийния сектор")
