@@ -67,6 +67,49 @@ def _write(folder, axis_name, data):
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     return out_path
 
+def _carry_forward(folder, axis_name, reason):
+    """Keep the last good values rather than replacing them with nothing.
+
+    An EMPTY fetch is not an exception, so `raw = provider.fetch()` returning {}
+    fell straight through the success path and wrote
+    {"source_type": "REAL_DATA", "raw": {}} — a snapshot that DECLARES a real
+    observation and contains none. Absence recorded as data.
+
+    REQUIREMENT RECOVERED 2026-08-28, IMPLEMENTATION NEW. The version that had
+    this guard was lost to a `git reset --hard` over uncommitted work; the
+    strings survive in agents/human/__pycache__/human_snapshots_agent_qwen
+    .cpython-314.pyc compiled 2026-08-17 14:16:18, and the requirement is read
+    from them. No line here was reassembled from bytecode.
+
+    The merge rule is the one agents/snapshot_carry.py already applies, and the
+    civilization agent already uses — this is deliberately the same shape, so
+    three agents do not grow three ideas of what carrying forward means."""
+    from agents.snapshot_carry import carry_forward_metrics
+    path = SNAPSHOT_DIR / folder / f"{folder}_snapshot_latest.json"
+    merged, carried = carry_forward_metrics(path, {})
+    if not merged:
+        return None
+    try:
+        prev = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        prev = {}
+    observed = prev.get("observed_utc") or prev.get("snapshot_timestamp")
+    _write(folder, axis_name, {
+        # NOT plain REAL_DATA. A carried value is real, but it is not NEW, and a
+        # reader that cannot tell them apart will read a stalled provider as a
+        # steady world.
+        "source_type": "REAL_DATA_CARRIED",
+        "raw": merged,
+        "metrics": merged,
+        "observed_utc": observed,
+        "_carried": carried,
+        "carried_forward": {"reason": reason, "carried_at": _utc_now(),
+                            "note": "kept from the last successful fetch; NOT a "
+                                    "fresh observation"},
+    })
+    return path
+
+
 def main():
     print("[HUMAN_SNAPSHOT] generating HUMAN axis snapshots...")
     for cfg in AXES:
@@ -74,6 +117,16 @@ def main():
         print(f"[HUMAN_SNAPSHOT] generating {axis}...")
         try:
             raw = cfg["provider"]().fetch()
+            if not raw:
+                # Empty is not success. The guard runs BEFORE the write: a check
+                # after _write has already put the lie on disk.
+                carried = _carry_forward(folder, axis, "provider returned no data")
+                if carried:
+                    print(f"[HUMAN_SNAPSHOT] {axis}: empty fetch — CARRIED FORWARD -> "
+                          f"{carried}")
+                    continue
+                raise ValueError(
+                    "provider returned no data and nothing to carry forward")
             path = _write(folder, axis, {"source_type": "REAL_DATA", "raw": raw})
             print(f"[HUMAN_SNAPSHOT] wrote {axis} -> {path}")
         except Exception as e:

@@ -173,9 +173,54 @@ def ensure_axis_dir(short: str) -> Path:
     return axis_dir
 
 
+def _carry_forward(axis: str, short: str, reason: str):
+    """Keep the last good metrics rather than replacing them with nothing.
+
+    REQUIREMENT RECOVERED 2026-08-28, IMPLEMENTATION NEW. A `git reset --hard`
+    over uncommitted work destroyed the version that carried this guard; the
+    requirement survives in agents/planet/__pycache__/planet_snapshots_agent
+    _qwen.cpython-314.pyc compiled 2026-08-17 14:16:18, whose constants state it
+    exactly. Nothing here was reassembled from bytecode.
+
+    PLANET differs from HUMAN on the dead end, and the recovered strings say so:
+    where the human agent raises and falls through to the LLM, this one writes an
+    HONESTLY EMPTY snapshot. That is the better answer for an axis whose scorer
+    reads metrics — an empty dict that says it is empty beats an invented one."""
+    from agents.snapshot_carry import carry_forward_metrics
+    path = ensure_axis_dir(short) / f"{short}_snapshot_latest.json"
+    merged, carried = carry_forward_metrics(path, {})
+    if not merged:
+        return None, 0
+    return merged, carried
+
+
 def write_axis_snapshot(axis: str, short: str, payload: Dict[str, Any]) -> Path:
     axis_dir = ensure_axis_dir(short)
     out_path = axis_dir / f"{short}_snapshot_latest.json"
+
+    # THE GUARD LIVES IN THE WRITER, which is the only way it covers all five
+    # REAL_DATA call sites. An empty metrics dict arriving with
+    # source_type=REAL_DATA is absence wearing the label of an observation.
+    raw = payload.get("metrics", payload.get("raw", {}).get("metrics", {}))
+    if not raw and str(payload.get("source_type", "")).startswith("REAL_DATA"):
+        merged, carried = _carry_forward(axis, short, "provider returned no metrics")
+        if merged:
+            print(f"[PLANET_SNAPSHOT][WARN] {axis}: empty fetch — CARRIED FORWARD "
+                  f"{carried} metric(s) instead of erasing the axis")
+            payload = {**payload, "source_type": "REAL_DATA_CARRIED",
+                       "metrics": merged, "_carried": carried,
+                       "carried_forward": {
+                           "reason": "provider returned no metrics",
+                           "carried_at": datetime.now(timezone.utc).isoformat(),
+                           "note": "kept from the last successful fetch; NOT a "
+                                   "fresh observation"}}
+        else:
+            print(f"[PLANET_SNAPSHOT][WARN] {axis}"
+                  ": empty fetch and nothing to carry forward"
+                  " — writing an honestly empty snapshot")
+            payload = {**payload, "source_type": "REAL_DATA_EMPTY",
+                       "empty_why": "provider returned no metrics and no"
+                                    " previous snapshot exists to carry forward"}
 
     now = datetime.now(timezone.utc).isoformat()
 
