@@ -446,6 +446,50 @@ ACCEPTANCE, all asserted by the fixture, all passing:
 NOT DONE, on purpose, recorded under HOLDING: the high_axes/high_urgency_axes
 key mismatch, and the global-synthesis call at :1151.
 
+### PUSH ATTEMPT BLOCKED — 2026-08-28T17:22Z, recorded per the PUSH RULE
+
+Suite VALID (lock absent at 17:03:54Z and 17:21:59Z). 26 failed against a
+baseline of 29. Push rule condition 1 requires the FAILED list to be
+byte-identical; it is not — 2 new, 5 gone — so NOTHING WAS PUSHED. 17 commits
+remain local, 71ddaf9 through df55c14.
+
+GONE (5), all live-state dependent and none of them evidence of a fix:
+  test_corrections_27 x2, test_level_reconciler::test_social_relations_is_
+  corrected_to_low_on_live_data, test_phase_evidence_swap x2.
+  A test that flips green because live state changed is as untrustworthy as one
+  that flips red; these are not counted as progress.
+
+FIXED AS INTENDED and absent from the list: the three BRAIN sweep entries, the
+two test_phase_report fixtures, test_no_exit_on_import, test_glass.
+
+NEW (2), and BOTH are the reset, not this batch. Each carries mtime
+18:09:22.4 — the exact reset second.
+
+  test_script_suite[test/test_snapshot_carry_forward.py]
+    One assertion: "the snapshot carries a _health block a human can read at a
+    glance". snapshots/master/global_indicators_latest.json has NO _health block
+    and 11 world_bank keys; in the Part 0 reading it had _health and 12. The file
+    is TRACKED, so reset --hard replaced live measurement with an older committed
+    snapshot. ONE CYCLE RUN REGENERATES IT — and because of 3.4 it should come
+    back with 13 world_bank keys. No code change is warranted.
+
+  test_script_suite[test/test_promotion_seam.py]
+    TypeError: float() argument must be a string or a real number, not NoneType,
+    at experiments/composers/composer.py:276. composer.py is one of the TWO files
+    with no pre-reset .pyc — recorded as permanently gone. Its uncommitted version
+    guarded that None; HEAD's does not. AWAITING A HUMAN DECISION: restore the
+    guard as new work (float(None) is a defect on its own terms, independent of
+    what the lost version did), or leave it red as visible damage. Not guessed at.
+
+SECOND-ORDER FINDING, feeding ITEM 12(b): the audit of tracked files a running
+cycle writes must include snapshots/, not only memory/.
+snapshots/master/global_indicators_latest.json is tracked runtime data and was
+reverted by the same command, one directory over from axis_history.json.
+
+VERIFIED BEFORE THE ATTEMPT, per instruction: memory/axis_history.json is in NO
+commit, unstaged, 616 KB. Nothing under memory/ is staged. The only memory/ path
+in the 17 unpushed commits is memory/trend_tracker.py, which is source.
+
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
 STATUS: DONE 2026-08-28 — a)-e), g), h), i) complete; f) PARTIAL (see below)
 GATE: READONLY
