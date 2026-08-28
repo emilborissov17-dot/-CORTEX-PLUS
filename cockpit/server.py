@@ -1086,6 +1086,64 @@ def api_stream():
                                                  "text": "STREAM ERROR"}})
 
 
+# ── THE HEAD, WHILE IT IS LEARNING (28 Aug 2026) ───────────────────────────
+# out/brain_scan.json is written by core/interval_head.py — once at the end of a
+# run, and every 5 epochs DURING one, atomically. This hands it over verbatim
+# and adds nothing: the file is the contract, and a server that reshaped it
+# would be a second place for the shape to be wrong.
+#
+# NO CACHING, deliberately. The page polls once a second and the whole point is
+# to watch the loss fall while the run happens; a 304 or a cached body would
+# show a frozen brain and look exactly like a finished one.
+@app.get("/api/brain")
+def api_brain():
+    p = ds.BASE / "out" / "brain_scan.json"
+    if not p.exists():
+        return jsonify({"meta": {"weights_persisted": False}}), 200, {
+            "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0"}
+    try:
+        body = p.read_text(encoding="utf-8")
+    except OSError as e:                                     # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e)}), 200
+    return app.response_class(body, mimetype="application/json", headers={
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+        "Pragma": "no-cache", "Expires": "0"})
+
+
+@app.get("/api/brain/matrices")
+def api_brain_matrices():
+    """W1/W2/W3 as int8 with a stated scale. Fetched ONCE by the page, not on
+    the poll: 2059x256 + 256x256 + 256x2 is large and does not move inside a
+    run. The scale travels so a reader can recover the real number rather than
+    trusting a colour."""
+    p = ds.BASE / "out" / "brain_matrices.json"
+    if not p.exists():
+        return jsonify({"weights_persisted": False}), 200, {
+            "Cache-Control": "no-store"}
+    try:
+        body = p.read_text(encoding="utf-8")
+    except OSError as e:                                     # noqa: BLE001
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e)}), 200
+    return app.response_class(body, mimetype="application/json",
+                              headers={"Cache-Control": "no-store"})
+
+
+@app.get("/brain_map.html")
+def brain_map_page():
+    """The page itself, served from out/ so it is same-origin with /api/brain.
+
+    Opening it as file:// cannot work — the browser refuses to read JSON from
+    disk — so this route is the only path to it, and saying that here saves the
+    next person the twenty minutes it costs to rediscover.
+    """
+    p = ds.BASE / "out" / "brain_map.html"
+    if not p.exists():
+        return ("out/brain_map.html is not on disk", 404,
+                {"Content-Type": "text/plain; charset=utf-8"})
+    return app.response_class(p.read_text(encoding="utf-8"),
+                              mimetype="text/html")
+
+
 @app.get("/api/glass")
 def api_glass():
     from cockpit import glass as gl

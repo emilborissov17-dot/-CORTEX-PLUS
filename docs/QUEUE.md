@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-28T11:32:00Z
+last_updated_utc: 2026-08-28T13:58:17Z
 last_item_done: ITEM 3.1 — a truncated answer is no longer "nothing urgent"
 current_item: ITEM 3.2 — the Gemini budget
 current_state: RUNNING
-gate_closed_reason: -
-next_action_needed_from_claude: raise GEMINI_BUDGET_FLOOR to 4000 in code and record Gemini usageMetadata
+gate_closed_reason: - (OPENED 13:58:08Z; cycle 2026-08-28T12:15:20 pid 30144 sealed after 103min, held the gate 12:15-13:58)
+next_action_needed_from_claude: guarded suite running; on VALID diff against 29, commit 3.2, then 3.3
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -13,10 +13,13 @@ Keep the state column current — it is the only place a human should have to lo
 |---|------|-------|------|
 | 1 | Prepare the K1 move | DONE 2026-08-28 | READONLY |
 | 2 | Commit docs/QUEUE.md | DONE 2026-08-28, 77b4838 (not pushed) | NOCYCLE |
-| 3 | Apply 3.1-3.9 | RUNNING — 3.1 DONE, 3.2 next | NOCYCLE |
-| 4 | Why the cloud tier is abandoned, f)-i) | PARTIAL — a)-e) done | READONLY |
+| 3 | Apply 3.1-3.9 | 3.1 DONE; 3.2 written, suite INVALID (cycle mid-run) | NOCYCLE |
+| 4 | Why the cloud tier is abandoned, f)-i) | DONE 2026-08-28 except f) — needs 429 bodies | READONLY |
 | 5 | The voice that never spoke | TODO | NOCYCLE |
 | 6 | Two lies on the expression panel | TODO | READONLY |
+| 7 | Make the compass produce a number | TODO | NOCYCLE |
+| 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
+| 10 | The suite has no gate while it runs | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -372,7 +375,7 @@ WHEN DONE: write acceptance numbers and each commit sha into this file, set
 STATUS: DONE, and continue.
 
 
-### 3.1 REPORT — 2026-08-28, commit <SHA>
+### 3.1 REPORT — 2026-08-28, commit 19e3909
 
 SUITE on the exact committed tree:
   30 failed, 3232 passed, 6 skipped, 5 deselected, 1 xfailed, 17 warnings in
@@ -435,11 +438,14 @@ NOT DONE, on purpose, recorded under HOLDING: the high_axes/high_urgency_axes
 key mismatch, and the global-synthesis call at :1151.
 
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
-STATUS: PARTIAL 2026-08-28 — a)-e) DONE, f)-i) NOT DONE (interrupted mid-f)
+STATUS: DONE 2026-08-28 — a)-e), g), h), i) complete; f) PARTIAL (see below)
 GATE: READONLY
-OUTSTANDING: f) pace, g) defer path, h) 3b-vs-8b, i) how many doors. f) was
-partly measured before the interrupt and the numbers are recorded under
-"ANSWERS f) PARTIAL" at the end of this item; g) h) i) are untouched.
+OUTSTANDING: f) only. Its cadence numbers are measured and recorded, but the
+question it asks - quota or our own burst rate - cannot be settled from this repo:
+the one limit on record (Gemini 1500/day, groq_backend.py:13) is 2600x above the
+observed 0.40 attempts/min, and NO limit is recorded for Groq or OpenRouter, the
+two that actually rate-limited. Closing it needs the 429 response bodies captured,
+which is the same gap as 3.3(c).
 
 SUMMARY (five lines)
 1. The Cerebras disable string is wrong: it blames reasoning-token accounting,
@@ -622,6 +628,146 @@ not know. Settling it needs either the providers' documented limits recorded in
 the repo, or the 429 response bodies captured — and memory/llm_provenance.jsonl
 records no failures at all (Item 4 c), which is the same gap as 3.3(c).
 
+
+### ANSWERS g) h) i) — 2026-08-28, read-only, gate CLOSED so ITEM 3 could not run
+
+**g) IS THERE A DEFER PATH? NO. The mechanism exists and nothing calls it.**
+When the cloud tier is abandoned at its slice, the question is answered by
+local_3b and that is the end of it. core/groq_backend.py:766-775:
+    if res.outcome == _budget.OK and res.value is not None:
+        result, meta = res.value
+        if res.tier != _budget.CLOUD:
+            _note_degraded(f"answered by {res.tier} ... after the cloud tier was
+                             abandoned at its slice of B={res.budget_sec:.0f}s")
+            print(f"[LLM] cloud abandoned -> {res.tier} ... OK (DEGRADED)")
+        return result, meta
+_note_degraded (:424-437) forwards to core.step_contract.note_degraded_on_current
+and is explicitly fail-open — it marks the STEP as degraded. It does not record
+the question, the prompt, or any intent to ask again. When no tier answers at all
+(:779-795) the step is told, AllBackendsFailedError is raised, and again nothing
+about the question survives.
+  A defer mechanism DOES exist and is complete: core/cycle_profile.py:201-247 —
+  defer() with dedup on `key` and a deferred_count, deferred(), take_deferred()
+  that drains atomically so two cycles cannot both run the same work, and
+  deferred_path() -> memory/deferred_batch.json.
+  AST call-site scan for defer() and take_deferred() across the repo: 11 sites,
+  ALL of them in test/test_cycle_profile.py. Zero production callers.
+  memory/deferred_batch.json does not exist on disk.
+  It is read in two places and only read: cockpit/datasources.py:124 lists it as a
+  source, cockpit/server.py:617 surfaces it in a panel. So the cockpit has a panel
+  for a backlog that nothing can ever fill.
+WHERE A DEFERRED QUESTION WOULD HAVE TO BE WRITTEN: memory/deferred_batch.json,
+via core/cycle_profile.defer({...}), called from core/groq_backend.py:769 on the
+non-CLOUD branch — the exact line that today only prints DEGRADED.
+
+**h) WHY 3B AND NOT 8B — a window, and a GPU that cannot hold the big model.**
+Where each is chosen:
+  core/groq_backend.py:754  _small = _mw.small_model()   -> qwen2.5:3b
+  core/groq_backend.py:755  _big   = _mw.big_model()     -> qwen3:8b
+  core/groq_backend.py:759  local_3b=_local_tier(_small)          ALWAYS offered
+  core/groq_backend.py:764  local_8b=_local_tier(_big) if _mw.is_open() else None
+  core/model_window.py:104-118 config(); :121-126 small_model()/big_model();
+  :193-195 is_open()
+  core/phase_debrief.py:90-94 — the debrief uses brain.think(fast=True), which
+  "picks the SMALLEST installed model, which is how a 3B ended up judging phases";
+  changed to qwen3:8b through core/self_experiment.ALLOWED_KNOBS. That is why the
+  debriefs say _model: local:qwen3:8b while the abandonment path says qwen2.5:3b.
+  They are two different choosers, not one setting read twice.
+config/model_window.json: enabled true, small_model qwen2.5:3b, big_model qwen3:8b,
+window_opens_at_step brain_reconsider (12.75), window_closes_after_step
+cycle_report (25.6).
+  internet_intelligence is step index 4 — OUTSIDE the window by design, and the
+  config's own README names it: "internet_intelligence ... sits OUTSIDE the window
+  and will be served 3b. That is the intended trade: it is a fetch step, and a
+  fetch step that degrades is cheaper than a cycle that dies."
+ollama list on this machine, live:
+  qwen2.5:3b   1.93 GB
+  qwen3:8b     5.23 GB
+  qwen2.5:7b   4.68 GB
+memory/body_scan_latest.json (written 12:18:06 local, inside the 12:15 cycle):
+  ram_total 13.86 GB, ram_free 7.70 GB, ram_percent 44.4
+  GPU NVIDIA GTX 1650: vram_total 4096 MB, vram_free 1385 MB, vram_used 2566 MB,
+  utilisation 80%, 61 C
+COULD THE FALL BE TO 8B? Inside the window, yes — the code already offers it.
+Outside it, no, and two independent things decide that:
+  1. the window (a human-owned config, core/model_window.py:764 guard), and
+  2. the GPU. qwen3:8b is 5.23 GB against 4096 MB of VRAM with 1385 MB free. The
+     config README records the measurement: 8b "does not fit even alone (3.32GB of
+     5.75GB resident; the other 42% runs on the CPU)", and the two models never
+     coexist — each call to one fully evicts the other, 7-14s warm, minutes cold.
+So for the 56 falls in the 08:05 cycle the answer is: they were in fetch steps
+outside the window, and even had the window been open the machine cannot hold 8b
+without paying an eviction and running 42% of it on the CPU.
+
+**i) HOW MANY DOORS — four cloud, two local, one dead, none missing a key.**
+core/groq_backend.py:686-691, the chain in order:
+  | backend    | file:line          | model                                | key | state |
+  | Groq       | :268 _call_groq    | openai/gpt-oss-120b                  | yes | ENABLED |
+  | Cerebras   | :292 _call_cerebras| gpt-oss-120b                         | yes | DISABLED — DECLARED_DEAD (:109-112) |
+  | OpenRouter | :353 _call_openrouter| nvidia/nemotron-3-super-120b-a12b:free| yes | ENABLED |
+  | Gemini     | :387 _call_gemini  | gemini-3.5-flash                     | yes | ENABLED |
+Local, not part of the chain but reachable as explicit last resort
+(core/groq_backend.py:759/764 via _call_local_as at :440):
+  | local 3b   | qwen2.5:3b | always offered |
+  | local 8b   | qwen3:8b   | only while model_window.is_open() |
+Ollama also holds qwen2.5:7b (4.68 GB), which NOTHING in the chain can reach:
+config/model_window.json names only small_model and big_model, so the 7b is
+installed and unreachable.
+KEYS: all four names present in .env (GROQ_API_KEY, CEREBRAS_API_KEY,
+OPENROUTER_API_KEY, GEMINI_API_KEY) — checked by presence only, never by value.
+.env.example declares exactly these four plus NASA_API_KEY.
+config/dead_sources.json holds ucdp_api and eia_api only — both DATA sources. No
+LLM provider appears in it; the LLM kill switch is DECLARED_DEAD in code, a
+different mechanism in a different place.
+So: 4 cloud doors, 1 of them shut by us for a reason Item 4(b) showed is
+misstated; 2 local doors, 1 of them gated by a window that is closed for most of
+the cycle; 1 installed model no door leads to.
+
+
+### THE FOUR ARMS — run 2026-08-28T14:49:36Z, first time ever
+
+core/interval_head.compare() was built at line 746 and had never been run. Four
+arms, one protocol: same split, same seed, same loss, same epochs, same baseline.
+
+| arm                             | heldout | coverage | width | verdict |
+|---------------------------------|--------:|---------:|------:|---------|
+| A  names only, real embedding   | 16.6994 |     19%  |  30s  | LOSES to flat |
+| B  names only, hashed control   | 21.9643 |     18%  |  19s  | LOSES to flat |
+| C  names + row features, real   | 16.5312 |     13%  |  13s  | LOSES to flat |
+| D  names + row features, hash   | 22.5665 |      8%  |   6s  | LOSES to flat |
+| FLAT BASELINE                   |  9.5350 |          |       |  -      |
+
+Lower heldout Winkler is better. THREE THINGS, and only the first is the one
+that was asked about:
+
+1. THE LANGUAGE DIMENSIONS DO CARRY SOMETHING. The hypothesis was that if the
+   hashed arm matched the real one, the 2048 embedding dims carry nothing and
+   the head is memorising which step is which. They do NOT match: real beats
+   hashed by 5.26 (A vs B) and by 6.04 (C vs D), consistently, on both feature
+   sets. So the embedding is not decoration and the attention strip is reading
+   something real.
+2. NO ARM BEATS THE FLAT BASELINE, and it is not close: the best learned arm is
+   16.53 against 9.54 for one constant band. Whatever the embedding carries, the
+   head is not turning it into better intervals than "always predict the same
+   width". Recorded as it came out, not tuned until it wins - that would be
+   Goodhart on our own instrument.
+3. THE CALIBRATION IS THE WORST NUMBER ON THE TABLE and nobody asked about it.
+   alpha=0.2 means the intervals are meant to contain the truth 80% of the time.
+   They contain it 19%, 18%, 13%, 8%. The head is not merely losing, it is
+   confidently wrong - and the arm that looks best on Winkler (C, 16.53) has the
+   second-worst coverage. Width falls 30s -> 6s across the table while coverage
+   falls with it: the arms are winning on width by being narrow, not by being
+   right.
+
+row-feature coverage: prev durations on 96% of rows, RAM-at-start on 66%,
+23 cycles detected.
+
+WHAT THIS MEANS FOR K4 (ITEM 7.3): the interval head predicts step_seconds and
+does it worse than a constant. Pointing it at an axis value is still the right
+move, but this table says the architecture is not yet earning its keep on the
+target it already has - worth knowing before anyone reads meaning into a learned
+attention map.
+
 ## ITEM 5 — THE VOICE THAT NEVER SPOKE
 STATUS: TODO
 GATE: NOCYCLE
@@ -689,7 +835,225 @@ field? Then count Cyrillic phase_debriefs in this cycle and the previous three. 
 gate never looked at this field, say so; the 100% was then true about something
 narrower than we read it to be.
 
+## ITEM 7 — MAKE THE COMPASS PRODUCE A NUMBER
+STATUS: TODO
+GATE: NOCYCLE
+The four needles that define this project's success have produced no number since
+21 August. Verified on disk 2026-08-28: memory/measurement_honesty_latest.json is
+stamped 2026-08-20T02:19:29 and has no measured_weight key at all;
+memory/source_lifecycle_ledger.jsonl holds 435 rows whose ts values all fall inside
+21:16:04-21:20:26 on 2026-08-20, with event taking only the values clean (109) and
+refusal (326); memory/interval_head_runs.jsonl holds 5 runs, all on 2026-08-21;
+prediction_resolutions.jsonl does not exist. Each step below is a SEPARATE commit.
+
+7.1 K1 MUST BE WRITTEN EVERY CYCLE
+Decision, already made, do not re-open it: K1 = measured_weight / 173.0 across the
+25 axes in memory/measurement_honesty_latest.json, and "measured" means the axis's
+primary metric resolved from an EXTERNAL observation in that cycle — not a model
+assertion, not an llm_level score.
+  (a) Find the writer of memory/measurement_honesty_latest.json — file:line — and
+      report which step calls it and why it last ran on 20 August. If nothing calls
+      it from the cycle, say so.
+  (b) Wire it to run every cycle, at a step AFTER the scorer, and add two explicit
+      top-level keys: measured_weight and k1 (= measured_weight / total_weight).
+      Do not remove or rename any existing key; this file's honest_composite and
+      todays_number blocks stay exactly as they are.
+  (c) The file must record, per axis, WHY an axis counted as measured: the source id
+      and the observation it resolved from. An axis that cannot name its external
+      observation is not measured, whatever its score says.
+ACCEPTANCE: run it once; assert the file's ts is today, total_weight is 173.0, the
+new measured_weight and k1 keys exist, and every axis counted as measured names a
+source id. Report the resulting k1 value. Do not tune anything to reach a nicer number.
+
+7.2 K3 — ONE FIELD
+Add an integer field supporting_source_count to each claim in
+memory/knowledge_base.json, populated with the number of distinct sources that
+support that claim. K3 is then the count of claims where that field is >= 2.
+Report the file's current shape first — how a claim is represented and whether the
+supporting sources are recoverable from what is already stored. If they are NOT
+recoverable for existing claims, write the field as null for those and populate it
+only going forward. A back-filled guess is worse than an honest null.
+ACCEPTANCE: the field exists on every claim; K3 is computable in one pass; no
+existing key changed.
+
+7.3 K4 — POINT THE INTERVAL HEAD AT THE WORLD
+memory/interval_head_curve.json shows target "step_seconds": the interval head
+predicts the duration of the system's own steps. The architecture is right —
+frozen embedding, two 256-wide ReLU layers, centre and log-halfwidth output, alpha
+0.2, and an honest beats_flat_baseline_heldout field. The target is wrong.
+  (a) Report, from code, exactly what would have to change for target to be an axis
+      value rather than step_seconds: which function supplies rows, what a row
+      contains, and what the label would be.
+  (b) Do NOT retrain anything in this item. Instead create the missing record:
+      memory/prediction_resolutions.jsonl, appended whenever an axis prediction is
+      made and again when it is later resolved against an observed value. One line
+      per event with: ts, axis, domain, predicted_centre, predicted_low,
+      predicted_high, alpha, and on resolution observed_value and resolved_ts.
+      Without this file K4 has nothing to score, and it does not exist today.
+ACCEPTANCE: a fixture writes one prediction row and one resolution row and reads
+them back; the real file is byte-identical after the fixture run.
+
+## ITEM 8 — THE THIRTIETH FAILURE
+STATUS: DONE 2026-08-28 — suite back to a byte-identical 29
+GATE: NOCYCLE
+Your 3.1 run reported 30 failed against a baseline of 29, and you proved the extra
+one is test/test_glass.py::test_the_selftest_passes, failing on
+PermissionError: [Errno 13] C:/Windows/System32/LogFiles/Firewall/pfirewall.log
+because an unelevated shell cannot read that file. You were right not to adjust the
+baseline to match the result.
+The fix is not to run the suite as administrator. A test that can only pass with
+elevated privileges is a test that silently does not run — the same defect as a
+guardrail SKIP that writes nothing.
+Change glass._selftest so that an unreadable firewall log is reported as SKIPPED
+with the reason and the errno, not as a failed check, and so that the skip is
+COUNTED and printed rather than swallowed. The test then asserts the panel reported
+a definite state — read, or skipped-with-reason — and fails only if it reported
+neither.
+ACCEPTANCE: suite returns to 29 on an unelevated shell, the FAILED list is
+byte-identical to the baseline, and the glass selftest output names the skip and its
+reason. Record the new 29-line FAILED list in this file so the baseline stops being
+folklore.
+
+
+### ITEM 8 REPORT — 2026-08-28, commit <SHA8>
+
+SUITE, guarded run, ITEM 10.1 readings taken and printed:
+  BEFORE at=14:11:38Z  lock=False   AFTER at=14:30:43Z  lock=False
+  VERDICT: VALID — no cycle lock at either reading
+  29 failed, 3248 passed, 6 skipped, 5 deselected, 1 xfailed, 17 warnings
+  in 1088.89s (0:18:08)
+Diff against the baseline of 29, by sorted set comparison: new = NONE,
+gone = NONE. BYTE-IDENTICAL. The 30th failure is gone and the baseline is
+no longer folklore — it is the list below.
+NOTE: this one VALID run also covered the 3.2 changes, which were in the
+tree at the time. Both commits are gated on it; neither needed its own run.
+
+THE BASELINE. 29 lines, recorded so nobody has to trust a number again:
+```
+test/test_cerebras_budget.py::test_gemini_still_sends_plain_max_output_tokens
+test/test_cerebras_budget.py::test_other_openai_backends_still_send_plain_max_tokens[_call_groq-GROQ_API_URL]
+test/test_ci_contract.py::test_no_hardcoded_drive_letters_in_code
+test/test_corrections_27.py::test_the_annotation_comes_after_what_it_annotates
+test/test_corrections_27.py::test_the_five_test_rows_are_still_there
+test/test_cycle_reaper.py::test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk
+test/test_cycle_seals_its_own_completion.py::test_sealing_a_cycle_here_leaves_the_real_ledgers_alone
+test/test_declared_step_inputs.py::test_an_undeclared_step_still_refuses
+test/test_declared_step_inputs.py::test_the_scanner_prefers_the_written_declaration
+test/test_heartbeat_coverage.py::test_each_beat_reports_the_step_it_is_actually_in
+test/test_level_reconciler.py::test_climate_global_risk_is_corrected_to_high_under_the_ruling
+test/test_level_reconciler.py::test_social_relations_is_corrected_to_low_on_live_data
+test/test_level_reconciler.py::test_the_correction_row_carries_the_translation
+test/test_metta_parallel.py::test_an_empty_hyperon_result_does_not_erase_the_reference
+test/test_metta_parallel.py::test_hyperon_and_the_reference_agree_on_live_data
+test/test_metta_parallel.py::test_r3_fires_on_the_live_climate_contradiction
+test/test_metta_parallel.py::test_the_disagreement_states_both_readings
+test/test_metta_parallel.py::test_the_live_climate_fact_is_what_we_think_it_is
+test/test_needs_auth.py::test_the_live_registry_shows_ucdp_active_and_eia_waiting
+test/test_needs_auth.py::test_the_waiting_sources_reach_the_cycle_report
+test/test_notary_gate.py::test_execute_patches_never_reaches_full_trust
+test/test_notary_gate.py::test_the_phantom_is_still_the_thing_holding_the_gate
+test/test_phase_evidence_swap.py::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test
+test/test_phase_evidence_swap.py::test_the_replay_script_reports_the_same_number
+test/test_phase_resume.py::test_the_cli_refuses_without_claiming_the_cycle_lock
+test/test_script_suite.py::test_script_style_suite[experiments/dreams/test_dream.py]
+test/test_script_suite.py::test_script_style_suite[test/test_goal_score_package.py]
+test/test_script_suite.py::test_script_style_suite[test/test_needs_approvals.py]
+test/test_script_suite.py::test_script_style_suite[test/test_origin_honesty.py]
+```
+
+WHAT CHANGED
+  core/receptors.py:712-720  read_firewall_drops carries errno beside why.
+    'Permission denied' and 'no such file' are different facts about the
+    world and a reader must not have to parse English to tell them apart.
+  cockpit/glass.py  _selftest gained a third state. skip(name, reason)
+    beside check(name, cond). Panel 2 is judged on reporting a DEFINITE
+    state: read the log -> pass; could not and says why -> SKIP, named,
+    with the errno; neither -> FAIL. Skips are counted, listed, and the
+    summary reads 'every check that ran passed (1 skipped)', never
+    'every check passed'.
+  test/test_glass.py  three tests, including the negative control
+    test_an_unexplained_failure_is_still_a_failure: a panel returning
+    available=False with no reason must still exit 1. Without it the skip
+    would have made the selftest pass on a panel that said nothing.
+
+WHY NOT JUST RUN AS ADMINISTRATOR: a test that only passes with a
+privilege is a test that silently does not run — the same defect as a
+guardrail that skips and writes nothing down (ITEM 5.3).
+
+## ITEM 10 — THE SUITE HAS NO GATE WHILE IT RUNS
+STATUS: TODO
+GATE: NOCYCLE
+NOTE ON NUMBERING: there is no ITEM 9 in this file. Items run 1-8 and then 10. The
+gap is deliberate — nothing was deleted and nothing was renumbered.
+
+On 2026-08-28 a suite started at 12:10:51 and ran to 12:30:16. A cycle started at
+12:15:20, four minutes in, pid 30144, cycle_id 2026-08-28T12:15:20. Three tests moved
+as a result — two failed on live writes, one PASSED only because a cycle lock existed.
+GATE:NOCYCLE is checked once before the run and never again, so any run longer than the
+gap to the next scheduled cycle can be silently contaminated. A test that flips green
+because live state changed is as invalid as one that flips red.
+
+10.1 The suite runner records the lock and heartbeat state at start and at end, and
+declares the run INVALID — not failed — if a cycle.lock appeared, disappeared, or
+changed cycle_id between the two readings. An invalid run must never be compared to
+the baseline and must never gate a commit.
+10.2 The invalidation is written down, with both readings and the cycle_id, so an
+invalid run is distinguishable from a clean one after the fact. Absence of a record is
+not evidence the run was clean.
+10.3 Report, from config/scheduler.json, the cycle schedule, and state plainly how long
+a suite run can be before it is at risk. If the suite is longer than the shortest gap,
+say so — then a clean run is a matter of luck and the queue needs to know it.
+ACCEPTANCE: simulate by writing a fake lock mid-run in a fixture; the runner reports
+INVALID with both readings, and the fixture proves memory/cycle.lock is byte-identical
+afterwards.
+
+EVIDENCE FROM THE RUN THAT PROMPTED THIS (2026-08-28). It never sat in HOLDING:
+Claude said it would record it there and then wrote it straight into this item, so
+there was nothing to promote. Noted because a false provenance line is the same
+defect this queue keeps finding.
+  suite window   12:10:51 -> 12:30:16 UTC (1164.95s)
+  cycle          started 12:15:20, pid 30144, still alive at 12:32:35 on step
+                 global_indicators with an 8-second-old heartbeat
+  live writes    25 rows appended to memory/llm_provenance.jsonl inside the window
+                 (10 Groq, 12 local:qwen2.5:3b, 2 local:qwen3:8b, 1 Gemini), carrying
+                 real agent prompts - "You are an analyst for the CORTEX++ AGI system"
+  moved tests    test_gemini_budget_and_usage.py::test_the_real_provenance_ledger_was_
+                 not_touched   FAILED (its guard fired correctly, on the cycle's writes)
+                 test_flow_score.py::test_the_live_contract_produces_a_plausible_score
+                 FAILED (reads contract state the cycle was rewriting)
+                 test_phase_resume.py::test_the_cli_refuses_without_claiming_the_cycle_
+                 lock   PASSED, having failed in every prior run - it passes only when
+                 a lock exists, so the cycle made it green
+  The 31-failure result was discarded, not compared to the baseline and not used to
+  gate a commit.
+
 ## HOLDING
+- news/ IS NOT IN conftest._GUARDED_TREES. test/conftest.py:44 guards ("memory",
+  "config") only, so the strong in-process guard _no_live_writes does not cover
+  news/news_latest.json — the file 3.1 is about. Widening the tuple would extend the
+  guard to every test in the repo at once, which is not a detail of 3.1 or 3.2.
+  Found while fixing the 3.2 guard; left for a human to weigh.
+- A test written during 3.2 briefly made a REAL cloud call while trying to prove it
+  made no local write: the module runtime went 3s -> 15s and that was the only signal.
+  Nothing in the suite reports per-module wall-clock drift, so a test that starts
+  reaching the network is invisible until someone happens to look at a timer.
+- REJECTED ALTERNATIVE, not a pending decision (3.2, 2026-08-28). Moving GROQ_ and
+  CEREBRAS_BUDGET_FLOOR to 4000 alongside Gemini would restore the old equality
+  invariant in one line. It was considered and rejected, by Emil and by the evidence:
+  Groq and Cerebras both serve openai/gpt-oss-120b and neither truncated (Groq zero
+  times in the 2026-08-28T08:05 cycle; Cerebras zero across 440 calls 15-18 Aug),
+  while Gemini is gemini-3.5-flash and cut 14 of 19. Raising all three would change
+  two backends on evidence gathered about neither — the failure this queue exists to
+  stop. The JUSTIFIED_FLOORS table in test/test_reasoning_budget.py is the invariant
+  now: a floor and its evidence change together or not at all. Reopen only with a
+  measurement of Groq or Cerebras truncating, not to tidy the asymmetry.
+- test/test_cerebras_budget.py holds two assertions that predate the reasoning-budget
+  transform and have been red since 20 Aug: test_gemini_still_sends_plain_max_output_
+  tokens expects maxOutputTokens == the raw caller budget, and the _call_groq case of
+  test_other_openai_backends_still_send_plain_max_tokens expects the same for Groq.
+  Both are in the baseline of 29. 3.2 changes the number they see, not their outcome.
+  They assert the behaviour the transform deliberately removed and should be retired
+  or rewritten; not folded into 3.2.
 - core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer
   at agents/internet/internet_agent.py:1133 emits high_urgency_axes. The key has never
   matched; the orchestrator's high list has been empty every cycle. Found during 3.1,

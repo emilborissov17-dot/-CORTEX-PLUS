@@ -102,6 +102,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import pathlib
 import sys
 from datetime import datetime, timezone
@@ -537,6 +538,54 @@ def coverage_and_width(lo, hi, y):
 # Training
 # ---------------------------------------------------------------------------
 
+WEIGHTS = BASE / "memory" / "interval_head_weights.npz"
+WEIGHTS_PREV = BASE / "memory" / "interval_head_weights_prev.npz"
+SCAN = BASE / "out" / "brain_scan.json"
+
+
+def _save_weights(head, mu, sd, run_ts: str) -> None:
+    """Persist the trained parameters, keeping exactly one previous run.
+
+    One generation back, not a full history: the page's whole question is
+    "what moved since the last run", which needs two files and no more. A
+    directory of npz nobody prunes would be a different feature.
+    """
+    WEIGHTS.parent.mkdir(parents=True, exist_ok=True)
+    if WEIGHTS.exists():
+        os.replace(WEIGHTS, WEIGHTS_PREV)
+    np.savez_compressed(
+        WEIGHTS, W1=head.W1, b1=head.b1, W2=head.W2, b2=head.b2,
+        W3=head.W3, b3=head.b3, mu=mu, sd=sd, run_ts=np.array(run_ts))
+
+
+def publish_scan(head=None, mu=None, sd=None, training=None,
+                 path: pathlib.Path | None = None) -> dict:
+    """Write out/brain_scan.json for the live page. ATOMIC, always.
+
+    tmp + os.replace, because the renderer polls once a second and a partial
+    file is a parse error the page would have to explain away. With no weights
+    on disk and no live head, publishes exactly {"meta":{"weights_persisted":
+    false}} — the page renders that as a stated fact, which is the honest output
+    when there is nothing to show.
+    """
+    out = path or SCAN
+    from tools import brain_scan as bs
+    blob = bs.build(head=head, mu=mu, sd=sd, training=training)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_suffix(".json.tmp")
+    tmp.write_text(json.dumps(blob, ensure_ascii=False) + "\n", encoding="utf-8")
+    os.replace(tmp, out)
+    # The matrices are large and do not change WITHIN a run, so they are written
+    # once per SAVE and fetched once by the page — never on the one-second poll.
+    if head is None and bs.WEIGHTS.exists():
+        m = out.parent / "brain_matrices.json"
+        mt = m.with_suffix(".json.tmp")
+        mt.write_text(json.dumps(bs.matrices(), ensure_ascii=False),
+                      encoding="utf-8")
+        os.replace(mt, m)
+    return blob
+
+
 def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
           write: bool = True, verbose: bool = True,
           force_fallback: bool = False, row_feats: bool = False) -> dict:
@@ -579,6 +628,19 @@ def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
     curve = []
     for epoch in range(1, epochs + 1):
         head.step(head.grads(Xn[tr], y[tr], alpha), lr=lr)
+        # LIVE, EVERY 5 EPOCHS. Written atomically so a reader polling once a
+        # second can never catch a half-file. This is the only thing in the loop
+        # that is not training: no hyperparameter, no seed, no loss, no stopping
+        # rule is touched by it, and `write` gates it exactly as it gates RUNS.
+        if write and (epoch % 5 == 0 or epoch == 1):
+            try:
+                publish_scan(head=head, mu=mu, sd=sd, training={
+                    "epoch": epoch, "epochs": epochs,
+                    "loss": round(float(head.loss(Xn[tr], y[tr], alpha)), 4),
+                    "heldout_loss": round(float(head.loss(Xn[va], y[va], alpha)), 4),
+                })
+            except Exception:
+                pass          # publishing must never break a training run
         if epoch == 1 or epoch % 20 == 0 or epoch == epochs:
             l_tr = head.loss(Xn[tr], y[tr], alpha)
             l_va = head.loss(Xn[va], y[va], alpha)
@@ -646,6 +708,14 @@ def train(epochs: int = EPOCHS, lr: float = LR, alpha: float = ALPHA,
             fh.write(json.dumps(result, ensure_ascii=False) + "\n")
         CURVE.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n",
                          encoding="utf-8")
+        # THE WEIGHTS, WHICH WERE NEVER KEPT. Five runs existed before this and
+        # not one could be inspected: RUNS and CURVE say how well the head did,
+        # never what it learned. mu/sd travel with them because without the
+        # normalisation the weights cannot be run forward — activations computed
+        # on differently-scaled inputs would be fiction, and the one thing this
+        # file must not produce is a plausible number nobody measured.
+        _save_weights(head, mu, sd, result["ts"])
+        publish_scan(training=None)
     return result
 
 

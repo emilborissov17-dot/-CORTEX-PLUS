@@ -355,6 +355,7 @@ const TABS = [
   {id:'expression', name:'EXPRESSION'},
   {id:'pending',    name:'PENDING'},
   {id:'glass',      name:'GLASS'},
+  {id:'brain',      name:'BRAIN'},
   {id:'terminal',   name:'TERMINAL'},
 ];
 const KEY = 'cortex.cockpit.tab';
@@ -1071,9 +1072,22 @@ function tabTerminal(){
       Opening this tab connects it; the token is injected and never displayed.</div>`, true)}</div>`
 }
 
+/* BRAIN is an <iframe>, and that is deliberate. out/brain_map.html is a whole
+   page with its own once-a-second poll and its own four modes; inlining it here
+   would mean this file owning a second render loop and re-shaping a contract
+   the page already implements. The iframe is same-origin, so /api/brain works
+   from inside it — which is the only reason the page can read anything at all,
+   since file:// cannot fetch JSON from disk. */
+async function tabBrain(){
+  return `<div class="grid"><div class="panel wide" style="padding:0">
+    <iframe src="/brain_map.html" title="interval head"
+      style="width:100%;height:82vh;border:0;background:#000"></iframe>
+  </div></div>`;
+}
+
 const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
                 expression:tabExpression, pending:tabPending, glass:tabGlass,
-                terminal:tabTerminal};
+                brain:tabBrain, terminal:tabTerminal};
 
 
 /* ── GLASS — a window, not a sense ──────────────────────────────────────────

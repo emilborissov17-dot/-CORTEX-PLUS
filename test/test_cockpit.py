@@ -709,8 +709,12 @@ PAGE = REPO / "cockpit" / "templates" / "cockpit.html"
 # these ids are also the digit-key shortcuts, so inserting one renumbers every
 # tab after it, and TERMINAL stays last because it is the only one that holds
 # live PTY state across a switch.
+#
+# BRAIN added 28 Aug 2026, after GLASS and still before TERMINAL, for the same
+# two reasons: TERMINAL keeps the last slot, and BRAIN goes at the end of the
+# read-only tabs rather than in the middle, so no existing digit shortcut moves.
 TAB_IDS = ("overview", "cycle", "world", "body", "expression", "pending",
-           "glass", "terminal")
+           "glass", "brain", "terminal")
 
 
 # ---------------------------------------------------------------------------
