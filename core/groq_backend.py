@@ -122,9 +122,30 @@ CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
 # output rather than in somebody's memory.
 #
 # To bring one back: delete its entry here. Nothing else has to change.
+# THE REASON WAS WRONG FOR FIVE DAYS, AND THE FILE ITSELF SAID SO.
+#
+# This entry read "reasoning tokens consume max_tokens" until 28 Aug 2026. That
+# was never the failure. The reasoning-token problem was real in July and was
+# FIXED by CEREBRAS_BUDGET_FLOOR above — the header at line ~87 records the
+# measurement: "Cerebras (който има пода) не отряза нито веднъж", and
+# memory/llm_provenance.jsonl holds 440 successful Cerebras calls between
+# 15 and 18 Aug with a median reply of 1208 chars, the best of the four.
+#
+# What actually happens is 402, in three cycle logs:
+#   memory/cycle_logs/cycle_2026-08-22_145127.log:179-180
+#   [POLICY] cerebras DISABLED for this run — permanent: 402 Client Error:
+#   Payment Required for url: https://api.cerebras.ai/v1/chat/completions
+#
+# ACCOUNT-SCOPED, VERIFIED 2026-08-28. Probed directly rather than assumed:
+# GET /v1/models returns 200 and lists ['gpt-oss-120b', 'gemma-4-31b'], so the
+# key is valid and the account is reachable. A one-message completion against
+# BOTH models returns 402 with {"type":"payment_required_error","param":"quota"}.
+# It is the quota, not the model — so no model swap and no parameter change can
+# reopen this door, and zai-glm-4.7, the alternative this file names at line 60,
+# is not even in the account's list. The question is closed until somebody pays.
 DECLARED_DEAD = {
-    "cerebras": "DISABLED: reasoning tokens consume max_tokens; "
-                "no budget for a paid tier",
+    "cerebras": "DISABLED: 402 Payment Required, account-scoped "
+                "(verified 2026-08-28, both models, param=quota)",
 }
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
@@ -604,6 +625,28 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             return backend_label.split(":", 1)[1]
         return backend_label
 
+    def _log_failure(backend_label: str, key: str, prompt_text: str,
+                     exc: BaseException, kind: str):
+        """The other half of provenance. Same file, same shape, outcome='error'.
+
+        HTTP status is pulled off the exception where requests attached one, so
+        a 402 is findable as a NUMBER rather than by grepping English out of a
+        message. `classification` is backend_policy's own verdict — permanent /
+        cooldown / transient — so the ledger records not just that a call failed
+        but what the system decided it meant.
+        """
+        status = None
+        resp = getattr(exc, "response", None)
+        if resp is not None:
+            status = getattr(resp, "status_code", None)
+        _log_provenance(backend_label, prompt_text, "", {
+            "outcome": "error",
+            "error": f"{type(exc).__name__}: {exc}"[:300],
+            "http_status": status,
+            "classification": kind,
+            "backend_key": key,
+        })
+
     def _log_provenance(backend_label: str, prompt_text: str, content_text: str,
                         meta: dict | None = None):
         """PROVENANCE (14 Aug 2026): every verdict the system records used to be
@@ -654,10 +697,14 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             # reply_chars because these fields were read and discarded; whoever
             # asks next reads the number. Absent for providers that report none
             # — an absent key is honest, a zero would not be.
+            _row["outcome"] = "ok"
             if meta:
                 for _k in ("finish_reason", "thoughts_tokens", "answer_tokens",
                            "prompt_tokens", "total_tokens", "budget",
-                           "used_reasoning_fallback"):
+                           "used_reasoning_fallback",
+                           # the failure half (see _log_failure)
+                           "outcome", "error", "http_status", "classification",
+                           "backend_key"):
                     if meta.get(_k) is not None:
                         _row[_k] = meta[_k]
             _append_json(_pf, _row, batched=True)
@@ -727,7 +774,15 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                     return result, meta
                 raise ValueError(f"Empty response from {label}")
             except Exception as e:
-                _policy.note_failure(key, e)
+                kind = _policy.note_failure(key, e)
+                # A FAILURE IS AN EVENT, NOT AN ABSENCE. Until now provenance
+                # recorded successes only — 3425 rows, not one of them an error
+                # — which is exactly why nine 402s from Cerebras were invisible
+                # in the one file whose job is to say what the backends did, and
+                # why the DECLARED_DEAD reason above stayed wrong for five days.
+                # Reading a gap as "nothing happened" is the same defect as a
+                # guardrail that skips and writes nothing down.
+                _log_failure(label, key, prompt, e, kind)
                 print(f"  [LLM] {label} failed ({e}) -- next...")
                 last_error = e
         return None                      # None => this tier declined, next tier
