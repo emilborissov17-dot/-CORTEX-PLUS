@@ -20,6 +20,15 @@ Keep the state column current — it is the only place a human should have to lo
 | 7 | Make the compass produce a number | TODO | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | TODO | NOCYCLE |
+| 11 | Wire resolve_ideas into the cycle (deadline 2026-09-02) | TODO | NOCYCLE |
+| 12 | axis_history.json is tracked in git | TODO | NOCYCLE |
+| 13 | The uncommitted-work guard | TODO | NOCYCLE |
+| 14 | Make the compass produce four numbers | TODO | NOCYCLE |
+| 15 | Early stopping + coverage gate | TODO | NOCYCLE |
+| 16 | A panel for a file nothing writes | TODO | NOCYCLE |
+| 17 | RUNBOOK.md is 1 byte | TODO | NOCYCLE |
+| 18 | Retarget the interval head at the world | TODO | NOCYCLE |
+| 19 | Record score provenance | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -1027,7 +1036,183 @@ defect this queue keeps finding.
   The 31-failure result was discarded, not compared to the baseline and not used to
   gate a commit.
 
+## ITEM 11 — WIRE tools/resolve_ideas.py INTO THE CYCLE
+STATUS: TODO
+GATE: NOCYCLE
+HARD DEADLINE 2026-09-02: 226 idea horizons fall that day and nothing resolves
+them today. The file and config/idea_dimension_aliases.json are on disk,
+delivered outside this session. Runs once per day, dry-run by default, --write to
+append. It NEVER edits memory/idea_stream.jsonl; it appends to
+memory/idea_resolutions.jsonl only.
+
+VERIFIED 2026-08-28 BEFORE WIRING, both outputs recorded verbatim below.
+--selftest -> 9/9, every check passed.
+--as-of 2026-09-30 -> exact match with the expected counts:
+    as of 2026-09-30  ideas 429  already resolved 0  due now 429
+      HELD 2   BROKE 26   FLAT 30   NO_CLAIM 258   NO_DATA 3
+      UNMAPPED 101   NEEDS_ORACLE 9
+      hit rate on the 28 that could be decided: 7.1%
+FIRST RUN DID NOT MATCH and was reported rather than adjusted: it returned
+NO_DATA 319 / UNMAPPED 101 / NEEDS_ORACLE 9, every series-reading verdict
+collapsed into NO_DATA. Cause confirmed afterwards: memory/axis_history.json had
+been reverted by the reset from 1827 points to 866 (latest 2026-06-21). Restored
+outside this session to 616519 B / 1834 points / 31 axes; the tool then matched
+exactly. The tool was never wrong — it was handed a truncated series. Nothing in
+tools/resolve_ideas.py was changed to make the numbers agree.
+
+## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
+STATUS: TODO
+GATE: NOCYCLE
+That is why one reset destroyed 68 days of history: a file a running cycle
+rewrites is under version control, so any checkout, reset or stash silently
+replaces live measurement with a committed snapshot.
+  (a) git rm --cached memory/axis_history.json, add it to .gitignore, and commit
+      a copy as data/seed/axis_history.seed.json so a fresh clone still starts
+      with a series.
+  (b) AUDIT memory/ for every other TRACKED file a running cycle writes, and
+      LIST them before changing any of them. The list is the deliverable; the
+      untracking is a separate decision per file.
+  (c) SEPARATE FINDING, separate commit: 7 points dated 2026-06-21 exist in the
+      committed version and had vanished from the live file. Something REWRITES
+      this file rather than appending to it. Find what, and report it. Do not fix
+      it in the same commit as (a).
+
+## ITEM 13 — THE UNCOMMITTED-WORK GUARD
+STATUS: TODO
+GATE: NOCYCLE
+Refuse to start a cycle when tracked files have been modified for longer than
+48 hours, and NAME them in the refusal. 86 files, some dating from 17 August, sat
+exposed for eleven days before a reset found them; the exposure predates the
+incident by a week and a half. The guard NAMES; it never commits and never
+discards. Uncommitted work with no owner is the same defect as a ledger that
+records only successes.
+
+## ITEM 14 — MAKE THE COMPASS PRODUCE FOUR NUMBERS
+STATUS: TODO
+GATE: NOCYCLE
+tools/compass.py: reads only, writes memory/compass_latest.json, and REFUSES to
+emit a number it cannot source. A stale input is reported as stale, never as a
+number. Report all four with source path and timestamp.
+  K1  measured weight / total weight. FIRST report which file holds the live
+      value — memory/measurement_honesty_latest.json is stale (ts 2026-08-20,
+      basis_weight 0.0) while ITEM 1 moved measured weight to 114 of 173. Name
+      the path; do not guess.
+  K2  sources that EARNED trust: rows in memory/source_lifecycle_ledger.jsonl
+      with a "transition" field whose state_after == "TRUSTED". Today 20, all
+      timestamped 2026-08-20. Report the count AND the date of the most recent
+      transition — a frozen K2 is the finding.
+  K3  consolidated claims: conclusions in memory/deductions_latest.json whose
+      "premises" cite at least two DIFFERENT (file, org) pairs. Today 2.
+  K4  interval score: heldout Winkler from memory/interval_head_runs.jsonl at the
+      early-stopping epoch, reported ONLY with heldout_coverage and the
+      flat_baseline heldout from the SAME run. Emit "does not beat baseline"
+      when it does not. Today it never does, at any epoch.
+
+## ITEM 15 — EARLY STOPPING AND A COVERAGE GATE FOR THE INTERVAL HEAD
+STATUS: TODO
+GATE: NOCYCLE
+The head trains 400 epochs and its heldout loss is BEST at epoch 1 (9.4034,
+coverage 0.793) and WORST at epoch 400 (16.7224, coverage 0.109). Flat baseline
+heldout is 8.4337 — it never wins. Training past epoch 1 makes it worse on every
+axis that matters and the run publishes the worst version.
+  - early stopping on heldout Winkler, with patience;
+  - a hard gate refusing to publish a head whose heldout coverage is below 0.75.
+DO NOT retune to force a win. If the gated head still loses to flat, publish that
+as the result.
+
+## ITEM 16 — A PANEL FOR A FILE NOTHING WRITES
+STATUS: TODO
+GATE: NOCYCLE
+core/cycle_profile.defer() has 11 call sites, all inside its own test, zero in
+production. memory/deferred_batch.json does not exist. cockpit/datasources.py:124
+and cockpit/server.py:617 render a panel for it.
+EITHER wire it at core/groq_backend.py:769 — the non-CLOUD branch that today only
+prints DEGRADED — so the file is really written, OR delete the panel. Do not
+leave a panel for a file nothing writes.
+
+## ITEM 17 — RUNBOOK.md IS 1 BYTE
+STATUS: TODO
+GATE: READONLY to write, NOCYCLE to commit
+Fill it from what actually works today: how to run one cycle, where the honesty
+files are, what a healthy run writes, and what to do when a step is DEGRADED.
+EVERY PATH IT NAMES MUST EXIST — open each one. A runbook that names a missing
+file is worse than an empty one, because the empty one does not mislead.
+
+## ITEM 18 — RETARGET THE INTERVAL HEAD AT THE WORLD
+STATUS: TODO
+GATE: NOCYCLE
+HUMAN DECISION, 28 August: the target changes from step_seconds to the next value
+of an external indicator.
+
+Do NOT target the composite axis score. Every point in memory/axis_history.json
+carries score_source, but it has exactly one value, "cortex_scoring_engine" — it
+records which module wrote the number, not whether the number came from the world
+or from the model. Training on it would mix measured and asserted scores with no
+way to separate them.
+
+Target instead: for each (axis, metric) series inside
+memory/axis_history.json["<axis>"][i]["metrics"], predict the NEXT value with an
+80% interval.
+
+Row selection, verified against the restored file today:
+  - metric value must be numeric
+  - series must have >= 10 points
+  - series must have MORE THAN 2 distinct values — 63 of the 89 eligible series
+    are effectively constant and would inflate any score. This leaves 26 series.
+  - 3-point warmup per series
+  Expect 1780 rows total. Split by TIME, not by row: heldout = dates >= 2026-08-10.
+  Expect 1329 train / 451 heldout. Report the actual numbers; if they differ from
+  these, stop and report the difference rather than adjusting the filter.
+
+Baselines — BOTH must be computed and published beside the head:
+  1. flat: the single best constant 80% band over the training rows (the existing
+     flat_baseline code already does this)
+  2. persistence: predict prev value with a constant band fitted on training
+     residuals. This is the real baseline for a time series and is much stronger
+     than flat. The head must beat PERSISTENCE to count as anything.
+
+Gates, non-negotiable:
+  - early stopping on heldout Winkler with patience; the current head is best at
+    epoch 1 and worst at epoch 400
+  - refuse to publish a head whose heldout coverage is below 0.75 at alpha 0.2
+  - when the head loses to persistence, publish "does not beat persistence" as
+    the result. Do not retune to force a win and do not drop the persistence
+    baseline because it is inconvenient.
+
+Report per-series as well as pooled — a head that wins on 3 series and loses on
+23 is not a head that works.
+
+## ITEM 19 — RECORD SCORE PROVENANCE
+STATUS: TODO
+GATE: NOCYCLE
+cortex_scoring_engine must write, on every axis_history point it creates, a
+score_basis field with value measured, asserted or absent, matching how
+memory/measurement_honesty_latest.json already classifies that axis on that day.
+Do not backfill history — the old points genuinely do not know. Annotate that the
+field starts today and why.
+
+Until this exists, no claim about "the system predicts the world" can be checked
+against the composite score.
+
 ## HOLDING
+- THE 86-FILE EXPOSURE IS ITS OWN FINDING, and it predates the incident that
+  revealed it. On 2026-08-28 a `git reset --hard` overwrote 86 tracked files
+  carrying uncommitted modifications. The .pyc timestamps date some of that work
+  to 17 and 20 August: eleven days in a working tree with no commit, no owner and
+  no expiry. The reset destroyed it; the EXPOSURE existed for a week and a half
+  before anything went wrong, and nothing in the system was watching for it.
+  Two of the nine .py files (composer.py, sensorium.py) had no pre-reset cache and
+  are permanently gone; six were re-implemented from recovered requirements; one
+  (prophecy_ledger.py) was left alone because HEAD is newer there.
+  PROPOSED GUARD, now ITEM 13: refuse to start a cycle when tracked files have
+  been modified for longer than 48 hours, and NAME them in the refusal. It names;
+  it never commits and never discards — committing on someone's behalf is its own
+  kind of damage, and discarding is what just happened. Uncommitted work with no
+  owner is the same defect as a ledger that records only successes: a real state
+  the system cannot see.
+  SECOND-ORDER, now ITEM 12: the reason the damage reached measurement data at all
+  is that memory/axis_history.json is TRACKED. A file a running cycle rewrites
+  should never be restorable-over by a checkout.
 - news/ IS NOT IN conftest._GUARDED_TREES. test/conftest.py:44 guards ("memory",
   "config") only, so the strong in-process guard _no_live_writes does not cover
   news/news_latest.json — the file 3.1 is about. Widening the tuple would extend the

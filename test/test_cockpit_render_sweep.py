@@ -149,7 +149,10 @@ def page(sweep, loaded):
 # terminal raised from 4.0 after #closebtn was reported ABSENT on one pass of an
 # otherwise green run. An intermittent skip is worse than a slow test: it reads
 # as "this machine cannot exercise that control" when the truth is impatience.
-SLOW_TABS = {"body": 6.0, "terminal": 6.0, "glass": 4.0, "expression": 3.5}
+# BRAIN loads an iframe that polls /api/brain once a second, so it needs longer
+# than a static panel to settle before anything is asserted about it.
+SLOW_TABS = {"body": 6.0, "terminal": 6.0, "glass": 4.0, "expression": 3.5,
+             "brain": 5.0}
 
 
 def go(b, tab: str, settle: float = 1.2):
@@ -1040,3 +1043,35 @@ def test_negative_control_a_blank_panel_is_caught(page):
         "an injected panel containing nothing but a heading was NOT caught by "
         "the blank-panel rule, so that rule cannot fail")
     assert any(p["title"] == "EMPTY" for p in empty)
+
+
+# ── 2.9  the BRAIN tab is a frame, and a frame needs its own assertion ──────
+#
+# Added 2026-08-28 with the tab. Every other tab renders its panels into THIS
+# document, so the generic assertions reach them. BRAIN embeds out/brain_map.html
+# in an iframe, whose contents contribute nothing to the parent's innerText — so
+# without this the sweep would visit the tab and learn nothing, and a broken
+# frame would look exactly like an empty brain.
+
+def test_the_brain_tab_says_what_it_is_outside_the_frame(page):
+    """The parent document must carry the state, not only the iframe."""
+    go(page, "brain", settle=5.0)
+    txt = page.js("return document.querySelector('#view').innerText || '';")
+    low = txt.lower()
+    assert "interval head" in low or "no weights have ever been written" in low, (
+        "the BRAIN panel must state its own condition in the parent document — "
+        "an iframe contributes nothing to innerText, so a viewer with a blocked "
+        "frame would see an empty box and no reason for it")
+    assert "/api/brain" in txt, "the panel must name where its data comes from"
+
+
+def test_the_brain_frame_is_actually_present_and_same_origin(page):
+    """file:// cannot fetch JSON from disk, so the frame must be served by us."""
+    go(page, "brain", settle=5.0)
+    src = page.js("""
+      const f = document.querySelector('#view iframe');
+      return f ? f.getAttribute('src') : null;
+    """)
+    assert src, "the BRAIN tab renders no iframe at all"
+    assert src.startswith("/"), (
+        f"the frame must be same-origin so /api/brain works inside it; got {src!r}")

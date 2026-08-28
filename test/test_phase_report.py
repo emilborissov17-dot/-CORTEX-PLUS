@@ -42,9 +42,29 @@ from core.phase_report import (DONE, FAILED, PARTIAL, PhaseReport,
 REPO = pathlib.Path(__file__).resolve().parents[1]
 CYCLE = "2026-08-20T17:59:34.463459+03:00"
 
-# F_SELF promises exactly one artifact, which makes it the cleanest phase to
-# test the contradiction rule against.
-F_SELF_PRODUCES = "memory/improvement_proposals.json"
+# F_SELF is the smallest phase, which makes it the cleanest one to test the
+# contradiction rule against — but WHAT it promises is read from the config, not
+# retyped here. It promised one artifact until 2026-08-28, when G_LEARN's
+# misattributed files were moved to the phases that actually write them and
+# memory/development_journal.json joined it. A hardcoded copy of a declared list
+# goes stale silently and then fails for a reason that has nothing to do with
+# what the test is about.
+def _phase_produces(phase: str) -> list:
+    import json
+    cfg = json.loads((REPO / "config" / "cycle_phases.json").read_text(
+        encoding="utf-8"))
+    return list(cfg["phases"][phase]["produces"])
+
+
+F_SELF_ALL = _phase_produces("F_SELF")
+# The one the assertions name when they need a single path.
+F_SELF_PRODUCES = F_SELF_ALL[0]
+
+
+def _write_all(base: pathlib.Path, rels, text: str = "{}"):
+    """Every artifact the phase promises. Writing only the first leaves the rest
+    absent, which is PARTIAL for a correct reason and a confusing test."""
+    return [_write(base, r, text) for r in rels]
 
 
 def _write(base: pathlib.Path, rel: str, text: str = "{}") -> pathlib.Path:
@@ -90,7 +110,7 @@ def test_the_same_phase_is_done_once_it_writes_the_file(tmp_path):
     """POSITIVE CONTROL. Without this, a verdict() hardcoded to PARTIAL passes."""
     with PhaseReport("F_SELF", CYCLE, base_dir=tmp_path) as rep:
         rep.step_ok("self_modifier")
-        _write(tmp_path, F_SELF_PRODUCES)
+        _write_all(tmp_path, F_SELF_ALL)
         rep.step_ok("execute_patches")
 
     report = _report_on_disk(rep)
@@ -105,7 +125,7 @@ def test_the_same_phase_is_done_once_it_writes_the_file(tmp_path):
 def test_a_file_left_over_from_an_earlier_cycle_does_not_count(tmp_path):
     """output/cortex_scores_latest.json exists right now and is from a cycle that
     died hours ago. Presence alone must never satisfy a promise."""
-    stale = _write(tmp_path, F_SELF_PRODUCES)
+    stale = _write_all(tmp_path, F_SELF_ALL)[0]
     old = (datetime.now(timezone.utc) - timedelta(hours=6)).timestamp()
     import os
     os.utime(stale, (old, old))
@@ -129,7 +149,7 @@ def test_a_file_written_the_instant_the_phase_began_still_counts(tmp_path):
     that had just written its artifact being called stale."""
     for _ in range(20):
         with PhaseReport("F_SELF", CYCLE, base_dir=tmp_path) as rep:
-            _write(tmp_path, F_SELF_PRODUCES)
+            _write_all(tmp_path, F_SELF_ALL)
         assert _report_on_disk(rep)["verdict"] == DONE, (
             "a file written in the same instant the phase began was judged stale"
         )
@@ -155,7 +175,7 @@ def test_a_step_that_raised_but_left_the_artifact_is_partial_not_failed(tmp_path
     PARTIAL means look at what is missing."""
     with PhaseReport("F_SELF", CYCLE, base_dir=tmp_path) as rep:
         rep.step_failed("self_modifier", ValueError("one proposal was malformed"))
-        _write(tmp_path, F_SELF_PRODUCES)
+        _write_all(tmp_path, F_SELF_ALL)
         rep.step_ok("execute_patches")
 
     assert _report_on_disk(rep)["verdict"] == PARTIAL
@@ -179,7 +199,7 @@ def test_an_exception_escaping_the_phase_is_recorded_and_not_swallowed(tmp_path)
 def test_the_report_carries_every_field_the_operator_needs(tmp_path):
     with PhaseReport("F_SELF", CYCLE, base_dir=tmp_path) as rep:
         rep.step_ok("self_modifier")
-        _write(tmp_path, F_SELF_PRODUCES)
+        _write_all(tmp_path, F_SELF_ALL)
         rep.step_ok("execute_patches")
 
     report = _report_on_disk(rep)
@@ -221,7 +241,7 @@ def test_llm_calls_are_counted_by_backend_within_the_phase_window(tmp_path):
             {"ts": during.isoformat(), "backend": "Groq"},
         ]), encoding="utf-8")
         rep.step_ok("self_modifier")
-        _write(tmp_path, F_SELF_PRODUCES)
+        _write_all(tmp_path, F_SELF_ALL)
 
     calls = _report_on_disk(rep)["llm_calls"]
     assert calls == {"Groq": 2, "Gemini": 1}, (

@@ -1079,9 +1079,27 @@ function tabTerminal(){
    from inside it — which is the only reason the page can read anything at all,
    since file:// cannot fetch JSON from disk. */
 async function tabBrain(){
-  return `<div class="grid"><div class="panel wide" style="padding:0">
+  /* The panel says what it is IN THIS DOCUMENT, not only inside the iframe.
+     An iframe contributes nothing to the parent's innerText, so a viewer whose
+     iframe fails to load — and the render sweep, which reads the parent — would
+     see a large empty box and no way to tell an empty brain from a broken
+     frame. The line below is the same information either way. */
+  const d = await get('/api/brain');
+  const m = (d && d.meta) || {};
+  const head = m.weights_persisted
+    ? `interval head · ${m.param_count||'?'} parameters · run ${String(m.run_ts||'?').slice(0,19)}`
+      + ` · ${m.architecture||''} · alpha ${m.alpha!=null?m.alpha:'?'}`
+      + ` · beats flat baseline: ${m.beats_flat_baseline_heldout===true?'yes':'NO'}`
+    : 'no weights have ever been written — memory/interval_head_weights.npz is absent,'
+      + ' so there is nothing to draw. Train the head once and this fills in.';
+  return `<div class="grid"><div class="panel wide">
+    <h2>BRAIN</h2>
+    <div class="muted">${esc(head)}</div>
+    <div class="muted">source /api/brain, polled once a second; matrices from
+      /api/brain/matrices, fetched once. Opening out/brain_map.html as a file://
+      URL cannot work — the browser refuses to read JSON from disk.</div>
     <iframe src="/brain_map.html" title="interval head"
-      style="width:100%;height:82vh;border:0;background:#000"></iframe>
+      style="width:100%;height:78vh;border:0;background:#000;margin-top:6px"></iframe>
   </div></div>`;
 }
 
