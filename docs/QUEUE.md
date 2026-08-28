@@ -631,9 +631,13 @@ ACCEPTANCE NUMBERS, as the steps demanded them:
        One cycle run closes this; a human can check with
        `venv\Scripts\python.exe -c "import json;print(json.load(open('output/cortex_scores_latest.json'))['score_scale'])"`.
 
-NOT PUSHED. The push attempt recorded above at 17:22Z still stands: nothing has
-been pushed since, and the local branch now carries 20 unpushed commits,
-71ddaf9 through 7d41957.
+NOT PUSHED AT THE TIME OF WRITING, AND NO LONGER TRUE. This paragraph read
+"nothing has been pushed since, and the local branch now carries 20 unpushed
+commits, 71ddaf9 through 7d41957." Checked again 2026-08-28T19:2xZ against
+origin/feature/lidaction-guard: the branch is 3 ahead, 0 behind. Seventeen of
+those commits were pushed from outside this session between the 17:22Z block and
+now. Corrected rather than deleted, because "we were blocked and stayed blocked"
+is the wrong thing for the next reader to carry forward.
 
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
 STATUS: DONE 2026-08-28 — a)-e), g), h), i) complete; f) PARTIAL (see below)
