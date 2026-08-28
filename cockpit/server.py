@@ -1006,7 +1006,10 @@ def api_entropy():
 # ── THE REACTION (24 Aug 2026) — READ ONLY FROM HERE ───────────────────────
 # This endpoint NEVER asks the model. It reads what core/reaction.py stored,
 # whenever that was. The call itself belongs at a phase boundary inside the
-# cycle and is behind reaction.enabled in config/reactions.json, which is off.
+# cycle and is behind reaction.enabled in config/reactions.json. This comment
+# used to end "which is off" — a third assertion about a flag nobody re-read,
+# beside the two sentences below that had the same fault. The flag's value is
+# whatever the file says right now; nothing here should state it.
 #
 # So the panel can be open all day and cost nothing: it is a reader of a record,
 # like every other panel on this tab.
@@ -1022,9 +1025,20 @@ def api_reaction():
             "label": "source:{}, directed:{}, mediation:{}".format(
                 rx.SOURCE, rx.DIRECTED, rx.MEDIATION),
             "rows": rows,
-            "why_off": ("reaction.enabled is false in config/reactions.json - "
-                        "one model call per phase boundary is about 63 a night "
-                        "inside a live cycle"),
+            # DERIVED, NOT ASSERTED (28 Aug 2026). This was a hard-coded
+            # sentence saying the flag is false, printed unconditionally beside
+            # a status word that re-reads the file — so on 2026-08-28 the panel
+            # rendered "ENABLED: reaction.enabled is false in
+            # config/reactions.json" in one line, with the flag true on disk.
+            # The status word was right; the explanation was frozen at the
+            # moment somebody wrote it.
+            "why_off": (
+                "reaction.enabled is true in config/reactions.json - a model "
+                "call per phase boundary, about 63 a night inside a live cycle"
+                if rx.enabled() else
+                "reaction.enabled is false in config/reactions.json - one model "
+                "call per phase boundary is about 63 a night inside a live "
+                "cycle"),
         })
     except Exception as e:                                   # noqa: BLE001
         return jsonify({"error": "{}: {}".format(type(e).__name__, e),
@@ -1043,6 +1057,16 @@ def api_reaction():
 # AST test that fails if anything else reads it, because the instant something
 # in the cycle starts consuming unvalidated text it stops being expression and
 # becomes an input nobody gated.
+def _rx_enabled() -> bool:
+    """core.reaction.enabled(), fail-CLOSED. A panel that cannot read the flag
+    must not claim it is on."""
+    try:
+        from core import reaction as rx
+        return bool(rx.enabled())
+    except Exception:                                        # noqa: BLE001
+        return False
+
+
 @app.get("/api/free")
 def api_free():
     from core import free_stream as fs
@@ -1056,9 +1080,15 @@ def api_free():
             "count": len(rows),
             "validated": False,
             "rows": rows,
-            "empty_why": ("nothing yet - reaction.enabled is false in "
-                          "config/reactions.json, so no answer has been asked "
-                          "for"),
+            # Same defect as /api/reaction's why_off: a sentence about a flag
+            # that never read the flag. Derived now.
+            "empty_why": (
+                "nothing yet - reaction.enabled is true in "
+                "config/reactions.json, so answers should appear as phase "
+                "boundaries pass"
+                if _rx_enabled() else
+                "nothing yet - reaction.enabled is false in "
+                "config/reactions.json, so no answer has been asked for"),
         })
     except Exception as e:                                   # noqa: BLE001
         return jsonify({"error": "{}: {}".format(type(e).__name__, e),

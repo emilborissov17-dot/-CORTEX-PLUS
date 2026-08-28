@@ -1222,8 +1222,12 @@ async function drawReaction(){
     const head = `<div class="muted">${esc(d.label||'')} —
       ${d.enabled ? 'ENABLED' : 'DISABLED'}: ${esc(d.why_off||'')}</div>`;
     if(!d.rows || !d.rows.length){
+      /* CONDITIONAL. "the flag is off" was printed whether it was or not,
+         which with the flag true read as "ENABLED ... the flag is off". */
       el.innerHTML = head + `<div class="quiet">NO REACTIONS RECORDED
-        <div class="muted">the flag is off; nothing has asked</div></div>`;
+        <div class="muted">${d.enabled
+          ? 'the flag is on; no boundary has produced one yet'
+          : 'the flag is off; nothing has asked'}</div></div>`;
       return;
     }
     const body = d.rows.slice().reverse().map(r => {
