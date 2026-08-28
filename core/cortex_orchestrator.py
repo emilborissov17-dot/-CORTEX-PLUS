@@ -267,8 +267,15 @@ def run():
     internet = state.get("internet", {})
     critical = internet.get("critical_axes", [])
     high = internet.get("high_axes", [])
+    # NOT ASSESSED (28 Aug 2026). Truncated analyses used to land here as LOW and
+    # vanish. They are neither critical nor calm — they are unanswered, and this
+    # is the one place a human reads the priority picture, so it says so.
+    unknown = internet.get("unknown_axes", [])
     print(f"  Критични: {critical}")
     print(f"  Високи: {high}")
+    if unknown:
+        print(f"  NOT ASSESSED ({len(unknown)}): {unknown}")
+        print("    No verdict for these axes - absence of an alert is not calm.")
     
     # 2. Attentional Assessment
     print("\n🎯 Attentional Protocol — оценявам приоритети...")

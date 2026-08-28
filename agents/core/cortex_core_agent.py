@@ -24,12 +24,24 @@ def _load_news_context() -> str:
         lines = [f"INTERNET INTELLIGENCE ({news.get('date','')}) — {len(results)} axes monitored:"]
         critical = news.get('critical_axes', [])
         high     = news.get('high_urgency_axes', [])
+        # NOT ASSESSED, AND SAID SO (28 Aug 2026). An axis whose analysis was cut
+        # off used to arrive here as urgency=LOW and was filtered out with the
+        # genuinely calm ones — so the brain read "nothing urgent" where the truth
+        # was "nobody looked". UNKNOWN is neither promoted to HIGH nor folded into
+        # LOW: it is named, counted, and the count is the point.
+        unknown  = news.get('unknown_axes') or [
+            a for a, r in results.items() if r.get('urgency') == 'UNKNOWN']
         if critical: lines.append(f"  CRITICAL ALERTS: {', '.join(critical)}")
         if high:     lines.append(f"  HIGH URGENCY:    {', '.join(high)}")
+        if unknown:
+            lines.append(f"  NOT ASSESSED ({len(unknown)} of {len(results)}): "
+                         f"{', '.join(unknown)}")
+            lines.append("    These carry NO verdict. Absence of an alert here is "
+                         "absence of an answer, not an all-clear.")
         lines.append("")
         # Само HIGH и CRITICAL оси за да пестим токени
         for axis, r in results.items():
-            urgency = r.get('urgency', 'LOW')
+            urgency = r.get('urgency', 'UNKNOWN')
             if urgency not in ('CRITICAL', 'HIGH'):
                 continue
             summary = r.get('summary', '')[:120]

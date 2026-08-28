@@ -97,14 +97,28 @@ def remember_from_news() -> int:
         return 0
     
     count = 0
+    # NOT ASSESSED IS NOT REMEMBERED, AND NOT SILENTLY EITHER (28 Aug 2026).
+    # A truncated analysis used to arrive as urgency=LOW with the raw source text
+    # as its "summary", so it failed this gate and left no trace — the memory of
+    # the day looked complete while an axis had never been read. UNKNOWN is still
+    # not stored (there is nothing to store), but it is counted and named, so the
+    # gap is visible where the memory is built rather than nowhere at all.
+    unknown = []
     for axis, r in news.get("results", {}).items():
         summary = r.get("summary", "")
-        urgency = r.get("urgency", "LOW")
+        urgency = r.get("urgency", "UNKNOWN")
+        if urgency == "UNKNOWN":
+            unknown.append(axis)
+            continue
         if summary and urgency in ("HIGH", "CRITICAL"):
             text = f"{axis} [{urgency}]: {summary}"
             remember(text, axis=axis, source="internet_agent")
             count += 1
-    
+
+    if unknown:
+        print(f"[SEMANTIC_MEMORY] {len(unknown)} axis/axes NOT ASSESSED, nothing "
+              f"remembered for them: {', '.join(sorted(unknown))}")
+
     return count
 
 def status() -> dict:

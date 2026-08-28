@@ -1,3 +1,23 @@
+## STATUS
+last_updated_utc: 2026-08-28T11:32:00Z
+last_item_done: ITEM 3.1 — a truncated answer is no longer "nothing urgent"
+current_item: ITEM 3.2 — the Gemini budget
+current_state: RUNNING
+gate_closed_reason: -
+next_action_needed_from_claude: raise GEMINI_BUDGET_FLOOR to 4000 in code and record Gemini usageMetadata
+
+## ORDER OF WORK
+Work strictly down this table. It is the map; the items below are the detail.
+Keep the state column current — it is the only place a human should have to look.
+| # | item | state | gate |
+|---|------|-------|------|
+| 1 | Prepare the K1 move | DONE 2026-08-28 | READONLY |
+| 2 | Commit docs/QUEUE.md | DONE 2026-08-28, 77b4838 (not pushed) | NOCYCLE |
+| 3 | Apply 3.1-3.9 | RUNNING — 3.1 DONE, 3.2 next | NOCYCLE |
+| 4 | Why the cloud tier is abandoned, f)-i) | PARTIAL — a)-e) done | READONLY |
+| 5 | The voice that never spoke | TODO | NOCYCLE |
+| 6 | Two lies on the expression panel | TODO | READONLY |
+
 # QUEUE — Claude Code works this file top to bottom
 
 The human types one line: "Read docs/QUEUE.md and continue from the first
@@ -17,6 +37,11 @@ again. This file remembers where work stopped; the context does not.
 6. When you reach an item marked BLOCKED, STOP THERE. Print the item's title and
    the words "this item is written by Claude after the previous report". Do not
    invent its content.
+7. New findings do NOT become items while an item is running. If you find something
+   outside the current item's scope, record it under a "## HOLDING" heading at the end
+   of this file, note it in the commit body, and KEEP WORKING. Do not stop to ask
+   whether to fold it in — the answer is always no. Claude promotes HOLDING entries to
+   numbered items after the current item reports. Nothing is lost, nothing jumps the queue.
 
 ## GATES
 - GATE:READONLY — always open. Reads, network probes, AST parsing. No writes to
@@ -213,8 +238,19 @@ perplexity blocks, uncommitted in the working tree (git diff shows false -> true
 last commit touching the file is 4bd4394, which left both false). config/reactions.json
 is a GUARDED file — Claude does not touch it. These 8 are the suite correctly
 detecting a human's live change.
-  37 - 8 = 29 = the baseline, exactly. No failure in the list is attributable to any
-  change made by this session; no tracked file was modified before this run.
+  CORRECTED 2026-08-28T11:32Z, after the 3.1 run: SEVEN of those eight are
+  flag-driven, not eight. test_glass.py::test_the_selftest_passes still FAILS with
+  the flags off, so it was never a reactions failure and this record was wrong to
+  fold it in. Its real cause, reproduced directly:
+      core.receptors.read_firewall_drops() -> available=False,
+      "PermissionError: [Errno 13] Permission denied:
+       C:/Windows/System32/LogFiles/Firewall/pfirewall.log"
+  An unelevated shell cannot read the Windows firewall log; glass._selftest checks
+  "panel 2 read the firewall log" and fails. Environment, not code.
+  So: 37 - 7 flag-driven = 30, and the documented baseline of 29 does not include
+  glass. Either the 29 was measured in an elevated shell, or the baseline is stale
+  by one. NOT VERIFIED which; it needs one run as administrator to settle.
+  No failure in either list is attributable to a change made by this session.
 
 Worth naming: test_reaction.py::test_and_it_says_why_rather_than_pretending_nothing_
 happened is failing on precisely the defect ITEM 3.9 exists to fix — the panel's
@@ -334,6 +370,69 @@ word "false" about reaction.enabled.
 
 WHEN DONE: write acceptance numbers and each commit sha into this file, set
 STATUS: DONE, and continue.
+
+
+### 3.1 REPORT — 2026-08-28, commit <SHA>
+
+SUITE on the exact committed tree:
+  30 failed, 3232 passed, 6 skipped, 5 deselected, 1 xfailed, 17 warnings in
+  1139.19s (0:18:59)
+DIFF against the baseline of 29 (computed as the ITEM 2 run's 37 minus the
+flag-driven failures), by sorted set comparison:
+  new failures vs baseline:  test/test_glass.py::test_the_selftest_passes
+  newly passing vs baseline: none
+That one is NOT from 3.1, proved three ways rather than asserted:
+  1. cockpit/glass.py imports __future__, cockpit, collections, core, pathlib,
+     psutil, sys, typing — zero overlap with the four files 3.1 touched (AST).
+  2. Reproduced directly: core.receptors.read_firewall_drops() returns
+     available=False, "PermissionError: [Errno 13] Permission denied:
+     C:/Windows/System32/LogFiles/Firewall/pfirewall.log". An unelevated shell
+     cannot read that file; glass._selftest's "panel 2 read the firewall log"
+     check fails on it. Environment, not code.
+  3. The same test failed in the pre-change ITEM 2 run.
+PUSH RULE condition 1 fails (list not byte-identical to 29). NOT PUSHED.
++19 tests passed vs the ITEM 2 run: the 12 new ones here plus 7 reaction/
+perplexity ones that pass again now the flags are false.
+
+WHAT CHANGED
+  agents/internet/internet_agent.py
+    :986  _groq(...) + hand-rolled 'done thinking.'/</think> stripping +
+          _parse_llm_json  ->  call_llm_json(prompt, max_tokens=400,
+          expect=dict, label=axis). Routes through call_groq_meta so
+          finish_reason=="length" is authoritative rather than guessed, and
+          retries ONCE at double budget. Stripping is already inside
+          core.llm_json.strip_reasoning, so the duplicate went. (a) and (b).
+    :1006 the failure record: urgency='UNKNOWN' (never LOW), sentiment=
+          'UNKNOWN', truncated=<bool>, error=str(e), summary='' with a
+          summary_why naming which failure it was. ctx[:200] is GONE. (c)
+    :1069 rebuild carries truncated / error / summary_why, and the urgency
+          default moved from 'LOW' to 'UNKNOWN'. (c)
+    :1114 run() counts `unknown` apart from LOW, publishes 'unknown_axes' in
+          news/news_latest.json, prints "NOT ASSESSED (n)". (d)
+  agents/core/cortex_core_agent.py  — NOT ASSESSED block in the brain's news
+    context, with "absence of an alert here is absence of an answer".
+  core/cortex_orchestrator.py       — reads unknown_axes, prints beside
+    critical/high.
+  memory/semantic_memory.py         — UNKNOWN still not stored (nothing to
+    store) but counted and named on stdout, so the gap is visible where the
+    memory is built.
+  test/test_internet_truncation.py  — NEW, 12 tests, all green.
+
+ACCEPTANCE, all asserted by the fixture, all passing:
+  urgency == "UNKNOWN"                     test_a_truncated_answer_is_unknown_not_low
+  truncated is True                        test_a_truncated_answer_is_marked_truncated
+  error present, non-empty, names backend  test_a_truncated_answer_carries_a_non_empty_error
+  summary is NOT the input                 test_the_summary_is_not_the_input
+  marker survives the rebuild              test_the_marker_survives_the_result_rebuild
+  UNKNOWN counted apart from LOW           test_run_publishes_unknown_axes_separately
+  readers surface it, never promote        test_core_agent_surfaces_unknown,
+                                           test_semantic_memory_does_not_remember_unknown_but_names_it,
+                                           test_orchestrator_prints_unknown
+  news/news_latest.json byte-identical     test_the_real_news_file_was_not_touched
+    (sha256 06831ab1964eb340..., 172243 bytes, unchanged across every run)
+
+NOT DONE, on purpose, recorded under HOLDING: the high_axes/high_urgency_axes
+key mismatch, and the global-synthesis call at :1151.
 
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
 STATUS: PARTIAL 2026-08-28 — a)-e) DONE, f)-i) NOT DONE (interrupted mid-f)
@@ -522,3 +621,79 @@ whether the wall is a quota or our own burst rate; it can only say the repo does
 not know. Settling it needs either the providers' documented limits recorded in
 the repo, or the 429 response bodies captured — and memory/llm_provenance.jsonl
 records no failures at all (Item 4 c), which is the same gap as 3.3(c).
+
+## ITEM 5 — THE VOICE THAT NEVER SPOKE
+STATUS: TODO
+GATE: NOCYCLE
+Cycle 2026-08-28T08:05:00 sealed with "attempts": 0 in memory/extra_calls_log.jsonl,
+while config/reactions.json had enabled: true in BOTH blocks from 07:34:36Z until the
+human reverted it at 13:53Z. memory/reactions.jsonl is unchanged since 2026-08-23 and
+its only row came from _once() with fixture lines. The voice has never spoken from real
+receptor lines.
+
+5.1 IS IT WIRED AT ALL?  (read-only, do this first)
+By AST, not grep: list every caller of core/reaction.py's at_phase_boundary(), ask(),
+react(), and of the perplexity equivalent. State whether fast_cycle_runner.py or any
+module it imports calls any of them during a cycle. If nothing does, say so plainly —
+the flag has then never been connected to anything, and the panel has been reporting a
+switch with no wire.
+
+5.2 IF IT IS WIRED: WHY DID IT NOT FIRE?
+Enumerate every early return in the path — RAM floor, VRAM floor, Ollama queue busy,
+wait timeout, circuit breaker, cooldown, config re-read. For each: file:line, the exact
+condition, and whether it writes ANY record. Then check the recorded body state for that
+cycle (memory/body_scan_latest.json, memory/somatic_history.jsonl between 08:05 and
+09:46) against each floor and say which gate would have been closed.
+
+5.3 SILENCE MUST BE WRITTEN DOWN   [required either way]
+Every non-attempt outcome writes a row to memory/extra_calls_log.jsonl with kind "skip"
+and a reason: not_enabled | ram_floor | vram_floor | queue_busy | wait_timeout |
+breaker_open | error — including the measured value that closed the gate (e.g.
+ram_available_mb), so a human can check the decision and not just read the verdict.
+The seal then carries attempts, skips, and skips_by_reason.
+Same defect as a 402 being invisible in a success-only memory/llm_provenance.jsonl
+(Item 4b) and as a refusal leaving a stale heartbeat indistinguishable from death.
+Absence of record is being read as absence of event, in three independent places.
+ACCEPTANCE: run one phase boundary with the flags OFF (they are off on disk now) and
+assert a row appears with reason "not_enabled". A ledger that stays empty when nothing
+happened IS the bug.
+
+5.4 STOP THERE
+Do not tune the guardrails, do not lower the floors, do not touch config/reactions.json
+(protected-path denylist, human-written). Report 5.1 and 5.2 and stop. The floors are a
+human decision and need 5.2's numbers first.
+
+## ITEM 6 — TWO LIES ON THE EXPRESSION PANEL
+STATUS: TODO
+GATE: READONLY
+Both observed live on the EXPRESSION tab for cycle 2026-08-28T08:05:00.
+
+6.1 AN ANOMALY THAT DID NOT CROSS ANYTHING
+Verbatim from the panel:
+  ANOMALY sensor_id=net_recv_mb name=disk_read_mb threshold=1000000
+          unit=binary_megabytes crossed=438.8
+sensor_id and name are two different sensors, and 438.8 is reported as having crossed a
+threshold of 1000000. Find the producer — file:line — and report where sensor_id and
+name are each taken from and why they can disagree; what "crossed" is compared against;
+and whether threshold and crossed are in the same unit. Then count the rows in
+memory/expression_stream.jsonl and how many have name != sensor_id. Do not fix. The
+count says whether this is one bad row or a class.
+
+6.2 A PHASE DEBRIEF IN CYRILLIC
+memory/phase_debriefs/2026-08-28T08_05_00*/B_SENSE.json begins "Фаза B_SENSE приключи
+с 7 артефакта". The language gate reported 100.0% live purity over 41 outputs on
+2026-08-27, with phase_debrief 8/8.
+Answer: which outputs does the gate actually inspect (file:line and the list), is
+phase_debrief among them today, and what does "purity" test — the whole record or one
+field? Then count Cyrillic phase_debriefs in this cycle and the previous three. If the
+gate never looked at this field, say so; the 100% was then true about something
+narrower than we read it to be.
+
+## HOLDING
+- core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer
+  at agents/internet/internet_agent.py:1133 emits high_urgency_axes. The key has never
+  matched; the orchestrator's high list has been empty every cycle. Found during 3.1,
+  deliberately left out of it.
+- agents/internet/internet_agent.py:1151 — the global-synthesis call still uses _groq +
+  _parse_llm_json, the same shape as the 3.1 defect. It fails loudly rather than
+  silently, so it was not folded into 3.1.

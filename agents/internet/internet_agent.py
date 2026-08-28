@@ -22,6 +22,7 @@ import sys as _sys
 _sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from core.groq_backend import call_groq as _groq
 from core.llm_json import extract_json as _shared_extract_json
+from core.llm_json import LLMJSONError, call_llm_json
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 NEWS_DIR = BASE_DIR / 'news'
@@ -983,15 +984,43 @@ def _llm_synthesize(axis, sources):
         '"sentiment":"POSITIVE|NEUTRAL|NEGATIVE|CRITICAL","urgency":"LOW|MEDIUM|HIGH|CRITICAL",'
         '"open_source_momentum":"...","scientific_frontier":"...","relevance_to_goal":"..."}'
     )
+    # THE ANSWER THAT NEVER CAME MUST NOT LOOK LIKE AN ANSWER (28 Aug 2026).
+    #
+    # This used to be `_groq(...)` — core.groq_backend.call_groq, which DISCARDS
+    # the meta dict and with it finish_reason. So when Gemini cut the response at
+    # maxOutputTokens the parser saw only a broken string, guessed "garbage", and
+    # the except-clause below published urgency=LOW with ctx[:200] — the raw
+    # SOURCE TEXT WE FED IN — as the analysis that came out. Measured in the cycle
+    # of 2026-08-28T08:05:00: 14 of 24 axes, every one of them a false all-clear,
+    # and three readers that gate on HIGH/CRITICAL skipped all fourteen.
+    #
+    # call_llm_json goes through call_groq_meta, so finish_reason=="length" is
+    # authoritative rather than guessed, and it retries ONCE at double the budget
+    # before giving up. A person does not accept half a sentence; they ask again.
+    # (It also strips 'done thinking.' and <think> blocks itself — core.llm_json
+    # .strip_reasoning — so the hand-rolled stripping that stood here is gone.)
     try:
-        raw = _groq(prompt, max_tokens=400)
-        if 'done thinking.' in raw:
-            raw = raw.split('done thinking.')[-1].strip()
-        if '</think>' in raw:
-            raw = raw.split('</think>')[-1].strip()
-        return _parse_llm_json(raw)
+        return call_llm_json(prompt, max_tokens=400, expect=dict, label=axis)
     except Exception as e:
-        return {'summary': ctx[:200], 'sentiment': 'NEUTRAL', 'urgency': 'LOW', 'key_developments': [], 'error': str(e)}
+        # NOT ASSESSED IS NOT "NOTHING URGENT". urgency=UNKNOWN, never LOW: LOW is
+        # a judgement and no judgement was made. summary stays EMPTY and says why —
+        # republishing the input as the output is the defect this block exists to
+        # stop, not a graceful degradation of it.
+        # TruncatedJSONError subclasses LLMJSONError and sets .truncated=True;
+        # anything else (AllBackendsFailedError, a network error) is also NOT
+        # ASSESSED, just not truncated.
+        truncated = isinstance(e, LLMJSONError) and e.truncated
+        return {
+            'summary': '',
+            'summary_why': ('no analysis: the model answer was cut off before it '
+                            'finished' if truncated else
+                            'no analysis: the model answer could not be parsed'),
+            'sentiment': 'UNKNOWN',
+            'urgency': 'UNKNOWN',
+            'key_developments': [],
+            'truncated': bool(truncated),
+            'error': str(e),
+        }
 
 def fetch_axis(axis, snapshot_data):
     print(f'\n[INTERNET] -- {axis} --')
@@ -1043,15 +1072,26 @@ def fetch_axis(axis, snapshot_data):
         'wiki':          sources.get('wiki', ''),
         'youtube_items': yt_items,
         'summary':       analysis.get('summary', ''),
-        'urgency':       analysis.get('urgency', 'LOW'),
-        'sentiment':     analysis.get('sentiment', 'NEUTRAL'),
+        # DEFAULT IS UNKNOWN, NOT LOW. An answer that omits urgency assessed
+        # nothing, exactly like an answer that never arrived; defaulting to LOW
+        # invented the reassuring half of a judgement the model did not make.
+        'urgency':       analysis.get('urgency', 'UNKNOWN'),
+        'sentiment':     analysis.get('sentiment', 'UNKNOWN'),
         'key_developments':   analysis.get('key_developments', []),
         'open_source_momentum': analysis.get('open_source_momentum', ''),
         'scientific_frontier':  analysis.get('scientific_frontier', ''),
         'relevance_to_goal':    analysis.get('relevance_to_goal', ''),
+        # THESE SURVIVE THE REBUILD. They were set by _llm_synthesize and then
+        # dropped here, which is how a failure reached news_latest.json wearing
+        # the shape of a considered verdict.
+        'truncated':     bool(analysis.get('truncated', False)),
+        'error':         analysis.get('error'),
+        'summary_why':   analysis.get('summary_why'),
     }
-    icon = {'LOW': '🟢', 'MEDIUM': '🟢', 'HIGH': '🟡', 'CRITICAL': '🔴'}.get(result['urgency'], '🟢')
-    print(f'  {icon} {result["urgency"]} | {result["summary"][:80]}')
+    icon = {'LOW': '🟢', 'MEDIUM': '🟢', 'HIGH': '🟡', 'CRITICAL': '🔴',
+            'UNKNOWN': '⬜'}.get(result['urgency'], '⬜')
+    detail = result['summary'][:80] or (result.get('summary_why') or '')
+    print(f'  {icon} {result["urgency"]} | {detail}')
     return result
 
 def _load_master():
@@ -1077,6 +1117,7 @@ def run(axes=None):
     all_results = {}
     critical = []
     high_urgency = []
+    unknown = []          # NOT ASSESSED. Counted apart from LOW, on purpose.
 
     for axis in axes:
         snap_data = snapshots.get(axis, {})
@@ -1090,6 +1131,8 @@ def run(axes=None):
                 critical.append(axis)
             elif result['urgency'] == 'HIGH':
                 high_urgency.append(axis)
+            elif result['urgency'] == 'UNKNOWN':
+                unknown.append(axis)
             time.sleep(1)
         except Exception as e:
             print(f'[INTERNET] ERROR {axis}: {e}')
@@ -1131,6 +1174,9 @@ def run(axes=None):
         'date': today, 'timestamp': _utc_now(),
         'axes_fetched': len(all_results),
         'critical_axes': critical, 'high_urgency_axes': high_urgency,
+        # PUBLISHED, not merely absent. An axis nobody assessed is a fact about
+        # this run, and a reader that cannot see it will read silence as calm.
+        'unknown_axes': unknown,
         'results': all_results,
     }
     (NEWS_DIR / 'news_latest.json').write_text(
@@ -1139,6 +1185,10 @@ def run(axes=None):
     print(f'\n[INTERNET] SUMMARY:')
     print(f'  🔴 CRITICAL:  {critical}')
     print(f'  🟡 HIGH:      {high_urgency}')
+    if unknown:
+        print(f'  ⬜ NOT ASSESSED ({len(unknown)}): {unknown}')
+        print(f'     these axes have NO verdict — not a quiet one. '
+              f'See .error / .truncated on each in news/news_latest.json')
     print(f'  Total: {len(all_results)} axes')
 
 if __name__ == '__main__':
