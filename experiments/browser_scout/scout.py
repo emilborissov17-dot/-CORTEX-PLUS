@@ -48,11 +48,40 @@ def _fetch(url: str, timeout: int = 20) -> str:
 # Each COUNTS from the page and returns the exact strings it counted, so the number
 # can never be a hallucination — it is arithmetic over matched substrings.
 
+class SourceSchemaDrift(Exception):
+    """The extraction contract no longer holds — the source has changed.
+
+    Kimi, 15 August 2026: "Fragility is source_schema_drift, not a step failure."
+    A separate type, so the cycle can tell "my code broke" from "the world I was
+    reading now looks different". The second is news; the first is a defect.
+
+    REQUIREMENT RECOVERED, IMPLEMENTATION NEW, 2026-08-28. A `git reset --hard`
+    destroyed the version carrying this class; the docstring above survives in
+    experiments/browser_scout/__pycache__/scout.cpython-314.pyc compiled
+    2026-08-17 14:16:18. Nothing here was reassembled from bytecode.
+    """
+
+
+def _drift_record(key: str, exc: "SourceSchemaDrift") -> dict:
+    """A source event, filed under its own key so it never reads as a code fault."""
+    return {"ok": False, "event": "source_schema_drift", "source": key,
+            "reason": str(exc), "kind": "upstream"}
+
+
+def _fault_record(key: str, exc: BaseException) -> dict:
+    """A defect in our own code. Not an event about the world."""
+    return {"ok": False, "source": key,
+            "error": f"{type(exc).__name__}: {exc}"}
+
+
 def _extract_ongoing_conflicts(text: str):
     # Wikipedia states each tier as "The N conflicts in the following list ..."
     hits = re.findall(r"The\s+(\d+)\s+conflicts\s+in\s+the\s+following\s+list", text)
     if not hits:
-        raise ValueError("tier statements not found — page layout changed")
+        raise SourceSchemaDrift(
+            "the extraction contract is invalid: the phrase 'The N conflicts in "
+            "the following list' is gone. The page has changed — this is an "
+            "event for the source, not an error in the code.")
     nums = [int(h) for h in hits]
     tiers = ["major_wars_10k+", "minor_wars_1k-9999", "conflicts_100-999", "skirmishes_1-99"]
     breakdown = {tiers[i] if i < len(tiers) else f"tier_{i}": n for i, n in enumerate(nums)}
@@ -103,8 +132,15 @@ def run_all() -> dict:
             out[key] = {"ok": True, "value": rec["value"]}
             print(f"[browser_scout] {key} -> {rec['metric']}={rec['value']} "
                   f"{rec['breakdown']} -> memory/browse_sources/{key}.json")
+        except SourceSchemaDrift as e:
+            # NOT a failure of this step. The world we were reading changed, and
+            # that is a finding about the source — printed differently so a human
+            # scanning the log does not read it as a bug in our code.
+            out[key] = _drift_record(key, e)
+            print(f"[browser_scout] {key} -> THE SOURCE HAS CHANGED "
+                  f"(not a code failure): {e}")
         except Exception as e:
-            out[key] = {"ok": False, "error": f"{type(e).__name__}: {e}"}
+            out[key] = _fault_record(key, e)
             print(f"[browser_scout] {key} -> FAILED: {type(e).__name__}: {e}")
     return out
 
