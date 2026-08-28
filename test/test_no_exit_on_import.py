@@ -55,11 +55,43 @@ def _is_main_guard(node: ast.AST) -> bool:
             and isinstance(t.left, ast.Name) and t.left.id == "__name__")
 
 
+class Unparseable(Exception):
+    """A file the guard COULD NOT READ. It is not "clean" — it is a BLIND SPOT.
+
+    RECOVERED REQUIREMENT, NEW IMPLEMENTATION, 2026-08-28. The lost version drew
+    this distinction; a `git reset --hard` destroyed it. The requirement survives
+    in test/__pycache__/test_no_exit_on_import.cpython-314-pytest-9.1.1.pyc
+    compiled 2026-08-20 12:13:43.
+
+    The defect it closes: `except Exception: return []` reported an unreadable or
+    unparseable file as having no offenders, which is indistinguishable from a
+    file that was read and found clean. A guard that cannot read a file and says
+    nothing has not checked it — it has failed quietly. Same principle as the
+    counted SKIP in cockpit/glass.py: read it, or say why not, but never let
+    silence pass for a pass.
+    """
+
+
 def offenders(path: Path) -> list[int]:
+    """Line numbers of import-time process kills.
+
+    Raises Unparseable when the file could not be read or parsed. The caller must
+    not treat that as clean.
+    """
     try:
-        tree = ast.parse(path.read_text(encoding="utf-8", errors="ignore"))
-    except Exception:
-        return []
+        # utf-8-sig strips a BOM; strict means an encoding fault SURFACES instead
+        # of being silently mangled by errors="ignore", which is how an
+        # unreadable file used to look exactly like an empty one.
+        text = path.read_text(encoding="utf-8-sig", errors="strict")
+    except Exception as e:
+        raise Unparseable(f"cannot read: {type(e).__name__}: {e}") from e
+    try:
+        tree = ast.parse(text)
+    except SyntaxError as e:
+        raise Unparseable(f"does not parse: {e.msg} (line {e.lineno})") from e
+    except Exception as e:
+        raise Unparseable(f"does not parse: {type(e).__name__}: {e}") from e
+
     found: list[int] = []
 
     def walk(body):
@@ -81,22 +113,72 @@ def offenders(path: Path) -> list[int]:
     return found
 
 
+def _script_style() -> set:
+    """The files whose module-level sys.exit() is the DOCUMENTED convention.
+
+    test/_script_style.py calls itself "the single source of the split" and
+    computes it rather than hand-listing it. A second guard that contradicts
+    that split would be two truths about the same question — the schism this
+    repo keeps naming. So this reads the declared split instead of re-deciding
+    it. If _script_style cannot be imported, nothing is excluded: a guard that
+    silently widens its own exemptions is worse than a noisy one.
+    """
+    try:
+        sys.path.insert(0, str(BASE / "test"))
+        from _script_style import SCRIPT_STYLE
+        return {s.replace("\\", "/") for s in SCRIPT_STYLE}
+    except Exception:
+        return set()
+
+
 def main() -> int:
-    bad = []
+    bad, blind = [], []
+    scripted = _script_style()
+    skipped = []
     for p in sorted(BASE.rglob("*.py")):
         if SKIP_PARTS & set(p.parts):
             continue
-        for line in offenders(p):
-            bad.append(f"{p.relative_to(BASE)}:{line}")
+        rel = p.relative_to(BASE)
+        if str(rel).replace("\\", "/") in scripted:
+            # Legitimate by the repo's own declaration, and COUNTED — an
+            # exemption nobody can see is an exemption nobody can challenge.
+            skipped.append(str(rel).replace("\\", "/"))
+            continue
+        try:
+            lines = offenders(p)
+        except Unparseable as e:
+            blind.append(f"{rel}: {e}")
+            continue
+        for line in lines:
+            bad.append(f"{rel}:{line}")
+
+    rc = 0
     if bad:
         print("FAIL: модул(и) убиват процеса ПРИ ИМПОРТ — забранено:")
         for b in bad:
             print(f"  {b}")
         print("Поправка: вдигни ImportError или деградирай с флаг "
               "(виж HAS_FEEDPARSER в web_intelligence_agent.py).")
-        return 1
-    print("OK: нито един модул не убива процеса при импорт")
-    return 0
+        rc = 1
+    if blind:
+        # A BLIND SPOT IS A FAILURE, NOT A PASS. The guard did not check these,
+        # and reporting nothing about them is how "clean" came to include
+        # "never read".
+        print("FAIL: files the guard COULD NOT READ — these are blind spots, "
+              "not clean files:")
+        for b in blind:
+            print(f"  {b}")
+        print("Fix: remove the BOM (save as UTF-8 without BOM) or fix the "
+              "syntax. Dead code belongs in LEGACY/ or OLD/.")
+        rc = 1
+    if skipped:
+        print(f"  ({len(skipped)} script-style file(s) exempt by "
+              f"test/_script_style.py — module-level sys.exit is their "
+              f"documented convention)")
+    if rc == 0:
+        print("OK: no module kills the process on import, and every file was "
+              "actually read")
+    return rc
 
 
 if __name__ == "__main__":
