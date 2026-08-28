@@ -217,6 +217,12 @@ def fetch_world_bank() -> dict:
         "literacy_rate_adult_pct":   _wb_world("SE.ADT.LITR.ZS"),
         "threatened_mammals_no":     _wb_world("EN.MAM.THRD.NO"),
         "co2_emissions_kt":          _wb_world("EN.ATM.CO2E.KT"),
+        # THE TWO AXES THAT HAD A METRIC AND NO NUMBER. PLANETARY_POTENTIAL and
+        # EDUCATION_CULTURE declared primary metrics whose obs keys nothing on
+        # disk produced, so 14 of 173 goal weight resolved to nothing every
+        # cycle. Both are one _wb_world() call away and always were.
+        "protected_terrestrial_area_pct": _wb_world("ER.LND.PTLD.ZS"),
+        "primary_completion_rate":        _wb_world("SE.PRM.CMPT.ZS"),
     }
     # Годината на ВСЯКО число, по показател — това, което дотук се губеше.
     out["_observed_years"] = {
@@ -230,6 +236,8 @@ def fetch_world_bank() -> dict:
         "literacy_rate_adult_pct": _WB_YEARS.get("SE.ADT.LITR.ZS"),
         "threatened_mammals_no":   _WB_YEARS.get("EN.MAM.THRD.NO"),
         "co2_emissions_kt":        _WB_YEARS.get("EN.ATM.CO2E.KT"),
+        "protected_terrestrial_area_pct": _WB_YEARS.get("ER.LND.PTLD.ZS"),
+        "primary_completion_rate":        _WB_YEARS.get("SE.PRM.CMPT.ZS"),
     }
     return out
 

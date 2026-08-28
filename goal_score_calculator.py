@@ -148,6 +148,13 @@ def load_global_indicators() -> dict:
     put("unhcr_refugees",       r * 1_000_000 if r is not None else None)
     put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"))
     put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"))
+    # THE LAST TWO UNRESOLVED METRICS. _resolve_metric has mapped
+    # protected_terrestrial_area_pct -> wb_ER.LND.PTLD.ZS and
+    # primary_completion_rate -> wb_SE.PRM.CMPT.ZS since it was written; nothing
+    # ever put those keys INTO last_obs, so both axes reported metric_unresolved
+    # every cycle. 14 of 173 goal weight, waiting on two lines.
+    put("wb_ER.LND.PTLD.ZS",    wb.get("protected_terrestrial_area_pct"))
+    put("wb_SE.PRM.CMPT.ZS",    wb.get("primary_completion_rate"))
     return out
 
 
