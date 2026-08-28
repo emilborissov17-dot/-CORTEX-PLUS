@@ -706,11 +706,17 @@ def read_firewall_drops(path: Optional[pathlib.Path] = None,
     """
     p = pathlib.Path(path or FIREWALL_LOG)
     out = {"available": False, "rows": [], "count": 0, "offset": since_offset,
-           "why": ""}
+           "why": "", "errno": None}
     try:
         raw = p.read_text(encoding="utf-8", errors="replace")
     except OSError as exc:
+        # THE ERRNO TRAVELS, not only the sentence. "Permission denied" and "no
+        # such file" are different facts about the world — the first means this
+        # process lacks a privilege, the second that the OS is not writing the
+        # log at all — and a reader deciding whether to escalate needs to tell
+        # them apart without parsing English out of a message string.
         out["why"] = "{}: {}".format(type(exc).__name__, exc)
+        out["errno"] = getattr(exc, "errno", None)
         return out
     out["available"] = True
     lines = raw.splitlines()

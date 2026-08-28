@@ -304,6 +304,59 @@ def test_the_selftest_passes():
     assert gl._selftest() == 0
 
 
+def test_the_firewall_panel_reports_a_definite_state(capsys):
+    """Read, or skipped-with-a-reason. Never neither.
+
+    This test used to be the 30th failure in a suite whose baseline is 29,
+    because C:\\Windows\\System32\\LogFiles\\Firewall\\pfirewall.log cannot be
+    read without elevation and the selftest counted that as a failed check.
+    Running the suite as administrator would have been the wrong fix: a test
+    that only passes with a privilege is a test that silently does not run.
+
+    So the property is the one the panel can actually guarantee — that it says
+    which of the two happened — and the errno travels so "no privilege" stays
+    distinguishable from "the OS is not writing the log".
+    """
+    d = gl.blocked_connections()
+    assert d["available"] is True or d["why"], (
+        "the panel neither read the log nor said why not — that is the failure "
+        "worth having, and it is the only one this check makes")
+    if d["available"] is not True:
+        assert d.get("errno") is not None, (
+            "an OSError reason must carry its errno, not only its sentence")
+
+
+def test_a_skip_is_counted_and_named_in_the_output(capsys):
+    """A skip nobody can see is the same as a check that never existed."""
+    gl._selftest()
+    out = capsys.readouterr().out
+    if "SKIP" in out:
+        assert "check(s) SKIPPED, not run:" in out, "skips must be summarised"
+        assert "every check that ran passed" in out, (
+            "a run with skips must not read as a run where everything passed")
+    else:
+        assert "every check passed" in out
+
+
+def test_an_unexplained_failure_is_still_a_failure(monkeypatch):
+    """The negative control: available=False AND no reason must fail.
+
+    Without this, turning the check into a skip would have made the selftest
+    pass on a panel that returned nothing and explained nothing — which is a
+    worse outcome than the failure it replaced.
+    """
+    real = gl.blocked_connections
+
+    def _mute(*a, **k):
+        d = dict(real(*a, **k))
+        d["available"], d["why"], d["errno"] = False, "", None
+        return d
+
+    monkeypatch.setattr(gl, "blocked_connections", _mute)
+    assert gl._selftest() == 1, (
+        "a panel that reported neither a read nor a reason must fail")
+
+
 # ── PART 8: blocked connections as they arrive ──────────────────────────────
 
 def test_the_tail_is_incremental_so_only_new_rows_spark():
