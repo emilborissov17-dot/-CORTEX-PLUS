@@ -10,6 +10,7 @@ leaves CORTEX is constrained by type, not by intention.
 
 The failure this prevents is already in production elsewhere in this repo: 0 of
 173 weight is backed by measurement, while every axis reports a confident level
+(173 was the 25-axis tree; 167 across 24 since commit 8052397, 2026-08-21)
 word. A sentence and a number look the same in JSON once a model has written
 both. So an axis feed carries a NUMBER bound to (axis, key), and anything else
 is rejected by name.

@@ -219,8 +219,11 @@ def fetch_world_bank() -> dict:
         "co2_emissions_kt":          _wb_world("EN.ATM.CO2E.KT"),
         # THE TWO AXES THAT HAD A METRIC AND NO NUMBER. PLANETARY_POTENTIAL and
         # EDUCATION_CULTURE declared primary metrics whose obs keys nothing on
-        # disk produced, so 14 of 173 goal weight resolved to nothing every
-        # cycle. Both are one _wb_world() call away and always were.
+        # disk produced, so 14 of the then-173 goal weight resolved to nothing
+        # every cycle. Both are one _wb_world() call away and always were.
+        # (173 was 25 axes. Commit 8052397 retired GENERAL_SELF_REVIEW on
+        #  2026-08-21: the goal tree is 24 axes / 167 weight now. The 14 is
+        #  unaffected — neither of these two axes was the one that left.)
         "protected_terrestrial_area_pct": _wb_world("ER.LND.PTLD.ZS"),
         "primary_completion_rate":        _wb_world("SE.PRM.CMPT.ZS"),
     }

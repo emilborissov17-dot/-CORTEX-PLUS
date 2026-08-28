@@ -152,7 +152,9 @@ def load_global_indicators() -> dict:
     # protected_terrestrial_area_pct -> wb_ER.LND.PTLD.ZS and
     # primary_completion_rate -> wb_SE.PRM.CMPT.ZS since it was written; nothing
     # ever put those keys INTO last_obs, so both axes reported metric_unresolved
-    # every cycle. 14 of 173 goal weight, waiting on two lines.
+    # every cycle. 14 of the then-173 goal weight, waiting on two lines.
+    # (167 across 24 axes since commit 8052397, 2026-08-21 — neither of these
+    #  two axes left the tree, so the 14 is unchanged.)
     put("wb_ER.LND.PTLD.ZS",    wb.get("protected_terrestrial_area_pct"))
     put("wb_SE.PRM.CMPT.ZS",    wb.get("primary_completion_rate"))
     return out
@@ -170,13 +172,57 @@ def load_probed_signals() -> dict:
 
 # ── metric resolution ─────────────────────────────────────────────────────────
 
-def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | None:
+# WHICH FEED A KEY BELONGS TO. The prefix of an observation key already names
+# its origin — noaa_, wb_, unhcr_ — and until 28 Aug 2026 that fact lived only
+# in a reader's head. K1 (ITEM 7.1) has to say WHY an axis counts as measured,
+# and "it has a number" is not a why; "NOAA, key noaa_co2_ppm, 424.61" is.
+# FAIL-OPEN ON THE LABEL, NEVER ON THE KEY: an unrecognised prefix yields
+# source_id "unattributed" and the axis still counts as measured, because the
+# observation key IS named and checkable. A missing key is a different thing
+# and is never measured.
+_SOURCE_BY_PREFIX = (
+    ("noaa_",   "NOAA"),
+    ("wb_",     "WORLD_BANK"),
+    ("unhcr_",  "UNHCR"),
+    ("gbif_",   "GBIF"),
+    ("owid_",   "OWID"),
+    ("vdem_",   "V_DEM"),
+    ("eia_",    "EIA"),
+    ("ucdp_",   "UCDP"),
+    # Not a feed prefix but a real, checkable origin: these two keys are
+    # computed by wellbeing_globe.py and read from output/wellbeing_globe.json
+    # under a freshness gate (load_governance_globals below).
+    ("governance_", "WELLBEING_GLOBE"),
+)
+
+
+def _source_id_for(obs_key: str) -> str:
+    """The feed an observation key came from, from its prefix. 'unattributed'
+    when no prefix matches — a named gap, not a silent one."""
+    k = str(obs_key or "")
+    for prefix, name in _SOURCE_BY_PREFIX:
+        if k.startswith(prefix):
+            return name
+    return "unattributed"
+
+
+def _resolve_metric_origin(metric_name: str, trends: dict,
+                           last_obs: dict) -> tuple[float | None, dict | None]:
     """
-    Find the current value for a metric.
-    Checks trends (most recent point) first, then last_observations.
+    Find the current value for a metric AND say where it came from.
+
+    Returns (value, origin). origin is None whenever value is None — an
+    unresolved metric has no provenance to report, and reporting one would be
+    the exact confusion this function exists to end. When value is not None,
+    origin carries: where ("trends" | "last_observations"), key (the literal
+    key that resolved), source_id (the feed) and metric.
+
+    _resolve_metric() below keeps its old signature and delegates here, so the
+    call sites and test/test_k1_metrics_resolve.py that expect a bare float
+    are untouched.
     """
     if not metric_name:
-        return None
+        return None, None
 
     # Trends keys (MerkleMemory naming)
     trend_map = {
@@ -190,7 +236,9 @@ def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | N
     }
     trend_key = trend_map.get(metric_name)
     if trend_key and trends.get(trend_key):
-        return float(trends[trend_key][-1])
+        return float(trends[trend_key][-1]), {
+            "where": "trends", "key": trend_key,
+            "source_id": _source_id_for(trend_key), "metric": metric_name}
 
     # last_observations keys
     obs_map = {
@@ -213,10 +261,18 @@ def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | N
     val = last_obs.get(obs_key)
     if val is not None:
         if metric_name == "refugee_population" and float(val) == 0.0:
-            return None  # sentinel zero, not a real count
-        return float(val)
+            return None, None  # sentinel zero, not a real count
+        return float(val), {
+            "where": "last_observations", "key": obs_key,
+            "source_id": _source_id_for(obs_key), "metric": metric_name}
 
-    return None
+    return None, None
+
+
+def _resolve_metric(metric_name: str, trends: dict, last_obs: dict) -> float | None:
+    """The value alone. Kept because callers and tests ask only for the number;
+    the provenance half is _resolve_metric_origin()."""
+    return _resolve_metric_origin(metric_name, trends, last_obs)[0]
 
 
 # ── scoring ───────────────────────────────────────────────────────────────────
@@ -444,6 +500,14 @@ def compute_goal_score(
 
     metric_details: dict = {}
     axis_scores:    dict = {}
+    # ── PROVENANCE, KEYED BY AXIS (28 Aug 2026, ITEM 7.1c) ──────────────────
+    # metric_details is keyed by METRIC, and two axes can declare the same one:
+    # MATERIALS_WASTE_REVIEW and CLIMATE_GLOBAL_RISK_REVIEW both point at
+    # co2_ppm_mauna_loa, so the first was silently overwritten in that dict and
+    # its 9 weight vanished from anything reading it per axis. K1 is a weight
+    # sum, so a collision there is a wrong number, not a cosmetic loss. This
+    # block is keyed by axis and cannot collide.
+    axis_observations: dict = {}
 
     total_weight    = 0.0
     weighted_sum    = 0.0
@@ -466,15 +530,17 @@ def compute_goal_score(
             # ── КРЪГЪТ (Kimi, 15 август 2026, стъпка 14 от 53) ───────────────
             # GOAL_PROGRESS_REVIEW има primary_metric = "goal_score", а в
             # _resolve_metric стои trend_map["goal_score"] = "goal_score". Тоест
-            # вчерашният композит влизаше в днешния с тегло 8 от 173 и композитът
+            # вчерашният композит влизаше в днешния с тегло 8 от 173 (тогава;
+            # 167 след 8052397, 2026-08-21) и композитът
             # частично измерваше САМ СЕБЕ СИ. Такава редица се влачи след
             # собственото си минало и изглежда стабилна независимо какво прави
             # светът — привидна стабилност, купена с автокорелация.
             #   Kimi: „Прекъсва се. goal_score се ражда от измерените оси;
             #          GOAL_PROGRESS_REVIEW е самооценка, не вход."
             self_reference = (metric == "goal_score")
-            current_val = (None if self_reference
-                           else (_resolve_metric(metric, trends, last_obs) if metric else None))
+            current_val, origin = ((None, None) if self_reference
+                                   else (_resolve_metric_origin(metric, trends, last_obs)
+                                         if metric else (None, None)))
 
             reference_worst = cfg.get("reference_worst")
             if self_reference:
@@ -488,7 +554,8 @@ def compute_goal_score(
                 # Вчера махнахме „няма данни -> 0.5". Този клон оцеля и вършеше
                 # същото: ECONOMY_WORK_REVIEW и INFRASTRUCTURE_CITIES_REVIEW имат
                 # target_value: null, значи ВИНАГИ падаха тук и ВИНАГИ даваха 0.5 —
-                # 10 от 173 тегло (5.8%) константа, при това броена за ИЗМЕРЕНА,
+                # 10 от 173 тегло (5.8%) константа — 173 е стойността от 15 авг;
+                # 167 след 8052397 — при това броена за ИЗМЕРЕНА,
                 # тоест надуваща покритието вместо да показва незнание.
                 # „stable_better" иска мярка за ПОСТОЯНСТВО (разсейване във времето),
                 # а такава тук няма реализирана. Липсващата мярка е None, не 0.5.
@@ -498,7 +565,8 @@ def compute_goal_score(
                 # ── КОНСЕНСУС С KIMI, 15 август 2026 ─────────────────────────
                 # Дотук тук пишеше: „Qualitative / no data -> neutral 0.5", и това
                 # 0.5 влизаше в претеглената сума С ПЪЛНОТО СИ ТЕГЛО. Преброено:
-                # 11 от 25 оси нямаха разрешено число, тоест 65 от 173 тегло —
+                # 11 от 25 оси нямаха разрешено число, тоест 65 от 173 тегло
+                # (дървото е 24 оси / 167 тегло след 8052397, 2026-08-21) —
                 # 38% ОТ КОМПОЗИТА стоеше на константа. Първата от тях беше
                 # CLIMATE_GLOBAL_RISK_REVIEW, с най-високото тегло в конфигурацията.
                 #
@@ -543,6 +611,21 @@ def compute_goal_score(
                     "why": (f"metric_unresolved: '{metric}' не се разрешава от "
                             f"trends/last_observations днес")}
 
+            if origin:
+                axis_observations[axis_name] = {
+                    "metric":            metric,
+                    "observation_key":   origin["key"],
+                    "observation_where": origin["where"],
+                    "source_id":         origin["source_id"],
+                    "observed_value":    current_val,
+                    "weight":            weight,
+                    # The metric resolving and the axis getting a score are two
+                    # different events: a metric with no target_value resolves
+                    # and still scores None. Both are recorded so a reader never
+                    # has to guess which one a number counted.
+                    "scored":            score is not None,
+                }
+
             if metric:
                 metric_details[metric] = {
                     "axis":         axis_name,
@@ -554,6 +637,15 @@ def compute_goal_score(
                     "measured":     score is not None,
                     "weight":       weight,
                     "tti_cycles":   tti,
+                    # THE WHY BEHIND "measured" (28 Aug 2026, ITEM 7.1c). Until
+                    # today this dict said an axis was measured and gave no way
+                    # to check the claim. These three name the external reading
+                    # the number came from; all three are None when nothing
+                    # resolved, and an axis with no observation_key is not
+                    # measured whatever its score says.
+                    "observation_key":   (origin or {}).get("key"),
+                    "observation_where": (origin or {}).get("where"),
+                    "source_id":         (origin or {}).get("source_id"),
                 }
 
     # ── ДВАТА ЗНАМЕНАТЕЛЯ (Kimi, 15 август 2026) ────────────────────────────
@@ -563,7 +655,8 @@ def compute_goal_score(
     # се хвали, второто се самобичува.
     #
     # И защо флаговете са ДВА, а не един: ако единственият флаг се съди срещу целта,
-    # той е False по построение — 49 от 173 тегло са структурно семантични и няма да
+    # той е False по построение — 49 от 173 тегло (167 след 8052397, 2026-08-21)
+    # са структурно семантични и няма да
     # получат число нито утре, нито другиден. Сигнал, който не може да мигне, е мъртъв.
     #   Kimi: „Приемам двата флага. Един винаги-False сигнал е мъртъв — sensors_ok
     #          мигне, goal_covered казва истината за структурната дупка."
@@ -631,6 +724,7 @@ def compute_goal_score(
                               f"{'...' if len(unmeasured) > 4 else ''}."),
         "axis_scores":     axis_scores,
         "metric_details":  metric_details,
+        "axis_observations": axis_observations,
         "total_weight":    total_weight,
         "timestamp":       datetime.now(timezone.utc).isoformat(),
     }

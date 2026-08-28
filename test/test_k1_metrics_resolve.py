@@ -13,7 +13,9 @@ Nothing ever put those keys INTO last_obs. Not data/last_observations.json
 (8 keys, frozen 2026-06-17, and its only writer is imported by nothing), not
 memory/probed_signals.json (does not exist), and not load_global_indicators()'s
 hard-coded put() list. So both axes reported metric_unresolved every cycle and
-14 of 173 goal weight — K1's denominator — resolved to nothing.
+14 of 173 goal weight — K1's denominator — resolved to nothing. (That
+denominator is 167 across 24 axes since commit 8052397, 2026-08-21. The 14
+did not move: neither of these axes was the one retired.)
 
 Worth stating because it was nearly fixed the expensive way: the obvious
 suspect was config/axis_source_map.json's wrong-row entry, and correcting that

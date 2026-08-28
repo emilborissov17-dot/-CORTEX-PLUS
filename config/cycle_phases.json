@@ -328,6 +328,10 @@
           "index": "20"
         },
         {
+          "name": "measurement_honesty",
+          "index": "20.1"
+        },
+        {
           "name": "session_update",
           "index": "21"
         },
@@ -395,6 +399,7 @@
       "produces": [
         "memory/feedback_log.json",
         "memory/goal_score_history.json",
+        "memory/measurement_honesty_latest.json",
         "cortex_memory/archive/merkle_root.txt",
         "memory/self_mirror_latest.json",
         "memory/self_mirror_log.jsonl",

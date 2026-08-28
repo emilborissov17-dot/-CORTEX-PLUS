@@ -32,6 +32,8 @@ from core import phase_debrief as pd  # noqa: E402
 GOOD = {"what": "Scored 25 axes, 0 of 173 weight measured.",
         "verdict": "DEGRADED", "risk": "the composite is assertion",
         "do": "wire a real metric"}
+# SYNTHETIC fixture, not the live goal tree: 25 / 173 was real until commit
+# 8052397 (2026-08-21); the tree is 24 axes / 167 weight now.
 EVIDENCE = {"axes_scored": 25, "measured_weight": 0, "total_weight": 173}
 
 

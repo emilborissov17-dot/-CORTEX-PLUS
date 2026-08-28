@@ -2890,6 +2890,31 @@ def main():
     _run("feedback_loop", lambda: __import__(
         "agents.core.feedback_loop", fromlist=["run"]).run())
 
+    # ── 20.1. K1 — THE FIRST NEEDLE (ITEM 7.1, 28 Aug 2026) ────────────────
+    # memory/measurement_honesty_latest.json had not been written since
+    # 20 August because NOTHING called it: AST-checked, the only importers of
+    # core.measurement_honesty were core/training_log.py (for the taxonomy
+    # constants) and two tests. Its one writer was a human at a prompt. A
+    # needle that only moves when somebody remembers to move it is not an
+    # instrument.
+    #
+    # HERE and not earlier: it needs the scorer (12.6) for the provenance and
+    # feedback_loop (20) for today's goal_score_history record. Placing it
+    # before either would stamp today's file with yesterday's basis.
+    # FAIL-OPEN — a cycle must not die because a report did not render.
+    beat("measurement_honesty", "20.1")
+    try:
+        from core.measurement_honesty import run as _honesty_run
+        _h = _honesty_run()
+        if _h.get("k1") is None:
+            print(f"[FAST_CYCLE] K1 -> NO NUMBER: {_h.get('k1_why')}")
+        else:
+            print(f"[FAST_CYCLE] K1 -> {_h['k1']:.4f} "
+                  f"({_h['measured_weight']:.1f} of "
+                  f"{(_h.get('honest_composite') or {}).get('total_weight')} weight measured)")
+    except Exception as e:
+        print(f"[FAST_CYCLE] measurement_honesty -> FAILED: {type(e).__name__}: {e}")
+
     # ── 21. Session update ──
     beat("session_update", "21")
     def _session_updater():

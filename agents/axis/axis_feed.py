@@ -15,6 +15,9 @@ sentence, not a level word, not a model's summary. Prose is where a language
 model's opinion smuggles itself across a boundary as if it were a measurement —
 and this repo has 0 of 173 weight backed by measurement while every axis reports
 a confident level, which is exactly that failure already in production.
+(The denominator moved after this was written: 173 was 25 axes; commit 8052397
+retired GENERAL_SELF_REVIEW on 2026-08-21 and it is 167 across 24. The point
+stands at either denominator.)
 
 So the contract is enforced by rejection, not by convention:
 

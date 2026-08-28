@@ -568,9 +568,16 @@ def debrief_phase(phase: str, cycle_id: str, evidence: dict,
 def _selftest() -> int:
     import tempfile
     print("core/phase_debrief.py --selftest")
+    # SYNTHETIC. These numbers exercise the formatter; they are not read from
+    # the goal tree. 25/173 was the real shape until commit 8052397 retired
+    # GENERAL_SELF_REVIEW on 2026-08-21 (24 / 167 now). Left as written so the
+    # fixture's expected strings below still match it.
     evidence = {"axes_scored": 25, "measured_weight": 0, "total_weight": 173}
     ok = True
 
+    # The 25 / 173 inside these strings is the same synthetic shape as above:
+    # real until 8052397 (2026-08-21), 24 / 167 now, and irrelevant to what
+    # the formatter is being asked to do with the sentence.
     cases = [
         ("good", {"what": "Scored 25 axes, 0 of 173 weight measured.",
                   "verdict": "DEGRADED", "risk": "composite is assertion",

@@ -47,10 +47,14 @@ EVIDENCE = {
     "axes_scored": 25,
     "measured_weight": 0,
     "asserted_weight": 75,
+    # SYNTHETIC fixture, not the live goal tree: 25 / 173 was real until
+    # commit 8052397 (2026-08-21); the tree is 24 axes / 167 weight now.
     "total_weight": 173,
     "seconds": 412.5,
 }
 
+# 25 / 173 below is the same synthetic shape as EVIDENCE above — real until
+# 8052397 (2026-08-21), 24 axes / 167 weight now.
 GOOD = {
     "what": "Scored 25 axes; 0 of 173 weight is backed by measurement.",
     "verdict": "DEGRADED",
@@ -171,6 +175,8 @@ def test_every_field_is_required(field):
 
 def test_cyrillic_and_latin_are_both_fine():
     """The system is bilingual by design; only CJK is unreadable here."""
+    # Synthetic, in Bulgarian on purpose. 25 / 173 was real until 8052397
+    # (2026-08-21); the tree is 24 / 167 now.
     bg = {"what": "Оценени са 25 оси, 0 от 173 тегло са измерени.",
           "verdict": "DEGRADED", "risk": "Композитът е твърдение.",
           "do": "Свържи един истински показател."}

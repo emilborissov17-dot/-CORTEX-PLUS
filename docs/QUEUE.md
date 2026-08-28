@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-28T19:05:00Z
-last_item_done: ITEM 3 — all nine steps 3.1-3.9 applied and committed
-current_item: ITEM 7 — make the compass produce a number (7.1 K1)
-current_state: STARTING
-gate_closed_reason: - (OPEN: memory/cycle.lock absent)
-next_action_needed_from_claude: 7.1(a) find the writer of measurement_honesty_latest.json and report why it last ran 20 Aug
+last_updated_utc: 2026-08-28T19:15:00Z
+last_item_done: ITEM 7.1 — K1 is written every cycle and can name its evidence
+current_item: ITEM 7.2 — K3, one field on each claim in knowledge_base.json
+current_state: READY
+gate_closed_reason: - (OPEN: memory/cycle.lock absent at 18:15Z and at the commit)
+next_action_needed_from_claude: 7.2 — the shape report is drafted below under 7.2 PREP; decide the carrier and write it
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -17,7 +17,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 4 | Why the cloud tier is abandoned, f)-i) | DONE 2026-08-28 except f) — needs 429 bodies | READONLY |
 | 5 | The voice that never spoke | 5.1 DONE — nothing calls it; 5.3 open | NOCYCLE |
 | 6 | Two lies on the expression panel | DONE — both premises overturned | READONLY |
-| 7 | Make the compass produce a number | TODO | NOCYCLE |
+| 7 | Make the compass produce a number | 7.1 DONE 2026-08-28; 7.2, 7.3 TODO | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | TODO | NOCYCLE |
 | 11 | Wire resolve_ideas into the cycle (deadline 2026-09-02) | TODO | NOCYCLE |
@@ -117,10 +117,23 @@ SUMMARY (five lines)
 5. Of the four numbers PLANETARY_POTENTIAL_REVIEW publishes, only two would change;
    cortex_scores_latest.json (0.5) and axis_history.json (50.0) are untouched by any
    of this — PLANETARY_POTENTIAL_REVIEW is absent from AXIS_SCORERS (19 keys).
-COMPASS: K1 = measured weight / 173. Today 100/173 = 57.8%. The unresolved 14
+COMPASS: K1 = measured weight / 167. Today 100/167 = 59.9%. The unresolved 14
 weight is two axes: EDUCATION_CULTURE_REVIEW (primary_completion_rate) and
 PLANETARY_POTENTIAL_REVIEW (protected_terrestrial_area_pct). This item prepares
 the only change found in Part 0 that moves the compass. It applies nothing.
+
+CORRECTED 2026-08-28 BY EMIL. THE NUMBER WAS ASSERTED FROM MEMORY BY A HUMAN AND
+THE CODE WAS ALWAYS RIGHT. This line originally read "K1 = measured weight / 173.
+Today 100/173 = 57.8%", and 173 was never read from anything — it was carried in
+a person's head from the shape the goal tree had before commit 8052397
+("the observer steps out of the observed", 2026-08-21), which retired
+GENERAL_SELF_REVIEW and left 24 axes / 167 weight. goal_score_calculator has
+always summed the denominator out of config/target_config.json and has always
+returned 167; nothing in the code needed changing. The 100 -> 114 arithmetic in
+ITEM 3.4 below was done against 173 and is left as it was written: against 167
+it is 59.9% -> 68.3%. A hand-copied constant goes stale silently, and
+test/test_no_stale_total_weight.py now fails if one appears anywhere outside
+config/ without its correction beside it.
 
 A1. THE DIFF FOR ROW #6
 Part 0 verified: wdpa_protected_area_share with csvType=full, row_key="World",
@@ -1180,7 +1193,7 @@ number cannot be quoted free of the thing that makes it true. The gate needs no
 change; the reporting does.
 
 ## ITEM 7 — MAKE THE COMPASS PRODUCE A NUMBER
-STATUS: TODO
+STATUS: 7.1 DONE 2026-08-28 (report at the end of this item) · 7.2 TODO · 7.3 TODO
 GATE: NOCYCLE
 The four needles that define this project's success have produced no number since
 21 August. Verified on disk 2026-08-28: memory/measurement_honesty_latest.json is
@@ -1191,8 +1204,8 @@ refusal (326); memory/interval_head_runs.jsonl holds 5 runs, all on 2026-08-21;
 prediction_resolutions.jsonl does not exist. Each step below is a SEPARATE commit.
 
 7.1 K1 MUST BE WRITTEN EVERY CYCLE
-Decision, already made, do not re-open it: K1 = measured_weight / 173.0 across the
-25 axes in memory/measurement_honesty_latest.json, and "measured" means the axis's
+Decision, already made, do not re-open it: K1 = measured_weight / 167.0 across the
+24 axes in memory/measurement_honesty_latest.json, and "measured" means the axis's
 primary metric resolved from an EXTERNAL observation in that cycle — not a model
 assertion, not an llm_level score.
   (a) Find the writer of memory/measurement_honesty_latest.json — file:line — and
@@ -1205,7 +1218,7 @@ assertion, not an llm_level score.
   (c) The file must record, per axis, WHY an axis counted as measured: the source id
       and the observation it resolved from. An axis that cannot name its external
       observation is not measured, whatever its score says.
-ACCEPTANCE: run it once; assert the file's ts is today, total_weight is 173.0, the
+ACCEPTANCE: run it once; assert the file's ts is today, total_weight is 167.0, the
 new measured_weight and k1 keys exist, and every axis counted as measured names a
 source id. Report the resulting k1 value. Do not tune anything to reach a nicer number.
 
@@ -1236,6 +1249,194 @@ frozen embedding, two 256-wide ReLU layers, centre and log-halfwidth output, alp
       Without this file K4 has nothing to score, and it does not exist today.
 ACCEPTANCE: a fixture writes one prediction row and one resolution row and reads
 them back; the real file is byte-identical after the fixture run.
+
+### 7.1 REPORT — 2026-08-28
+
+(a) THE WRITER, AND WHY IT STOPPED
+  core/measurement_honesty.py:run() -> OUT at :50. It is the only writer.
+  NOTHING IN THE CYCLE CALLED IT. AST over every .py in the repo: the only
+  importers of core.measurement_honesty were core/training_log.py:49 (the four
+  taxonomy constants, not run()), test/test_measurement_honesty.py:17 and
+  test/test_training_record.py:34. No step, no scheduler, no agent.
+  So it last ran on 20 August because a human typed it on 20 August. The file's
+  mtime is 2026-08-20T15:45:17. That is the whole answer: a needle that moves
+  only when somebody remembers to move it is not an instrument.
+
+  AND THE STAMP WAS NEVER A RUN TIME. `ts` was rec.get("timestamp") — the
+  timestamp of the LAST RECORD in memory/goal_score_history.json, copied. A file
+  written today could carry a two-month-old date and nothing in it said so. This
+  item's own premise ("stamped 2026-08-20T02:19:29") was reading a basis date as
+  a run date. Fixed: `ts` is the moment of writing; the record's stamp travels
+  as the new key `basis_ts`, which is how the 7-day staleness below is visible
+  at all.
+
+(b) WIRED, AND WHERE
+  fast_cycle_runner.py step 20.1 "measurement_honesty", after the scorer (12.6)
+  for the provenance and after feedback_loop (20) for today's history record.
+  Declared in config/cycle_phases.json under G_LEARN, with
+  memory/measurement_honesty_latest.json added to G_LEARN.produces.
+  FAIL-OPEN: a cycle must not die because a report did not render.
+  New top-level keys, all additive — honest_composite and todays_number are
+  byte-for-byte the blocks they were:
+    measured_weight   the weight whose axes NAMED an external observation
+    k1                measured_weight / total_weight
+    k1_why            how the numerator was reached, or why there is no number
+    carried_weight    published separately, deliberately NOT inside K1
+    basis_ts          the record honest_composite was computed from
+
+(c) THE WHY, PER AXIS
+  goal_score_calculator gained _resolve_metric_origin(), which returns the value
+  AND where it came from; _resolve_metric() keeps its old signature and
+  delegates, so no caller and no test changed. Each axis now carries
+  measured_by = {source_id, observation_key, observation_where, observed_value,
+  metric} and counts_toward_k1 = "measured_by is not None". An axis that cannot
+  name its observation does not count, whatever its score says.
+
+  A COLLISION FOUND WHILE BUILDING IT, AND IT WAS A WRONG NUMBER, NOT A COSMETIC
+  ONE. metric_details is keyed by METRIC. MATERIALS_WASTE_REVIEW and
+  CLIMATE_GLOBAL_RISK_REVIEW both declare primary_metric co2_ppm_mauna_loa, so
+  the first is overwritten in that dict and disappears from anything reading it
+  per axis. K1 is a weight sum, so that is 9 weight missing: the first run
+  produced 42.0, the corrected one 51.0. The scorer now also emits
+  axis_observations, keyed by AXIS, which cannot collide; read_provenance
+  prefers it and falls back to metric_details only for older snapshots, saying
+  so in k1_why.
+
+ACCEPTANCE — run twice, against the real config and a live scorer run, with NO
+live file written (the scorer result and the report both went to scratch). The
+second run is the one recorded: memory/goal_score_history.json was restored
+between them and honest_composite depends on it.
+  ts                     2026-08-28T18:42:23+00:00        TODAY        PASS
+  basis_ts               2026-08-21T00:05:21.577111+00:00  7 days stale, and now
+                                                           SAYABLE
+  total_weight           167.0                            PASS (see CORRECTION)
+  measured_weight        51.0                             key present  PASS
+  k1                     0.3054                           key present  PASS
+  every counted axis names a source id                    6 of 6       PASS
+  live files byte-identical (sha256, before -> after)                  PASS
+    memory/measurement_honesty_latest.json  c78bf036832f2c34 unchanged
+    snapshots/master/goal_score_latest.json eb0979a11e910145 unchanged
+    memory/goal_score_history.json          ef9d10da604639ae unchanged
+
+  THE RESULTING K1 IS 0.3054 — 51.0 of 167.0 weight, 6 of 24 axes:
+    CLIMATE_GLOBAL_RISK_REVIEW        w=10  NOAA             noaa_co2_ppm = 432.3
+    MATERIALS_WASTE_REVIEW            w= 9  NOAA             noaa_co2_ppm = 432.3
+    HUMAN_WELL_BEING_REVIEW           w= 9  WORLD_BANK       wb_SH.DYN.MORT = 37.4
+    INEQUALITY_POVERTY_REVIEW         w= 9  WORLD_BANK       wb_SI.POV.DDAY = 10.4
+    GOVERNANCE_INSTITUTIONS_REVIEW    w= 7  WELLBEING_GLOBE  governance_institutions_score_global = 0.443037
+    GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL  w= 7  WELLBEING_GLOBE  governance_rights_score_global = 0.432078
+  It agrees exactly with the scorer's own measured_weight (51.0), computed by a
+  different route. Nothing was tuned to reach it.
+
+WHAT THE RESTORED HISTORY CHANGED, AND WHAT IT DID NOT
+  memory/goal_score_history.json was restored outside this session while the
+  suite was running: 11 records -> 47, ending 2026-08-21T00:05:21 instead of
+  2026-06-21T13:57:09, and 11 of them carry score_sources where the disk had
+  none. Re-read before this report was written, as instructed.
+    honest_composite   MOVED, and it was the whole cause. Before: "НЯМА
+                       ИЗМЕРВАНЕ ... покритие 0%". After: 60.9395 at 54%
+                       coverage, 19% asserted. todays_number 62.1352 at 73%.
+    K1                 DID NOT MOVE. 0.3054 both times.
+  That the two moved independently is the design working: K1 reads the scorer's
+  live provenance, honest_composite reads the history record, and a report that
+  had conflated them would have swung on a file restore.
+
+  AND THE RESTORED RECORD CORROBORATES THE COLLISION. In the 2026-08-21 record
+  MATERIALS_WASTE_REVIEW is score_source "llm_level" — a model opinion — while
+  K1 counts it TODAY as measured from noaa_co2_ppm. Both readings are of the
+  same axis on the same data. The difference is that feedback_loop reads the
+  colliding metric_details and the K1 path does not.
+
+CORRECTION — 173 WAS NEVER READ FROM ANYTHING
+  Emil, 2026-08-28: total_weight is 167, not 173. Commit 8052397 ("the observer
+  steps out of the observed", 2026-08-21) retired GENERAL_SELF_REVIEW: 25 axes /
+  173 weight -> 24 / 167. Every 173 in this repo outside config/ was a human
+  writing the number down from memory. goal_score_calculator has always summed
+  the denominator out of config/target_config.json and has always returned 167;
+  no code was ever wrong. Fixed where it was ASSERTED — ITEM 1's COMPASS line,
+  ITEM 14's K1 spec, and this item's own decision and acceptance lines — and
+  ANNOTATED, never deleted, in the 16 places where it was true on the day it was
+  written (goal_score_calculator, core/global_indicators, core/phase_debrief,
+  agents/axis/axis_feed, four test fixtures, PROGRESS/...2026-08-20.txt).
+  test/test_no_stale_total_weight.py, NEW, now fails if the literal 173 appears
+  next to "weight" or "тегло" anywhere outside config/ without 167 within five
+  lines. It carries its own negative test — it is watched failing on a planted
+  violation — and a third test that fails if config/target_config.json stops
+  summing to the number the guard quotes. Fourth instance of a hand-copied
+  constant going stale in one day.
+
+TESTS: test/test_k1_measurement_honesty.py, NEW, 15 tests, all green. They hold
+the three properties that make the number worth reading: an axis counts only if
+it names its observation; an unreadable provenance gives null and a reason,
+never 0.0; and two axes sharing one metric both count. The last test compares
+sha256 digests taken at import against the same files after every test ran.
+test/test_no_stale_total_weight.py, NEW, 3 tests, all green.
+
+SUITE — THE GATE RUN, 18:49Z on the exact committed tree:
+  28 failed, 3344 passed, 7 skipped, 1 xfailed, 17 warnings in 1045.88s (17:25)
+  memory/cycle.lock absent at start and at finish, so the run is VALID.
+  DIFF against the recorded baseline, by sorted set comparison:
+    failures NOT in the baseline: NONE.
+    gone from the baseline (3), all LIVE_STATE, reported not celebrated:
+      test_corrections_27 x2, test_level_reconciler::test_social_relations_is_
+      corrected_to_low_on_live_data
+  PUSH RULE condition 1 asks whether any failure appears that is not in the
+  recorded baseline with a named cause. None does. This is the first time today
+  that condition has been met.
+  MOVED SINCE THE 18:15Z RUN, and both movements are the restored history file,
+  not this batch:
+    BACK RED (2)  test_phase_evidence_swap x2 — LIVE_STATE, in the baseline with
+                  a named cause. They read live state; the state moved.
+    GONE (1)      test_brain_scan::test_a_dry_run_leaves_memory_and_snapshots_
+                  byte_identical. It was the external-write detector firing on
+                  the human restoring memory/goal_score_history.json mid-run.
+                  Green here, which closes that question.
+
+SUITE, THE EARLIER RUN: the 19:01 run at 18:15Z is REPORTED AND WAS NOT USED AS
+THE GATE, because the tree it measured no longer exists — memory/goal_score_history.json was restored
+by a human mid-run, and the 173 annotations and both new test files landed
+after it. 27 failed, 3342 passed, 7 skipped, 1 xfailed. Against the recorded
+baseline: ONE new failure and none gone.
+  NEW (1)  test/test_brain_scan.py::test_a_dry_run_leaves_memory_and_snapshots_
+           byte_identical. It hashes name+size+mtime_ns of every file under
+           memory/ and snapshots/ around one publish_scan() call, so it is an
+           external-write detector and it detected one. Re-run alone
+           immediately after: 19 passed. NOT VERIFIED which file it caught —
+           the run was captured with `tail -60` and the assertion detail was
+           truncated. No code in this batch writes to either tree.
+  A NOTE ON THE BASELINE ITSELF, found while diffing against it: the block
+  "THE BASELINE, RE-RECORDED 2026-08-28" says 26 failures and then enumerates
+  31 test ids, labelling as "OTHER (17)" a list of 22. The 26 is right and the
+  enumeration is right — the five LIVE_STATE entries are listed as failures and
+  described in the same paragraph as green. A baseline whose count and list
+  disagree is exactly the hazard it was re-recorded to fix. Left for ITEM 20,
+  which owns those five.
+
+NOT DONE, on purpose, recorded under HOLDING: feedback_loop reads the colliding
+metric_details and so has never scored MATERIALS_WASTE_REVIEW as measured; and
+MATERIALS_WASTE_REVIEW being scored by atmospheric CO2 at all is a config
+question, not a 7.1 one.
+
+### 7.2 PREP — the shape report 7.2 asks for FIRST, done 2026-08-28
+
+memory/knowledge_base.json is NOT a list of claims. It is keyed by AXIS: 28
+entries, 26 of shape {cycle_count, insight_hashes, key_insights, last_score,
+last_updated, scores, trend} and 2 without last_score.
+
+A "claim" is a BARE STRING inside key_insights. There is no object to hang
+supporting_source_count on, and no source is recorded anywhere beside it — so
+for existing claims the supporting sources are NOT recoverable, which by the
+item's own rule means the field is null for all of them and populated only
+going forward.
+
+THE DECISION 7.2 HAS TO MAKE BEFORE IT WRITES ANYTHING, and it is not written
+in the item: turning each string into an object would change the shape three
+readers depend on — core/hypothesis_search.py:107 (which documents the shape
+verbatim), memory/continuous_learner.py:213 (the writer) and
+agents/core/self_observer.py:178. The existing `insight_hashes` field is the
+handle that avoids all of it: a parallel map hash -> supporting_source_count
+carries the number without touching key_insights. Recommend that; do not
+convert the list.
 
 ## ITEM 8 — THE THIRTIETH FAILURE
 STATUS: DONE 2026-08-28 — suite back to a byte-identical 29
@@ -1418,6 +1619,30 @@ replaces live measurement with a committed snapshot.
       failures in the current baseline. Scoping the audit to memory/ would have
       missed it, so the audit is now: every tracked file any cycle step writes,
       in any directory.
+      THE THREE KNOWN SO FAR, named by Emil 2026-08-28. This is the start of the
+      audit's list, not the whole of it — (b) is still to be done.
+        1. memory/axis_history.json — tracked, rewritten every cycle by
+           memory/trend_tracker.py:80 at step trend_tracker (index 3). 68 days of
+           history destroyed. Still tracked, still unmodified in .gitignore.
+        2. snapshots/master/global_indicators_latest.json — tracked, rewritten
+           every cycle by core.global_indicators.fetch_all at step
+           global_indicators (index 2.5). NO PRE-RESET COPY EXISTS; the loss is
+           permanent and only a cycle run replaces it. It reverted to timestamp
+           2026-06-21T19:52:15, which is 68 days old, so
+           goal_score_calculator's 14-day freshness gate now discards the file
+           WHOLE — "[goal_score] WARNING: global_indicators 68d old (>14d) — not
+           used." That is why K1 measured 51 of 167 on 2026-08-28 instead of the
+           114 that ITEM 3.4 measured against a live fetch the same day. One
+           cycle fixes it.
+        3. memory/goal_score_history.json — tracked, appended every cycle by
+           agents/core/feedback_loop.py:save_score_snapshot at step
+           feedback_loop (index 20). It carries score_sources, the only record of
+           which axis was measured and which was a model opinion, so losing it
+           blanked honest_composite to "покритие 0%". RESTORED outside this
+           session on 2026-08-28: 11 records -> 47, ending 2026-08-21 instead of
+           2026-06-21, proven lossless (no record on disk dropped, no shared
+           timestamp changed). Records between 21 and 28 August are gone for
+           good. DO NOT rebuild or revert it.
   (c) SEPARATE FINDING, separate commit: 7 points dated 2026-06-21 exist in the
       committed version and had vanished from the live file. Something REWRITES
       this file rather than appending to it. Find what, and report it. Do not fix
@@ -1441,8 +1666,17 @@ emit a number it cannot source. A stale input is reported as stale, never as a
 number. Report all four with source path and timestamp.
   K1  measured weight / total weight. FIRST report which file holds the live
       value — memory/measurement_honesty_latest.json is stale (ts 2026-08-20,
-      basis_weight 0.0) while ITEM 1 moved measured weight to 114 of 173. Name
+      basis_weight 0.0) while ITEM 1 moved measured weight to 114 of 167. Name
       the path; do not guess.
+      CORRECTED 2026-08-28 BY EMIL: this line said 114 of 173. The denominator
+      was asserted from memory; the tree has been 24 axes / 167 weight since
+      commit 8052397 (2026-08-21) and the code always read it from
+      config/target_config.json. 114/167 = 68.3%, not 65.9%.
+      ALSO STALE IN THIS LINE, and left for ITEM 14 to answer rather than
+      fixed here: measurement_honesty_latest.json is no longer the file it
+      describes. ITEM 7.1 (2026-08-28) wired it into the cycle at step 20.1
+      and gave it top-level measured_weight, k1 and k1_why keys, so the file
+      IS the live holder of K1 from the next cycle on.
   K2  sources that EARNED trust: rows in memory/source_lifecycle_ledger.jsonl
       with a "transition" field whose state_after == "TRUSTED". Today 20, all
       timestamped 2026-08-20. Report the count AND the date of the most recent
@@ -1563,6 +1797,46 @@ MUST SURVIVE the fix — fixing these does not turn today's flip into progress
 retroactively.
 
 ## HOLDING
+- feedback_loop HAS NEVER SCORED MATERIALS_WASTE_REVIEW AS MEASURED, and nobody
+  noticed. agents/core/feedback_loop.py:_measured_axis_scores iterates
+  goal_score_calculator's metric_details, which is keyed by METRIC;
+  MATERIALS_WASTE_REVIEW and CLIMATE_GLOBAL_RISK_REVIEW share
+  co2_ppm_mauna_loa, so the first is overwritten before that loop ever sees it.
+  CONFIRMED AGAINST LIVE DATA, not inferred: in the restored
+  memory/goal_score_history.json the 2026-08-21 record gives
+  MATERIALS_WASTE_REVIEW score_source "llm_level" while ITEM 7.1's K1 path,
+  reading the same scorer on the same day, counts it as measured from
+  noaa_co2_ppm. 7.1 fixed the K1 path by adding axis_observations; the
+  feedback_loop path still reads the colliding dict. One axis, weight 9,
+  silently demoted to a model opinion every cycle.
+- MATERIALS_WASTE_REVIEW IS SCORED BY ATMOSPHERIC CO2. config/target_config.json
+  gives it primary_metric co2_ppm_mauna_loa, the same metric as
+  CLIMATE_GLOBAL_RISK_REVIEW, so the two axes are the same reading twice with
+  different weights (9 and 10) — 19 of 167 weight from one number, and after the
+  domain rearrangement they sit in DIFFERENT top branches, so one reading moves
+  two of the five. PROGRESS/CORTEX++_TASKS_2026-08-20.txt item 1.2 already
+  raised this and it is still open. target_config.json weights are guarded —
+  flagged, not touched.
+- THE RE-RECORDED BASELINE'S COUNT AND ITS LIST DISAGREE. "THE BASELINE,
+  RE-RECORDED 2026-08-28" declares 26 failures, enumerates 31 test ids, and
+  labels 22 of them "OTHER (17)". The five LIVE_STATE entries are simultaneously
+  listed as failures and described as green. 26 is the true count of the 17:22Z
+  run and the extra five are the green ones — but a reader diffing against the
+  list gets a different answer from a reader trusting the count. ITEM 20 owns
+  those five tests; this is the baseline document, not the tests.
+- test/test_brain_scan.py::test_a_dry_run_leaves_memory_and_snapshots_byte_
+  identical IS AN EXTERNAL-WRITE DETECTOR AND NOTHING SAYS SO. It hashes
+  name+size+mtime_ns of every file under memory/ and snapshots/ around one call.
+  It caught a human restoring memory/goal_score_history.json during the 18:15Z
+  suite run and reported it as "publishing wrote into memory/ or snapshots/",
+  which is the one thing that had NOT happened. A guard whose failure message
+  names the wrong culprit costs the next reader the same hour it cost this one.
+- test/test_human_planet_empty_fetch_guard.py HAS BEEN SITTING MODIFIED AND
+  UNCOMMITTED since before this session began. It is a real improvement — the
+  guard check went from a substring search scoped to main() to a whole-file AST
+  scan for REAL_DATA dict literals — and it belongs to whoever wrote commit
+  8203511. Not committed here because it is not this item's work; named because
+  it is exactly the state ITEM 13's guard exists to make visible.
 - THE 86-FILE EXPOSURE IS ITS OWN FINDING, and it predates the incident that
   revealed it. On 2026-08-28 a `git reset --hard` overwrote 86 tracked files
   carrying uncommitted modifications. The .pyc timestamps date some of that work
