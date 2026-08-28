@@ -265,6 +265,12 @@ def run() -> Dict:
             "timestamp": timestamp,
             "metrics": metrics,
             "score": score,
+            # 0-100 here, 0-1 in output/cortex_scores_latest.json, for the same
+            # axis on the same day — this module is what multiplies by 100 (see
+            # _load_engine_scores). Neither file said so until 2026-08-28.
+            # trends_latest.json has carried this key all along; the series it
+            # is derived FROM did not.
+            "score_scale": "0-100",
             "score_source": score_source,
         }
 
