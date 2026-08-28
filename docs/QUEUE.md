@@ -15,8 +15,8 @@ Keep the state column current — it is the only place a human should have to lo
 | 2 | Commit docs/QUEUE.md | DONE 2026-08-28, 77b4838 (not pushed) | NOCYCLE |
 | 3 | Apply 3.1-3.9 | 3.1 DONE; 3.2 written, suite INVALID (cycle mid-run) | NOCYCLE |
 | 4 | Why the cloud tier is abandoned, f)-i) | DONE 2026-08-28 except f) — needs 429 bodies | READONLY |
-| 5 | The voice that never spoke | TODO | NOCYCLE |
-| 6 | Two lies on the expression panel | TODO | READONLY |
+| 5 | The voice that never spoke | 5.1 DONE — nothing calls it; 5.3 open | NOCYCLE |
+| 6 | Two lies on the expression panel | DONE — both premises overturned | READONLY |
 | 7 | Make the compass produce a number | TODO | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | TODO | NOCYCLE |
@@ -29,6 +29,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 17 | RUNBOOK.md is 1 byte | TODO | NOCYCLE |
 | 18 | Retarget the interval head at the world | TODO | NOCYCLE |
 | 19 | Record score provenance | TODO | NOCYCLE |
+| 20 | The five LIVE_STATE tests | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -912,7 +913,7 @@ target it already has - worth knowing before anyone reads meaning into a learned
 attention map.
 
 ## ITEM 5 — THE VOICE THAT NEVER SPOKE
-STATUS: TODO
+STATUS: 5.1 DONE 2026-08-28 (not wired at all) · 5.2 NOT APPLICABLE · 5.3 STILL TODO (needs code)
 GATE: NOCYCLE
 Cycle 2026-08-28T08:05:00 sealed with "attempts": 0 in memory/extra_calls_log.jsonl,
 while config/reactions.json had enabled: true in BOTH blocks from 07:34:36Z until the
@@ -952,8 +953,67 @@ Do not tune the guardrails, do not lower the floors, do not touch config/reactio
 (protected-path denylist, human-written). Report 5.1 and 5.2 and stop. The floors are a
 human decision and need 5.2's numbers first.
 
+### ANSWERS 5.1 and 5.2 — 2026-08-28, read-only
+
+**5.1 IS IT WIRED AT ALL? NO. NOTHING CALLS IT, EVER.**
+
+By AST across 626 .py files, imports of core/reaction.py and core/perplexity.py,
+excluding the two modules themselves:
+
+    cockpit/server.py:1018   core.reaction     (the READ-ONLY panel endpoint)
+    cockpit/server.py:1064   core.reaction     (the READ-ONLY free-stream endpoint)
+    test/test_free_stream.py:34   core.reaction
+    test/test_perplexity.py:33    core.perplexity
+    test/test_reaction.py:28      core.reaction
+
+FIVE importers. TWO are non-test, and BOTH are the cockpit READING what was
+already stored. Neither ever calls the model.
+
+Call-site scan for the entrypoints — at_phase_boundary(), react(), ask(),
+measure() — finds every non-test caller INSIDE core/reaction.py itself
+(lines 193, 236, 266, 288, 296), which are its own _once() and _selftest()
+paths, reachable only by hand:
+
+    venv/Scripts/python.exe core/reaction.py --once
+
+fast_cycle_runner.py never imports either module. Its ONLY mention of the whole
+subsystem is a COMMENT at line 574 — "the switches in config/reactions.json are
+still false" — which is prose about a flag the runner cannot act on.
+
+SO: config/reactions.json is a switch with no wire. Turning reaction.enabled to
+true, as happened between 07:34:36Z and 13:53Z today, could not have produced a
+single reaction, because no cycle step reaches the code the flag guards. The
+cycle sealed with "attempts": 0 in memory/extra_calls_log.jsonl not because a
+guardrail refused, but because nothing ever asked. memory/reactions.jsonl is
+unchanged since 2026-08-23 and its single row came from _once() with fixture
+lines — the voice has never spoken from real receptor lines because it has never
+been invited to.
+
+This also explains, without any further investigation, why the panel's prose and
+its status word disagreed (ITEM 3.9, now fixed): the status word read a live flag
+that governs nothing.
+
+**5.2 IF IT IS WIRED: WHY DID IT NOT FIRE?** — DOES NOT APPLY.
+
+5.2 asks which guardrail closed. None did. Enumerating early returns, checking
+RAM and VRAM floors against memory/body_scan_latest.json and walking the Ollama
+queue would all be answering a question about a code path that no cycle enters.
+Recorded as NOT APPLICABLE rather than answered with a plausible-looking table,
+which is exactly the shape of the defect this queue keeps finding.
+
+The guardrails inside core/reaction.py are real and may matter LATER — after
+5.3's skip-ledger exists and after somebody wires the call. They cannot be
+measured before then, because nothing exercises them.
+
+**CONSEQUENCE FOR 5.3, which stands unchanged and matters more than before.**
+5.3 requires every non-attempt to write a row with a reason. With the subsystem
+unwired, the FIRST such reason is not ram_floor or queue_busy — it is
+"never_invoked", and today it is the only true one. A ledger that stays empty
+because nothing ran looks identical to a ledger that stays empty because
+everything was refused, and that is precisely the confusion 5.3 exists to end.
+
 ## ITEM 6 — TWO LIES ON THE EXPRESSION PANEL
-STATUS: TODO
+STATUS: DONE 2026-08-28 — both answered; BOTH PREMISES OVERTURNED
 GATE: READONLY
 Both observed live on the EXPRESSION tab for cycle 2026-08-28T08:05:00.
 
@@ -977,6 +1037,106 @@ phase_debrief among them today, and what does "purity" test — the whole record
 field? Then count Cyrillic phase_debriefs in this cycle and the previous three. If the
 gate never looked at this field, say so; the 100% was then true about something
 narrower than we read it to be.
+
+### ANSWER 6.1 — 2026-08-28. THE PRODUCER IS THE MODEL, NOT A FORMATTER.
+
+There is no code that assembles that line, and that is the finding.
+
+THE ROW, verbatim from memory/expression_stream.jsonl:
+
+  {"ts": "2026-08-28T08:52:21.983384+00:00", "source": "model",
+   "text": "ANOMALY sensor_id=net_recv_mb name=disk_read_mb threshold=1000000
+            unit=binary_megabytes crossed=438.8",
+   "source_tag": "model", "form": "ANOMALY", "reflexivity": 1, "glyphs": []}
+
+`text` is a single free string with source="model". No producer splices
+sensor_id and name from two places, because nothing splices them at all — a
+local model WROTE that sentence, and cockpit/expression.py only CHECKED it. The
+check, at :203-206, is that an ANOMALY "cites a sensor_id" and "names the
+threshold crossed". The line satisfies both. It is form-valid and false.
+
+So the questions as posed do not have the answers they expect:
+  - where are sensor_id and name each taken from? NOWHERE. Both are tokens in
+    one generated sentence. They can disagree because nothing ever required them
+    to agree; no code read a sensor and printed its name.
+  - what is `crossed` compared against? NOTHING. It is not a comparison result;
+    it is a number the model emitted next to the word.
+  - are threshold and crossed in the same unit? UNKNOWABLE from the row. It
+    declares unit=binary_megabytes once, for the pair, and 438.8 against
+    1000000 is a ratio of 2278 — consistent with bytes-vs-megabytes, or with an
+    invented number. NOT VERIFIED, and it cannot be verified from this record.
+
+THE COUNT, which was the point of asking:
+  7959 rows in memory/expression_stream.jsonl
+  2 carry an ANOMALY form
+  0 rows have a `name` field at all — the schema has `sensor`, never `name`
+So `name != sensor_id` cannot be counted as a field mismatch: it is not a field.
+Both ANOMALY rows are model prose. The second is
+  "ANOMALY sensor_id=net_send, threshold=1000.0MB/s, crossed=465.6MB/s"
+— same shape, same unverifiable claim, and it too passes the form gate.
+
+IT IS NOT ONE BAD ROW AND IT IS NOT A CLASS OF BAD ROWS. It is 2 of 2: EVERY
+ANOMALY this system has ever emitted is a sentence a 3B model wrote, gated only
+on containing the right words. The renderer sweep proved every panel says
+SOMETHING; this is the same defect one layer down — the expression gate proves
+every ANOMALY is well-FORMED, and cannot tell whether any part of it is TRUE.
+
+WHAT WOULD CLOSE IT, not done here: an ANOMALY should be produced by the
+receptor that crossed the threshold, carrying sensor id, threshold, observed
+value and unit as FIELDS, with the sentence rendered from them. Then form
+validity and truth are the same check. Filed as a finding; no code changed.
+
+### ANSWER 6.2 — 2026-08-28. THE GATE DID LOOK, AND IT SAID NO.
+
+The premise was that a Cyrillic debrief slipped past a gate reporting 100%
+purity. It did not. The gate inspected that exact record and FAILED it.
+
+memory/phase_debriefs/2026-08-28T08_05_00.525209_00_00/B_SENSE.json:
+  what: "Фаза B_SENSE приключи с 7 артефакта (всички налични), най-старият..."
+  lang: {"ok": false, "reason": "CYRILLIC_0.97",
+         "profile": {"latin": 0.031, "cyrillic": 0.969, "letters": 258}}
+
+WHICH OUTPUTS THE GATE INSPECTS: core/language_gate.py:274 purity_ratio and :317
+purity_by_kind read memory/brain_journal.jsonl (JOURNAL, :65) — every row any
+brain call writes, each carrying kind, summary, payload and a lang verdict.
+924 rows, 8 kinds: constancy 576, phase_debrief 161, cycle_plan 41, reconsider
+28, constellation 24, skip_decision 24, cycle_report 22, cycle_review 18.
+phase_debrief IS among them, and is the second largest kind.
+
+WHAT PURITY TESTS: the row's `summary`, judged clean or not, with rows written
+before the gate existed judged from their stored summary as they are read so the
+window stays comparable. Not the whole record, and not the payload.
+
+THE NUMBERS, counted today over all 161 phase_debrief rows:
+  Cyrillic in summary   89
+  Cyrillic in payload   93
+  lang ok=True          68
+  Cyrillic in summary AND ok=True   0
+Zero. Not one Cyrillic debrief was ever marked clean. The gate is doing exactly
+what it claims, on the field it claims to judge.
+
+SO WHERE DID "100.0% over 41 outputs, phase_debrief 8/8" COME FROM? From a
+24-HOUR ROLLING WINDOW (purity_ratio's default hours=24), not from all history.
+On 2026-08-27 the 41 outputs inside that window happened to be clean. The figure
+was TRUE ABOUT ITS WINDOW and was read as a statement about the system. Those are
+different claims, and the one that matters — "the model writes English now" — is
+false: 89 of 161 phase_debrief summaries are Cyrillic, and the very next day
+produced another.
+
+SO THE FINDING IS NOT A HOLE IN THE GATE. It is that a rolling-window ratio was
+quoted without its window, which is the same shape as reading `last_sealed` as a
+seal or an 8763-byte artifact total as DEGRADED — a true number carrying a
+meaning nobody checked it against.
+
+NOT VERIFIED: I did not reconstruct the 2026-08-27 window to confirm it held
+exactly 41 rows. The claim above is that a 24h window explains a 100% reading
+while all-history is 89/161 Cyrillic; the specific composition of that day's
+window was not recomputed.
+
+WHAT WOULD CLOSE IT, not done here: purity should be published WITH its window
+and its denominator in the same string — "100.0% over 41 outputs in 24h" — so the
+number cannot be quoted free of the thing that makes it true. The gate needs no
+change; the reporting does.
 
 ## ITEM 7 — MAKE THE COMPASS PRODUCE A NUMBER
 STATUS: TODO
@@ -1338,6 +1498,28 @@ field starts today and why.
 
 Until this exists, no claim about "the system predicts the world" can be checked
 against the composite score.
+
+## ITEM 20 — THE FIVE LIVE_STATE TESTS
+STATUS: TODO
+GATE: NOCYCLE
+A test that reads live state is not a test, it is a probe.
+
+  test/test_corrections_27.py::test_the_five_test_rows_are_still_there
+  test/test_corrections_27.py::test_the_annotation_comes_after_what_it_annotates
+  test/test_level_reconciler.py::test_social_relations_is_corrected_to_low_on_live_data
+  test/test_phase_evidence_swap.py::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test
+  test/test_phase_evidence_swap.py::test_the_replay_script_reports_the_same_number
+
+Each must either
+  (a) PIN the state it reads in a fixture, so its result depends only on code; or
+  (b) MOVE OUT of the suite into a monitor that reports state without voting on
+      whether the build is good.
+Decide per test which of the two it is, and say why in the commit.
+
+A test that flips green when state moves is recorded as a DEFECT IN THE TEST,
+never as a pass. That classification is already in the re-recorded baseline and
+MUST SURVIVE the fix — fixing these does not turn today's flip into progress
+retroactively.
 
 ## HOLDING
 - THE 86-FILE EXPOSURE IS ITS OWN FINDING, and it predates the incident that
