@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-28T13:58:17Z
-last_item_done: ITEM 3.1 — a truncated answer is no longer "nothing urgent"
-current_item: ITEM 3.2 — the Gemini budget
-current_state: RUNNING
-gate_closed_reason: - (OPENED 13:58:08Z; cycle 2026-08-28T12:15:20 pid 30144 sealed after 103min, held the gate 12:15-13:58)
-next_action_needed_from_claude: guarded suite running; on VALID diff against 29, commit 3.2, then 3.3
+last_updated_utc: 2026-08-28T19:05:00Z
+last_item_done: ITEM 3 — all nine steps 3.1-3.9 applied and committed
+current_item: ITEM 7 — make the compass produce a number (7.1 K1)
+current_state: STARTING
+gate_closed_reason: - (OPEN: memory/cycle.lock absent)
+next_action_needed_from_claude: 7.1(a) find the writer of measurement_honesty_latest.json and report why it last ran 20 Aug
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -13,7 +13,7 @@ Keep the state column current — it is the only place a human should have to lo
 |---|------|-------|------|
 | 1 | Prepare the K1 move | DONE 2026-08-28 | READONLY |
 | 2 | Commit docs/QUEUE.md | DONE 2026-08-28, 77b4838 (not pushed) | NOCYCLE |
-| 3 | Apply 3.1-3.9 | 3.1 DONE; 3.2 written, suite INVALID (cycle mid-run) | NOCYCLE |
+| 3 | Apply 3.1-3.9 | DONE 2026-08-28 — nine commits, 19e3909..a6e1958 | NOCYCLE |
 | 4 | Why the cloud tier is abandoned, f)-i) | DONE 2026-08-28 except f) — needs 429 bodies | READONLY |
 | 5 | The voice that never spoke | 5.1 DONE — nothing calls it; 5.3 open | NOCYCLE |
 | 6 | Two lies on the expression panel | DONE — both premises overturned | READONLY |
@@ -282,7 +282,7 @@ COMMIT: docs/QUEUE.md alone, staged by explicit path (the tree carries 766 other
 paths of cycle runtime churn; none staged, no `git add -A`).
 
 ## ITEM 3 — COMMAND 32 PART 1B: APPLY
-STATUS: TODO
+STATUS: DONE 2026-08-28 — all nine steps applied, one commit each (report at the end of this item)
 GATE: NOCYCLE
 Each numbered step is a SEPARATE commit. Run the suite before each, diff the FAILED
 list against the baseline of 29, apply the push rule per commit. Order matters:
@@ -580,6 +580,47 @@ OTHER (17) — each with its reason, all pre-existing and none touched by this b
 NOT VERIFIED: the OTHER reasons are read from the test names, their assertions and
 today's run output. Where a reason says "somewhere", nobody has opened the failure
 in this session and it should not be quoted as diagnosed.
+
+### ITEM 3 CLOSING REPORT — 2026-08-28, nine commits
+
+The header of this file said "3.2 written, suite INVALID" for several hours after
+the work had in fact gone in. Re-verified today against the working tree, not
+against the header: every one of 3.1-3.9 is applied and committed. The commits
+below were checked one at a time against the code they claim to change.
+
+| step | commit  | verified in the tree by                                        |
+|------|---------|----------------------------------------------------------------|
+| 3.1  | 19e3909 | internet_agent.py:25 imports call_llm_json; :1003 uses it; urgency='UNKNOWN' at :1018-1019, :1078 |
+| 3.2  | 84cc1a7 | groq_backend.py:109 GEMINI_BUDGET_FLOOR default "4000"; :466-473 carries usageMetadata thoughts/answer/prompt/total into _meta |
+| 3.3  | 7785395 | DECLARED_DEAD text now cites 402 in cycle_2026-08-22_145127.log:179-180; provenance rows carry outcome ok/error (:643, :700) |
+| 3.4  | 7bedac3 | global_indicators.py:224-225 _wb_world() for both ids; goal_score_calculator.py:156-157 put() both keys |
+| 3.5  | 110546a | five correct_use texts rewritten with the verified World value; the sixth marked per-country-only |
+| 3.6  | a8dada4 | cycle_phases.json: axis_history -> B_SENSE, development_journal -> F_SELF, runtime_experiences -> E_PROPOSE |
+| 3.7  | baa166d | fast_cycle_runner.py:307 "last_seen", :309 "last_sealed" |
+| 3.8  | 7e5ef71 | fast_cycle_runner.py:2597 "score_scale":"0-1"; trend_tracker.py:273,288,302 "0-100" |
+| 3.9  | a6e1958 | cockpit/server.py why_off and empty_why derive from rx.enabled(); _rx_enabled() fails CLOSED |
+
+ACCEPTANCE NUMBERS, as the steps demanded them:
+  3.1  urgency=="UNKNOWN", truncated true, error non-empty, summary != input,
+       UNKNOWN counted apart from LOW — 12 fixture tests, all green.
+       news/news_latest.json sha256 06831ab1964eb340..., 172243 bytes, unchanged.
+  3.2  FLOOR 1500 -> 4000. Measured distribution in the commit body (median 247.5).
+  3.3  Cerebras: GET /v1/models 200, completion 402 on BOTH model ids. Verdict
+       recorded as account-scoped, verified 2026-08-28. DECLARED_DEAD stays.
+  3.4  measured_weight 100.0 -> 114.0, unmeasured_weight 14.0 -> 0.0,
+       unmeasured_axes [] , coverage_of_measurable 0.8772 -> 1.0000,
+       PLANETARY_POTENTIAL_REVIEW None -> 0.5504, EDUCATION_CULTURE_REVIEW None ->
+       0.8802, composite 0.6284 -> 0.6391, K1 57.8% -> 65.9%. Matched the
+       expectation exactly; nothing was adjusted to reach it.
+  3.8  NOT YET ON DISK, and this is expected, not a miss: output/cortex_scores_
+       latest.json and memory/axis_history.json still carry no score_scale key
+       because neither has been rewritten since the commit. The WRITERS carry it.
+       One cycle run closes this; a human can check with
+       `venv\Scripts\python.exe -c "import json;print(json.load(open('output/cortex_scores_latest.json'))['score_scale'])"`.
+
+NOT PUSHED. The push attempt recorded above at 17:22Z still stands: nothing has
+been pushed since, and the local branch now carries 20 unpushed commits,
+71ddaf9 through 7d41957.
 
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
 STATUS: DONE 2026-08-28 — a)-e), g), h), i) complete; f) PARTIAL (see below)
