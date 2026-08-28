@@ -114,7 +114,8 @@
         "memory/grounding_ledger.jsonl",
         "memory/trends_latest.json",
         "snapshots/cortex_strategist/cortex_strategist_snapshot_latest.json",
-        "news/news_latest.json"
+        "news/news_latest.json",
+        "memory/axis_history.json"
       ]
     },
     "C_SNAPSHOT": {
@@ -287,7 +288,8 @@
       "produces": [
         "snapshots/body/body_snapshot_latest.json",
         "snapshots/body/growth_plan_latest.json",
-        "memory/improvement_proposals.json"
+        "memory/improvement_proposals.json",
+        "memory/runtime_experiences.json"
       ]
     },
     "F_SELF": {
@@ -310,7 +312,8 @@
         "memory/improvement_proposals.json"
       ],
       "produces": [
-        "memory/improvement_proposals.json"
+        "memory/improvement_proposals.json",
+        "memory/development_journal.json"
       ]
     },
     "G_LEARN": {
@@ -391,9 +394,6 @@
       ],
       "produces": [
         "memory/feedback_log.json",
-        "memory/development_journal.json",
-        "memory/runtime_experiences.json",
-        "memory/axis_history.json",
         "memory/goal_score_history.json",
         "cortex_memory/archive/merkle_root.txt",
         "memory/self_mirror_latest.json",
@@ -401,5 +401,6 @@
         "memory/self_experiments.json"
       ]
     }
-  }
+  },
+  "_g_learn_attribution_note": "Corrected 2026-08-28. G_LEARN.produces listed three artifacts it does not write, so it reported PARTIAL every cycle for a reason that was false in three cases out of five. Verified writers: memory/axis_history.json <- memory/trend_tracker.py:80, called at step trend_tracker (index 3, B_SENSE); memory/development_journal.json <- execute_patches.py, step 19 (F_SELF); memory/runtime_experiences.json <- self_observer, step 17 (E_PROPOSE). feedback_log.json and goal_score_history.json stay in G_LEARN: both are written by agents/core/feedback_loop.py at step 20, which is G_LEARN's. A phase that cannot report DONE stops being read, and the one real failure in that list — runtime_experiences.json, unchanged since 2026-08-17 — was hidden behind two false ones."
 }
