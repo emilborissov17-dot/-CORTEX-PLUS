@@ -34,7 +34,27 @@ AXIS_WEIGHTS = {
 }
 
 
-def compute_goal_score() -> dict:
+def compute_llm_level_score() -> dict:
+    """The LLM LEVELS, weighted. NOT a goal_score, and must not be read as one.
+
+    RENAMED 2026-08-28. REQUIREMENT RECOVERED, from
+    agents/core/__pycache__/goal_planner.cpython-314.pyc compiled 2026-08-17
+    14:16:18, whose surviving docstring records the decision; the rename itself
+    is new work today. Until 15 August this was called compute_goal_score —
+    exactly like goal_score_calculator.compute_goal_score — while computing
+    something entirely different: not measured values against scientific
+    thresholds, but the words LOW/MEDIUM/HIGH pronounced by an LLM, under its
+    OWN hardcoded weights (different from config/target_config.json), with
+    UNKNOWN -> 40, so ignorance received a score.
+
+    Kimi, 15 Aug 2026, quoted in the recovered docstring: "Merge or rename. Two
+    compute_goal_score with different logic are one truth under two faces — an
+    architectural schism. If goal_planner measures LLM levels, let it be called
+    compute_llm_level_score."
+
+    The name now says what it is: a task prioritiser by the model's opinion —
+    legitimate for ordering work, illegitimate as a measurement of the world.
+    """
     try:
         levels = json.loads(LEVELS_PATH.read_text(encoding="utf-8"))
     except Exception:
@@ -198,7 +218,7 @@ def run():
     predictor = _read(PREDICTOR_PATH)
 
     # Изчисляваме goal score
-    score_data = compute_goal_score()
+    score_data = compute_llm_level_score()
     print(f"  Goal Score: {score_data['score']}/100")
 
     critical = [a for a, d in score_data["breakdown"].items() if d["level"] == "LOW"]
