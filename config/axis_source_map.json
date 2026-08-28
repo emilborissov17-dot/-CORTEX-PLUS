@@ -128,7 +128,7 @@
           "independence_note": "FAO Forest Resources Assessment is a country questionnaire - states report their own forest cover",
           "verified": "WRONG_ROW_2026_08_03",
           "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "VERIFIED 2026-08-28: csvType=filtered is 199 country rows with NO World row. Switch to csvType=full with row_key='World', row_key_column='entity' AND column_name='forest_share' -- the full CSV appends an empty forest_share__annotations column, so the default col=-1 would read '' -> World 2025 = 31.905802.",
           "not_a_global_anchor": true
         },
         {
@@ -290,7 +290,7 @@
           "class_was_mixed": true,
           "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified_note": "It returned a number, and the number was Yemen (2010)'s. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "PER-COUNTRY ONLY, VERIFIED 2026-08-28. Unlike the other five this one has NO World row in EITHER variant: csvType=full returns 187 rows and zero of them are World. There is no row_key that makes this global. Do not promote it to an anchor; use it per country or not at all.",
           "not_a_global_anchor": true
         },
         {
@@ -351,7 +351,7 @@
           "independence_note": "states designate and report their own protected areas; designation is not protection",
           "verified": "WRONG_ROW_2026_08_03",
           "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "VERIFIED 2026-08-28: csvType=filtered is 196 country rows with NO World row. Switch to csvType=full with row_key='World', row_key_column='entity', column_name='er_lnd_ptld_zs' -> World 2025 = 16.51166. NOTE: this axis's metric now resolves through core/global_indicators._wb_world('ER.LND.PTLD.ZS') instead; the composer entry is a second, independent path to the same World Bank figure, not the one the scorer reads.",
           "not_a_global_anchor": true
         }
       ],
@@ -599,7 +599,7 @@
           "class_was_mixed": true,
           "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified_note": "It returned a number, and the number was United States's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "VERIFIED 2026-08-28: csvType=filtered holds only the grapher's 7 chart-selected entities and has NO World row, so row_key='World' would raise CsvRowNotFound on it. Switch the url to csvType=full and declare row_key='World', row_key_column='entity', column_name='child_mortality_rate' -> World 2024 = 3.74.",
           "not_a_global_anchor": true
         }
       ],
@@ -739,7 +739,7 @@
           "reporter_independence": "self_reported",
           "verified": "WRONG_ROW_2026_08_03",
           "verified_note": "It returned a number, and the number was Zimbabwe (2020)'s. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "VERIFIED 2026-08-28: csvType=filtered is 143 country rows with NO World row. Switch to csvType=full with row_key='World', row_key_column='entity', column_name='mf_youth_and_adults__15_64_years__average_years_of_education' -> World 2020 = 8.840671.",
           "not_a_global_anchor": true
         }
       ],
@@ -865,7 +865,7 @@
           "independence_note": "each country defines 'urban' itself - the definition is not comparable across borders",
           "verified": "WRONG_ROW_2026_08_03",
           "verified_note": "It returned a number, and the number was Zimbabwe's. With no row_key declared the composer reads the LAST ROW of the panel, which is whichever entity sorts last. Real, correctly parsed, correctly hashed, and about the wrong entity — the failure no guard before 2026-08-03 could see.",
-          "correct_use": "Declare row_key explicitly. If the panel has a World row, row_key='World' makes it global; if it has none, it is a per-country panel like the entries above.",
+          "correct_use": "VERIFIED 2026-08-28: csvType=filtered is 201 country rows with NO World row. Switch to csvType=full with row_key='World', row_key_column='entity', column_name='share__area_type_urban__data_type_estimates' -> World 2025 = 57.8335.",
           "not_a_global_anchor": true
         },
         {
