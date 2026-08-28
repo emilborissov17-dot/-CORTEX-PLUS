@@ -271,6 +271,26 @@ def fetch(src, return_payload: bool = False) -> tuple:
     if kind == "file":
         data = json.loads((REPO / src["path"]).read_text(encoding="utf-8"))
         v = _dotted(data, src["extract"])
+        # AN ADDRESS THAT DOES NOT RESOLVE IS A NAMED FAILURE, not a TypeError.
+        #
+        # _dotted returns None when the dotted path is absent from the payload —
+        # the key was renamed, the section is missing, the file is a stub — and
+        # float(None) then raised "float() argument must be a string or a real
+        # number, not 'NoneType'". That message names neither the file, nor the
+        # path, nor the source, so the reader learns only that arithmetic
+        # happened somewhere. It is the same class the CSV readers already close:
+        # an address was declared and the payload does not hold it.
+        #
+        # NEW WORK, 2026-08-28. The uncommitted version of this file carried a
+        # guard here and was destroyed by a `git reset --hard`; unlike six of its
+        # siblings it left no pre-reset .pyc, so its wording is unrecoverable and
+        # nothing here is a reconstruction of it. This is written from the defect,
+        # which stands on its own terms.
+        if v is None:
+            raise readers.RowNotFound(
+                f"file: extract {src.get('extract')!r} is not in "
+                f"{src.get('path')!r} (source {src.get('id', '?')}) — the address "
+                f"was declared and the payload does not hold it")
         if src.get("data_date_extract"):
             data_date = _dotted(data, src["data_date_extract"])
         return (float(v), data_date, data) if return_payload else (float(v), data_date)

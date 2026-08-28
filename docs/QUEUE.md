@@ -81,9 +81,18 @@ again. This file remembers where work stopped; the context does not.
   before every commit.
 
 ## PUSH RULE
+AMENDED BY EMIL, 28 August 2026. Condition 1 was "the FAILED list is
+byte-identical to the recorded baseline". That rule stopped the push twice in one
+day over failures no code in the batch had caused — a reverted runtime file and a
+set of tests that read live state — while a list that merely SHRANK was also a
+blocker. A gate that cannot tell a regression from a restored file is a gate
+people learn to route around. The baseline now carries a cause per line, so the
+condition can ask the question that matters.
+
 Push without asking a human, only if all three hold machine-checked:
-1. the suite summary line matches the baseline of 29 failed AND the FAILED list
-   is byte-for-byte identical;
+1. NO FAILURE APPEARS THAT IS NOT IN THE RECORDED BASELINE WITH A NAMED CAUSE.
+   A failure LEAVING the list is reported, never a blocker. A new failure with no
+   recorded cause blocks, as before.
 2. the diff contains no data, V-Dem, CSV, media, or .env;
 3. the branch is feature/lidaction-guard, never master.
 If any fails: do not push, and record why in this file under the item.
@@ -489,6 +498,87 @@ reverted by the same command, one directory over from axis_history.json.
 VERIFIED BEFORE THE ATTEMPT, per instruction: memory/axis_history.json is in NO
 commit, unstaged, 616 KB. Nothing under memory/ is staged. The only memory/ path
 in the 17 unpushed commits is memory/trend_tracker.py, which is source.
+
+### THE BASELINE, RE-RECORDED 2026-08-28 WITH A CAUSE PER LINE
+
+The 29-line list recorded earlier under ITEM 8 is SUPERSEDED, not deleted. It
+stays where it is. It was a count and a list of names, which is enough to detect
+a change and not enough to judge one — twice today it forced a stop over failures
+that were not caused by any code in the batch. A baseline without causes turns
+every deviation into the same event.
+
+26 failures, each with the reason it fails.
+
+LIVE_STATE (5) — flips with system state, not with code. RECORDED AS A DEFECT IN
+THE TEST, NOT AS A PASS. All five were RED in the ITEM 8 baseline and are GREEN
+now, and nothing in this batch touched them: they moved because the live files
+they read moved. A test that flips green when state moves is exactly as
+untrustworthy as one that flips red, and counting today's flip as progress would
+be counting the same unreliability as evidence. They are ITEM 20.
+  test/test_corrections_27.py::test_the_five_test_rows_are_still_there
+  test/test_corrections_27.py::test_the_annotation_comes_after_what_it_annotates
+  test/test_level_reconciler.py::test_social_relations_is_corrected_to_low_on_live_data
+  test/test_phase_evidence_swap.py::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test
+  test/test_phase_evidence_swap.py::test_the_replay_script_reports_the_same_number
+
+RESET_DAMAGE (2) — snapshots/master/global_indicators_latest.json is TRACKED
+runtime data and the 15:09:22Z `git reset --hard` replaced it with an older
+committed copy. It lost its _health block, is down to 11 world_bank keys, and
+lost its `conflicts` section. ONE CYCLE RUN REGENERATES IT; because of 3.4 it
+should return with 13 world_bank keys. NO CODE CHANGE IS WARRANTED for either.
+  test/test_script_suite.py::test_script_style_suite[test/test_snapshot_carry_forward.py]
+      asserts "the snapshot carries a _health block a human can read at a glance"
+  test/test_script_suite.py::test_script_style_suite[test/test_promotion_seam.py]
+      composer.fetch now names the cause instead of dying on float(None):
+      "extract 'conflicts.active_armed_conflicts' is not in
+      snapshots/master/global_indicators_latest.json (source promoted_96302)".
+      The guard did not fix the failure — it turned an opaque TypeError into a
+      diagnosis that points at the reverted file, which is the whole value.
+
+BY_DESIGN (2) — assertions that pin behaviour the reasoning-budget transform
+deliberately removed on 2026-08-20. Red since then, kept red on purpose, and NOT
+retired in this batch because retiring them would change the list for a reason
+unrelated to any code under test. Separate item.
+  test/test_cerebras_budget.py::test_gemini_still_sends_plain_max_output_tokens
+      expects maxOutputTokens == the caller's raw budget; the transform overrides it
+  test/test_cerebras_budget.py::test_other_openai_backends_still_send_plain_max_tokens[_call_groq-GROQ_API_URL]
+      same expectation for Groq
+
+OTHER (17) — each with its reason, all pre-existing and none touched by this batch.
+  test/test_ci_contract.py::test_no_hardcoded_drive_letters_in_code
+      a hardcoded C:\ path exists somewhere in the tree; the guard is right
+  test/test_cycle_reaper.py::test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk
+      end-to-end reaper test; spawns a real cycle process
+  test/test_cycle_seals_its_own_completion.py::test_sealing_a_cycle_here_leaves_the_real_ledgers_alone
+      asserts a seal from a test never touches the live ledgers
+  test/test_declared_step_inputs.py::test_an_undeclared_step_still_refuses
+  test/test_declared_step_inputs.py::test_the_scanner_prefers_the_written_declaration
+      config/step_inputs.json does not declare every step the runner walks
+  test/test_heartbeat_coverage.py::test_each_beat_reports_the_step_it_is_actually_in
+      a beat() name and its heartbeat step disagree somewhere
+  test/test_level_reconciler.py::test_climate_global_risk_is_corrected_to_high_under_the_ruling
+  test/test_level_reconciler.py::test_the_correction_row_carries_the_translation
+      reads live auto_levels/goal_score; adjacent to LIVE_STATE, see ITEM 20
+  test/test_metta_parallel.py:: (5 tests)
+      the MeTTa sidecar (venv312_metta) is not answering on this machine, so the
+      symbolic column cannot be compared against its reference
+  test/test_needs_auth.py::test_the_live_registry_shows_ucdp_active_and_eia_waiting
+  test/test_needs_auth.py::test_the_waiting_sources_reach_the_cycle_report
+      reads config/dead_sources.json live; ucdp/eia state has moved
+  test/test_notary_gate.py::test_execute_patches_never_reaches_full_trust
+  test/test_notary_gate.py::test_the_phantom_is_still_the_thing_holding_the_gate
+      the notary's trust gate does not hold the property these assert
+  test/test_phase_resume.py::test_the_cli_refuses_without_claiming_the_cycle_lock
+      depends on whether a cycle lock exists at run time — borderline LIVE_STATE
+  test/test_script_suite.py::test_script_style_suite[experiments/dreams/test_dream.py]
+  test/test_script_suite.py::test_script_style_suite[test/test_goal_score_package.py]
+  test/test_script_suite.py::test_script_style_suite[test/test_needs_approvals.py]
+  test/test_script_suite.py::test_script_style_suite[test/test_origin_honesty.py]
+      four script-style tests failing on their own assertions, pre-existing
+
+NOT VERIFIED: the OTHER reasons are read from the test names, their assertions and
+today's run output. Where a reason says "somewhere", nobody has opened the failure
+in this session and it should not be quoted as diagnosed.
 
 ## ITEM 4 — WHY THE CLOUD TIER IS ABANDONED
 STATUS: DONE 2026-08-28 — a)-e), g), h), i) complete; f) PARTIAL (see below)
@@ -981,7 +1071,11 @@ no longer folklore — it is the list below.
 NOTE: this one VALID run also covered the 3.2 changes, which were in the
 tree at the time. Both commits are gated on it; neither needed its own run.
 
-THE BASELINE. 29 lines, recorded so nobody has to trust a number again:
+THE BASELINE. 29 lines, recorded so nobody has to trust a number again.
+SUPERSEDED 2026-08-28 by the classified baseline under ITEM 3 — kept here,
+not deleted. It was a count and a list of names: enough to detect a change,
+not enough to judge one, and twice today it forced a stop over failures no
+code in the batch had caused. The replacement carries a cause per line.
 ```
 test/test_cerebras_budget.py::test_gemini_still_sends_plain_max_output_tokens
 test/test_cerebras_budget.py::test_other_openai_backends_still_send_plain_max_tokens[_call_groq-GROQ_API_URL]
@@ -1113,9 +1207,16 @@ replaces live measurement with a committed snapshot.
   (a) git rm --cached memory/axis_history.json, add it to .gitignore, and commit
       a copy as data/seed/axis_history.seed.json so a fresh clone still starts
       with a series.
-  (b) AUDIT memory/ for every other TRACKED file a running cycle writes, and
-      LIST them before changing any of them. The list is the deliverable; the
-      untracking is a separate decision per file.
+  (b) AUDIT EVERY DIRECTORY, not just memory/, for TRACKED files a running cycle
+      writes, and LIST them before changing any of them. The list is the
+      deliverable; the untracking is a separate decision per file.
+      WIDENED 2026-08-28: snapshots/master/global_indicators_latest.json was
+      reverted by the same reset, one directory over from axis_history.json, and
+      nobody had it on the list. It lost its _health block, four world_bank keys
+      and its conflicts section, and it is the sole cause of both RESET_DAMAGE
+      failures in the current baseline. Scoping the audit to memory/ would have
+      missed it, so the audit is now: every tracked file any cycle step writes,
+      in any directory.
   (c) SEPARATE FINDING, separate commit: 7 points dated 2026-06-21 exist in the
       committed version and had vanished from the live file. Something REWRITES
       this file rather than appending to it. Find what, and report it. Do not fix
