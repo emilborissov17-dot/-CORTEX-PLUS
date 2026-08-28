@@ -90,7 +90,23 @@ GROQ_BUDGET_FLOOR = int(os.environ.get("GROQ_BUDGET_FLOOR", "1500"))
 GROQ_BUDGET_CAP   = int(os.environ.get("GROQ_BUDGET_CAP",   "8192"))
 
 GEMINI_BUDGET_MULT  = float(os.environ.get("GEMINI_BUDGET_MULT",  "3"))
-GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "1500"))
+# THE 1500 FLOOR WAS NOT ENOUGH. Measured in cycle 2026-08-28T08:05:00, not
+# assumed: Gemini cut 14 of 19 answers (finishReason=MAX_TOKENS). The truncated
+# reply lengths in characters, from memory/llm_provenance.jsonl:
+#
+#   77 171 174 182 191 193 239 256 258 271 293 519 1348 1382   median 247.5
+#
+# Eleven of the fourteen came back under 300 characters — the model spent the
+# whole budget thinking and emitted a stub. For comparison the two COMPLETE
+# answers at the same call site were 1711 and 1764 characters, about 430-440
+# output tokens, so thinking took ~1060-1070 of the 1500 there. In the fourteen
+# it took all of it.
+#
+# 4000 leaves room for a full answer after the longest thinking observed and
+# stays under half the 8192 cap. The value lives IN CODE, not in .env: a
+# threshold that exists only in an untracked file is invisible to git and to
+# every future reader.
+GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "4000"))
 GEMINI_BUDGET_CAP   = int(os.environ.get("GEMINI_BUDGET_CAP",   "8192"))
 # low | medium | high (Cerebras default за gpt-oss-120b е "medium")
 CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
@@ -410,7 +426,8 @@ def _call_gemini(prompt: str, max_tokens: int):
         raise RuntimeError("Gemini rate limit")
 
     r.raise_for_status()
-    candidates = r.json().get("candidates", [])
+    body = r.json()
+    candidates = body.get("candidates", [])
     if not candidates:
         raise ValueError("Gemini: празен отговор")
     cand = candidates[0]
@@ -418,7 +435,24 @@ def _call_gemini(prompt: str, max_tokens: int):
     # Нормализираме към "length", за да има llm_json един-единствен признак.
     raw_reason = (cand.get("finishReason") or "").upper()
     finish_reason = "length" if raw_reason == "MAX_TOKENS" else raw_reason.lower() or None
-    return cand["content"]["parts"][0]["text"], {"finish_reason": finish_reason}
+    # THE SPLIT IS MEASURED, NOT INFERRED (28 Aug 2026). Gemini returns
+    # usageMetadata with thoughtsTokenCount and candidatesTokenCount — thinking
+    # and answer, separately — and this function read the text and the finish
+    # reason and threw the rest away. So when 14 answers were cut short the only
+    # evidence left on disk was reply LENGTH IN CHARACTERS, and the size of the
+    # thinking that ate the budget had to be estimated from it. Carried now, so
+    # the next person reads the number instead of reconstructing it.
+    usage = body.get("usageMetadata") or {}
+    meta = {"finish_reason": finish_reason}
+    for src, dst in (("thoughtsTokenCount", "thoughts_tokens"),
+                     ("candidatesTokenCount", "answer_tokens"),
+                     ("promptTokenCount", "prompt_tokens"),
+                     ("totalTokenCount", "total_tokens")):
+        if isinstance(usage.get(src), int):
+            meta[dst] = usage[src]
+    if "thoughts_tokens" in meta or "answer_tokens" in meta:
+        meta["budget"] = budget
+    return cand["content"]["parts"][0]["text"], meta
 
 
 def _note_degraded(reason: str) -> None:
@@ -570,7 +604,8 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             return backend_label.split(":", 1)[1]
         return backend_label
 
-    def _log_provenance(backend_label: str, prompt_text: str, content_text: str):
+    def _log_provenance(backend_label: str, prompt_text: str, content_text: str,
+                        meta: dict | None = None):
         """PROVENANCE (14 Aug 2026): every verdict the system records used to be
         anonymous — no trace of WHICH model produced it, though the chain falls
         through 4 providers many times per cycle. E7 (calibrated ensemble) and E2
@@ -605,14 +640,27 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             # 143-writes-a-night provenance stream as core/brain.py.
             # Same trade, same barrier: beat(). See core/durable.py.
             from core.durable import append_json as _append_json  # noqa: PLC0415
-            _append_json(_pf, {
+            _row = {
                     "ts": datetime.now(timezone.utc).isoformat(),
                     "backend": backend_label,
                     "model": _model_for(backend_label),
                     "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
                     "prompt_head": prompt_text[:80],
                     "reply_chars": len(content_text or ""),
-                }, batched=True)
+                }
+            # WHY THE ANSWER WAS THAT SHORT, not just how short it was. Where
+            # the provider reports its own token accounting, it is carried here
+            # verbatim. Item 4(d) had to estimate the thinking/answer split from
+            # reply_chars because these fields were read and discarded; whoever
+            # asks next reads the number. Absent for providers that report none
+            # — an absent key is honest, a zero would not be.
+            if meta:
+                for _k in ("finish_reason", "thoughts_tokens", "answer_tokens",
+                           "prompt_tokens", "total_tokens", "budget",
+                           "used_reasoning_fallback"):
+                    if meta.get(_k) is not None:
+                        _row[_k] = meta[_k]
+            _append_json(_pf, _row, batched=True)
         except Exception:
             pass  # bookkeeping must never break the chain
 
@@ -674,7 +722,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                         print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
                     else:
                         print(f"[LLM] {label} OK")
-                    _log_provenance(label, prompt, result)
+                    _log_provenance(label, prompt, result, meta)
                     _policy.note_cloud_success()
                     return result, meta
                 raise ValueError(f"Empty response from {label}")

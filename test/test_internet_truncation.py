@@ -51,8 +51,19 @@ def _digest(p: pathlib.Path):
     return hashlib.sha256(p.read_bytes()).hexdigest() if p.exists() else None
 
 
-# Captured before anything in this module imports or runs further.
-_NEWS_BEFORE = _digest(NEWS_LATEST)
+# NO DIGEST GUARD. See the long note in test/test_gemini_budget_and_usage.py and
+# test/conftest.py:175-213: a filesystem hash on a live machine cannot tell "a
+# test wrote this" from "the cycle wrote this", and this repo already tried it,
+# already had it fire wrongly, and already demoted it to a warning on purpose.
+# This module's first version carried one and passed on 2026-08-28 only because
+# the concurrent cycle had not yet reached internet_intelligence. Luck is not a
+# guard, and a guard that cries wolf gets switched off.
+#
+# HONEST GAP, stated rather than papered over: conftest's _no_live_writes covers
+# _GUARDED_TREES = ("memory", "config"). news/ is NOT among them, so writes there
+# are caught by nothing but the warning-level canary. Recorded in docs/QUEUE.md
+# under HOLDING rather than fixed here — widening the guarded trees is a change to
+# every test in the repo, not a detail of this one.
 
 
 # The context a real axis fetch builds and hands to the model. If any assertion
@@ -214,7 +225,21 @@ def test_orchestrator_prints_unknown():
 
 # ── live state ─────────────────────────────────────────────────────────────
 
-def test_the_real_news_file_was_not_touched():
-    assert _digest(NEWS_LATEST) == _NEWS_BEFORE, (
-        "news/news_latest.json changed while this suite ran — a test that "
-        "writes live state is not a test, it is a cycle")
+def test_the_real_news_file_was_not_touched(truncating_llm):
+    """Byte-identical across THIS test, the window the module can attribute.
+
+    Function-scoped on purpose. A session-long digest cannot tell a test's write
+    from the cycle's (conftest.py:175-213, and it went red exactly that way on
+    2026-08-28). A window of milliseconds around one test can, in practice —
+    and the residual risk is stated in the message rather than hidden.
+
+    Takes truncating_llm so the exercised path is stubbed. The first version of
+    this test omitted it and the module's runtime went from 3s to 15s: it was
+    making a real cloud call to prove it made no local write.
+    """
+    before = _digest(NEWS_LATEST)
+    ia._llm_synthesize("WATER_REVIEW", SOURCES)
+    assert _digest(NEWS_LATEST) == before, (
+        "news/news_latest.json changed across a single test. Either this module "
+        "wrote it — the defect — or a cycle wrote it in the same millisecond; "
+        "check memory/cycle.lock before believing the first.")
