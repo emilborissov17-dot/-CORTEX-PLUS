@@ -289,9 +289,24 @@ def _classify_cycle_id(env_id):
 
     try:
         CYCLE_ORIGIN.parent.mkdir(parents=True, exist_ok=True)
+        # `last` is max(LAST_CYCLE_ID, LAST_ATTEMPT) — correct for the boot guard
+        # above, which must not let a stale env id through just because the cycle
+        # that used it died before sealing. But it is NOT a seal, and publishing
+        # it under that name made it one: on 2026-08-28 this file reported
+        # last_sealed=07:46:06, a cycle that died at step 4 with no end record,
+        # while the genuinely sealed cycle was 03:48:44. Two keys now, because
+        # they answer two questions.
+        _sealed = None
+        try:
+            _sealed = LAST_CYCLE_ID.read_text(encoding="utf-8").strip() or None
+        except Exception:
+            _sealed = None
         CYCLE_ORIGIN.write_text(json.dumps(
             {"cycle_id": cid, "origin": origin, "why": why,
-             "last_sealed": last.isoformat() if last else None},
+             # the latest cycle SEEN, sealed or not — the boot guard's reference
+             "last_seen": last.isoformat() if last else None,
+             # the latest cycle that actually reached the seal, or null
+             "last_sealed": _sealed},
             ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
@@ -2571,6 +2586,15 @@ def main():
                 {
                     "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
                     "scorer_version": "1.1",
+                    # THE SCALE, SAID OUT LOUD. This file holds 0..1 and
+                    # memory/axis_history.json holds 0..100 for the same axis on
+                    # the same day — verified 28/28 exact x100 on 2026-08-28 —
+                    # and neither carried a tag. One producer, two units, nothing
+                    # on disk saying which is which. memory/trend_tracker.py
+                    # already writes "score_scale" into trends_latest.json; this
+                    # is the same key, in the two files that were missing it.
+                    # Additive only: no reader is asked to change.
+                    "score_scale": "0-1",
                     "total_axes": len(_scores),
                     "scores": {
                         ax: {
