@@ -4,7 +4,7 @@ last_item_done: ITEM 10 — a suite run now knows whether a cycle touched it
 current_item: ITEM 11 — wire tools/resolve_ideas.py into the cycle (deadline 2026-09-02)
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
-next_action_needed_from_claude: ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
+next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -30,6 +30,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 18 | Retarget the interval head at the world | TODO | NOCYCLE |
 | 19 | Record score provenance | TODO | NOCYCLE |
 | 20 | The five LIVE_STATE tests | TODO | NOCYCLE |
+| 21 | feedback_loop dies on a dict level word (LIVE CRASH) | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -1973,6 +1974,58 @@ automatically or when Emil deletes it. Neither is Claude's call.
     test_the_answer_is_only_stripped_and_never_edited
     test_the_raw_lines_are_sent_not_a_summary
     test_the_record_is_readable_as_one_thing
+
+## ITEM 21 — feedback_loop DIES ON A LEVEL WORD THAT IS A DICT
+STATUS: TODO
+GATE: NOCYCLE
+PROMOTED FROM HOLDING 2026-08-29, after ITEM 10 reported, per rule 7. Found while
+checking the K1 number the cycle produced. IT IS A LIVE CRASH, not an audit
+finding, and it arguably deserves to jump the queue — that ordering call is left
+visible here rather than made silently.
+
+  agents/core/feedback_loop.py:47   `if val in level_map:` where val came from
+  snap.get("current_level"). For DEEP_TIME_RISKS_REVIEW that field is a DICT:
+      {"asteroid": "HIGH", "supervolcano": "UNKNOWN", "astrophysical": "MEDIUM"}
+  a per-hazard breakdown where every other axis has a single level word. `in`
+  against a dict key raises TypeError and the WHOLE step dies.
+
+REPRODUCED, not inferred: agents.core.feedback_loop.run() with _save_json
+stubbed raises at line 47 via read_current_scores -> _axis_score. Traceback in
+the 2026-08-29 report above.
+
+WHAT IT COSTS, and it is more than one step. feedback_loop is the only writer of
+memory/goal_score_history.json (save_score_snapshot) and memory/feedback_log.json,
+and it also updates proposal priorities. When it dies:
+  - no history record is appended, so measurement_honesty's basis_ts stays where
+    it was — today it is 2026-08-21, EIGHT DAYS STALE, and honest_composite is
+    computed from that.
+  - K1 is NOT affected, because ITEM 7.1 deliberately sources it from the
+    scorer's axis_observations rather than from score_sources. That separation
+    is doing its job and should not be undone to "simplify".
+
+INTERMITTENT, WHICH IS WHY IT SURVIVED: 3 of the last 15 cycles
+(2026-08-26_073958, 2026-08-28_080500, 2026-08-29_030401). The deep-time-risks
+agent emits a dict on some runs and a level word on others, so the crash comes
+and goes and nothing has ever chased it.
+
+  (a) Make _axis_score total: a level field that is not a string is NOT a level.
+      Name the axis and the shape on stdout and carry on with the other axes —
+      one malformed field must never cost the whole step. The same fail-per-axis
+      discipline _measured_axis_scores already got on 20 Aug for exactly this
+      class of bug (a single None killed all measurement); this is that lesson
+      applied to the other loop in the same file.
+  (b) Decide what DEEP_TIME_RISKS_REVIEW's level actually IS. A per-hazard
+      breakdown is richer than a word and throwing it away is a loss; the axis
+      needs either an agreed reduction (worst? weighted?) or an explicit
+      "structurally multi-valued, no single level" marker. Do NOT invent one
+      silently — that is a scoring decision.
+  (c) A step that RAISED must be visible in the cycle report as a failed
+      artifact, not only as a log line. Check whether G_LEARN's phase report
+      noticed; if it reported PARTIAL or DONE while its own writer had raised,
+      that is a second defect.
+ACCEPTANCE: a fixture feeds a snapshot whose current_level is a dict and asserts
+read_current_scores() returns the other axes' scores, names the offender, and
+does not raise; and that memory/goal_score_history.json is byte-identical after.
 
 ## ITEM 11 — WIRE tools/resolve_ideas.py INTO THE CYCLE
 STATUS: TODO
