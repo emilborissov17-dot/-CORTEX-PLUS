@@ -4,6 +4,7 @@ from __future__ import annotations
 import json, sys, io
 from datetime import datetime, timezone
 from pathlib import Path
+from core.answered_by import stamp as _prov_stamp  # ITEM 43.1
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
@@ -33,7 +34,9 @@ def _write_planet(axis: str, folder_name: str, raw: dict) -> Path:
         "level": "MEDIUM",
         "signals": [],
         "key_metrics": [],
-        "model": "WORLD_BANK_API+OWID+OECD",
+        # ITEM 43.1: was "model", which claimed a model identity it never had.
+        "data_source": "WORLD_BANK_API+OWID+OECD",
+        "provenance": _prov_stamp(),
         "source_type": "REAL_DATA",
         "metrics": raw.get("metrics", {}),
         "data_quality": raw.get("data_quality", ""),

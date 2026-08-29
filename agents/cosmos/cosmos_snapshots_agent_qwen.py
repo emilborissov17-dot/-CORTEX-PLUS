@@ -8,6 +8,7 @@ SNAPSHOT_DIR = BASE_DIR / "snapshots" / "cosmos"
 sys.path.insert(0, str(BASE_DIR))
 from data_providers.cosmos.space_infrastructure_provider import SpaceInfrastructureProvider
 from data_providers.cosmos.cosmic_resources_provider import CosmicResourcesProvider
+from core.answered_by import stamp as _prov_stamp  # ITEM 43.1
 
 LLM_AXES = [
     {"axis_name": "LONG_TERM_FUTURE_REVIEW", "folder": "long_term_future",
@@ -69,6 +70,14 @@ def _write(folder, axis_name, data):
     out_path = out_dir / f"{folder}_snapshot_latest.json"
     data["snapshot_timestamp"] = _utc_now()
     data["axis"] = axis_name
+    # ITEM 43.1 (29 Aug 2026). source_type STAYS — REAL_DATA vs
+    # REAL_DATA_CARRIED vs LLM_GENERATED is a claim about where the VALUE came
+    # from, and it is honest. The stamp answers a different question it cannot:
+    # which backend answered, and was the step degraded. Kimi: "adopt cosmos's
+    # honesty pattern but add the backend/degradation dimension that source_type
+    # lacks." Both, therefore; neither replaces the other.
+    data = dict(data)
+    data["provenance"] = _prov_stamp()
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     return out_path
 

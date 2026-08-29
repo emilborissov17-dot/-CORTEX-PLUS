@@ -46,6 +46,7 @@ from data_providers.planet.planet_normalization import (
     normalize_biodiversity,
     normalize_materials_waste,
 )
+from core.answered_by import stamp as _prov_stamp  # ITEM 43.1: what answered this
 
 
 ROOT = Path(__file__).resolve().parent.parent.parent
@@ -230,7 +231,15 @@ def write_axis_snapshot(axis: str, short: str, payload: Dict[str, Any]) -> Path:
         "level": payload.get("level", "MEDIUM"),
         "signals": payload.get("signals", []),
         "key_metrics": payload.get("key_metrics", []),
-        "model": payload.get("model", "QWEN_PLANET_SNAPSHOT_AGENT"),
+        # ITEM 43.1 (29 Aug 2026). "model" USED TO LIVE HERE, defaulting to the
+        # constant "QWEN_PLANET_SNAPSHOT_AGENT" — an AGENT name, not a model,
+        # written into a field every reader takes for provenance. On the night
+        # of 2026-08-29 nine agents fell to local qwen2.5:3b and every snapshot
+        # still said QWEN_PLANET_SNAPSHOT_AGENT. The field is gone; what
+        # actually answered is stamped below, and the upstream API keeps its own
+        # name under a key that claims only what is true.
+        "provenance": _prov_stamp(),
+        "data_source": payload.get("data_source"),
         "source_type": payload.get("source_type", "LLM"),
         "metrics": payload.get("metrics", payload.get("raw", {}).get("metrics", {})),
         "data_quality": payload.get("data_quality", payload.get("raw", {}).get("data_quality", "")),
@@ -296,7 +305,7 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
             return
 
         payload = normalize_climate(raw)
-        payload["model"] = "CLIMATE_GLOBAL_RISK_MULTI_REAL_DATA"
+        payload["data_source"] = "CLIMATE_GLOBAL_RISK_MULTI_REAL_DATA"
         # Инжектирай NOAA CO2 метрики директно
         from data_providers.planet.climate_global_risk_review_provider import fetch_noaa_co2
         noaa = fetch_noaa_co2()
@@ -351,7 +360,7 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
             print(f"[PLANET_SNAPSHOT][ERROR] real-data fetch failed for {axis}: {e}")
             return
 
-        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "model": "WORLD_BANK_API"}
+        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "data_source": "WORLD_BANK_API"}
         write_axis_snapshot(axis, short, payload)
         return
 
@@ -364,7 +373,7 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
             print(f"[PLANET_SNAPSHOT][ERROR] real-data fetch failed for {axis}: {e}")
             return
 
-        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "model": "WORLD_BANK_API"}
+        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "data_source": "WORLD_BANK_API"}
         write_axis_snapshot(axis, short, payload)
         return
 
@@ -377,7 +386,7 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
             print(f"[PLANET_SNAPSHOT][ERROR] real-data fetch failed for {axis}: {e}")
             return
 
-        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "model": "WORLD_BANK_API"}
+        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "data_source": "WORLD_BANK_API"}
         write_axis_snapshot(axis, short, payload)
         return
 
@@ -390,7 +399,7 @@ def generate_axis_snapshot_real(axis: str, cfg: Dict[str, Any]) -> None:
             print(f"[PLANET_SNAPSHOT][ERROR] real-data fetch failed for {axis}: {e}")
             return
 
-        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "model": "WORLD_BANK_API"}
+        payload = {"source_type": "REAL_DATA", "metrics": raw.get("metrics", {}), "data_quality": raw.get("data_quality", ""), "fetched_date": raw.get("fetched_date", ""), "data_source": "WORLD_BANK_API"}
         write_axis_snapshot(axis, short, payload)
         return
 

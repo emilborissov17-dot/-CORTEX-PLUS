@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-29T14:05:00Z
-last_item_done: ITEM 14 — the compass runs from the system, at step 25.8, and K2 refuses on purpose. All five declaration sites; through _run(), so the ratchet still reads 66 steps / 31 uncovered / limit 31. K2 = NOT_WIRED with every diagnostic kept, an expiry a bare date bump cannot pass, and a consumer census re-taken every run.
-current_item: ITEM 36 — the front-end renders UNMEASURED (ITEM 33's open half). NEXT by the table; ITEM 13, 35 and 15 follow.
+last_updated_utc: 2026-08-29T18:05:00Z
+last_item_done: ITEM 43.1 — every persisted axis payload now carries what actually answered it. core/answered_by.py stamps {backend, model, degraded} read from step_contract.current(); the false constant `model` field is gone from all seven sites; cosmos keeps source_type and gains the stamp beside it.
+current_item: ITEM 44.1 items 1-4 — the demotion must stop outliving its own recovery signal. THE PRIORITY: it is the only change that alters the 03:00 cycle.
 current_state: READY
 gate_closed_reason: - (GATE:NOCYCLE open. No memory/cycle.lock, no memory/heartbeat.json; memory/last_cycle_id.txt = 2026-08-29T03:04:01 — the nightly cycle sealed at 05:03 local and today's has already run.)
-next_action_needed_from_claude: TWO THINGS FOR EMIL BEFORE THE QUEUE MOVES ON. (1) ITEM 14's expected headline was wrong and the work is right: it reports 2 of 4, not 1 of 4, because K2 was already excluded as SOURCE_STALE — see the ITEM 14 section. (2) ITEM 37's blocking finding was WRONG and the correction makes the demotion less safe, not more: external_feeds.jsonl IS read, by the DMZ worker, and demoting all 20 would stop any candidate ever being promoted again. ITEM 37 stays HELD and must be re-argued against the corrected finding in its own section. Otherwise work the table: ITEM 36 next. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py`, never bare pytest. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
+next_action_needed_from_claude: 44.1 items 1-4, then 44.1 item 5 (CLOUD_EMPTY_LIMIT -> config/scheduler.json, Emil's approval quoted verbatim in that commit). DO NOT RUN A CYCLE BY HAND — the scheduler's own 03:00 run is the test. FOR EMIL: the 2026-08-29 POST-CYCLE baseline amendment is THE LAST OF ITS KIND; the next time a cycle moves the FAILED list, ITEM 45 separates the gate from the monitor instead of widening the tolerance.
 
 THE BASELINE IS 52-53, NOT 29. The number in STANDING RULES said 29 until
 2026-08-29 and that was three amendments out of date. Of the 53 recorded at
@@ -59,6 +59,9 @@ Keep the state column current — it is the only place a human should have to lo
 | 32 | THE BATCH RULE — a batch closes only at zero NEW orphans | STANDING | NOCYCLE |
 | 37 | RE-QUALIFY — the 20 TRUSTED sources were promoted under a bug | HELD behind ITEM 14's real output | NOCYCLE |
 | 38 | The checkpoint ratchet carried two units of slack | Part 1 DONE 2026-08-29, bd663ec · Part 2 TODO | NOCYCLE |
+| 45 | Separate the gate from the monitor — live-state tests out of suite_gate, surfaced as a compass needle | TODO | NOCYCLE |
+| 46 | test_the_unrestricted_hit_rate_is_never_printed asserts a bare string anywhere in stdout | TODO | NOCYCLE |
+| 47 | a test writes memory/embeddings_cache.json — live-state leak caught by _no_live_writes | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -2077,6 +2080,65 @@ THE FIX IS NOT A BASELINE ENTRY. The test should watch the paths the code under
 test could plausibly write, not two whole trees. Until then it will flip with
 the minute hand. ITEM 20 owns it.
 
+### THE BASELINE, AMENDED 2026-08-29 — POST-CYCLE (4 LIVE_STATE + 1 TEST_DEFECT)
+
+AMENDED BY CLAUDE, NOT BY EMIL, AND SAID SO HERE SO IT CAN BE OVERRULED.
+Emil chose this over holding ITEM 43.1 or re-running; Kimi ruled on how it must
+be written, and his ruling is the reason the five are NOT filed under one cause:
+
+  "A baseline amended after every cycle is a tolerance log, not a baseline. The
+   property it must have is stability against external state changes - it must
+   reflect code defects, not world mutations."
+  "A gating test must be deterministic; any test whose outcome varies with live
+   state is an operational monitor, not a correctness gate."
+
+**THIS IS THE LAST AMENDMENT OF THIS KIND.** The next time a cycle moves the
+FAILED list, the answer is to SEPARATE THE GATE FROM THE MONITOR — ITEM 45 —
+not to widen the tolerance again. An amendment that recurs has become the thing
+Kimi named: a tolerance log wearing a baseline's name.
+
+WHY THESE FIVE APPEARED. bd663ec's baseline (12:45Z) and the ITEM 12(a) run
+(14:04Z) were both taken BEFORE the manual cycle; this run began 17:25Z, after it
+sealed at 17:03Z. All five passed at 14:04Z.
+
+NOT ITEM 43.1's DOING, PROVEN RATHER THAN ARGUED. 43.1 touches three snapshot
+writers plus core/answered_by.py and its test. An AST walk of the imports of all
+three regressing test modules returns ZERO references to agents/, answered_by, or
+any snapshot writer: they import core.metta_parallel, core.level_reconciler,
+tools.resolve_ideas and core.phase_report. There is no path from the change to
+the failures.
+
+  LIVE_STATE (4) — the assertion describes the world, and the world moved:
+    test/test_metta_parallel.py::test_r3_fires_on_the_live_climate_contradiction
+      the live contradiction it asserts NO LONGER EXISTS. It was written against
+      auto_levels=LOW vs goal_score=81.85 on one night; the cycle rewrote both.
+      "R3 fired on: []" is the rule correctly seeing no contradiction.
+    test/test_metta_parallel.py::test_hyperon_and_the_reference_agree_on_live_data
+    test/test_metta_parallel.py::test_an_empty_hyperon_result_does_not_erase_the_reference
+      same file, same dependency on the live scores.
+    test/test_level_reconciler.py::test_the_correction_row_carries_the_translation
+      StopIteration: the correction row it expects is absent from tonight's
+      reconciler output.
+
+  TEST_DEFECT (1) — filed apart on Kimi's ruling, and the distinction matters:
+    test/test_resolve_ideas_defects.py::test_the_unrestricted_hit_rate_is_never_printed
+      Kimi: "Defective test filed under the wrong cause. It is a brittle grep
+      without context; the collision is a test-quality failure, not a live-state
+      mutation."
+      It asserts the bare string "7.1%" never reaches stdout. Tonight the live
+      output printed "FRAGILITY: 7.1%" — an UNRELATED statistic that happens to
+      round to the same number. The guard cannot tell the number it is policing
+      from any other number. Filing this as LIVE_STATE would bury a real defect
+      inside a bucket we have agreed to tolerate. ITEM 46 rewrites it to assert
+      against a specific output location instead of anywhere in stdout.
+
+  NOT IN THE BASELINE, DELIBERATELY — the 1 error:
+    test/test_brain_scan.py::test_the_contract_has_exactly_the_keys_the_page_reads
+      leaked Path.write_text -> memory/embeddings_cache.json. This BREAKS the
+      standing rule that tests never touch live state. conftest's _no_live_writes
+      caught it exactly as designed. It is a defect to FIX (ITEM 47), not a
+      failure to accept, and admitting it here would make the guard negotiable.
+
 ### THE BASELINE, AMENDED 2026-08-29 — SUSPENDED_FLAG (27)
 
 AMENDED BY CLAUDE, NOT BY EMIL, AND SAID SO HERE SO IT CAN BE OVERRULED. These
@@ -3585,6 +3647,51 @@ A test that flips green when state moves is recorded as a DEFECT IN THE TEST,
 never as a pass. That classification is already in the re-recorded baseline and
 MUST SURVIVE the fix — fixing these does not turn today's flip into progress
 retroactively.
+
+## ITEM 45 — SEPARATE THE GATE FROM THE MONITOR
+STATUS: TODO
+GATE: NOCYCLE
+Kimi, 2026-08-29: "A gating test must be deterministic; any test whose outcome
+varies with live state is an operational monitor, not a correctness gate." And:
+"A baseline amended after every cycle is a tolerance log, not a baseline."
+
+Move the four LIVE_STATE tests out of the suite tools/suite_gate.py runs. THE
+HARD PART IS NOT THE MOVE — it is that a second suite nobody looks at is worse
+than a red line in the first one. So the monitor must SURFACE: a compass needle
+carrying a status and a reason, the same shape K2 already uses to report
+NOT_WIRED without pretending to a number. A monitor that reports "3 of 4 live
+checks disagree with the world tonight" is information; a green second suite in a
+folder is not.
+The four: three in test/test_metta_parallel.py, one in test/test_level_reconciler.py.
+THE BASELINE AMENDMENT OF 2026-08-29 IS THE LAST OF ITS KIND — this item is what
+happens instead, the next time a cycle moves the FAILED list.
+
+## ITEM 46 — A GUARD THAT CANNOT TELL ITS NUMBER FROM ANY OTHER NUMBER
+STATUS: TODO
+GATE: NOCYCLE
+test/test_resolve_ideas_defects.py::test_the_unrestricted_hit_rate_is_never_printed
+asserts the bare string "7.1%" never appears in stdout. On 2026-08-29 it failed
+because an UNRELATED statistic printed "FRAGILITY: 7.1%".
+Kimi: "Defective test filed under the wrong cause. It is a brittle grep without
+context; the collision is a test-quality failure, not a live-state mutation."
+Rewrite it to assert against a SPECIFIC OUTPUT LOCATION — the field, the line,
+the labelled value it is actually policing — not against the presence of a
+number anywhere in a stream. The defect it guards (the unrestricted hit rate
+reaching a human) is real and must keep being guarded; what must go is a check
+that any coincidence can trip.
+
+## ITEM 47 — A TEST WRITES TO LIVE STATE
+STATUS: TODO
+GATE: NOCYCLE
+test/test_brain_scan.py::test_the_contract_has_exactly_the_keys_the_page_reads
+leaked `Path.write_text -> memory/embeddings_cache.json`, caught at teardown by
+conftest's _no_live_writes fixture, which is exactly what that fixture exists for
+(and which was itself written after the 16 Aug incident where a test sent a
+fabricated alarm to the human's phone).
+DELIBERATELY NOT IN THE BASELINE. Admitting it would make the never-touch-live-
+state rule negotiable. Fix the fixture: redirect the embedding cache into
+tmp_path. The write is almost certainly a side effect of importing or exercising
+the interval-head embed path, which caches by sha256 of the text.
 
 ## HOLDING
 
