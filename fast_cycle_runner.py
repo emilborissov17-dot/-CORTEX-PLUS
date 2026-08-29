@@ -2915,7 +2915,7 @@ def main():
     # before either would stamp today's file with yesterday's basis.
     # FAIL-OPEN — a cycle must not die because a report did not render.
     beat("measurement_honesty", "20.1")
-    try:
+    def _measurement_honesty_step():
         from core.measurement_honesty import run as _honesty_run
         _h = _honesty_run()
         if _h.get("k1") is None:
@@ -2924,8 +2924,7 @@ def main():
             print(f"[FAST_CYCLE] K1 -> {_h['k1']:.4f} "
                   f"({_h['measured_weight']:.1f} of "
                   f"{(_h.get('honest_composite') or {}).get('total_weight')} weight measured)")
-    except Exception as e:
-        print(f"[FAST_CYCLE] measurement_honesty -> FAILED: {type(e).__name__}: {e}")
+    _run("measurement_honesty", _measurement_honesty_step)
 
     # ── 20.2. RESOLVE THE IDEAS AGAINST WHAT HAPPENED (ITEM 11, 29 Aug 2026) ──
     # The pulse has been writing hypotheses into memory/idea_stream.jsonl every
@@ -2942,7 +2941,7 @@ def main():
     # CLI dry-runs so a human can look first; the cycle is the caller that means
     # it. FAIL-OPEN: a scorer that cannot run must not take the cycle with it.
     beat("resolve_ideas", "20.2")
-    try:
+    def _resolve_ideas_step():
         import datetime as _dt
         from tools.resolve_ideas import run as _resolve_ideas
         _ri = _resolve_ideas(_dt.datetime.now(_dt.timezone.utc).date(), True)
@@ -2965,8 +2964,7 @@ def main():
                   + (f"{_hr:.1%} on the {_s.get('decided', 0)} that could be decided"
                      if _hr is not None else
                      "UNDEFINED — nothing was decidable, which is not 0%"))
-    except Exception as e:
-        print(f"[FAST_CYCLE] resolve_ideas -> FAILED: {type(e).__name__}: {e}")
+    _run("resolve_ideas", _resolve_ideas_step)
 
     # ── 21. Session update ──
     beat("session_update", "21")
@@ -3240,6 +3238,34 @@ def main():
             pass
     except Exception as e:
         print(f"[FAST_CYCLE] cycle_report -> FAILED: {type(e).__name__}: {e}")
+
+    # ── 25.7. THE FULL-STATE SNAPSHOT (ITEM 34 step 2, 29 Aug 2026) ────────
+    # cortex_scanner.scan() had NO caller outside `if __name__ == "__main__"`
+    # and appeared 0 times in this file, core/cycle_map.py and
+    # config/cycle_phases.json. Its output, memory/cortex_full_state.json, was
+    # last written 13 APRIL 2026 — and cortex_dashboard.html has been rendering
+    # that 137-day-old file to anyone who opened it ever since.
+    # Emil: "make it run from the system, why should I open it by hand."
+    #
+    # LAST on purpose: it aggregates the finished cycle — snapshots, trends,
+    # axis_history, the session file written at 21, the journal from 19.
+    # Running it earlier would snapshot a half-done night.
+    #
+    # 0.02s measured, pure local I/O, no network import. FAIL-OPEN: a dashboard
+    # feed must never be the thing that kills a cycle at its last step.
+    # THROUGH _run(), NOT A BARE try/except. Only _run() writes a checkpoint,
+    # opens the step contract and now (ITEM 21c) tells the phase report when a
+    # step raises. test_checkpoint_wiring's ratchet caught this: a bare
+    # try/except step records NOTHING.
+    beat("cortex_scan", "25.7")
+    def _cortex_scan_step():
+        from cortex_scanner import scan as _cortex_scan
+        _st = _cortex_scan()
+        _sc = (_st.get("trends") or {}).get("scores") or {}
+        _in = (_st.get("trends") or {}).get("insufficient") or []
+        print(f"[FAST_CYCLE] cortex_scan -> {len(_sc)} axes scored, "
+              f"{len(_in)} insufficient")
+    _run("cortex_scan", _cortex_scan_step)
 
     # ── IS THE BRAIN STILL ANSWERING IN ENGLISH? (23 Aug 2026) ─────────────
     # Here, with the report, because this is the one place per cycle that exists

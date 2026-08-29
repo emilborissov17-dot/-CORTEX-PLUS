@@ -24,7 +24,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 12 | axis_history.json is tracked in git | (a) BLOCKED on Emil · (b) DONE · (c) DONE 2026-08-29, half-open: see ITEM 33 | NOCYCLE |
 | 33 | API transmits measured:false (render is ITEM 36) | DONE 2026-08-29 — no human sees it yet | NOCYCLE |
 | 36 | Front-end renders UNMEASURED — the layer a human observes | TODO — ITEM 33's open half | NOCYCLE |
-| 34 | cortex_scanner drops an axis whose last point is unmeasured | TODO | NOCYCLE |
+| 34 | cortex_scanner: 34-A DONE · 34-B dropped on evidence · step 2 wiring DONE 2026-08-29 | DONE | NOCYCLE |
 | 35 | Two snapshot filenames are sitting in the axis key space | TODO | NOCYCLE |
 | 13 | The uncommitted-work guard | TODO | NOCYCLE |
 | 14 | Make the compass produce four numbers | TODO | NOCYCLE |
@@ -2367,6 +2367,84 @@ test/test_phase_report_names_failures.py NEW 6 green — including the one that
 matters: a phase whose step raised must not read DONE even when every promised
 artifact is fresh, which is the case produces_check cannot catch. Nine of the
 fifteen were red before any source changed.
+
+### ITEM 34 STEP 2 REPORT — 2026-08-29
+
+WIRED. cortex_scanner.scan() had no caller outside `if __name__ == "__main__"`
+and appeared 0 times in the runner, cycle_map or cycle_phases. Its output,
+memory/cortex_full_state.json, was last written 13 APRIL 2026, and
+cortex_dashboard.html had been rendering that 137-day-old file ever since.
+Emil: "make it run from the system, why should I open it by hand."
+
+fast_cycle_runner step 25.7, LAST, after cycle_report — it aggregates the
+finished cycle. Declared in what turned out to be FIVE sites, not three:
+  fast_cycle_runner.py         beat("cortex_scan", "25.7") + _run()
+  config/cycle_phases.json     G_LEARN.steps
+  config/cycle_phases.json     G_LEARN.produces
+  config/cycle_phases.json     G_LEARN.index_range   <- 25.6 -> 25.7, THE FOURTH
+  core/cycle_map.py            STEPS row
+The fourth was found by test_cycle_phases_cover_every_step failing: the phase
+declared bounds that excluded its own last step.
+
+KIMI'S WAIVED-SUITE RISK, TESTED RATHER THAN ASSUMED. Kimi waived its
+"suite green with scan() in the cycle" precondition and named what that gives
+up: "If the cycle runner's invocation context differs from manual execution in a
+way none of us inspected, the suite would have caught it and I have now waived
+that protection." The difference is cortex_scanner.py:6,
+BASE = pathlib.Path(__file__).resolve().parent, with every read and the single
+write hanging off BASE. Measured from a cwd outside the repo (the system temp
+directory): BASE and OUT both resolve to the repo root. A real run from that
+foreign cwd: 0.02 s, 28 snapshots, 21 axes scored, 7 insufficient, written to
+the right path. test_base_resolves_to_the_repo_root_from_a_foreign_cwd IS that
+waived protection and must keep passing.
+
+THE RATCHET CAUGHT A PATTERN, NOT A STEP. test_checkpoint_wiring's
+`len(missing) <= 33` failed at 34. The cause was not only cortex_scan: my
+measurement_honesty (ITEM 7.1) and resolve_ideas (ITEM 11), both COMMITTED AND
+PUSHED EARLIER TODAY, were added with a bare try/except and record no
+checkpoint. They took the count from 31 to exactly 33 — the limit — so the
+ratchet passed and nobody saw it. cortex_scan was merely the third. All three
+now go through _run(), so they get a checkpoint, a step contract and ITEM
+21(c)'s failure reporting. Count 34 -> 31. That two-unit hiding space is ITEM 38.
+
+STALENESS — THE INSTRUCTION'S PREMISE WAS WRONG AND IS CORRECTED HERE. The order
+was "add the file's own timestamp to what the dashboard shows, or say why not".
+Saying why not: cortex_dashboard.html:79 ALREADY rendered d.timestamp. The
+timestamp was never missing. What was missing was JUDGEMENT about it — 11px grey
+text, identical whether the file was minutes or months old. Added: a named
+STALE_HOURS = 36 (the cycle writes this nightly, so past 36h at least one cycle
+did not run or did not reach its last step), the age in human units, and red
+bold "— STALE" past the threshold.
+
+### ITEM 32 — THE BASELINE EXISTS, AND THE GATE STARTS NEXT BATCH
+
+config/orphan_baseline.json recorded 2026-08-29: 349 orphans. THE ZERO-NEW RULE
+OF ITEM 32 TAKES EFFECT FROM THE NEXT BATCH; THIS COMMIT CREATES THE BASELINE
+AND IS NOT JUDGED AGAINST IT.
+
+FIRST, THE SCANNER WAS FIXED, because recording a baseline against a broken
+scanner freezes its blind spot forever. tools/orphan_scan.py could not see
+wiring through an ALIASED import: :114 stored `a.asname or a.name`, so an alias
+REPLACED the original name, and :187 matched `fn in direct and fn in cnames`
+where fn is the entrypoint's real name. My own wiring —
+`from cortex_scanner import scan as _cortex_scan` — was therefore invisible.
+  MY PROPOSED FIX WAS WRONG AND EMIL CORRECTED IT. Adding a.name alongside
+  a.asname is insufficient: cnames holds the CALL-SITE name (_cortex_scan), so
+  `fn in cnames` still fails. The binding has to be kept as a PAIR,
+  (original, local). I read :114 and reasoned from it without checking :187's
+  conjunction, or the sibling branch at :119-120 for plain `import x` which
+  ALREADY stored both names — the file contradicted itself and one line could
+  not show it.
+  THE FIX MOVED 77 ENTRYPOINTS. CALLED_IN_PRODUCTION 202 -> 279 (286 after the
+  baseline), NEVER_CALLED 55 -> 54. Alias blindness was understating live wiring
+  across the whole codebase, not only in this batch.
+
+THE SEVEN tools/compass.py ENTRIES ARE NOT PERMANENT DEBT, and the baseline says
+so on each one: "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed",
+with expires: "on ITEM 14 wiring". They must be REMOVED from the baseline in the
+same commit that wires compass into the five declaration sites. The other 342
+carry the writer's own "RECORDED, NOT DIAGNOSED" — recorded so NEW ones fail,
+not accepted as correct.
 
 ## ITEM 25 — tools/orphan_scan.py: PUBLIC ENTRYPOINTS NOTHING CALLS
 STATUS: TODO — selftest VERIFIED ON APPEND, the report is the work

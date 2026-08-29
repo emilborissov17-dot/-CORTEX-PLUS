@@ -320,7 +320,7 @@
       "purpose": "Score what was predicted, write down what happened, seal it. Nothing here fetches or decides.",
       "index_range": [
         "20",
-        "25.6"
+        "25.7"
       ],
       "steps": [
         {
@@ -394,6 +394,10 @@
         {
           "name": "cycle_report",
           "index": "25.6"
+        },
+        {
+          "name": "cortex_scan",
+          "index": "25.7"
         }
       ],
       "requires": [
@@ -405,6 +409,7 @@
         "memory/goal_score_history.json",
         "memory/measurement_honesty_latest.json",
         "memory/idea_resolutions.jsonl",
+        "memory/cortex_full_state.json",
         "cortex_memory/archive/merkle_root.txt",
         "memory/self_mirror_latest.json",
         "memory/self_mirror_log.jsonl",

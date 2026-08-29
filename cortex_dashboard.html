@@ -76,7 +76,23 @@ function col(s) { if(s===null||s===undefined) return '#444'; if(s>=70) return '#
 async function loadAll() {
   const d = await loadJSON('./memory/cortex_full_state.json');
   if(!d) { document.getElementById('ts').textContent='cortex_full_state.json не е намерен — пусни: python3 cortex_scanner.py'; return; }
-  document.getElementById('ts').textContent='Обновено: '+new Date(d.timestamp).toLocaleString('bg');
+  // A DATE PRINTED WITHOUT JUDGEMENT IS WHAT LET 13 APRIL READ AS TODAY FOR 137
+  // DAYS (ITEM 34 step 2, 29 Aug 2026). This line already rendered d.timestamp;
+  // the timestamp was never missing. What was missing was any opinion about it,
+  // in 11px grey identical whether the file was minutes or months old.
+  // The threshold is named, not buried: the cycle writes this file once a night,
+  // so anything past 36h means at least one cycle did not run or did not reach
+  // its last step.
+  const STALE_HOURS = 36;
+  const ageHours = (Date.now() - new Date(d.timestamp).getTime()) / 3600000;
+  const ageTxt = ageHours < 1 ? Math.round(ageHours*60)+' мин'
+               : ageHours < 48 ? Math.round(ageHours)+' ч'
+               : Math.round(ageHours/24)+' дни';
+  const tsEl = document.getElementById('ts');
+  tsEl.textContent = 'Обновено: '+new Date(d.timestamp).toLocaleString('bg')
+                   + '  ('+ageTxt+')'
+                   + (ageHours > STALE_HOURS ? '  — STALE' : '');
+  if (ageHours > STALE_HOURS) { tsEl.style.color = '#c0392b'; tsEl.style.fontWeight = '700'; }
   document.getElementById('m-chroma').textContent=d.session?.chromadb_memories||'—';
   document.getElementById('m-snaps').textContent=d.system?.snap_count||'—';
   document.getElementById('m-modifier').textContent=(d.memory?.modifier_ok||0)+'✓ '+(d.memory?.modifier_fail||0)+'✗';

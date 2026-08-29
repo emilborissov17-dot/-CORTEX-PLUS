@@ -1,0 +1,1412 @@
+{
+  "method": "orphan_scan/1",
+  "recorded": "2026-08-29T12:14:04.713765+00:00",
+  "why": "Organs already built without a nerve. Recorded so NEW ones fail.",
+  "entrypoint_files": [],
+  "orphans": {
+    "_test_zone_logic.py::compute_profile": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "_test_zone_logic.py::show": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/actions/hypercortex_actions_agent.py::call_llm_refactor": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/civilization/civilization_snapshots_agent_qwen.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/cortex_core_agent.py::LLMCall": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/cortex_core_agent.py::CortexCoreAgent": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/cortex_core_agent.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/daily_review_runner.py::run_parallel": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/daily_review_runner.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::load_domains_tree": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::get_domain_info": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::candidates_path_for": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::active_path_for": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::load_candidates": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::load_active": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::save_active": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::save_candidates": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::is_already_active": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::test_source": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::run_domain_gateway": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/domain_gateway.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/self_observer_backup.py::get_tools": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/self_observer_backup.py::run": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/self_observer_backup.py::save_proposals": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/system2_agent.py::ClimateRiskModel": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/system2_agent.py::System2Agent": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/core/system2_agent.py::SemanticMemory": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/cosmos/cosmos_snapshots_agent_qwen.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/human/human_snapshots_agent_qwen.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::safe_read_text": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::load_planetary_snapshots": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::next_review_index": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::build_context_block": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::format_snapshots_for_prompt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::strip_to_planetary_markdown": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::build_prompt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::wrap_in_protocol": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::write_planetary_review": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "agents/planet/planetary_potential_review_agent_qwen.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "civilization_state_review_agent_qwen.py::load_latest_planet_review": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "civilization_state_review_agent_qwen.py::build_civilization_prompt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "civilization_state_review_agent_qwen.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::find_latest_session_log": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::parse_task_candidates": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::priority_rank": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::pick_one_task_per_axis": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::append_executor_log": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "core/axis_task_executor.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex/memory.py::init_memory": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex/memory.py::remember": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex/memory.py::query": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex/memory.py::add_to_history": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::ScoreResult": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_climate": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_energy": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_human_well_being": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_economy": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_inequality": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_governance": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_technology_ai": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_food": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_water": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_ecosystems": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_education": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_infrastructure": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_materials_waste": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_generic": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::apply_correlations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::score_all_snapshots": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::print_report": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_planning_agent.py::save_scores": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scanner.py::axis_scores": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::ScoreResult": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_climate": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_energy": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_human_well_being": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_economy": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_inequality": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_governance": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_technology_ai": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_food": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_water": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_ecosystems": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_education": {
+      "verdict": "CALLED_ONLY_IN_TESTS",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_infrastructure": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_materials_waste": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_governance_rights_human": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_cognition_learning": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_culture_media": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_technology_infra": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_generic": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::apply_correlations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_social_relations": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "cortex_scoring_engine.py::score_strategist_solutions": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "daily_signals/fx_fetch.py::fetch": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "daily_signals/fx_fetch.py::append": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/economy_work_provider.py::EconomyWorkProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/education_culture_provider.py::EducationCultureProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/inequality_poverty_provider.py::InequalityPovertyProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/infrastructure_cities_provider.py::InfrastructureCitiesProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/technology_ai_provider.py::TechnologyAIProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/civilization/technology_infra_provider.py::TechnologyInfraProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/cosmos/cosmic_resources_provider.py::CosmicResourcesProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/cosmos/space_infrastructure_provider.py::SpaceInfrastructureProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/human/cognition_learning_provider.py::CognitionLearningProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/human/governance_rights_human_provider.py::GovernanceRightsHumanProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/human/human_well_being_provider.py::HumanWellBeingProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "data_providers/planet/planetary_potential_provider.py::PlanetaryPotentialProvider": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "energy_review_patch.py::energy_review": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/k1_curve/k1_curve.py::acc": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/k1_curve/k1_curve.py::mt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/k1_curve/k1_curve.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/merkle_check/verify_ledger.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/self_clock.py::portrait": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/self_clock.py::render": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/survival_hazard.py::load": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/survival_hazard.py::dt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/survival_hazard.py::cycles": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "experiments/temporal_sense/survival_hazard.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "github_publisher.py::publish_cycle": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "github_publisher.py::get_field": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "github_publisher.py::publish_verified_hypotheses": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "github_publisher.py::publish_vision": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "manual_pre_llm_backup.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1785912052.py::register_reserve": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1785912052.py::update_measurements": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1785912052.py::print_measurable_status": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::Reserve": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::load_reserves": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::save_reserves": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::load_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::save_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::add_reserve": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::simulate_population_change": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::evaluate_measurable_goal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::apply_biological_control": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786063817.py::enforce_pesticide_reduction": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::load_reserves": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::save_reserves": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::load_population": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::save_population": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::add_reserve": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::simulate_population_growth": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786171906.py::measurable_report": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786236159.py::register_reserve": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786236159.py::record_bumblebee_count": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/ecosystems_biodiversity_review_patch.1786236159.py::evaluate_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1783756963.py::collect_water_review": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1783757009.py::integrate_water_data": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1783937000.py::apply_water_conservation": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1783937000.py::run_root_cause_scan": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1783937046.py::evaluate_water_resources": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784009400.py::review_and_update_civilization_goal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784009400.py::measurable_output": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784183887.py::assess_water_scarcity": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784183887.py::implement_sustainable_water_tech": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784183899.py::assess_water_resources": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784443581.py::run_water_system_audit": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784940113.py::record_action": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784940113.py::assess_existing_gaps": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784940113.py::generate_mitigation_strategies": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784940113.py::implement_strategies": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1784940113.py::measurable_output": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1785353275.py::register_water_review_agent": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1785353287.py::integrate_energy_review_agent": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1785353287.py::verify_integration": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1785353298.py::DailyAnalysisAgent": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/general_patch.1785353298.py::integrate_into_execution_chain": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::load_observations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::save_observations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::load_alerts": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::save_alerts": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::detect_illegal_mining": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::generate_alert": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::propose_remediation": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::update_measurement": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::evaluate_goal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1784613995.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::load_satellite_soil_moisture": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::load_precipitation_forecast": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::load_farm_registry": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::save_quota_allocations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::calculate_dynamic_quota": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::aggregate_groundwater_drawdown": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::update_groundwater_drawdown": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786322784.py::run_policy_automation": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::estimate_soil_moisture": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::forecast_precipitation": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::socioeconomic_impact_factor": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::compute_dynamic_quota": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::update_quota_db": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::log_compliance": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::record_measurement": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/governance_institutions_review_patch.1786438182.py::compute_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_patch.1785372158.py::collect_indicator": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_patch.1785372158.py::compute_social_cohesion_score": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_patch.1785372158.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785353303.py::load_programs": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785353303.py::save_programs": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785353303.py::add_community_program": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785353303.py::record_event": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785353303.py::compute_measurable_score": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785564191.py::record_telegram_approval": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785564191.py::calculate_target_increment": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785564191.py::maybe_update_score": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::load_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::save_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::register_city_project": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::log_event": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::set_inequality_target": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::report_inequality_achieved": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::calculate_score": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785745560.py::print_measurable": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::load_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::save_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::start_city_projects": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::record_measurement": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::simulate_score_increase": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785804165.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/social_relations_review_patch.1785835073.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786236200.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::log_collection": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::log_marketplace": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::update_goal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::simulate_collection": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::simulate_marketplace": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786322819.py::calculate_recycling_rate": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::classify_plastic": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::optimise_route": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::reward_manufacturer": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::process_collection_point": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::plan_truck_routes": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_ai_review_patch.1786438193.py::compute_measurable_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785745563.py::register_new_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785745563.py::collect_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785745563.py::recycle_batteries": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785745563.py::update_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785745563.py::print_measurable": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785804170.py::register_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785804170.py::record_collection": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785804170.py::record_recycling": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785804170.py::measurable_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785835083.py::register_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785835083.py::update_battery_status": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785835083.py::record_recycling": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785835083.py::compute_measurable_goal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785912064.py::register_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785912064.py::record_recycling": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785912064.py::print_measurable": {
+      "verdict": "NEVER_CALLED",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785999884.py::register_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785999884.py::update_battery_status": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785999884.py::log_flow": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1785999884.py::measurable_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1786063828.py::register_battery": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1786063828.py::update_battery_status": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1786063828.py::record_flow": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/technology_infra_review_patch.1786063828.py::measurable_stats": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::register_sensor": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::record_reading": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::check_contamination": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::register_license": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::correlate_alerts_with_licenses": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::remediation_plan": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::process_new_alerts": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784183911.py::measurable_output": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784613957.py::WaterContaminationMonitor": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_contamination_agent_patch.1784613957.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::load_sensor_data": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::save_sensor_data": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::log_alert": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::load_metrics": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::save_metrics": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::evaluate_and_alert": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::compute_measurables": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_monitoring_agent_patch.1784681763.py::simulate_sensor_input": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785835016.py::init_storage": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785835016.py::register_sensor": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785835016.py::add_reading": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785835016.py::evaluate_region": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785835016.py::measurable_output": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785999905.py::load_sensor_data": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785999905.py::save_recommendation": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785999905.py::analyze_and_recommend": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1785999905.py::print_measurable_result": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786063833.py::load_sensor_data": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786063833.py::save_recommendations": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786063833.py::record_metric": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786063833.py::analyze_and_recommend": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786063833.py::measure_progress": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786322808.py::simulate_sensor_input": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786322808.py::evaluate_regions": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786322808.py::update_metrics": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_agent_patch.1786322808.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_patch.1785372131.py::WaterStressAgent": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "patches/quarantine/rejected/water_review_patch.1785745555.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::safe_read": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::next_review_index": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::build_context": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::build_prompt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::strip_thinking": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::is_valid_new_format": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::write_daily_file": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_civilization_daily_review_agent.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_cortex_agent.py::load_recent_context": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_cortex_agent.py::build_prompt": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_cortex_agent.py::append_to_qwen_journal": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_cortex_agent.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_planetary_repl.py::strip_to_planetary_markdown": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_planetary_repl.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "qwen_repl.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "reasoning_extractor.py::extract_reasoning": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "reasoning_extractor.py::save_reasoning": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "reasoning_extractor.py::load_context": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "scripts/energy_query_all.py::load_active_sources": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "scripts/energy_query_all.py::safe_filename_from_url": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "scripts/energy_query_all.py::fetch_generic": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "scripts/energy_query_all.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/attention_ratio.py::load_map": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/attention_ratio.py::measure": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/attention_ratio.py::summarise": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/attention_ratio.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/attention_ratio.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/compass.py::k1": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::k2": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::k3": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::k4": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::compass": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/compass.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
+      "expires": "on ITEM 14 wiring"
+    },
+    "tools/direction_patch.py::theil_sen": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/direction_patch.py::spread": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/direction_patch.py::direction": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/direction_patch.py::direction_with_fragility": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/direction_patch.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/orphan_scan.py::scan": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/orphan_scan.py::load_baseline": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/orphan_scan.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/orphan_scan.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/stale_copy_scan.py::config_values": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/stale_copy_scan.py::scan": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/stale_copy_scan.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/stale_copy_scan.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/verify_claims.py::verify_claim": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/verify_claims.py::verify_file": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/verify_claims.py::main": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "tools/verify_claims.py::selftest": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "wellbeing_profile.py::WellbeingProfile": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "wellbeing_profile.py::load_scores_from_file": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    },
+    "wellbeing_profile.py::profile_from_file": {
+      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
+      "reason": "RECORDED, NOT DIAGNOSED"
+    }
+  },
+  "_note_on_compass": "The seven tools/compass.py entrypoints are the only entries here with an expiry. Everything else is RECORDED, NOT DIAGNOSED — recorded so NEW orphans fail, not accepted as correct."
+}
