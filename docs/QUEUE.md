@@ -51,6 +51,13 @@ The human types one line: "Read docs/QUEUE.md and continue from the first
 unfinished item." When context fills, the human types /clear and that same line
 again. This file remembers where work stopped; the context does not.
 
+## HANDOVER
+docs/HANDOVER_2026-08-29.md — written at the end of 2026-08-29 before context ran
+out. Read it with this file. It carries what landed, what is held, Kimi's twelve
+rulings, the two rules derived that day, and the warning that EVERY ORPHAN FIGURE
+PREDATING COMMIT 9b85408 was computed with alias blindness active and must be
+re-derived (ITEM 25's first task).
+
 ## HOW TO WORK THIS FILE
 1. Read from the top. Find the first item whose status is TODO.
 2. Check the gate for that item (below). If the gate is closed, skip to the next

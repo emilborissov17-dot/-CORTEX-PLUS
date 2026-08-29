@@ -178,23 +178,68 @@ def test_the_checkpoint_call_sits_on_the_completed_path(runner):
 # Coverage is a measured number, not an assumption
 # ---------------------------------------------------------------------------
 
+# The human-set boundary. Only a step that goes through _run() records a
+# checkpoint, so this is the number of cycle steps that record nothing.
+#
+# ZERO SLACK, AND THIS IS WHY (2026-08-29). The limit was 33 while the real
+# count was 31. That gap was not headroom, it was a hiding place: ITEM 7.1's
+# measurement_honesty and ITEM 11's resolve_ideas were both added with a bare
+# try/except, both recorded nothing, and both were COMMITTED AND PUSHED while
+# this test stayed green — they took the count from 31 to exactly 33 and the
+# assertion never fired. Only the third such step, ITEM 34's cortex_scan,
+# pushed it to 34 and tripped the wire. Two defects shipped inside the slack.
+#
+# So the count must now equal the limit EXACTLY. Adding an uncovered step
+# breaches it immediately instead of two steps later.
+#
+# LOWERING THIS NUMBER IS A NORMAL CHANGE. RAISING IT IS NOT. A rise means a
+# step stopped recording, and the commit that raises it has to say which step
+# and why that is acceptable. Do not "helpfully" restore slack to make a red
+# test green: the slack is what let the two defects through.
+UNCOVERED_STEP_LIMIT = 31
+
+
 def test_the_uncovered_steps_are_counted_and_not_growing():
     """Not every step goes through _run(); the ones that do not record nothing.
 
-    This is a RATCHET, not a target. Coverage may improve freely; it may not
-    silently rot. If a step is moved out of _run(), this fails and the number in
-    the message is the new truth to argue with.
+    This is a RATCHET, not a target, and it carries NO SLACK. Coverage may
+    improve freely — by lowering the limit in the same commit. It may not
+    silently rot, and it may not silently sit below the limit either, because a
+    limit above the count is a place for defects to hide. See the comment on
+    UNCOVERED_STEP_LIMIT for the two that did.
     """
     from core.cycle_map import ALIASES, STEPS
     labels = set(re.findall(r"_run\(\s*[\"']([A-Za-z0-9_]+)[\"']", RUNNER_SRC))
     covered = {ALIASES.get(x, x) for x in labels}
     names = list(dict.fromkeys(s[0] for s in STEPS))
-    missing = [n for n in names if n not in covered]
+    missing = sorted(n for n in names if n not in covered)
 
-    assert len(missing) <= 33, (
-        f"checkpoint coverage went backwards: {len(missing)} of {len(names)} "
-        f"steps now record nothing (was 33 on 22 Aug 2026). Newly uncovered: "
-        f"{missing}")
+    # FIRST: has coverage gone backwards? The steps are NAMED, not counted,
+    # because when this fires the reader needs to know WHICH step stopped
+    # recording — and because the count can also move when a new declaration
+    # site is discovered, which is not a coverage change at all.
+    assert len(missing) <= UNCOVERED_STEP_LIMIT, (
+        f"CHECKPOINT COVERAGE WENT BACKWARDS: {len(missing)} of {len(names)} "
+        f"steps record nothing, against a limit of {UNCOVERED_STEP_LIMIT}.\n"
+        f"Every step that records nothing:\n  "
+        + "\n  ".join(missing)
+        + "\nA step records a checkpoint only by going through _run(). "
+          "If you added one with a bare try/except, route it through _run() "
+          "instead of raising this limit.")
+
+    # SECOND: is there slack? A limit above the count is where the next defect
+    # hides. Improving coverage is welcome and costs one line: lower the limit
+    # in the same commit.
+    assert len(missing) == UNCOVERED_STEP_LIMIT, (
+        f"SLACK IN THE RATCHET: {len(missing)} steps record nothing but the "
+        f"limit is {UNCOVERED_STEP_LIMIT}, leaving room for "
+        f"{UNCOVERED_STEP_LIMIT - len(missing)} uncovered step(s) to be added "
+        f"without this test firing. That is exactly how ITEM 7.1's "
+        f"measurement_honesty and ITEM 11's resolve_ideas shipped.\n"
+        f"If coverage improved, lower UNCOVERED_STEP_LIMIT to {len(missing)} "
+        f"in this commit.\nEvery step that records nothing:\n  "
+        + "\n  ".join(missing))
+
 
 
 def test_resume_is_still_off_so_the_gap_cannot_skip_work_tonight():
