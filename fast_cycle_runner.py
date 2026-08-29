@@ -2915,6 +2915,47 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] measurement_honesty -> FAILED: {type(e).__name__}: {e}")
 
+    # ── 20.2. RESOLVE THE IDEAS AGAINST WHAT HAPPENED (ITEM 11, 29 Aug 2026) ──
+    # The pulse has been writing hypotheses into memory/idea_stream.jsonl every
+    # five minutes for weeks and NOTHING has ever graded one: 437 ideas, 0
+    # resolved. A generator without a scorer is a system that can only ever
+    # agree with itself. 226 horizons fall on 2026-09-02, which is the deadline
+    # on this item and the reason it is wired now rather than after.
+    #
+    # It APPENDS to memory/idea_resolutions.jsonl and never edits
+    # idea_stream.jsonl — the claim and the verdict stay in separate files so a
+    # verdict can never be written back over the claim it is judging.
+    #
+    # write=True here is the deliberate opposite of the tool's own default. The
+    # CLI dry-runs so a human can look first; the cycle is the caller that means
+    # it. FAIL-OPEN: a scorer that cannot run must not take the cycle with it.
+    beat("resolve_ideas", "20.2")
+    try:
+        import datetime as _dt
+        from tools.resolve_ideas import run as _resolve_ideas
+        _ri = _resolve_ideas(_dt.datetime.now(_dt.timezone.utc).date(), True)
+        _s = _ri.get("summary") or {}
+        _due = _s.get("due_now", 0)
+        if not _due:
+            print(f"[FAST_CYCLE] resolve_ideas -> nothing has reached its horizon "
+                  f"yet ({_s.get('ideas_total', '?')} ideas, "
+                  f"{_s.get('already_resolved', 0)} already resolved). "
+                  f"A fact, not an error.")
+        else:
+            _v = _s.get("verdicts") or {}
+            _hr = _s.get("hit_rate")
+            print(f"[FAST_CYCLE] resolve_ideas -> {_due} due, "
+                  f"{'appended ' + str(_s.get('appended', 0)) if _s.get('wrote') else 'NOTHING WRITTEN'}; "
+                  + ", ".join(f"{k} {n}" for k, n in sorted(_v.items())))
+            # decided = HELD + BROKE. The rest could not be judged, and a hit
+            # rate over the judgeable few is not a hit rate over the ideas.
+            print(f"[FAST_CYCLE] resolve_ideas -> hit rate "
+                  + (f"{_hr:.1%} on the {_s.get('decided', 0)} that could be decided"
+                     if _hr is not None else
+                     "UNDEFINED — nothing was decidable, which is not 0%"))
+    except Exception as e:
+        print(f"[FAST_CYCLE] resolve_ideas -> FAILED: {type(e).__name__}: {e}")
+
     # ── 21. Session update ──
     beat("session_update", "21")
     def _session_updater():

@@ -156,6 +156,12 @@ STEPS = [
     # ако добавяш стъпка, и двете искат ред.
     ("measurement_honesty", "20.1", "K1: измереното тегло и защо всяка ос се брои за измерена.",
      ["memory/measurement_honesty_latest.json"], False),
+    # ДОБАВЕНА 29 авг 2026 (ITEM 11). И трите карти наведнъж този път —
+    # fast_cycle_runner, config/cycle_phases.json и тази — защото ITEM 7.1
+    # обяви стъпка само в едната и първият цикъл, който я изпълни, я записа
+    # като unmapped_checkpoint.
+    ("resolve_ideas", "20.2", "Съди хипотезите на пулса срещу наблюдаваната серия; приложение само, никога редакция на idea_stream.",
+     ["memory/idea_resolutions.jsonl"], False),
     ("session_update", "21", "Обновява записа на сесията.", [], False),
     ("daily_analysis", "22", "Дневен анализ.", [], False),
     ("data_scout", "22.5", "Търси нови източници; последен, за да не се бие за LLM лимита.",

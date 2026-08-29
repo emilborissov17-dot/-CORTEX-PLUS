@@ -1,7 +1,7 @@
 ## STATUS
-last_updated_utc: 2026-08-29T03:40:00Z
-last_item_done: ITEM 10 — a suite run now knows whether a cycle touched it
-current_item: ITEM 11 — wire tools/resolve_ideas.py into the cycle (deadline 2026-09-02)
+last_updated_utc: 2026-08-29T06:35:00Z
+last_item_done: ITEM 11 — the idea scorer is called by the cycle, and the deadline date was wrong
+current_item: ITEM 21 (live crash) or ITEM 12 — Emil's call, see the table
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
 next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
@@ -20,7 +20,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 7 | Make the compass produce a number | DONE 2026-08-28 — 7.1, 7.2, 7.3 | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | DONE 2026-08-29 | NOCYCLE |
-| 11 | Wire resolve_ideas into the cycle (deadline 2026-09-02) | TODO | NOCYCLE |
+| 11 | Wire resolve_ideas into the cycle (deadline was 2026-09-02; really 09-05) | DONE 2026-08-29 | NOCYCLE |
 | 12 | axis_history.json is tracked in git | TODO | NOCYCLE |
 | 13 | The uncommitted-work guard | TODO | NOCYCLE |
 | 14 | Make the compass produce four numbers | TODO | NOCYCLE |
@@ -2028,7 +2028,7 @@ read_current_scores() returns the other axes' scores, names the offender, and
 does not raise; and that memory/goal_score_history.json is byte-identical after.
 
 ## ITEM 11 — WIRE tools/resolve_ideas.py INTO THE CYCLE
-STATUS: TODO
+STATUS: DONE 2026-08-29 (report at the end of this item)
 GATE: NOCYCLE
 HARD DEADLINE 2026-09-02: 226 idea horizons fall that day and nothing resolves
 them today. The file and config/idea_dimension_aliases.json are on disk,
@@ -2050,6 +2050,97 @@ been reverted by the reset from 1827 points to 866 (latest 2026-06-21). Restored
 outside this session to 616519 B / 1834 points / 31 axes; the tool then matched
 exactly. The tool was never wrong — it was handed a truncated series. Nothing in
 tools/resolve_ideas.py was changed to make the numbers agree.
+
+### ITEM 11 REPORT — 2026-08-29
+
+WIRED. fast_cycle_runner.py step 20.2 "resolve_ideas", inside G_LEARN, after
+measurement_honesty (20.1). Fail-open. It calls run(today, write=True) — the
+deliberate opposite of the tool's own dry-run default: the CLI dry-runs so a
+human can look first, the cycle is the caller that means it.
+
+DECLARED IN ALL THREE MAPS THIS TIME, which is ITEM 10's lesson applied on the
+next step rather than written down and forgotten:
+  fast_cycle_runner.py        beat("resolve_ideas", "20.2")
+  config/cycle_phases.json    G_LEARN.steps + produces memory/idea_resolutions.jsonl
+  core/cycle_map.py           STEPS row with its artifact
+ITEM 7.1 declared its step in one of the three and the first cycle that ran it
+recorded an unmapped checkpoint. test_resolve_ideas_wired.py asserts all three.
+
+AND THE TOOL ITSELF WAS NOT IN GIT. tools/resolve_ideas.py and
+config/idea_dimension_aliases.json were both UNTRACKED — not ignored, just never
+committed. Wiring a cycle step to a file that is not in the repository would
+have produced exactly the failure CLAUDE.md warns about: a documented feature
+that is inert on any other clone, and worse, _aliases() fails soft to
+{"to_axis": {}, ...}, so a missing config would not crash — it would silently
+mark every idea UNMAPPED. Both are in this commit.
+
+TWO NUMBERS IN THIS ITEM WERE WRONG. REPORTED, NOT ADJUSTED.
+
+  1. THE DEADLINE DATE. The item says "226 idea horizons fall that day
+     [2026-09-02]". Measured from memory/idea_stream.jsonl today, 437 ideas,
+     every one carrying a test_horizon date:
+        2026-09-02      1 due     (cumulative 1)
+        2026-09-03     11         (12)
+        2026-09-04     13         (25)
+        2026-09-05    166         (191)   <- THE REAL CLIFF
+        2026-09-07     17         (208)
+        2026-09-08     12         (220)
+        2026-09-10      6         (226)   <- where 226 actually falls
+        ... 13-16/day through 2026-09-27, ending at 437
+     So 226 is a CUMULATIVE total reached on 2026-09-10, not a single day's
+     load, and the day that matters is 2026-09-05 with 166. One idea is due on
+     the stated deadline. The pressure is real and the date was off by three
+     days; since the step now runs daily it collects them as they mature either
+     way, so nothing is at risk from the error.
+
+  2. THE RECORDED REFERENCE RUN NO LONGER REPRODUCES, and that is a property of
+     the tool, not a regression. The item records --as-of 2026-09-30 as
+        ideas 429 · HELD 2 · BROKE 26 · FLAT 30 · NO_CLAIM 258 · NO_DATA 3
+        UNMAPPED 101 · NEEDS_ORACLE 9 · hit rate 7.1%
+     The same command today:
+        ideas 437 · HELD 26 · BROKE 32 · FLAT 0 · NO_CLAIM 265 · NO_DATA 3
+        UNMAPPED 102 · NEEDS_ORACLE 9 · hit rate 44.8% on 58 decidable
+     Eight new ideas cannot move HELD from 2 to 26 or empty a bucket of 30. The
+     cause is the series underneath: memory/axis_history.json was 1834 points
+     when that run was recorded and is 1848 now, latest point 2026-08-29,
+     because last night's cycle appended to it. HELD/BROKE/FLAT are verdicts
+     ABOUT A SERIES, so they move when the series moves — a re-read of the same
+     ideas against one more day of world.
+     THE CONSEQUENCE WORTH NAMING: a hit rate computed this way is not stable
+     and must never be quoted as "the system's accuracy" without the series
+     state beside it. 7.1% and 44.8% are the same tool, the same ideas, eight
+     days apart. Any K-number built on this needs the axis_history point count
+     and latest date recorded alongside, exactly as K1 carries basis_ts.
+
+SUITE — through tools/suite_gate.py, VALID (start 09:23:02, end 09:42:53 local,
+lock absent at both): 52 failed, 3367 passed, 6 skipped, 1 xfailed in 1191.14s.
+Against the baseline: no failure outside the recorded 27 SUSPENDED_FLAG entries.
++10 passing, which is this item's new tests. Six LIVE_STATE entries remain green.
+
+VERIFIED TODAY, all dry, nothing written:
+  --selftest                    9/9, every check passed
+  --as-of 2026-08-29 (today)    437 ideas, 0 due — nothing has reached its
+                                horizon yet, which the tool prints as "a fact,
+                                not an error"
+  --as-of 2026-09-02            1 due, HELD 1
+  memory/idea_resolutions.jsonl STILL ABSENT — every run above was a dry run.
+                                The first real write happens on the first cycle
+                                after an idea matures.
+
+TESTS: test/test_resolve_ideas_wired.py, NEW, 10 green. They hold the wiring,
+not the arithmetic (the tool's own --selftest covers the verdicts): that
+something calls it at all; that it runs after trend_tracker, whose
+memory/axis_history.json it grades against; that all three maps know it; that
+the verdict file is not the claim file; that no write path in the module targets
+IDEAS, checked BY AST rather than by trust; that a dry run writes nothing; that
+a write APPENDS and never truncates; and that a second run the same day resolves
+0 — idempotence matters now that the cycle runs it daily.
+
+OBSERVED IN PASSING, NOT INVESTIGATED: memory/idea_stream.jsonl was last written
+at 02:09 local while memory/pulse_stream.jsonl was still growing at 09:19, so
+the pulse is alive but has emitted no idea for seven hours. That may be normal —
+ideas are conditional, not per-tick — and it is recorded here only so nobody
+later reads a flat idea count as the scorer's fault.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
 STATUS: TODO
