@@ -76,6 +76,17 @@ memory/telegram_offset.json
 memory/approvals_ledger.jsonl
 memory/needs_brief.md
 
+# ITEM 12(a), 2026-08-29 — LIVE MEASUREMENT HISTORY, UNTRACKED ON PURPOSE.
+# A file a running cycle rewrites every night must never be restorable-over by a
+# checkout. On 2026-08-28 a `git reset --hard` did exactly that to 86 tracked
+# files and destroyed 68 days of this series; HEAD still held the pre-recovery
+# 267,524 bytes (866 points, latest 2026-06-21) while the live file held 1,848.
+# A fresh clone starts from data/seed/axis_history.seed.json, which is generated
+# by `venv/Scripts/python.exe tools/make_seed.py --write` and carries its own
+# provenance. THE SEED IS NOT A BACKUP: if the two disagree, the live file is
+# right. Never restore this path from git.
+memory/axis_history.json
+
 # grounding + E8 runtime state (never commit)
 memory/grounding_ledger.jsonl
 memory/e8_elite.json
