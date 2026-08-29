@@ -196,3 +196,45 @@ def test_the_live_files_are_untouched():
     for path, before in _LIVE_BEFORE.items():
         after = _digest(pathlib.Path(path))
         assert after == before, f"{path} moved during the test run"
+
+
+# ── the hit rate may not be printed unrestricted (Emil, ITEM 27) ────────────
+
+def test_the_unrestricted_hit_rate_is_never_printed(capsys, tmp_path, monkeypatch):
+    """A single percentage that looks like accuracy, computed from verdicts
+    82.8% of which flip on one observation, is the most dangerous thing this
+    tool produces. The printed rate is restricted to verdicts that survive
+    leave-one-out, and says so in the same line."""
+    monkeypatch.setattr(ri, "OUT", tmp_path / "out.jsonl")
+    res = ri.run(dt.date(2026, 9, 30), False)
+    ri._print(res)
+    out = capsys.readouterr().out
+    s = res["summary"]
+
+    assert "SURVIVE LEAVE-ONE-OUT ONLY" in out or "NOT PRINTED" in out
+    if s.get("hit_rate") is not None and s.get("hit_rate_robust") is not None:
+        unrestricted = f"{s['hit_rate'] * 100:.1f}%"
+        restricted = f"{s['hit_rate_robust'] * 100:.1f}%"
+        if unrestricted != restricted:
+            assert unrestricted not in out, (
+                f"the unrestricted hit rate {unrestricted} reached stdout")
+
+
+def test_the_summary_keeps_the_raw_rate_but_labels_it_unquotable(tmp_path, monkeypatch):
+    monkeypatch.setattr(ri, "OUT", tmp_path / "out.jsonl")
+    s = ri.run(dt.date(2026, 9, 30), False)["summary"]
+    assert "hit_rate_robust" in s and "decided_robust" in s
+    assert "hit_rate_note" in s and "hit_rate_robust" in s["hit_rate_note"], (
+        "the raw key must carry a pointer to the one that may be quoted")
+
+
+def test_the_restricted_rate_counts_only_robust_verdicts(tmp_path, monkeypatch):
+    monkeypatch.setattr(ri, "OUT", tmp_path / "out.jsonl")
+    res = ri.run(dt.date(2026, 9, 30), False)
+    rows, s = res["rows"], res["summary"]
+    robust = [r for r in rows if r.get("verdict") in ("HELD", "BROKE")
+              and r.get("survives_leave_one_out") is True]
+    assert s["decided_robust"] == len(robust)
+    if robust:
+        held = sum(1 for r in robust if r["verdict"] == "HELD")
+        assert abs(s["hit_rate_robust"] - held / len(robust)) < 1e-9

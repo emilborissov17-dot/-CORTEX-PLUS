@@ -1,7 +1,7 @@
 ## STATUS
 last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 23 — the idea scorer stops failing soft, and its verdicts admit what they rest on
-current_item: ITEM 21 (live crash) or ITEM 12 (audit list is DONE, see its report) — Emil's call
+last_item_done: ITEM 23 · the hit rate is now printed restricted (ITEM 27's standing order, applied early)
+current_item: ITEM 12, per "continue in table order". ITEM 21 is a live crash still sitting behind it — Emil's call whether it jumps.
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
 next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
@@ -32,6 +32,9 @@ Keep the state column current — it is the only place a human should have to lo
 | 20 | The five LIVE_STATE tests | TODO | NOCYCLE |
 | 21 | feedback_loop dies on a dict level word (LIVE CRASH) | TODO | NOCYCLE |
 | 23 | Three defects in tools/resolve_ideas.py | DONE 2026-08-29 | NOCYCLE |
+| 25 | tools/orphan_scan.py — entrypoints nothing calls | TODO | NOCYCLE |
+| 26 | tools/attention_ratio.py — world vs self | TODO | NOCYCLE |
+| 27 | tools/direction_patch.py — replace the two-point rule (spec given as "ITEM 24") | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -1910,6 +1913,35 @@ SUITE — THE GATE RUN, through tools/suite_gate.py, VALID:
   predicted; three test_metta_parallel entries and one test_level_reconciler
   moved with live state.
 
+### THE BASELINE, AMENDED 2026-08-29 — SCHEDULED_WRITER (1)
+
+AMENDED BY CLAUDE. PREDICTED BEFORE IT FIRED, which is the reason it is being
+recorded rather than chased.
+  test/test_brain_scan.py::test_a_dry_run_leaves_memory_and_snapshots_byte_identical
+
+CAUSE: the test hashes name+size+mtime_ns over the WHOLE of memory/ and
+snapshots/ around one publish_scan() call, so it fails whenever anything writes
+there during that call. On this machine CORTEX_Approvals runs EVERY MINUTE and
+CORTEX_Pulse EVERY FIVE, both writing under memory/, and neither holds
+cycle.lock — so tools/suite_gate.py cannot see them and correctly reports the
+run VALID.
+
+EVIDENCE: 11 files under memory/ were written inside the 10:13-10:36 suite
+window, among them memory/pulse_runs.log, memory/pulse_signal.json and
+memory/pending_approvals.json at 10:34:04. The test PASSED in isolation at
+09:1xZ and FAILS in isolation now. Nothing in any commit today writes to
+memory/ or snapshots/.
+
+IT IS A COIN FLIP, NOT A REGRESSION, and it was written into HOLDING as such
+before this run — the prediction is on record above this line. Its own failure
+message says "publishing wrote into memory/ or snapshots/", which is the one
+thing that did not happen; that misattribution cost an hour on 2026-08-28 and
+produced a wrong claim in commit 74af010.
+
+THE FIX IS NOT A BASELINE ENTRY. The test should watch the paths the code under
+test could plausibly write, not two whole trees. Until then it will flip with
+the minute hand. ITEM 20 owns it.
+
 ### THE BASELINE, AMENDED 2026-08-29 — SUSPENDED_FLAG (27)
 
 AMENDED BY CLAUDE, NOT BY EMIL, AND SAID SO HERE SO IT CAN BE OVERRULED. These
@@ -2234,6 +2266,157 @@ TESTS: test/test_resolve_ideas_defects.py, NEW, 14 green. Eleven were red before
 any source change. The two fragility tests are a matched pair — one series built
 so the last point flips the verdict, one built so it does not — because a flag
 that is always true tests nothing.
+
+## ITEM 25 — tools/orphan_scan.py: PUBLIC ENTRYPOINTS NOTHING CALLS
+STATUS: TODO — selftest VERIFIED ON APPEND, the report is the work
+GATE: NOCYCLE
+On disk, written and tested outside this session, queued by Emil 2026-08-29.
+Finds public entrypoints no production code CALLS — not merely imports. That
+distinction is the whole point: it is why the tool would have caught
+core/reaction.py, which cockpit/server.py imports twice and never invokes.
+  Run --selftest (expect 8/8), then --report. Do NOT run --baseline or --write
+  yet. THE ORPHAN LIST IS THE FINDING.
+
+VERIFIED ON APPEND 2026-08-29: --selftest 8/8, every check passed, including
+"imported by production but never invoked is STILL an orphan", "called only by a
+test is an orphan, however green the test", "named in a subprocess string is
+wiring, not an orphan", and "an unparseable file is a named blind spot, not a
+clean file".
+--report NOT YET DELIVERED: started 10:0xZ and still running after 568 s of CPU
+with no output. It is not hung — it is walking a large tree. Whoever works this
+item should check whether --root defaults to the repo root and therefore walks
+venv/ and venv312_metta/, which would explain the runtime and would also mean
+the orphan list is computed over site-packages. That is the first thing to
+establish, before the list is read as a finding about this codebase.
+
+## ITEM 26 — tools/attention_ratio.py: HOW MUCH OF THIS IS ABOUT THE WORLD
+STATUS: TODO — run done on append; TWO DEFECTS FOUND, neither fixed here
+GATE: NOCYCLE
+Measures bytes and claims on three sides: MEASURED from the world, ASSERTED
+about the world, and about this machine.
+  Run --selftest (expect 9/9), then the plain run. Report the two ratios and the
+  whole UNCLASSIFIED list. memory/intel.db is DELIBERATELY unclassified because
+  nobody has opened it — do not place it by its name.
+
+VERIFIED ON APPEND 2026-08-29, and the expectation did not hold.
+
+  --selftest is 8/9, NOT 9/9. The failing check is "self ratio computed", got
+  0.09 where it wants 0.06. DIAGNOSED, and it is the FIXTURE, not the tool: the
+  fixture writes "a\nb\nc\n" (6 characters) with pathlib.write_text, and on
+  Windows that translates LF to CRLF, so the file is 9 BYTES ON DISK. The tool
+  measures disk bytes and is right; the expectation assumes LF. This repo is
+  Windows-only by CLAUDE.md, so the check cannot pass here as written. One-line
+  fix, in the fixture: write with newline="" (or assert against the on-disk
+  size). NOT APPLIED — it is Emil's tool and this item is not yet being worked.
+
+  THE TWO RATIOS, from the plain run:
+      0.69 bytes about itself, and 0.02 bytes of opinion, per byte measured
+      world MEASURED   27,089,697 B     492 rows
+      world ASSERTED      527,180 B     437 rows
+      self             18,661,736 B  28,664 rows
+      plumbing         17,192,468 B
+
+  NEITHER RATIO IS YET A FACT ABOUT THIS SYSTEM, for two separate reasons.
+
+  1. UNCLASSIFIED IS BIGGER THAN EVERYTHING CLASSIFIED PUT TOGETHER:
+     62,927,968 B in 3,337 files, against 63.5 MB across all four buckets. The
+     ratios are computed over slightly under half the bytes. The tool says so
+     itself — "a human must place these before the ratio means anything" — and
+     it is right. The eight largest:
+        13,451,264  memory/intel.db          <- LEFT UNPLACED ON PURPOSE, per
+                                                Emil: nobody has opened it, and
+                                                it must not be classified by its
+                                                name. It is also the single
+                                                largest unclassified file.
+         7,004,160  memory/chromadb/chroma.sqlite3
+         4,576,993  memory/interval_head_weights.npz
+         4,555,368  memory/interval_head_weights_prev.npz
+         1,658,516  memory/provider_catalogs/eurostat.json
+         1,278,019  memory/_mem_trace.jsonl
+           784,213  logs/fast_cycle_log.txt
+           440,578  logs/supervisor.log
+     The remaining 3,329 files are the tail; the item's "whole UNCLASSIFIED
+     list" is 3,337 entries and belongs in a file, not in this queue. Whoever
+     works ITEM 26 should have the tool write it.
+
+  2. THE MAP COUNTS SNAPSHOTS OF THIS MACHINE AS MEASUREMENTS OF THE WORLD, and
+     correcting only that INVERTS the headline. config/attention_map.json puts
+     the glob "snapshots/**/*.json" under world_measured. That glob matches
+     13,681,840 B, of which 13,578,717 B — 99.2%, 69 of 103 files — is
+     snapshots/self/, self-snapshots of this repo (they contain per-file line
+     counts of its own source). Moving just those to the self side:
+        world MEASURED  27,089,697 -> 13,510,980
+        self            18,661,736 -> 32,240,453
+        self per measured byte   0.69 -> 2.39
+     So "more attention on the world than on itself" becomes its opposite. This
+     is a defect in config/attention_map.json, NOT in the tool: the tool
+     faithfully counted what it was told to count. NOT FIXED HERE — changing the
+     map changes the number, and doing that in the same breath as reporting it
+     would make the report unauditable.
+
+## ITEM 27 — REPLACE THE TWO-POINT DIRECTION RULE
+STATUS: TODO — selftest VERIFIED ON APPEND 12/12; the swap is the work
+GATE: NOCYCLE
+NUMBERING: Emil first gave this spec as "ITEM 24", then numbered the three
+on-disk tools 25/26/27 with this one as 27. SAME WORK, ONE ITEM. Recorded here
+under 27 with the earlier number named, so neither reference dangles and no
+duplicate item exists.
+
+tools/direction_patch.py replaces resolve_one's two-point rule with
+direction_with_fragility(). Keep the module separate or fold it in — Claude's
+call — but the tests move with it either way. Three behaviours change, each a
+defect on its own terms:
+  - direction comes from the whole window, not birth-value vs after[-1]
+  - the flat threshold is a fraction of the series' own spread, not an absolute
+    0.5 applied identically to a 0-100 score and to gdp_per_capita_usd
+  - fewer than MIN_POINTS is "insufficient", never "flat"
+MIN_POINTS=5 and FLAT_K=0.25 are first guesses by their author and are NOT
+sacred. Report what the fragility figure becomes; if it stays high, the rule was
+not the only problem and Emil wants to know that rather than have the constants
+nudged until it looks better. DO NOT TUNE THEM TO IMPROVE THE NUMBER.
+EMIL'S PREDICTION, RECORDED SO IT CAN BE WRONG: fragility drops from 82.8% to
+under 10%.
+
+VERIFIED ON APPEND 2026-08-29: --selftest 12/12, including the negative control
+that the OLD two-point rule calls a nine-day flat line with one late spike
+"rising" while Theil-Sen calls it flat AND stable.
+
+TWO INTEGRATION DECISIONS, stated before they are made so they can be overruled:
+  THE "NOW" WINDOW. The old rule anchored at birth — _direction([v_birth,
+  v_horizon]). To keep that question while using the whole window, Theil-Sen
+  should run over the birth point PLUS every post-birth observation, not over
+  the after-points alone. Otherwise the question silently changes from "did the
+  trend since birth continue" to "what is the post-birth series doing".
+  WHERE "insufficient" GOES. The vocabulary is HELD/BROKE/FLAT/NO_CLAIM/NO_DATA/
+  UNMAPPED/NEEDS_ORACLE. NO_CLAIM means "the series was flat at birth" — a
+  statement about the world. "insufficient" is a statement about our evidence,
+  so it maps to NO_DATA with a why naming MIN_POINTS. Folding it into NO_CLAIM
+  would reintroduce the silence-versus-stillness confusion the new rule exists
+  to remove.
+PREDICTED SIDE EFFECT, recorded before measuring: MIN_POINTS=5 applies to the
+since-birth window too, so any idea with fewer than four post-birth observations
+becomes NO_DATA rather than decided. The decided population will shrink, perhaps
+sharply. If fragility falls mainly BECAUSE almost nothing is decided any more,
+that is not the rule succeeding, and the decided count must be reported beside
+the fragility figure so the two cannot be read apart.
+
+DONE EARLY, 2026-08-29, because it was ordered with immediate effect and ITEM 27
+now sits behind ITEM 12-21 in the table: THE HIT RATE IS NO LONGER PRINTED
+UNRESTRICTED. tools/resolve_ideas.py now prints the rate only over verdicts
+where survives_leave_one_out is True, with the restriction in the same line, and
+prints "NOT PRINTED" with the reason when none survive. The raw hit_rate key
+stays in the summary for readers that already use it, carrying hit_rate_note
+that points at hit_rate_robust. Made PERMANENT rather than temporary: the
+restriction is correct whatever the fragility figure turns out to be, so it is
+not something to remember to undo.
+  AND THE RESTRICTED NUMBER IS WORSE THAN THE ONE IT REPLACES. As of 2026-09-30:
+      unrestricted   44.8% over 58 decided
+      restricted      0.0% over the 10 that survive leave-one-out
+  All ten stable verdicts are BROKE. There is not one robust HELD in the whole
+  population. The idea generator, where its claims can be judged at all and the
+  judgement does not rest on a single observation, has been wrong every time.
+  That is the number the compass should carry, and it could not have been seen
+  behind the 44.8%.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
 STATUS: TODO

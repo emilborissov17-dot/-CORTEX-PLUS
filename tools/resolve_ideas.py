@@ -453,6 +453,18 @@ def run(today: dt.date, write: bool) -> dict:
     decided = counts.get("HELD", 0) + counts.get("BROKE", 0)
     hit_rate = (counts.get("HELD", 0) / decided) if decided else None
 
+    # THE ONLY HIT RATE THIS TOOL IS ALLOWED TO PRINT (Emil, ITEM 27, 29 Aug
+    # 2026). A single percentage that looks like accuracy, computed from
+    # verdicts 82.8% of which flip on one observation, is the most dangerous
+    # thing this tool produces — the same judgement passed on the composite
+    # score the day before, applied here. So the printed rate is restricted to
+    # verdicts that survive leave-one-out, and the restriction is printed in the
+    # same line rather than in a footnote somebody can drop.
+    robust = [r for r in rows if r.get("verdict") in ("HELD", "BROKE")
+              and r.get("survives_leave_one_out") is True]
+    robust_held = sum(1 for r in robust if r["verdict"] == "HELD")
+    hit_rate_robust = (robust_held / len(robust)) if robust else None
+
     # (ITEM 23c) How much of this depends on the newest point in each series.
     fragile = sum(1 for r in rows if r.get("survives_leave_one_out") is False)
     judged = sum(1 for r in rows if r.get("survives_leave_one_out") is not None)
@@ -468,7 +480,14 @@ def run(today: dt.date, write: bool) -> dict:
         "due_now": due,
         "verdicts": counts,
         "decided": decided,
+        # RAW, AND NOT FOR QUOTING. Kept because removing a key breaks readers,
+        # but hit_rate_note says what it is. Quote hit_rate_robust or nothing.
         "hit_rate": hit_rate,
+        "hit_rate_note": ("computed over ALL decided verdicts including the "
+                          "fragile ones; not a statement about accuracy. Use "
+                          "hit_rate_robust."),
+        "decided_robust": len(robust),
+        "hit_rate_robust": hit_rate_robust,
         # A hit rate without the series it was computed from is not a number
         # about the system's accuracy (ITEM 23b).
         **_series_state(),
@@ -514,9 +533,16 @@ def _print(res: dict) -> None:
               "UNMAPPED", "NEEDS_ORACLE"):
         if k in s["verdicts"]:
             print(f"  {k:<12} {s['verdicts'][k]}")
-    if s["hit_rate"] is not None:
-        print(f"  hit rate on the {s['decided']} that could be decided: "
-              f"{s['hit_rate']*100:.1f}%")
+    if s.get("hit_rate_robust") is not None:
+        print(f"  hit rate {s['hit_rate_robust']*100:.1f}% — OVER THE "
+              f"{s['decided_robust']} VERDICTS THAT SURVIVE LEAVE-ONE-OUT ONLY, "
+              f"of {s['decided']} decided. The other "
+              f"{s['decided'] - s['decided_robust']} change if their series "
+              f"loses its last point and are excluded from this number.")
+    elif s["decided"]:
+        print(f"  hit rate: NOT PRINTED. None of the {s['decided']} decided "
+              f"verdicts survives leave-one-out, so there is no rate here that "
+              f"means anything.")
     else:
         print("  hit rate: undefined — nothing could be decided from data")
     if s["unmapped_dimensions"]:
