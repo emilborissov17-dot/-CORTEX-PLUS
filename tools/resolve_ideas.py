@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import pathlib
@@ -68,12 +69,113 @@ TARGET = BASE / "config" / "target_config.json"
 BRANCH_MIN_MEMBERS = 2
 
 
+class AliasFileError(RuntimeError):
+    """The alias map could not be read. Never downgraded to a default."""
+
+
 def _aliases() -> dict:
-    """to_axis / to_branch / refused. A human file; absent means no aliasing."""
+    """to_axis / to_branch / refused, from a human-written file.
+
+    IT USED TO FAIL SOFT AND THAT WAS THE DEFECT (ITEM 23a, 29 Aug 2026). A
+    missing or malformed file returned {"to_axis": {}, ...}, which does not
+    crash — every idea simply comes back UNMAPPED. "We could not map this
+    dimension" and "the mapping file is gone" then look identical in the output,
+    and the second one is a broken deployment reported as a finding about the
+    world. That is the exact substitution this queue exists to remove, and it
+    was living inside the tool that grades the queue's own hypotheses.
+
+    An EMPTY BUT VALID map is still accepted: a human who deliberately aliases
+    nothing is not a missing file, and refusing that would trade one silent
+    failure for a loud refusal to do the right thing.
+    """
     try:
-        return json.loads(ALIAS_FILE.read_text(encoding="utf-8"))
-    except Exception:
-        return {"to_axis": {}, "to_branch": {}, "refused": {}}
+        raw = ALIAS_FILE.read_text(encoding="utf-8")
+    except OSError as e:
+        raise AliasFileError(
+            f"cannot read the alias map at {ALIAS_FILE}: {type(e).__name__}: {e}. "
+            f"Without it every dimension resolves to UNMAPPED, which would be "
+            f"reported as a fact about the ideas rather than about this file."
+        ) from e
+    try:
+        al = json.loads(raw)
+    except ValueError as e:
+        raise AliasFileError(
+            f"the alias map at {ALIAS_FILE} is not valid JSON: {e}") from e
+    if not isinstance(al, dict):
+        raise AliasFileError(
+            f"the alias map at {ALIAS_FILE} is a {type(al).__name__}, not an "
+            f"object with to_axis / to_branch / refused")
+    for k in ("to_axis", "to_branch", "refused"):
+        v = al.setdefault(k, {})
+        if not isinstance(v, dict):
+            raise AliasFileError(
+                f"the alias map at {ALIAS_FILE} has {k} as a "
+                f"{type(v).__name__}, not an object")
+    return al
+
+
+def _series_state(path: pathlib.Path | None = None) -> dict:
+    """The series these verdicts were computed from, so a number cannot travel
+    without it (ITEM 23b).
+
+    A verdict about a series is meaningless without the series. Measured on
+    2026-08-29: the same 437 ideas scored 7.1% one day and 44.8% the next, and
+    the only thing that had changed was one more day of axis_history. A hit rate
+    quoted without this block is not a statement about the system's accuracy,
+    and the tool should make that impossible to forget. K1 carries basis_ts for
+    the same reason.
+    """
+    pth = path or HISTORY
+    try:
+        raw = pth.read_bytes()
+    except OSError as e:
+        return {"series_source": SERIES_SOURCE, "points_total": None,
+                "axes_total": None, "series_latest_date": None,
+                "series_sha256": None,
+                "series_why": f"unreadable: {type(e).__name__}: {e}"}
+    try:
+        hist = json.loads(raw.decode("utf-8"))
+    except ValueError as e:
+        return {"series_source": SERIES_SOURCE, "points_total": None,
+                "axes_total": None, "series_latest_date": None,
+                "series_sha256": hashlib.sha256(raw).hexdigest(),
+                "series_why": f"not valid JSON: {e}"}
+    points = 0
+    latest = None
+    for rows in hist.values():
+        if not isinstance(rows, list):
+            continue
+        for r in rows:
+            if not isinstance(r, dict) or r.get("score") is None:
+                continue
+            points += 1
+            d = str(r.get("date") or "")[:10]
+            if d and (latest is None or d > latest):
+                latest = d
+    return {"series_source": SERIES_SOURCE,
+            "points_total": points,
+            "axes_total": len(hist) if isinstance(hist, dict) else None,
+            "series_latest_date": latest,
+            "series_sha256": hashlib.sha256(raw).hexdigest()}
+
+
+def _drop_last_point(history: dict) -> dict:
+    """The same history with the chronologically last scored point of every
+    axis removed. Used only to ask whether a verdict depends on it."""
+    out = {}
+    for k, rows in history.items():
+        if not isinstance(rows, list):
+            out[k] = rows
+            continue
+        scored = [(i, r) for i, r in enumerate(rows)
+                  if isinstance(r, dict) and r.get("date") is not None
+                  and r.get("score") is not None]
+        if len(scored) < 2:
+            out[k] = rows
+            continue
+        last_i = max(scored, key=lambda pair: str(pair[1].get("date"))[:10])[0]
+        out[k] = [r for i, r in enumerate(rows) if i != last_i]
+    return out
 
 
 def _branches() -> dict:
@@ -187,8 +289,18 @@ def _direction(vals: list[float]) -> tuple[str, float]:
     return ("UP" if delta > 0 else "DOWN"), delta
 
 
-def resolve_one(idea: dict, history: dict, today: dt.date) -> dict | None:
-    """One verdict, or None when the horizon has not arrived."""
+def resolve_one(idea: dict, history: dict, today: dt.date,
+                _loo: bool = True) -> dict | None:
+    """One verdict, or None when the horizon has not arrived.
+
+    `_loo` is internal. When true, the verdict is computed a SECOND time against
+    the same series with each axis's last point removed, and the row carries
+    survives_leave_one_out. Measured on 2026-08-29 across 437 ideas: 82.8% of
+    decided verdicts flip under that operation and NOT ONE HELD survives, so a
+    verdict here is usually a statement about the most recent point rather than
+    about a trend. The rule is deliberately NOT retuned to hide that — the flag
+    makes a fragile verdict visibly fragile and the number is the finding.
+    """
     hz_raw = idea.get("test_horizon")
     if not hz_raw:
         return None
@@ -206,7 +318,14 @@ def resolve_one(idea: dict, history: dict, today: dt.date) -> dict | None:
         "dimension": idea.get("dimension"),
         "horizon": horizon.isoformat(),
         "method_version": METHOD_VERSION,
-        "series_source": SERIES_SOURCE,
+        # THE SERIES TRAVELS WITH THE VERDICT (ITEM 23b). Not decoration: the
+        # same 437 ideas scored 7.1% and 44.8% one day apart, and only the
+        # series had changed.
+        **_series_state(),
+        # None for verdicts that never read the series (UNMAPPED, NEEDS_ORACLE):
+        # "not applicable" is not the same as "fragile" or "robust".
+        "survives_leave_one_out": None,
+        "verdict_without_last_point": None,
     }
 
     if idea.get("seed") != "trend":
@@ -286,15 +405,21 @@ def resolve_one(idea: dict, history: dict, today: dt.date) -> dict | None:
         why = (f"born {born_dir} ({born_delta:+.3f}); {v_birth:.3f} -> {v_horizon:.3f} "
                f"by {obs_date} ({now_delta:+.3f}) — reversed")
 
-    return {**base, "verdict": verdict, "axis_key": key,
-            "direction_at_birth": born_dir, "delta_at_birth": round(born_delta, 6),
-            "points_at_birth": len(before),
-            "value_at_birth": round(v_birth, 6),
-            "value_at_horizon": round(v_horizon, 6),
-            "observed_on": obs_date.isoformat(),
-            "delta": round(now_delta, 6),
-            "flat_eps": FLAT_EPS,
-            "why": why}
+    row = {**base, "verdict": verdict, "axis_key": key,
+           "direction_at_birth": born_dir, "delta_at_birth": round(born_delta, 6),
+           "points_at_birth": len(before),
+           "value_at_birth": round(v_birth, 6),
+           "value_at_horizon": round(v_horizon, 6),
+           "observed_on": obs_date.isoformat(),
+           "delta": round(now_delta, 6),
+           "flat_eps": FLAT_EPS,
+           "why": why}
+    if _loo:
+        shadow = resolve_one(idea, _drop_last_point(history), today, _loo=False)
+        row["survives_leave_one_out"] = bool(
+            shadow is not None and shadow.get("verdict") == verdict)
+        row["verdict_without_last_point"] = (shadow or {}).get("verdict")
+    return row
 
 
 # ------------------------------------------------------------------------ main
@@ -328,6 +453,13 @@ def run(today: dt.date, write: bool) -> dict:
     decided = counts.get("HELD", 0) + counts.get("BROKE", 0)
     hit_rate = (counts.get("HELD", 0) / decided) if decided else None
 
+    # (ITEM 23c) How much of this depends on the newest point in each series.
+    fragile = sum(1 for r in rows if r.get("survives_leave_one_out") is False)
+    judged = sum(1 for r in rows if r.get("survives_leave_one_out") is not None)
+    frag_dec = sum(1 for r in rows
+                   if r.get("verdict") in ("HELD", "BROKE")
+                   and r.get("survives_leave_one_out") is False)
+
     summary = {
         "ts": dt.datetime.now(dt.timezone.utc).isoformat(),
         "as_of": today.isoformat(),
@@ -337,6 +469,15 @@ def run(today: dt.date, write: bool) -> dict:
         "verdicts": counts,
         "decided": decided,
         "hit_rate": hit_rate,
+        # A hit rate without the series it was computed from is not a number
+        # about the system's accuracy (ITEM 23b).
+        **_series_state(),
+        # ITEM 23c: how many verdicts change if each series loses its last
+        # point. fragile_of_decided is the one that matters — measured 82.8% on
+        # 2026-08-29, with no HELD surviving at all.
+        "fragile": fragile,
+        "judged_for_fragility": judged,
+        "fragile_of_decided": (frag_dec / decided) if decided else None,
         "unmapped_dimensions": unmapped,
         "wrote": False,
     }
@@ -356,6 +497,16 @@ def _print(res: dict) -> None:
     s = res["summary"]
     print(f"as of {s['as_of']}  ideas {s['ideas_total']}  "
           f"already resolved {s['already_resolved']}  due now {s['due_now']}")
+    print(f"series: {s.get('points_total')} points over {s.get('axes_total')} axes, "
+          f"latest {s.get('series_latest_date')}, "
+          f"sha256 {str(s.get('series_sha256'))[:12]}"
+          + (f"  [{s['series_why']}]" if s.get("series_why") else ""))
+    if s.get("fragile_of_decided") is not None:
+        print(f"FRAGILITY: {s['fragile_of_decided']:.1%} of the {s['decided']} "
+              f"decided verdicts change if each series loses its LAST POINT "
+              f"({s['fragile']} of {s['judged_for_fragility']} judged overall). "
+              f"A high number here means these are verdicts about today, not "
+              f"about a trend.")
     if not s["due_now"]:
         print("nothing has reached its horizon yet — this is a fact, not an error.")
         return

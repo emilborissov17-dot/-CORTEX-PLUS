@@ -1,7 +1,7 @@
 ## STATUS
 last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 11 — the idea scorer is called by the cycle, and the deadline date was wrong
-current_item: ITEM 21 (live crash) or ITEM 12 — Emil's call, see the table
+last_item_done: ITEM 23 — the idea scorer stops failing soft, and its verdicts admit what they rest on
+current_item: ITEM 21 (live crash) or ITEM 12 (audit list is DONE, see its report) — Emil's call
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
 next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
@@ -31,6 +31,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 19 | Record score provenance | TODO | NOCYCLE |
 | 20 | The five LIVE_STATE tests | TODO | NOCYCLE |
 | 21 | feedback_loop dies on a dict level word (LIVE CRASH) | TODO | NOCYCLE |
+| 23 | Three defects in tools/resolve_ideas.py | DONE 2026-08-29 | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -2031,7 +2032,23 @@ does not raise; and that memory/goal_score_history.json is byte-identical after.
 STATUS: DONE 2026-08-29 (report at the end of this item)
 GATE: NOCYCLE
 HARD DEADLINE 2026-09-02: 226 idea horizons fall that day and nothing resolves
-them today. The file and config/idea_dimension_aliases.json are on disk,
+them today.
+CORRECTED 2026-08-29 BY EMIL. THE SENTENCE ABOVE IS KEPT AS WRITTEN AND IS WRONG
+IN TWO WAYS. It was asserted from memory by a human; measured against
+memory/idea_stream.jsonl the same day, 437 ideas each carrying a test_horizon:
+  2026-09-02      1 due     cumulative 1
+  2026-09-03     11                   12
+  2026-09-04     13                   25
+  2026-09-05    166                  191   <- THE REAL CLIFF
+  2026-09-07     17                  208
+  2026-09-08     12                  220
+  2026-09-10      6                  226   <- where 226 actually falls
+  then 13-16/day to 437 by 2026-09-27
+So 226 is a CUMULATIVE total reached on 2026-09-10, not one day's load, and the
+day that matters is 2026-09-05 with 166. One idea is due on the stated date.
+The deadline was real; the date and the shape of the number were not. Nothing
+was at risk, because the step wired in ITEM 11 runs daily and collects horizons
+as they mature. The file and config/idea_dimension_aliases.json are on disk,
 delivered outside this session. Runs once per day, dry-run by default, --write to
 append. It NEVER edits memory/idea_stream.jsonl; it appends to
 memory/idea_resolutions.jsonl only.
@@ -2141,6 +2158,82 @@ at 02:09 local while memory/pulse_stream.jsonl was still growing at 09:19, so
 the pulse is alive but has emitted no idea for seven hours. That may be normal —
 ideas are conditional, not per-tick — and it is recorded here only so nobody
 later reads a flat idea count as the scorer's fault.
+
+## ITEM 23 — THREE DEFECTS IN tools/resolve_ideas.py
+STATUS: DONE 2026-08-29
+GATE: NOCYCLE
+Raised by Emil 2026-08-29 after ITEM 11 wired the tool into the cycle. All three
+were introduced by the tool's author and all three were found while wiring it.
+Fixed in one commit, tests written first — 11 of the 14 were red before any
+source changed, and the 3 that were green from the start are the negative
+controls.
+
+(a) _aliases() FAILED SOFT — FIXED
+  It returned {"to_axis": {}, "to_branch": {}, "refused": {}} on any exception.
+  That does not crash: it silently marks every idea UNMAPPED, so "we could not
+  map this dimension" and "the mapping file is gone" produce identical output,
+  and a broken deployment is reported as a finding about the world. Inside the
+  tool that grades this queue's own hypotheses.
+  Now raises AliasFileError naming the path, for: unreadable/absent, invalid
+  JSON, a non-object at the top level, and a to_axis/to_branch/refused that is
+  not an object. THE NEGATIVE CONTROL IS TESTED TOO — a valid but EMPTY map is
+  still accepted, because a human who deliberately aliases nothing is not a
+  missing file, and refusing that would trade a silent failure for a loud
+  refusal to do the right thing.
+
+(b) EVERY RUN NOW CARRIES ITS SERIES STATE — FIXED
+  _series_state() puts points_total, axes_total, series_latest_date and a
+  sha256 of memory/axis_history.json on EVERY row and on the summary, the way
+  K1 carries basis_ts. Live today: 1841 points over 31 axes, latest 2026-08-29,
+  sha256 1947f1fc381b.
+  NOTE ON 1841 vs 1848: the file holds 1848 rows and 1841 of them carry a
+  score. _series_state counts SCORED points, because that is what the verdicts
+  read; the seven without a score cannot move a verdict and counting them would
+  overstate the evidence.
+
+(c) THE VERDICTS ARE DOMINATED BY THE LAST POINT — MEASURED, NOT RETUNED
+  Recomputed every verdict with the chronologically last scored point of each
+  axis removed:
+      as of 2026-09-30   58 decided   48 flip   82.8%
+      as of 2026-09-05   19 decided   14 flip   73.7%
+  AND NOT ONE HELD SURVIVES. All 26 HELD become something else — 18 BROKE, 8
+  FLAT. Of the 437 ideas, 55 change verdict outright (12.6%); of the 323 that
+  read a series at all, 55 (17.0%).
+  SO THE VERDICT IS A STATEMENT ABOUT THE MOST RECENT POINT, NOT ABOUT A TREND.
+  resolve_one computes now_dir from exactly two values — the value at birth and
+  after[-1] — so the entire HELD/BROKE/FLAT decision rests on one observation at
+  each end. FLAT_EPS and the direction rule DO need rethinking and are
+  DELIBERATELY UNTOUCHED here, per the instruction: retuning them to make the
+  number look better would be fitting the rule to the answer.
+  Every row now carries survives_leave_one_out (true/false, and None for
+  UNMAPPED/NEEDS_ORACLE which never read a series — "not applicable" is not
+  "robust") and verdict_without_last_point. The summary carries fragile,
+  judged_for_fragility and fragile_of_decided, and _print leads with the
+  fragility line so it cannot be read past.
+
+  THIS ALSO EXPLAINS ITEM 11'S "DRIFT", AND THE EXPLANATION IS BETTER THAN THE
+  ONE I GAVE. ITEM 11 recorded --as-of 2026-09-30 as HELD 2 / BROKE 26 / FLAT 30
+  / NO_CLAIM 258 and reported today's 44.8% as the series having moved. The
+  leave-one-out run today returns NO_CLAIM 258 and FLAT 30 — the recorded
+  reference almost exactly. It was never drift between two states of the world;
+  it is the same instability, and one day of new data was enough to flip nearly
+  every decidable verdict. "Sensitive to the series" understated it: it is
+  dominated by the series' last point.
+
+WHAT A READER MUST NOT DO WITH THIS TOOL'S OUTPUT: quote a hit rate. 44.8% and
+7.1% are the same 437 ideas one day apart. Until (c) is rethought, the honest
+statement is the fragility percentage beside the hit rate, never the hit rate
+alone.
+
+SUITE — through tools/suite_gate.py, VALID (lock absent at 09:48:17 and
+10:08:10 local): 52 failed, 3381 passed, 6 skipped, 1 xfailed in 1193.13s. No
+failure outside the recorded 27 SUSPENDED_FLAG entries. +14 passing, this item's
+tests.
+
+TESTS: test/test_resolve_ideas_defects.py, NEW, 14 green. Eleven were red before
+any source change. The two fragility tests are a matched pair — one series built
+so the last point flips the verdict, one built so it does not — because a flag
+that is always true tests nothing.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
 STATUS: TODO
