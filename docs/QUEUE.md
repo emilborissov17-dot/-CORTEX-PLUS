@@ -1,6 +1,6 @@
 ## STATUS
 last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 29 · ITEM 30 and 31 run, lists delivered, nothing written · ITEM 32 standing rule recorded
+last_item_done: ITEM 12(c) — the series stops deleting itself. HALF-OPEN: nothing renders the marker yet, ITEM 33 is the other half.
 current_item: ITEM 12 — ITEM 21 jumped the queue on Emil's instruction and is now DONE
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
@@ -21,7 +21,11 @@ Keep the state column current — it is the only place a human should have to lo
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
 | 10 | The suite has no gate while it runs | DONE 2026-08-29 | NOCYCLE |
 | 11 | Wire resolve_ideas into the cycle (deadline was 2026-09-02; really 09-05) | DONE 2026-08-29 | NOCYCLE |
-| 12 | axis_history.json is tracked in git | TODO | NOCYCLE |
+| 12 | axis_history.json is tracked in git | (a) BLOCKED on Emil · (b) DONE · (c) DONE 2026-08-29, half-open: see ITEM 33 | NOCYCLE |
+| 33 | API transmits measured:false (render is ITEM 36) | DONE 2026-08-29 — no human sees it yet | NOCYCLE |
+| 36 | Front-end renders UNMEASURED — the layer a human observes | TODO — ITEM 33's open half | NOCYCLE |
+| 34 | cortex_scanner drops an axis whose last point is unmeasured | TODO | NOCYCLE |
+| 35 | Two snapshot filenames are sitting in the axis key space | TODO | NOCYCLE |
 | 13 | The uncommitted-work guard | TODO | NOCYCLE |
 | 14 | Make the compass produce four numbers | TODO | NOCYCLE |
 | 15 | Early stopping + coverage gate | TODO | NOCYCLE |
@@ -2791,8 +2795,20 @@ WHAT IS STILL NOT SAFE TO BASELINE, on the numbers as they are:
                                    measured.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
-STATUS: TODO
+STATUS: (a) NOT EXECUTED — collides with a standing rule, Emil's decision, see below.
+        (b) DONE 2026-08-29 — the audit list is the deliverable and it is delivered.
+        (c) DONE 2026-08-29 AND HALF-OPEN. The deletion is stopped and the marker is
+            written, BUT NOTHING RENDERS IT ANYWHERE. ITEM 33 is the other half and
+            neither is finished without it. Recorded here rather than left implicit,
+            because an item that quietly closes while its purpose is unmet is the
+            pattern this queue has spent the week removing.
 GATE: NOCYCLE
+
+(a) IS BLOCKED ON A HUMAN DECISION, NOT ON WORK. The instruction is "commit a copy
+as data/seed/axis_history.seed.json"; the standing rules at the top of this file
+say "Never stage data/, V-Dem, CSV, media, .env, or the ~48 runtime-churn files
+under memory/, snapshots/, news/." Those cannot both be followed. Emil decides;
+Kimi was not asked because it is a rule Emil wrote.
 That is why one reset destroyed 68 days of history: a file a running cycle
 rewrites is under version control, so any checkout, reset or stash silently
 replaces live measurement with a committed snapshot.
@@ -2844,6 +2860,241 @@ replaces live measurement with a committed snapshot.
       committed version and had vanished from the live file. Something REWRITES
       this file rather than appending to it. Find what, and report it. Do not fix
       it in the same commit as (a).
+
+### ITEM 12(c) REPORT — 2026-08-29
+
+THE FINDING WAS BIGGER THAN THE ITEM. (c) described 7 points lost from a
+committed copy — a historical artefact of the reset. It is a deletion that ran
+last night and would have run again tonight.
+
+  memory/trend_tracker.py:238  history = _load_history()
+  memory/trend_tracker.py:241  history[axis] = [e for e in history[axis] if e.get("metrics")]
+  memory/trend_tracker.py:296  _save_history(history)   # write_text, a full rewrite
+
+Load, filter, overwrite — every cycle. Not an append-only ledger.
+
+MEASURED ON THE LIVE FILE, sha256 1947f1fc381b3d62..., 1848 points, 31 axes:
+7 points had falsy metrics, all dated 2026-08-29, on BODY_SCAN,
+DEEP_TIME_RISKS_REVIEW, GENERAL_SELF_REVIEW, GOAL_PROGRESS_REVIEW,
+HYPERCLAW_PLAN, LONG_TERM_FUTURE_REVIEW and PLANETARY_POTENTIAL_REVIEW. Those
+seven axes held EXACTLY ONE POINT EACH — written by one cycle, deleted by the
+next. They have never had a history, and every trend, score and resolution
+computed for them ran over a series that empties itself.
+
+AN ERROR OF MINE, CORRECTED BY THE THIRD SEAT AND WORTH KEEPING. My first draft
+searched for a MISSING "metrics" key, found zero, and would have reported the
+falsification check as firing — i.e. that the third seat's testimony was wrong.
+The points carry "metrics": {} — a PRESENT key holding an empty dict.
+`e.get("metrics")` is falsy for {} exactly as for absent, so line 241 dropped
+them all the same. Any fix or test written against `"metrics" not in e` matches
+nothing on real data. Both shapes are covered in the code and in the tests.
+
+INTENT, obtained rather than assumed, as instructed:
+  git log -S 'e.get("metrics")' -- memory/trend_tracker.py
+returns exactly ONE commit — 14ca73c, 2026-06-14, author "CORTEX System",
+message in full: "feat: add QWEN architecture as base", --stat "1 file changed,
+226 insertions(+)", the filter already at line 166. THE LINE HAS NEVER BEEN
+DISCUSSED IN ANY COMMIT. There was no intent to honour.
+
+THE DECISION WAS KIMI'S AND IT OVERRULED MINE. I proposed DELETE-BRANCH — block
+the axes and do not preserve — on the grounds that all seven carry score=None,
+so preserving them creates a growing series of empty rows that reads as history.
+Kimi ruled PRESERVE-AND-MARK, verbatim: "Coverage data — distinguishing 'ran and
+found nothing' from 'did not run' — is exactly what this system has been
+silently destroying. A marker makes the emptiness explicit and searchable;
+deletion makes it invisible. The agreed block on trend, score and resolution for
+these axes prevents the marker from poisoning verdicts." Built as ruled.
+
+KIMI'S FALSIFICATION, run BEFORE any change because it could overturn the
+decision: do two or more consumers already ignore explicit boolean markers in
+this file? THE TEST HAS NO SUBJECT — memory/axis_history.json contains ZERO
+boolean values. Every key across all 1848 points: date 1848, timestamp 1848,
+metrics 1848, score 1848, score_source 927, score_scale 28. No result was
+manufactured for a test whose subject does not exist.
+The question it was ASKING is answerable, and the answer is two-sided:
+  NO consumer reads any flag — so the marker is indeed ineffective as insulation
+  and cannot be relied on, which is why the block ships in the same commit;
+  but ZERO consumers are poisoned by a preserved point, because all eight guard
+  on the DATA — numeric score, non-empty metrics — not on a flag.
+So the "two or more" threshold is not met, and implementation proceeded.
+
+THE EIGHT CONSUMERS, each opened. MY LIST WAS INCOMPLETE WHEN I FIRST GAVE IT —
+the third seat declined to certify completeness, correctly, and a repo-wide
+search then found an eighth:
+  experiments/prophecy/prophecy.py:137  isinstance(v,(int,float)) and not isinstance(v,bool)
+  core/source_trust.py:107              v = (e.get("metrics") or {}).get(metric)
+  core/constancy.py:105                 for name,v in (e.get("metrics") or {}).items()
+  cockpit/server.py:1337                isinstance(h.get("score"),(int,float))
+  cortex_scanner.py:57                  last = entries[-1]; if last.get("score") is not None
+  core/phase_evidence.py:469            len() over a dict — counts AXES, not points
+  memory/auto_threshold.py:27           metrics = snap.get("metrics", {})   <- THE MISSED ONE,
+                                        reaching production via memory/auto_level.py:158
+  experiments/meadow/meadow.py:384      NOT a consumer — reads src.goal_history, a list
+
+WHAT WAS BUILT
+  retain()                    every dated point survives, carrying measured:true/false
+  measured_days()             replaces len(history[axis]) at :290 — counts measured only
+  previous_measured_score()   replaces history[axis][-2]["score"] at :286
+  axis_is_blocked()           an axis whose LATEST point is unmeasured is never scored
+  trends_latest.json          gains points_total and unmeasured per axis, so a display
+                              consumer has something to read without re-deriving it
+_compute_trend at :114 needed no change — [h for h in history[-5:] if h.get("metrics")]
+was already the read-time skip that is the correct pattern, in the same file.
+
+A BUG IN MY OWN FIX, CAUGHT BY MY OWN TEST. previous_measured_score first
+returned scored[-2], which skips a day whenever today is measured. series[-1] is
+ALWAYS today's entry — it is appended or replaced in place at :277-280 — so the
+field means "the last measured score BEFORE today". Corrected.
+
+PROVED AGAINST THE REAL FILE, dry, nothing written:
+  points before 1848 · points after 1848 · DELETED 0
+  all seven preserved, measured=False, blocked=True, history_days=0
+  live file sha256 unchanged
+
+TWO THINGS FOUND THAT NOBODY ASKED FOR, both now their own items:
+  TEN axes are blocked, not seven. The other three hold ZERO points:
+  OPENCLAW_SOLUTIONS, and two keys that are not axes at all —
+  climate_global_risk_review_snapshot_latest and master_snapshot_latest are
+  SNAPSHOT FILENAMES sitting in the axis key space. 10 of 31 keys carry no
+  measurement; 2 of 31 are not axes. -> ITEM 35.
+  cortex_scanner.py:57 reads entries[-1], which is now always the unmeasured
+  point, so those ten axes will vanish from the scan entirely rather than
+  showing as unmeasured. Raised by the third seat. -> ITEM 34.
+
+TESTS: test/test_axis_history_preserves_unmeasured.py, NEW, 11 green, 9 of them
+red before any source changed.
+
+SUITE — SHARED WITH THE OTHER HALF, AND THAT IS A WEAKER CLAIM THAN USUAL.
+ITEM 12(c) and ITEM 33 were implemented in OVERLAP: cockpit/server.py was
+changed while 12(c)'s suite was already running, so the run measured a tree
+containing BOTH. NEITHER ITEM WAS VALIDATED IN ISOLATION. Claude caused this by
+starting 33 before 12(c)'s run finished, and reported it rather than letting the
+log imply two independent verifications.
+  Kimi's ruling (option 4): "Let the suite finish. If clean, commit both
+  separately with honest notation that they shared one run; if dirty, stash
+  server.py and re-run 12(c) alone to attribute. Separation only buys
+  information when a failure actually exists."
+  Kimi's objection, closed by evidence rather than assurance: "a clean shared
+  run means neither item was tested in isolation; an undetected cross-file
+  interaction could ship on a joint positive that future auditors mistake for
+  independent verification." The interaction is real — trend_tracker WRITES
+  measured, server.py READS it — so test/test_measured_flag_seam.py was added,
+  spanning the seam: raw history through retain(), the writer's real output fed
+  to /api/axis/<name>, asserting the flag survives with the SAME MEANING at both
+  ends. It never hand-writes the flag; every other test on both sides does,
+  which is why they could have drifted together and stayed green. 5 green.
+  THE SEAM TEST IS NOT IN THE SHARED RUN EITHER — it was written after that run
+  started. Verified in isolation, and covered by the next full run (ITEM 34's).
+  THE RUN, through tools/suite_gate.py, VALID (lock absent 12:26:35 and
+  12:48:41): 52 failed, 3420 passed, 6 skipped, 1 xfailed in 1326.47s. No
+  failure outside the recorded SUSPENDED_FLAG (27). +21 passing across both
+  items.
+
+
+NOT DONE: nothing renders measured:false. -> ITEM 33.
+
+POST-CYCLE CHECK, to run after the next cycle: the seven 2026-08-29 points on
+those axes must still exist, must carry measured:false, and those axes must be
+reported blocked rather than scored. Any missing means the fix failed.
+Pre-fix baseline for that check: sha256
+1947f1fc381b3d62971e03293d6014a0070425ae3403eb88575bd124e48d9643, 1848 points,
+31 axes.
+
+## ITEM 33 — THE API TRANSMITS measured:false (RENDERING IS ITEM 36)
+STATUS: DONE 2026-08-29. THE API TELLS THE TRUTH AND NO HUMAN SEES IT — ITEM 36
+        is the open half. Scope was narrowed from 'display' to 'transmit' by Kimi.
+GATE: NOCYCLE
+Required by Kimi 2026-08-29, verbatim: "cockpit/server.py must render an axis
+carrying "measured": false as explicitly UNMEASURED rather than filtering it
+from history plots. The marker was chosen to end invisibility; if every consumer
+silently drops it, the defect merely shifts from the write path to the read
+path."
+KIMI'S OWN OBJECTION, recorded because it shaped the split: this turns a
+one-file data fix into a cross-file UI change in a consumer not under review.
+Resolved by SEPARATION rather than by picking a side — 12(c) is one concern in
+one file, this is another.
+  cockpit/server.py:1337, verified by the third seat this turn:
+      history = [h for h in (hist_blob.get(name) or [])
+                 if isinstance(h, dict) and isinstance(h.get("score"), (int,float))]
+  Stop filtering points whose measured flag is false; render the axis as
+  UNMEASURED with the count of unmeasured days. ONE CONCERN, ONE FILE, ONE
+  COMMIT, its own suite run. Nothing else in server.py is touched.
+  memory/trends_latest.json already carries `unmeasured` and `points_total` per
+  axis as of ITEM 12(c), so this does not need to re-derive them.
+
+STATUS NOTE, REQUIRED: THE API TELLS THE TRUTH AND NO HUMAN SEES IT. ITEM 33
+transmits; it does not render. ITEM 36 is the open half — Kimi retreated from
+"display" to "transmit" to keep this item contained, in its words: "I am
+retreating from 'display' to 'transmit' to keep the item contained", with the
+objection "If the front-end ignores the new field, the operator sees no
+difference and the silence persists in the only layer a human actually
+observes." Neither 12(c) nor 33 is the finished thing on its own.
+
+SUITE — SHARED WITH THE OTHER HALF, AND THAT IS A WEAKER CLAIM THAN USUAL.
+ITEM 12(c) and ITEM 33 were implemented in OVERLAP: cockpit/server.py was
+changed while 12(c)'s suite was already running, so the run measured a tree
+containing BOTH. NEITHER ITEM WAS VALIDATED IN ISOLATION. Claude caused this by
+starting 33 before 12(c)'s run finished, and reported it rather than letting the
+log imply two independent verifications.
+  Kimi's ruling (option 4): "Let the suite finish. If clean, commit both
+  separately with honest notation that they shared one run; if dirty, stash
+  server.py and re-run 12(c) alone to attribute. Separation only buys
+  information when a failure actually exists."
+  Kimi's objection, closed by evidence rather than assurance: "a clean shared
+  run means neither item was tested in isolation; an undetected cross-file
+  interaction could ship on a joint positive that future auditors mistake for
+  independent verification." The interaction is real — trend_tracker WRITES
+  measured, server.py READS it — so test/test_measured_flag_seam.py was added,
+  spanning the seam: raw history through retain(), the writer's real output fed
+  to /api/axis/<name>, asserting the flag survives with the SAME MEANING at both
+  ends. It never hand-writes the flag; every other test on both sides does,
+  which is why they could have drifted together and stayed green. 5 green.
+  THE SEAM TEST IS NOT IN THE SHARED RUN EITHER — it was written after that run
+  started. Verified in isolation, and covered by the next full run (ITEM 34's).
+  THE RUN, through tools/suite_gate.py, VALID (lock absent 12:26:35 and
+  12:48:41): 52 failed, 3420 passed, 6 skipped, 1 xfailed in 1326.47s. No
+  failure outside the recorded SUSPENDED_FLAG (27). +21 passing across both
+  items.
+
+
+## ITEM 36 — THE FRONT-END RENDERS UNMEASURED
+STATUS: TODO. ITEM 33's OPEN HALF, recorded so the retreat is not silent.
+GATE: NOCYCLE
+Kimi narrowed ITEM 33 to the data-to-API boundary and said so in its own words:
+"I am retreating from 'display' to 'transmit' to keep the item contained." Its
+objection to its own narrowing, recorded here because it is still unmet: "If the
+front-end ignores the new field, the operator sees no difference and the silence
+persists in the only layer a human actually observes."
+  The API now serves, per axis: history entries each carrying `measured`, plus
+  `measured_len`, `unmeasured_len`, a `known` that counts only measured points,
+  and an `empty_because` that names the unmeasured count. Nothing reads them.
+  ITEM 36 teaches the renderer to surface measured:false as UNMEASURED with the
+  count of unmeasured days. One concern, one file, its own suite run.
+
+## ITEM 34 — cortex_scanner DROPS AN AXIS WHOSE LAST POINT IS UNMEASURED
+STATUS: TODO
+GATE: NOCYCLE
+Raised by the third seat 2026-08-29 and deliberately NOT folded into ITEM 33 —
+it is a different consumer with a different failure.
+  cortex_scanner.py:57  last = entries[-1]; if last.get("score") is not None
+It reads only the LAST entry. Under ITEM 12(c) the last entry for the ten
+blocked axes is always the unmeasured one, so those axes do not merely plot
+short — THEY DISAPPEAR FROM THE SCAN ENTIRELY. This is the sharper of the two
+read-path failures and it is not covered by Kimi's display requirement.
+
+## ITEM 35 — TWO SNAPSHOT FILENAMES ARE SITTING IN THE AXIS KEY SPACE
+STATUS: TODO
+GATE: NOCYCLE
+Found during ITEM 12(c). memory/axis_history.json has 31 top-level keys. Two of
+them are not axes:
+  climate_global_risk_review_snapshot_latest   0 points
+  master_snapshot_latest                        0 points
+and a third, OPENCLAW_SOLUTIONS, is an axis with 0 points. So 10 of 31 keys
+carry no measurement at all and 2 of 31 are filenames that got written as axis
+names. This is a finding about the KEY SPACE, not about trend_tracker: something
+upstream passed a snapshot filename where an axis name was expected. Find what,
+before deciding whether to remove the keys — deleting them without knowing the
+writer means they come back.
 
 ## ITEM 13 — THE UNCOMMITTED-WORK GUARD
 STATUS: TODO

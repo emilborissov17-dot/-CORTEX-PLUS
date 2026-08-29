@@ -1334,9 +1334,25 @@ def api_axis(name: str):
     targets = _read_json(ds.BASE / "config" / "target_config.json", {}) or {}
 
     latest = scores.get(name)
-    history = [h for h in (hist_blob.get(name) or [])
-               if isinstance(h, dict) and isinstance(h.get("score"), (int, float))]
+    # ── UNMEASURED POINTS ARE TRANSMITTED, NOT DROPPED (ITEM 33, 29 Aug 2026) ──
+    # This filter used to require a numeric score, which silently removed every
+    # point ITEM 12(c) preserves — the ones whose metrics came back {} — so the
+    # plot just got shorter and said nothing. The invisibility trend_tracker
+    # stopped writing was recreated here on the way out.
+    #
+    # SCOPE, Kimi: "ITEM 33's scope is the data-to-API boundary." This makes the
+    # API tell the truth. Making a human SEE it is ITEM 36 and is not here.
+    history = [h for h in (hist_blob.get(name) or []) if isinstance(h, dict)]
     points = history[-55:]
+    # measured means "this point carried a measurement". Both shapes of the
+    # absence occur upstream — metrics {} and no metrics key — so trust the flag
+    # trend_tracker writes, and fall back to the score for points written before
+    # ITEM 12(c) existed.
+    def _is_measured(h: dict) -> bool:
+        if isinstance(h.get("measured"), bool):
+            return h["measured"]
+        return isinstance(h.get("score"), (int, float))
+    measured_points = [h for h in points if _is_measured(h)]
 
     # target_config.json is keyed by SUBGOAL, each holding its axes, so the axis
     # is found by walking rather than by a direct lookup. The subgoal it turns
@@ -1359,7 +1375,11 @@ def api_axis(name: str):
     return jsonify({
         "ts": _now(),
         "axis": name,
-        "known": latest is not None or bool(points),
+        # MEASURED points, not all points (Kimi's WATCH, ITEM 33). Once the
+        # filter above stopped dropping unmeasured entries, bool(points) became
+        # true for an axis holding nothing measurable — it would have read as
+        # KNOWN while carrying no measurement, a new lie made by the fix.
+        "known": latest is not None or bool(measured_points),
         "latest": latest,
         "subgoal": subgoal,
         "target": target,
@@ -1377,15 +1397,29 @@ def api_axis(name: str):
         # WHERE THE NUMBER COMES FROM, named per point rather than assumed: an
         # axis scored by the generic fallback and one scored from real metrics
         # must not look alike on a page.
-        "score_source": (points[-1].get("score_source") if points else None),
+        # From the last MEASURED point. points[-1] is now often the unmeasured
+        # one, and reporting its source would advertise 'fallback_metric_mean'
+        # for an axis that has no score at all. Third site of the same class;
+        # found by opening the file rather than named in the brief.
+        "score_source": (measured_points[-1].get("score_source")
+                         if measured_points else None),
         "history": [{"date": h.get("date"), "score": h.get("score"),
-                     "source": h.get("score_source")} for h in points],
+                     "source": h.get("score_source"),
+                     "measured": _is_measured(h)} for h in points],
+        # history_len describes the array above and must always equal it.
+        # measured_len is how much of it is real — a reader needs both, and
+        # conflating them is what made the short plot unexplainable.
         "history_len": len(points),
+        "measured_len": len(measured_points),
+        "unmeasured_len": len(points) - len(measured_points),
         "sources": {"scores": "output/cortex_scores_latest.json",
                     "history": "memory/axis_history.json",
                     "target": "config/target_config.json"},
-        "empty_because": (None if (latest is not None or points) else
-                          "no score and no history on record for this axis"),
+        "empty_because": (
+            None if (latest is not None or measured_points) else
+            ("no score on record, and all %d history point(s) are UNMEASURED — "
+             "the axis ran and measured nothing" % len(points)) if points else
+            "no score and no history on record for this axis"),
     })
 
 
