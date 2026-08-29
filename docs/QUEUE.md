@@ -3071,9 +3071,73 @@ persists in the only layer a human actually observes."
   ITEM 36 teaches the renderer to surface measured:false as UNMEASURED with the
   count of unmeasured days. One concern, one file, its own suite run.
 
-## ITEM 34 — cortex_scanner DROPS AN AXIS WHOSE LAST POINT IS UNMEASURED
-STATUS: TODO
+## ITEM 34 — cortex_scanner: FABRICATION (34-A) AND OMISSION (34-B)
+STATUS: BLOCKED ON A FINDING, 2026-08-29. NEITHER HALF IS LIVE — the module has
+        not run since 13 April. See "THE PREMISE DID NOT HOLD" below. Ordering
+        is back with Kimi; nothing has been changed in cortex_scanner.py.
 GATE: NOCYCLE
+
+THE PREMISE DID NOT HOLD, and the stop-condition fired in a shape nobody
+predicted. 34-B was ordered first because the omission was "live and worsening"
+while the fabrication was proven inert. Checked before changing anything, as the
+stop-condition required:
+    callers of cortex_scanner.scan()          NONE — only `if __name__ == "__main__"`
+    in fast_cycle_runner / cycle_map / cycle_phases   0 occurrences in all three
+    readers of memory/cortex_full_state.json  ONE — cortex_dashboard.html:77, a
+                                              static page opened by hand
+    that file last written                    13 April 2026, 138 days ago
+So the omission is not live either. BOTH halves are defects in a module that
+left the running system at some point and nobody noticed.
+  AND THE TOOL HAD ALREADY SAID SO. tools/orphan_scan.py --report listed
+  cortex_scanner.py::scan under CALLED_ONLY_IN_OWN_MODULE hours before this item
+  was drafted, in output Claude quoted at the time and read past. ITEM 32's
+  batch rule exists for exactly this and would have caught it.
+
+34-A — THE FABRICATION PATH, cortex_scanner.py:62-72
+When the latest point has score None, the else branch averages every numeric
+value in that point's metrics falling between 0 and 100 and publishes the mean
+as the axis score, to state["trends"]["scores"] at :73 and to disk at :166.
+Third seat found this; Claude's first draft quoted lines 55-59 from a truncated
+`sed -n '50,62p'` that cut off at the first line of the branch, asserted a
+mechanism from the truncated read, and reached the right conclusion for the
+wrong reason.
+  BLAST RADIUS, MEASURED TWICE AND INDEPENDENTLY REPRODUCED BY THE THIRD SEAT:
+      ON 2026-08-29 — axes fabricated for today:                    0
+      ON 2026-08-29 — points in ALL history that would have:  0 of 1848
+  NOT A SURVIVORSHIP ARTEFACT: a point with score None and usable metrics has
+  TRUTHY metrics, so ITEM 12(c)'s old filter would have KEPT it. The 1848
+  therefore include every point of that shape that ever existed.
+  THIS ZERO IS DATED AND IT EXPIRES. It is a measurement taken on 2026-08-29,
+  NOT a standing property. The branch fires the moment any axis emits a null
+  score together with a numeric metric in 0..100, and nothing prevents
+  _extract_metrics returning data while _compute_axis_score returns None. A
+  future reader must not read "measured zero" as "cannot happen".
+  KIMI'S DEADLINE, NOT A PROMISE: "A zero-blast-radius fix that takes minutes
+  should not be deferred indefinitely just because a louder defect exists."
+  34-A IS THE IMMEDIATE NEXT ITEM — before ITEM 35, before anything else. IF IT
+  HAS NOT LANDED BY THE END OF THE NEXT WORKING SESSION, THAT IS ITSELF THE
+  FINDING AND IT GETS REPORTED, NOT SILENTLY CARRIED.
+
+34-B — THE OMISSION, cortex_scanner.py:55-59
+It reads only entries[-1]. After ITEM 12(c) the last entry for the ten blocked
+axes is always the unmeasured one, so those axes do not plot short — they leave
+the scan entirely. Real, and not urgent, because of the finding above.
+  Claude's stop-condition stands for whenever this is worked: identify every
+  consumer of state["trends"]["scores"] before back-filling any stale-dated
+  score, and if any treats it as a current reading, report the axis as
+  UNMEASURED with no score instead of back-filling.
+
+FOR KIMI, three questions this raises and Claude did not decide:
+  1. Should 34-A and 34-B merge again? The split was justified by one being live
+     and one dormant; both are dormant.
+  2. Is the real item WHY cortex_scanner stopped running — a module with a
+     __main__, absent from all three cycle maps, and a dashboard still pointing
+     at a 138-day-old file? Retired with the dashboard left dangling, or dropped
+     by accident?
+  3. Does the dated zero change the deadline? 34-A guards a branch in a module
+     that does not execute.
+
+
 Raised by the third seat 2026-08-29 and deliberately NOT folded into ITEM 33 —
 it is a different consumer with a different failure.
   cortex_scanner.py:57  last = entries[-1]; if last.get("score") is not None
