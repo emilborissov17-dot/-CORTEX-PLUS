@@ -1,10 +1,22 @@
 ## STATUS
-last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 12(c) — the series stops deleting itself. HALF-OPEN: nothing renders the marker yet, ITEM 33 is the other half.
-current_item: ITEM 12 — ITEM 21 jumped the queue on Emil's instruction and is now DONE
+last_updated_utc: 2026-08-29T13:10:00Z
+last_item_done: ITEM 38 Part 1 — bd663ec. The checkpoint ratchet's two-unit slack is closed: UNCOVERED_STEP_LIMIT = 31 with an `==` assertion beside the `<=`, both naming every uncovered step. Measured 65 steps / 31 uncovered / limit 31.
+current_item: ITEM 14 — make the compass produce four numbers. NEXT.
 current_state: READY
-gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
-next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
+gate_closed_reason: - (GATE:NOCYCLE open. No memory/cycle.lock, no memory/heartbeat.json; memory/last_cycle_id.txt = 2026-08-29T03:04:01 — the nightly cycle sealed at 05:03 local and today's has already run.)
+next_action_needed_from_claude: ITEM 14, ruled in full by Kimi and by Emil on 2026-08-29 — K2 becomes NOT_WIRED with a detail-preserving shape, K2_NOT_WIRED_UNTIL = 2026-10-01 with a sibling reason string a test binds to, all five declaration sites, non-fatal on raise, and the seven tools/compass.py entries come OUT of config/orphan_baseline.json in the same commit. Expect the compass to report 1 of 4, not 2 — that is the correct number. ITEM 37 is HELD behind ITEM 14's real output. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py`, never bare pytest. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
+
+THE BASELINE IS 52-53, NOT 29. The number in STANDING RULES said 29 until
+2026-08-29 and that was three amendments out of date. Of the 53 recorded at
+9b85408, 27 are SUSPENDED_FLAG and 1 is test_brain_scan's SCHEDULED_WRITER coin
+flip, which lands green or red with the minute hand. Compare the FAILED LIST
+id-by-id, never the count.
+
+WHAT LANDED SINCE THIS BLOCK LAST SPOKE, in order, all pushed on
+feature/lidaction-guard: 3ec1b26 (ITEM 12c), 11bf1a4 (ITEM 33), a0ffcea (ITEM 34
+premise overturned), ad121e3 (ITEM 34-A), 9b85408 (ITEM 34 step 2 + ITEM 32
+baseline), bd663ec (ITEM 38 Part 1 + the handover). Read
+docs/HANDOVER_2026-08-29.md with this file.
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -44,6 +56,8 @@ Keep the state column current — it is the only place a human should have to lo
 | 30 | tools/verify_claims.py — how much can be contradicted at all | RUN 2026-08-29, list delivered | READONLY |
 | 31 | tools/stale_copy_scan.py — config values retyped into code | RUN 2026-08-29, list delivered | READONLY |
 | 32 | THE BATCH RULE — a batch closes only at zero NEW orphans | STANDING | NOCYCLE |
+| 37 | RE-QUALIFY — the 20 TRUSTED sources were promoted under a bug | HELD behind ITEM 14's real output | NOCYCLE |
+| 38 | The checkpoint ratchet carried two units of slack | Part 1 DONE 2026-08-29, bd663ec · Part 2 TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -72,7 +86,56 @@ re-derived (ITEM 25's first task).
    the words "this item is written by Claude after the previous report". Do not
    invent its content.
 7. New findings do NOT become items while an item is running. If you find something
-   outside the current item's scope, record it under a "## HOLDING" heading at the end
+   outside the current item's scope, record it under a "## ITEM 37 — RE-QUALIFY: THE 20 TRUSTED SOURCES WERE PROMOTED UNDER A BUG
+STATUS: HELD, and the hold is deliberate. Kimi ruled RE-QUALIFY — a demotion is
+APPENDED to memory/source_lifecycle_ledger.jsonl as a new event, never a rewrite
+of the 20 promotion rows. Appending is a new decision with its own date;
+rewriting would erase the fact that the system once believed them.
+GATE: NOCYCLE
+HELD BEHIND ITEM 14. Do not append the demotion until ITEM 14 has produced a
+real memory/compass_latest.json from a real cycle. Reason: the demotion must be
+visible as `withdrawals: 20` beside a `last_transition_ts` in K2's detail, and
+that field does not exist until ITEM 14 lands. Demoting first would produce a
+drop from 20 to 0 that no reader could distinguish from the wiring change.
+
+THE FINDING THAT MADE THE HOLD SAFE, measured 2026-08-29, UNTRUNCATED — 29
+matches for the TRUSTED label: 12 comments, 7 tools/compass.py reporting, 5
+self_mirror reporting, 3 scripts/openclaw_axis_worker.py, and 4 belonging to
+alignment/civilization_guard.py's own unrelated TRUSTED_SOURCES set. Every
+downstream reader points at openclaw_queue/axis_feeds.jsonl; NONE reads
+external_feeds.jsonl. So demoting all 20 breaks nothing — Kimi's
+self-denial-of-service objection does not fire — and the same fact is why K2 is
+being marked NOT_WIRED: the label has never gated anything that runs.
+
+## ITEM 38 — THE CHECKPOINT RATCHET CARRIED TWO UNITS OF SLACK
+STATUS: Part 1 DONE 2026-08-29, bd663ec. Part 2 TODO.
+GATE: NOCYCLE
+
+PART 1, DONE. test/test_checkpoint_wiring.py: UNCOVERED_STEP_LIMIT = 31 as a
+named constant with TWO assertions — `<=` for rot (a step stopped recording a
+checkpoint) and `==` for slack (the limit sits above the count, which is room to
+add an uncovered step without the test firing). Both messages name every
+uncovered step, sorted. Measured: 65 steps, 31 uncovered, limit 31.
+
+WHY, AND IT IS NOT HYPOTHETICAL. The limit was 33 while the true count was 31.
+ITEM 7.1's measurement_honesty and ITEM 11's resolve_ideas were both added with
+a bare try/except, both record nothing, and both were COMMITTED AND PUSHED while
+this test stayed green — they took the count from 31 to exactly 33 and the
+assertion never fired. Only the third, ITEM 34's cortex_scan, pushed it to 34
+and tripped the wire. Two defects shipped inside two units of headroom.
+
+LOWERING THE NUMBER IS NORMAL; RAISING IT IS NOT. A rise means a step stopped
+recording, and the commit that raises it must name the step and why that is
+acceptable. Restoring slack to make a red test green is the defect, not the fix.
+
+PART 2, TODO — THE SAME DEFECT WHEREVER ELSE A LIMIT SITS ABOVE ITS COUNT.
+Part 1 fixed one ratchet. The finding is general: any threshold constant in this
+repo that is not equal to the thing it bounds is a hiding place of exactly that
+size. Enumerate them, by AST, and decide per constant whether it is a genuine
+ceiling (a budget, a timeout) or a ratchet that should be pinned to `==`.
+Do not assume the answer is the same for all of them.
+
+## HOLDING" heading at the end
    of this file, note it in the commit body, and KEEP WORKING. Do not stop to ask
    whether to fold it in — the answer is always no. Claude promotes HOLDING entries to
    numbered items after the current item reports. Nothing is lost, nothing jumps the queue.
@@ -99,8 +162,13 @@ re-derived (ITEM 25's first task).
   default and needs an explicit --write.
 - Tests never touch live state. A fixture must prove the real files byte-identical
   after the test run.
-- Read the suite summary line and diff the FAILED list against the baseline of 29
-  before every commit.
+- Read the suite summary line and diff the FAILED LIST, id-by-id, against the
+  most recent VALID record in memory/suite_runs.jsonl. THE COUNT IS NOT THE
+  GATE: 52-53 as of 2026-08-29, of which 27 are SUSPENDED_FLAG and 1 is a coin
+  flip. The older wording said "the baseline of 29" and stayed there through
+  three amendments; earlier items quote 29 as the number of their own day and
+  are left alone, because a record of what was believed then is not a stale
+  instruction now. This line is the instruction, and it runs before every commit.
 
 ## PUSH RULE
 AMENDED BY EMIL, 28 August 2026. Condition 1 was "the FAILED list is
