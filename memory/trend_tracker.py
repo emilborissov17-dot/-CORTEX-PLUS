@@ -107,6 +107,100 @@ def _extract_metrics(snapshot: Dict, axis: str) -> Dict[str, float]:
 
     return metrics
 
+def is_measured(entry: Dict) -> bool:
+    """Did this point actually carry measurements?
+
+    Both shapes occur. The LIVE file holds "metrics": {} — a present key with an
+    empty dict — not an absent key, so a check written against `"metrics" not in
+    entry` matches nothing on real data. `.get("metrics")` is falsy for {}, None
+    and absent alike, which is what the deleted filter relied on and what this
+    keeps, minus the deleting.
+    """
+    return bool(isinstance(entry, dict) and entry.get("metrics"))
+
+
+def retain(history: Dict) -> Dict:
+    """Every dated point survives, and says whether it measured anything.
+
+    WHAT THIS REPLACED, and why it is the whole item (ITEM 12c, 29 Aug 2026):
+
+        for axis in list(history.keys()):
+            history[axis] = [e for e in history[axis] if e.get("metrics")]
+
+    That line loaded the file, dropped every point whose metrics were falsy, and
+    _save_history wrote the survivors back over the original — a full rewrite,
+    not an append. Measured on the live file 2026-08-29: seven axes held exactly
+    ONE point each, written by one cycle and deleted by the next. BODY_SCAN,
+    DEEP_TIME_RISKS_REVIEW, GENERAL_SELF_REVIEW, GOAL_PROGRESS_REVIEW,
+    HYPERCLAW_PLAN, LONG_TERM_FUTURE_REVIEW and PLANETARY_POTENTIAL_REVIEW have
+    never had a history at all, and every trend, score and resolution computed
+    for them ran over a series that empties itself.
+
+    It arrived in commit 14ca73c, 2026-06-14, "feat: add QWEN architecture as
+    base" — a 226-line machine-authored bulk import, already at line 166. No
+    commit has ever discussed it. There is no intent to honour.
+
+    Kimi, binding, 2026-08-29: "Coverage data — distinguishing 'ran and found
+    nothing' from 'did not run' — is exactly what this system has been silently
+    destroying. A marker makes the emptiness explicit and searchable; deletion
+    makes it invisible."
+    """
+    out: Dict = {}
+    for axis, entries in history.items():
+        if not isinstance(entries, list):
+            out[axis] = entries
+            continue
+        kept = []
+        for e in entries:
+            if not isinstance(e, dict):
+                continue
+            kept.append({**e, "measured": is_measured(e)})
+        out[axis] = kept
+    return out
+
+
+def measured_days(series: List[Dict]) -> int:
+    """How many days actually carry measurement.
+
+    NOT len(series). Line 290 published len(history[axis]) as "history_days",
+    which was harmless while unmeasured points were being deleted and becomes a
+    lie the moment they are kept. No consumer of axis_history.json reads any
+    flag — checked across all eight readers — so the marker cannot be left to
+    defend this on its own.
+    """
+    return sum(1 for e in series if is_measured(e))
+
+
+def previous_measured_score(series: List[Dict]) -> Optional[float]:
+    """The last measured score BEFORE the most recent measured one.
+
+    NOT series[-2]["score"]. That indexed blindly and, with unmeasured points
+    preserved, [-2] can be a point whose score is None.
+
+    series[-1] is ALWAYS today's entry — it is appended, or replaced in place
+    when the date already matches, just below. So "the previous score" means the
+    last measured score among everything BEFORE today, which is what [-2] gave
+    while unmeasured points were being deleted. Taking scored[-2] instead would
+    skip a day whenever today is measured.
+    """
+    earlier = series[:-1]
+    scored = [e for e in earlier
+              if is_measured(e) and isinstance(e.get("score"), (int, float))]
+    return float(scored[-1]["score"]) if scored else None
+
+
+def axis_is_blocked(series: List[Dict]) -> bool:
+    """True when this axis must not be scored or resolved.
+
+    An axis whose LATEST point measured nothing is reported as unmeasured, never
+    scored. The marker without the block is exactly the fabrication Kimi warned
+    of: a growing series of empty rows that reads as history.
+    """
+    if not series:
+        return True
+    return not is_measured(series[-1])
+
+
 def _compute_trend(history: List[Dict]) -> str:
     if len(history) < 2:
         return "INSUFFICIENT_DATA"
@@ -237,8 +331,7 @@ def run() -> Dict:
 
     history = _load_history()
 
-    for axis in list(history.keys()):
-        history[axis] = [e for e in history[axis] if e.get("metrics")]
+    history = retain(history)
 
     engine_scores = _load_engine_scores()
     if engine_scores:
@@ -283,11 +376,13 @@ def run() -> Dict:
         trends[axis] = {
             "trend": trend,
             "score_today": score,
-            "score_prev": history[axis][-2]["score"] if len(history[axis]) >= 2 else None,
+            "score_prev": previous_measured_score(history[axis]),
             "score_source": score_source,
             "score_scale": "0-100",
             "metrics_count": len(metrics),
-            "history_days": len(history[axis]),
+            "history_days": measured_days(history[axis]),
+            "points_total": len(history[axis]),
+            "unmeasured": axis_is_blocked(history[axis]),
         }
 
         trend_icon = "UP" if trend == "IMPROVING" else "DOWN" if trend == "DETERIORATING" else "->"
