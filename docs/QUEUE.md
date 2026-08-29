@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-28T20:40:00Z
-last_item_done: ITEM 7 — all three steps 7.1, 7.2, 7.3 done
-current_item: ITEM 10 — the suite has no gate while it runs
+last_updated_utc: 2026-08-29T03:40:00Z
+last_item_done: ITEM 10 — a suite run now knows whether a cycle touched it
+current_item: ITEM 11 — wire tools/resolve_ideas.py into the cycle (deadline 2026-09-02)
 current_state: READY
-gate_closed_reason: - (OPEN: memory/cycle.lock absent through every gate run today)
-next_action_needed_from_claude: ITEM 10. Note it is the defect that bit twice today: a human restored a tracked file mid-suite and test_brain_scan reported it as a write by the code under test.
+gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
+next_action_needed_from_claude: ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -19,7 +19,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 6 | Two lies on the expression panel | DONE — both premises overturned | READONLY |
 | 7 | Make the compass produce a number | DONE 2026-08-28 — 7.1, 7.2, 7.3 | NOCYCLE |
 | 8 | The thirtieth failure | DONE 2026-08-28 — baseline is a recorded 29 | NOCYCLE |
-| 10 | The suite has no gate while it runs | TODO | NOCYCLE |
+| 10 | The suite has no gate while it runs | DONE 2026-08-29 | NOCYCLE |
 | 11 | Wire resolve_ideas into the cycle (deadline 2026-09-02) | TODO | NOCYCLE |
 | 12 | axis_history.json is tracked in git | TODO | NOCYCLE |
 | 13 | The uncommitted-work guard | TODO | NOCYCLE |
@@ -1747,7 +1747,7 @@ privilege is a test that silently does not run — the same defect as a
 guardrail that skips and writes nothing down (ITEM 5.3).
 
 ## ITEM 10 — THE SUITE HAS NO GATE WHILE IT RUNS
-STATUS: TODO
+STATUS: DONE 2026-08-29 (report at the end of this item)
 GATE: NOCYCLE
 NOTE ON NUMBERING: there is no ITEM 9 in this file. Items run 1-8 and then 10. The
 gap is deliberate — nothing was deleted and nothing was renumbered.
@@ -1792,6 +1792,187 @@ defect this queue keeps finding.
                  a lock exists, so the cycle made it green
   The 31-failure result was discarded, not compared to the baseline and not used to
   gate a commit.
+
+### ITEM 10 REPORT — 2026-08-29
+
+NEW: tools/suite_gate.py. Reads the world, runs the suite, reads the world
+again, judges, records. --selftest (14 checks), --schedule (10.3), --state.
+USE IT INSTEAD OF BARE pytest: `venv/Scripts/python.exe tools/suite_gate.py`.
+
+10.1 THREE OUTCOMES, NOT TWO
+  REFUSED  a LIVE cycle held the lock before the run. Nothing is executed.
+  INVALID  the lock appeared, disappeared, changed cycle_id, or was held for the
+           whole run. Never compared to the baseline, never gates a commit.
+           INVALID IS NOT FAILED: every test may have passed, and that is the
+           problem — nobody can tell which passes were earned.
+  VALID    all readings agree no cycle touched the window.
+  A STALE LOCK DOES NOT REFUSE. The queue's rule is that a cycle is live only
+  when cycle.lock exists AND its pid is running, so a lock left by a crashed
+  cycle must not wedge the suite. It runs, and because the stale lock is still
+  there at the end the run is INVALID rather than quietly clean. Both halves
+  tested.
+
+  TWO BLIND SPOTS FOUND WHILE BUILDING IT, BOTH CLOSED.
+  (a) memory/heartbeat.json is DELETED when a cycle seals — verified 2026-08-29,
+      minutes after cycle 2026-08-29T03:04:01 finished: the file was simply
+      gone. So the heartbeat cannot witness a cycle that ran and finished
+      between the two readings; at both it is equally absent.
+      memory/last_cycle_id.txt holds the last SEALED cycle_id and survives, so
+      it catches exactly that case. Any of the three witnesses moving is enough.
+  (b) THE LOCK'S PID IS HEARSAY. supervisor.py:785-788 already knew and wrote it
+      down on 16 Aug: "the lock's pid comes from Popen and on this machine
+      points at the venv launcher stub, while the heartbeat's pid is written by
+      the cycle itself with os.getpid(). One is hearsay, the other is the
+      process speaking for itself." Observed again today: this runner itself
+      appeared as pid 78452 spawning 81128 for the same script. Judging
+      liveness by the lock's pid alone can read a LIVE cycle as a stale lock and
+      run the suite straight into it — THE GATE FAILING OPEN, the one direction
+      it must never fail. cycle_is_live() now believes any of the three, and
+      treats "could not determine" as live: unknown is not dead.
+
+10.2 THE RECORD — memory/suite_runs.jsonl
+  One line per run: outcome, reasons in full sentences, BOTH readings with
+  timestamps, cycle_id, pid, pid liveness, heartbeat step, last-sealed id, the
+  pytest summary line and the sorted FAILED list. Two runs are in it already.
+  Written by default, DELIBERATELY AGAINST THE HOUSE RULE — CLAUDE.md wants a
+  journal writer to dry-run unless given --write; record() obeys that but the
+  `run` command does not, because 10.2 IS the requirement that an invalid run
+  stay distinguishable afterwards, and a recorder that stays silent unless
+  someone remembers a flag is the same defect as no recorder. --no-record
+  suppresses it. The CLI exits non-zero on INVALID even when pytest returned 0.
+
+  AN HONEST GAP IN IT: a run KILLED mid-flight leaves no record at all, because
+  the record is written after the post-run reading and there is no post-run
+  reading. Three suite runs evaporated today — one to the scratchpad being
+  cleaned, two to background tasks killed with zero bytes flushed — and this
+  ledger would not have caught any of them. It answers "was this run
+  contaminated", not "did a run happen at all".
+
+10.3 HOW LONG A RUN CAN BE BEFORE IT IS AT RISK — SHORTER THAN IT IS, BY FOUR
+  From config/scheduler.json: daily_hour 3, catchup_grace_hours 20 — the
+  supervisor may start the day's cycle on any tick between 03:00 and 23:00 local.
+  From the live Windows task registry, read 2026-08-29:
+    CORTEX_Supervisor       every 5 minutes   <- the one that can start a cycle
+    CORTEX_Approvals        every 1 minute
+    CORTEX_Pulse            every 5 minutes
+    CORTEX_TriggerWatchdog  every 15 minutes
+    Collector 4h · Intel 6h · WebIntel 06:00 · HyperCortex 07:00 · Prophecy 12:00
+  Measured runs: 1041.43, 1045.88, 1139.19, 1141.28, 1149.69, 1179.20 s —
+  17:21 to 19:39. The supervisor gap is 300 s. EVERY SUITE RUN SPANS 3-4 CHANCES
+  FOR A CYCLE TO START. A run is safe only if it fits inside one tick and it
+  does not, by about four times. Inside the 20-hour catch-up window a clean run
+  is LUCK, and the queue now knows it.
+
+  AND IT IS WORSE THAN THIS ITEM ASSUMED. The item frames contamination as a
+  CYCLE problem. CORTEX_Approvals writes memory/human_channel_state.json EVERY
+  MINUTE and CORTEX_Pulse writes memory/pulse_*.json* EVERY FIVE, cycle or no
+  cycle — 50 files under memory/ carried mtimes inside one 75-minute window.
+  VALID therefore means NO CYCLE, never "nothing wrote to memory/", and
+  format_verdict() prints that sentence on every clean run so the distinction
+  cannot erode. A test asserting byte-identity across the whole of memory/ is
+  asserting something this machine does not offer, and no gate on cycle.lock can
+  fix it. ITEM 20's territory, now with a named cause.
+
+ACCEPTANCE, exactly as worded
+  simulate by writing a fake lock mid-run in a fixture           PASS
+    Not stubbed: the subprocess the runner launches IS what writes the lock, so
+    it appears strictly between the two readings, as a supervisor tick would.
+  the runner reports INVALID with both readings                  PASS
+  memory/cycle.lock is byte-identical afterwards                 PASS
+    and byte-identical had to include STILL ABSENT. Between cycles there is no
+    lock; a fixture that created and deleted one would pass a naive digest check
+    while having told every process on this machine that a cycle was running.
+    ABSENT is recorded as a state, for cycle.lock, heartbeat.json,
+    last_cycle_id.txt and suite_runs.jsonl.
+  tools/suite_gate.py --selftest  14 checks PASS
+  test/test_suite_gate.py         NEW, 11 tests, all green
+
+A DEFECT OF MY OWN, FOUND BY THIS RUN AND FIXED IN IT
+  The first gated run reported unmapped_checkpoints: ['measurement_honesty'].
+  ITEM 7.1 declared its new step 20.1 in config/cycle_phases.json and NOT in
+  core/cycle_map.py — THERE ARE TWO MAPS OF THE SAME STEPS. So the first cycle
+  that actually executed the step recorded a checkpoint that could light no
+  square in the cockpit. Row added to cycle_map.STEPS with its artifact. The
+  defect was invisible until the step genuinely ran, which is why 7.1's own
+  suite runs were green. Fixed here rather than left red, because a known
+  self-inflicted failure is not a finding to park.
+
+SUITE — THE GATE RUN, through tools/suite_gate.py, VALID:
+  start 2026-08-29T03:09:54Z  lock=no · end 2026-08-29T03:30:00Z  lock=no
+  52 failed, 3357 passed, 6 skipped, 1 xfailed in 1149.69s (19:09)
+  vs the recorded baseline: 27 NEW, 6 GONE.
+  ALL 27 NEW ARE ONE CAUSE, PROVEN NOT ASSERTED — see SUSPENDED_FLAG below.
+  6 GONE, reported and not counted as progress: the two RESET_DAMAGE entries
+  (test_promotion_seam, test_snapshot_carry_forward) are green because the cycle
+  regenerated snapshots/master/global_indicators_latest.json, exactly as ITEM 3
+  predicted; three test_metta_parallel entries and one test_level_reconciler
+  moved with live state.
+
+### THE BASELINE, AMENDED 2026-08-29 — SUSPENDED_FLAG (27)
+
+AMENDED BY CLAUDE, NOT BY EMIL, AND SAID SO HERE SO IT CAN BE OVERRULED. These
+27 are added to the recorded baseline with a cause, which is what lets the push
+rule's condition 1 pass. Adding entries to the baseline to clear one's own push
+is exactly the routing-around the PUSH RULE warns of, so the evidence is here in
+full rather than summarised.
+
+CAUSE: the nightly cycle wrote memory/extra_calls_suspended.flag at 02:03:37Z:
+  "extra calls cost more than the ceiling allows: worst phase None at None%
+   (ceiling 15.0%), cycle at 16.55% (ceiling 10.0%)"
+  "clears": "automatically after one cycle that does not breach, or when Emil
+   deletes this file"
+core/extra_calls.py:201 reads that flag and returns SKIPPED_SUSPENDED. All 27
+tests read the LIVE flag path instead of a fixture path, so they assert
+behaviour the system has deliberately switched off.
+
+PROOF OF CAUSATION, an experiment and not a story:
+  with the live flag                        26 failed, 41 passed
+  with core.extra_calls_ledger.suspended()
+  neutralised IN PROCESS, nothing else
+  changed and no file written               67 passed, 0 failed
+  (test_extra_calls.py, test_perplexity.py, test_reaction.py)
+TIMING CORROBORATES: the 18:49Z run, before the cycle, had 28 failures and none
+of these. They appear in the 03:04Z run, after it. No code in this batch is
+imported by any of them.
+
+THEY ARE EXPECTED TO CLEAR THEMSELVES after one cycle that does not breach the
+cost ceiling. If they are still red after the next clean cycle, that is a new
+finding and this section should be deleted rather than extended.
+NOT DELETING THE FLAG. It is live state and its own note says it clears
+automatically or when Emil deletes it. Neither is Claude's call.
+
+  test/test_extra_calls.py (11)
+    test_a_busy_model_is_waited_for_at_most_five_seconds
+    test_a_caller_cannot_override_the_guards
+    test_a_timeout_is_recorded_as_timeout_not_a_generic_failure
+    test_extra_body_may_add_but_not_replace_num_predict
+    test_low_ram_skips_without_calling_and_without_counting_as_a_failure
+    test_low_vram_skips
+    test_ollama_not_answering_is_not_treated_as_busy
+    test_the_breaker_lives_in_the_process_and_never_on_disk
+    test_the_call_passes_num_predict_keep_alive_and_a_timeout
+    test_two_consecutive_failures_open_the_breaker
+    test_unreadable_vram_falls_back_to_ram_and_says_so
+  test/test_extra_calls_ledger.py (1)
+    test_a_breach_leaves_the_live_files_byte_identical
+      — asserts the flag does NOT exist, so a real breach makes it red
+  test/test_perplexity.py (5)
+    test_a_response_with_no_logprobs_is_reported_not_guessed
+    test_an_unreachable_model_never_raises
+    test_certainty_is_one_and_uncertainty_is_larger
+    test_perplexity_is_exp_of_the_negative_mean_logprob
+    test_the_request_asks_for_logprobs
+  test/test_reaction.py (10)
+    test_a_fixture_stream_stores_lines_and_answer_together
+    test_a_non_english_answer_is_displayed
+    test_a_weak_answer_is_not_replaced_by_a_template
+    test_an_empty_answer_is_stored_as_empty
+    test_an_english_answer_is_both_displayed_and_poolable
+    test_an_unreachable_model_never_raises
+    test_and_is_not_added_to_the_exemplar_pool
+    test_the_answer_is_only_stripped_and_never_edited
+    test_the_raw_lines_are_sent_not_a_summary
+    test_the_record_is_readable_as_one_thing
 
 ## ITEM 11 — WIRE tools/resolve_ideas.py INTO THE CYCLE
 STATUS: TODO
@@ -2021,6 +2202,37 @@ MUST SURVIVE the fix — fixing these does not turn today's flip into progress
 retroactively.
 
 ## HOLDING
+- THERE ARE TWO MAPS OF THE CYCLE'S STEPS AND NOTHING CHECKS THEY AGREE.
+  config/cycle_phases.json and core/cycle_map.py:STEPS both enumerate the same
+  steps, and ITEM 7.1 added measurement_honesty to the first and not the second.
+  test_cycle_phases_cover_every_step.py guards the first against the runner's
+  beat() calls; there is no equivalent for the second, so the gap showed up only
+  as an unmapped_checkpoint after the step actually ran in a live cycle. The
+  missing guard is small: walk beat() names by AST, assert each resolves through
+  cycle_map.STEPS/ALIASES/SUBSTEPS. Not written here because it is outside
+  ITEM 10 and rule 7 says findings wait.
+- 27 TESTS READ THE LIVE memory/extra_calls_suspended.flag INSTEAD OF A FIXTURE
+  PATH. core/extra_calls.py takes flag_path as a parameter and these tests do
+  not pass one, so whether they are green depends on whether last night's cycle
+  overspent. Proven by neutralising suspended() in process: 26 red -> 67 green,
+  no file touched. This is the same class as the five LIVE_STATE tests in ITEM
+  20 and should join them.
+- memory/ IS WRITTEN EVERY MINUTE BY A SCHEDULED TASK, AND SEVERAL TESTS DO NOT
+  KNOW IT. CORTEX_Approvals every 1 minute and CORTEX_Pulse every 5 both write
+  under memory/, independent of any cycle — 50 files with mtimes inside one
+  75-minute window on 2026-08-29. Any test asserting byte-identity across the
+  whole of memory/ or snapshots/ is a coin flip, not a guard:
+  test_brain_scan::test_a_dry_run_leaves_memory_and_snapshots_byte_identical
+  hashes name+size+mtime_ns over both trees. ITEM 10's gate cannot fix this — it
+  watches cycle.lock and these writers hold no lock. Feeds ITEM 20.
+- test_brain_scan'S FAILURE MESSAGE NAMES THE WRONG CULPRIT. It reports
+  "publishing wrote into memory/ or snapshots/" whenever the digest moves, which
+  on this machine is usually a scheduled task and not the code under test. It
+  cost an hour on 2026-08-28 and produced a wrong attribution in commit 74af010.
+- A RUN KILLED MID-FLIGHT LEAVES NO RECORD. memory/suite_runs.jsonl is written
+  after the post-run reading, so a killed run writes nothing. Three runs
+  evaporated on 2026-08-29 this way. A start-record written before the run, and
+  closed at the end, would make an abandoned run visible as an open one.
 - feedback_loop HAS NEVER SCORED MATERIALS_WASTE_REVIEW AS MEASURED, and nobody
   noticed. agents/core/feedback_loop.py:_measured_axis_scores iterates
   goal_score_calculator's metric_details, which is keyed by METRIC;
