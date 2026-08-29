@@ -231,6 +231,27 @@ def on_beat(step: str, index: str | None = None,
         _open_phase, _open_report = None, None
 
 
+def note_failure(step: str, exc) -> None:
+    """Tell the open phase report that a step RAISED (ITEM 21c, 29 Aug 2026).
+
+    THE SEAM THAT WAS MISSING. on_step() records step_ok() at beat() time, which
+    is before the step does anything, so steps_run has always meant "steps
+    STARTED" and nothing ever reported an outcome. Measured on 2026-08-29: 133
+    phase reports on disk, ZERO naming a failed step, while the same night's log
+    carried "feedback_loop -> FAILED: TypeError". PhaseReport.step_failed()
+    existed the whole time with no live caller but "<phase aborted>".
+
+    FAIL-OPEN, and that is not a detail: this is called from _run()'s except
+    branch, so if it raised it would replace one failed step with two.
+    """
+    try:
+        if _open_report is not None:
+            _open_report.step_failed(step, exc)
+    except Exception as e:  # noqa: BLE001
+        print(f"[PHASE] could not record the failure of {step}: "
+              f"{type(e).__name__}: {e}")
+
+
 def close_last() -> None:
     """At the end of the cycle, close whatever is still open."""
     global _open_phase, _open_report

@@ -162,7 +162,14 @@ class PhaseReport:
         self.steps_run.append(name)
 
     def step_failed(self, name: str, exc: BaseException | str) -> None:
-        self.steps_run.append(name)
+        # NOT append-always (ITEM 21c, 29 Aug 2026). core/phase_tracker.py calls
+        # step_ok() from on_step(), which fires at beat() time — BEFORE the step
+        # runs — so a failure ALWAYS arrives second, for a step already in
+        # steps_run. Appending again would list it twice and make steps_run
+        # disagree with itself. The failure corrects the record; it does not add
+        # to it.
+        if name not in self.steps_run:
+            self.steps_run.append(name)
         self.steps_failed.append({
             "step": name,
             "error": f"{type(exc).__name__}: {exc}" if isinstance(exc, BaseException)

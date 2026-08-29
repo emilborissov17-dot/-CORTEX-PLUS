@@ -1,7 +1,7 @@
 ## STATUS
 last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 23 · the hit rate is now printed restricted (ITEM 27's standing order, applied early)
-current_item: ITEM 12, per "continue in table order". ITEM 21 is a live crash still sitting behind it — Emil's call whether it jumps.
+last_item_done: ITEM 21 — the crash is fixed, and the reason nobody saw it is fixed too
+current_item: ITEM 12 — ITEM 21 jumped the queue on Emil's instruction and is now DONE
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
 next_action_needed_from_claude: ITEM 21 is a LIVE CRASH found 2026-08-29 (feedback_loop dies on a dict level word, killing goal_score_history writes); it sits after ITEM 11 in the table but may deserve to jump. Otherwise ITEM 11. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py` from now on — bare pytest gives no verdict on whether a cycle touched the window. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
@@ -30,11 +30,12 @@ Keep the state column current — it is the only place a human should have to lo
 | 18 | Retarget the interval head at the world | TODO | NOCYCLE |
 | 19 | Record score provenance | TODO | NOCYCLE |
 | 20 | The five LIVE_STATE tests | TODO | NOCYCLE |
-| 21 | feedback_loop dies on a dict level word (LIVE CRASH) | TODO | NOCYCLE |
+| 21 | feedback_loop dies on a dict level word (LIVE CRASH) | DONE 2026-08-29 | NOCYCLE |
 | 23 | Three defects in tools/resolve_ideas.py | DONE 2026-08-29 | NOCYCLE |
 | 25 | tools/orphan_scan.py — entrypoints nothing calls | TODO | NOCYCLE |
 | 26 | tools/attention_ratio.py — world vs self | TODO | NOCYCLE |
 | 27 | tools/direction_patch.py — replace the two-point rule (spec given as "ITEM 24") | TODO | NOCYCLE |
+| 28 | K2 gate — hypothesis resolution must not feed source trust yet | PRE-REGISTERED 2026-08-29 · REVIEW 2026-10-01 | READONLY |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -2009,8 +2010,10 @@ automatically or when Emil deletes it. Neither is Claude's call.
     test_the_record_is_readable_as_one_thing
 
 ## ITEM 21 — feedback_loop DIES ON A LEVEL WORD THAT IS A DICT
-STATUS: TODO
+STATUS: DONE 2026-08-29 (report at the end of this item)
 GATE: NOCYCLE
+JUMPED THE QUEUE on Emil's instruction 2026-08-29: "a crash in a running cycle
+outranks every audit item behind it." Worked before ITEM 12.
 PROMOTED FROM HOLDING 2026-08-29, after ITEM 10 reported, per rule 7. Found while
 checking the K1 number the cycle produced. IT IS A LIVE CRASH, not an audit
 finding, and it arguably deserves to jump the queue — that ordering call is left
@@ -2267,6 +2270,96 @@ any source change. The two fragility tests are a matched pair — one series bui
 so the last point flips the verdict, one built so it does not — because a flag
 that is always true tests nothing.
 
+### ITEM 21 REPORT — 2026-08-29
+
+(a) THE CRASH — FIXED
+  agents/core/feedback_loop.py:47, `if val in level_map`, where val came from
+  snap.get("current_level"). For DEEP_TIME_RISKS_REVIEW that field is
+      {"asteroid": "HIGH", "supervolcano": "UNKNOWN", "astrophysical": "MEDIUM"}
+  and an unhashable key cannot be looked up, so the whole step died.
+  A level that is not a string is now not a level: named on stdout with its
+  SHAPE and its value, skipped, and the loop carries on. The same fail-per-axis
+  discipline _measured_axis_scores got on 20 Aug, when one None silenced all
+  measurement, applied to the other loop in the same file.
+
+  PROVEN AGAINST THE LIVE DATA, not just the fixture. agents.core.feedback_loop
+  .run() with _save_json stubbed, on today's real master snapshot:
+      before: TypeError at feedback_loop.py:47, nothing written
+      after : RAN TO COMPLETION — no exception
+              [FEEDBACK] DEEP_TIME_RISKS_REVIEW.current_level is a dict, not a
+                        level word — no level taken from it ...
+              [FEEDBACK] axis scores: 13 measured / 4 LLM-level
+              [FEEDBACK_LOOP] Axes: 17 | Avg score: 60.91/100
+              would have written: feedback_log.json, goal_score_history.json
+  Those are the two files that stopped being written. goal_score_history.json
+  and feedback_log.json byte-identical throughout (writes stubbed).
+
+(b) WHAT DEEP_TIME_RISKS_REVIEW'S LEVEL IS — DELIBERATELY NOT DECIDED
+  The item says do not invent a reduction silently, and nothing here does. A
+  per-hazard breakdown is RICHER than a word; collapsing it to one — worst?
+  weighted? highest-confidence? — is a scoring decision with consequences for
+  the composite, and making it inside a crash fix would be the defect wearing a
+  fix's clothes. The axis now yields NO level, says so by name every cycle, and
+  waits. FOR A HUMAN: either agree a reduction, or mark the axis structurally
+  multi-valued so nobody keeps trying to score it as one number.
+
+(c) A STEP THAT RAISED WAS INVISIBLE IN THE RECORD — CONFIRMED, AND FIXED
+  Checked as the item asks. G_LEARN's report for the 2026-08-29 cycle:
+      steps_run    [... 'feedback_loop', ...]     <- listed as if it ran
+      steps_failed []
+      verdict      PARTIAL
+      reason       promised but only a stale copy from an earlier cycle:
+                   memory/feedback_log.json, memory/goal_score_history.json
+  So it reported PARTIAL while its own writer had raised. SECOND DEFECT
+  CONFIRMED — and it is worse than one phase.
+
+  MEASURED: 133 phase reports on disk, and NOT ONE names a failed step.
+
+  THE CAUSE IS STRUCTURAL. core/phase_tracker.py calls step_ok() from on_step(),
+  which fires at beat() time — BEFORE the step does its work — so steps_run has
+  always meant "steps STARTED", and nothing ever told the report how any of them
+  ended. PhaseReport.step_failed() existed the whole time and its only live
+  caller was "<phase aborted>" in __exit__. fast_cycle_runner._run() caught the
+  exception, printed it, told the CONTRACT, suppressed the checkpoint — and
+  never told the phase report.
+
+  AND G_LEARN ONLY CAUGHT IT BY LUCK. PARTIAL came from produces_check noticing
+  a stale artifact, not from knowing the step crashed. A step that raised AFTER
+  writing its artifact would have left the phase reading DONE with a crash in
+  the log and nothing in the record.
+
+  FIXED, three small pieces:
+    core/phase_tracker.py   note_failure(step, exc) — the missing seam.
+                            FAIL-OPEN: it is called from an except branch, so a
+                            raise here would turn one failed step into two.
+    core/phase_report.py    step_failed() no longer appends to steps_run when
+                            the step is already there. The failure always
+                            arrives second, for a step step_ok() already
+                            recorded; it must correct the record, not duplicate.
+    fast_cycle_runner.py    _run()'s except branch calls note_failure(label, e).
+  The verdict logic already refused DONE when steps_failed is non-empty, so it
+  needed no change — it had simply never been given anything to refuse on.
+
+ACCEPTANCE, as worded: a fixture feeds a snapshot whose current_level is a dict;
+read_current_scores() returns the other axes' scores (GOOD_ONE 85.0, GOOD_TWO
+55.0), names the offender AND its shape on stdout, omits the offender rather
+than scoring it, and does not raise. memory/goal_score_history.json byte-
+identical after. PASS.
+
+SUITE — through tools/suite_gate.py, VALID (lock absent at 10:45:00 and
+11:05:40 local): 52 failed, 3399 passed, 6 skipped, 1 xfailed in 1240.51s. No
+failure outside the recorded SUSPENDED_FLAG (27). +16 passing, this item's
+tests. test_brain_scan did NOT fire this run, having fired in the previous one —
+the SCHEDULED_WRITER coin flip landing the other way, exactly as recorded.
+
+TESTS: test/test_axis_score_total.py NEW 9 green — the exact live payload, lists
+and other unhashables, non-strings of every kind, and the negative controls that
+a real level word still scores and a RISK axis still inverts.
+test/test_phase_report_names_failures.py NEW 6 green — including the one that
+matters: a phase whose step raised must not read DONE even when every promised
+artifact is fresh, which is the case produces_check cannot catch. Nine of the
+fifteen were red before any source changed.
+
 ## ITEM 25 — tools/orphan_scan.py: PUBLIC ENTRYPOINTS NOTHING CALLS
 STATUS: TODO — selftest VERIFIED ON APPEND, the report is the work
 GATE: NOCYCLE
@@ -2417,6 +2510,95 @@ not something to remember to undo.
   judgement does not rest on a single observation, has been wrong every time.
   That is the number the compass should carry, and it could not have been seen
   behind the 44.8%.
+
+## ITEM 28 — K2 GATE: HYPOTHESIS RESOLUTION MUST NOT FEED SOURCE TRUST YET
+STATUS: PRE-REGISTERED 2026-08-29. NOT a task to work — a condition to check.
+        REVIEW DATE 2026-10-01.
+GATE: READONLY
+
+AGREED 2026-08-29 BETWEEN EMIL, CLAUDE AND KIMI (round 32). Three parties, one
+text. Recorded here because a threshold agreed in conversation and not written
+down is a threshold that will be remembered differently by each party the day it
+binds.
+
+PRE-REGISTERED. THE THRESHOLDS BELOW ARE NOT TO BE ADJUSTED LATER TO MAKE THEM
+REACHABLE. That sentence is the whole point of the item: the numbers were set
+while nobody knew whether they would be met, and moving them once the answer is
+known would convert a test into a formality. If they turn out to be wrong, they
+are wrong in public, on the review date, with the reason stated.
+
+--- EMIL'S TEXT, VERBATIM -------------------------------------------------
+
+ITEM 28 — K2 gate, agreed 2026-08-29 between Emil, Claude and Kimi (round 32).
+Pre-registered; do not adjust the thresholds later to make them reachable.
+
+Hypothesis resolution does NOT feed source trust until BOTH hold:
+ (a) trust withdrawal exists in memory/source_lifecycle_ledger.jsonl AND has been
+     exercised at least once on a real source. A mechanism that has never fired is an
+     intention, not a mechanism — same lesson as the reaction subsystem that was
+     "enabled" for six hours with no wire behind it.
+ (b) the ITEM 27 resolver produces >= 20 leave-one-out-surviving verdicts, including
+     >= 5 HELD and >= 5 BROKE, across >= 3 distinct sources. Today: 10 surviving, all
+     BROKE, zero HELD. A signal that can only punish is not a trust signal.
+
+REVIEW DATE 2026-10-01, added to close Kimi's objection that an unbounded gate is a
+permanent block wearing a condition's clothes. On that date, report which condition
+failed. Failure of (b) means the dream layer does not discriminate and must be redesigned
+or stopped — not waited on. Failure of (a) means withdrawal was never built, which is a
+different failure and gets its own item. Neither outcome is "keep waiting".
+
+--- END OF EMIL'S TEXT ----------------------------------------------------
+
+WHERE THE "TODAY" FIGURE IN (b) COMES FROM, so the review can reproduce it:
+measured 2026-08-29 by tools/resolve_ideas.py --as-of 2026-09-30, after ITEM 23
+added survives_leave_one_out. 58 decided verdicts, of which 10 survive
+leave-one-out, all 10 BROKE, zero HELD. The restricted hit rate is therefore
+0.0%. The unrestricted 44.8% is not the number this gate is about and must not
+be substituted for it.
+
+HOW TO CHECK EACH CONDITION ON 2026-10-01, so the review is a measurement and
+not a memory:
+  (a) grep memory/source_lifecycle_ledger.jsonl for a transition whose
+      state_after is a WITHDRAWN/UNTRUSTED state on a real source id, and check
+      the row is not a fixture or a selftest artifact. ITEM 14's K2 already
+      reads this file for state_after == "TRUSTED" and found 20 rows, all
+      timestamped 2026-08-20 — trust GRANTED has fired; the question here is
+      whether trust WITHDRAWN ever has.
+  (b) venv\Scripts\python.exe tools/resolve_ideas.py --as-of <that day>, then
+      count rows where survives_leave_one_out is True, split by verdict, and
+      count distinct sources behind them. The summary already carries
+      decided_robust and hit_rate_robust; the per-source split does not exist
+      yet and whoever reviews will need to add it or count from the rows.
+
+BASELINE READING OF (a), TAKEN 2026-08-29 SO THE REVIEW HAS SOMETHING TO
+COMPARE AGAINST — and it is worse than "never exercised":
+  memory/source_lifecycle_ledger.jsonl   435 rows
+    events                               clean 109, refusal 326
+    rows carrying a transition           20
+    every one of them                    CANDIDATE -> TRUSTED
+    all 20 inside 65 seconds             2026-08-20T21:18:33 -> 21:19:38
+    transitions originating from a
+    'refusal' event                      0 of 326
+  So there is not one transition AWAY from TRUSTED in the whole file, and no
+  refusal has ever produced a transition of any kind. The three most-refusing
+  sources — scout:NASA-EONET (18 refusals), scout:UCDP/PRIO (14),
+  scout:UN SDG Global Database (14) — each carry exactly one transition, and it
+  is CANDIDATE -> TRUSTED. A source can refuse eighteen times and keep its
+  trust.
+  (a) IS THEREFORE NOT MERELY UNEXERCISED — ON THIS EVIDENCE THERE IS NO PATH.
+  Whoever reviews on 2026-10-01 should expect to be answering "withdrawal was
+  never built", which the item already says gets its own item, rather than
+  "built but never fired".
+  FIELD NOTE FOR THE REVIEWER: the ledger carries BOTH a "state_after" key and a
+  "transition" string ("CANDIDATE -> TRUSTED"). Check state_after; the
+  transition string is the same fact formatted, and grepping only the string
+  would miss a row that set state_after without composing one.
+
+WHAT THIS ITEM IS NOT. It is not a block on ITEM 27 — the resolver work proceeds
+regardless. It is a block on one specific wire: resolution verdicts changing a
+source's trust state. Nothing today attempts that wire, so the gate costs
+nothing to hold; its value is that it was written down BEFORE anyone wanted to
+build it.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
 STATUS: TODO

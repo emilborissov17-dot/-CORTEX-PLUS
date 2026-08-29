@@ -44,6 +44,30 @@ def _axis_score(snap, axis_name=""):
         if "capacity_pct" in s: return float(s["capacity_pct"])
         for field in ["current_level", "level"]:
             val = s.get(field, "")
+            # A LEVEL THAT IS NOT A STRING IS NOT A LEVEL (ITEM 21, 29 Aug 2026).
+            # `val in level_map` raised TypeError on 2026-08-29 because
+            # DEEP_TIME_RISKS_REVIEW.current_level is a per-hazard DICT —
+            # {"asteroid": "HIGH", "supervolcano": "UNKNOWN", ...} — and an
+            # unhashable key cannot be looked up. One field killed the whole
+            # step, and feedback_loop is the ONLY writer of
+            # goal_score_history.json and feedback_log.json, so the cycle
+            # stopped recording which axis was measured and which was asserted.
+            #
+            # Named, skipped, and the loop carries on — the same fail-per-axis
+            # discipline _measured_axis_scores got on 20 Aug, when one None
+            # silenced all measurement. WHAT THIS DELIBERATELY DOES NOT DO is
+            # reduce the breakdown to a single word: worst? weighted? is a
+            # SCORING decision, and inventing one here silently would be the
+            # defect wearing a fix's clothes. The axis yields no level until a
+            # human decides what its level means.
+            if not isinstance(val, str):
+                if val not in (None, ""):
+                    print(f"[FEEDBACK] {axis_name or '?'}.{field} is a "
+                          f"{type(val).__name__}, not a level word — no level "
+                          f"taken from it. A per-hazard breakdown needs an "
+                          f"agreed reduction before it can score; none is "
+                          f"invented here. value={str(val)[:120]}")
+                continue
             if val in level_map: return float(level_map[val])
         urgency = s.get("urgency", "")
         if urgency in URGENCY_MAP: return float(URGENCY_MAP[urgency])

@@ -1087,6 +1087,18 @@ def _run(label, fn, free_after=False):
         # str(e) can be empty (e.g. bare MemoryError()) — always show the
         # exception type too, so a failure never renders as a blank message.
         print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
+        # ── AND THE PHASE REPORT HEARS ABOUT IT (ITEM 21c, 29 Aug 2026) ──────
+        # Until today a raised step was a line on stdout and nothing else: the
+        # phase report listed it under steps_run, because phase_tracker records
+        # step_ok at beat() time, and steps_failed was empty in all 133 reports
+        # on disk. G_LEARN only caught the 2026-08-29 feedback_loop crash
+        # because produces_check independently saw a stale artifact — a step
+        # that crashed AFTER writing its artifact would have read DONE.
+        try:
+            from core import phase_tracker as _pt
+            _pt.note_failure(label, e)
+        except Exception:
+            pass
         if _contract is not None:
             _contract.note_swallowed(f"{type(e).__name__}: {e}")
         # ── ГРАНИЦАТА НЕ БИВА ДА СПАСЯВА ПАДНАЛА СТЪПКА (23 авг 2026) ──────
