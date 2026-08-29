@@ -1,6 +1,6 @@
 ## STATUS
 last_updated_utc: 2026-08-29T06:35:00Z
-last_item_done: ITEM 21 — the crash is fixed, and the reason nobody saw it is fixed too
+last_item_done: ITEM 29 · ITEM 30 and 31 run, lists delivered, nothing written · ITEM 32 standing rule recorded
 current_item: ITEM 12 — ITEM 21 jumped the queue on Emil's instruction and is now DONE
 current_state: READY
 gate_closed_reason: - (OPEN since 05:04:20 local; the nightly cycle 2026-08-29T03:04:01 held it 03:04-05:04)
@@ -36,6 +36,10 @@ Keep the state column current — it is the only place a human should have to lo
 | 26 | tools/attention_ratio.py — world vs self | TODO | NOCYCLE |
 | 27 | tools/direction_patch.py — replace the two-point rule (spec given as "ITEM 24") | TODO | NOCYCLE |
 | 28 | K2 gate — hypothesis resolution must not feed source trust yet | PRE-REGISTERED 2026-08-29 · REVIEW 2026-10-01 | READONLY |
+| 29 | Annotate the 133 phase reports that could not report failure | DONE 2026-08-29 | NOCYCLE |
+| 30 | tools/verify_claims.py — how much can be contradicted at all | RUN 2026-08-29, list delivered | READONLY |
+| 31 | tools/stale_copy_scan.py — config values retyped into code | RUN 2026-08-29, list delivered | READONLY |
+| 32 | THE BATCH RULE — a batch closes only at zero NEW orphans | STANDING | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -2599,6 +2603,192 @@ regardless. It is a block on one specific wire: resolution verdicts changing a
 source's trust state. Nothing today attempts that wire, so the gate costs
 nothing to hold; its value is that it was written down BEFORE anyone wanted to
 build it.
+
+## ITEM 29 — 133 PHASE REPORTS THAT COULD NOT REPORT A FAILURE
+STATUS: DONE 2026-08-29
+GATE: NOCYCLE
+Raised by Emil 2026-08-29 after ITEM 21(c). The mechanism is fixed; the history
+is not. DO NOT REWRITE THE 133 REPORTS — append one annotation.
+
+DONE, and the instruction was followed to the letter: not one report was
+touched. 133 sha256 digests taken before the write and re-taken after, by a
+script independent of the tool that did the writing: all identical.
+
+THE RECORD: memory/phase_reports/_ANNOTATIONS.jsonl, one line, written by
+tools/annotate_phase_reports.py (NEW; --selftest 11/11, dry-run by default,
+idempotent — a second --write appends nothing). It sits in the same directory as
+the reports with a leading underscore so it sorts first for anyone listing that
+folder.
+
+WHAT IT SAYS, measured rather than asserted:
+  reports                    133, every one with a steps_failed key, every one
+                             an empty list, zero naming any failed step
+  window                     2026-08-21T00:38:54 to 2026-08-29T05:00:21
+  by phase                   A_ORIENT 23, B_SENSE 21, C_SNAPSHOT 18, D_SCORE 20,
+                             E_PROPOSE 19, F_SELF 17, G_LEARN 15
+  the defect                 phase_tracker recorded step_ok() from on_step(),
+                             which fires at beat() time BEFORE the step runs, so
+                             steps_run meant "steps STARTED";
+                             PhaseReport.step_failed() had no live caller except
+                             "<phase aborted>"; _run() caught, printed, told the
+                             contract, and never told the report
+  what steps_failed means    "the report could not say otherwise" — NOT
+                             "nothing failed"
+  the gap                    the logs record 3 step failures in the same window
+                             in which the 133 reports record 0
+  unverifiable               84 of the 133 read DONE. DONE was reachable while a
+                             step had raised, because nothing could populate
+                             steps_failed, so those verdicts are not evidence
+                             that their phase was clean. F_SELF and G_LEARN
+                             carry zero DONE; all 84 sit in the other five
+                             phases.
+  instruction                any past analysis resting on these reports is VOID
+                             and must be re-derived from memory/cycle_logs/*.log
+
+THE RE-DERIVATION WAS TESTED BEFORE BEING PRESCRIBED, because an instruction to
+"use the logs instead" is worthless if the logs do not carry it. Three
+independent markers over the 15 cycle logs in the window agree:
+    [FAST_CYCLE] <step> -> FAILED:     3, all feedback_loop
+    [CONTRACT] <step>: RAISED          3, all feedback_loop
+    Traceback (most recent call last)  0
+So the evidence survives, it is small, and it is exactly the ITEM 21 crash — 3
+of 15 cycles, which is the same 3-in-15 that item measured from a different
+direction.
+
+WHY APPEND RATHER THAN EDIT, in the record itself so it cannot be lost: editing
+133 records to state something their writer never knew would be inventing
+evidence while cleaning up after a defect about invented evidence.
+
+ONE LIMIT, NAMED: memory/phase_reports/ is untracked (not ignored — simply never
+committed), so the annotation does not travel to a fresh clone. That is why the
+substance is duplicated here in docs/QUEUE.md, which is tracked. A clone has
+neither the reports nor the annotation, so nothing is stranded; a MACHINE THAT
+COPIES memory/ WITHOUT THIS FILE would be.
+
+SUITE — through tools/suite_gate.py, VALID (lock absent at 11:15:57 and
+11:37:43 local): 52 failed, 3409 passed, 6 skipped, 1 xfailed in 1305.64s. No
+failure outside the recorded SUSPENDED_FLAG (27). +10 passing, this item's tests.
+
+TESTS: test/test_phase_report_annotation.py, NEW, 10 green — that writing the
+annotation touches no report, that a second run appends nothing, that a dry run
+creates nothing, that the record distinguishes "could not say" from "nothing
+failed", names the mechanism and not just the symptom, voids past analysis AND
+says where to re-derive it, and that the live annotation is on file exactly once.
+
+## ITEM 30 — tools/verify_claims.py: HOW MUCH CAN BE CONTRADICTED AT ALL
+STATUS: RUN 2026-08-29, list delivered, NOTHING WRITTEN. The number is the finding.
+GATE: READONLY
+Read-only. --write not taken.
+
+RUN TWICE. The first run reported 14 claims and 14.3% checkable; five defects
+found in that run were fixed outside this session and the second run supersedes
+it. Both are recorded because the difference between them is the point.
+
+  FIRST RUN   claims 14 · DIFFERS 2 · SOURCE_KEY_GONE 12 · 14.3% checkable
+  SECOND RUN  claims  7 · SOURCE_SHAPE_CHANGED 1 · SOURCE_KEY_GONE 6 · 0.0%
+
+WHAT CHANGED AND WHY THE NUMBER FELL:
+  - files were being counted once per matching glob, so every claim in
+    deductions_latest.json appeared twice. 14 was 7 doubled. Verified by opening
+    the file: 7 distinct claims.
+  - the 2 DIFFERS were the same claim twice, and it was never a contradiction.
+    The claim says 'LOW'; the source now holds a DICT whose level is 'LOW'. That
+    is an address that stopped meaning what it meant, and it is now its own
+    verdict, SOURCE_SHAPE_CHANGED, which also reports whether the claimed value
+    is still inside. It is.
+
+SO THE HONEST NUMBER IS 0.0%, AND IT IS WORSE THAN THE ONE IT REPLACES. Not one
+claim in memory/*.json can currently be contradicted by anything: six name a key
+that no longer exists, one names an address whose meaning changed. 14.3% was an
+artifact of double-counting a claim that was never checkable either.
+
+FOR THE COMPASS, BESIDE K1: this is the share of what the system says that
+anything at all could disprove. Today it is zero. A system whose assertions
+cannot be contradicted is not being careful, it is unfalsifiable, and that is a
+worse position than being wrong.
+
+## ITEM 31 — tools/stale_copy_scan.py: CONFIG VALUES RETYPED INTO CODE
+STATUS: RUN 2026-08-29, list delivered, NOTHING WRITTEN.
+GATE: READONLY
+Read-only. --write not taken.
+
+RUN TWICE, and the first run's headline was mostly noise:
+  FIRST RUN   COPY_OF_CONFIG 243 · FROZEN_AT_IMPORT 55 · BLIND SPOTS 1
+  SECOND RUN  COPY_OF_CONFIG  41 · VALUE_COINCIDENCE 205 · FROZEN_AT_IMPORT 21
+                              · no blind spot
+
+  - COPY_OF_CONFIG now needs name affinity or a distinctive value. 205 of the
+    original 243 matched on VALUE ALONE — WEB_INTEL_MAX_AGE_H = 6.0 "owned by"
+    profiles.day.starts_hour because both are 6.0 — and are now printed as
+    VALUE_COINCIDENCE and explicitly NOT a finding.
+  - FROZEN_AT_IMPORT prints the real expression instead of a hardcoded None, and
+    a bare load() no longer counts unless the expression names a path or file.
+    The 55 were mostly PAGE = None and data = None in test files; the 21 that
+    remain are genuine import-time reads, e.g. _diag.py:8
+    p = json.loads((BASE / 'memory' / 'improvement_proposals.json').read_text()).
+  - utf-8-sig removed the blind spot.
+
+THE 41 LOOK REAL ON INSPECTION: core/model_window.py:82 SMALL_DEFAULT =
+'qwen2.5:3b' against config/model_window.json::small_model;
+core/extra_calls.py:54 MIN_RAM_FREE_MB = 600.0 against
+config/homeostasis.json::variables.ram_free.levels.gate. A FEW STILL WANT A
+HUMAN EYE and are not defects in the rule, only rows where affinity coincided:
+core/notary.py:130 HUMAN_ACT_DAYS = 7 attributed to two `weight` keys, and
+core/level_reconciler.py:60 GOODNESS = 'goodness' to `score_meaning`.
+
+## ITEM 32 — THE BATCH RULE
+STATUS: STANDING RULE, not a task. Set by Emil 2026-08-29.
+GATE: NOCYCLE
+
+A BATCH OF WORK DOES NOT CLOSE UNTIL tools/orphan_scan.py REPORTS ZERO NEW
+ORPHANS. Build in bulk and wire in bulk — THE GATE IS AT THE END OF THE BATCH,
+NOT BETWEEN ITEMS.
+
+WHY IT IS AT THE END AND NOT BETWEEN. Wiring each thing as it is built forces
+the order of construction to match the order of dependency, which it rarely
+does, and it makes every half-finished piece look like a defect to the next
+scan. The batch is the unit that must be whole. What the rule forbids is
+FINISHING while something built inside the batch is still reachable by nothing.
+
+WHAT "NEW" MEANS: new against tools/orphan_scan.py's recorded baseline, which is
+what --baseline --write records. Known debt already in the baseline does not
+block a batch; it is debt, and it is somebody's item. A thing this batch created
+and never wired is not debt, it is an unfinished batch.
+
+HOW TO CHECK, at the end of a batch and before the closing commit:
+    venv\Scripts\python.exe tools\orphan_scan.py --report
+and read the NEW lines. Zero NEW is the condition. It costs about 8 seconds
+since the 2026-08-29 rewrite.
+
+THE BASELINE DOES NOT EXIST YET, and that is the first thing this rule needs.
+As of 2026-08-29 --report says "orphans in baseline (known debt): 0" because
+nothing has ever run --baseline --write, so EVERY orphan currently reads as NEW:
+55 NEVER_CALLED, 281 CALLED_ONLY_IN_OWN_MODULE, 1 CALLED_ONLY_IN_TESTS. Until a
+human records a baseline, this rule cannot pass and must not be treated as
+though it had. Recording that baseline is ITEM 25's business, not something to
+do quietly on the way to closing a batch — a baseline recorded to make a gate go
+green is the gate being routed around.
+
+THE SCANNER HOLE IS FIXED — utf-8-sig, outside this session, 2026-08-29.
+orphan_scan.py read source with encoding="utf-8" and
+agents/internet/internet_agent.py is the repo's one BOM'd file, so U+FEFF
+reached ast.parse and 37 top-level entrypoints were missing from every list the
+tool had ever produced. Re-run after the fix: entrypoints scanned 2055 -> 2075,
+no blind spot line, and NEVER_CALLED held at 55 — so none of the 37 restored
+entrypoints was an orphan, and the 18 dead cortex_scoring_engine scorers and 11
+uninstantiated Providers stand unchanged.
+
+WHAT IS STILL NOT SAFE TO BASELINE, on the numbers as they are:
+  NEVER_CALLED 55                  trustworthy — baseline this
+  CALLED_ONLY_IN_TESTS 1           trustworthy
+  CALLED_ONLY_IN_OWN_MODULE 289    NOT yet — it does not distinguish an ordinary
+                                   private helper from a dead one, and 289 rows
+                                   of "module-private function" is not debt
+  NAMED_ONLY_AS_A_STRING 1535      NOT yet, and it is the load-bearing one: it
+                                   is what keeps NEVER_CALLED down to 55, so
+                                   whatever it wrongly absorbs is invisible
+                                   orphan debt. Its precision has not been
+                                   measured.
 
 ## ITEM 12 — memory/axis_history.json IS TRACKED IN GIT
 STATUS: TODO
