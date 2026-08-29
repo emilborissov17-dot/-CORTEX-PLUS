@@ -1,0 +1,16 @@
+{
+  "method": "make_seed/1",
+  "seed": "axis_history.seed.json",
+  "source_path": "memory/axis_history.json",
+  "source_sha256": "1947f1fc381b3d62971e03293d6014a0070425ae3403eb88575bd124e48d9643",
+  "source_bytes": 644625,
+  "seed_sha256": "3cd7a4070cbeddad588f9a9c01cf6711d07fd4a3e3f043d57fb113709af799be",
+  "seed_bytes": 624135,
+  "generated_at_utc": "2026-08-29T13:39:27.570534+00:00",
+  "generated_at_commit": "5dc78b6eeff68191c059a5da407826cc88fc3761",
+  "why": "The measurement series the whole compass rests on. Untracked 2026-08-29 (ITEM 12a) because a tracked file a cycle rewrites nightly can be destroyed by a checkout — and was, on 2026-08-28.",
+  "authority": "NOT AUTHORITATIVE. The live file at source_path is. If the two disagree, the live file is right — it is the one the cycles write. This exists so a clone with no history can begin, not so a machine with history can be corrected.",
+  "axis_count": 31,
+  "point_count": 1848,
+  "latest_point_date": "2026-08-29"
+}
