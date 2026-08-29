@@ -3118,7 +3118,42 @@ wrong reason.
   HAS NOT LANDED BY THE END OF THE NEXT WORKING SESSION, THAT IS ITSELF THE
   FINDING AND IT GETS REPORTED, NOT SILENTLY CARRIED.
 
-34-B — THE OMISSION, cortex_scanner.py:55-59
+34-A IS DONE, 2026-08-29. Lines 62-72 excised; the loop is extracted into
+axis_scores(history), which returns nothing for an axis whose latest point has
+no score. The removed code is quoted verbatim in its docstring so the next
+reader sees what was there and why.
+  THE GATING TEST IS THE POINT OF THE COMMIT, and Kimi named it: the measured
+  zero is a dated fact, so the test is what makes it a property.
+  test_a_null_score_never_auto_averages_even_under_dirty_input feeds the exact
+  shape that has NEVER occurred in 1848 real points — score None with a
+  percentage, a count and a ratio all inside 0..100 — and asserts nothing is
+  derived. The specific mean the old branch would have published is pinned
+  separately, so a reimplementation cannot reintroduce it under another shape.
+  Against the real file: 21 of 31 axes scored, the same 10 unscored, nothing
+  invented, memory/cortex_full_state.json untouched.
+  SUITE, VALID (lock absent 13:35:30 and 13:57:09): 52 failed, 3446 passed,
+  6 skipped, 1 xfailed in 1299.41s. No failure outside the recorded
+  SUSPENDED_FLAG. +9 passing. Green, which is Kimi's precondition for step 2.
+
+34-B — DROPPED 2026-08-29, ON EVIDENCE, AND THE MISDESCRIPTION WAS OURS.
+Kimi: "Drop the entries[-1] fix: the axis does not vanish; it is routed to
+trends.insufficient, which is correct categorization, not omission. The defect
+was our misdescription." Kimi then doubted its own ruling — "Dropping 34-B
+assumes insufficient is operationally visible. I have not verified that the
+dashboard or any downstream consumer reads that list" — and the third seat
+tested it. Claude re-opened cortex_dashboard.html and confirms the lines:
+    :85  const stable=t.stable||[], improving=t.improving||[], insuf=t.insufficient||[];
+    :87  document.getElementById('m-stable-sub').textContent = insuf.length+' insufficient';
+    :89  const allAxes=[...improving.map(...), ...stable.map(...),
+                        ...insuf.map(a=>({a,t:'INSUFFICIENT'}))];
+insufficient comes from trends_latest.json's OWN categorisation at
+cortex_scanner.py:44, independent of the score loop, and the dashboard renders
+it twice — as a count and by name, labelled INSUFFICIENT, in the same list as
+the scored axes. The seven axes are VISIBLE, not merely present in JSON.
+ALL THREE OF US HAD DESCRIBED THIS WRONGLY until the scanner was actually run.
+entries[-1] is NOT changed.
+
+34-B, THE ORIGINAL DESCRIPTION, kept for the record: cortex_scanner.py:55-59
 It reads only entries[-1]. After ITEM 12(c) the last entry for the ten blocked
 axes is always the unmeasured one, so those axes do not plot short — they leave
 the scan entirely. Real, and not urgent, because of the finding above.
