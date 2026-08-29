@@ -3267,6 +3267,42 @@ def main():
               f"{len(_in)} insufficient")
     _run("cortex_scan", _cortex_scan_step)
 
+    # ── 25.8. THE COMPASS, WRITTEN BY THE CYCLE (ITEM 14, 29 Aug 2026) ─────
+    # tools/compass.py has been able to produce all four needles since it was
+    # written, and produced them only when a human typed the command. The
+    # project's stated success criterion was a thing you had to remember to ask
+    # for. Now the night that generates the evidence also records the reading.
+    #
+    # LAST, after cortex_scan: every source it reads is written earlier in this
+    # same cycle — measurement_honesty at 20.1 writes K1's, the deduction engine
+    # writes K3's. Run any earlier and the compass would describe yesterday.
+    #
+    # compass() is called and the file written HERE rather than through main(),
+    # so the runner never depends on argv and --write stays the human path.
+    #
+    # THE COMPASS MUST NEVER BE THE THING THAT KILLS THE NIGHT. It measures the
+    # cycle; a measuring instrument that can end the run it measures is worse
+    # than no instrument. _run() already swallows and records — this goes
+    # through it, not a bare try/except, because only _run() writes a
+    # checkpoint, opens the step contract and tells the phase report when a step
+    # raises (ITEM 21c). test_checkpoint_wiring's ratchet is what enforces that.
+    #
+    # 0.4s measured on 2026-08-29, of which the consumer census over 660 .py
+    # files is most of it. No network, no model call.
+    beat("compass", "25.8")
+    def _compass_step():
+        import json as _json
+        from tools.compass import compass as _compass, OUT as _compass_out
+        _c = _compass()
+        _compass_out.parent.mkdir(parents=True, exist_ok=True)
+        _compass_out.write_text(_json.dumps(_c, indent=2, ensure_ascii=False),
+                                encoding="utf-8")
+        print(f"[FAST_CYCLE] compass -> {_c['verdict']}")
+        for _n in _c["needles"]:
+            _v = "—" if _n.get("value") is None else _n["value"]
+            print(f"[FAST_CYCLE]   {_n['needle']}  {_v}  {_n.get('status')}")
+    _run("compass", _compass_step)
+
     # ── IS THE BRAIN STILL ANSWERING IN ENGLISH? (23 Aug 2026) ─────────────
     # Here, with the report, because this is the one place per cycle that exists
     # to tell a human what happened. The language drift ran for six days in

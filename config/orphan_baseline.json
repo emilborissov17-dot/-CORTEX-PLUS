@@ -1294,38 +1294,27 @@
     },
     "tools/compass.py::k1": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/compass.py::k2": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/compass.py::k3": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/compass.py::k4": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
-    },
-    "tools/compass.py::compass": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/compass.py::main": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/compass.py::selftest": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "ITEM 14 wiring outstanding, scoped 2026-08-29, not yet landed. NOT permanent debt: tools/compass.py is written and tested (11/11) and was scoped into the 2026-08-29 batch, then omitted. These seven entries must be REMOVED from this baseline in the same commit that wires it into the five declaration sites. A baseline entry that has been fixed and left in place is the slack defect again.",
-      "expires": "on ITEM 14 wiring"
+      "reason": "ITEM 14 LANDED 2026-08-29. The expiry on this entry is DISCHARGED, and the entry stays because wiring never touched it. tools/compass.py::compass is now CALLED_IN_PRODUCTION by fast_cycle_runner.py at step 25.8 and has been removed. These six were not waiting on ITEM 14 at all: k1..k4 are called only by compass(), and main/selftest only by `if __name__ == \"__main__\"`. That is the ordinary internal-helper shape, and no cycle wiring can change it. The original entry claimed they were pending ITEM 14; that claim was wrong when it was written and is removed rather than left to expire into nothing. MEASURED, NOT ASSUMED: verdicts re-read from the fixed scanner after the wiring landed."
     },
     "tools/direction_patch.py::theil_sen": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
@@ -1408,5 +1397,5 @@
       "reason": "RECORDED, NOT DIAGNOSED"
     }
   },
-  "_note_on_compass": "The seven tools/compass.py entrypoints are the only entries here with an expiry. Everything else is RECORDED, NOT DIAGNOSED — recorded so NEW orphans fail, not accepted as correct."
+  "_note_on_compass": "RESOLVED 2026-08-29 by ITEM 14. The seven tools/compass.py entrypoints were recorded with expires: 'on ITEM 14 wiring'. The wiring landed; exactly ONE of the seven — compass() itself — became CALLED_IN_PRODUCTION and was removed. The other six were never pending on wiring: they are internal helpers reached only from compass() or from __main__, which is the same shape as most of this file. Their expiry is gone and their reason now says what is true. No entry in this baseline carries an expiry any more. Everything here is RECORDED, NOT DIAGNOSED — recorded so NEW orphans fail, not accepted as correct."
 }

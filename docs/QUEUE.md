@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-29T13:10:00Z
-last_item_done: ITEM 38 Part 1 — bd663ec. The checkpoint ratchet's two-unit slack is closed: UNCOVERED_STEP_LIMIT = 31 with an `==` assertion beside the `<=`, both naming every uncovered step. Measured 65 steps / 31 uncovered / limit 31.
-current_item: ITEM 14 — make the compass produce four numbers. NEXT.
+last_updated_utc: 2026-08-29T14:05:00Z
+last_item_done: ITEM 14 — the compass runs from the system, at step 25.8, and K2 refuses on purpose. All five declaration sites; through _run(), so the ratchet still reads 66 steps / 31 uncovered / limit 31. K2 = NOT_WIRED with every diagnostic kept, an expiry a bare date bump cannot pass, and a consumer census re-taken every run.
+current_item: ITEM 36 — the front-end renders UNMEASURED (ITEM 33's open half). NEXT by the table; ITEM 13, 35 and 15 follow.
 current_state: READY
 gate_closed_reason: - (GATE:NOCYCLE open. No memory/cycle.lock, no memory/heartbeat.json; memory/last_cycle_id.txt = 2026-08-29T03:04:01 — the nightly cycle sealed at 05:03 local and today's has already run.)
-next_action_needed_from_claude: ITEM 14, ruled in full by Kimi and by Emil on 2026-08-29 — K2 becomes NOT_WIRED with a detail-preserving shape, K2_NOT_WIRED_UNTIL = 2026-10-01 with a sibling reason string a test binds to, all five declaration sites, non-fatal on raise, and the seven tools/compass.py entries come OUT of config/orphan_baseline.json in the same commit. Expect the compass to report 1 of 4, not 2 — that is the correct number. ITEM 37 is HELD behind ITEM 14's real output. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py`, never bare pytest. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
+next_action_needed_from_claude: TWO THINGS FOR EMIL BEFORE THE QUEUE MOVES ON. (1) ITEM 14's expected headline was wrong and the work is right: it reports 2 of 4, not 1 of 4, because K2 was already excluded as SOURCE_STALE — see the ITEM 14 section. (2) ITEM 37's blocking finding was WRONG and the correction makes the demotion less safe, not more: external_feeds.jsonl IS read, by the DMZ worker, and demoting all 20 would stop any candidate ever being promoted again. ITEM 37 stays HELD and must be re-argued against the corrected finding in its own section. Otherwise work the table: ITEM 36 next. Run the suite as `venv/Scripts/python.exe tools/suite_gate.py`, never bare pytest. FOR EMIL: 27 tests are red purely because memory/extra_calls_suspended.flag is set; they clear themselves after one non-breaching cycle. See the baseline section SUSPENDED_FLAG.
 
 THE BASELINE IS 52-53, NOT 29. The number in STANDING RULES said 29 until
 2026-08-29 and that was three amendments out of date. Of the 53 recorded at
@@ -15,8 +15,9 @@ id-by-id, never the count.
 WHAT LANDED SINCE THIS BLOCK LAST SPOKE, in order, all pushed on
 feature/lidaction-guard: 3ec1b26 (ITEM 12c), 11bf1a4 (ITEM 33), a0ffcea (ITEM 34
 premise overturned), ad121e3 (ITEM 34-A), 9b85408 (ITEM 34 step 2 + ITEM 32
-baseline), bd663ec (ITEM 38 Part 1 + the handover). Read
-docs/HANDOVER_2026-08-29.md with this file.
+baseline), bd663ec (ITEM 38 Part 1 + the handover), b5fa2b6 (this block brought
+current), and ITEM 14. Read docs/HANDOVER_2026-08-29.md with this file — and
+read its ITEM 37 paragraph together with the correction quoted under it.
 
 ## ORDER OF WORK
 Work strictly down this table. It is the map; the items below are the detail.
@@ -39,7 +40,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 34 | cortex_scanner: 34-A DONE · 34-B dropped on evidence · step 2 wiring DONE 2026-08-29 | DONE | NOCYCLE |
 | 35 | Two snapshot filenames are sitting in the axis key space | TODO | NOCYCLE |
 | 13 | The uncommitted-work guard | TODO | NOCYCLE |
-| 14 | Make the compass produce four numbers | TODO | NOCYCLE |
+| 14 | Make the compass produce four numbers | DONE 2026-08-29 — wired at 25.8; K2 is NOT_WIRED | NOCYCLE |
 | 15 | Early stopping + coverage gate | TODO | NOCYCLE |
 | 16 | A panel for a file nothing writes | TODO | NOCYCLE |
 | 17 | RUNBOOK.md is 1 byte | TODO | NOCYCLE |
@@ -98,14 +99,39 @@ visible as `withdrawals: 20` beside a `last_transition_ts` in K2's detail, and
 that field does not exist until ITEM 14 lands. Demoting first would produce a
 drop from 20 to 0 that no reader could distinguish from the wiring change.
 
-THE FINDING THAT MADE THE HOLD SAFE, measured 2026-08-29, UNTRUNCATED — 29
-matches for the TRUSTED label: 12 comments, 7 tools/compass.py reporting, 5
-self_mirror reporting, 3 scripts/openclaw_axis_worker.py, and 4 belonging to
-alignment/civilization_guard.py's own unrelated TRUSTED_SOURCES set. Every
-downstream reader points at openclaw_queue/axis_feeds.jsonl; NONE reads
-external_feeds.jsonl. So demoting all 20 breaks nothing — Kimi's
-self-denial-of-service objection does not fire — and the same fact is why K2 is
-being marked NOT_WIRED: the label has never gated anything that runs.
+THE FINDING THAT MADE THE HOLD SAFE WAS WRONG, AND THE CORRECTED ONE IS WORSE
+FOR ITEM 37. Found 2026-08-29 while wiring ITEM 14, and recorded here because
+ITEM 37's whole argument rested on the version below it.
+
+WHAT WAS CLAIMED: an untruncated census of the TRUSTED label returned 29 matches
+— 12 comments, 7 tools/compass.py reporting, 5 self_mirror reporting, 3
+scripts/openclaw_axis_worker.py, 4 in alignment/civilization_guard.py's own
+unrelated TRUSTED_SOURCES set — and the conclusion drawn was that NOTHING reads
+openclaw_queue/external_feeds.jsonl, so demoting all 20 breaks nothing.
+
+WHAT IS TRUE: external_feeds.jsonl IS read. scripts/openclaw_axis_worker.py:313
+sets row["measured"] = (state == TRUSTED), which decides whether a reading is
+appended to external_feeds.jsonl or diverted to external_shadow.jsonl, and
+_peer_for() at :255-286 reads that file back for the incumbent value every
+contradiction check is judged against. The label gates behaviour.
+
+THE MISTAKE WAS RULE (a) IN A NEW SHAPE. The census counted MATCHES and the
+conclusion was about READERS. Grepping TRUSTED finds where the word appears, not
+where the file it governs is opened — and openclaw_axis_worker showed up as
+"3 matches", which was read as noise instead of opened.
+
+K2 IS STILL NOT_WIRED, FOR A BETTER REASON. The gated path has no production
+caller: an untruncated search for openclaw_axis_worker returns its own
+docstring, two comments in core/, one cockpit string, docs/MODULE_MAP and three
+test files. No cycle, phase or scheduled task invokes run(). Promotions
+accumulate into a path the system never walks.
+
+AND ITEM 37 MUST BE RE-ARGUED. "Demoting all 20 breaks nothing" does not follow
+any more. With 0 TRUSTED every reading becomes SHADOW, external_feeds.jsonl
+stops growing, and _peer_for returns None — so no candidate can be contradicted
+and none can be promoted again. That is Kimi's self-denial-of-service objection
+FIRING, in the manual path, exactly as predicted. It is survivable only because
+the worker is hand-run. Do not append the demotion against the old argument.
 
 ## ITEM 38 — THE CHECKPOINT RATCHET CARRIED TWO UNITS OF SLACK
 STATUS: Part 1 DONE 2026-08-29, bd663ec. Part 2 TODO.
@@ -3359,7 +3385,22 @@ discards. Uncommitted work with no owner is the same defect as a ledger that
 records only successes.
 
 ## ITEM 14 — MAKE THE COMPASS PRODUCE FOUR NUMBERS
-STATUS: TODO
+STATUS: DONE 2026-08-29. Wired as step 25.8, last, after cortex_scan, through
+_run() so it records a checkpoint. All five declaration sites. K2 reports
+NOT_WIRED with every diagnostic preserved, plus `consumers` and
+`last_transition_ts`; K2_NOT_WIRED_UNTIL = 2026-10-01 with a sibling reason
+string that test_compass_wired.py binds to by digest, so a bare date bump stays
+red. tools/compass.py::compass left config/orphan_baseline.json in the same
+commit; the other six entries kept their record and lost a claim that was never
+true. Tests: test/test_compass_wired.py NEW, 18 green; --selftest 16/16.
+
+THE HEADLINE DID NOT MOVE, AND THE INSTRUCTION EXPECTED IT TO. Emil: "Expect the
+compass to report 1 of 4, not 2." Measured before and after: it reports 2 of 4
+both times, and the two are K1 and K3. K2 was ALREADY not counting — its ledger
+is 207.8h old, so it was SOURCE_STALE, and `needles_reporting` requires status
+OK. NOT_WIRED changes which refusal K2 gives, not the count. What it does change
+is the future: a refreshed ledger would have made K2 count 20 and shown 3 of 4,
+and now it never can. Recorded because the premise, not the work, was wrong.
 GATE: NOCYCLE
 tools/compass.py: reads only, writes memory/compass_latest.json, and REFUSES to
 emit a number it cannot source. A stale input is reported as stale, never as a
@@ -3497,6 +3538,38 @@ MUST SURVIVE the fix — fixing these does not turn today's flip into progress
 retroactively.
 
 ## HOLDING
+
+### TWO SUITE RUNS OVERLAPPED AND suite_gate CALLED BOTH VALID (found 2026-08-29, ITEM 14)
+Read from memory/suite_runs.jsonl, not inferred:
+  run A  12:22:10Z -> 12:45:42Z   52 failed
+  run B  12:44:35Z -> 13:07:07Z   53 failed
+B STARTED 67 SECONDS BEFORE A FINISHED. Both were recorded VALID.
+
+B's extra failure is test_suite_gate.py::test_the_real_cycle_lock_is_byte_
+identical_afterwards — a test about the live lock file, which is exactly what a
+second pytest process would disturb. A is clean and C (13:13:54Z -> 13:37:04Z,
+the ITEM 14 run) is clean; only the overlapping one is red, and it is red on the
+lock.
+
+WHY THE GATE DID NOT SEE IT, and this is not a bug in suite_gate: it watches
+memory/cycle.lock, memory/heartbeat.json and memory/last_cycle_id.txt. A
+concurrent SUITE holds none of those. Its own docstring already says VALID means
+"no CYCLE touched the window", not "nothing wrote"— and it names Approvals and
+Pulse as the writers it cannot exclude. A second pytest is a third such writer
+and is not named anywhere.
+
+I DID NOT START RUN B AND CANNOT ACCOUNT FOR IT. Two suite_gate invocations were
+issued this session, and three runs are on record. Stated as an open fact rather
+than a guess.
+
+WHAT IT WOULD TAKE: suite_gate could take a lock of its own — a pid file it
+writes at start and clears at end — and REFUSE when one is already held, the same
+shape as the cycle gate it already implements. That is a small change and it is
+not ITEM 14's, so it is here.
+
+NOTHING IN THIS BATCH RESTS ON RUN B. bd663ec was committed against run A and
+ITEM 14 against run C, and the two FAILED lists are byte-identical to each other.
+
 - THERE ARE TWO MAPS OF THE CYCLE'S STEPS AND NOTHING CHECKS THEY AGREE.
   config/cycle_phases.json and core/cycle_map.py:STEPS both enumerate the same
   steps, and ITEM 7.1 added measurement_honesty to the first and not the second.
