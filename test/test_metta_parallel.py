@@ -67,6 +67,7 @@ def test_the_live_climate_fact_is_what_we_think_it_is():
     assert climate["measured"] is True
 
 
+@pytest.mark.live_state
 def test_r3_fires_on_the_live_climate_contradiction():
     """THE REQUIRED PROOF, on real data, not a fixture."""
     facts = mp.gather_facts()
@@ -91,6 +92,7 @@ def test_the_disagreement_states_both_readings():
     assert "LOW" in entry["says"] and "81.85" in entry["says"]
 
 
+@pytest.mark.live_state
 def test_hyperon_and_the_reference_agree_on_live_data():
     """If the sidecar is present, the MeTTa program must derive what the
     reference derives. A second engine that quietly differs is worse than none."""
@@ -113,6 +115,7 @@ def test_hyperon_and_the_reference_agree_on_live_data():
 # (b) An empty second opinion must not erase a firing first one
 # ---------------------------------------------------------------------------
 
+@pytest.mark.live_state
 def test_an_empty_hyperon_result_does_not_erase_the_reference(monkeypatch):
     """THE SECOND NEGATIVE CONTROL. hyperon returns nothing; the reference
     fires. The output must keep the firings and say the engines disagreed."""

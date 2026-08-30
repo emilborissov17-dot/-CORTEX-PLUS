@@ -260,7 +260,15 @@ def run(pytest_args=None, write_record: bool = True,
         record(entry, write=write_record, path=runs_path)
         return entry
 
+    # ITEM 45 (30 Aug 2026): THE GATE RUNS ONLY DETERMINISTIC TESTS.
+    # Nine tests carry @pytest.mark.live_state — their outcome moves with the
+    # world rather than with the code, measured across 19 runs (see pytest.ini
+    # for the method and the one deliberate exclusion). They are not deleted and
+    # not weakened; tools/live_monitor.py runs exactly this complement. A gate
+    # that goes red because a cycle refused overnight is not a gate, and a
+    # baseline amended after every cycle is a tolerance log.
     cmd = command or [sys.executable, "-m", "pytest", "-q", "-rf",
+                      "-m", "not live_state",
                       *(pytest_args or [])]
     proc = subprocess.run(cmd, cwd=str(BASE), capture_output=True, text=True,
                           encoding="utf-8", errors="replace")

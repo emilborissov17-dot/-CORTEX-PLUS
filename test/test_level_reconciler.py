@@ -119,6 +119,7 @@ def test_a_risk_axis_carries_its_human_translation():
     )
 
 
+@pytest.mark.live_state
 def test_the_correction_row_carries_the_translation():
     result = lr.reconcile()
     row = next(r for r in result["corrections"] if r["axis"] == UNPINNED_AXIS)

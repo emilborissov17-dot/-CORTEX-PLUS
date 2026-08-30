@@ -295,6 +295,7 @@ def test_no_logs_yields_unknown_rather_than_a_guess(tmp_path):
 # Against the live record
 # ---------------------------------------------------------------------------
 
+@pytest.mark.live_state
 def test_the_live_contract_produces_a_plausible_score():
     """And the honest reading beside it, which is the one that ships now."""
     fs = fsm.compute()

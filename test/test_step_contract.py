@@ -129,6 +129,7 @@ def test_after_warmup_it_starts_judging(sandbox):
     assert c.result["verdict"] != sc.UNKNOWN
 
 
+@pytest.mark.live_state
 def test_the_footprint_is_recorded_during_warmup(sandbox):
     warm_up("recorded", sandbox)
     baseline = json.loads((sandbox / "baseline.json").read_text(encoding="utf-8"))

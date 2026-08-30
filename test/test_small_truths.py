@@ -168,6 +168,7 @@ def test_a_step_that_runs_twice_lights_only_the_square_it_finished(monkeypatch):
          if c["state"] == "done"})
 
 
+@pytest.mark.live_state
 def test_a_substep_checkpoint_is_named_as_one_not_as_unmapped():
     from cockpit import server as srv
     blob = srv.app.test_client().get("/api/cycles").get_json()

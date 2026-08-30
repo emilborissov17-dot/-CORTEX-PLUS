@@ -3649,8 +3649,74 @@ MUST SURVIVE the fix — fixing these does not turn today's flip into progress
 retroactively.
 
 ## ITEM 45 — SEPARATE THE GATE FROM THE MONITOR
-STATUS: TODO
+STATUS: STEP 1 DONE 2026-08-30 — nine tests marked @pytest.mark.live_state,
+        tools/suite_gate.py runs -m "not live_state", tools/live_monitor.py runs
+        -m live_state. STEP 2 (the compass needle) HELD pending Kimi.
 GATE: NOCYCLE
+
+THE SET WAS MEASURED, NOT GUESSED, and the first measurement destroyed the
+obvious plan. A runtime detector — the read-side mirror of conftest's
+_no_live_writes, loaded with -p so nothing in the repo changed to run it —
+intercepted open/read_text/read_bytes across a full suite and attributed every
+path under memory/, snapshots/, output/ or cortex_memory/ to the test that
+touched it.
+
+  453 TESTS READ LIVE STATE. 13% of the suite, 106 modules. Most-read:
+  memory/scheduler_state.json (57 tests), memory/step_contract_latest.json (55),
+  memory/cycle.lock (46), memory/existence_ledger.jsonl (44).
+
+So "reads live state" CANNOT be the criterion — moving 453 tests is not
+separating a monitor from a gate, it is deleting the gate. The criterion is
+whether the OUTCOME MOVES, and that is measurable from history:
+
+  19 VALID recorded runs, 2026-08-29T03:04 -> 2026-08-30T08:43
+  52 tests failed in EVERY run          -> stable red, real defects, stay in the gate
+  13 tests FLAPPED                      -> red in some runs, green in others
+   9 of the 13 flapped AND read live state          -> MARKED
+   3 flapped while reading NO live state            -> the control
+   1 flapped, reads live state, DELIBERATELY UNMARKED (below)
+
+THE THREE CONTROLS ARE WHY THIS DISCRIMINATOR IS TRUSTWORTHY. They flapped
+because CODE changed, and the detector independently saw them touch no live
+state: test_checkpoint_wiring (the ITEM 34 ratchet going 33->34) and the two
+test_last_viable_tier tests (ITEM 44.1's contract change). A method that could
+not tell those apart from a world mutation would be worthless.
+
+THE ONE THAT IS NOT MARKED, AND MUST NOT BE "FIXED" BY MARKING IT:
+test_resolve_ideas_defects.py::test_the_unrestricted_hit_rate_is_never_printed.
+It flapped 4/19 and it reads live state, so the mechanical rule would mark it.
+Kimi ruled it a TEST DEFECT — "a brittle grep without context; the collision is
+a test-quality failure, not a live-state mutation." It stays RED IN THE GATE
+until ITEM 46. Emil, asked to overrule, declined: marking it would bury a real
+defect in the bucket we agreed to tolerate. This is the one place the mechanical
+answer and the right answer differ, and the difference is recorded rather than
+smoothed away.
+
+THE LIMIT, IN PLAIN WORDS, BECAUSE IT DECIDES HOW TO USE THIS LIST. Eight of the
+nine flapped only 1-5 times in 19 runs. A test that reads live state but has not
+yet met a world that breaks it looks perfectly stable today, and there are 453
+candidates. So THIS MEMBERSHIP IS NOT SETTLED — it is a snapshot of what has
+been caught, and it will grow. Treating it as final would rebuild the tolerance
+log one level down: a monitor whose membership is fixed by one measurement is
+exactly the thing Kimi named. Add to it by the same method — flapped AND reads
+live state — not by argument about which tests feel flaky.
+
+WHY A MARKER AND NOT A FILE MOVE. Relocating tests would break their imports and
+fixtures, scatter their history, and make the diff unreadable at precisely the
+moment someone needs to verify that no assertion was weakened. A marker is one
+line above an untouched assertion, and git blame still points at whoever wrote
+the test. Emil agreed on that reasoning.
+
+STEP 2 IS HELD ON PURPOSE. The monitor must surface — Kimi's objection is that a
+second-class suite gets ignored, and a green folder nobody opens is worse than a
+red line in the suite everyone reads. The answer is a compass needle carrying a
+status and a reason, with NEVER_RUN distinct from OK ("nothing is wrong" and
+"nobody looked" are different facts, the same distinction core/answered_by.py
+draws). But adding a fifth needle silently redefines "N of 4 needles", which is
+what K1-K4 have meant since the compass was written. That is not a decision to
+make as a side effect of a test-runner commit. tools/live_monitor.py writes
+memory/live_monitor_latest.json today and NOTHING READS IT, which is stated in
+its docstring rather than left to be discovered.
 Kimi, 2026-08-29: "A gating test must be deterministic; any test whose outcome
 varies with live state is an operational monitor, not a correctness gate." And:
 "A baseline amended after every cycle is a tolerance log, not a baseline."

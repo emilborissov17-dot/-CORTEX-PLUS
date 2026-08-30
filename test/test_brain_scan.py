@@ -227,6 +227,7 @@ def _tree_digest(root: pathlib.Path) -> str:
     return h.hexdigest()
 
 
+@pytest.mark.live_state
 def test_a_dry_run_leaves_memory_and_snapshots_byte_identical(tmp_path, monkeypatch):
     """write=False must touch neither tree. Checked around this test alone."""
     mem, snap = REPO / "memory", REPO / "snapshots"

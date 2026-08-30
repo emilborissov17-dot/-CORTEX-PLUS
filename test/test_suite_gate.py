@@ -21,6 +21,7 @@ from __future__ import annotations
 import hashlib
 import json
 import pathlib
+import pytest
 import sys
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
@@ -82,6 +83,7 @@ def test_both_readings_are_in_the_record_with_the_cycle_id(tmp_path):
     assert rec["reasons"], "an invalid run with no stated reason is not a record"
 
 
+@pytest.mark.live_state
 def test_the_real_cycle_lock_is_byte_identical_afterwards():
     """Including the case where byte-identical means 'still does not exist'."""
     for path, before in _LIVE_BEFORE.items():
