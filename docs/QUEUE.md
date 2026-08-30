@@ -62,6 +62,10 @@ Keep the state column current — it is the only place a human should have to lo
 | 45 | Separate the gate from the monitor — live-state tests out of suite_gate, surfaced as a compass needle | TODO | NOCYCLE |
 | 46 | test_the_unrestricted_hit_rate_is_never_printed asserts a bare string anywhere in stdout | TODO | NOCYCLE |
 | 47 | a test writes memory/embeddings_cache.json — live-state leak caught by _no_live_writes | TODO | NOCYCLE |
+| 50 | Unify on _run(): ONE hook for coverage and skipping — closes ITEM 38 and opens partial runs, same defect | TODO — blocked by 52, 53 | NOCYCLE |
+| 51 | --resume silently re-executed 31 inline steps while reporting them skipped | DONE 2026-08-30 — disabled, refuses by name | NOCYCLE |
+| 52 | the survival gate is a statement inside main(), not a precondition of any entry point | TODO — MUST land BEFORE ITEM 50 | NOCYCLE |
+| 53 | a sandbox/dry-run mode is a PREREQUISITE for partial runs, not a convenience | TODO — blocks ITEM 50 | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -3758,6 +3762,138 @@ DELIBERATELY NOT IN THE BASELINE. Admitting it would make the never-touch-live-
 state rule negotiable. Fix the fixture: redirect the embedding cache into
 tmp_path. The write is almost certainly a side effect of importing or exercising
 the interval-head embed path, which caches by sha256 of the text.
+
+## ITEM 50 — THE STEP ARCHITECTURE IS A DESCRIPTION, NOT A CAPABILITY
+STATUS: TODO
+GATE: NOCYCLE
+
+ESTABLISHED FROM SOURCE 2026-08-30, in answer to "is our architecture usable or
+only on paper". THE ANSWER IS: ONLY WHOLE CYCLES CAN BE RUN.
+
+  --resume            skips only via _run(); DISABLED by ITEM 51
+  --only / --from     REFUSE OR PERMIT, print, and EXIT. They never execute
+                      (fast_cycle_runner.py:3483, and the docstring says so)
+  --pulse             a CPU/RAM monitor loop, not a cycle
+  --dry-run           DOES NOT EXIST — zero occurrences in the runner
+
+THE ROOT IS ONE FACT WITH TWO FACES. main() is a linear ~900-line function and
+31 of the 66 steps have INLINE bodies that never pass through _run(). _run() is
+the only hook for both the skip gate and the checkpoint — so THE STEPS THAT
+RECORD NOTHING ARE EXACTLY THE STEPS THAT CANNOT BE SKIPPED. ITEM 38's
+UNCOVERED_STEP_LIMIT = 31 and this item's "31 unrunnable steps" are the SAME
+NUMBER measured from two directions. Closing either closes the other.
+
+WHAT IT COSTS US TODAY, concretely: the smallest unit that would exercise the
+LLM ladder hard enough to make the cloud fail, the cooldowns fire and the
+demotion decide is a single step — daily_analysis (29 calls, ~458s) or
+internet_agent (26 calls, ~631s, the one whose [BUDGET] line showed
+tiers={'cloud': 13, 'local_3b': 13} across the demotion boundary). Neither can
+be run. Every experiment on the ladder therefore costs a FULL 2h20m cycle.
+
+AND A PARTIAL RUN WOULD POLLUTE THE STATE OUR TESTS READ. Measured on the
+REFUSED cycle of 2026-08-30T00:04, which reached only body_scan and exited in 45
+seconds: it wrote 21 files, including memory/existence_ledger.jsonl
+(CYCLE_STARTED + CYCLE_REFUSED) and memory/step_contract_latest.json reset to
+steps: 0 — and THAT reset is what failed test_flow_score and blocked 44.1 this
+morning. A 45-second refusal broke a test in the gating suite. Nothing is
+guarded, and there is no dry-run.
+
+KIMI'S SEQUENCING CRITERION, verbatim, and it decides WHEN this is done rather
+than whether: "Yes. Criterion: validation dependency. If the next priority item
+can be validated without step isolation - C3 by direct hash comparison, ITEM 18
+by frozen-data replay - it precedes unification. If an item requires step-level
+testing to validate, unification must precede it."
+So this item does not jump the queue on its own merits. It jumps only when an
+item ahead of it CANNOT be validated without step isolation. C3 and ITEM 18 both
+can, so both precede it.
+
+KIMI'S OBJECTION TO DOING IT AT ALL, recorded beside the item because it is the
+strongest argument against the work: "Unifying 30 inline bodies is a high-risk
+refactor. The safer path is to disable --resume and accept nightly-only
+verification until the architecture is rewritten." ITEM 51 took that safer path
+on 2026-08-30. The cost we are accepting in exchange is NIGHTLY-ONLY
+VERIFICATION — every ladder experiment costs a full 2h20m cycle, and there is no
+way to test a step. That is a real price and it is being paid deliberately, not
+overlooked.
+
+TWO ITEMS BLOCK THIS ONE, and both were ruled prerequisites rather than
+companions:
+  ITEM 52 — the survival gate must become a precondition BEFORE any new entry
+            point exists. Kimi: "Move the gate BEFORE decomposition. Safety
+            invariants must be enforced at every entry point before any new
+            entry point is created."
+  ITEM 53 — a dry-run mode. Kimi: "PREREQUISITE. A test mode that mutates live
+            state is not a convenience; it is uncontrolled production
+            pollution."
+
+WHEN THIS IS FIXED, THE SURVIVAL GATE MOVES WITH IT. The RAM gate is a statement
+INSIDE main() at :2154, after beat("body_scan", "0") — not a precondition of an
+entry point. A per-phase runner that starts at D_SCORE would skip main()'s
+prologue and therefore skip the gate, and would start on a machine the full cycle
+refused. The gate must become a function every entry point calls, or it silently
+stops applying the moment this item lands.
+
+## ITEM 51 — --resume LIED ABOUT WHAT IT SKIPPED
+STATUS: DONE 2026-08-30 — disabled; refuses with the reason named.
+GATE: NOCYCLE
+
+Kimi, verbatim: "Disable --resume immediately; fix in queue order. A feature that
+silently re-executes while claiming to skip is worse than an absent feature.
+Disabling is cheap and stops corruption; the architectural fix follows the
+queue."
+
+--resume consulted the skip gate inside _run(), so it could only skip the 35
+steps that pass through it. The other 31 RE-EXECUTED while the log reported the
+prefix as skipped — re-fetching, re-scoring and re-writing over artifacts the
+earlier cycle had already sealed. _phase_cli() already refused --only/--from for
+exactly this reason since 20 Aug; --resume was the one door left open.
+
+_decide_resume() now returns active=False with a reason naming the mechanism and
+pointing at ITEM 50. THE 900-LINE FUNCTION IS UNTOUCHED: a repair attempted
+underneath a live nightly cycle is how this defect would gain company.
+
+## ITEM 52 — THE SAFETY GATE IS A STATEMENT, NOT A PRECONDITION
+STATUS: TODO. MUST LAND BEFORE ITEM 50, NOT WITH IT.
+GATE: NOCYCLE
+
+Kimi: "Move the gate BEFORE decomposition. Safety invariants must be enforced at
+every entry point before any new entry point is created."
+
+The homeostasis/RAM gate lives at fast_cycle_runner.py:2154, INSIDE main(), after
+beat("body_scan", "0"). It is a statement in a linear function, not a property of
+starting a cycle. It works today only because there is exactly one entry point
+and that entry point happens to execute it.
+
+THE FAILURE IS PREDICTABLE AND DATED: the moment ITEM 50 creates a per-phase
+runner, a run that starts at D_SCORE never executes main()'s prologue and
+therefore never meets the gate — and would start on a machine the full cycle
+refused. On 2026-08-29 and 2026-08-30 the gate refused at RAM 95.3% and 93.5%.
+A partial runner built before this item would have started both times.
+
+Move it into a function every entry point calls, and give it a test that FAILS
+when a new entry point does not call it. The test is the point: a precondition
+enforced by convention is a precondition until somebody adds a door.
+
+## ITEM 53 — A DRY-RUN MODE IS A PREREQUISITE, NOT A CONVENIENCE
+STATUS: TODO. BLOCKS ITEM 50.
+GATE: NOCYCLE
+
+Kimi: "PREREQUISITE. A test mode that mutates live state is not a convenience; it
+is uncontrolled production pollution."
+
+THE EVIDENCE IS 21 FILES. The REFUSED cycle of 2026-08-30T00:04 reached only
+body_scan and exited in 45 seconds. It still wrote 21 files, including
+memory/existence_ledger.jsonl (CYCLE_STARTED + CYCLE_REFUSED, seq 302) and
+memory/step_contract_latest.json reset to steps: 0. That reset is what failed
+test_flow_score and blocked ITEM 44.1 for a morning.
+
+So the shortest possible run — one that did no work at all — polluted the state
+the tests read. A partial-run mode without a sandbox would do that on purpose,
+repeatedly, to the very state ITEM 45 spent 2026-08-30 separating from the gate.
+
+fast_cycle_runner.py has ZERO occurrences of `dry_run` or `--dry`. What exists is
+the house rule that a module writing a ledger dry-runs unless given --write —
+obeyed by tools/, not by the runner.
 
 ## HOLDING
 

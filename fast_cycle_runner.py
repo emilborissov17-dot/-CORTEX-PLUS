@@ -844,6 +844,43 @@ def _decide_resume(argv) -> dict:
         return {"active": False, "skip": frozenset(),
                 "reason": "resume not requested (--resume is OFF by default)",
                 "seal_only": False}
+
+    # ── ITEM 51 (30 Aug 2026): --resume IS DISABLED, AND REFUSES BY NAME ──────
+    #
+    # Kimi, verbatim: "Disable --resume immediately; fix in queue order. A
+    # feature that silently re-executes while claiming to skip is worse than an
+    # absent feature. Disabling is cheap and stops corruption; the architectural
+    # fix follows the queue."
+    #
+    # THE DEFECT, MEASURED. A skip can only happen inside _run(), which is the
+    # sole place the resume gate is consulted. But 31 of the 66 steps in
+    # core.cycle_map.STEPS have INLINE bodies in main() and never pass through
+    # _run() — that is the same 31 that test_checkpoint_wiring's
+    # UNCOVERED_STEP_LIMIT ratchets, and it is not a coincidence: a step that
+    # records no checkpoint is exactly a step that cannot be skipped, because
+    # _run() is the single hook for both.
+    #
+    # So a resume RE-EXECUTES those 31 steps while the log reports the prefix as
+    # skipped. That is not a partial run; it is a full run wearing a partial
+    # run's label — re-fetching, re-scoring and re-writing over artifacts the
+    # earlier cycle already sealed. The same class of defect the phase reports
+    # were built to expose, and _phase_cli() already refuses --only/--from for
+    # this exact reason (fast_cycle_runner.py:3489). --resume was the one door
+    # left open.
+    #
+    # ITEM 50 is the architectural fix: decompose main() into per-phase callables
+    # so a skip means what it says. Until then this refuses rather than lies.
+    # DELIBERATELY NOT TOUCHING THE 900-LINE FUNCTION — a repair attempted
+    # underneath a live nightly cycle is how this defect would gain company.
+    return {"active": False, "skip": frozenset(), "seal_only": False,
+            "reason": (
+                "--resume is DISABLED (ITEM 51, 30 Aug 2026). It can only skip "
+                "steps that pass through _run(), and 31 of 66 steps have inline "
+                "bodies in main() — so a resume SILENTLY RE-EXECUTES those 31 "
+                "while reporting them skipped, overwriting artifacts the earlier "
+                "cycle sealed. Running the whole cycle instead. The fix is "
+                "ITEM 50: decompose main() into per-phase callables so a skip "
+                "means what it says.")}
     try:
         from core import cycle_checkpoint as _cc
         from core.cycle_map import STEPS as _STEPS

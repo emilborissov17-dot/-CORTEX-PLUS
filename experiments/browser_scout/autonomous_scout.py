@@ -48,8 +48,40 @@ def _now_iso():
 def _local(prompt: str, timeout: int = 120, num_predict: int = 300) -> str:
     """Sovereign local model over Ollama HTTP. Raises on failure (caller handles)."""
     import requests
+    # keep_alive=0 — UNLOAD IMMEDIATELY (30 Aug 2026). MEASURED, not guessed:
+    # ollama serve holds 2,031 MB flat, a model runner adds 6,263 MB, the machine
+    # has 13.9 GB, and the cycle's homeostasis gate needs 2 GB free to start. This
+    # function is called by experiments/pulse/pulse_continuum.py:428,580 — which
+    # CORTEX_Pulse fires EVERY FIVE MINUTES. It sent no keep_alive at all, so
+    # Ollama applied its 5-minute server default and the next pulse re-touched
+    # the model before it expired: a model that never unloads, by accident. The
+    # 03:00 cycle refused twice in eighteen hours with 1.0-1.2 GB free.
+    #
+    # THIS IS A FAMILY, NOT AN INCIDENT, and that is why the citation is here:
+    # core/reaction.py:143 already records this exact defect — "passed no
+    # keep_alive at all, so a timed-out reaction left the model" — found, fixed
+    # and written down. It then recurred in this file, which nobody was checking.
+    # A defect that is documented once and repeats is a defect the documentation
+    # did not prevent.
+    #
+    # THE ENVIRONMENT VARIABLE IS SET TOO, AND THEY HAVE DIFFERENT JOBS.
+    # OLLAMA_KEEP_ALIVE=0 (user scope) governs any caller that FORGETS to send
+    # one — it is the net under the next unknown case, and it is irrelevant to
+    # the 41 call_groq sites that override it per request. This line is the
+    # opposite: it states the intent AT THE SITE and does not depend on the
+    # machine's environment, so a clone, a container or a reset profile behaves
+    # the same. The variable defends against the unknown; the constant fixes the
+    # known.
+    #
+    # THE COST, NAMED SO NOBODY REDISCOVERS IT: every call now reloads the model.
+    # For a five-minutely background probe that is the entire point. Six other
+    # callers share this function — goal_impact.py, semantic_scout.py,
+    # shadow_test_semantic.py and selfcode_loop.py — all DORMANT per
+    # docs/EXPERIMENT_AUTOPSY_2026-08-29.md, so nothing live pays it today. A
+    # future tight loop through _local() would, and should set its own value
+    # rather than raise this one.
     r = requests.post(f"{_OLLAMA}/api/chat", timeout=timeout, json={
-        "model": _MODEL, "stream": False,
+        "model": _MODEL, "stream": False, "keep_alive": 0,
         "messages": [{"role": "user", "content": prompt}],
         "options": {"temperature": 0.1, "num_predict": num_predict}})
     r.raise_for_status()

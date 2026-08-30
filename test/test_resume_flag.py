@@ -69,6 +69,14 @@ def test_a_manual_run_gets_no_resume_even_with_a_perfect_checkpoint(resumable):
     assert r._decide_resume(["fast_cycle_runner.py"])["active"] is False
 
 
+@pytest.mark.xfail(strict=True, reason=(
+    "ITEM 51 (30 Aug 2026): --resume is DISABLED, so _decide_resume() "
+    "short-circuits before the logic this test describes. The test is KEPT, "
+    "not deleted: it is the specification ITEM 50 has to restore when it "
+    "unifies the step bodies on _run(). strict=True on purpose — the day "
+    "resume is re-enabled this XPASSes and fails the suite, forcing whoever "
+    "re-enables it to remove this marker deliberately rather than find a "
+    "quietly-green test that has not run its assertion in months."))
 def test_with_the_flag_and_a_named_cycle_it_resumes(resumable):
     d = r._decide_resume(["--resume"])
     assert d["active"] is True, d["reason"]
@@ -79,6 +87,14 @@ def test_with_the_flag_and_a_named_cycle_it_resumes(resumable):
 # The refusals
 # ---------------------------------------------------------------------------
 
+@pytest.mark.xfail(strict=True, reason=(
+    "ITEM 51 (30 Aug 2026): --resume is DISABLED, so _decide_resume() "
+    "short-circuits before the logic this test describes. The test is KEPT, "
+    "not deleted: it is the specification ITEM 50 has to restore when it "
+    "unifies the step bodies on _run(). strict=True on purpose — the day "
+    "resume is re-enabled this XPASSes and fails the suite, forcing whoever "
+    "re-enables it to remove this marker deliberately rather than find a "
+    "quietly-green test that has not run its assertion in months."))
 def test_the_flag_without_a_named_cycle_refuses(resumable, monkeypatch):
     monkeypatch.delenv("CORTEX_RESUME_CYCLE_ID", raising=False)
     d = r._decide_resume(["--resume"])
@@ -95,6 +111,14 @@ def test_a_checkpoint_from_another_cycle_refuses(resumable, monkeypatch):
     assert d["skip"] == frozenset()
 
 
+@pytest.mark.xfail(strict=True, reason=(
+    "ITEM 51 (30 Aug 2026): --resume is DISABLED, so _decide_resume() "
+    "short-circuits before the logic this test describes. The test is KEPT, "
+    "not deleted: it is the specification ITEM 50 has to restore when it "
+    "unifies the step bodies on _run(). strict=True on purpose — the day "
+    "resume is re-enabled this XPASSes and fails the suite, forcing whoever "
+    "re-enables it to remove this marker deliberately rather than find a "
+    "quietly-green test that has not run its assertion in months."))
 def test_a_cycle_that_already_sealed_is_not_resumed(resumable, monkeypatch):
     import memory.existence_ledger as el
     monkeypatch.setattr(el, "has_finished", lambda cid: True)
@@ -136,6 +160,14 @@ def test_an_exploding_gate_runs_the_full_cycle(resumable, monkeypatch):
 # Evidence, not arithmetic
 # ---------------------------------------------------------------------------
 
+@pytest.mark.xfail(strict=True, reason=(
+    "ITEM 51 (30 Aug 2026): --resume is DISABLED, so _decide_resume() "
+    "short-circuits before the logic this test describes. The test is KEPT, "
+    "not deleted: it is the specification ITEM 50 has to restore when it "
+    "unifies the step bodies on _run(). strict=True on purpose — the day "
+    "resume is re-enabled this XPASSes and fails the suite, forcing whoever "
+    "re-enables it to remove this marker deliberately rather than find a "
+    "quietly-green test that has not run its assertion in months."))
 def test_a_step_in_the_prefix_but_not_recorded_is_still_run(resumable, monkeypatch):
     """The prefix says six steps; the record says four. Four is the answer."""
     import core.cycle_checkpoint as cc
@@ -159,6 +191,14 @@ def test_nothing_recorded_means_nothing_skipped(resumable, monkeypatch):
 # seal-only
 # ---------------------------------------------------------------------------
 
+@pytest.mark.xfail(strict=True, reason=(
+    "ITEM 51 (30 Aug 2026): --resume is DISABLED, so _decide_resume() "
+    "short-circuits before the logic this test describes. The test is KEPT, "
+    "not deleted: it is the specification ITEM 50 has to restore when it "
+    "unifies the step bodies on _run(). strict=True on purpose — the day "
+    "resume is re-enabled this XPASSes and fails the suite, forcing whoever "
+    "re-enables it to remove this marker deliberately rather than find a "
+    "quietly-green test that has not run its assertion in months."))
 def test_all_steps_done_but_never_sealed_is_flagged_seal_only(resumable, monkeypatch):
     import core.cycle_checkpoint as cc
     monkeypatch.setattr(cc, "latest", lambda base=None: {
