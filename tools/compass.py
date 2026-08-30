@@ -23,6 +23,34 @@ runner does not depend on argv.
 FOUR NEEDLES, AND ONE OF THEM NOW REFUSES ON PURPOSE. K2 reports NOT_WIRED: see
 the block above K2_NOT_WIRED_UNTIL for the ruling, the objection to the ruling,
 and the measurement behind both.
+
+A FIFTH ENTRY THAT IS NOT A NEEDLE (ITEM 45, 30 Aug 2026). The live monitor
+appears in `needles` with kind="monitor", and `needles_total` STAYS 4.
+Kimi's ruling: "kind=monitor, headline stays N of 4. Criterion: a needle must
+measure progress toward the global goal. K1-K4 do; the monitor measures
+infrastructure integrity. Conflating them would let a green headline hide a
+broken foundation, or let a red monitor obscure real progress."
+
+AND THE `integrity` FIELD IS NOT DECORATION — IT IS THE ANSWER TO THE STRONGEST
+OBJECTION AGAINST THIS WHOLE SEPARATION, which is Kimi's own and is recorded here
+verbatim so that nobody later deletes the field as clutter:
+
+    If test integrity is prerequisite to all measurement, then a red monitor
+    means the other four needles are unreliable, and separating them risks a
+    GREEN HEADLINE OVER ROTTEN FOUNDATIONS.
+
+That objection is correct, and visibility alone does not meet it — humans read
+headlines, not footnotes. So the count and the TRUST in the count are separated:
+the four needles keep counting, and `integrity` vetoes their credibility.
+Kimi: "if the monitor is RED or NEVER_RUN, the headline reads '2 of 4 needles;
+INTEGRITY: UNVERIFIED.' ... Separating count from trust answers your earlier
+objection: the suite is no longer second-class, it is a veto gate on the
+credibility of the other four."
+
+NEVER_RUN IS NOT OK, and the default before the monitor has ever run is
+NEVER_RUN. "Nothing is wrong" and "nobody looked" are different facts — the same
+distinction core/answered_by.py draws between degraded=False and degraded=None,
+and a monitor that read green without running would be worse than no monitor.
 """
 
 from __future__ import annotations
@@ -51,6 +79,16 @@ MISSING, UNREADABLE, STALE = "SOURCE_MISSING", "SOURCE_UNREADABLE", "SOURCE_STAL
 # refuses to put 20 on the face of the compass as if 20 sources had earned
 # something.
 NOT_WIRED = "NOT_WIRED"
+
+# ITEM 45: the monitor's own vocabulary. Deliberately NOT reusing the four
+# SOURCE_* verdicts — those describe a file this tool reads, and the monitor
+# describes whether the test suite that guards every measurement still agrees
+# with the world.
+MONITOR = "monitor"
+LIVE_CHECKS_RED = "LIVE_CHECKS_RED"
+NEVER_RUN = "NEVER_RUN"
+NO_TESTS_MARKED = "NO_TESTS_MARKED"
+VERIFIED, UNVERIFIED = "VERIFIED", "UNVERIFIED"
 
 # ─────────────────────────── THE EXPIRY, AND THE ARGUMENT AGAINST IT ──────────
 # Kimi ruled HARDCODE-WITH-EXPIRY: "a constant with a review date is an honest
@@ -341,16 +379,81 @@ def k4() -> dict:
                    "does not beat the flat baseline — a single constant band scores better")
 
 
+def monitor_needle() -> dict:
+    """Infrastructure integrity, as an entry that is NOT one of the four.
+
+    It carries kind="monitor" so every consumer can tell it apart, and it is
+    excluded from needles_reporting by compass() below — a monitor reporting
+    zero red checks must never inflate a headline that means "how much of the
+    world we can measure".
+    """
+    rel = "memory/live_monitor_latest.json"
+    base = {"needle": "MONITOR", "kind": MONITOR,
+            "means": "live checks that disagree with the world (infrastructure "
+                     "integrity, NOT progress toward the goal)",
+            "source": rel}
+    try:
+        # sys.path FIRST. Run as `python tools/compass.py` the repo root is not
+        # importable, so `tools.live_monitor` raises ModuleNotFoundError and the
+        # needle would report NEVER_RUN forever — failing safe, but for a reason
+        # that is not true. A monitor permanently red for a spurious reason is a
+        # monitor nobody reads, which is the failure ITEM 45 exists to avoid.
+        if str(BASE) not in sys.path:
+            sys.path.insert(0, str(BASE))
+        from tools.live_monitor import latest as _latest
+        rec = _latest()
+    except Exception as e:
+        return dict(base, value=None, status=NEVER_RUN,
+                    why=f"tools/live_monitor.py could not be read: "
+                        f"{type(e).__name__}. This is NOT a pass.")
+
+    st, failed = rec.get("status"), (rec.get("failed") or [])
+    ts = rec.get("ts")
+    if st == "OK":
+        return dict(base, value=0, status="OK", ran_at=ts,
+                    why="every live check agreed with the world when the monitor "
+                        "last ran")
+    if st == "LIVE_CHECKS_RED":
+        return dict(base, value=len(failed), status=LIVE_CHECKS_RED, ran_at=ts,
+                    red=failed,
+                    why=f"{len(failed)} live check(s) disagree with the world. "
+                        f"These are NOT code defects and do not gate a commit — "
+                        f"but until they are read, the four needles above rest on "
+                        f"a foundation nobody has verified.")
+    if st == "NO_TESTS_MARKED":
+        return dict(base, value=None, status=NO_TESTS_MARKED, ran_at=ts,
+                    why="no test carries @pytest.mark.live_state — the monitor is "
+                        "watching nothing, which is not the same as everything "
+                        "being well.")
+    return dict(base, value=None, status=NEVER_RUN, ran_at=ts,
+                why=rec.get("why") or "the live monitor has never run. Not a pass.")
+
+
 def compass() -> dict:
     needles = [k1(), k2(), k3(), k4()]
+    # COUNTED OVER THE FOUR ONLY. The monitor is appended after this line, and
+    # `n.get("kind") != MONITOR` is what keeps a monitor reporting 0 red checks
+    # from reading as a fifth measured needle.
     reported = sum(1 for n in needles if n.get("value") is not None
-                   and n.get("status") == "OK")
+                   and n.get("status") == "OK" and n.get("kind") != MONITOR)
+
+    mon = monitor_needle()
+    integrity = VERIFIED if mon.get("status") == "OK" else UNVERIFIED
+
+    verdict = (f"{reported} of 4 needles carry a number from a live source"
+               if reported else
+               "NO NEEDLE CARRIES A NUMBER FROM A LIVE SOURCE")
+    if integrity != VERIFIED:
+        # IN THE HEADLINE, NOT A FOOTNOTE. Kimi: "Visibility alone fails because
+        # humans read headlines, not footnotes."
+        verdict = f"{verdict}; INTEGRITY: {integrity}"
+
     return {"method": METHOD_VERSION, "ts": _now().isoformat(),
             "needles_reporting": reported, "needles_total": 4,
-            "verdict": (f"{reported} of 4 needles carry a number from a live source"
-                        if reported else
-                        "NO NEEDLE CARRIES A NUMBER FROM A LIVE SOURCE"),
-            "needles": needles}
+            "integrity": integrity,
+            "integrity_why": mon.get("why"),
+            "verdict": verdict,
+            "needles": needles + [mon]}
 
 
 def main(argv=None) -> int:
@@ -362,7 +465,10 @@ def main(argv=None) -> int:
         return selftest()
     c = compass()
     print(f"{METHOD_VERSION}   {c['ts'][:19]}")
-    print(f"  {c['verdict']}\n")
+    print(f"  {c['verdict']}")
+    if c.get("integrity") != VERIFIED:
+        print(f"  INTEGRITY {c.get('integrity')}: {c.get('integrity_why')}")
+    print()
     for n in c["needles"]:
         v = n["value"]
         v = "—" if v is None else (f"{v}" if not isinstance(v, float) else f"{v:.4f}")
@@ -419,10 +525,24 @@ def selftest() -> int:
 
         # 1. every needle with NO source at all
         c = compass()
-        want(all(n["value"] is None for n in c["needles"]),
+        # SCOPED TO THE FOUR, NOT RELAXED. Both assertions are about the
+        # MEASURING needles and were written when those were the only kind. The
+        # monitor carries NEVER_RUN, not SOURCE_MISSING, so an unscoped `all()`
+        # would fail — and loosening the assertion to accommodate a new field
+        # would weaken a real check instead of aiming it.
+        ks = [n for n in c["needles"] if n.get("kind") != MONITOR]
+        want(len(ks) == 4, "the four measuring needles are still four", str(len(ks)))
+        want(all(n["value"] is None for n in ks),
              "with no sources, no needle invents a number")
-        want(all(n["status"] == MISSING for n in c["needles"]),
+        want(all(n["status"] == MISSING for n in ks),
              "and each says SOURCE_MISSING by name")
+        want(c["integrity"] == UNVERIFIED,
+             "and with no monitor record, integrity is UNVERIFIED — never absent, "
+             "never VERIFIED by default", c["integrity"])
+        want("INTEGRITY: UNVERIFIED" in c["verdict"],
+             "and the HEADLINE carries it, not a footnote", c["verdict"])
+        want(sum(1 for n in c["needles"] if n.get("kind") == MONITOR) == 1,
+             "the monitor is present as exactly one non-needle entry")
         want("NO NEEDLE" in c["verdict"], "the verdict says so plainly", c["verdict"])
 
         # 2. K2 counts transitions, not labels — the defect it exists to avoid
