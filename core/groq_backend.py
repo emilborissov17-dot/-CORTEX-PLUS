@@ -254,6 +254,18 @@ def _set_cooldown(name: str) -> None:
         _cooldown_hits[name] = hits
         secs = min(_COOLDOWN_SECS_FIRST * hits, _COOLDOWN_SECS_MAX)  # 60/120/180, capped
         _cooldowns[name] = time.time() + secs
+        until = _cooldowns[name]
+    # ITEM 44.1: TELL THE BUDGET WHEN THIS WINDOW ENDS. The cloud demotion is
+    # tied to the LONGEST active cooldown so a transient 429 cannot outlive its
+    # own recovery signal. Pushed rather than pulled because this module imports
+    # step_budget, so step_budget cannot import back to ask; and here rather than
+    # anywhere else because this is the single place a cooldown is created.
+    # FAIL-OPEN: bookkeeping must never break the chain.
+    try:
+        from core import step_budget as _sb
+        _sb.note_cooldown_until(until)
+    except Exception:
+        pass
     print(f"  [LLM] {name} cooldown {secs}s (hit #{hits})")
 
 
@@ -809,6 +821,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     _small = _mw.small_model()
     _big = _mw.big_model()
 
+    # Read BEFORE the ladder: run_call may clear eligibility as a side effect of
+    # the attempt itself, and asking afterwards would always answer "no".
+    _cs = _budget.cloud_state()
+    _probing = bool(_cs.get("tripped") and not _cs.get("demoted"))
+
     res = _budget.run_call(
         cloud=_cloud_chain,
         local_3b=_local_tier(_small),
@@ -818,6 +835,19 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
         # own CRITICAL check is about priority, not residency.
         local_8b=_local_tier(_big) if _mw.is_open() else None,
     )
+
+    # ITEM 44.1: WAS THIS CALL THE RE-PROBE? A demotion that has outlived its
+    # cooldowns lets exactly one cloud attempt through; its outcome decides
+    # whether the demotion clears or re-arms with a longer floor. Reported here
+    # because this is where the tier that answered is known.
+    if _probing:
+        try:
+            if res.outcome == _budget.OK and res.tier == _budget.CLOUD:
+                _budget.note_probe_succeeded()
+            else:
+                _budget.note_probe_failed()
+        except Exception:
+            pass
 
     if res.outcome == _budget.OK and res.value is not None:
         result, meta = res.value

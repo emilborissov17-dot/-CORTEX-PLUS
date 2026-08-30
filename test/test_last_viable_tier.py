@@ -75,11 +75,27 @@ def test_a_normal_step_does_not_count_8b_as_viable(monkeypatch):
 
 
 def test_cloud_is_demoted_after_three_empty_tiers(monkeypatch):
+    """UPDATED BY ITEM 44.1 (29 Aug 2026), and the update is the item.
+
+    cloud_demoted() used to mean "the trip happened". It now means "the cloud is
+    excluded RIGHT NOW", which is a question about the clock: a demotion whose
+    cooldowns have all expired is tripped AND eligible for one probe. The old
+    identity between the two is precisely how a 180s cooldown became a two-hour
+    exclusion on 2026-08-29.
+
+    What this test guards is unchanged and still guarded: three EMPTY tiers trip
+    it, and while it is in force the cloud is SKIPPED with a named reason and the
+    local tier gets the whole remaining slice. The cooldown pushed below is what
+    puts it in force — in production the EMPTY tiers come from rate limits, which
+    set exactly such a window.
+    """
     sb.reset_cycle()
     assert not sb.cloud_demoted()
     for _ in range(sb.CLOUD_EMPTY_LIMIT):
         _run(monkeypatch, [sb.EMPTY, sb.TIMEOUT],
              cloud=lambda: None, local_3b=lambda: None, local_8b=None)
+    assert sb.cloud_state()["tripped"], sb.cloud_state()
+    sb.note_cooldown_until(sb._now_wall() + 300.0)     # a live rate-limit window
     assert sb.cloud_demoted(), sb.cloud_state()
 
     slices, res = _run(monkeypatch, [sb.TIMEOUT],
@@ -92,14 +108,26 @@ def test_cloud_is_demoted_after_three_empty_tiers(monkeypatch):
 
 
 def test_the_demotion_is_cycle_scoped(monkeypatch):
+    """Still true and still worth guarding: boot clears everything.
+
+    ITEM 44.1 made the demotion TIME-bounded as well as cycle-bounded — it now
+    expires with the cooldowns that caused it — but reset_cycle() must still wipe
+    the slate, including the pushed cooldown and any probe floor. A demotion that
+    survived a boot would be a policy nobody set.
+    """
     sb.reset_cycle()
     for _ in range(sb.CLOUD_EMPTY_LIMIT):
         _run(monkeypatch, [sb.EMPTY, sb.TIMEOUT],
              cloud=lambda: None, local_3b=lambda: None, local_8b=None)
+    sb.note_cooldown_until(sb._now_wall() + 300.0)
     assert sb.cloud_demoted()
     sb.reset_cycle()                       # what the runner does at boot
     assert not sb.cloud_demoted()
     assert sb.cloud_state()["cloud_empty"] == 0
+    assert sb.cloud_state()["tripped"] is False
+    assert sb.cloud_state()["cooldown_until_in"] == 0.0, (
+        "reset_cycle left a pushed cooldown behind — the next cycle would "
+        "inherit an exclusion window from the last one")
 
 
 def test_a_non_empty_cloud_never_demotes(monkeypatch):

@@ -371,26 +371,146 @@ class LadderResult:
 
 CLOUD_EMPTY_LIMIT = 3
 
+# ── ITEM 44.1 (29 Aug 2026): THE DEMOTION STOPS OUTLIVING ITS OWN CAUSE ─────
+#
+# WHAT THE STICKY VERSION DID, measured from the cycle of 2026-08-29. Groq was
+# rate-limited early, three cloud tiers came back EMPTY, and the cloud was
+# demoted "for the rest of this cycle" at 14:5x. From that moment 66 of the
+# cycle's 71 local answers had NO cloud rung attempted, and the log holds ZERO
+# cloud attempts for the remaining 2h20m. The cooldowns that caused it are
+# 60/120/180s, capped at 180 — THE DEMOTION OUTLIVED THEM BY TWO HOURS.
+#
+# Kimi: "Tie demotion lifetime to the longest active cooldown expiry. Criterion:
+# transient failures (429s) should not outlast their own recovery signal. When
+# the last cooldown expires, re-probe the cloud tier before permanently
+# defaulting to local."
+#
+# HIS OBJECTION, AND WHERE IT IS ANSWERED: "Re-probing after cooldown expiry
+# risks hammering a rate-limited backend, getting the free tier banned or
+# IP-blocked, turning a transient rate limit into permanent account loss."
+#
+# The answer is NOT the backoff — it is the PRECONDITION on the line
+# `if now < _cooldown_until: return True`. A probe can only happen once EVERY
+# backend's own signalled window has already elapsed, so no probe is ever sent
+# into a window a provider told us about. That is the opposite of hammering: it
+# is waiting exactly as long as we were asked to, and no longer.
+#
+# The exponential floor below covers the one case the precondition cannot: the
+# provider's REAL window was longer than the one it declared. 300s doubling to
+# 600, 1200, capped at 1800.
+#   * why 300 to start — it must exceed the cooldown cap of 180s, or the floor
+#     would add nothing over the precondition that already holds;
+#   * why doubling — a provider still refusing after 5 minutes is not 5 minutes
+#     from recovering, and each failure is evidence the declared window was
+#     wrong;
+#   * why a 1800s cap — over a 2h20m cycle the worst case is ~5 probes, which is
+#     not a burst by any reading; an uncapped floor would silently become the
+#     sticky demotion again, under a longer name.
+#
+# WALL CLOCK, NOT monotonic: these expiries are compared against cooldown
+# deadlines produced by core/groq_backend with time.time(), and mixing the two
+# clocks would make the comparison meaningless.
+PROBE_FLOOR_START_SEC = 300.0
+PROBE_FLOOR_MAX_SEC = 1800.0
+
 _cloud_empty = 0
 _cloud_demoted_at = None          # the empty-count at which it tripped
+_cooldown_until = 0.0             # the LONGEST active cooldown, pushed in
+_probe_floor_until = 0.0          # a failed probe holds the demotion this long
+_probe_failures = 0
+
+
+def _now_wall() -> float:
+    """Wall clock, so it is comparable with groq_backend's cooldown deadlines."""
+    return time.time()
+
+
+def note_cooldown_until(ts: float) -> float:
+    """Told by core/groq_backend whenever it sets a cooldown.
+
+    PUSHED, NOT PULLED, and the direction is forced: groq_backend imports this
+    module, so this module cannot import groq_backend to ask. _set_cooldown is
+    the single place any cooldown is created, which makes it the one call site.
+    Only ever moves later — the demotion must respect the LONGEST window.
+    """
+    global _cooldown_until
+    with _step_lock:
+        _cooldown_until = max(_cooldown_until, float(ts))
+        return _cooldown_until
 
 
 def reset_cycle() -> dict:
     """Forget the demotion. Called from the runner's boot step, once per cycle."""
-    global _cloud_empty, _cloud_demoted_at
+    global _cloud_empty, _cloud_demoted_at, _cooldown_until
+    global _probe_floor_until, _probe_failures
     was = {"cloud_empty": _cloud_empty,
            "cloud_demoted": _cloud_demoted_at is not None}
     _cloud_empty, _cloud_demoted_at = 0, None
+    _cooldown_until, _probe_floor_until, _probe_failures = 0.0, 0.0, 0
     return was
 
 
 def cloud_demoted() -> bool:
-    return _cloud_demoted_at is not None
+    """Is the cloud excluded RIGHT NOW? Time-bounded, not cycle-bounded.
+
+    False here does not mean "healthy" — it means ELIGIBLE FOR ONE PROBE. The
+    caller that acts on it must report the outcome through note_probe_failed()
+    or note_probe_succeeded(), or the next call will probe again.
+    """
+    if _cloud_demoted_at is None:
+        return False
+    now = _now_wall()
+    if now < _cooldown_until:
+        return True                  # a backend's own window is still open
+    if now < _probe_floor_until:
+        return True                  # a probe already failed; serve its floor
+    return False
+
+
+def probe_floor_sec() -> float:
+    """The floor the NEXT failed probe would impose. Reads only."""
+    return min(PROBE_FLOOR_START_SEC * (2 ** _probe_failures),
+               PROBE_FLOOR_MAX_SEC)
+
+
+def note_probe_failed() -> float:
+    """The one probe came back EMPTY. Re-arm with a longer floor; return it."""
+    global _probe_failures, _probe_floor_until
+    with _step_lock:
+        floor = min(PROBE_FLOOR_START_SEC * (2 ** _probe_failures),
+                    PROBE_FLOOR_MAX_SEC)
+        _probe_failures += 1
+        _probe_floor_until = _now_wall() + floor
+    print("[BUDGET] cloud re-probe FAILED; demotion re-armed for {:.0f}s "
+          "(failure #{})".format(floor, _probe_failures))
+    return floor
+
+
+def note_probe_succeeded() -> None:
+    """The cloud answered. Clear the demotion AND the empty counter.
+
+    The counter must go too: leaving it at the limit would let the very next
+    empty tier re-trip a demotion the probe has just disproved.
+    """
+    global _cloud_empty, _cloud_demoted_at, _probe_floor_until, _probe_failures
+    with _step_lock:
+        _cloud_empty, _cloud_demoted_at = 0, None
+        _probe_floor_until, _probe_failures = 0.0, 0
+    print("[BUDGET] cloud re-probe SUCCEEDED; demotion cleared, "
+          "normal laddering resumes")
 
 
 def cloud_state() -> dict:
+    now = _now_wall()
     return {"cloud_empty": _cloud_empty, "demoted": cloud_demoted(),
-            "limit": CLOUD_EMPTY_LIMIT}
+            # TRIPPED is a fact about the past; DEMOTED is a question about the
+            # clock. Before ITEM 44.1 they were the same boolean, which is how a
+            # 180s cooldown became a two-hour exclusion.
+            "tripped": _cloud_demoted_at is not None,
+            "limit": CLOUD_EMPTY_LIMIT,
+            "cooldown_until_in": round(max(0.0, _cooldown_until - now), 1),
+            "probe_floor_in": round(max(0.0, _probe_floor_until - now), 1),
+            "probe_failures": _probe_failures}
 
 
 def _note_cloud_outcome(outcome: str) -> None:
@@ -453,12 +573,21 @@ def run_with_ladder(step: str,
             continue
         if not allowed:
             attempts.append(Attempt(tier, SKIPPED, 0.0, why))
+            # ITEM 44.1 (3). THIS LINE IS WHY TWO HOURS WENT UNNOTICED. On
+            # 2026-08-29 the cloud was skipped on 66 consecutive calls and the
+            # log said so ONCE, in aggregate, at the moment of demotion. A skip
+            # that writes nothing is indistinguishable from a call that was
+            # never made.
+            print("  [LADDER] {} SKIPPED for {}: {}".format(tier, step, why))
             continue
 
         spent = now() - started
         remaining = budget.seconds - spent
         if remaining <= 0:
             attempts.append(Attempt(tier, SKIPPED, 0.0, "budget exhausted"))
+            print("  [LADDER] {} SKIPPED for {}: budget exhausted mid-chain "
+                  "({:.0f}s of B={:.0f}s already spent)".format(
+                      tier, step, spent, budget.seconds))
             continue
 
         # THE WHOLE REMAINDER when nothing viable comes after this tier;
@@ -520,7 +649,20 @@ def begin_step(step: str, priority: str = NORMAL,
             "budget": budget,
             "spent": 0.0,
             "calls": 0,
-            "degraded_calls": 0,
+            # TWO COUNTERS, ITEM 44.1 (29 Aug 2026). `degraded_calls` used to
+            # mean ONLY "no tier answered", so on 2026-08-29 every [BUDGET] line
+            # read degraded=0 while TWELVE step contracts read DEGRADED — a step
+            # that ran entirely on the 3B reported functional success.
+            # Kimi: "The budget ledger's degraded=0 is dishonest because it
+            # reports functional success while hiding that scored outputs came
+            # from a model the provenance system cannot trust."
+            # So `degraded_calls` now means what the step contract means by the
+            # word — the answer did not come from the cloud — and the older,
+            # narrower and still REAL fact keeps its own name below. One word
+            # with two meanings was the bug; the fix is two names, not a
+            # redefinition that loses one of them.
+            "degraded_calls": 0,      # answered by a local tier, OR nothing answered
+            "no_tier_calls": 0,       # nothing answered at all
             "tiers": {},
             "started": time.monotonic(),
         }
@@ -589,6 +731,10 @@ def run_call(cloud: Optional[Callable] = None,
             "step budget of {:.0f}s already spent by {} earlier call(s); this one "
             "degrades without waiting".format(state["budget"].seconds,
                                               state["calls"]))
+        print("  [LADDER] ALL TIERS SKIPPED for {}: account empty — B={:.0f}s "
+              "spent by {} earlier call(s), no tier could land in the "
+              "remainder".format(state["step"], state["budget"].seconds,
+                                 state["calls"]))
         _charge(0.0, res)
         return res
 
@@ -613,6 +759,12 @@ def _charge(seconds: float, res: LadderResult) -> None:
         _open_step["spent"] += float(seconds or 0.0)
         _open_step["calls"] += 1
         if res.outcome == DEGRADED:
+            # Nothing answered. Still degraded, and ALSO its own distinct fact.
+            _open_step["no_tier_calls"] += 1
+            _open_step["degraded_calls"] += 1
+        elif res.tier is not None and res.tier != CLOUD:
+            # A local tier answered. The step contract already calls this
+            # DEGRADED; until now the ledger did not.
             _open_step["degraded_calls"] += 1
         if res.tier:
             _open_step["tiers"][res.tier] = _open_step["tiers"].get(res.tier, 0) + 1

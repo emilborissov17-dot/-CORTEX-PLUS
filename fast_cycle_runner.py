@@ -1120,11 +1120,17 @@ def _run(label, fn, free_after=False):
             from core import step_budget as _sb
             _spent = _sb.end_step()
             if _spent and _spent.get("calls"):
+                # ITEM 44.1: BOTH COUNTERS. `degraded` now means what the step
+                # contract means — the answer did not come from the cloud — and
+                # `no_tier` keeps the older, narrower fact. On 2026-08-29 this
+                # line read degraded=0 for twelve steps the contract called
+                # DEGRADED, because a local answer returns OK.
                 print("[BUDGET] {}: {} model call(s), {:.0f}s of B={:.0f}s, "
-                      "tiers={} degraded={}".format(
+                      "tiers={} degraded={} no_tier={}".format(
                           label, _spent["calls"], _spent["spent"],
                           _spent["budget"].seconds, _spent["tiers"] or "{}",
-                          _spent["degraded_calls"]))
+                          _spent.get("degraded_calls"),
+                          _spent.get("no_tier_calls")))
         except Exception as e:
             print(f"[FAST_CYCLE] step_budget.end_step({label}) -> "
                   f"{type(e).__name__}: {e}")
