@@ -63,15 +63,12 @@
     "So: raise or lower a ceiling HERE and everything follows. Do not add a second",
     "table of durations anywhere else — that is the thing this note forbids."
   ],
-
   "daily_hour": 3,
   "catchup_grace_hours": 20,
   "max_restarts_per_day": 2,
   "max_refusal_retries_per_day": 3,
-
   "step_ceilings_sec": {
     "_default": 900,
-
     "web_intelligence": 3600,
     "internet_intelligence": 3600,
     "global_indicators": 1200,
@@ -88,5 +85,7 @@
     "self_observer": 1200,
     "continuous_learning": 1200,
     "daily_analysis": 1500
-  }
+  },
+  "cloud_empty_limit": 3,
+  "_cloud_empty_limit_why": "How many EMPTY cloud tiers in one cycle demote the cloud to local-only. Moved out of core/step_budget.py on 2026-08-30 with Emil's approval: it is a policy parameter that decides how much of a cycle runs on a 3B local model, and it belongs where a human can see it and set it. Value stays 3 until measured evidence justifies changing it. Removing the key restores the built-in default of 3; a malformed value RAISES rather than defaulting, so a broken policy file cannot behave like a correct one."
 }

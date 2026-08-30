@@ -369,7 +369,67 @@ class LadderResult:
 # is one process, and a demotion that outlived the process would be a policy
 # nobody set.
 
-CLOUD_EMPTY_LIMIT = 3
+# ── ITEM 44.1 item 5 (30 Aug 2026): THE LIMIT IS A POLICY, SO IT LIVES IN CONFIG
+#
+# HUMAN APPROVAL (Emil Borissov, 29 August 2026), quoted here because
+# config/scheduler.json is a GUARDED file:
+#   "I approve moving CLOUD_EMPTY_LIMIT out of core/step_budget.py into
+#    config/scheduler.json. The value stays 3 until measured evidence justifies
+#    changing it. It is a policy parameter that decides how much of a cycle runs
+#    on a 3B local model, and it belongs where a human can see it and set it."
+#
+# ABSENT KEY -> 3, SILENTLY. That is the documented default and absence is not an
+# error; a fresh clone with no key must behave exactly as this file did before.
+#
+# PRESENT BUT UNREADABLE -> RAISE, LOUDLY. Defaulting to 3 on a malformed value
+# would hide a broken policy file behind correct-looking behaviour, which is the
+# defect this repository keeps finding in other shapes. A typo in a parameter
+# that decides how much of a night runs on a 3B model must not be absorbed.
+#
+# RESOLVED AT IMPORT AND AGAIN AT reset_cycle(), NOT INSIDE THE LADDER. The one
+# consumer, _note_cloud_outcome(), runs inside run_with_ladder() with no try
+# around it — raising there would take down a step two hours into a night because
+# of a config typo. Failing at import, and again at the boot step, puts the error
+# where a policy-file error belongs: at the start, before anything depends on it.
+CLOUD_EMPTY_LIMIT_DEFAULT = 3
+_CLOUD_EMPTY_KEY = "cloud_empty_limit"
+
+
+def cloud_empty_limit(cfg: Optional[dict] = None) -> int:
+    """How many EMPTY cloud tiers trip the demotion. `cfg` is injectable so a
+    test can pass its own dict and never touch the guarded file."""
+    if cfg is None:
+        cfg = _load_json(BASE / "config" / "scheduler.json")
+    if _CLOUD_EMPTY_KEY not in (cfg or {}):
+        return CLOUD_EMPTY_LIMIT_DEFAULT
+    raw = cfg[_CLOUD_EMPTY_KEY]
+    if isinstance(raw, bool):                      # bool is an int in Python
+        raise ValueError(
+            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}, a boolean. "
+            f"It must be a whole number >= 1.")
+    if isinstance(raw, float) and not raw.is_integer():
+        # int(2.7) == 2 would silently truncate a policy value. A number that
+        # does not mean what it says is the same defect as a malformed one.
+        raise ValueError(
+            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}. It counts "
+            f"whole cloud tiers; {raw!r} would silently become {int(raw)}.")
+    try:
+        value = int(raw)
+    except (TypeError, ValueError):
+        raise ValueError(
+            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}, which is not "
+            f"a number. Remove the key to accept the default of "
+            f"{CLOUD_EMPTY_LIMIT_DEFAULT}, or set a whole number >= 1. It is NOT "
+            f"defaulted, because a malformed policy value that behaves like the "
+            f"default is a broken file nobody notices.") from None
+    if value < 1:
+        raise ValueError(
+            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {value}, which would "
+            f"demote the cloud before a single empty tier. Must be >= 1.")
+    return value
+
+
+CLOUD_EMPTY_LIMIT = cloud_empty_limit()
 
 # ── ITEM 44.1 (29 Aug 2026): THE DEMOTION STOPS OUTLIVING ITS OWN CAUSE ─────
 #
@@ -443,6 +503,11 @@ def reset_cycle() -> dict:
     """Forget the demotion. Called from the runner's boot step, once per cycle."""
     global _cloud_empty, _cloud_demoted_at, _cooldown_until
     global _probe_floor_until, _probe_failures
+    global CLOUD_EMPTY_LIMIT
+    # Re-read at boot: a human who edits the policy during the day should see it
+    # take effect on the next cycle without a restart, and a malformed edit
+    # should stop THAT cycle at its first step rather than midway through.
+    CLOUD_EMPTY_LIMIT = cloud_empty_limit()
     was = {"cloud_empty": _cloud_empty,
            "cloud_demoted": _cloud_demoted_at is not None}
     _cloud_empty, _cloud_demoted_at = 0, None

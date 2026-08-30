@@ -202,3 +202,55 @@ def test_a_cloud_answer_is_not_degraded():
         assert st["degraded_calls"] == 0 and st["no_tier_calls"] == 0
     finally:
         sb.end_step()
+
+
+# ── ITEM 44.1 item 5 — the limit comes from config, and is HONOURED ─────────
+
+def test_a_different_limit_in_config_is_actually_honoured(monkeypatch):
+    """ASSERTS THE TRIP POINT, NOT THE CONSTANT, and that distinction is the test.
+
+    A test that only asserted `cloud_empty_limit({...: 5}) == 5` would pass
+    against a value that is read and then ignored — the reader would be correct
+    and the policy dead, which is precisely the class of defect ITEM 43.1 spent a
+    day removing from the snapshots. So this drives the real counter and checks
+    WHERE it trips: at the fifth empty tier, not the third.
+
+    The guarded file config/scheduler.json is never touched: the limit is
+    injected through cloud_empty_limit(cfg=...) and monkeypatched onto the
+    module, which is the same injection path budget_for()/ceiling_for() already
+    offer for step ceilings.
+    """
+    assert sb.cloud_empty_limit({"cloud_empty_limit": 5}) == 5
+    # monkeypatch the RESOLVED value rather than calling reset_cycle(), which
+    # would re-read the real config and undo the injection.
+    monkeypatch.setattr(sb, "CLOUD_EMPTY_LIMIT", 5)
+
+    for i in range(4):
+        sb._note_cloud_outcome(sb.EMPTY)
+        assert sb.cloud_state()["tripped"] is False, (
+            f"the demotion tripped after {i + 1} empty tier(s) with the limit set "
+            f"to 5 — the config value was read but not used")
+    sb._note_cloud_outcome(sb.EMPTY)
+    assert sb.cloud_state()["tripped"] is True, (
+        "five empty tiers did not trip a limit of 5")
+
+
+def test_an_absent_key_falls_back_to_three_and_a_malformed_one_does_not():
+    """Absence is the documented default. A malformed value is NOT defaulted —
+    a broken policy file that behaves exactly like a correct one is a file
+    nobody ever notices is broken."""
+    assert sb.cloud_empty_limit({}) == sb.CLOUD_EMPTY_LIMIT_DEFAULT == 3
+    for bad in ("three", None, 0, -1, True, 2.7):
+        with pytest.raises(ValueError):
+            sb.cloud_empty_limit({"cloud_empty_limit": bad})
+
+
+def test_the_guarded_config_carries_the_key_at_the_approved_value():
+    """Emil approved the move on the condition that "the value stays 3 until
+    measured evidence justifies changing it". This is that condition, checked."""
+    import json
+    cfg = json.loads((BASE / "config" / "scheduler.json").read_text(encoding="utf-8"))
+    assert cfg.get("cloud_empty_limit") == 3, (
+        f"config/scheduler.json cloud_empty_limit is {cfg.get('cloud_empty_limit')!r}, "
+        f"not the approved 3. Changing it is a policy decision and needs the same "
+        f"human approval the move itself needed.")
