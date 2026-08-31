@@ -148,17 +148,25 @@ def _calls(tree: ast.AST) -> tuple[set[str], set[tuple[str, str]]]:
 _PY_IN_STRING = re.compile(r"[\w\-.]+\.py")
 
 
-def _filenames_in_strings(trees: dict) -> set[str]:
-    """Every *.py named inside a string literal in production code, collected in one
-    pass. A module launched by subprocess or named in a scheduler entry is really wired;
-    it is reported, never failed on."""
-    found: set[str] = set()
+def _filenames_in_strings(trees: dict) -> dict[str, set[str]]:
+    """Maps each *.py named inside a production string literal to the set of files
+    that name it. A module launched by subprocess or named in a scheduler entry is
+    really wired; it is reported, never failed on.
+
+    WHY THIS RETURNS WHO, NOT JUST WHAT. The first version returned a flat set, so a
+    module that merely mentioned ITS OWN filename - a usage line in a docstring, a
+    log message, an argparse epilog - satisfied its own exemption and every
+    entrypoint in it read as wired. Measured on 2026-08-29: 610 entrypoints across
+    128 modules were exempted by self-naming alone. A module naming itself is not
+    wiring; it is a sentence about itself."""
+    found: dict[str, set[str]] = {}
     for rel, (tree, is_test) in trees.items():
         if is_test:
             continue
         for node in ast.walk(tree):
             if isinstance(node, ast.Constant) and isinstance(node.value, str):
-                found.update(_PY_IN_STRING.findall(node.value))
+                for name in _PY_IN_STRING.findall(node.value):
+                    found.setdefault(name, set()).add(rel)
     return found
 
 
@@ -210,8 +218,8 @@ def scan(root: pathlib.Path, declared_entrypoints: set[str]) -> tuple[list[dict]
             prod, tests = hits[rel][fn]
             if prod:
                 verdict = LIVE
-            elif filename in named_in_strings:
-                verdict = STRING
+            elif named_in_strings.get(filename, frozenset()) - {rel}:
+                verdict = STRING          # named by SOMEONE ELSE, not by itself
             elif fn in own_names or any(a == fn for _, a in own_attrs):
                 verdict = OWN
             elif tests:
@@ -340,6 +348,12 @@ _FIXTURES = {
     # a local name; the entrypoint is known by its original one. Aliasing is not
     # exotic - it is what you do when two modules both export scan().
     "core/aliased.py": "def scan():\n    return 7\n",
+    # SELF-NAMING: the module mentions its own filename in a docstring. That is a
+    # sentence about itself, not wiring, and must NOT satisfy the string exemption.
+    "core/talks_about_itself.py": (
+        '"""Run me with: python core/talks_about_itself.py --once"""\n'
+        "def solo():\n    return 8\n"
+    ),
     "aliased_runner.py": (
         "from core.aliased import scan as _outer_scan\n"
         "def go():\n"
@@ -385,6 +399,8 @@ def selftest() -> int:
              "named in a subprocess string is wiring, not an orphan")
         want("core/aliased.py::scan", LIVE,
              "wiring through an ALIASED import is live, not an orphan")
+        want("core/talks_about_itself.py::solo", NEVER,
+             "a module naming ITSELF in a string is not wiring")
 
         # negative control: the baseline must silence a KNOWN orphan and nothing else
         rows, _ = scan(root, set())

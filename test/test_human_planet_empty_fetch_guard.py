@@ -100,15 +100,49 @@ def test_the_planet_agent_counts_what_it_carried():
         "a carry is a WARNing, not routine output")
 
 
-def test_the_human_guard_runs_before_its_write():
-    """Order is the whole fix. A guard after _write has already lied to disk.
+def test_the_human_guard_runs_before_every_real_data_write():
+    """Order is the whole fix. A guard after the write has already lied to disk.
 
-    Scoped to main() on purpose: _carry_forward's docstring quotes the very
-    payload it exists to prevent, and a whole-file search matches the quotation.
+    WHOLE FILE, BY AST — and the history of this check is the point. It began as
+    a substring search over the file, which matched _carry_forward's docstring,
+    because that docstring QUOTES the payload it exists to prevent. The first
+    fix scoped the search to main(), which made it pass and made it weaker: it
+    stopped covering every helper defined ABOVE main, which is exactly where an
+    unguarded REAL_DATA write would plausibly be added next — _write and
+    _carry_forward already live there.
+
+    So the search is whole-file again and the docstring is excluded properly:
+    ast.Dict literals whose source_type is exactly "REAL_DATA" are the writes
+    that matter, and prose cannot masquerade as one.
     """
+    import ast
     src = AGENTS["human"].read_text(encoding="utf-8")
-    main = src.index("def main(")
-    assert src.index("if not raw:", main) < src.index('"source_type": "REAL_DATA"', main)
+    tree = ast.parse(src)
+
+    writes = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Dict):
+            continue
+        for k, v in zip(node.keys, node.values):
+            if (isinstance(k, ast.Constant) and k.value == "source_type"
+                    and isinstance(v, ast.Constant) and v.value == "REAL_DATA"):
+                writes.append(node.lineno)
+    assert writes, "no plain REAL_DATA write found — has the payload been renamed?"
+
+    guards = [n.lineno for n in ast.walk(tree)
+              if isinstance(n, ast.If) and "if not raw:" in
+              ast.get_source_segment(src, n).splitlines()[0].strip() + ":"]
+    guards = guards or [n.lineno for n in ast.walk(tree)
+                        if isinstance(n, ast.If)
+                        and isinstance(n.test, ast.UnaryOp)
+                        and isinstance(n.test.op, ast.Not)
+                        and getattr(n.test.operand, "id", None) == "raw"]
+    assert guards, "no `if not raw:` guard anywhere in the file"
+
+    for w in writes:
+        assert any(g < w for g in guards), (
+            f"the REAL_DATA write at line {w} is not preceded by an emptiness "
+            f"guard — the file on disk is wrong before any check runs")
 
 
 def test_the_planet_guard_lives_in_the_writer_so_it_covers_every_call_site():
