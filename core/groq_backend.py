@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 """
-groq_backend.py — LLM backend с 4-степенен fallback chain
+groq_backend.py — LLM backend с 3-степенен fallback chain
 ==========================================================
 Ред на опити (моделите са верифицирани срещу живите листинги на 20 август 2026;
-трите reasoning пътя минават през _reasoning_budget — виж него):
+двата reasoning пътя минават през _reasoning_budget — виж него):
   1. Groq       (openai/gpt-oss-120b)                  — reasoning, бърз, безплатен
-  2. Cerebras   (gpt-oss-120b)   DECLARED DEAD — see DECLARED_DEAD below: its
-     reasoning tokens are charged against max_tokens, and there is no budget for
-     the paid tier that would make that affordable. The code path is intact and
-     the chain skips it by name.
-  3. OpenRouter (nvidia/nemotron-3-super-120b-a12b:free) — openrouter.ai
-  4. Gemini     (gemini-3.5-flash)                     — reasoning, 1500 req/day
+  2. OpenRouter (nvidia/nemotron-3-super-120b-a12b:free) — openrouter.ai
+  3. Gemini     (gemini-3.5-flash)                     — reasoning, 1500 req/day
+
+CEREBRAS WAS THE FOURTH AND IS RETIRED (31 Aug 2026, Emil's call: it is not
+free and it is not ours). It served 440 calls 15-18 Aug with the best median
+reply of the four, then returned 402 payment_required on every completion from
+~22 Aug. Verified 2026-08-28: GET /v1/models answers 200, completions answer
+402 with param=quota on BOTH listed models, so it is the ACCOUNT, not the model
+or any parameter — no swap reopens it. It was skipped by name for three days
+before removal; the chain has been three legs wide in fact since 28 Aug, and
+now says so. To bring it back, restore this file from before this commit.
 
 Ollama беше премахнат от веригата (2026-07-04) като ТИХ safety net, който
 маскираше AllBackendsFailedError. Това остава в сила: локалният модел НЕ е
@@ -35,7 +40,6 @@ needs_reanalysis: True за приоритетен повторен анализ
 
 .env:
   GROQ_API_KEY=gsk_...
-  CEREBRAS_API_KEY=csk_...
   OPENROUTER_API_KEY=sk-or-...
   GEMINI_API_KEY=AIza...
 """
@@ -56,17 +60,10 @@ from pathlib import Path
 GROQ_API_URL    = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL      = "openai/gpt-oss-120b"
 
-CEREBRAS_API_URL = "https://api.cerebras.ai/v1/chat/completions"
-CEREBRAS_MODEL   = "gpt-oss-120b"   # reasoning model; "zai-glm-4.7" е алтернатива
-
-# Cerebras budget transform — виж _effective_budget() по-долу.
-# gpt-oss-120b е reasoning модел: reasoning токените се броят В max_completion_tokens
-# (Cerebras docs: "including reasoning tokens"), т.е. мисленето изяжда бюджета
-# ПРЕДИ payload-а. Call site-овете тук са оразмерени за llama-3.3-70b (80..4096),
-# затова при Cerebras ги мащабираме и — по-важното — слагаме ПОД.
-CEREBRAS_BUDGET_MULT  = float(os.environ.get("CEREBRAS_BUDGET_MULT",  "3"))
-CEREBRAS_BUDGET_FLOOR = int(os.environ.get("CEREBRAS_BUDGET_FLOOR", "1500"))
-CEREBRAS_BUDGET_CAP   = int(os.environ.get("CEREBRAS_BUDGET_CAP",   "8192"))
+# CEREBRAS_* constants removed 31 Aug 2026 with the backend. The reasoning-token
+# FLOOR they introduced is the part that mattered and it lives on in
+# GROQ_BUDGET_FLOOR below: Groq serves the SAME model (openai/gpt-oss-120b), so
+# the measurement that justified the floor still applies to a live backend.
 
 # 20 август 2026 — СЪЩИЯТ трансформ, сега и за Groq и за Gemini.
 #
@@ -108,9 +105,6 @@ GEMINI_BUDGET_MULT  = float(os.environ.get("GEMINI_BUDGET_MULT",  "3"))
 # every future reader.
 GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "4000"))
 GEMINI_BUDGET_CAP   = int(os.environ.get("GEMINI_BUDGET_CAP",   "8192"))
-# low | medium | high (Cerebras default за gpt-oss-120b е "medium")
-CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
-
 # ── PROVIDERS DECLARED DEAD (23 Aug 2026) ───────────────────────────────────
 # A provider that cannot serve this system is skipped BY NAME, with the reason
 # written down, and its code path is left exactly where it is. Deleting the path
@@ -122,6 +116,13 @@ CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
 # output rather than in somebody's memory.
 #
 # To bring one back: delete its entry here. Nothing else has to change.
+# CEREBRAS IS NO LONGER LISTED HERE — IT IS GONE (31 Aug 2026). The block below
+# is kept as the decision record this section demands, because that is the whole
+# argument for skipping-by-name rather than deleting: a later reader must be able
+# to tell "we tried it and it does not work for us" from "nobody ever wired it".
+# This IS that record. The dict is empty and the mechanism stays, for the next
+# provider that dies while the chain is still walking to it.
+#
 # THE REASON WAS WRONG FOR FIVE DAYS, AND THE FILE ITSELF SAID SO.
 #
 # This entry read "reasoning tokens consume max_tokens" until 28 Aug 2026. That
@@ -143,10 +144,7 @@ CEREBRAS_REASONING_EFFORT = os.environ.get("CEREBRAS_REASONING_EFFORT", "low")
 # It is the quota, not the model — so no model swap and no parameter change can
 # reopen this door, and zai-glm-4.7, the alternative this file names at line 60,
 # is not even in the account's list. The question is closed until somebody pays.
-DECLARED_DEAD = {
-    "cerebras": "DISABLED: 402 Payment Required, account-scoped "
-                "(verified 2026-08-28, both models, param=quota)",
-}
+DECLARED_DEAD: dict[str, str] = {}
 
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
@@ -163,7 +161,7 @@ GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemin
 # ---------------------------------------------------------------------------
 
 class AllBackendsFailedError(RuntimeError):
-    """Raised when the full fallback chain (Groq→Cerebras→OpenRouter→Gemini→Ollama)
+    """Raised when the full fallback chain (Groq→OpenRouter→Gemini→local_3b)
     has been exhausted without a successful response.  Callers that write
     snapshots should catch this and set needs_reanalysis=True on the output."""
     pass
@@ -316,85 +314,14 @@ def _call_groq(prompt: str, max_tokens: int):
     return choice["message"]["content"], {"finish_reason": choice.get("finish_reason")}
 
 
-def _effective_budget(max_tokens: int) -> int:
-    """Бюджетът, който реално пращаме на Cerebras.
-
-    ПОДЪТ е същината, не множителят: 3 x 80 = 240 пак не стига дори за
-    мисленето. Подът гарантира, че reasoning-ът има място да СВЪРШИ, преди
-    payload-ът изобщо да започне — независимо колко малко е поискал call
-    site-ът. Капът ни държи далеч под 32k тавана на free tier-а.
-    """
-    return _reasoning_budget(max_tokens, CEREBRAS_BUDGET_MULT,
-                             CEREBRAS_BUDGET_FLOOR, CEREBRAS_BUDGET_CAP)
-
-
 def _reasoning_budget(max_tokens: int, mult: float, floor: int, cap: int) -> int:
     """Бюджет за модел, който МИСЛИ вътре в бюджета на отговора.
 
-    Един и същ трансформ за трите reasoning backend-а (Cerebras, Groq, Gemini).
+    Един и същ трансформ за двата reasoning backend-а (Groq, Gemini).
     Подът е същината: 3 x 80 = 240 не стига дори за мисленето, така че малките
     call site-ове (media_intel_worker подава 80) получават пода, не кратното.
     """
     return min(cap, max(floor, int(max_tokens * mult)))
-
-
-def _call_cerebras(prompt: str, max_tokens: int):
-    key = _load_key("CEREBRAS_API_KEY")
-    if not key:
-        raise ValueError("CEREBRAS_API_KEY не е намерен")
-
-    print(f"  [LLM] Cerebras {CEREBRAS_MODEL}...")
-
-    budget = _effective_budget(max_tokens)
-    if budget >= 2 * max_tokens:
-        reason = "floor" if budget == CEREBRAS_BUDGET_FLOOR else f"x{CEREBRAS_BUDGET_MULT:g}"
-        print(f"  [CEREBRAS] budget {max_tokens}->{budget} ({reason})")
-
-    headers = {
-        "Authorization": f"Bearer {key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": CEREBRAS_MODEL,
-        "messages": [
-            {"role": "system", "content": _system_msg()},
-            {"role": "user",   "content": prompt},
-        ],
-        # Документираното име при Cerebras (max_tokens се приема само като
-        # legacy alias). Броят се И reasoning токените — оттам транформът горе.
-        "max_completion_tokens": budget,
-        "reasoning_effort": CEREBRAS_REASONING_EFFORT,
-    }
-    time.sleep(_SLEEP_SECS)
-    r = requests.post(CEREBRAS_API_URL, headers=headers, json=payload, timeout=(10, 60))
-
-    if r.status_code == 429:
-        _set_cooldown("cerebras")
-        raise RuntimeError("Cerebras rate limit")
-
-    r.raise_for_status()
-    choice = r.json()["choices"][0]
-    msg = choice["message"]
-    # gpt-oss-120b / zai-glm-4.7 са reasoning модели: отговорът е в "content",
-    # "reasoning" е вътрешното мислене. При твърде нисък max_tokens "content"
-    # може да липсва — в такъв случай fallback-ваме към "reasoning".
-    #
-    # ВАЖНО: точно този fallback е причината parser-ите да получават суров
-    # reasoning текст ("The user asks: ...", "done thinking."). Не го махаме
-    # (по-добре нещо, отколкото нищо), но го МАРКИРАМЕ в meta, за да може
-    # core/llm_json.py да разпознае случая и да го третира като TRUNCATED,
-    # вместо да го бърка с "моделът върна боклук".
-    content = msg.get("content") or ""
-    used_reasoning_fallback = False
-    if not content.strip():
-        content = msg.get("reasoning") or ""
-        used_reasoning_fallback = bool(content.strip())
-    if not content.strip():
-        raise ValueError(f"Cerebras {CEREBRAS_MODEL}: празен отговор (content и reasoning са празни)")
-    return content, {
-        "finish_reason": choice.get("finish_reason"),
-        "used_reasoning_fallback": used_reasoning_fallback,
-    }
 
 
 def _call_openrouter(prompt: str, max_tokens: int):
@@ -586,14 +513,16 @@ def _call_local(prompt: str, max_tokens: int):
 def call_groq_meta(prompt: str, max_tokens: int = 1024,
                    purpose: str | None = None) -> tuple:
     """
-    Fallback chain: Groq → Cerebras → OpenRouter → Gemini
+    Fallback chain: Groq → OpenRouter → Gemini (→ local_3b, explicit last resort)
 
     Връща (content, meta), където meta съдържа:
-      backend                 — кой backend отговори ("Groq", "Cerebras", ...)
+      backend                 — кой backend отговори ("Groq", "OpenRouter", ...)
       finish_reason           — "length" ако отговорът е отрязан (нормализирано
                                 през всички providers), иначе "stop"/None
-      used_reasoning_fallback — True само за Cerebras, когато "content" е бил
-                                празен и сме взели суровия "reasoning" текст
+      used_reasoning_fallback — вдига се от reasoning backend, чийто "content"
+                                е празен и е взет суровият "reasoning" текст.
+                                Въведено за Cerebras (retired 31 Aug 2026);
+                                полето остава, защото core/llm_json.py го чете
 
     core/llm_json.py ползва точно тези две полета, за да различи "отрязан
     отговор" (→ retry) от "моделът върна боклук" (→ грешка).
@@ -605,7 +534,6 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     """
     backends = [
         ("Groq",       "groq",       _call_groq),
-        ("Cerebras",   "cerebras",   _call_cerebras),
         ("OpenRouter", "openrouter", _call_openrouter),
         ("Gemini",     "gemini",     _call_gemini),
     ]
@@ -624,8 +552,6 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
         """
         if backend_label == "Groq":
             return GROQ_MODEL
-        if backend_label == "Cerebras":
-            return CEREBRAS_MODEL
         if backend_label == "OpenRouter":
             return OPENROUTER_MODEL
         if backend_label == "Gemini":
@@ -756,9 +682,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     def _cloud_chain():
         nonlocal last_error
         for label, key, fn in backends:
-            # A DECLARED SKIP, NOT A DELETED PATH. _call_cerebras is still here,
-            # still tested, still correct; it is simply not on the ladder, and
-            # the run says why every time it walks past it.
+            # A DECLARED SKIP. The dict is EMPTY as of 31 Aug 2026 - Cerebras
+            # was its only entry and was removed outright, not skipped - so this
+            # branch is currently inert. It stays because the next provider to
+            # die mid-life needs somewhere to be named while the chain still
+            # walks past it, and a skip that says why beats a silent absence.
             if key in DECLARED_DEAD:
                 print(f"  [LLM] {label} -- {DECLARED_DEAD[key]}")
                 continue
@@ -876,7 +804,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     print(f"  [LLM] DEGRADED: {res.reason}")
 
     raise AllBackendsFailedError(
-        f"All LLM backends failed (Groq/Cerebras/OpenRouter/Gemini + local). "
+        f"All LLM backends failed (Groq/OpenRouter/Gemini + local). "
         f"Last error: {last_error}"
     )
 

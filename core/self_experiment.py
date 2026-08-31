@@ -112,7 +112,7 @@ ALLOWED_KNOBS = {
         "file": "memory/self_experiment_overlay.json",
         "key": "backend_order",
         "kind": "choice",
-        "choices": ("groq_first", "cerebras_first", "openrouter_first"),
+        "choices": ("groq_first", "openrouter_first", "gemini_first"),
         "guarded": False,
         "why": "Редът, в който се пробват облачните бекенди.",
     },

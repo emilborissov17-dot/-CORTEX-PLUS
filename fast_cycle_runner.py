@@ -1457,7 +1457,6 @@ def _check_dependencies() -> bool:
     # 1. Проверка на ключове
     key_levels = {
         "GROQ_API_KEY":       "thinking_path",
-        "CEREBRAS_API_KEY":   "thinking_path",
         "OPENROUTER_API_KEY": "thinking_path",
         "GEMINI_API_KEY":     "thinking_path",
         "YOUTUBE_API_KEY":    "optional",

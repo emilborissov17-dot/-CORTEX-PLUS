@@ -228,8 +228,13 @@ def _selftest() -> int:
         ("anything else is transient", classify("Connection reset") == TRANSIENT),
     ]
 
-    note_failure("cerebras", "402 Client Error: Payment Required")
-    checks.append(("402 disables the backend", is_disabled("cerebras")))
+    # A SYNTHETIC NAME ON PURPOSE (31 Aug 2026). This check is about the RULE
+    # — a 402 is permanent and disables its backend — not about any one
+    # provider. It used to name cerebras, which retired that day; a selftest
+    # that dies with the provider it happened to cite was testing the wrong
+    # thing. "acme" cannot be retired.
+    note_failure("acme", "402 Client Error: Payment Required")
+    checks.append(("402 disables the backend", is_disabled("acme")))
     note_failure("groq", "Groq rate limit")
     checks.append(("rate limit does NOT disable", not is_disabled("groq")))
 

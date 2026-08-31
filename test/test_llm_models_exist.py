@@ -86,7 +86,6 @@ def configured_model(provider: str) -> str:
         url = _literal("GEMINI_API_URL")
         return url.rsplit("/", 1)[-1].split(":")[0] if url else ""
     return _literal({"groq": "GROQ_MODEL",
-                     "cerebras": "CEREBRAS_MODEL",
                      "openrouter": "OPENROUTER_MODEL"}[provider])
 
 
@@ -138,8 +137,6 @@ def _gemini(key: str) -> dict[str, bool]:
 PROVIDERS = {
     "groq": ("GROQ_API_KEY", True,
              lambda k: _openai_compatible("https://api.groq.com/openai/v1/models", k)),
-    "cerebras": ("CEREBRAS_API_KEY", True,
-                 lambda k: _openai_compatible("https://api.cerebras.ai/v1/models", k)),
     "openrouter": ("OPENROUTER_API_KEY", False,
                    lambda k: _openai_compatible("https://openrouter.ai/api/v1/models", k)),
     "gemini": ("GEMINI_API_KEY", True, _gemini),

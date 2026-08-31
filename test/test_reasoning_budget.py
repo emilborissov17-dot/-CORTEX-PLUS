@@ -163,15 +163,6 @@ def test_the_gemini_path_asks_for_more_than_the_caller_did(captured, asked):
 # (c) The three reasoning paths agree
 # ---------------------------------------------------------------------------
 
-def test_cerebras_still_gets_its_original_budget():
-    """The refactor moved Cerebras onto the shared helper. Its numbers must not
-    have moved with it — it was the one path that was already right."""
-    for asked in CALLER_BUDGETS:
-        expected = min(g.CEREBRAS_BUDGET_CAP,
-                       max(g.CEREBRAS_BUDGET_FLOOR, int(asked * g.CEREBRAS_BUDGET_MULT)))
-        assert g._effective_budget(asked) == expected
-
-
 def test_every_reasoning_backend_uses_the_same_transform():
     """No reasoning path may skip the transform. THE SHAPE is shared; the FLOOR
     is per backend and must be justified by that backend's own measurement.
@@ -207,9 +198,6 @@ def test_every_reasoning_backend_uses_the_same_transform():
                  "20 Aug 2026: gpt-oss-120b, 19 truncations at the raw caller "
                  "budget; 1500 stopped them and no Groq truncation has been "
                  "observed since, including the 2026-08-28T08:05 cycle"),
-        "cerebras": (g.CEREBRAS_BUDGET_FLOOR, 1500,
-                     "same model as Groq; the floor originated here and this "
-                     "path never truncated once across 440 calls 15-18 Aug"),
         "gemini": (g.GEMINI_BUDGET_FLOOR, 4000,
                    "2026-08-28T08:05: 14 of 19 answers cut at 1500; truncated "
                    "replies 77..1382 chars, median 247.5, while the two "
@@ -232,13 +220,11 @@ def test_every_reasoning_backend_uses_the_same_transform():
                                    g.GROQ_BUDGET_FLOOR, g.GROQ_BUDGET_CAP)
         gemini = g._reasoning_budget(asked, g.GEMINI_BUDGET_MULT,
                                      g.GEMINI_BUDGET_FLOOR, g.GEMINI_BUDGET_CAP)
-        cerebras = g._effective_budget(asked)
-        for name, got in (("groq", groq), ("gemini", gemini),
-                          ("cerebras", cerebras)):
+        for name, got in (("groq", groq), ("gemini", gemini)):
             assert got > asked, (
                 f"{name} passed the caller's raw {asked} straight through — "
                 f"this is the defect the file exists to catch")
-        # Groq and Cerebras ARE the same model and must not drift apart.
-        assert groq == cerebras, (
-            f"groq and cerebras run the same model (gpt-oss-120b) and disagree "
-            f"at max_tokens={asked}: groq={groq} cerebras={cerebras}")
+        # The groq == cerebras invariant retired with Cerebras on 31 Aug 2026.
+        # It said "these two serve the same model and must not drift apart";
+        # with one of them gone there is nothing left to drift against, and the
+        # floor it protected is still pinned by JUSTIFIED_FLOORS above.

@@ -68,6 +68,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 53 | a sandbox/dry-run mode is a PREREQUISITE for partial runs, not a convenience | TODO — blocks ITEM 50 | NOCYCLE |
 | 57 | a cycle launched as a background task of the assistant session dies with it (~5 min) | RECORDED 2026-08-30 | READONLY |
 | 58 | video transcripts: attempt 2 was never once started - bare `yt-dlp` off PATH, FileNotFoundError swallowed | DONE 2026-08-31 | NOCYCLE |
+| 59 | Cerebras retirement - a leg dead since 28 Aug on a billing 402 stops being advertised | DONE 2026-08-31 | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -4176,6 +4177,79 @@ TESTS: test/test_transcript_ytdlp_invocation.py, 7 tests, no network - argv is
 captured by intercepting subprocess.run. Pins argv[0] == sys.executable and
 argv[1:3] == ["-m", "yt_dlp"] in BOTH files, forbids a bare "yt-dlp" literal
 reappearing in either call path, and asserts both failure paths name a reason.
+
+
+--------------------------------------------------------------------------------
+ITEM 59 — FOUR PROVIDERS CLAIMED, THREE REAL
+--------------------------------------------------------------------------------
+STATUS: DONE 2026-08-31. Emil's call: it is not free and it is not ours.
+
+WHY NOW. Cerebras returned 402 payment_required on every completion from ~22 Aug
+and was skipped by name from 28 Aug. The chain has been three legs wide IN FACT
+since then while claiming four everywhere a human or a test could look:
+  - core/groq_backend.py header said "4-степенен fallback chain"
+  - fast_cycle_runner.py:1460 printed [DEP_CHECK] OK CEREBRAS_API_KEY
+    (thinking_path) every cycle - a path to thinking that cannot think
+  - core/self_experiment.py:115 offered "cerebras_first" as a live ordering the
+    system could still choose
+  - test_backend_policy.py's control asserted four attempts per call
+That gap is the item. A dead leg that still advertises itself makes every
+capacity reading wrong, including last night's 24.5%-local verdict.
+
+VERIFIED BEFORE DELETING, because the report said to check it:
+  _reasoning_budget  IS shared - Groq :297, Gemini :448. KEPT.
+  _effective_budget  was a Cerebras-ONLY wrapper; its sole production caller was
+                     _call_cerebras. REMOVED.
+The floor those constants introduced is the part that mattered and it survives
+in GROQ_BUDGET_FLOOR: Groq serves the SAME model (openai/gpt-oss-120b), so the
+measurement that justified 1500 still applies to a live backend.
+
+REMOVED: the chain entry, _call_cerebras (59 lines), CEREBRAS_API_URL/MODEL/
+BUDGET_MULT/FLOOR/CAP/REASONING_EFFORT, _effective_budget, the _model_for
+branch, the DECLARED_DEAD entry, the dep-check key, the "cerebras_first"
+experiment choice, and the docstrings at :8 :166 :589 :879.
+
+KEPT ON PURPOSE:
+  - DECLARED_DEAD itself, now an empty dict. Its own comment argues that
+    skipping-by-name beats deleting because a later reader must be able to tell
+    "we tried it and it does not work for us" from "nobody ever wired it". That
+    argument is honoured by keeping the block AS the decision record and saying
+    plainly that the dict is empty and the mechanism awaits the next casualty.
+  - core/llm_json.py's gpt-oss reasoning-preamble handling. Groq serves the same
+    model; deleting it would break a LIVE backend to tidy a dead one.
+  - The historical fixtures (test_llm_json, test_proposal_archive,
+    test_cycle_logs, test_climate_normalization) use "Cerebras" only as an
+    opaque string label on archived artifacts. Renaming them would falsify
+    provenance for no gain.
+  - CEREBRAS_API_KEY in .env - untouched, so the account can be re-probed if
+    anyone ever pays. The docstring stops listing it as required.
+
+CORRECTED, because they became false the moment the code went:
+  :686 said "_call_cerebras is still here, still tested, still correct" - it is
+  not, and a comment that lies about the file it sits in is worse than none.
+  :43 advertised CEREBRAS_API_KEY in the .env block for a key nothing reads.
+
+backend_policy._selftest now names a SYNTHETIC backend ("acme"). The check is
+about the RULE - a 402 is permanent and disables its backend - not about any one
+provider, and a selftest that dies with the provider it happened to cite was
+testing the wrong thing.
+
+TESTS: test_cerebras_budget.py deleted (its whole subject is gone; note it held
+TWO assertions red since 20 Aug and in the baseline, so the failure count drops
+by 2 for that reason and not because anything was fixed). test_reasoning_budget
+lost test_cerebras_still_gets_its_original_budget, its JUSTIFIED_FLOORS row, and
+the groq == cerebras drift assert - that invariant retired with the backend,
+and the floor it protected is still pinned by JUSTIFIED_FLOORS.
+test_provenance_model_id and test_llm_models_exist dropped their entries.
+
+MUST-STAY-GREEN, verified by RUNNING, not reading:
+  test_backend_policy.py + test_reasoning_budget.py + test_provenance_model_id.py
+                                                              53 passed
+  -k "cloud_empty or demot or ladder or probe_floor or step_budget"
+                                                              67 passed
+  core.backend_policy --selftest    RESULT: OK (10/10)
+  core.step_budget    --selftest    cycle_map LIVE, fast_cycle_runner WIRED,
+                                    dead-cloud smoke DEGRADED in 0.001s
 
 
 - core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer

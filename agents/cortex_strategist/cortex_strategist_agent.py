@@ -20,7 +20,7 @@ BASE = pathlib.Path(__file__).resolve().parent.parent.parent
 MODEL = "qwen3:1.7b"
 
 def _groq(prompt: str) -> dict:
-    """5-way fallback chain: Groq -> Cerebras -> OpenRouter -> Gemini -> Ollama."""
+    """Fallback chain: Groq -> OpenRouter -> Gemini -> local_3b."""
     import sys, re as _re
     sys.path.insert(0, str(BASE))
     try:

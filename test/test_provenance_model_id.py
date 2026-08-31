@@ -42,7 +42,7 @@ from core import groq_backend as gb   # noqa: E402
 # --------------------------------------------------------------------------- #
 
 def test_every_configured_id_is_a_non_empty_literal():
-    for name in ("GROQ_MODEL", "CEREBRAS_MODEL", "OPENROUTER_MODEL"):
+    for name in ("GROQ_MODEL", "OPENROUTER_MODEL"):
         value = getattr(gb, name)
         assert isinstance(value, str) and value.strip(), name
 
@@ -75,7 +75,6 @@ def _model_for():
     that, read the mapping off the module constants it wraps."""
     return {
         "Groq": gb.GROQ_MODEL,
-        "Cerebras": gb.CEREBRAS_MODEL,
         "OpenRouter": gb.OPENROUTER_MODEL,
     }
 
