@@ -70,6 +70,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 58 | video transcripts: attempt 2 was never once started - bare `yt-dlp` off PATH, FileNotFoundError swallowed | DONE 2026-08-31 | NOCYCLE |
 | 59 | Cerebras retirement - a leg dead since 28 Aug on a billing 402 stops being advertised | DONE 2026-08-31 | NOCYCLE |
 | 60 | Ц3а - execute_patches' ceiling is STATED in code, not resting on a phantom input | DONE 2026-08-31 | NOCYCLE |
+| 61 | PUBLISH GATE - 15 nights silent; the notary refused, not the token | DONE 2026-08-31, published | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -4335,6 +4336,84 @@ SUITE, tools/suite_gate.py, both runs VALID, no cycle touched either window:
 Full failing-id lists captured to file via --junitxml (47 junit ids == 47 stdout
 ids, so no truncation) and diffed. The ONLY four ids that changed state are the
 four target tests. Zero new failures.
+
+
+--------------------------------------------------------------------------------
+ITEM 61 — THE PUBLISH GATE: NOT THE TOKEN, NOT THE MERGE STATE
+--------------------------------------------------------------------------------
+STATUS: DONE 2026-08-31, proven by an actual publish.
+
+cortex-civilization-watch had not published since 2026-08-17T01:07:17Z — 15
+nights. Diagnosed, not guessed.
+
+RULED OUT BY MEASUREMENT, not by argument:
+  token        VALID. 93 chars, GitHub API returns 200 for both the repo and
+               the commit list. Not rotated, not expired.
+  repo         REACHABLE. emilborissov17-dot/cortex-civilization-watch, public.
+  merge state  NOT INVOLVED. The publisher uses the GitHub contents API; there
+               is no local clone and no merge.
+  the network  NEVER REACHED. No publish is ATTEMPTED at all — there is not one
+               publish line in any cycle log. _witness_or_refuse returns False
+               at fast_cycle_runner.py:2886 and the step is skipped before
+               github_publisher is called.
+
+THE CAUSE IS THE NOTARY, and the same log line appears on every one of the 15
+nights:
+  [FAST_CYCLE] github_publish -> ОТКАЗАНА: level_0 (неизвестен произход)
+  (наследено от memory/web_intelligence) — слабо звено: нивото не е на тази
+  стъпка: собственото ѝ е level_3 (пълно), а входът memory/web_intelligence
+  носи level_0 от този цикъл
+
+THE CHAIN, read out of attestation/attest.jsonl:
+  1. web_intelligence is in core/notary.VERIFIERS but declared NO inputs.
+  2. Since the 17 Aug fail-closed flip, _age_state([]) returns UNKNOWN(0) —
+     "ignorance is not evidence of freshness". Correct, and it is what fired.
+  3. own = min(witness 3, human 2, thought 3, AGE 0, promise 3) = 0.
+     The verifier flag breaks INHERITED, not OWN — `level = own if verified`.
+  4. Its product memory/web_intelligence is therefore stamped level_0.
+  5. github_publish declares that product as its input, own = 2, not a verifier
+     -> level = min(2, 0) = 0.
+  6. may_act needs >= IRREVERSIBLE_MIN(2). 0 < 2. Refused, every night.
+THE DATE MATCHES EXACTLY: the flip landed 17 Aug and the last publish is
+17 Aug 01:07 UTC. The fail-closed change was right; this step was collateral.
+
+THE FIX: declare web_intelligence in config/step_inputs.json — the same remedy
+8b0bca6 applied to self_modifier and execute_patches. AUTHORISED BY EMIL on
+2026-08-31, who was shown the cause and the alternatives and chose "Declare
+web_intelligence's inputs" over a broader notary trust change. Recorded because
+this file is guarded in safety/protected_paths.py and is human-owned: a system
+able to edit it could declare itself trustworthy.
+
+THREE CANDIDATES WERE SIMULATED BEFORE THE FILE WAS TOUCHED:
+  inputs = []                                  age 0 -> own 0 -> REFUSED (today)
+  memory/claude_query_proposals.json (106.6d)  age 1 -> own 1 -> STILL REFUSED
+  memory/web_intelligence (0.4d)               age 3 -> own 2 -> ALLOWED
+The middle one is also doctrinally wrong: it is optional-by-construction
+(.exists() guard, returns {}), so declaring it would mean DELETING a dead file
+lowers the gate — the trap already documented for github_publish's pending.json.
+
+THE DECLARATION IS CIRCULAR AND THE ENTRY SAYS SO IN ITS OWN TEXT. This step's
+real input is the live network; every file it opens on the run path is its own
+output. So the age dimension for web_intelligence is now a LIVENESS check ("it
+ran recently"), not a staleness check ("what it read was recent"). THE HOLE:
+run() writes master_web_intel.json and copies it to latest.json unconditionally
+at :830-838, so a night on which every fetch failed still refreshes the tree and
+still reports age=FULL. A sharper input would be one written only on a
+successful fetch; none exists today. FOLLOW-UP WORTH DOING.
+The circular INHERITANCE is safe and not by luck: web_intelligence is a VERIFIER,
+so level = own and the inheritance loop is skipped — it cannot lift itself by its
+own prior stamp. The verifier break exists for exactly this shape.
+
+PROVEN, not asserted:
+  may_act(github_publish) = True, level_2
+  publish_synthesis() -> [GitHub] Публикувани: 26 | Грешки: 0
+                         [GitHub] verified_hypotheses -> 1 published
+  repo pushed_at 2026-08-17T01:07:17Z -> 2026-08-31T09:14:36Z
+
+SUITE, tools/suite_gate.py, both runs VALID:
+  before  47 failed, 3483 passed   (1359s)
+  after   47 failed, 3483 passed   (1244s)
+Full failing-id lists written to file and diffed: IDENTICAL SET, zero moved.
 
 
 - core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer

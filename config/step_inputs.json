@@ -54,6 +54,20 @@
       "_also_reads_why": "execute_patches.py:314 globs the patch directory. A glob is not a provenance input: an empty patches/ is the normal state and must not read as a missing dependency.",
       "_the_phantom_input": "The scanner and core/metta_check._IGNORE both name memory/last_attempt.txt. NOTHING WRITES IT. Checked 21 Aug 2026: no file on disk, and the only producer-shaped reference in the repo is fast_cycle_runner's LAST_ATTEMPT, which points at memory/last_attempted_cycle_id.txt — a different file. So it is not declared here. Declaring a phantom as required would make the notary refuse forever on a file that can never arrive; declaring it optional would enshrine a typo. It is simply not an input to this step.",
       "derived_from": "Read line by line out of execute_patches.py on 21 Aug 2026."
+    },
+    "web_intelligence": {
+      "entry_point": "web_intelligence_agent.run(axes_filter=...) — fast_cycle_runner.py:1289, launched as a subprocess with `import web_intelligence_agent as w; w.run(axes_filter=...)`. NOT the module's __main__ block.",
+      "inputs": [
+        "memory/web_intelligence"
+      ],
+      "_inputs_why": {
+        "memory/web_intelligence": "THIS STEP'S REAL INPUT IS THE LIVE NETWORK, AND THAT IS THE WHOLE PROBLEM. web_intelligence_agent.py reads NO config file and no upstream product: its axis table is a module literal (:159) and its substance arrives over requests/feedparser/ddgs/youtube_intel. Every file it opens on the run path is its OWN output — the per-axis domain files it re-reads to resume (:601, :610, :618), cycle_checkpoint.json (:632-638), and latest.json, which it writes and then reads back to verify (:834-841). All of them live under this tree. So the honest declaration is not a list of upstream dependencies; it is the artifact that evidences the fetch and says WHEN the world was last read. That is what the age dimension should mean for a VERIFIER. Declared as a tree because the step picks the dated folder at runtime; the notary grades a directory by its newest file."
+      },
+      "_this_declaration_is_circular_and_here_is_the_hole": "STATED PLAINLY BECAUSE IT IS A REAL WEAKENING, NOT A DETAIL. The declared input is the step's own product, so running the step refreshes its own freshness. For web_intelligence the age dimension therefore becomes a LIVENESS check ('it ran recently') and NOT a staleness check ('what it read was recent'). WHAT THIS CANNOT CATCH: run() writes master_web_intel.json and copies it to latest.json unconditionally at the end (:830-838), so a night on which every fetch failed still refreshes the tree and still reports age=FULL. The verify-read at :841 asserts ready_for_self_observer but only WARNS. A sharper input would be one written only on a SUCCESSFUL fetch; none exists today. This is the narrowest honest declaration available, not the right one forever. THE CIRCULAR INHERITANCE IS SAFE, THOUGH, AND NOT BY LUCK: web_intelligence is in core/notary.VERIFIERS, so `level = own` and the inheritance loop is skipped — the step cannot lift itself by its own prior stamp. The verifier break exists for exactly this shape.",
+      "also_reads": {
+        "memory/claude_query_proposals.json": "READ at :112-117 and deliberately NOT an age input, for the same reason github_publish excludes cortex_memory/hypotheses/pending.json. It is OPTIONAL BY CONSTRUCTION: _load_claude_proposals() is guarded by .exists() and returns {} when absent, so listing it under 'inputs' would mean DELETING a dead file lowers the gate. MEASURED 31 Aug 2026: its mtime is 2026-05-16, 106.6 days old, which scores MINIMAL(1). Declaring it would hold web_intelligence at level_1 and keep the publish gate shut — it does not fix this, it re-breaks it one level higher."
+      },
+      "derived_from": "Read line by line out of web_intelligence_agent.py (1033 lines) on 2026-08-31, following run() at :856 through run_axis() at :668 to every read_text/json.loads/open call, and cross-checked by grepping the file for config reads (there are none). Written after the publish gate had refused 15 nights running; see the commit for the measurement."
     }
   }
 }
