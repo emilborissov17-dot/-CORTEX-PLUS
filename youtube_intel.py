@@ -21,6 +21,7 @@ import json
 import time
 import hashlib
 import pathlib
+import sys
 import urllib.request
 import urllib.parse
 import ssl
@@ -204,6 +205,21 @@ def search_youtube(query: str, max_results: int = MAX_VIDEOS_PER_AXIS,
 
 # ── Transcript извличане ──────────────────────────────────────────────────────
 
+def _is_ip_block_error(exc: BaseException) -> bool:
+    """Is this exception YouTube refusing our IP, rather than one bad language?
+
+    BY TYPE FIRST. youtube_transcript_api raises IpBlocked / RequestBlocked as
+    CLASSES; matching only on message text is why the substring test below was
+    never reached - the exception never got that far. See the caller.
+    """
+    name = type(exc).__name__
+    if name in ("IpBlocked", "RequestBlocked", "IpBlockedError"):
+        return True
+    err = str(exc)
+    return ("blocking" in err.lower() or "RequestBlocked" in err
+            or "IPBlocked" in err or "IpBlocked" in err)
+
+
 def _get_transcript_api(video_id: str) -> Optional[str]:
     global _YT_IP_BLOCKED
     if _YT_IP_BLOCKED:
@@ -212,13 +228,25 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
         from youtube_transcript_api import YouTubeTranscriptApi
         api = YouTubeTranscriptApi()
 
+        # WHY THIS LOOP NO LONGER SWALLOWS EVERYTHING (2026-08-31).
+        # `except Exception: continue` caught IpBlocked one level BELOW the
+        # _YT_IP_BLOCKED detector that exists to catch it, so the detector was
+        # unreachable code and the warning it prints was never once emitted.
+        # The 28 Aug logs show the visible consequence: "[TRANSCRIPT-API] <id>:"
+        # with an EMPTY message, because the outer handler only ever saw
+        # exceptions that were not the one that mattered.
+        first_error = None
         for lang in TRANSCRIPT_LANGUAGES[:-1]:
             try:
                 transcript_list = api.fetch(video_id, languages=[lang])
                 text = " ".join([t.text if hasattr(t, "text") else t.get("text", "") if isinstance(t, dict) else str(t) for t in list(transcript_list)])
                 if text.strip():
                     return text[:MAX_TRANSCRIPT_CHARS]
-            except Exception:
+            except Exception as inner:
+                if _is_ip_block_error(inner):
+                    raise                     # let the detector below latch it
+                if first_error is None:
+                    first_error = inner
                 continue
 
         try:
@@ -226,18 +254,29 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
             text = " ".join([t.text if hasattr(t, "text") else t.get("text", "") if isinstance(t, dict) else str(t) for t in list(transcript_list)])
             if text.strip():
                 return text[:MAX_TRANSCRIPT_CHARS]
-        except Exception:
-            pass
+        except Exception as inner:
+            if _is_ip_block_error(inner):
+                raise
+            if first_error is None:
+                first_error = inner
+
+        if first_error is not None:
+            # repr, not str: str(IpBlocked()) and friends can be empty, and an
+            # empty reason is what hid this for three nights.
+            print(f"    [TRANSCRIPT-API] {video_id}: no transcript "
+                  f"({first_error!r})")
 
     except ImportError:
         pass
     except Exception as e:
-        err = str(e)
-        if "blocking" in err.lower() or "IP" in err or "RequestBlocked" in err or "IPBlocked" in err:
+        if _is_ip_block_error(e):
+            if not _YT_IP_BLOCKED:        # once per cycle, not once per video
+                print("    [TRANSCRIPT-API] YouTube IP block detected - "
+                      "skipping transcript-api for the rest of this cycle "
+                      f"({type(e).__name__})")
             _YT_IP_BLOCKED = True
-            print(f"    [TRANSCRIPT-API] ⛔ YouTube IP блок засечен — спираме transcript заявки за този цикъл")
         else:
-            print(f"    [TRANSCRIPT-API] {video_id}: {str(e).splitlines()[0]}")
+            print(f"    [TRANSCRIPT-API] {video_id}: {e!r}")
 
     return None
 
@@ -247,8 +286,15 @@ def _get_transcript_yt_dlp(video_id: str) -> Optional[str]:
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_template = os.path.join(tmpdir, "%(id)s")
+            # THE INTERPRETER THAT IS RUNNING US, NOT A NAME ON PATH.
+            # A bare "yt-dlp" resolves only if venv/Scripts is on PATH, and the
+            # scheduled cycle launches venv\Scripts\python.exe WITHOUT activating
+            # the venv - so it never resolved, FileNotFoundError was swallowed
+            # below, and this fallback has never once run. Zero "chars, yt-dlp"
+            # successes in every cycle log ever written. media_intel_worker.py:255
+            # and internet_agent.py:724 already do it this way.
             cmd = [
-                "yt-dlp",
+                str(pathlib.Path(sys.executable)), "-m", "yt_dlp",
                 "--no-check-certificate",
                 "--write-auto-sub",
                 "--write-sub",
@@ -267,19 +313,29 @@ def _get_transcript_yt_dlp(video_id: str) -> Optional[str]:
 
             vtt_files = glob.glob(os.path.join(tmpdir, "*.vtt"))
             if not vtt_files:
+                # rc and stderr, or this is another silent None.
+                err = (result.stderr or "").strip().splitlines()
+                print(f"    [TRANSCRIPT-YTDLP] {video_id}: no subtitle file "
+                      f"(rc={result.returncode}) {err[-1][:160] if err else ''}")
                 return None
 
             text = _parse_vtt(vtt_files[0])
-            return text[:MAX_TRANSCRIPT_CHARS] if text else None
+            if not text:
+                print(f"    [TRANSCRIPT-YTDLP] {video_id}: vtt parsed to empty text")
+                return None
+            return text[:MAX_TRANSCRIPT_CHARS]
 
     except subprocess.TimeoutExpired:
-        print(f"    [TRANSCRIPT-YT-DLP] {video_id}: timeout {YT_DLP_TIMEOUT_SEC}s")
+        print(f"    [TRANSCRIPT-YTDLP] {video_id}: timeout {YT_DLP_TIMEOUT_SEC}s")
         return None
-    except FileNotFoundError:
-        # yt-dlp не е инсталиран
+    except FileNotFoundError as e:
+        # A FALLBACK THAT CANNOT SAY WHY IT FAILED IS THE DEFECT ITSELF. This
+        # returned None in silence from 2026-06 until 2026-08-31, which is why
+        # three nights of empty transcripts named no cause.
+        print(f"    [TRANSCRIPT-YTDLP] {video_id}: yt_dlp module not runnable: {e!r}")
         return None
     except Exception as e:
-        print(f"    [TRANSCRIPT-YT-DLP] {video_id}: {e}")
+        print(f"    [TRANSCRIPT-YTDLP] {video_id}: {e!r}")
         return None
 
 

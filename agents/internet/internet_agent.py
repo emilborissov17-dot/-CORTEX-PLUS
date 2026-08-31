@@ -677,8 +677,13 @@ def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_template = os.path.join(tmpdir, "%(id)s")
+            # sys.executable -m yt_dlp, NOT a bare name on PATH. This call
+            # site said "yt-dlp" while _get_transcript_whisper below (:724)
+            # already used the module form - two call sites in ONE file
+            # disagreeing, and the bare one never resolved under the scheduled
+            # cycle, which does not activate the venv.
             cmd = [
-                "yt-dlp", "--no-check-certificate",
+                sys.executable, "-m", "yt_dlp", "--no-check-certificate",
                 "--write-auto-sub", "--write-sub",
                 "--skip-download", "--sub-lang", "en,bg",
                 "--convert-subs", "vtt",
@@ -688,16 +693,20 @@ def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=YT_DLP_TIMEOUT_SEC)
             vtt_files = glob.glob(os.path.join(tmpdir, "*.vtt"))
             if not vtt_files:
+                err = (result.stderr or "").strip().splitlines()
+                print(f"    [TRANSCRIPT-YTDLP] {video_id}: no subtitle file "
+                      f"(rc={result.returncode}) {err[-1][:160] if err else ''}")
                 return None
             text = _parse_vtt(vtt_files[0])
             return text[:MAX_TRANSCRIPT_CHARS] if text else None
     except subprocess.TimeoutExpired:
         print(f"    [TRANSCRIPT-YTDLP] {video_id}: timeout {YT_DLP_TIMEOUT_SEC}s")
         return None
-    except FileNotFoundError:
+    except FileNotFoundError as e:
+        print(f"    [TRANSCRIPT-YTDLP] {video_id}: yt_dlp module not runnable: {e!r}")
         return None
     except Exception as e:
-        print(f"    [TRANSCRIPT-YTDLP] {video_id}: {e}")
+        print(f"    [TRANSCRIPT-YTDLP] {video_id}: {e!r}")
         return None
 
 def _get_transcript_whisper(video_id: str) -> Optional[str]:

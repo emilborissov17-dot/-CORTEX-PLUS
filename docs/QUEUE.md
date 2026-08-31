@@ -66,6 +66,8 @@ Keep the state column current — it is the only place a human should have to lo
 | 51 | --resume silently re-executed 31 inline steps while reporting them skipped | DONE 2026-08-30 — disabled, refuses by name | NOCYCLE |
 | 52 | the survival gate is a statement inside main(), not a precondition of any entry point | TODO — MUST land BEFORE ITEM 50 | NOCYCLE |
 | 53 | a sandbox/dry-run mode is a PREREQUISITE for partial runs, not a convenience | TODO — blocks ITEM 50 | NOCYCLE |
+| 57 | a cycle launched as a background task of the assistant session dies with it (~5 min) | RECORDED 2026-08-30 | READONLY |
+| 58 | video transcripts: attempt 2 was never once started - bare `yt-dlp` off PATH, FileNotFoundError swallowed | DONE 2026-08-31 | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -3895,6 +3897,34 @@ fast_cycle_runner.py has ZERO occurrences of `dry_run` or `--dry`. What exists i
 the house rule that a module writing a ledger dry-runs unless given --write —
 obeyed by tools/, not by the runner.
 
+## ITEM 57 — A CYCLE CANNOT BE A CHILD OF THE ASSISTANT SESSION
+STATUS: RECORDED 2026-08-30. Not a code defect; a launch-method defect.
+GATE: READONLY
+
+MEASURED, 2026-08-30T10:49:44 -> 10:54:51. A full cycle was started from the
+assistant's shell as a backgrounded command. It cleared the survival gate at
+2,633 MB free, completed A_ORIENT with all 6 promised artifacts, entered B_SENSE,
+and DIED AT ~5 MINUTES inside web_intelligence. Nothing killed it deliberately —
+not Emil, not the assistant. The cycle was a CHILD of the background job and died
+with the job's lifecycle.
+
+WHAT IT COST: the run produced no [BUDGET] line, no [LADDER] line, no re-probe
+line and no local-share figure, so ITEM 44.1 remained unproven in a live cycle
+despite being committed. Roughly 2h20m of intended measurement, lost to the
+launch method rather than to anything about the system.
+
+WHAT IT LEFT, CORRECTLY: a stale memory/cycle.lock naming a dead pid, and a
+frozen heartbeat. That is the DEATH RECORD the system is designed to produce
+(supervisor.py:146) and it must not be deleted by hand — deleting it would erase
+the evidence and rob the reaper of its input. suite_gate is not blocked by it:
+cycle_is_live() reads both pids as provably dead and returns False.
+
+THE RULE: every manual cycle must be DETACHED from the assistant's session.
+Preferred: schtasks /Run /TN CORTEX_Supervisor — the native path, owned by the
+Windows scheduler, identical to what runs at 03:00, and it exercises the real
+entry point instead of a hand-rolled one. A Start-Process detached run is second
+best: it survives, but it tests a launcher nothing else uses.
+
 ## HOLDING
 
 ### THE ORPHAN GATE'S STRING EXEMPTION IS SATISFIED BY A MODULE NAMING ITSELF (found 2026-08-29, ITEM 12a)
@@ -4075,6 +4105,79 @@ ITEM 14 against run C, and the two FAILED lists are byte-identical to each other
   Both are in the baseline of 29. 3.2 changes the number they see, not their outcome.
   They assert the behaviour the transform deliberately removed and should be retired
   or rewritten; not folded into 3.2.
+--------------------------------------------------------------------------------
+ITEM 58 — THE FALLBACK THAT WAS NEVER ONCE STARTED
+--------------------------------------------------------------------------------
+STATUS: DONE 2026-08-31.
+
+MEASURED FIRST. Across every cycle log in memory/cycle_logs/ there are ZERO
+`chars, yt-dlp` transcript successes. Fresh fetches by method, per cycle:
+
+  28 Aug 07:46   playwright 1   api 0   yt-dlp 0   fallback 2
+  28 Aug 08:05   playwright 12  api 0   yt-dlp 0   fallback 1
+  28 Aug 12:15   playwright 5   api 0   yt-dlp 0   fallback 1     <- last success
+  29 Aug 03:04   playwright 0   api 0   yt-dlp 0   fallback 325
+  30 Aug 14:14   playwright 0   api 0   yt-dlp 0   fallback 356
+  31 Aug 03:04   playwright 0   api 0   yt-dlp 0   fallback 168
+
+FOUR ATTEMPTS, AND WHAT EACH ACTUALLY WAS
+  1 youtube-transcript-api  DEAD - YouTube IP block, reproduced live 31 Aug
+                            (IpBlocked: "blocking requests from your IP")
+  2 yt-dlp VTT subtitles    NEVER RAN - see below. This is the item.
+  3 Playwright              carried the feature alone; broke after 28 Aug 12:15
+                            (youtube-transcript.ai still answers HTTP 200 and
+                            still has the input selector, so the break is inside
+                            the scrape flow, not the site disappearing)
+  4 Groq Whisper            unreachable: it is fed by attempt 2's download
+
+THE DEFECT: `cmd = ["yt-dlp", ...]` - a bare name resolved against PATH. The
+scheduled cycle runs `venv\Scripts\python.exe fast_cycle_runner.py` without
+activating the venv, so venv/Scripts is not on PATH, the name did not resolve,
+and `except FileNotFoundError: return None` returned in SILENCE. The feature had
+no second leg for two months and nothing said so.
+
+TWO FILES HAD IT, and one of them already had it right eleven lines further on:
+  youtube_intel._get_transcript_yt_dlp            bare     -> FIXED
+  internet_agent._get_transcript_ytdlp    (:681)  bare     -> FIXED
+  internet_agent._get_transcript_whisper  (:724)  correct all along
+  media_intel_worker.download_audio       (:255)  correct all along
+Both are live cycle steps: web_intelligence imports youtube_intel, and
+internet_agent is its own step. Fixing one would have fixed half the system.
+
+SECOND DEFECT, THE ONE THAT HID THE FIRST: in _get_transcript_api the
+per-language loop caught IpBlocked with `except Exception: continue`, ONE LEVEL
+BELOW the _YT_IP_BLOCKED detector that exists to catch it. The detector was
+unreachable code; its warning has never been printed. The visible symptom is in
+the 28 Aug logs: "[TRANSCRIPT-API] <id>:" with an EMPTY message, because
+str(exc) was empty and the outer handler only ever saw the wrong exceptions.
+Now: matched by TYPE via _is_ip_block_error, re-raised so the detector latches
+once per cycle, other errors logged by repr.
+
+WHAT THE FIX DOES AND DOES NOT CLAIM. Verified live 2026-08-31 09:5x, real
+videos, no state written:
+  [TRANSCRIPT-YTDLP] nmLSaXj7j_8: no subtitle file (rc=1) ERROR: Unable to
+  download video subtitles for 'en': HTTP Error 429: Too Many Requests
+That is the fix working. The path now EXECUTES (it never did) and now SAYS WHY
+(it never could). It does NOT yet return text: the subtitle endpoint is itself
+rate-limited from this IP, which is a second, separate problem that was
+invisible until this commit made the leg run at all. Some of that 429 may be
+this session's own probing. Transcripts are not declared restored.
+
+PRE-DECLARED PASS CRITERION for the 2026-09-01 03:04 cycle, written before it
+runs and not to be revised after:
+  PASS if EITHER  (a) `chars, yt-dlp` fresh-fetch count > 0 in the cycle log
+                       AND at least one axis reports videos WITH transcripts,
+              OR  (b) at least one named "[TRANSCRIPT-YTDLP] ..." line appears.
+  (b) alone proves the honesty half only. If (b) holds and (a) does not, the
+  remaining cause is the 429 and the next item is transcript sourcing, NOT this
+  code path - do not re-fix what this commit already made speak.
+
+TESTS: test/test_transcript_ytdlp_invocation.py, 7 tests, no network - argv is
+captured by intercepting subprocess.run. Pins argv[0] == sys.executable and
+argv[1:3] == ["-m", "yt_dlp"] in BOTH files, forbids a bare "yt-dlp" literal
+reappearing in either call path, and asserts both failure paths name a reason.
+
+
 - core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer
   at agents/internet/internet_agent.py:1133 emits high_urgency_axes. The key has never
   matched; the orchestrator's high list has been empty every cycle. Found during 3.1,
