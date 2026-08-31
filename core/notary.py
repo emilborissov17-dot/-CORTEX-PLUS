@@ -79,6 +79,40 @@ LEVEL_NAMES = {3: "level_3 (пълно)", 2: "level_2 (намалено)",
 # към най-ограниченото — както е в проекта на OpenClaw (default_unclassified).
 IRREVERSIBLE_MIN = REDUCED
 
+# ── EXPLICIT CEILINGS: A STATED INVARIANT, NOT AN ACCIDENT OF IGNORANCE ────
+# A step named here can never be stamped above its ceiling, however healthy
+# every one of the five dimensions is. The cap is applied LAST, after the
+# vector, after inheritance, after the verifier break.
+#
+# WHY THIS TABLE HAD TO EXIST (Ц3а, ruled 31 Aug 2026).
+# The rule "execute_patches must never reach full trust" was real and was
+# tested (test/test_notary_gate.py), but nothing in the code SAID it. It held
+# only because the step's declared inputs harvested a phantom filename -
+# memory/last_attempt.txt, a truncation of memory/last_attempted_cycle_id.txt
+# that nothing anywhere writes. _age_state could not stat it, age fell to
+# UNKNOWN, and the gate shut. The invariant was resting on a typo.
+#
+# On 21 Aug 2026 commit 8b0bca6 declared execute_patches' real input in
+# config/step_inputs.json - correctly, and for a good reason: the notary was
+# refusing for ignorance rather than for fault. The declaration beat the
+# scanner, the phantom left the harvest, age became FULL, and the step that
+# REWRITES THIS SYSTEM'S OWN SOURCE was stamped level_3 with may_act() = True.
+# Measured in the live chain: 2026-08-30T12:57:14 level=3, own=3, vector all
+# threes. THE GATE WAS OPEN FOR TEN DAYS, and on 31 Aug it read level_2 only
+# because the human channel had gone quiet - an accident, not a guard.
+#
+# A cap is the only honest place for this. A phantom input is a lie that
+# happens to be load-bearing; a missing declaration is ignorance we are trying
+# to remove everywhere else. An invariant worth holding is worth writing down.
+#
+# execute_patches is capped at MINIMAL, which is BELOW IRREVERSIBLE_MIN, so
+# may_act() refuses. That is the decision, not a side effect: the step does not
+# run. RAISING A CEILING IS AMENDMENT_001'S BUSINESS - cooling-off ends
+# 19 Oct 2026. Lowering one, or adding a step, is an ordinary change.
+MAX_LEVEL = {
+    "execute_patches": MINIMAL,
+}
+
 # ── ЯВНИ МАРКЕРИ ЗА ПРЕДШЕСТВЕНИКА ─────────────────────────────────────────
 # Извикващият ТРЯБВА да каже кое от двете е вярно. Няма стойност по подразбиране,
 # която значи доверие: PREV_UNKNOWN е подразбирането и той струва 0.
@@ -404,10 +438,28 @@ def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
     verified = step in VERIFIERS
     level = own if verified else min(own, inherited)
 
+    # ...and ALWAYS under this step's explicit ceiling, if it has one. Applied
+    # last so that no dimension, no inheritance and no verifier break can lift
+    # a capped step above the line a human drew for it. See MAX_LEVEL.
+    ceiling = MAX_LEVEL.get(step)
+    capped = ceiling is not None and level > ceiling
+    if capped:
+        level = ceiling
+    # BINDS is the question may_act cares about, and it is NOT the same as CAPPED.
+    # `capped` says the ceiling actually moved the number on this call; it goes
+    # False the moment some other dimension has already dragged the level to or
+    # below the line. `binds` says the ceiling would hold this step down even if
+    # every other dimension were perfect - which is the fact a reader needs, and
+    # the one that stays true when a stale input happens to be the proximate
+    # cause tonight.
+    ceiling_binds = ceiling is not None and own > ceiling
+
     rec = {"ts": _now(), "step": step, "prev_step": prev_step,
            "vector": {k: vec[k] for k in ("witness", "human", "thought", "age", "promise")},
            "why": vec["why"], "own": own, "inherited": inherited,
            "inherited_from": from_who, "verifier": verified, "level": level,
+           "ceiling": ceiling, "capped": capped,
+           "ceiling_binds": ceiling_binds,
            "level_name": LEVEL_NAMES.get(level, str(level)),
            "products": products, "inputs": inputs,
            "inputs_source": inputs_source}
@@ -489,6 +541,16 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     lvl = rec["level"]
     if lvl >= IRREVERSIBLE_MIN:
         return True, f"{rec['level_name']} — {rec['why']['age']}"
+    if rec.get("ceiling_binds"):
+        # THE CEILING IS THE REASON, AND IT MUST SAY SO. Without this branch the
+        # refusal would be blamed on whichever dimension happened to equal the
+        # capped level - naming an innocent input for a decision a human made.
+        return False, (
+            f"{rec['level_name']} — explicit ceiling for {step!r}: this step is "
+            f"capped at {LEVEL_NAMES.get(rec['ceiling'], rec['ceiling'])} by "
+            f"core/notary.MAX_LEVEL regardless of its own vector "
+            f"({LEVEL_NAMES.get(rec['own'], rec['own'])}). Raising it is "
+            f"AMENDMENT_001's business; cooling-off ends 19 Oct 2026.")
     weak = [k for k, v in rec["vector"].items() if v == lvl]
     why = "; ".join(rec["why"][k] for k in weak)
     src = (f" (наследено от {rec['inherited_from']})"

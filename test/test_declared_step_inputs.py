@@ -60,8 +60,26 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 NOTARY_SRC = REPO_ROOT / "core" / "notary.py"
 
 DECLARED_STEP = "github_publish"
-UNDECLARED_STEP = "self_modifier"          # irreversible, and named nowhere in the file
 DECL_REL = "config/step_inputs.json"
+
+# THE CONTROL SUBJECT MOVED, AND WHY IT HAD TO (31 Aug 2026).
+# This was `self_modifier`, chosen because it is irreversible AND named nowhere
+# in the declaration - so it could prove that a file written about one step says
+# nothing about another. Commit 8b0bca6 (21 Aug) declared it, and the control
+# stopped controlling anything: it asserted a step was undeclared while the file
+# declared it.
+#
+# THERE IS NO UNDECLARED IRREVERSIBLE STEP LEFT. All three - execute_patches,
+# self_modifier, github_publish - are now in config/step_inputs.json. So the
+# irreversibility half of the old choice cannot be preserved, and pretending
+# otherwise would be the retirement this control exists to prevent.
+#
+# `notify_patches_and_initiatives` keeps the half that the test actually
+# measures: it is undeclared, it harvests [] from the scanner (so UNKNOWN is the
+# honest answer for it), and it still touches the world - it sends messages out,
+# and an unsent message cannot be recalled. If it is ever declared, this test
+# will say so in the same words, and the next reader picks again.
+UNDECLARED_STEP = "notify_patches_and_initiatives"
 
 
 # ---------------------------------------------------------------------------

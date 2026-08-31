@@ -69,6 +69,7 @@ Keep the state column current — it is the only place a human should have to lo
 | 57 | a cycle launched as a background task of the assistant session dies with it (~5 min) | RECORDED 2026-08-30 | READONLY |
 | 58 | video transcripts: attempt 2 was never once started - bare `yt-dlp` off PATH, FileNotFoundError swallowed | DONE 2026-08-31 | NOCYCLE |
 | 59 | Cerebras retirement - a leg dead since 28 Aug on a billing 402 stops being advertised | DONE 2026-08-31 | NOCYCLE |
+| 60 | Ц3а - execute_patches' ceiling is STATED in code, not resting on a phantom input | DONE 2026-08-31 | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -4250,6 +4251,90 @@ MUST-STAY-GREEN, verified by RUNNING, not reading:
   core.backend_policy --selftest    RESULT: OK (10/10)
   core.step_budget    --selftest    cycle_map LIVE, fast_cycle_runner WIRED,
                                     dead-cloud smoke DEGRADED in 0.001s
+
+
+--------------------------------------------------------------------------------
+ITEM 60 — Ц3а: THE INVARIANT WAS RESTING ON A TYPO, THEN ON NOTHING
+--------------------------------------------------------------------------------
+STATUS: DONE 2026-08-31. Closed by decision, not by ignorance.
+
+THE RULE: execute_patches - the step that REWRITES THIS SYSTEM'S OWN SOURCE -
+must never carry full trust. The rule was real and it was tested. Nothing in the
+code SAID it.
+
+WHAT WAS ACTUALLY HOLDING THE GATE, until 21 Aug: memory/last_attempt.txt, a
+phantom. It is a truncation of memory/last_attempted_cycle_id.txt and NOTHING in
+the repo writes it. It reached the step's requires because the harvester greps
+core/metta_check._IGNORE - a NEGATIVE list - and cannot tell an ignore list from
+a requires list. _age_state could not stat the phantom, age fell to UNKNOWN, own
+went to 0, may_act refused. A safety property held up by a misspelling.
+
+HOW IT OPENED. Commit 8b0bca6 (21 Aug 2026, "the notary was refusing for
+ignorance, not for fault") declared execute_patches' real input in
+config/step_inputs.json. That change was CORRECT and is not being reverted: the
+notary was refusing because nobody had said what the step reads, which is
+ignorance, not fault. But the declaration beat the scanner, the phantom left the
+harvest, age became FULL, and the gate swung open as a side effect nobody
+intended and no test caught for ten days.
+
+MEASURED IN THE LIVE ATTESTATION CHAIN, not inferred:
+  2026-08-30T12:57:14  execute_patches  level=3  own=3
+                       vector {witness:3, human:3, thought:3, age:3, promise:3}
+  2026-08-31T01:51:32  execute_patches  level=2  own=2
+                       - and level_2 only because `human` had dropped to 2 after
+                       seven days with no human action. An accident standing in
+                       for a guard. Still >= IRREVERSIBLE_MIN, so may_act said yes.
+
+THE FIX: core/notary.MAX_LEVEL, an explicit named ceiling applied LAST - after
+the vector, after inheritance, after the verifier break - so that no dimension
+and no inheritance can lift a capped step above the line a human drew.
+
+    MAX_LEVEL = {"execute_patches": MINIMAL}
+
+MINIMAL(1) is BELOW IRREVERSIBLE_MIN(2), so may_act() refuses and the step does
+not run. That is the decision, not a side effect. RAISING A CEILING IS
+AMENDMENT_001'S BUSINESS; the cooling-off ends 19 OCT 2026. Lowering one, or
+adding a step, is an ordinary change.
+
+TWO DISTINCT FLAGS, and the difference matters:
+  capped        the ceiling actually moved the number on THIS call. Goes False
+                as soon as some other dimension has already dragged the level
+                to or below the line.
+  ceiling_binds the ceiling would hold this step down even if every dimension
+                were perfect (own > ceiling). This is what may_act reports,
+                because it stays true when a stale input happens to be tonight's
+                proximate cause. A decision a human made must not be blamed on
+                an innocent input.
+
+THE THREE TESTS WENT GREEN BECAUSE THE INVARIANT HOLDS, NOT BY RETIREMENT:
+  test_execute_patches_never_reaches_full_trust - unchanged, now passes.
+  test_the_phantom_is_still_the_thing_holding_the_gate - REPLACED by
+    test_the_explicit_ceiling_is_the_thing_holding_the_gate. Same role (name the
+    load-bearing thing, then remove it and watch the gate swing open), new and
+    truthful subject. Asserting the phantom was still load-bearing would now be
+    a lie: it left the harvest on 21 Aug. A companion test records that the
+    phantom is NOT relied on any more, so the next reader of the file heading
+    does not hunt for a coupling that was severed. The positive control clears
+    the attestation chain first - execute_patches writes
+    memory/development_journal.json, which is also its declared input, so a
+    capped run inherits level_1 from ITSELF and would "prove" the ceiling still
+    bound after removal. (That self-inheritance is correct in production: a
+    capped step's outputs should carry reduced trust onward.)
+  test_an_undeclared_step_still_refuses and
+  test_the_scanner_prefers_the_written_declaration - both used self_modifier as
+    the UNDECLARED control, and 8b0bca6 declared it. THERE IS NO UNDECLARED
+    IRREVERSIBLE STEP LEFT: all three (execute_patches, self_modifier,
+    github_publish) are in config/step_inputs.json. The control moved to
+    notify_patches_and_initiatives, which keeps the half the test measures -
+    undeclared, harvests [] from the scanner, and still touches the world, since
+    an unsent message cannot be recalled.
+
+SUITE, tools/suite_gate.py, both runs VALID, no cycle touched either window:
+  before  51 failed, 3478 passed, 6 skipped, 6 xfailed   (1176s)
+  after   47 failed, 3483 passed, 6 skipped, 6 xfailed   (1359s)
+Full failing-id lists captured to file via --junitxml (47 junit ids == 47 stdout
+ids, so no truncation) and diffed. The ONLY four ids that changed state are the
+four target tests. Zero new failures.
 
 
 - core/cortex_orchestrator.py:268 reads internet.get("high_axes", []) while the writer

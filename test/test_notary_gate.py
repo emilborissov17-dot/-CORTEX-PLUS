@@ -247,67 +247,102 @@ def test_an_empty_inputs_list_is_not_a_reason_to_trust(notary):
         f"an empty inputs list is being read as proof of freshness.")
 
 
-def test_the_phantom_is_still_the_thing_holding_the_gate(
+def test_the_explicit_ceiling_is_the_thing_holding_the_gate(
         healthy_environment, live_harvest, phantom_is_the_only_gap, monkeypatch):
-    """Tripwire: name the load-bearing typo, and PROVE it is load-bearing.
+    """Tripwire: name what is ACTUALLY load-bearing, and PROVE it is.
 
-    This is the narrow, literal guard that the invariant test above cannot give you —
-    a failure message that says WHICH string was removed and WHY the removal matters.
+    THIS TEST REPLACED A TRIPWIRE ON THE PHANTOM (31 Aug 2026), and the reason is
+    the whole point of the file. Until 21 Aug the gate was held shut by
+    `memory/last_attempt.txt` - a truncation of `memory/last_attempted_cycle_id.txt`
+    that nothing anywhere writes. `_age_state` could not stat it, age fell to
+    UNKNOWN, and the step that rewrites this system's own source was refused. The
+    invariant was resting on a typo, and the old version of this test asserted the
+    typo was still there.
 
-    The last assertion is a POSITIVE CONTROL. A guard that only ever asserts the safe
-    state cannot tell you whether it is still guarding anything; this one re-runs the
-    real notary with the phantom filtered out and checks that the level really does
-    jump to FULL. If that stops being true, either the coupling is gone (good — this
-    whole file is obsolete, delete it) or something else changed underneath it (bad —
-    find out what before trusting the green).
+    Commit 8b0bca6 (21 Aug) then declared the step's real input in
+    config/step_inputs.json - correctly, because the notary was refusing for
+    ignorance rather than for fault. The declaration beat the scanner, the phantom
+    left the harvest, and the gate SWUNG OPEN. Measured in the live attestation
+    chain: 2026-08-30T12:57:14 level=3, own=3, vector all threes, may_act True. It
+    stayed open ten days. On 31 Aug it read level_2 only because the human channel
+    had gone quiet for seven days - an accident standing in for a guard.
 
-    Expected to become obsolete: once `_age_state` treats emptiness and absence
-    honestly, delete this test. Until then, removing the phantom without touching
-    `_age_state` should cost somebody a red suite and thirty seconds of reading.
+    So the phantom is no longer load-bearing and asserting that it is would be a
+    lie. What holds the gate now is core/notary.MAX_LEVEL: a STATED ceiling. This
+    test guards that, the same way the old one guarded the typo - by naming it and
+    then removing it to watch the gate swing open.
     """
-    from core.metta_check import _IGNORE
     notary = healthy_environment
-    mc = importlib.import_module("core.metta_check")
 
-    assert PHANTOM in _IGNORE, (
-        f"{PHANTOM!r} is gone from core/metta_check.py:_IGNORE.\n"
-        f"That string is a phantom — a truncation of {REAL_FILE!r}, with no writer "
-        f"anywhere in the repo — and removing it is not a cleanup: it is the only "
-        f"missing input on {STEP}, therefore the only thing keeping the notary's "
-        f"gate on self-modification shut.\n"
-        f"Removing it hands {STEP} level_3. Read the docstring at the top of this "
-        f"file before deciding this test is wrong.")
+    # 1. The ceiling exists, names this step, and sits below the action threshold.
+    assert STEP in notary.MAX_LEVEL, (
+        f"{STEP!r} has no entry in core/notary.MAX_LEVEL. The invariant "
+        f"'{STEP} must never reach full trust' is back to resting on whatever "
+        f"happens to be missing that night. See Ц3а, ruled 31 Aug 2026.")
+    ceiling = notary.MAX_LEVEL[STEP]
+    assert ceiling < notary.FULL, (
+        f"the ceiling for {STEP!r} is {ceiling}, which is full trust - it caps "
+        f"nothing")
+    assert ceiling < notary.IRREVERSIBLE_MIN, (
+        f"the ceiling for {STEP!r} is {ceiling}, at or above IRREVERSIBLE_MIN "
+        f"({notary.IRREVERSIBLE_MIN}), so may_act() still permits the action. "
+        f"Ц3а closed this gate by decision; raising it is AMENDMENT_001's "
+        f"business and the cooling-off ends 19 Oct 2026.")
 
-    assert PHANTOM in live_harvest, (
-        f"{PHANTOM!r} is still in _IGNORE but no longer reaches {STEP}'s requires.\n"
-        f"Harvested instead: {live_harvest}\n"
-        f"core/cycle_graph.py:scan_requires() changed. The gate may now be open — "
-        f"check test_execute_patches_never_reaches_full_trust.")
-
-    # POSITIVE CONTROL: take the phantom out and watch the gate swing open.
-    without = [r for r in live_harvest if r != PHANTOM]
-    monkeypatch.setitem(mc._REQ, STEP, without)
+    # 2. It is the ceiling doing the work, and the refusal SAYS so.
     rec = notary.attest(STEP)
-    ok, _why = notary.may_act(STEP)
+    assert rec["ceiling_binds"], (
+        f"the ceiling is not binding: own={rec['own']}, ceiling={ceiling}. "
+        f"Something else is holding the gate and this tripwire is not guarding "
+        f"what it claims to guard.")
+    ok, why = notary.may_act(STEP)
+    assert not ok, f"may_act({STEP!r}) permitted an irreversible action: {why}"
+    assert "ceiling" in why, (
+        f"the refusal does not name the ceiling as its reason: {why!r}. A "
+        f"decision a human made must not be blamed on an innocent input.")
 
-    assert rec["level"] == notary.FULL and ok, (
-        f"Removing {PHANTOM!r} no longer promotes {STEP} to full trust "
-        f"(got {rec['level_name']}, may_act={ok}, vector={rec['vector']}).\n"
-        f"The coupling this file guards has changed. If core/notary.py:_age_state "
-        f"was made honest about unknown provenance, this file has done its job — "
-        f"delete it. If not, find out what else moved before trusting the green.")
+    # 3. POSITIVE CONTROL. A guard that only ever asserts the safe state cannot
+    #    tell you whether it is still guarding anything. Take the ceiling away and
+    #    the gate must swing open - which is exactly what happened for ten days.
+    monkeypatch.setattr(notary, "MAX_LEVEL", {})
+    # FROM A CLEAN CHAIN. The capped attestations above stamped this step's own
+    # products at the capped level, and execute_patches writes
+    # memory/development_journal.json - which is also its declared input. Left
+    # in place, the control would inherit level_1 from itself and "prove" the
+    # ceiling was still binding after we removed it. (That self-inheritance is
+    # correct behaviour in production: a capped step's outputs should carry the
+    # reduced trust onward. It is only a contaminant here.)
+    notary.ATTEST_LOG.write_text("", encoding="utf-8")
+    rec_open = notary.attest(STEP)
+    ok_open, _ = notary.may_act(STEP)
+    assert rec_open["level"] == notary.FULL and ok_open, (
+        f"with MAX_LEVEL emptied, {STEP} did NOT return to full trust "
+        f"(got {rec_open['level_name']}, may_act={ok_open}, "
+        f"vector={rec_open['vector']}). "
+        f"The ceiling may no longer be the load-bearing thing. Find out what "
+        f"else is holding the gate before trusting the green - that is the "
+        f"mistake this file was written after.")
 
 
-# ---------------------------------------------------------------------------
-# THE PROMISE DIMENSION MUST NOT BE FULL BY DEFAULT
-#
-# may_act() used to call attest(step) with no prev_step. _promise_state(None)
-# returned FULL, "няма предишна стъпка" — so at the ONE place the vector is
-# enforced, one of its five dimensions was structurally maximal. Measured on the
-# live chain, 17 Aug: github_publish attested TWICE in the same second, level_0 from
-# the heartbeat (which passes prev_step) and level_3 from the gate (which did not).
-# The gate acted on its own row. The audit log and the decision disagreed.
-# ---------------------------------------------------------------------------
+def test_the_phantom_is_no_longer_load_bearing_and_that_is_recorded():
+    """The phantom string may still sit in _IGNORE; it must not be RELIED on.
+
+    Kept as a fact, not a guard. If someone deletes `memory/last_attempt.txt`
+    from core/metta_check.py:_IGNORE tomorrow, nothing about the gate changes -
+    and this test says so out loud, so that the next reader of the file heading
+    does not go looking for a coupling that was severed on 21 Aug 2026.
+    """
+    assert PHANTOM not in live_harvest_for(STEP), (
+        f"{PHANTOM!r} is back in {STEP}'s harvest. That is not a restored "
+        f"safety net - it is the typo returning. The gate is held by "
+        f"core/notary.MAX_LEVEL now; see "
+        f"test_the_explicit_ceiling_is_the_thing_holding_the_gate.")
+
+
+def live_harvest_for(step: str) -> list:
+    """The requires the REAL harvester derives right now, for one step."""
+    from core.cycle_graph import scan_requires
+    return scan_requires().get(step, [])
 
 def test_an_unstated_predecessor_is_not_a_kept_promise(notary):
     """Nobody-said is UNKNOWN, not FULL.
