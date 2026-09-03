@@ -262,6 +262,15 @@ check("one bad ref among good ones fails the whole set",
 
 _seed_tr = {"kind": "hypothesis", "seed": "trend", "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
             "source": "gi_noaa_co2", "detail": "d"}
+# Hermetic (27 Aug 2026): on a clean checkout memory/composer_state/ is runtime
+# state and does not exist, so this block failed for ENVIRONMENT, not code. The
+# test now stands up the one series file it asserts about and removes it after —
+# on the live machine the file already exists and this is a no-op.
+_series_f = P.COMPOSER_ST / "CLIMATE_GLOBAL_RISK_REVIEW.json"
+_series_created = not _series_f.is_file()
+if _series_created:
+    _series_f.parent.mkdir(parents=True, exist_ok=True)
+    _series_f.write_text("[]", encoding="utf-8")
 _cat = P._catalog(_seed_tr)
 check("catalog is non-empty and every entry is a real file",
       bool(_cat) and all((P.REPO / c).is_file() for c in _cat))
@@ -270,6 +279,11 @@ check("catalog names the very series file the trend seed came from",
 check("a real file that is NOT in the catalog is still refused — existing != cited",
       P._refs_exist(["CLAUDE.md"], _cat) is False)
 check("a catalog entry passes", P._refs_exist([_cat[0]], _cat) is True)
+if _series_created:
+    try:
+        _series_f.unlink()
+    except OSError:
+        pass
 
 _seen = {}
 P.articulate = lambda seed, frame, catalog=None: _seen.update(catalog=catalog) or {
