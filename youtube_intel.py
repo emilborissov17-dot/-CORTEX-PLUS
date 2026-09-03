@@ -55,6 +55,23 @@ YT_DLP_TIMEOUT_SEC     = 30
 # Глобален флаг: YouTube е блокирал IP-а → спираме transcript заявки
 _YT_IP_BLOCKED = False
 
+# ffmpeg / deno resolution for every yt-dlp call (core/media_tools.py). Import is
+# guarded so a missing module degrades to "no extra args" and yt-dlp's own WARNING
+# stays visible in the log — never a crash in a fallback.
+try:
+    from core.media_tools import yt_dlp_extra_args as _yt_dlp_extra_args
+    from core.media_tools import SUBS_LIMIT as _SUBS_LIMIT
+except Exception:  # pragma: no cover
+    def _yt_dlp_extra_args():
+        return []
+
+    class _NoLimit:
+        parked = False
+        def record(self, *_a, **_k): return False
+        def park_line(self): return ""
+        def reset(self): pass
+    _SUBS_LIMIT = _NoLimit()
+
 _SSL_CTX = ssl.create_default_context()
 _SSL_CTX.check_hostname = False
 _SSL_CTX.verify_mode    = ssl.CERT_NONE
@@ -283,6 +300,14 @@ def _get_transcript_api(video_id: str) -> Optional[str]:
 
 def _get_transcript_yt_dlp(video_id: str) -> Optional[str]:
     """yt-dlp — сваля VTT субтитри. FIX: явен timeout=YT_DLP_TIMEOUT_SEC."""
+    if _SUBS_LIMIT.parked:
+        # 3 Sep 2026: ~280 attempts/night against a 429'd endpoint. The YouTube breaker
+        # (core/media_tools.YouTubeBreaker, Kimi: one breaker per IP, wall-clock backoff)
+        # is open; one line, once.
+        _pl = _SUBS_LIMIT.park_line()
+        if _pl:
+            print(_pl)
+        return None
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_template = os.path.join(tmpdir, "%(id)s")
@@ -302,6 +327,9 @@ def _get_transcript_yt_dlp(video_id: str) -> Optional[str]:
                 "--sub-lang", "en,bg",
                 "--convert-subs", "vtt",
                 "-o", out_template,
+                # ffmpeg / deno by RESOLVED PATH, not by PATH (core/media_tools.py):
+                # the scheduled cycle's PATH is the logon-time one and never saw them.
+                *_yt_dlp_extra_args(),
                 f"https://www.youtube.com/watch?v={video_id}",
             ]
             result = subprocess.run(
@@ -317,7 +345,12 @@ def _get_transcript_yt_dlp(video_id: str) -> Optional[str]:
                 err = (result.stderr or "").strip().splitlines()
                 print(f"    [TRANSCRIPT-YTDLP] {video_id}: no subtitle file "
                       f"(rc={result.returncode}) {err[-1][:160] if err else ''}")
+                if _SUBS_LIMIT.record(result.stderr or ""):
+                    _pl = _SUBS_LIMIT.park_line()
+                    if _pl:
+                        print(_pl)
                 return None
+            _SUBS_LIMIT.record("", success=True)
 
             text = _parse_vtt(vtt_files[0])
             if not text:
@@ -499,15 +532,35 @@ def _get_transcript_unbounded(video_id: str, title: str = "", description: str =
                         if _line.startswith("GROQ_API_KEY="):
                             groq_key = _line.split("=", 1)[1].strip()
                             break
-            if groq_key:
+            if groq_key and _SUBS_LIMIT.parked:
+                _pl = _SUBS_LIMIT.park_line()
+                if _pl:
+                    print(_pl)
+            elif groq_key:
                 _yt_url = f"https://www.youtube.com/watch?v={video_id}"
                 with tempfile.TemporaryDirectory() as tmpdir:
                     audio_path = os.path.join(tmpdir, "audio.mp3")
                     dl = subprocess.run(
                         [sys.executable, "-m", "yt_dlp", "-x", "--audio-format", "mp3",
-                         "-o", audio_path, "--no-playlist", "--quiet", _yt_url],
-                        capture_output=True, timeout=90,
+                         "-o", audio_path, "--no-playlist", "--quiet",
+                         *_yt_dlp_extra_args(),   # -x IS an ffmpeg post-processor
+                         _yt_url],
+                        capture_output=True, text=True, timeout=90,
                     )
+                    if dl.returncode != 0 or not os.path.exists(audio_path):
+                        # This returned nothing in silence while ffmpeg was missing.
+                        # Last THREE stderr lines (Kimi: the real cause of a chained
+                        # postprocessor failure sits a few lines above the last one).
+                        _err = (dl.stderr or "").strip().splitlines()
+                        print(f"    [TRANSCRIPT-WHISPER] {video_id[:11]}: audio download "
+                              f"failed (rc={dl.returncode}) "
+                              f"{' | '.join(l[:160] for l in _err[-3:])}")
+                        if _SUBS_LIMIT.record(dl.stderr or ""):
+                            _pl = _SUBS_LIMIT.park_line()
+                            if _pl:
+                                print(_pl)
+                    else:
+                        _SUBS_LIMIT.record("", success=True)
                     if dl.returncode == 0 and os.path.exists(audio_path):
                         if os.path.getsize(audio_path) <= 24 * 1024 * 1024:
                             with open(audio_path, "rb") as f:

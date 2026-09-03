@@ -46,6 +46,21 @@ YT_DLP_TIMEOUT_SEC     = 30
 _IP_BLOCKED_THIS_CYCLE = False
 _STATE_LOCK = threading.Lock()
 
+# ffmpeg / deno resolution for every yt-dlp call (core/media_tools.py); guarded import.
+try:
+    from core.media_tools import yt_dlp_extra_args as _yt_dlp_extra_args
+    from core.media_tools import SUBS_LIMIT as _SUBS_LIMIT
+except Exception:  # pragma: no cover
+    def _yt_dlp_extra_args():
+        return []
+
+    class _NoLimit:
+        parked = False
+        def record(self, *_a, **_k): return False
+        def park_line(self): return ""
+        def reset(self): pass
+    _SUBS_LIMIT = _NoLimit()
+
 # ── Cross-cycle transcript cache (item 4c) ───────────────────────────────────
 # Ключ = video ID. Проверява се ПРЕДИ какъвто и да е fetch опит, така че вече
 # свалена транскрипция струва нула мрежови заявки — независимо от цикъл, ос
@@ -414,6 +429,7 @@ def reset_cycle_state() -> None:
     with _STATE_LOCK:
         _IP_BLOCKED_THIS_CYCLE = False
         _YT_QUOTA_EXHAUSTED = False
+    _SUBS_LIMIT.reset()   # per-process counters; the wall-clock park is NOT reset (Kimi, 3 Sep 2026)
 
 
 def _is_ip_blocked() -> bool:
@@ -674,6 +690,13 @@ def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
     """
     if _is_ip_blocked():
         return None
+    if _SUBS_LIMIT.parked:
+        # 3 Sep 2026: parked after consecutive 429s from the subtitle endpoint
+        # (core/media_tools.SubtitleRateLimit). One line, once per cycle.
+        _pl = _SUBS_LIMIT.park_line()
+        if _pl:
+            print(_pl)
+        return None
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_template = os.path.join(tmpdir, "%(id)s")
@@ -688,6 +711,7 @@ def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
                 "--skip-download", "--sub-lang", "en,bg",
                 "--convert-subs", "vtt",
                 "-o", out_template,
+                *_yt_dlp_extra_args(),   # ffmpeg/deno by resolved path (core/media_tools)
                 f"https://www.youtube.com/watch?v={video_id}",
             ]
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=YT_DLP_TIMEOUT_SEC)
@@ -696,7 +720,12 @@ def _get_transcript_ytdlp(video_id: str) -> Optional[str]:
                 err = (result.stderr or "").strip().splitlines()
                 print(f"    [TRANSCRIPT-YTDLP] {video_id}: no subtitle file "
                       f"(rc={result.returncode}) {err[-1][:160] if err else ''}")
+                if _SUBS_LIMIT.record(result.stderr or ""):
+                    _pl = _SUBS_LIMIT.park_line()
+                    if _pl:
+                        print(_pl)
                 return None
+            _SUBS_LIMIT.record("", success=True)
             text = _parse_vtt(vtt_files[0])
             return text[:MAX_TRANSCRIPT_CHARS] if text else None
     except subprocess.TimeoutExpired:
@@ -726,16 +755,34 @@ def _get_transcript_whisper(video_id: str) -> Optional[str]:
         return None
 
     url = f"https://www.youtube.com/watch?v={video_id}"
+    if _SUBS_LIMIT.parked:
+        # same IP, same limit (Kimi, 3 Sep): the breaker covers the audio leg too
+        _pl = _SUBS_LIMIT.park_line()
+        if _pl:
+            print(_pl)
+        return None
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
             audio_path = os.path.join(tmpdir, "audio.mp3")
             dl = subprocess.run(
                 [sys.executable, "-m", "yt_dlp", "-x", "--audio-format", "mp3",
-                 "-o", audio_path, "--no-playlist", "--quiet", url],
-                capture_output=True, timeout=90,
+                 "-o", audio_path, "--no-playlist", "--quiet",
+                 *_yt_dlp_extra_args(),   # -x IS an ffmpeg post-processor
+                 url],
+                capture_output=True, text=True, timeout=90,
             )
             if dl.returncode != 0 or not os.path.exists(audio_path):
+                # Was `return None` with no message: with ffmpeg absent this leg failed
+                # on every video since it was written and the log never said so.
+                _err = (dl.stderr or "").strip().splitlines()
+                print(f"    [TRANSCRIPT-WHISPER] {video_id[:11]}: audio download failed "
+                      f"(rc={dl.returncode}) {' | '.join(l[:160] for l in _err[-3:])}")
+                if _SUBS_LIMIT.record(dl.stderr or ""):
+                    _pl = _SUBS_LIMIT.park_line()
+                    if _pl:
+                        print(_pl)
                 return None
+            _SUBS_LIMIT.record("", success=True)
             file_size = os.path.getsize(audio_path)
             if file_size > 24 * 1024 * 1024:
                 print(f"    [TRANSCRIPT] {video_id[:11]} ⚠️ audio > 24 MB — skip")

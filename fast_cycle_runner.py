@@ -1454,6 +1454,21 @@ def _check_dependencies() -> bool:
         except Exception:
             pass
 
+    # ffmpeg / deno (3 Sep 2026): the two binaries yt-dlp warned about on every video
+    # for three nights. Reported in the same vocabulary as ddgs — MISSING is a proposal
+    # to the human (tools/install_media_deps.ps1), never a self-install. Fail-open.
+    try:
+        from core.media_tools import status as _mt_status, dep_check_lines as _mt_lines
+        _mt = _mt_status()
+        checks["bin_ffmpeg"] = {"present": _mt["ffmpeg_ok"], "level": "optional",
+                                "path": _mt["ffmpeg"]}
+        checks["bin_deno"] = {"present": _mt["deno_ok"], "level": "optional",
+                              "path": _mt["deno"]}
+        for _ln in _mt_lines():
+            print(_ln)
+    except Exception as _mte:
+        print(f"[DEP_CHECK] media_tools unavailable: {type(_mte).__name__}: {_mte}")
+
     # 1. Проверка на ключове
     key_levels = {
         "GROQ_API_KEY":       "thinking_path",

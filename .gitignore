@@ -210,3 +210,7 @@ memory/flow_score.jsonl
 memory/deferred_batch.json
 # Индексът от вграждания (core/embed_index.py) — mmap-ван, регенерира се от кеша.
 memory/embed_index/
+
+# Hand-dropped media binaries (core/media_tools.py last-resort search path, 3 Sep 2026).
+# Never committed: ffmpeg.exe is ~100 MB and deno.exe ~40 MB.
+/bin/
