@@ -127,6 +127,20 @@ def main() -> None:
     print(f"[HYPERCLAW] started at {_utc_now()}")
 
     context        = _read_context()
+    # Wire-first (16 Aug 2026): the cycle comment at step 12.7 always claimed
+    # HyperClaw uses the orchestrator's priority_axes — it never read them.
+    # Now it does: attention.priority_axes from orchestration_latest.json.
+    try:
+        _orch = json.loads((BASE / "memory" / "orchestration_latest.json")
+                           .read_text(encoding="utf-8"))
+        _pa = (_orch.get("attention") or {}).get("priority_axes") or []
+        if _pa:
+            context += ("\n\nPRIORITY_AXES (cognitive_orchestrator, this cycle): "
+                        + json.dumps(_pa, ensure_ascii=False)[:600]
+                        + "\nFocus the sub-axis selection on these first.")
+            print(f"[HYPERCLAW] priority_axes wired: {str(_pa)[:120]}")
+    except Exception as _e:
+        print(f"[HYPERCLAW] priority_axes unavailable: {_e}")
     axes_spec      = AXES_SPEC.read_text(encoding="utf-8", errors="ignore") if AXES_SPEC.exists() else ""
     merkle_essence = _load_merkle_essence()
     if merkle_essence:

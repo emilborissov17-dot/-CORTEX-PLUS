@@ -1613,6 +1613,54 @@ def _strategist_to_proposals():
         print(f"[FAST_CYCLE] strategist_to_proposals -> FAILED: {e}")
 
 
+def _growth_to_proposals():
+    """Wire-first (16 Aug 2026): growth_plan_latest.json had zero readers —
+    the Growth Planner's immediate_safe_actions died on disk every cycle.
+    Mirror of _strategist_to_proposals: safe actions become improvement
+    proposals so the system READS what it produces."""
+    plan_path      = BASE / "snapshots" / "body" / "growth_plan_latest.json"
+    proposals_path = BASE / "memory" / "improvement_proposals.json"
+    if not plan_path.exists():
+        print("[FAST_CYCLE] growth_to_proposals -> no growth plan yet")
+        return
+    try:
+        data = json.loads(plan_path.read_text(encoding="utf-8"))
+        new_proposals = []
+        for act in data.get("immediate_safe_actions", []):
+            action = str(act.get("action") or "").strip()
+            gain   = str(act.get("expected_gain") or "").strip()
+            # measurable_goal rule (quarantine lesson, 13 Aug): no goal — no proposal.
+            if not action or not gain or "<" in action:
+                continue
+            new_proposals.append({
+                "component":         str(act.get("id") or "body"),
+                "problem":           data.get("body_assessment", "Growth Planner safe action"),
+                "solution":          action,
+                "measurable_goal":   gain[:80],
+                "root_cause":        "Growth plan — snapshots/body/growth_plan_latest.json",
+                "priority":          "MEDIUM",
+                "real_world_signal": True,
+                "generated_by":      "GROWTH_PLANNER",
+                "timestamp":         _utc_now(),
+            })
+        if not new_proposals:
+            print("[FAST_CYCLE] growth_to_proposals -> 0 measurable safe actions")
+            return
+        try:
+            existing = json.loads(proposals_path.read_text(encoding="utf-8"))
+            existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
+        except Exception:
+            existing_list = []
+        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "GROWTH_PLANNER"]
+        proposals_path.write_text(
+            json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        print(f"[FAST_CYCLE] growth_to_proposals -> {len(new_proposals)} proposals injected")
+    except Exception as e:
+        print(f"[FAST_CYCLE] growth_to_proposals -> FAILED: {e}")
+
+
 def _hyperclaw_to_proposals():
     """Convert the latest HyperClaw markdown plan to improvement proposals."""
     plans_dir = BASE / "plans"
@@ -2883,6 +2931,7 @@ def main():
     beat("growth_planner", "14")
     _run("growth_planner", lambda: __import__(
         "agents.body.growth_planner", fromlist=["run"]).run())
+    _growth_to_proposals()
 
     # ── 15.6. HyperClaw — multi-axis 24-72h plan ──
     beat("hyperclaw", "15.6")
