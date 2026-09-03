@@ -328,6 +328,10 @@
           "index": "20"
         },
         {
+          "name": "resolve_hypotheses",
+          "index": "20.05"
+        },
+        {
           "name": "measurement_honesty",
           "index": "20.1"
         },
@@ -411,6 +415,7 @@
       "produces": [
         "memory/feedback_log.json",
         "memory/goal_score_history.json",
+        "memory/hypothesis_resolution_latest.json",
         "memory/measurement_honesty_latest.json",
         "memory/idea_resolutions.jsonl",
         "memory/cortex_full_state.json",

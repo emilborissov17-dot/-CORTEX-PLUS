@@ -68,6 +68,22 @@
         "memory/claude_query_proposals.json": "READ at :112-117 and deliberately NOT an age input, for the same reason github_publish excludes cortex_memory/hypotheses/pending.json. It is OPTIONAL BY CONSTRUCTION: _load_claude_proposals() is guarded by .exists() and returns {} when absent, so listing it under 'inputs' would mean DELETING a dead file lowers the gate. MEASURED 31 Aug 2026: its mtime is 2026-05-16, 106.6 days old, which scores MINIMAL(1). Declaring it would hold web_intelligence at level_1 and keep the publish gate shut — it does not fix this, it re-breaks it one level higher."
       },
       "derived_from": "Read line by line out of web_intelligence_agent.py (1033 lines) on 2026-08-31, following run() at :856 through run_axis() at :668 to every read_text/json.loads/open call, and cross-checked by grepping the file for config reads (there are none). Written after the publish gate had refused 15 nights running; see the commit for the measurement."
+    },
+    "resolve_hypotheses": {
+      "entry_point": "core.hypothesis_resolution.run() — fast_cycle_runner.py step 20.05. It wraps evaluator.check_due_hypotheses(); the evaluator itself holds its three paths as repo-relative strings and resolves them against the CWD, which is why they are declared here rather than inferred.",
+      "inputs": [
+        "cortex_memory/hypotheses/pending.json",
+        "cortex_memory/abstractions/trends.json"
+      ],
+      "_inputs_why": {
+        "cortex_memory/hypotheses/pending.json": "evaluator.py:58 — the hypotheses to grade. This is the substance of the step: an empty or stale pending store means there is nothing to resolve, and its age IS the age of the claim being judged.",
+        "cortex_memory/abstractions/trends.json": "evaluator.py:22, _get_current_value() — the observed series a prediction is graded against. A stale trends.json silently turns every due hypothesis into skipped_no_data, which is exactly the failure this step must not report as 'nothing due'."
+      },
+      "also_reads": [
+        "cortex_memory/hypotheses/resolved.json"
+      ],
+      "_also_reads_why": "evaluator.py:113, read only to append to. Absence is not a failure — the first resolution creates it — so its age must not gate the step.",
+      "derived_from": "Read line by line out of evaluator.py on 3 Sep 2026 while wiring its first cycle caller. The static scanner cannot see these paths: they are module-level string constants joined with os.path.join and consumed inside the function."
     }
   }
 }

@@ -3008,6 +3008,25 @@ def main():
     _run("feedback_loop", lambda: __import__(
         "agents.core.feedback_loop", fromlist=["run"]).run())
 
+    # ── 20.05. GRADE THE PREDICTIONS (calibration bench, part 1, 3 Sep 2026) ──
+    # evaluator.check_due_hypotheses() has had exactly one caller since it was
+    # written — `hypothesis_generator.py --check`, a manual CLI flag. Nothing on
+    # the cycle ever called it, and the store shows it: pending.json last written
+    # 2026-06-20, resolved.json 2026-06-17. Seventy-five days of predictions that
+    # were never graded against what actually happened.
+    #
+    # RESOLUTION ONLY. The generator is not imported and pending.json must not
+    # grow across the call; a step that grew it says ILLEGAL_GROWTH out loud.
+    #
+    # HERE and not after 20.1: K1 is the measurement needle, and a resolution
+    # written after it would be read by tomorrow's K1 rather than today's.
+    # FAIL-OPEN — a cycle must not die because a grader could not run.
+    beat("resolve_hypotheses", "20.05")
+    def _resolve_hypotheses_step():
+        from core.hypothesis_resolution import run as _hr_run, summary_line as _hr_line
+        print(_hr_line(_hr_run(write=True)))
+    _run("resolve_hypotheses", _resolve_hypotheses_step)
+
     # ── 20.1. K1 — THE FIRST NEEDLE (ITEM 7.1, 28 Aug 2026) ────────────────
     # memory/measurement_honesty_latest.json had not been written since
     # 20 August because NOTHING called it: AST-checked, the only importers of

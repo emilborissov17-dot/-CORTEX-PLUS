@@ -149,6 +149,14 @@ STEPS = [
      ["memory/development_journal.json"], False),
     ("feedback_loop", "20", "Обратна връзка по ос от реално измерени стойности.",
      ["memory/feedback_log.json"], False),
+    # ДОБАВЕНА 3 сеп 2026 (пейка за калибрация, част 1). И трите карти наведнъж,
+    # по урока от ITEM 7.1: fast_cycle_runner, config/cycle_phases.json и тази.
+    # `produces` е СТАТУС файлът, а не resolved.json — evaluator пише resolved.json
+    # само когато нещо се е разрешило, така че тиха и правилна нощ би се четяла
+    # като счупена фаза. Статусът се пише винаги, затова хваща стъпка, която е
+    # престанала да се изпълнява.
+    ("resolve_hypotheses", "20.05", "Съди дължимите хипотези срещу trends.json; разрешаване само, никога генериране.",
+     ["memory/hypothesis_resolution_latest.json"], False),
     # ДОБАВЕНА 29 авг 2026 (ITEM 7.1, поправено в ITEM 10). Стъпката беше
     # обявена в config/cycle_phases.json и НЕ тук, така че първият цикъл, който
     # наистина я изпълни, я записа като unmapped_checkpoint: тя не можеше да
