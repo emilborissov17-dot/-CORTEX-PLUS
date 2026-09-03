@@ -737,6 +737,40 @@ def creative_due(ctx: dict, c: dict) -> bool:
     return False
 
 
+def consolidation_due(ctx: dict, c: dict) -> bool:
+    """Once per day, in the quiet hour. Same gate as creative_due, own record.
+
+    Separate from creative_due deliberately: ideation asks a 3b model for an idea
+    and can be starved by a dead Ollama, which is what has kept `creative` out of
+    the stream since 2026-09-02T23:09. Consolidation is arithmetic over the sealed
+    archive and has no such dependency, so tying the two together would let the
+    model's absence silence the one job that does not need it.
+    """
+    now = datetime.now(timezone.utc)
+    if now.hour < c.get("quiet_hour", 21):
+        return False
+    return not any(str(p.get("ts", ""))[:10] == now.date().isoformat()
+                   and p.get("consolidation") for p in ctx["prev"])
+
+
+def consolidate(dry: bool) -> dict:
+    """Read the last 30 days of sealed cycles and write falsifiable drift claims.
+
+    FAIL-SOFT and REPORTED: the pulse must not die because consolidation did, but a
+    failure must not read as a quiet night either — the error goes into the stream.
+    """
+    try:
+        from core.consolidation import run as _run
+        rec = _run(write=not dry)
+        return {"cycles_read": rec["cycles_read"],
+                "series": rec["series_considered"],
+                "emitted": rec["emitted"],
+                "rejected": rec["rejected"],
+                "dry": dry}
+    except Exception as e:
+        return {"error": f"{type(e).__name__}: {e}"}
+
+
 # ── the tick ─────────────────────────────────────────────────────────────────
 
 def tick(dry: bool = False) -> dict:
@@ -763,6 +797,10 @@ def tick(dry: bool = False) -> dict:
 
     if creative_due(ctx, c):
         line["creative"] = ideate(frame, dry, c)
+
+    # The quiet hour's other job, and the one that does not need a model.
+    if consolidation_due(ctx, c):
+        line["consolidation"] = consolidate(dry)
 
     _append(STREAM, line, dry)
     return line
