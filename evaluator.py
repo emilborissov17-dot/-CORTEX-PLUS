@@ -19,14 +19,50 @@ PENDING_PATH = os.path.join("cortex_memory", "hypotheses", "pending.json")
 RESOLVED_PATH = os.path.join("cortex_memory", "hypotheses", "resolved.json")
 
 
-def _get_current_value(axis_name):
-    """Return the most recent value for axis_name from trends.json, or None."""
-    with open(TRENDS_PATH, "r", encoding="utf-8") as f:
-        trends = json.load(f)
-    values = trends.get(axis_name)
-    if not isinstance(values, list) or len(values) == 0:
+GOAL_SNAP_PATH = os.path.join("snapshots", "master", "goal_score_latest.json")
+
+
+def _observed_from_scorer(axis_name):
+    """The axis's own external reading from the scorer's snapshot, or None.
+
+    ADDED 3 Sep 2026. trends.json carries seven series — co2_ppm, kp_index,
+    earthquake_max, refugees, gbif_30d, goal_score, cycle_count — and five of them
+    are EMPTY LISTS. It has never carried an axis under its REVIEW name. So a
+    hypothesis about ENERGY_REVIEW could be pre-registered, come due, and be
+    skipped forever for want of anything to grade it against: that is the state the
+    two live hypotheses have been in since 17 and 20 July.
+
+    snapshots/master/goal_score_latest.json DOES name a current external reading
+    per axis (axis_observations), and it is the same block core/measurement_honesty
+    already treats as the authority for whether an axis counts as measured. Reading
+    it here means the generator and the grader agree on what the number IS.
+
+    trends.json is still tried FIRST so nothing that resolves today changes.
+    """
+    try:
+        with open(GOAL_SNAP_PATH, "r", encoding="utf-8") as f:
+            snap = json.load(f)
+    except Exception:
         return None
-    return values[-1]
+    obs = (snap.get("axis_observations") or {}).get(axis_name)
+    if isinstance(obs, dict):
+        v = obs.get("observed_value")
+        if isinstance(v, (int, float)):
+            return float(v)
+    return None
+
+
+def _get_current_value(axis_name):
+    """Most recent value for axis_name: trends.json first, scorer snapshot second."""
+    try:
+        with open(TRENDS_PATH, "r", encoding="utf-8") as f:
+            trends = json.load(f)
+        values = trends.get(axis_name)
+        if isinstance(values, list) and len(values) > 0:
+            return values[-1]
+    except Exception:
+        pass
+    return _observed_from_scorer(axis_name)
 
 
 def _accuracy(predicted, actual):

@@ -157,6 +157,11 @@ STEPS = [
     # престанала да се изпълнява.
     ("resolve_hypotheses", "20.05", "Съди дължимите хипотези срещу trends.json; разрешаване само, никога генериране.",
      ["memory/hypothesis_resolution_latest.json"], False),
+    # ДОБАВЕНА 3 сеп 2026 (C5+C11). ОТДЕЛНА стъпка от resolve_hypotheses: едната
+    # пише pending.json, другата resolved.json, и стъпка, която прави и двете, може
+    # да оцени твърдение, което току-що е измислила.
+    ("hypothesis_intake", "20.06", "Пре-регистрира тазвечершните предсказания с интервал; само MEASURED оси.",
+     ["memory/hypothesis_intake_latest.json"], False),
     # ДОБАВЕНА 29 авг 2026 (ITEM 7.1, поправено в ITEM 10). Стъпката беше
     # обявена в config/cycle_phases.json и НЕ тук, така че първият цикъл, който
     # наистина я изпълни, я записа като unmapped_checkpoint: тя не можеше да

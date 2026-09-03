@@ -3027,6 +3027,24 @@ def main():
         print(_hr_line(_hr_run(write=True)))
     _run("resolve_hypotheses", _resolve_hypotheses_step)
 
+    # ── 20.06. PRE-REGISTER TONIGHT'S PREDICTIONS (C5+C11, 3 Sep 2026) ────────
+    # A SEPARATE STEP from 20.05, deliberately. Generation and resolution must not
+    # share a step: one writes pending.json, the other (through the evaluator)
+    # writes resolved.json, and a single step that did both could grade a claim it
+    # had just invented. The test asserts each stays out of the other's file.
+    #
+    # AFTER 20.05 so tonight's claims cannot be resolved by tonight's grader — a
+    # prediction registered and settled in the same cycle is not a prediction.
+    # Only MEASURED axes are eligible (the K1 gate, read from the same place), and
+    # every hypothesis carries lo/hi: an interval can be missed, a point can always
+    # be called close.
+    # FAIL-OPEN.
+    beat("hypothesis_intake", "20.06")
+    def _hypothesis_intake_step():
+        from core.hypothesis_intake import run as _hi_run, summary_line as _hi_line
+        print(_hi_line(_hi_run(write=True)))
+    _run("hypothesis_intake", _hypothesis_intake_step)
+
     # ── 20.1. K1 — THE FIRST NEEDLE (ITEM 7.1, 28 Aug 2026) ────────────────
     # memory/measurement_honesty_latest.json had not been written since
     # 20 August because NOTHING called it: AST-checked, the only importers of
