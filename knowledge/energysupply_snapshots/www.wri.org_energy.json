@@ -69,132 +69,132 @@
     ]
 }</script>
 <link rel="icon" href="/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon" />
-<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "transparent,#000000";
-
-(function () {
-  // Ensure a2a_config exists before AddToAny runs.
-  window.a2a_config = window.a2a_config || {};
-  window.a2a_config.callbacks = window.a2a_config.callbacks || [];
-
-  function showCopiedMessage(buttonEl, message) {
-    if (!buttonEl) return;
-
-    // Remove any existing message for this button.
-    var existing = buttonEl.parentNode && buttonEl.parentNode.querySelector(".a2a-copy-toast");
-    if (existing) existing.remove();
-
-    var toast = document.createElement("span");
-    toast.className = "a2a-copy-toast";
-    toast.setAttribute("role", "status");
-    toast.setAttribute("aria-live", "polite");
-    toast.textContent = message || "Link Copied";
-
-    // Put the message right after the icon.
-    buttonEl.insertAdjacentElement("afterend", toast);
-
-    // Auto-remove after a short delay.
-    window.setTimeout(function () {
-      toast.classList.add("is-hiding");
-      window.setTimeout(function () {
-        if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
-      }, 250);
-    }, 1400);
-  }
-
-  function fallbackCopy(text) {
-    // Old-school fallback for non-secure contexts / older browsers.
-    var ta = document.createElement("textarea");
-    ta.value = text;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "absolute";
-    ta.style.left = "-9999px";
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand("copy");
-      return true;
-    } catch (e) {
-      return false;
-    } finally {
-      document.body.removeChild(ta);
-    }
-  }
-
-  window.a2a_config.callbacks.push({
-    share: function (data) {
-      // Only override the Copy Link service.
-      if (!data || data.serviceCode !== "copy_link") return;
-
-      var url = data.url || window.location.href;
-      var btn = data.node;
-
-      // Prevent AddToAny’s default modal / UI for copy_link.
-      // Returning { stop: true } cancels the share action. :contentReference[oaicite:3]{index=3}
-      var stop = { stop: true };
-
-      // Prefer modern Clipboard API when available (requires HTTPS / secure context).
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard
-          .writeText(url)
-          .then(function () {
-            showCopiedMessage(btn, "Link Copied");
-          })
-          .catch(function () {
-            // If permissions fail, try fallback.
-            var ok = fallbackCopy(url);
-            showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
-          });
-
-        return stop;
-      }
-
-      // Non-secure context or older browser fallback.
-      var ok = fallbackCopy(url);
-      showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
-      return stop;
-    },
-  });
-})();
+<script>window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};a2a_config.icon_color = "transparent,#000000";
+
+(function () {
+  // Ensure a2a_config exists before AddToAny runs.
+  window.a2a_config = window.a2a_config || {};
+  window.a2a_config.callbacks = window.a2a_config.callbacks || [];
+
+  function showCopiedMessage(buttonEl, message) {
+    if (!buttonEl) return;
+
+    // Remove any existing message for this button.
+    var existing = buttonEl.parentNode && buttonEl.parentNode.querySelector(".a2a-copy-toast");
+    if (existing) existing.remove();
+
+    var toast = document.createElement("span");
+    toast.className = "a2a-copy-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    toast.textContent = message || "Link Copied";
+
+    // Put the message right after the icon.
+    buttonEl.insertAdjacentElement("afterend", toast);
+
+    // Auto-remove after a short delay.
+    window.setTimeout(function () {
+      toast.classList.add("is-hiding");
+      window.setTimeout(function () {
+        if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 250);
+    }, 1400);
+  }
+
+  function fallbackCopy(text) {
+    // Old-school fallback for non-secure contexts / older browsers.
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "absolute";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+
+  window.a2a_config.callbacks.push({
+    share: function (data) {
+      // Only override the Copy Link service.
+      if (!data || data.serviceCode !== "copy_link") return;
+
+      var url = data.url || window.location.href;
+      var btn = data.node;
+
+      // Prevent AddToAny’s default modal / UI for copy_link.
+      // Returning { stop: true } cancels the share action. :contentReference[oaicite:3]{index=3}
+      var stop = { stop: true };
+
+      // Prefer modern Clipboard API when available (requires HTTPS / secure context).
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(url)
+          .then(function () {
+            showCopiedMessage(btn, "Link Copied");
+          })
+          .catch(function () {
+            // If permissions fail, try fallback.
+            var ok = fallbackCopy(url);
+            showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
+          });
+
+        return stop;
+      }
+
+      // Non-secure context or older browser fallback.
+      var ok = fallbackCopy(url);
+      showCopiedMessage(btn, ok ? "Link Copied" : "Copy failed");
+      return stop;
+    },
+  });
+})();
 </script>
-<style>.addtoany_list a {
-  display: inline-flex;
-  border: 1px solid #e8e8e7 !important;
-  border-radius: 3px;
-  padding: 4px !important;
-  margin: 0 4px;
-}
-
-/* Ensure the icon itself is a positioning context */
-.addtoany_list {
-  position: relative;
-}
-.a2a_button_copy_link {
-  position: relative;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Toast positioned above the icon */
-.a2a-copy-toast {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 6px;
-
-  font-size: 12px;
-  line-height: 1.2;
-  white-space: nowrap;
-
-  opacity: 1;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-}
-
-/* Fade-out state */
-.a2a-copy-toast.is-hiding {
-  opacity: 0;
-}
+<style>.addtoany_list a {
+  display: inline-flex;
+  border: 1px solid #e8e8e7 !important;
+  border-radius: 3px;
+  padding: 4px !important;
+  margin: 0 4px;
+}
+
+/* Ensure the icon itself is a positioning context */
+.addtoany_list {
+  position: relative;
+}
+.a2a_button_copy_link {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Toast positioned above the icon */
+.a2a-copy-toast {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 6px;
+
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  opacity: 1;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+/* Fade-out state */
+.a2a-copy-toast.is-hiding {
+  opacity: 0;
+}
 </style>
 
     <title>WRI Polsky Center for the Global Energy Transition | World Resources Institute</title>

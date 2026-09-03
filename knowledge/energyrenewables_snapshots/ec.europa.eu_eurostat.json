@@ -111,49 +111,49 @@
     <link rel="stylesheet" media="print" href="https://ec.europa.eu/eurostat/o/estat-theme-ecl/css/ecl-eu-print.css?browserId=other&amp;themeId=estatthemeecl_WAR_estatthemeecl&amp;minifierType=&amp;languageId=en_GB&amp;t=1772478022000">
 <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
-<meta name="google-site-verification" content="6XK2M_NqFEhF79UhdF43-Zv2t58zbBUp_CYAAKDHjgo" />
-<meta name="google-site-verification" content="in2pBF1QfAtURduPbpP5i-jI0MycWywIlnAImhgFALc" />
-<script type="text/javascript" src="/eurostat/ruxitagentjs_ICANVfgqrux_10327251022105625.js" data-dtconfig="app=e63eebabdf39f376|agentId=9ac5a71f25e71bc4|ssc=1|cssm=l|owasp=1|featureHash=ICANVfgqrux|rdnt=1|uxrgce=1|cuc=m097nmfl|mel=100000|dpvc=1|lastModification=1772193950138|tp=500,50,0|srbbv=2|agentUri=/eurostat/ruxitagentjs_ICANVfgqrux_10327251022105625.js|reportUrl=/eurostat/rb_39a3e95b-5423-482c-879b-99ef235dffeb|rid=RID_618670545|rpid=156574877|domain=europa.eu"></script><script type="application/ld+json">
-    {
-		"@context": "https://schema.org",
-		"@type": "GovernmentOrganization",
-		"@id": "https://ec.europa.eu/eurostat/",
-		"name": "Eurostat",
-		"description": "Eurostat is the statistical office of the European Union. Its mission is to provide high quality statistics and data on Europe.",
-		"url": "https://ec.europa.eu/eurostat/",
-		"logo": "https://ec.europa.eu/eurostat/o/estat-theme/images/logo/4x3.png",
-		"image": [
-			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/1x1.png",
-			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/4x3.png",
-			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/16x9.png"
-		],
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Luxembourg",
-			"postalCode": "L-2721",
-			"streetAddress": "5 Rue Alphonse Weicker"
-		},
-		"geo": {
-			"@type": "GeoCoordinates",
-			"latitude": 49.633182,
-			"longitude": 6.169437
-		},
-		"telephone": "+35243011",
-		"foundingDate": "1953",
-		"memberOf": [{
-			"@type": "GovernmentOrganization",
-			"name": "European Commission",
-			"url": "https://ec.europa.eu/"
-		}],
-		"sameAs": [
-			"https://en.wikipedia.org/wiki/Eurostat",
-			"https://twitter.com/EU_Eurostat",
-			"https://www.facebook.com/EurostatStatistics",
-			"https://www.instagram.com/eu_eurostat",
-			"https://www.linkedin.com/company/eurostat/",
-			"https://youtube.com/c/Eurostat-EC"
-		]
-    }
+<meta name="google-site-verification" content="6XK2M_NqFEhF79UhdF43-Zv2t58zbBUp_CYAAKDHjgo" />
+<meta name="google-site-verification" content="in2pBF1QfAtURduPbpP5i-jI0MycWywIlnAImhgFALc" />
+<script type="text/javascript" src="/eurostat/ruxitagentjs_ICANVfgqrux_10327251022105625.js" data-dtconfig="app=e63eebabdf39f376|agentId=9ac5a71f25e71bc4|ssc=1|cssm=l|owasp=1|featureHash=ICANVfgqrux|rdnt=1|uxrgce=1|cuc=m097nmfl|mel=100000|dpvc=1|lastModification=1772193950138|tp=500,50,0|srbbv=2|agentUri=/eurostat/ruxitagentjs_ICANVfgqrux_10327251022105625.js|reportUrl=/eurostat/rb_39a3e95b-5423-482c-879b-99ef235dffeb|rid=RID_618670545|rpid=156574877|domain=europa.eu"></script><script type="application/ld+json">
+    {
+		"@context": "https://schema.org",
+		"@type": "GovernmentOrganization",
+		"@id": "https://ec.europa.eu/eurostat/",
+		"name": "Eurostat",
+		"description": "Eurostat is the statistical office of the European Union. Its mission is to provide high quality statistics and data on Europe.",
+		"url": "https://ec.europa.eu/eurostat/",
+		"logo": "https://ec.europa.eu/eurostat/o/estat-theme/images/logo/4x3.png",
+		"image": [
+			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/1x1.png",
+			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/4x3.png",
+			"https://ec.europa.eu/eurostat/o/estat-theme/images/logo/16x9.png"
+		],
+		"address": {
+			"@type": "PostalAddress",
+			"addressLocality": "Luxembourg",
+			"postalCode": "L-2721",
+			"streetAddress": "5 Rue Alphonse Weicker"
+		},
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": 49.633182,
+			"longitude": 6.169437
+		},
+		"telephone": "+35243011",
+		"foundingDate": "1953",
+		"memberOf": [{
+			"@type": "GovernmentOrganization",
+			"name": "European Commission",
+			"url": "https://ec.europa.eu/"
+		}],
+		"sameAs": [
+			"https://en.wikipedia.org/wiki/Eurostat",
+			"https://twitter.com/EU_Eurostat",
+			"https://www.facebook.com/EurostatStatistics",
+			"https://www.instagram.com/eu_eurostat",
+			"https://www.linkedin.com/company/eurostat/",
+			"https://youtube.com/c/Eurostat-EC"
+		]
+    }
 </script><link data-senna-track="permanent" href="/eurostat/o/frontend-theme-font-awesome-web/css/main.css" rel="stylesheet" type="text/css" />
 <script data-senna-track="permanent" src="/eurostat/combo?browserId=other&minifierType=js&languageId=en_GB&t=1772098569444&/eurostat/o/frontend-js-jquery-web/jquery/jquery.min.js&/eurostat/o/frontend-js-jquery-web/jquery/bootstrap.bundle.min.js&/eurostat/o/frontend-js-jquery-web/jquery/collapsible_search.js&/eurostat/o/frontend-js-jquery-web/jquery/fm.js&/eurostat/o/frontend-js-jquery-web/jquery/form.js&/eurostat/o/frontend-js-jquery-web/jquery/popper.min.js&/eurostat/o/frontend-js-jquery-web/jquery/side_navigation.js" type="text/javascript"></script>
 <link href="https://ec.europa.eu/eurostat/o/estat-theme-ecl/images/favicon.ico" rel="icon" />
@@ -507,63 +507,63 @@
 	// ]]>
 </script>
 
-<script data-senna-track="temporary" type="text/javascript">
-	Liferay.Data.ICONS_INLINE_SVG = false;
-</script>
-<script type="application/json">
-{
-    "utility" : "cck"
-}
-</script>
-<script defer src="https://webtools.europa.eu/load.js?theme=eu" type="text/javascript"></script>
-
-<script type="text/javascript">
-	window._paq = window._paq || [];
-	href = window.location.href
-		.toLowerCase()
-		.split('?')[0]
-		.replace('/eurostat/en/', '/eurostat/')
-		.replace('/eurostat/fr/', '/eurostat/')
-		.replace('/eurostat/de/', '/eurostat/');
-	_paq.push(['setCustomUrl', href]);
-	
-	_paq.push(['setCustomVariable', 1, 'liferay-site', 'Guest', 'page']);
-	
-
-	//start bottom-ext
-	document.addEventListener('DOMContentLoaded', () => {
-	    //Piwik: force Piwik to consider links to document library as downloads
-		var links = document.getElementsByTagName("a"); 
-		for (var i = 0; i < links.length; i++) { 
-			var href = links[i].href;
-			if (href != null && href.includes("/eurostat/documents/")) {
-				//ec.europa.eu/eurostat/documents/3217494/13389103/KS-HA-21-001-EN-N.pdf/1358b0d3-a9fe-2869-53a0-37b59b413ddd?t=1631630029904
-				//ec.europa.eu/eurostat/documents/3217494/13389103/KS-HA-21-001-EN-N.pdf/1358b0d3-a9fe-2869-53a0-37b59b413ddd
-				//remove all parameters from URL if any
-				href = href.toLowerCase().split('?')[0];
-				//remove UUID from URL if any
-				href = href.replace(/\/\b[a-f\d]{8}\b-[a-f\d]{4}\b-[a-f\d]{4}\b-[a-f\d]{4}\b-[a-f\d]{12}\b/,'');
-				links[i].setAttribute("onClick", "if(typeof _paq !== 'undefined') { _paq.push(['trackLink', '"+href+"', 'download']); }");
-			}
-		}
-		//End Piwik Code
-		//Inline svg which are not from ECL & fontawesome
-		if (!Liferay.Data.ICONS_INLINE_SVG) {
-			svg4everybody(
-					{
-						attributeName: 'data-href',
-						polyfill: true,
-						validate: function (src, svg, use) {
-							return !src || (!src.includes("/o/estat-theme-ecl/images/icons/sprites") && !src.startsWith('#'));
-						}
-					}
-				);
-		}
-	});
-//end bottom-ext
-</script>
-<script id="analytics-json-snippet" type="application/json">{"siteSection":"liferay","utility":"analytics","siteID":"a441974e-4574-4f0a-9ed2-f90fb8547bb7","lang":"en-GB"}</script>
-<!-- End Piwik Code -->
+<script data-senna-track="temporary" type="text/javascript">
+	Liferay.Data.ICONS_INLINE_SVG = false;
+</script>
+<script type="application/json">
+{
+    "utility" : "cck"
+}
+</script>
+<script defer src="https://webtools.europa.eu/load.js?theme=eu" type="text/javascript"></script>
+
+<script type="text/javascript">
+	window._paq = window._paq || [];
+	href = window.location.href
+		.toLowerCase()
+		.split('?')[0]
+		.replace('/eurostat/en/', '/eurostat/')
+		.replace('/eurostat/fr/', '/eurostat/')
+		.replace('/eurostat/de/', '/eurostat/');
+	_paq.push(['setCustomUrl', href]);
+	
+	_paq.push(['setCustomVariable', 1, 'liferay-site', 'Guest', 'page']);
+	
+
+	//start bottom-ext
+	document.addEventListener('DOMContentLoaded', () => {
+	    //Piwik: force Piwik to consider links to document library as downloads
+		var links = document.getElementsByTagName("a"); 
+		for (var i = 0; i < links.length; i++) { 
+			var href = links[i].href;
+			if (href != null && href.includes("/eurostat/documents/")) {
+				//ec.europa.eu/eurostat/documents/3217494/13389103/KS-HA-21-001-EN-N.pdf/1358b0d3-a9fe-2869-53a0-37b59b413ddd?t=1631630029904
+				//ec.europa.eu/eurostat/documents/3217494/13389103/KS-HA-21-001-EN-N.pdf/1358b0d3-a9fe-2869-53a0-37b59b413ddd
+				//remove all parameters from URL if any
+				href = href.toLowerCase().split('?')[0];
+				//remove UUID from URL if any
+				href = href.replace(/\/\b[a-f\d]{8}\b-[a-f\d]{4}\b-[a-f\d]{4}\b-[a-f\d]{4}\b-[a-f\d]{12}\b/,'');
+				links[i].setAttribute("onClick", "if(typeof _paq !== 'undefined') { _paq.push(['trackLink', '"+href+"', 'download']); }");
+			}
+		}
+		//End Piwik Code
+		//Inline svg which are not from ECL & fontawesome
+		if (!Liferay.Data.ICONS_INLINE_SVG) {
+			svg4everybody(
+					{
+						attributeName: 'data-href',
+						polyfill: true,
+						validate: function (src, svg, use) {
+							return !src || (!src.includes("/o/estat-theme-ecl/images/icons/sprites") && !src.startsWith('#'));
+						}
+					}
+				);
+		}
+	});
+//end bottom-ext
+</script>
+<script id="analytics-json-snippet" type="application/json">{"siteSection":"liferay","utility":"analytics","siteID":"a441974e-4574-4f0a-9ed2-f90fb8547bb7","lang":"en-GB"}</script>
+<!-- End Piwik Code -->
 
 	
 <link class="lfr-css-file" data-senna-track="temporary" href="https://ec.europa.eu/eurostat/o/estat-theme-ecl/css/main.css?browserId=other&amp;themeId=estatthemeecl_WAR_estatthemeecl&amp;minifierType=css&amp;languageId=en_GB&amp;t=1772478022000" id="liferayThemeCSS" rel="stylesheet" type="text/css" />
@@ -758,8 +758,8 @@ Liferay.on(
 
 
 
-
-
+
+
 
 
 
@@ -935,8 +935,8 @@ Liferay.on(
 
 
 
-
-
+
+
 
 
 
@@ -1210,7 +1210,7 @@ Search                                </a>
 
 
 
-
+
 
 
 
@@ -1335,8 +1335,8 @@ Search                                </a>
 
 
 
-
-
+
+
 
 
 
@@ -1826,7 +1826,7 @@ Search                                </a>
 
 
 
-
+
 
 
 
@@ -1951,8 +1951,8 @@ Search                                </a>
 
 
 
-
-
+
+
 
 
 
@@ -2742,7 +2742,7 @@ Search                                </a>
 
 
 
-
+
 
 
 
@@ -2867,8 +2867,8 @@ Search                                </a>
 
 
 
-
-
+
+
 
 
 
@@ -2950,8 +2950,8 @@ Search                                </a>
 
 
 
-
-
+
+
 
 
 
@@ -4118,7 +4118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+
 
 
 
@@ -4246,8 +4246,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
+
+
 
 
 
@@ -4960,7 +4960,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+
 
 
 
@@ -5088,8 +5088,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
+
+
 
 
 
