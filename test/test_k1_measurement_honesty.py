@@ -128,7 +128,13 @@ def test_k1_is_the_named_weight_over_the_config_total():
     prov = {ax: {"source_id": "NOAA", "observation_key": "noaa_co2_ppm",
                  "observation_where": "last_observations", "observed_value": 432.3,
                  "metric": "co2_ppm_mauna_loa"} for ax in picked}
-    d = assess({}, {}, TARGETS, provenance=prov).to_dict()
+    # 3 Sep 2026: naming an observation is no longer sufficient — the axis must
+    # also BE measured. Supplying the scores and sources that the provenance is
+    # the evidence FOR is what this fixture always meant; before the tightening,
+    # empty scores counted anyway, which was the defect.
+    d = assess({ax: 50.0 for ax in picked},
+               {ax: "measured" for ax in picked},
+               TARGETS, provenance=prov).to_dict()
     expected = sum(CONFIG_AXES[ax] for ax in picked)
     assert d["measured_weight"] == expected
     assert d["honest_composite"]["total_weight"] == CONFIG_TOTAL
@@ -151,7 +157,9 @@ def test_two_axes_sharing_one_metric_both_count():
     (pathlib.Path(__file__).parent / "_k1_tmp.json").unlink()
     assert note is None
     assert set(prov) == set(pair)
-    d = assess({}, {}, TARGETS, provenance=prov).to_dict()
+    d = assess({ax: 50.0 for ax in pair},
+               {ax: "measured" for ax in pair},
+               TARGETS, provenance=prov).to_dict()
     assert d["measured_weight"] == CONFIG_AXES[pair[0]] + CONFIG_AXES[pair[1]]
 
 
@@ -160,12 +168,58 @@ def test_every_axis_that_counts_names_a_source_id_and_a_key():
         "source_id": "NOAA", "observation_key": "noaa_co2_ppm",
         "observation_where": "last_observations", "observed_value": 432.3,
         "metric": "co2_ppm_mauna_loa"}}
-    d = assess({}, {}, TARGETS, provenance=prov).to_dict()
+    d = assess({"CLIMATE_GLOBAL_RISK_REVIEW": 50.0},
+               {"CLIMATE_GLOBAL_RISK_REVIEW": "measured"},
+               TARGETS, provenance=prov).to_dict()
     counted = [v for v in d["by_axis"].values() if v["counts_toward_k1"]]
     assert counted, "the fixture supplied one; none counted"
     for v in counted:
         assert v["measured_by"]["source_id"]
         assert v["measured_by"]["observation_key"]
+
+
+def test_naming_an_observation_is_not_enough_the_axis_must_be_measured():
+    """THE TIGHTENING, 3 Sep 2026. On 2026-09-03 K1 published 0.7425 while the same
+    file's honest coverage read 0.6287. The 19-weight gap was three axes that named
+    an observation but were not measured by it: MATERIALS_WASTE (ASSERTED, scored by
+    llm_level while carrying CLIMATE's NOAA reading) and ECONOMY_WORK and
+    INFRASTRUCTURE_CITIES (both ABSENT, score null, provenance attached anyway).
+    counts_toward_k1 now requires BOTH halves."""
+    axis = "CLIMATE_GLOBAL_RISK_REVIEW"
+    prov = {axis: {"source_id": "NOAA", "observation_key": "noaa_co2_ppm",
+                   "observation_where": "last_observations", "observed_value": 432.3,
+                   "metric": "co2_ppm_mauna_loa"}}
+
+    # named, but the score is an opinion -> does not count
+    asserted = assess({axis: 60.0}, {axis: "llm_level"}, TARGETS,
+                      provenance=prov, gt_axes=frozenset()).to_dict()
+    assert asserted["by_axis"][axis]["measured_by"], "the fixture named one"
+    assert asserted["by_axis"][axis]["counts_toward_k1"] is False
+    assert asserted["measured_weight"] == 0.0
+
+    # named, and no score at all -> does not count
+    absent = assess({}, {}, TARGETS, provenance=prov).to_dict()
+    assert absent["by_axis"][axis]["measured_by"], "the fixture named one"
+    assert absent["by_axis"][axis]["counts_toward_k1"] is False
+    assert absent["measured_weight"] == 0.0
+
+    # named AND measured -> counts
+    ok = assess({axis: 60.0}, {axis: "measured"}, TARGETS, provenance=prov).to_dict()
+    assert ok["by_axis"][axis]["counts_toward_k1"] is True
+    assert ok["measured_weight"] == CONFIG_AXES[axis]
+
+
+def test_the_k1_numerator_equals_the_honest_basis_weight():
+    """The two numbers must agree by construction. They disagreed on 2026-09-03 —
+    105.0 honest against a 124.0 numerator — and that gap is what this pins shut."""
+    picked = sorted(CONFIG_AXES)[:4]
+    prov = {ax: {"source_id": "WORLD_BANK", "observation_key": f"wb_{ax}",
+                 "observation_where": "last_observations", "observed_value": 1.0,
+                 "metric": "m"} for ax in picked}
+    d = assess({ax: 50.0 for ax in picked}, {ax: "measured" for ax in picked},
+               TARGETS, provenance=prov).to_dict()
+    assert d["measured_weight"] == d["honest_composite"]["basis_weight"]
+    assert d["k1"] == round(d["honest_composite"]["coverage"], 4)
 
 
 def test_carried_weight_is_published_and_is_not_inside_k1():

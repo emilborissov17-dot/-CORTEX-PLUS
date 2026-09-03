@@ -94,7 +94,11 @@ def test_all_asserted_gives_no_honest_number():
     scores = {"WATER_REVIEW": 60.0, "FOOD_REVIEW": 60.0, "GOAL_PROGRESS_REVIEW": 60.0}
     sources = {k: "llm_level" for k in scores}
 
-    a = assess(scores, sources, TARGETS)
+    # gt_axes is explicit so this unit test does not depend on the live
+    # config/axis_source_map.json: here NO axis has a configured ground-truth
+    # series, which is what makes llm_level a legitimate ASSERTED rather than a
+    # forfeit. The forfeit rule has its own test below.
+    a = assess(scores, sources, TARGETS, gt_axes=frozenset())
 
     assert a.honest.value is None
     assert a.honest.coverage == 0.0
@@ -110,7 +114,7 @@ def test_asserted_axes_are_named_not_just_counted():
     sources = {"WATER_REVIEW": "measured", "FOOD_REVIEW": "llm_level",
                "GOAL_PROGRESS_REVIEW": "llm_level"}
 
-    a = assess(scores, sources, TARGETS)
+    a = assess(scores, sources, TARGETS, gt_axes=frozenset())
     named = {x["axis"] for x in a.asserted_axes}
     assert named == {"FOOD_REVIEW", "GOAL_PROGRESS_REVIEW"}
     assert all("source" in x for x in a.asserted_axes)
@@ -121,13 +125,85 @@ def test_the_honest_number_excludes_assertions_and_todays_number_does_not():
     sources = {"WATER_REVIEW": "measured", "FOOD_REVIEW": "llm_level",
                "GOAL_PROGRESS_REVIEW": "llm_level"}
 
-    a = assess(scores, sources, TARGETS)
+    a = assess(scores, sources, TARGETS, gt_axes=frozenset())
 
     assert a.honest.value == pytest.approx(20.0)          # само измереното
     assert a.honest.coverage == pytest.approx(9 / TOTAL)
     assert a.todays_number.value == pytest.approx(
         (20.0 * 9 + 60.0 * 9 + 60.0 * 8) / TOTAL)          # днешният, надут
     assert a.todays_number.value > a.honest.value
+
+
+# --------------------------------------------------------------------------- #
+# A CONFIGURED AXIS MAY NOT FALL BACK TO AN OPINION (3 сеп 2026)
+# --------------------------------------------------------------------------- #
+
+def test_a_ground_truth_axis_that_arrives_as_an_opinion_is_absent_not_asserted():
+    """If somebody wrote down which number decides an axis and where to fetch it,
+    a failed fetch is an ABSENCE. Degrading to llm_level keeps the axis's weight in
+    the composite while dropping the evidence under it — which is precisely
+    'opinion dressed as measurement'."""
+    scores = {"WATER_REVIEW": 20.0, "FOOD_REVIEW": 60.0}
+    sources = {"WATER_REVIEW": "measured", "FOOD_REVIEW": "llm_level"}
+
+    a = assess(scores, sources, TARGETS, gt_axes=frozenset({"FOOD_REVIEW"}))
+
+    assert a.by_axis["FOOD_REVIEW"]["kind"] == ABSENT
+    assert a.by_axis["FOOD_REVIEW"]["ground_truth_forfeited"] is True
+    assert "does not fall back" in a.by_axis["FOOD_REVIEW"]["forfeit_why"]
+    # it is NOT in the asserted list — it forfeited, it did not assert
+    assert "FOOD_REVIEW" not in {x["axis"] for x in a.asserted_axes}
+    assert "FOOD_REVIEW" in {x["axis"] for x in a.absent_axes}
+
+
+def test_the_forfeited_weight_leaves_todays_number_it_does_not_inflate_it():
+    """The whole point: the weight is FORFEITED. An axis that failed its fetch must
+    not keep voting with an opinion."""
+    scores = {"WATER_REVIEW": 20.0, "FOOD_REVIEW": 60.0}
+    sources = {"WATER_REVIEW": "measured", "FOOD_REVIEW": "llm_level"}
+
+    kept = assess(scores, sources, TARGETS, gt_axes=frozenset())
+    lost = assess(scores, sources, TARGETS, gt_axes=frozenset({"FOOD_REVIEW"}))
+
+    # todays_number is the weighted MEAN over the axes that contributed, so the
+    # denominator is their own weight, not TOTAL.
+    assert kept.todays_number.value == pytest.approx((20.0 * 9 + 60.0 * 9) / 18.0)
+    assert lost.todays_number.value == pytest.approx(20.0)   # WATER alone
+    # and the forfeit shows up as coverage lost, not as a number quietly moving
+    assert lost.todays_number.basis_weight == 9.0
+    assert kept.todays_number.basis_weight == 18.0
+    assert lost.todays_number.value < kept.todays_number.value
+    # the honest number never contained it either way
+    assert lost.honest.value == kept.honest.value == pytest.approx(20.0)
+
+
+def test_a_ground_truth_axis_that_really_measured_is_untouched():
+    """The rule may only ever DEMOTE. A measured axis is not its business."""
+    scores = {"FOOD_REVIEW": 60.0}
+    sources = {"FOOD_REVIEW": "measured"}
+
+    a = assess(scores, sources, TARGETS, gt_axes=frozenset({"FOOD_REVIEW"}))
+
+    assert a.by_axis["FOOD_REVIEW"]["kind"] == MEASURED
+    assert "ground_truth_forfeited" not in a.by_axis["FOOD_REVIEW"]
+
+
+def test_an_unreadable_axis_source_map_forfeits_nothing():
+    """FAIL-OPEN. A config that cannot be read must not be able to demote an axis —
+    that would turn a missing file into a silent drop in the composite."""
+    from core.measurement_honesty import ground_truth_axes
+    assert ground_truth_axes(BASE / "does" / "not" / "exist.json") == frozenset()
+
+
+def test_the_live_map_names_the_axes_that_actually_have_ground_truth():
+    """Guard the premise against a config edit: these are the axes the rule polices."""
+    from core.measurement_honesty import ground_truth_axes
+    live = ground_truth_axes()
+    assert {"WATER_REVIEW", "FOOD_REVIEW", "CLIMATE_GLOBAL_RISK_REVIEW"} <= live
+    # MATERIALS_WASTE has primary_metric=null, so its llm_level is legitimate and
+    # the rule must NOT touch it. If that changes, this test should be revisited
+    # rather than the rule quietly widened.
+    assert "MATERIALS_WASTE_REVIEW" not in live
 
 
 def test_silencing_a_bad_measured_axis_lowers_coverage_it_does_not_raise_the_number():

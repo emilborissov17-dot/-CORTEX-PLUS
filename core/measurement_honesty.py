@@ -79,6 +79,37 @@ _CARRIED_SOURCES = frozenset({
 })
 
 
+AXIS_SOURCE_MAP = BASE / "config" / "axis_source_map.json"
+
+
+def ground_truth_axes(path: pathlib.Path | None = None) -> frozenset:
+    """Axes that have a ground-truth series CONFIGURED — a named primary_metric AND
+    at least one numeric candidate to fetch it from (config/axis_source_map.json).
+
+    These are the axes that have no excuse for an opinion: somebody wrote down which
+    number decides them and where it comes from. If that fetch fails the honest
+    answer is ABSENT, not an llm_level guess wearing the axis's weight.
+
+    FAIL-OPEN, and deliberately so: an unreadable or missing map returns the empty
+    set, which restores the previous behaviour exactly. This rule may only ever
+    DEMOTE an axis, so a config that cannot be read must not be able to promote one.
+    """
+    try:
+        d = json.loads((path or AXIS_SOURCE_MAP).read_text(encoding="utf-8"))
+    except Exception:
+        return frozenset()
+    out = set()
+    for tree, axes in (d.items() if isinstance(d, dict) else []):
+        if str(tree).startswith("_") or not isinstance(axes, dict):
+            continue
+        for ax, cfg in axes.items():
+            if not isinstance(cfg, dict):
+                continue
+            if cfg.get("primary_metric") and (cfg.get("numeric_candidates") or []):
+                out.add(ax)
+    return frozenset(out)
+
+
 def classify(source) -> str:
     """
     Произходът на едно число. FAIL-CLOSED по дизайн.
@@ -288,14 +319,18 @@ def _branches(targets: dict) -> dict:
 
 def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
            provenance: dict | None = None, provenance_why: str | None = None,
-           basis_ts: str | None = None) -> Assessment:
+           basis_ts: str | None = None,
+           gt_axes: frozenset | set | None = None) -> Assessment:
     """
     scores     : ос -> число (както го пише цикълът)
     sources    : ос -> низ за произход (score_sources)
     targets    : config/target_config.json
     provenance : ос -> външното четене, което я е разрешило (read_provenance).
                  None означава „не е гледано", не „няма" — виж k1_why.
+    gt_axes    : оси с конфигурирана ground-truth серия. None чете
+                 config/axis_source_map.json; подава се изрично в тест.
     """
+    gt_axes = ground_truth_axes() if gt_axes is None else frozenset(gt_axes)
     a = Assessment(ts=ts or datetime.now(timezone.utc).isoformat(timespec="seconds"),
                    basis_ts=basis_ts)
 
@@ -322,15 +357,33 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
             if raw is None:
                 kind = ABSENT
 
-            # ── THE WHY, PER AXIS (ITEM 7.1c) ────────────────────────────────
+            # ── A CONFIGURED AXIS MAY NOT FALL BACK TO AN OPINION (3 Sep 2026) ─
+            # If somebody wrote down which number decides this axis and where to
+            # fetch it, then a failed fetch is an ABSENCE, not an invitation for
+            # the model to fill the hole. Silently degrading to llm_level keeps
+            # the axis's weight in the composite while dropping the evidence
+            # under it — the exact shape of "opinion dressed as measurement".
+            # ABSENT forfeits the weight, which is the honest cost of a failure.
+            forfeited = kind == ASSERTED and axis in gt_axes
+            if forfeited:
+                kind = ABSENT
+
+            # ── THE WHY, PER AXIS (ITEM 7.1c, tightened 3 Sep 2026) ──────────
             # measured_by is the external reading this axis resolved from, or
-            # None. counts_toward_k1 is exactly "measured_by is not None": an
-            # axis that cannot name its observation does not count, whatever
-            # its score or its score_source string says. When the scorer
-            # snapshot could not be read at all, both are None and k1_why —
-            # not a zero — carries the reason.
+            # None. counts_toward_k1 USED TO BE exactly "measured_by is not
+            # None", which let an axis count while its own kind said ASSERTED or
+            # ABSENT: on 2026-09-03 that put MATERIALS_WASTE (ASSERTED, scored by
+            # llm_level but carrying CLIMATE's NOAA reading) plus ECONOMY_WORK
+            # and INFRASTRUCTURE_CITIES (both ABSENT, score null) inside the
+            # numerator, 19 weight of inflation, and published K1 0.7425 while
+            # the same file's honest coverage read 0.6287.
+            # Both halves are now required: the axis must BE measured and must
+            # NAME what measured it. The second half is kept because naming was
+            # always the point of 7.1(c) — an axis whose source string says
+            # "measured" but which cannot say by what still does not count.
             measured_by = (prov or {}).get(axis)
-            counts = bool(measured_by) if prov is not None else None
+            counts = (kind == MEASURED and bool(measured_by)) \
+                if prov is not None else None
             if counts:
                 k1_weight += w
             if kind == CARRIED:
@@ -340,6 +393,13 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
                                "score": raw, "source": sources.get(axis),
                                "measured_by": measured_by,
                                "counts_toward_k1": counts}
+            if forfeited:
+                a.by_axis[axis]["ground_truth_forfeited"] = True
+                a.by_axis[axis]["forfeit_why"] = (
+                    f"config/axis_source_map.json configures a ground-truth series "
+                    f"for this axis; the score arrived as "
+                    f"{sources.get(axis)!r}, which is an opinion. ABSENT, weight "
+                    f"{w:g} forfeited — a configured axis does not fall back.")
             b["axes"][axis] = kind
 
             if kind in (MEASURED, CARRIED):
@@ -379,9 +439,17 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
         named = sum(1 for v in a.by_axis.values() if v.get("counts_toward_k1"))
         a.measured_weight = round(k1_weight, 1)
         a.k1 = round(k1_weight / total_w, 4)
-        a.k1_why = (f"{named} of {len(a.by_axis)} axes named an external observation "
-                    f"this cycle, carrying {k1_weight:.1f} of {total_w:.1f} weight. "
+        forfeits = [ax for ax, v in a.by_axis.items()
+                    if v.get("ground_truth_forfeited")]
+        a.k1_why = (f"{named} of {len(a.by_axis)} axes were MEASURED and named the "
+                    f"external observation that measured them, carrying "
+                    f"{k1_weight:.1f} of {total_w:.1f} weight. Naming alone is not "
+                    f"enough: an axis whose kind is ASSERTED or ABSENT does not "
+                    f"count even when an observation is attached to it. "
                     f"Source: snapshots/master/goal_score_latest.json axis_observations."
+                    + (f" {len(forfeits)} configured axis(es) forfeited their weight "
+                       f"rather than fall back to an opinion: "
+                       f"{', '.join(sorted(forfeits))}." if forfeits else "")
                     + (f" CAVEAT: {provenance_why}" if provenance_why else ""))
 
     coverage = honest_w / total_w if total_w else 0.0
