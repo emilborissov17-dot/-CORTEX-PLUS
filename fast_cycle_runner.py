@@ -3220,6 +3220,41 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] MerkleMemory -> FAILED: {e}")
 
+    # ── 24.1. VERIFY WHAT WAS JUST SEALED (3 Sep 2026) ────────────────────────
+    # merkle_memory.verify_cycle() has existed since the archive did, and its only
+    # caller in the whole repo was merkle_memory.py's own __main__ demo block. So
+    # every night the system wrote a hash and NEVER ONCE checked that the hash it
+    # wrote described the cycle it wrote. An audit chain nobody verifies is a
+    # filing cabinet.
+    #
+    # It re-reads the directory that step 24 just wrote and recomputes the cycle
+    # hash from signals.json + results.json. Failure is a NAMED step failure in the
+    # phase report — _run records it — and never a silent pass.
+    beat("merkle_verify", "24.1")
+    def _merkle_verify_step():
+        from merkle_memory import MerkleMemory as _MM
+        _mm = _MM()
+        _n = _mm._state.get("total_cycles")
+        if not _n:
+            raise RuntimeError("no total_cycles in cortex_memory/state.json — "
+                               "step 24 did not seal a cycle, so there is nothing "
+                               "to verify and this must not read as a pass")
+        _v = _mm.verify_cycle(int(_n))
+        _rec = {"ts": _utc_now(), "cycle": _n, **_v}
+        try:
+            (BASE / "memory" / "merkle_verify_latest.json").write_text(
+                json.dumps(_rec, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            pass
+        if not _v.get("ok"):
+            _why = _v.get("error") or (
+                f"stored {_v.get('stored_hash')} != recomputed {_v.get('recomputed')}")
+            raise RuntimeError(
+                f"cycle_{int(_n):06d} FAILED proof-of-inclusion: {_why}")
+        print(f"[FAST_CYCLE] merkle_verify -> cycle_{int(_n):06d} OK "
+              f"(hash {_v.get('stored_hash')}, {_v.get('signals')} signals)")
+    _run("merkle_verify", _merkle_verify_step)
+
     # ── 25. Training data accumulation ──
     beat("training_data_accumulation", "25")
     # Runs AFTER MerkleMemory commit (step 24) so the archive entry exists.

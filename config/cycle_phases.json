@@ -360,6 +360,10 @@
           "index": "24"
         },
         {
+          "name": "merkle_verify",
+          "index": "24.1"
+        },
+        {
           "name": "training_data_accumulation",
           "index": "25"
         },
@@ -421,6 +425,7 @@
         "memory/cortex_full_state.json",
         "memory/compass_latest.json",
         "cortex_memory/archive/merkle_root.txt",
+        "memory/merkle_verify_latest.json",
         "memory/self_mirror_latest.json",
         "memory/self_mirror_log.jsonl",
         "memory/self_experiments.json"

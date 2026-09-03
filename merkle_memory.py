@@ -108,6 +108,43 @@ class MerkleMemory:
             "essence_summary": "",
         })
 
+    # ── кой е следващият цикъл ────────────────────────────────────────────────
+
+    @staticmethod
+    def _archived_cycle_nums(archive: Path | None = None) -> list:
+        """Номерата на цикъл-директориите, които НАИСТИНА са на диска."""
+        root = archive or ARCHIVE
+        out = []
+        if not root.is_dir():
+            return out
+        for d in root.iterdir():
+            if not d.is_dir() or not d.name.startswith("cycle_"):
+                continue
+            try:
+                out.append(int(d.name[len("cycle_"):]))
+            except ValueError:
+                continue          # чуждо име в archive/ не е номер
+        return sorted(out)
+
+    def _next_cycle_num(self, archive: Path | None = None) -> int:
+        """СЛЕДВАЩИЯТ номер идва от АРХИВА, не от брояч.
+
+        ЗАЩО (3 сеп 2026). Беше `self._state["total_cycles"] + 1`. state.json е
+        мутируем файл и беше нулиран на 28 авг: броячът се върна на 16, докато 56-те
+        директории оцеляха. Резултатът не беше „грешен номер" — беше ЗАГУБА НА ДАННИ.
+        Нощите на 1, 2 и 3 септ. презаписаха cycle_000017, 000018 и 000019, които
+        съдържаха юлски цикли, и следващата нощ щеше да изяде cycle_000020 (29 юли).
+        Архивът не може да бъде презаписан от число, което някой е нулирал: истината
+        за това докъде сме стигнали е самият архив.
+
+        max(existing) + 1, и НИКОГА по-малко от total_cycles + 1 — дупка в номерата
+        (изтрита директория) не бива да върне брояча назад върху жива история.
+        """
+        nums = self._archived_cycle_nums(archive)
+        from_disk = (max(nums) + 1) if nums else 1
+        from_state = int(self._state.get("total_cycles", 0) or 0) + 1
+        return max(from_disk, from_state)
+
     # ── main entry ────────────────────────────────────────────────────────────
 
     async def commit(
@@ -122,7 +159,7 @@ class MerkleMemory:
         ts = datetime.now(timezone.utc).isoformat()
 
         # 1. Архивирай цикъла
-        cycle_num = self._state.get("total_cycles", 0) + 1
+        cycle_num = self._next_cycle_num()
         cycle_hash = await self._archive_cycle(cycle_num, cycle_id, signals, decisions, results, goal_score, ts)
 
         # 2. Обнови тренд-вектори
@@ -141,13 +178,21 @@ class MerkleMemory:
         # 6. Обнови abstractions
         self._save_json(TRENDS_FILE, self._trends)
         self._save_json(PROFILE_FILE, self._profile)
-        self._update_abs_hashes()
 
-        # 7. Генерирай essence
+        # 7. Генерирай essence — ПРЕДИ хашовете (3 сеп 2026).
+        # Беше обратното: _update_abs_hashes() вземаше хаша на essence.md на ред 144,
+        # а ред 148 презаписваше файла. Затова hashes.json["essence.md"] беше
+        # СТРУКТУРНО невъзможно да съвпадне — той винаги беше хашът на вчерашния
+        # essence. trends.json и self_profile.json съвпадаха, защото се пишат преди
+        # хеширането; само essence.md се пишеше след него. Един ред разлика, но той
+        # прави третината от abstractions непроверима.
         essence = self._generate_essence(cycle_id, goal_score, ts)
         ESSENCE_FILE.write_text(essence, encoding="utf-8")
 
-        # 8. Запиши state (root на всичко)
+        # 8. Хеширай ТРИТЕ файла, всеки в окончателния си вид
+        self._update_abs_hashes()
+
+        # 9. Запиши state (root на всичко)
         self._state.update({
             "merkle_root": new_root,
             "last_cycle": cycle_id,

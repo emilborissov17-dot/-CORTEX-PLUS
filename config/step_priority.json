@@ -52,6 +52,7 @@
     "scoring_engine",
     "goal_score_calculator",
     "merklememory_commit",
+    "merkle_verify",
     "self_mirror",
     "brain_debrief",
     "cycle_report",

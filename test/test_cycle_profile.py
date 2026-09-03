@@ -132,7 +132,9 @@ def test_a_narrower_allow_list_would_actually_cut_steps():
     cfg["profiles"]["night"]["allowed_priorities"] = ["CRITICAL"]
     p = cp.resolve(at(3), config=cfg)
     assert p.skip, "restricting to CRITICAL cut nothing — the filter is decoration"
-    assert len(p.run) == 16, len(p.run)
+    # 17 since 3 Sep 2026: merkle_verify (24.1) joined CRITICAL. cycle_map marks it
+    # backbone, and test_survival_mode asserts every backbone step is in the table.
+    assert len(p.run) == 17, len(p.run)
 
 
 def test_the_priority_table_is_read_through_survival_mode():
@@ -140,7 +142,7 @@ def test_the_priority_table_is_read_through_survival_mode():
     reader here returned 0 entries where survival_mode returned 16."""
     from core.survival_mode import load_priorities as theirs
     assert cp.load_priorities() == theirs()
-    assert len(cp.load_priorities()) == 16
+    assert len(cp.load_priorities()) == 17
 
 
 def test_an_unlisted_step_is_treated_as_normal():
