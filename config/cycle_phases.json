@@ -332,6 +332,10 @@
           "index": "20.05"
         },
         {
+          "name": "belief_revision",
+          "index": "20.07"
+        },
+        {
           "name": "hypothesis_intake",
           "index": "20.06"
         },
@@ -424,6 +428,7 @@
         "memory/feedback_log.json",
         "memory/goal_score_history.json",
         "memory/hypothesis_resolution_latest.json",
+        "memory/belief_state.json",
         "memory/hypothesis_intake_latest.json",
         "memory/measurement_honesty_latest.json",
         "memory/idea_resolutions.jsonl",

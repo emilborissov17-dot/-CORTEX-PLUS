@@ -3027,6 +3027,23 @@ def main():
         print(_hr_line(_hr_run(write=True)))
     _run("resolve_hypotheses", _resolve_hypotheses_step)
 
+    # ── 20.07. BEING WRONG HAS TO COST SOMETHING (C7, 3 Sep 2026) ─────────────
+    # Reads what 20.05 just resolved and moves the per-axis weights over prediction
+    # methods, a source-trust delta for source_lifecycle, and the per-axis
+    # llm_vs_data record. Update is proportional to surprise = |error| / interval
+    # width (C11), not to raw error: being 5 out when you claimed +/-1 is a
+    # different event from being 5 out when you claimed +/-50.
+    #
+    # BEFORE 20.06 deliberately: tonight's revision must reach tonight's generator,
+    # or the system would predict with weights one full night stale and the loop
+    # would take two cycles to close instead of one.
+    # FAIL-OPEN.
+    beat("belief_revision", "20.07")
+    def _belief_revision_step():
+        from core.belief_revision import run as _br_run, summary_line as _br_line
+        print(_br_line(_br_run(write=True)))
+    _run("belief_revision", _belief_revision_step)
+
     # ── 20.06. PRE-REGISTER TONIGHT'S PREDICTIONS (C5+C11, 3 Sep 2026) ────────
     # A SEPARATE STEP from 20.05, deliberately. Generation and resolution must not
     # share a step: one writes pending.json, the other (through the evaluator)
