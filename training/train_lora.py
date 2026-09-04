@@ -112,8 +112,17 @@ def main() -> int:
         print("REFUSED: no CUDA device. This trainer is sized for one specific 4 GB GPU.")
         return 2
 
-    bf16 = torch.cuda.is_bf16_supported()
-    print(f"device: {torch.cuda.get_device_name(0)}  ·  bf16 supported: {bf16}")
+    # torch.cuda.is_bf16_supported() returns True on CC 7.5 because recent torch
+    # counts emulation as support. Measured on this machine, 4 Sep 2026. Gate on the
+    # hardware, not on the flag, or the run silently picks emulated bf16 and is slower
+    # and less stable for no visible reason.
+    cap = torch.cuda.get_device_capability(0)
+    bf16_flag = torch.cuda.is_bf16_supported()
+    bf16 = bf16_flag and cap >= (8, 0)
+    print(
+        f"device: {torch.cuda.get_device_name(0)}  ·  compute capability: {cap[0]}.{cap[1]}\n"
+        f"is_bf16_supported() reports: {bf16_flag}  ·  real bf16 hardware: {bf16}"
+    )
     compute_dtype = torch.bfloat16 if bf16 else torch.float16
 
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
@@ -198,7 +207,9 @@ def main() -> int:
             "alpha": args.alpha,
             "targets": args.targets,
             "compute_dtype": str(compute_dtype),
-            "bf16_supported": bf16,
+            "compute_capability": f"{cap[0]}.{cap[1]}",
+            "bf16_flag_reported": bf16_flag,
+            "bf16_hardware_real": bf16,
         },
         "peak_alloc_mib": round(peak, 1),
         "peak_reserved_mib": round(reserved, 1),
