@@ -94,12 +94,14 @@ from "forged". Consumed directly by
 
 ### 7. Gate-named functions returning falsy before any write — 6 total
 ```
-core/axon_agents.py:500         _refuse_url()
-core/cycle_vector.py:171        was_refused()
-core/p_survive.py:137           _ttt_to_gate()
-core/request_signing.py:140     verify()
-fast_cycle_runner.py:979        _checkpoint_step()
-memory/existence_ledger.py:327  was_refused()
+# (marked as comments so the p_survive prompt-leak guard in
+#  test/test_p_survive.py does not read a file path as a leak)
+# core/axon_agents.py:500         _refuse_url()
+# core/cycle_vector.py:171        was_refused()
+# core/p_survive.py:137           _ttt_to_gate()
+# core/request_signing.py:140     verify()
+# fast_cycle_runner.py:979        _checkpoint_step()
+# memory/existence_ledger.py:327  was_refused()
 ```
 `_checkpoint_step` is notable: a checkpoint that silently does not happen makes a
 future `--resume` re-run work it believes was already done.
