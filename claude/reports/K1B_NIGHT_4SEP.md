@@ -138,3 +138,53 @@ epochs 1.** Never a different epoch count between runs.
 Control and A both land before 02:45 with margin. **No run will be started that
 would still be holding the GPU at 03:04.** If the arithmetic stops fitting, A
 moves after the cycle rather than the cycle being sacrificed.
+---
+
+## CORRECTION, 23:26 — THE MITIGATION DID NOT HOLD
+
+Everything above about *why* stopping Ollama is the right mechanism remains true.
+What is **false** is the implied claim that it stayed stopped.
+
+```
+22:33:37  ollama stopped, /api/tags and /api/chat REFUSED  (verified)
+22:34:14  ollama.exe RUNNING again, PID 122476             (NOT restarted by me)
+23:25:21  /api/tags ANSWERING
+```
+
+It came back **sixty seconds** after I stopped it. I did not restart it and nothing
+in this session did. Ollama on Windows respawns its server; a one-shot
+`Stop-Process` cannot hold it.
+
+I did not notice for fifty minutes because the check I was running was the wrong
+one: I watched **GPU memory**, which stayed at 0 MiB, and concluded the mitigation
+was holding. It was not — idle Ollama simply holds no VRAM. It takes the GPU only
+when a step actually calls the local tier and a model is loaded.
+
+**So the exposure is narrower than this document originally claimed, and the
+mitigation is weaker.** Contention happens if and only if a CORTEX step invokes the
+local leg during a training run. Ollama merely being alive costs nothing. The speed
+probe, the B-shape probe and the control all in fact ran with Ollama up and the GPU
+still free.
+
+Re-stopping it would be theatre — it would be back within a minute — so it has not
+been re-stopped. The 02:45 "restart ollama" step in the schedule below is therefore
+already satisfied and is a no-op: it never stayed down.
+
+### What this means for the sealed 03:04 cycle
+Unchanged and still protected: the full ladder is intact right now, because the
+local leg has been reachable since 22:34.
+
+### What it means for the schedule
+```
+23:24  the negative control was KILLED ~27 min into an ~84 min run.
+       No OOM, no traceback — the log stops cleanly mid training loop and the
+       harness reported "killed", i.e. an external stop, not a crash.
+       supervisor.py is NOT the culprit: it only kills the pid recorded in
+       memory/cycle.lock (is_cycle_pid -> kill_tree), and the trainer was never
+       in that lock.
+23:27  control restarted, expected ~00:51
+```
+With 27 minutes lost, control + A can no longer both clear 02:45: A's eval would
+still be holding the GPU at ~02:56. Per the standing rule — *never start a run that
+would still be holding the GPU at 03:04* — **run A moves to after the sealed cycle,
+alongside B.** Only the control runs before it.
