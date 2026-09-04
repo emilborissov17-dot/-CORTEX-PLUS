@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -94,6 +95,10 @@ def main() -> int:
     ap.add_argument("--rank", type=int, default=8)
     ap.add_argument("--alpha", type=int, default=16)
     ap.add_argument("--targets", default="q_proj,k_proj,v_proj,o_proj")
+    ap.add_argument("--save-every", type=int, default=25,
+                    help="checkpoint every N optimiser steps; a kill then costs minutes, not the run")
+    ap.add_argument("--resume", action="store_true",
+                    help="continue from <out>/ckpt if it exists")
     args = ap.parse_args()
 
     train_path = Path(args.train)
@@ -212,8 +217,51 @@ def main() -> int:
     sched = get_cosine_schedule_with_warmup(opt, int(0.03 * steps) + 1, steps)
     scaler = torch.cuda.amp.GradScaler(enabled=not bf16)
 
+    # --- survivability -------------------------------------------------------
+    # A long run on this machine has been killed twice with no OOM and no traceback
+    # (the 30 Aug cycle at the survival gate, and the 4 Sep control at ~27 min).
+    # The killer is not named yet. This does not prevent a kill - it makes one cost
+    # minutes instead of the whole run, and leaves a dated trace of the death.
+    ck = Path(args.out) / "ckpt"
+    hb = Path(args.out) / "heartbeat.json"
+    ck.mkdir(parents=True, exist_ok=True)
+    start_step = 0
+    if args.resume and (ck / "state.pt").exists():
+        st = torch.load(ck / "state.pt", map_location="cuda")
+        from peft import set_peft_model_state_dict
+        set_peft_model_state_dict(model, st["adapter"])
+        opt.load_state_dict(st["optimizer"])
+        sched.load_state_dict(st["scheduler"])
+        start_step = st["step"]
+        print(f"RESUMED from optimiser step {start_step}")
+
+    def save_ckpt(step_i: int, loss_v: float) -> None:
+        from peft import get_peft_model_state_dict
+        torch.save(
+            {
+                "adapter": get_peft_model_state_dict(model),
+                "optimizer": opt.state_dict(),
+                "scheduler": sched.state_dict(),
+                "step": step_i,
+            },
+            ck / "state.pt.tmp",
+        )
+        os.replace(ck / "state.pt.tmp", ck / "state.pt")  # atomic: a kill mid-write cannot corrupt it
+        hb.write_text(
+            json.dumps(
+                {
+                    "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                    "step": step_i,
+                    "of_steps": steps,
+                    "loss": round(loss_v, 4),
+                    "gpu_alloc_mib": round(torch.cuda.memory_allocated() / 2**20, 1),
+                }
+            ),
+            encoding="utf-8",
+        )
+
     torch.cuda.reset_peak_memory_stats()
-    t0, losses, step = time.time(), [], 0
+    t0, losses, step = time.time(), [], start_step
     model.train()
     for epoch in range(args.epochs):
         for i, (ids, labels, mask) in enumerate(dl):
@@ -228,9 +276,11 @@ def main() -> int:
                 sched.step()
                 opt.zero_grad(set_to_none=True)
                 step += 1
+                recent = sum(losses[-args.accum * 10 :]) / len(losses[-args.accum * 10 :])
                 if step % 10 == 0:
-                    recent = sum(losses[-args.accum * 10 :]) / len(losses[-args.accum * 10 :])
-                    print(f"epoch {epoch} step {step}/{steps} loss {recent:.4f}")
+                    print(f"epoch {epoch} step {step}/{steps} loss {recent:.4f}", flush=True)
+                if step % args.save_every == 0:
+                    save_ckpt(step, recent)
 
     wall = time.time() - t0
     peak = torch.cuda.max_memory_allocated() / 2**20

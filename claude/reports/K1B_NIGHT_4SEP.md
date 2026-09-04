@@ -188,3 +188,96 @@ With 27 minutes lost, control + A can no longer both clear 02:45: A's eval would
 still be holding the GPU at ~02:56. Per the standing rule — *never start a run that
 would still be holding the GPU at 03:04* — **run A moves to after the sealed cycle,
 alongside B.** Only the control runs before it.
+
+---
+
+## 23:50 — THE KILLER IS NAMED, AND IT WAS NEVER ON THIS MACHINE
+
+**The agent harness killed the run.** Not the OS, not the GPU driver, not CORTEX.
+
+The evidence is in the harness's own bookkeeping. Every background job it runs ends
+its output file with a terminator, and there are exactly two kinds:
+
+```
+[exited with code N]   x19   normal completion
+[killed]               x2    3 Sep 16:40, and the control at 23:24:13
+```
+
+`[killed]` is written by the harness, not observed from the OS. And there is a
+lifetime boundary:
+
+| job | duration | outcome |
+|---|---|---|
+| suite gate | 24 m 14 s | exited 0 |
+| suite gate | 24 m 53 s | exited 0 |
+| B-shape probe | 14 m 54 s | exited 0 |
+| **negative control** | **26 m 35 s** | **killed** |
+
+Longest survivor 24 m 53 s; the kill at 26 m 35 s. Consistent with a finite
+background-job lifetime in the 25-26 minute band. Two kills is not proof of an exact
+limit, but it is enough to stop betting 84-minute runs against it.
+
+### THE REUSABLE LESSON
+**Every OS-level search was always going to come back empty, because the terminator
+was outside the machine's own bookkeeping.** Hours went into:
+
+- Windows System and Application Event Logs around both deaths
+- `ResourceExhaustionDetector` / event 2004 — zero in 30 days
+- the TDR hypothesis — **refuted**: no `Display` 4101/4102/4103 in ten days, and both
+  `nvlddmkm` entries are Id=0 (generic, no registered message resource) rather than
+  the 13/14 Xid class
+- `HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers` — TdrDelay, TdrDdiDelay,
+  TdrLevel, TdrLimitTime, TdrLimitCount ALL unset, stock defaults
+- every `taskkill`, `Stop-Process`, `psutil.process_iter` in the repo — no kill path;
+  all hits are comments or read-only scanners
+- Task Scheduler execution limits — all nine CORTEX tasks are PT72H
+
+None of it could have found the answer. **When a process dies with no trace anywhere
+in the system, suspect the thing that started it.**
+
+Two corrections this forces, both mine:
+1. I named `nvlddmkm` as the leading candidate for the kill. It is a CONSEQUENCE of
+   abrupt CUDA teardown, not a cause — the absence of any 4101 settles it.
+2. I said the ~785 MiB gap between total and free VRAM was "the display holding it".
+   Wrong: `nvidia-smi` reports `display_mode Disabled, display_active Disabled` for
+   the GTX 1650. The desktop runs on **AMD Radeon integrated graphics** at 2560x1600.
+   Nothing display-related lives on the training card. (This also means that if TDR
+   ever DID become the diagnosis, raising TdrDelay would not freeze the desktop here
+   — the cost of that fix is far lower on this machine than the usual warning implies.)
+
+### THE FIX: DETACH THE RUN FROM ITS LAUNCHER
+`tools/launch_detached.ps1` starts training with `Start-Process`, outside this
+session's process tree, redirecting stdout/stderr to `claude/reports/` and writing a
+pid file. The caller then POLLS THE LOG instead of owning the process.
+
+**Smoke-tested before being trusted with 84 minutes**, because an untested launcher
+is the same bet that just cost half an hour:
+
+```
+23:51:20  dummy launched detached from inside a harness background job, pid 126788
+23:52:12  that harness job KILLED via TaskStop
+23:52:37  dummy still ALIVE and still writing:  tick 16/36
+```
+
+It survived the destruction of its launcher by 25 seconds and counting. A run that
+survives its launcher cannot be killed by its launcher.
+
+### CONTROL RELAUNCHED, DETACHED
+```
+23:52:51  pid 117852, detached
+          --epochs 1 --max-len 256 --save-every 25 --resume
+```
+`train_lora.py` verified before use: `heartbeat.json`, `--resume`, `os.replace`
+(atomic checkpoint — a kill mid-write cannot corrupt it), `--save-every`, and
+`prepare_model_for_kbit_training` still comment-only at line 149.
+
+Checkpointing matters more than the launcher fix, because it is the only defence that
+works against a killer we have NOT named. The launcher defends against this one.
+
+### ITEM (4) IS A SEPARATE PROBLEM AND NEEDS DIFFERENT EVIDENCE
+The 30 Aug cycle death ("RAM 94% at the survival gate") is **not** an instance of this
+killer, and the Windows Event Log cannot investigate it: no ResourceExhaustionDetector
+event in 30 days, no nvlddmkm on 30 Aug, only an unrelated NDIS network error. It
+needs the cycle's OWN survival-gate logs. Until someone reads those, its cause is
+genuinely unknown rather than merely unnamed — and naming a killer would not close it
+anyway. The vulnerability closes when the kill is prevented or survived.
