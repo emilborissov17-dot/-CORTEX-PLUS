@@ -152,3 +152,163 @@ exactly, and `self_modifier`'s ongoing 19-night streak shows the same shape can 
 under a different input. The fix is per-step and manual; nothing structurally prevents
 the next occurrence. What is different now is that a streak longer than two nights is one
 command away from being visible.
+
+---
+
+# ADDENDUM, 01:40 — the finding the reader was built to catch
+
+## 5. `self_modifier` — 19 CONSECUTIVE NIGHTS, STILL REFUSING
+
+This is a bigger open item than the publish gate was. `github_publish` touched a public
+repo; `self_modifier` is the step that **modifies the system itself**, and it has not been
+allowed to run since 17 August.
+
+```
+started : 2026-08-17T16:21:05.499276+00:00
+latest  : 2026-09-04T01:18:19.872996+00:00   (last night)
+nights  : 19 consecutive, 2026-08-17 .. 2026-09-04
+events  : 31 refusals
+gate    : notary   (subject: "self_modifier ОТКАЗАНА от нотариуса")
+```
+
+**The reason is not one reason. It changed on 21 August, mid-streak**, which is why a
+count of nights alone would have been misleading:
+
+```
+2026-08-17T16:21:05  (7 events, to 2026-08-21)
+  level_0 (неизвестен произход) — слабо звено: no declared inputs - provenance unknown
+
+2026-08-21T14:03:55  (24 events, to 2026-09-04)
+  level_0 (неизвестен произход) (наследено от memory/improvement_proposals.json)
+  — слабо звено: нивото не е на тази стъпка: собственото ѝ е level_1 (минимално),
+    а входът memory/improvement_proposals.json носи level_0 (неизвестен произход)
+    от този цикъл
+```
+
+The first form is the `web_intelligence` landmine exactly. The second form is what it
+became once `self_modifier`'s own inputs were declared — **the declaration worked, and the
+step is still refused, for a different reason one step upstream.** That is precisely why a
+per-step manual remedy is not a fix.
+
+## 6. THE DIAGNOSIS — and it is not where the reason points
+
+The refusal names `memory/improvement_proposals.json`. Following that to its producer
+changes the picture. From `core/cycle_map.STEPS`, **two** steps declare that file as a
+product:
+
+```
+hyperclaw_plan   idx 15.7   products ['memory/improvement_proposals.json']
+self_modifier    idx 18     products ['memory/improvement_proposals.json']
+```
+
+Last night's attestations, read from the notary's own log:
+
+```
+hyperclaw_plan   01:10:06  level=0  own=0  inherited=3  verifier=False
+    age: "no declared inputs - provenance unknown (from the static scanner)"
+    inputs: []
+
+self_modifier    01:18:19  level=0  own=1  inherited=0  from=memory/improvement_proposals.json
+    age: "най-стар вход memory/self_awareness.json: 176.3 дни
+          (from the written declaration in config/step_inputs.json)"
+    inputs: [improvement_proposals, development_journal, auto_levels, self_awareness]
+```
+
+**`hyperclaw_plan` runs eight minutes earlier, has no declared inputs, scores `own=0`, and
+stamps `memory/improvement_proposals.json` at level_0.** `self_modifier` then reads that
+file and inherits the 0. The landmine is not on `self_modifier`; it is one step upstream,
+on a step that is **not** in VERIFIERS and which the test in item 7 therefore does not
+cover.
+
+**There are TWO independent blockers, and fixing either alone changes nothing:**
+
+1. **inherited = 0**, from `hyperclaw_plan`'s undeclared inputs.
+2. **own = 1**, because `memory/self_awareness.json` is **176.3 days old**, which the age
+   dimension scores MINIMAL. `IRREVERSIBLE_MIN = REDUCED = 2` (`core/notary.py:80`), so
+   even with the inheritance cleared, `self_modifier` stands at level_1 and is still
+   refused.
+
+There is also a **ratchet worth noticing**: `self_modifier` both reads and produces
+`improvement_proposals.json`. Its own stamp on that file is the level it was refused at, so
+once the file has been stamped 0, the step re-reads its own 0 the next night. Nothing in
+the mechanism recovers on its own.
+
+### The options, none of them taken tonight
+
+| # | option | effect | cost |
+|---|---|---|---|
+| A | declare `hyperclaw_plan`'s inputs in `config/step_inputs.json` | clears blocker 1 only; `self_modifier` goes 0 → 1, still refused | the honest one; requires reading the module and writing `derived_from` |
+| B | refresh or retire `memory/self_awareness.json` (176 days stale) | clears blocker 2 only; still 0 from inheritance | needs a decision on whether that file should be a live input at all |
+| C | A **and** B | `self_modifier` reaches level_2 and the gate opens | opens the self-modification path — the one that most deserves a human present |
+| D | add `hyperclaw_plan` to `VERIFIERS` | breaks inheritance, level_0 washed clean | **rejected**: it does not verify against a live external source; this would grant the washing privilege to a planner, which is the exact abuse the short explicit list exists to prevent |
+| E | leave it | 20th night | the refusal is now visible, which it was not yesterday |
+
+**Taken: E, tonight.** Changing the gate on the only path that modifies the system itself,
+at 01:15, before an unattended run, is the wrong hour for it. Nothing in the mechanism was
+touched. Option C is the real fix and it wants a human awake.
+
+**One thing to weigh before choosing C:** 19 nights of refusal means 19 nights of proposals
+that were never applied. Opening the gate does not replay them one at a time — check what
+`self_modifier` would do on its first permitted run before permitting it.
+
+## 7. THE LANDMINE, MADE STRUCTURAL — `test/test_verifier_inputs.py`
+
+A step in `VERIFIERS` may break inherited provenance. That privilege is granted by name, in
+a set literal (`core/notary.py:126-132`), and nothing ever checked that the named step can
+say what it reads. A verifier with no declared inputs scores `UNKNOWN(0)` and stamps 0 on
+everything downstream — 15 nights for `github_publish`, 19 for `self_modifier`.
+
+The new test fails if any name in `VERIFIERS` has no declared inputs in
+`config/step_inputs.json`. `for_step()` returns `None` for undeclared and `[]` for
+declared-but-empty; **both fail**, because both produce UNKNOWN.
+
+### It is RED today, and these four are why
+
+```
+$ venv\Scripts\python.exe -m pytest test/test_verifier_inputs.py -q
+1 failed, 8 passed
+
+FAILED test_every_verifier_declares_what_it_reads
+  browser_scout
+  global_indicators
+  internet_intelligence
+  sensorium_ingest
+```
+
+Four of the five verifiers. The fifth, `web_intelligence`, is the one declared on 31 August
+— and it scores level_3 today, which is the counter-example the test also asserts, so the
+failure above is not vacuously true of everything.
+
+The other eight tests pass and are the structural part:
+
+- **the ratchet** — a *newly* added undeclared verifier fails in its own test, so it cannot
+  hide inside the already-red one. This is what makes the next occurrence impossible to
+  miss rather than merely unlikely.
+- **the ledger tests** — the four names must leave `KNOWN_UNDECLARED` when declared, and
+  must leave it when removed from `VERIFIERS`. A stale ledger silently re-permits.
+- **the mechanism** — each of the four is put through `_inputs_for` → `_age_state` right
+  now and asserted to answer 0 with "no declared inputs". Not an assumption.
+
+**No `xfail`.** Rendering this failure as something plausible is the exact defect the file
+is about.
+
+### The measurement that reframes the whole item
+
+While confirming the above I asked the same question of every step, not just the verifiers:
+
+```
+steps in core/cycle_map.STEPS                     : 71
+steps whose inputs resolve to []  (-> level_0)    : 66
+  ...of those, that PRODUCE artifacts             : 47
+```
+
+**Only 5 of 71 steps can say what they read** — the five written into
+`config/step_inputs.json`. 47 undeclared steps stamp level_0 onto artifacts that other
+steps inherit. `VERIFIERS` is 5 of those 71; the test covers the 5 where the consequence is
+worst, because a verifier is also allowed to *wash* a level clean. **It does not cover
+`hyperclaw_plan`, which is the step actually blocking `self_modifier` tonight.**
+
+So: the test closes the door on the specific hole that cost 34 nights across two steps, and
+the census says the same shape exists 66 times over. That is a scope decision for a human,
+not a fix to make at 01:40 — but it should not be discovered a third time by a streak.
+
