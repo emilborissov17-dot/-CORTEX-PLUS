@@ -125,7 +125,7 @@ def main() -> int:
     )
     compute_dtype = torch.bfloat16 if bf16 else torch.float16
 
-    from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+    from peft import LoraConfig, get_peft_model
     import bitsandbytes as bnb
 
     tok = AutoTokenizer.from_pretrained(args.base)
@@ -139,9 +139,53 @@ def main() -> int:
         bnb_4bit_compute_dtype=compute_dtype,
     )
     model = AutoModelForCausalLM.from_pretrained(args.base, quantization_config=quant, device_map={"": 0})
-    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
-    model.gradient_checkpointing_enable()
+    print(f"after load          allocated {torch.cuda.memory_allocated() / 2**20:8.1f} MiB")
+
+    # prepare_model_for_kbit_training() is deliberately NOT used.
+    # It upcasts every non-quantised parameter to fp32. On Qwen2.5-3B the input
+    # embedding is 311M parameters TIED to the output head, so that call costs
+    # +595 MiB before a single activation exists - measured on this machine,
+    # 4 Sep 2026, and the reason max-len 256, 192 and 128 all died at the same
+    # 3.3 GiB. Sequence length was never the binding constraint.
+    # Only the LoRA adapters train, so the frozen embedding has no reason to be
+    # fp32. Below is what that helper does that we actually need, and nothing else.
+    for p in model.parameters():
+        p.requires_grad = False
+
+    # Qwen2.5 ships bf16, and the non-quantised tensors keep the checkpoint dtype.
+    # On CC 7.5 there are no bf16 units, so every touch of that 311M-parameter
+    # embedding goes through emulation. Same 2 bytes, so this is not a memory fix -
+    # it is a speed fix, and at ~4.8 s per example (measured 4 Sep) speed is the
+    # binding constraint. Done BEFORE the norm upcast so norms still end at fp32.
+    n_cast = 0
+    if compute_dtype == torch.float16:
+        for module in model.modules():
+            if isinstance(module, torch.nn.Embedding) and module.weight.dtype == torch.bfloat16:
+                module.to(torch.float16)
+                n_cast += 1
+    print(f"embeddings cast bf16 -> fp16: {n_cast}")
+
+    # fp32 only for the normalisation layers: numerically worth it, and they are
+    # thousands of parameters rather than hundreds of millions.
+    n_norm = 0
+    for name, module in model.named_modules():
+        if "norm" in name.lower():
+            module.to(torch.float32)
+            n_norm += 1
     model.config.use_cache = False
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    # required once the embedding stays frozen, or checkpointing yields no grads
+    model.enable_input_require_grads()
+    emb_dtype = model.get_input_embeddings().weight.dtype
+    print(
+        f"after prepare       allocated {torch.cuda.memory_allocated() / 2**20:8.1f} MiB"
+        f"   embedding dtype {emb_dtype}   norms upcast: {n_norm}"
+    )
+    if emb_dtype == torch.float32:
+        print("REFUSED: the embedding is fp32. That is the 595 MiB regression this file exists to avoid.")
+        return 2
+    if emb_dtype == torch.bfloat16 and not bf16:
+        print("WARNING: embedding is bf16 on hardware without bf16 units - emulated, and slower.")
 
     lcfg = LoraConfig(
         r=args.rank,
@@ -154,7 +198,11 @@ def main() -> int:
     model = get_peft_model(model, lcfg)
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total = sum(p.numel() for p in model.parameters())
+    print(f"after LoRA attach   allocated {torch.cuda.memory_allocated() / 2**20:8.1f} MiB")
     print(f"trainable: {trainable:,} / {total:,} ({100 * trainable / total:.3f}%)")
+    if trainable == 0:
+        print("REFUSED: nothing is trainable. Freezing ran after LoRA attachment.")
+        return 2
 
     ds = PairDataset(rows, tok, args.max_len)
     dl = DataLoader(ds, batch_size=1, shuffle=True, collate_fn=lambda b: collate(b, tok.pad_token_id))
