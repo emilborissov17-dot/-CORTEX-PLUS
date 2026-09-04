@@ -133,6 +133,39 @@ if the cycle died, this is the first night it can say where.
 
 ---
 
+## ADDENDUM 02:20 — the provenance work, phases 0 and 2 done
+
+**PHASE 0 (done, `94b14a1`)** — `claude/reports/PROVENANCE_CLOSURE_5SEP.md`. The closure is
+**6 steps**, not 47: `github_publish`, `self_modifier`, `execute_patches`,
+`web_intelligence` (all declared) plus **`hyperclaw_plan` and `auto_levels` (undeclared)**.
+Two caveats that Phase 1 depends on:
+
+- 6 is a **lower bound bounded by ignorance** — the walk stops at those two because they
+  cannot say what they read. Each declaration extends it one ring; the phase graph caps it
+  at 47. **Re-run the trace after each declaration; the trace is the stopping rule.**
+- **A correct declaration can still be useless.** Inheritance only flows through artifacts
+  some step claims as a *product* in `cycle_map.STEPS`. Neither `plans/` nor
+  `snapshots/master/master_snapshot_latest.json` has a registered producer, and
+  `attest()` initialises `inherited = FULL`, lowering it only when a stamp is found — so a
+  **missing stamp currently reads as a clean one**. Declaring inputs without registering the
+  upstream products yields a real age and an unearned `inherited=FULL`. Flagged, not fixed.
+
+**PHASE 1 (NOT started, waits for the 03:04 cycle).** Declare `hyperclaw_plan` then
+`auto_levels`, one commit each, evidence read from the code. The reads are already traced in
+the closure report §"THE NEXT RING" — `fast_cycle_runner.py:1693-1701` and
+`memory/auto_level.py:12-13,197,201` — but **re-read them before writing; that trace was
+made to size the problem, not to be pasted in.** Then extend `test/test_verifier_inputs.py`
+to guard the *named closure*, not `VERIFIERS`.
+
+**PHASE 2 (done, `6e45019`)** — `core/notary.may_act()` now leads a refusal with the blind
+step by name: `blind step 'hyperclaw_plan' (produces memory/improvement_proposals.json):
+provenance unknown — the step never declared what it reads`. It flows into
+`night_events.jsonl` unchanged, because `_witness_or_refuse` passes `may_act`'s string
+straight to `_refusal_event` (`fast_cycle_runner.py:2023`). **Tonight's cycle is the first
+that can say blindness out loud — check `tools/read_the_refusals.py` after 03:04.**
+
+`memory/self_awareness.json` was **not touched**, per instruction.
+
 ## NEXT, IN ORDER
 
 1. **Read the control's final loss** when it lands (~02:00-02:15) in
