@@ -168,8 +168,31 @@ that can say blindness out loud — check `tools/read_the_refusals.py` after 03:
 
 ## NEXT, IN ORDER
 
-1. **Read the control's final loss** when it lands (~02:00-02:15) in
-   `K1B_CONTROL_RUN.out.log`. If the control learned, stop and fix the harness.
+1. ~~Read the control's final loss when it lands.~~ **DONE — it landed at 01:47.**
+
+```
+examples 1077  |  optimiser steps 134  |  wall 6895.2s (1h55m)
+peak allocated 2482.3 MiB  |  peak reserved 2718.0 MiB  (of 4096)
+bf16 supported False  |  compute dtype torch.float16
+loss: 2.6226 -> 1.9029
+corpus sha256: 2622e01a08972d62431152cfa8022b8bea779c8efaf05383e664a6e782470c6c
+```
+
+**CORRECTION to the rule I wrote above it.** I said "if the control learned, stop and fix
+the harness". That is too crude and would have called this a failure wrongly. The control's
+**training** loss fell 27% on deranged targets — and that is expected, not damning: a
+language model lowers training loss on any corpus by fitting the marginal distribution of
+the target tokens (style, vocabulary, length, JSON shape), which the derangement leaves
+completely intact. Only the problem→solution *mapping* was destroyed.
+
+**The deciding number is the held-out eval, not this one.** The run's own closing note says
+the same thing. What would indict the harness is the control scoring **comparably to runs A
+and B on the held-out split** — that would mean A and B never learned the mapping either.
+`training/eval_adapter.py` on the time-based holdout is the test.
+
+**Not run tonight**, deliberately: it is GPU work inside the 71 minutes before the 03:04
+sealed cycle, and protecting that cycle has been the standing constraint all night. It is
+short (minutes, not hours) and is the first thing to run when someone is watching.
 2. **Then, and only after the 03:04 cycle has sealed**, run A (rank 8, q/k/v/o) and run B
    (rank 16, 7 targets), shared recipe `--epochs 1 --max-len 256`, reports to
    `claude/reports/`. Use `tools/launch_detached.ps1` — and add `PYTHONIOENCODING=utf-8`
