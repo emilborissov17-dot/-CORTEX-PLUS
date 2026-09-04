@@ -524,6 +524,47 @@ def verify_chain() -> dict:
 
 # ── ПОРТАТА ─────────────────────────────────────────────────────────────────
 
+# ── BLINDNESS IS NOT A VERDICT (5 септ 2026) ────────────────────────────────
+# Отказ, породен от стъпка, която НИКОГА не е обявила какво чете, трябва да го
+# КАЖЕ с тези думи. Досега се връщаше „level_0 (неизвестен произход)" и името на
+# един вход — което се чете като преценка за КАЧЕСТВОТО на този вход. Не е:
+# нищо не е измерено и намерено за недостатъчно, нищо не е измервано изобщо.
+#
+# Двата случая искат различни действия — „поправи данните" срещу „напиши четири
+# реда в config/step_inputs.json" — и деветнайсет нощи self_modifier бяха
+# похарчени по грешния. Слепотата не бива да се представя като присъда.
+BLIND_WHY = ("provenance unknown — the step never declared what it reads "
+             "(config/step_inputs.json)")
+
+
+def _producers_of(artifact: str) -> list:
+    """Стъпките, които обявяват `artifact` за свой продукт, по core/cycle_map."""
+    try:
+        from core import cycle_map as cm
+        return [n for n, _i, _p, prod, _b in cm.STEPS if artifact in (prod or [])]
+    except Exception:
+        return []
+
+
+def _blindness(step: str, rec: dict) -> str:
+    """Назовава стъпката, чиято слепота е причинила ТОЗИ отказ, или ''.
+
+    Две форми, и втората е тази, която досега оставаше скрита:
+      1. самата стъпка не може да каже какво чете;
+      2. нивото е наследено от артефакт, чийто ПРОИЗВОДИТЕЛ не може.
+    """
+    if not _inputs_for(step)[0]:
+        return f"blind step {step!r} (itself): {BLIND_WHY}"
+    art = rec.get("inherited_from")
+    if art and rec.get("inherited", FULL) < rec.get("own", FULL):
+        blind = [p for p in _producers_of(art)
+                 if p != step and not _inputs_for(p)[0]]
+        if blind:
+            who = ", ".join(repr(b) for b in blind)
+            return f"blind step {who} (produces {art}): {BLIND_WHY}"
+    return ""
+
+
 def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     """Разрешено ли е НЕОБРАТИМО действие сега. (може_ли, обяснение).
 
@@ -566,7 +607,16 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
                f"{LEVEL_NAMES.get(rec['inherited'], rec['inherited'])} от този цикъл"
                if rec.get("inherited_from") else
                f"нивото не съвпада с нито едно измерение: {rec['vector']}")
-    return False, f"{rec['level_name']}{src} — слабо звено: {why}"
+    # Слепотата върви ПРЕДИ номера на нивото, защото номерът се чете като оценка
+    # и я скрива. НИКОГА не променя решението — само обяснението. Ако самата
+    # проверка се спъне, това се ЗАПИСВА, а не се преглъща: рекордер, който се
+    # проваля тихо, е същият дефект едно ниво по-горе.
+    try:
+        blind = _blindness(step, rec)
+    except Exception as e:                                   # noqa: BLE001
+        blind = f"[blindness check failed: {type(e).__name__}: {e}]"
+    head = f"{blind}. " if blind else ""
+    return False, f"{head}{rec['level_name']}{src} — слабо звено: {why}"
 
 
 if __name__ == "__main__":

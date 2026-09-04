@@ -151,6 +151,70 @@ def test_an_undeclared_verifier_really_does_score_unknown(step):
     assert "no declared inputs" in why, why
 
 
+# ── the refusal must not present blindness as a verdict ──────────────────────
+# A refusal caused by a step that never declared what it reads used to come back
+# as "level_0 (неизвестен произход)" plus the name of an input — which reads as a
+# judgement about the QUALITY of that input. It is not: nothing was measured and
+# found wanting, nothing was measured at all. The two want different responses,
+# and nineteen nights of self_modifier were spent on the wrong one.
+
+def test_a_blind_step_is_named_as_blind_not_scored_as_poor():
+    """The step's own blindness, in words, ahead of the level number."""
+    step = sorted(KNOWN_UNDECLARED)[0]
+    if for_step(step):
+        pytest.skip(f"{step} now has a declaration")
+    from core.notary import _blindness
+    said = _blindness(step, {})
+    assert "never declared what it reads" in said, said
+    assert repr(step) in said, said
+
+
+def test_the_blind_step_named_is_the_UPSTREAM_one_not_the_consumer():
+    """THE CASE THAT WAS INVISIBLE. self_modifier declares all four of its inputs
+    and is still refused, because hyperclaw_plan — which produces
+    memory/improvement_proposals.json — declares none. The refusal must name
+    hyperclaw_plan, not blame the artifact."""
+    from core.notary import _blindness
+    rec = {"inherited_from": "memory/improvement_proposals.json",
+           "inherited": 0, "own": 1}          # last night's real attestation
+    said = _blindness("self_modifier", rec)
+    assert "hyperclaw_plan" in said, said
+    assert "never declared what it reads" in said, said
+    assert "memory/improvement_proposals.json" in said, said
+
+
+def test_no_blindness_is_claimed_when_the_producer_IS_declared():
+    """The clause must be earned. web_intelligence declares its inputs, so a low
+    level inherited from it is a real verdict and must not be excused as
+    blindness."""
+    from core.notary import _blindness
+    rec = {"inherited_from": "memory/web_intelligence", "inherited": 0, "own": 2}
+    assert _blindness("github_publish", rec) == ""
+
+
+def test_the_blindness_clause_survives_the_refusal_reader_truncation():
+    """tools/read_the_refusals.py prints reason[:150]. The name of the blind step
+    must fall inside that, or the streak report shows the boilerplate and hides
+    the one word a human needs."""
+    from core.notary import _blindness
+    rec = {"inherited_from": "memory/improvement_proposals.json",
+           "inherited": 0, "own": 1}
+    assert "hyperclaw_plan" in _blindness("self_modifier", rec)[:150]
+
+
+def test_the_explanation_can_never_change_the_decision():
+    """_blindness is called inside may_act's refusal path only, and its failure is
+    recorded rather than swallowed. Asserted structurally: the call is wrapped and
+    the except branch produces text, never a `pass` and never a re-raise."""
+    src = (REPO / "core" / "notary.py").read_text(encoding="utf-8")
+    i = src.index("blind = _blindness(step, rec)")
+    tail = src[i:i + 400]
+    assert "except Exception" in tail, tail
+    assert "blindness check failed" in tail, (
+        "the blindness check swallows its own failure silently")
+    assert "return False" in tail, "the refusal must still be returned"
+
+
 def test_a_declared_verifier_scores_above_unknown():
     """The counter-example, so the test above is not vacuously true of every
     step. web_intelligence is the one verifier whose inputs were declared, on
