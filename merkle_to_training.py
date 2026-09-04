@@ -177,20 +177,44 @@ def build_pair(cycle_dir: Path) -> Optional[dict]:
     input_text = "\n".join(input_parts).strip()
 
     # ── OUTPUT ────────────────────────────────────────────────────────────────
-    decisions = dec_data.get("decisions", [])
-    if decisions:
-        parts = []
-        for d in decisions:
-            if isinstance(d, dict):
-                action   = d.get("action", "")
-                priority = d.get("priority", "")
-                label    = f"{action} (priority={priority})" if priority else action
-                parts.append(label or str(d))
-            else:
-                parts.append(str(d))
-        decisions_str = " | ".join(parts)
-    else:
-        decisions_str = "—"
+    # ── ONE CONTRACT, NOT TWO THAT DISAGREE (4 Sep 2026) ─────────────────────
+    # This block used to read d.get("action", "") and default to "". Across the
+    # 57 archived cycles `action` exists in 3 of 1326 decision records (0.2%) and
+    # `solution` in 1323 (99.8%), so 99.8% of the corpus was written with an empty
+    # target and reported as success for two months.
+    #
+    # The mapping now comes from training/corpus_from_merkle.py — the single
+    # declared key contract — so this path and that one cannot drift apart. A
+    # signature the contract does not know is REFUSED here too: the cycle is
+    # skipped and says so, rather than emitting a pair with a blank target.
+    from training.corpus_from_merkle import CONTRACT, Refuse
+
+    decisions = dec_data.get("decisions")
+    if not isinstance(decisions, list) or not decisions:
+        return None
+
+    parts: list[str] = []
+    refused = 0
+    for d in decisions:
+        if not isinstance(d, dict):
+            refused += 1
+            continue
+        entry = CONTRACT.get(tuple(sorted(d.keys())))
+        if entry is None or isinstance(entry, Refuse):
+            refused += 1
+            continue
+        _prompt_key, target_key = entry
+        text = d[target_key]
+        if isinstance(text, str) and text.strip():
+            parts.append(text.strip())
+        else:
+            refused += 1
+
+    if not parts:
+        print(f"  [SKIP] {cycle_dir.name}: no decision mapped to a non-empty "
+              f"target ({refused} refused) — refusing to write an empty pair")
+        return None
+    decisions_str = " | ".join(parts)
 
     goal_score = res_data.get("goal_score")
     results    = res_data.get("results", [])
