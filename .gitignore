@@ -214,3 +214,5 @@ memory/embed_index/
 # Hand-dropped media binaries (core/media_tools.py last-resort search path, 3 Sep 2026).
 # Never committed: ffmpeg.exe is ~100 MB and deno.exe ~40 MB.
 /bin/
+venv_train/
+models/
