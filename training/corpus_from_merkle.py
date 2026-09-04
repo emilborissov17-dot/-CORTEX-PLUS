@@ -50,8 +50,8 @@ if hasattr(sys.stdout, "reconfigure"):
 REPO = Path(__file__).resolve().parents[1]
 ARCHIVE = REPO / "cortex_memory" / "archive"
 OUT_DIR = REPO / "cortex_memory" / "training"
-TRAIN_FILE = OUT_DIR / "corpus_train.jsonl"
-HOLDOUT_FILE = OUT_DIR / "corpus_holdout.jsonl"
+TRAIN_FILE = OUT_DIR / "train.jsonl"
+HOLDOUT_FILE = OUT_DIR / "holdout.jsonl"
 MANIFEST_FILE = OUT_DIR / "corpus_manifest.json"
 
 HOLDOUT_FRACTION = 0.20
@@ -69,41 +69,54 @@ class Refuse:
         self.reason = reason
 
 
-_PROBLEM_SOLUTION = ("problem", "solution")
+class Mapping:
+    """prompt key, target key, and the STRATUM LABEL for this signature.
+
+    record_kind is derived from the key-set signature the contract matched — it is
+    the declared id of the entry that accepted the record, never inferred from the
+    content and never defaulted. eval_adapter strata by it, so a wrong or missing
+    kind silently merges two populations; there is no default anywhere.
+    """
+    __slots__ = ("prompt_key", "target_key", "kind")
+
+    def __init__(self, prompt_key: str, target_key: str, kind: str):
+        self.prompt_key = prompt_key
+        self.target_key = target_key
+        self.kind = kind
 
 CONTRACT: dict[tuple, object] = {
     # SIG 1 — 786 records. The plain shape.
     ("component", "generated_by", "measurable_goal", "priority", "problem",
-     "real_world_signal", "root_cause", "solution", "timestamp"): _PROBLEM_SOLUTION,
+     "real_world_signal", "root_cause", "solution", "timestamp"): Mapping("problem", "solution", "sig01_plain"),
     # SIG 2 — 470 records. Adds the approval/impact block.
     ("agi_characteristic", "approved", "component", "downstream_impact",
      "measurable_goal", "priority", "problem", "real_world_signal", "rejected",
-     "root_cause", "solution", "source", "timestamp"): _PROBLEM_SOLUTION,
+     "root_cause", "solution", "source", "timestamp"): Mapping("problem", "solution", "sig02_approved_with_impact"),
     # SIG 3 — 18 records. Experiment-authored.
     ("authored_by", "component", "experiment_id", "generated_by",
      "measurable_goal", "priority", "problem", "real_world_signal", "solution",
-     "timestamp"): _PROBLEM_SOLUTION,
+     "timestamp"): Mapping("problem", "solution", "sig03_experiment_authored"),
     # SIG 4 — 18 records. Moral-checked.
     ("accepted_by", "authored_by", "component", "generated_by",
      "measurable_goal", "moral_check", "priority", "problem",
-     "real_world_signal", "root_cause", "solution", "timestamp"): _PROBLEM_SOLUTION,
+     "real_world_signal", "root_cause", "solution", "timestamp"): Mapping("problem", "solution", "sig04_moral_checked"),
     # SIG 5 — 13 records. Gate-signalled.
     ("authored_by", "component", "gate_signals", "generated_by",
      "measurable_goal", "moral_check", "passes_measurable_gate", "priority",
      "problem", "real_world_signal", "root_cause", "solution", "timestamp",
-     "why"): _PROBLEM_SOLUTION,
+     "why"): Mapping("problem", "solution", "sig05_gate_signalled"),
     # SIG 6 — 8 records. Feedback note, no component.
     ("agi_characteristic", "approved", "feedback_note", "measurable_goal",
      "priority", "problem", "real_world_signal", "rejected", "root_cause",
-     "solution", "source", "timestamp"): _PROBLEM_SOLUTION,
+     "solution", "source", "timestamp"): Mapping("problem", "solution", "sig06_feedback_no_component"),
     # SIG 7 — 6 records. Dependency check.
     ("approved", "component", "generated_by", "measurable_goal", "priority",
      "problem", "real_world_signal", "rejected", "root_cause", "solution",
-     "timestamp"): _PROBLEM_SOLUTION,
+     "timestamp"): Mapping("problem", "solution", "sig07_dependency_check"),
     # SIG 8 — 4 records. No component.
     ("agi_characteristic", "approved", "measurable_goal", "priority", "problem",
      "real_world_signal", "rejected", "root_cause", "solution", "source",
-     "timestamp"): _PROBLEM_SOLUTION,
+     "timestamp"): Mapping("problem", "solution", "sig08_approved_no_component"),
     # SIG 9 — 3 records, all cycle_000001: {"action": "monitor", "priority": "HIGH"}.
     # This is the ONLY signature the old extractor could read, and it is a bare
     # stub: no problem statement, so there is no prompt to pair a target with.
@@ -167,7 +180,7 @@ def build(archive: Path | None = None) -> dict:
                 refusals.append((rid, ",".join(signature), entry.reason))
                 continue
 
-            prompt_key, target_key = entry
+            prompt_key, target_key = entry.prompt_key, entry.target_key
             # No .get with a default anywhere: the contract asserted these keys
             # exist for this signature, and if that is wrong we want the failure.
             prompt = rec[prompt_key]
@@ -185,6 +198,11 @@ def build(archive: Path | None = None) -> dict:
             pairs.append({
                 "id": rid,
                 "cycle": n,
+                # THE STRATUM KEY. Declared by the contract entry that matched this
+                # record's key set — never inferred from content, never defaulted.
+                # eval_adapter strata by it: a missing or guessed kind silently
+                # merges two populations and reports one number for both.
+                "record_kind": entry.kind,
                 "prompt": prompt.strip(),
                 "target": target.strip(),
                 "provenance": {
@@ -194,6 +212,8 @@ def build(archive: Path | None = None) -> dict:
                     "record_sha256": _sha256(rec),
                     "prompt_key": prompt_key,
                     "target_key": target_key,
+                    "record_kind": entry.kind,
+                    "key_signature": list(signature),
                 },
             })
 
@@ -275,6 +295,12 @@ def main() -> int:
         "holdout_cycle_range": [min(hold_cycles), max(hold_cycles)] if hold_cycles else None,
         "target_len_chars": _lengths(pairs),
         "exact_duplicate_target_rate": dup_rate,
+        "record_kind_distribution": dict(
+            Counter(p["record_kind"] for p in pairs).most_common()),
+        "record_kind_train": dict(
+            Counter(p["record_kind"] for p in train).most_common()),
+        "record_kind_holdout": dict(
+            Counter(p["record_kind"] for p in holdout).most_common()),
         "distinct_targets": len(set(targets)),
         "files": {
             "train": str(TRAIN_FILE.relative_to(REPO)).replace("\\", "/"),
