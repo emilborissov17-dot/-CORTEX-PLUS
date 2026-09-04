@@ -75,9 +75,13 @@ def load_jsonl(path: Path) -> list[dict]:
     return rows
 
 
-def norm(text: str) -> str:
-    """Whitespace-normalised target, for exact-duplicate detection."""
-    return " ".join(str(text).split())
+# ONE definition, shared with the ranking metric. SEEN/UNSEEN classification and
+# distractor-collision exclusion must use the SAME normalisation: if they
+# diverged, a distractor could be the true target under one rule and not the
+# other. Strengthened 5 Sep 2026 (casefold + trailing punctuation) after a test
+# proved a single full stop made a memorised target read as novel and put it in
+# the bucket that IS the verdict.
+from training.rank_metric import norm  # noqa: E402,F401
 
 
 def resolve_stratum(row: dict, path: Path, i: int) -> str:

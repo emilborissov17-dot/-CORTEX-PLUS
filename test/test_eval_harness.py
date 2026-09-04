@@ -149,27 +149,31 @@ def test_trailing_whitespace_still_counts_as_SEEN():
     assert ea.norm("proposal:  raise   the sampling rate\n") in train
 
 
-def test_a_single_full_stop_makes_a_SEEN_target_read_as_UNSEEN():
-    """THE WEAKNESS, ASSERTED AS IT IS, not as it should be.
+def test_a_single_full_stop_no_longer_leaks_into_the_UNSEEN_bucket():
+    """FIXED 5 Sep 2026, and this assertion is INVERTED from the one it replaces.
 
-    norm() is `" ".join(text.split())` — whitespace only. It does not touch
-    punctuation or case. So a memorised training target with a full stop appended
-    is classified UNSEEN and is graded in the bucket that IS the verdict.
-
-    This test documents the actual behaviour so it cannot change unnoticed. It is
-    a finding about the harness, not a passing feature: memorisation can leak into
-    the UNSEEN row through punctuation alone.
+    The original version documented the weakness: norm() was
+    `" ".join(text.split())` — whitespace only — so a memorised training target
+    with a full stop appended was classified UNSEEN and graded in the bucket that
+    IS the verdict. It said in its own message that the eval report and this test
+    must be updated together. They were, in the same commit that strengthened
+    norm() to casefold and strip trailing punctuation.
     """
     train = {ea.norm("proposal: raise the sampling rate")}
-    leaked = "proposal: raise the sampling rate."
-    assert ea.norm(leaked) not in train, (
-        "norm() now handles punctuation — good, but the eval reports and this "
-        "test must be updated together")
+    assert ea.norm("proposal: raise the sampling rate.") in train
 
 
-def test_case_also_leaks_for_the_same_reason():
+def test_case_no_longer_leaks_either():
     train = {ea.norm("proposal: raise the sampling rate")}
-    assert ea.norm("Proposal: raise the sampling rate") not in train
+    assert ea.norm("Proposal: raise the sampling rate") in train
+
+
+def test_eval_adapter_and_the_ranking_metric_share_ONE_norm():
+    """They must be the same object, not two copies that agree today. SEEN/UNSEEN
+    and distractor-collision exclusion diverging is how a distractor becomes the
+    true target under one rule and not the other."""
+    import training.rank_metric as rmod
+    assert ea.norm is rmod.norm
 
 
 # ════════════════════════════════════════════════════════════════════════════
