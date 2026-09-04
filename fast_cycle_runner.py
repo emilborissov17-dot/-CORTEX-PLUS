@@ -1944,6 +1944,33 @@ def _get_pending_patches() -> list[str]:
     return pending
 
 
+def _refusal_event(step: str, gate: str, why: str) -> None:
+    """EVERY refusal names the gate and the reason. Added 5 Sep 2026.
+
+    Two branches of _witness_or_refuse() used to refuse without writing anything:
+    the human-channel check returned False after a print only, and its
+    `except Exception: pass` deleted the human second witness in total silence.
+    A gate that can refuse without leaving a record is how nights disappear.
+
+    Best-effort by design: the event write must never be able to stop the cycle,
+    which is why the whole body is guarded. But the guard prints on failure now —
+    a recorder that fails silently is the same defect one level up.
+    """
+    try:
+        from memory.heartbeat import BASE as _B
+        import json as _j
+        from datetime import datetime as _dt, timezone as _tz
+        with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(_j.dumps({"ts": _dt.now(_tz.utc).isoformat(),
+                               "subject": f"{step} ОТКАЗАНА",
+                               "gate": gate,
+                               "detail": why}, ensure_ascii=False))
+            fh.write(chr(10))
+    except Exception as e:
+        print(f"[FAST_CYCLE] {step} -> refusal event NOT written "
+              f"({gate}): {type(e).__name__}: {e}")
+
+
 def _witness_or_refuse(step: str, prev_step: str) -> bool:
     """Има ли символен свидетел за тази необратима стъпка.
 
@@ -1966,9 +1993,21 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
         if not _ok_human:
             print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: човешкият канал е мъртъв "
                   f"({_why_human}). Снощната забрана може да не е стигнала дотук.")
+            # WAS SILENT UNTIL 5 Sep 2026: this refusal printed and returned, and
+            # wrote no event. The cycle log is not read; night_events.jsonl is.
+            _refusal_event(step, "human_channel", _why_human)
             return False
-    except Exception:
-        pass
+    except Exception as e:
+        # WAS `except Exception: pass` UNTIL 5 Sep 2026 — the worst branch in the
+        # function. An import error in approve_reader, or any exception inside
+        # channel_alive(), DELETED the human second witness and printed nothing at
+        # all. The gate then carried on and could still return True. A check that
+        # was never performed must not look like a check that passed.
+        print(f"[FAST_CYCLE] {step} -> човешката проверка НЕ БЕШЕ ИЗВЪРШЕНА: "
+              f"{type(e).__name__}: {e}")
+        _refusal_event(step, "human_channel_check_skipped",
+                       f"{type(e).__name__}: {e} — вторият свидетел липсва, "
+                       f"проверката не е правена")
     # ── ПОРТАТА ЧЕТЕ ПЕЧАТИТЕ (Kimi, 15 авг 2026) ──────────────────────────
     # „Стъпка 18 може да има твърда порта, но ако входът ѝ е роден на стъпка 5 при
     #  channel_alive=false, портата е СЛЯПА."
@@ -1981,16 +2020,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
         if ok:
             return True
         print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
-        try:
-            from memory.heartbeat import BASE as _B
-            import json as _j
-            from datetime import datetime as _dt, timezone as _tz
-            with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
-                fh.write(_j.dumps({"ts": _dt.now(_tz.utc).isoformat(),
-                                   "subject": f"{step} ОТКАЗАНА от нотариуса",
-                                   "detail": why}, ensure_ascii=False) + "\n")
-        except Exception:
-            pass
+        _refusal_event(step, "notary", why)
         return False
     except Exception as e:
         print(f"[FAST_CYCLE] {step} -> нотариусът е недостъпен: {type(e).__name__}: {e}")
@@ -2003,18 +2033,8 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
         print(f"[FAST_CYCLE] {step} -> witness check failed: {type(e).__name__}: {e}")
     print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: няма символен свидетел (MeTTa не е на "
           f"линия). Необратимо действие без проверка не се прави.")
-    try:
-        from memory.heartbeat import BASE as _B
-        import json as _j
-        from datetime import datetime as _dt, timezone as _tz
-        with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
-            fh.write(_j.dumps({"ts": _dt.now(_tz.utc).isoformat(),
-                               "subject": f"{step} ОТКАЗАНА",
-                               "detail": "няма символен свидетел (MeTTa); необратимите "
-                                         "стъпки спират, останалите вървят"},
-                              ensure_ascii=False) + "\n")
-    except Exception:
-        pass
+    _refusal_event(step, "metta_witness",
+                   "няма символен свидетел (MeTTa); необратимите стъпки спират, останалите вървят")
     return False
 
 
