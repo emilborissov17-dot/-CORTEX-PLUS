@@ -413,11 +413,32 @@ def _pick_model() -> tuple:
 
 
 def _smaller(current: str) -> str | None:
+    """The smallest installed model STRICTLY SMALLER than `current`, or None.
+
+    FIXED 5 Sep 2026. The old body sorted the other installed models by size and
+    returned the first, without ever comparing against `current`. On this machine
+    that made the "fall back to a smaller brain" path ESCALATE:
+
+        _smaller("qwen2.5:3b") -> "qwen2.5:7b"     3b -> 7b
+
+    because 7b was simply the smallest model that was not 3b. The caller reaches
+    this on a TIMEOUT (brain.py, the (model, COLD) / (_smaller(model), WARM) loop),
+    so a slow 3B answer pulled a 7B onto a 4 GB card and pushed host RAM toward the
+    survival gate. A function whose name asserts "smaller" must check it.
+
+    None is a valid answer and the caller already handles it: `if not mdl: break`
+    ends the retry loop. When nothing smaller exists there is nothing to fall back
+    to, and saying so is better than loading something bigger.
+    """
     ms = models()
+
     def _size(name: str) -> float:
         m = re.search(r":(\d+(?:\.\d+)?)b", str(name).lower())
         return float(m.group(1)) if m else 99.0
-    cands = sorted([m for m in ms if m and m != current], key=_size)
+
+    here = _size(current)
+    cands = sorted([m for m in ms if m and m != current and _size(m) < here],
+                   key=_size)
     return cands[0] if cands else None
 
 
