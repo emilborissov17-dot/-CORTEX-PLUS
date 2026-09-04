@@ -137,13 +137,90 @@ def test_due_but_unresolvable_is_not_reported_as_nothing_due(store):
     assert rec["due"] == 1
     assert rec["resolved_now"] == 0
     assert rec["skipped_no_data"] == 1
+    assert rec["unresolvable_now"] == 1
     assert rec["verdict"] == "DUE_BUT_UNRESOLVABLE"
     assert rec["stuck"][0]["axis"] == "kp_index"
     line = HR.summary_line(rec)
     assert "NONE resolvable" in line and "kp_index" in line
     assert "0 due" not in line
-    # and it stays pending — an ungradeable hypothesis is not silently discarded
-    assert len(json.loads(store["pending"].read_text(encoding="utf-8"))) == 1
+    # AMENDED 4 Sep 2026 (Q0). It no longer stays pending. Staying pending is what
+    # let this exact hypothesis rot for seven weeks while the step reported clean.
+    # It leaves pending carrying a named reason instead — not discarded, graded as
+    # ungradeable.
+    assert json.loads(store["pending"].read_text(encoding="utf-8")) == []
+    moved = json.loads(store["resolved"].read_text(encoding="utf-8"))
+    assert len(moved) == 1
+    assert moved[0]["status"] == "unresolvable"
+    assert moved[0]["actual_value"] is None
+    assert moved[0]["accuracy"] is None
+    assert moved[0]["days_overdue"] == 1
+    assert "kp_index" in moved[0]["unresolvable_reason"]
+
+
+def test_the_named_reason_says_which_lookups_came_up_empty(store):
+    """A reason is only a reason if it is actionable. "no current value" was true
+    for seven weeks and told nobody which of the three lookups to go and fix."""
+    yesterday = date.today() - timedelta(days=1)
+    store["pending"].write_text(json.dumps(
+        [_hyp("stuck", "kp_index", 2.67, yesterday)]), encoding="utf-8")
+    store["trends"].write_text(json.dumps({"kp_index": []}), encoding="utf-8")
+
+    HR.run(write=True)
+
+    why = json.loads(store["resolved"].read_text(encoding="utf-8"))[0][
+        "unresolvable_reason"]
+    # all three lookups named, each with its own outcome
+    assert "trends.json['kp_index'] is an EMPTY series" in why
+    assert "axis_observations has no axis 'kp_index'" in why
+    assert "metric_details has no metric 'kp_index'" in why
+
+
+def test_a_past_due_hypothesis_never_survives_the_step_in_pending(store):
+    """THE CONTRACT, stated as one property: after this step runs, nothing in
+    pending.json may carry a prediction_date in the past. Both exits are legal —
+    graded, or marked unresolvable — but staying is not."""
+    yesterday = date.today() - timedelta(days=1)
+    store["pending"].write_text(json.dumps([
+        _hyp("gradeable", "co2_ppm", 430.0, yesterday),      # has a series
+        _hyp("ungradeable", "kp_index", 2.67, yesterday),    # has nothing
+    ]), encoding="utf-8")
+    store["trends"].write_text(json.dumps(
+        {"co2_ppm": [426.94], "kp_index": []}), encoding="utf-8")
+
+    rec = HR.run(write=True)
+
+    left = json.loads(store["pending"].read_text(encoding="utf-8"))
+    assert [h for h in left
+            if date.fromisoformat(h["prediction_date"]) < date.today()] == []
+    assert rec["resolved_now"] == 1 and rec["unresolvable_now"] == 1
+    by_id = {r["id"]: r for r in
+             json.loads(store["resolved"].read_text(encoding="utf-8"))}
+    assert by_id["gradeable"]["status"] == "resolved"
+    assert isinstance(by_id["gradeable"]["accuracy"], float)
+    assert by_id["ungradeable"]["status"] == "unresolvable"
+
+
+def test_an_unresolvable_record_moves_no_belief_weight(store, tmp_path):
+    """C7 must not learn from a prediction nobody could grade. A vacuous record
+    reaching belief_revision has to produce zero weight movement and a named
+    refusal, not a micro-update from a missing number."""
+    import core.belief_revision as BR
+
+    resolved = tmp_path / "resolved_for_br.json"
+    resolved.write_text(json.dumps([{
+        "id": "u1", "axis": "kp_index", "method": "persistence",
+        "predicted_value": 2.67, "actual_value": None, "accuracy": None,
+        "lo": 2.0, "hi": 3.0, "status": "unresolvable",
+        "unresolvable_reason": "no ground truth",
+        "evaluated_at": "2026-09-04T00:00:00+00:00",
+    }]), encoding="utf-8")
+
+    rec = BR.run(write=False, state_path=tmp_path / "state.json",
+                 resolved_path=resolved)
+
+    assert rec["revisions"] == 0
+    assert rec["skipped"]["unresolvable"] == 1
+    assert rec["state"]["axes"] == {}
 
 
 # ── RESOLUTION ONLY, NEVER GENERATION ─────────────────────────────────────────

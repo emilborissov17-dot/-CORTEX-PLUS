@@ -29,13 +29,16 @@ catch it going inert:
     succeeds silently when it did nothing is indistinguishable from a step that is
     not wired.
 
-  - DUE BUT UNRESOLVABLE IS ITS OWN VERDICT. A hypothesis whose prediction_date has
-    passed but whose axis has no current value in trends.json is NOT resolved and NOT
-    counted as "nothing due" — the evaluator leaves it pending and this module counts
-    it as `skipped_no_data`. On 3 Sep 2026 both live hypotheses are in exactly that
-    state: kp_index and co2_ppm are empty lists in trends.json, so they have been due
-    since 17 and 20 July with nothing to grade them against. Reporting that as "0 due"
-    would hide the actual failure, which is upstream of the evaluator.
+  - DUE BUT UNRESOLVABLE IS ITS OWN VERDICT, AND IT LEAVES PENDING (amended 4 Sep
+    2026, Q0). A hypothesis whose prediction_date has passed but whose axis has no
+    reading anywhere is NOT graded and NOT counted as "nothing due". Until today the
+    evaluator returned it to pending, which is why kp_index (due 17 July) and
+    co2_ppm (due 20 July) sat there for seven weeks while this step reported cleanly
+    every night: "still pending" and "forgotten" were the same state on disk. Now the
+    evaluator marks it `status: "unresolvable"` with the lookup trail that came up
+    empty and moves it to resolved.json; this module counts it as `unresolvable_now`
+    (and keeps `skipped_no_data` as its alias). A past-due hypothesis that is still
+    in pending after this step is a contract violation and is reported as one.
 
 The artifact (memory/hypothesis_resolution_latest.json) is written on EVERY run, which
 is what lets G_LEARN's produces list catch this step going inert. resolved.json is
@@ -123,32 +126,45 @@ def run(write: bool = True, today: date | None = None) -> dict:
     # means something called a generator behind our back.
     grew = len(after_pending) > len(before_pending)
 
+    # GRADED AND UNGRADEABLE ARE TWO OUTCOMES, NOT ONE (4 Sep 2026, Q0). The
+    # evaluator now returns both: a hypothesis it scored, and a past-due one it
+    # could not score and therefore moved out of pending marked "unresolvable"
+    # with the lookup trail that came up empty. Counting them together would let a
+    # night of pure failure report the same number as a night of pure success.
+    graded = [r for r in newly if r.get("status") != "unresolvable"]
+    ungradeable = [r for r in newly if r.get("status") == "unresolvable"]
+
     rec = {
         "ts": datetime.now(timezone.utc).isoformat(),
         "due": len(due_before),
-        "resolved_now": len(newly),
-        "skipped_no_data": max(0, len(due_before) - len(newly)),
+        "resolved_now": len(graded),
+        "unresolvable_now": len(ungradeable),
+        "skipped_no_data": len(ungradeable),
         "pending_before": len(before_pending),
         "pending_after": len(after_pending),
         "resolved_total": len(after_resolved),
         "resolved_added": len(after_resolved) - len(before_resolved),
-        "accuracies": [round(float(r.get("accuracy")), 4) for r in newly
+        "accuracies": [round(float(r.get("accuracy")), 4) for r in graded
                        if isinstance(r.get("accuracy"), (int, float))],
         "resolution_only_ok": not grew,
         "verdict": ("ERROR" if error else
                     "ILLEGAL_GROWTH" if grew else
-                    "RESOLVED" if newly else
-                    "DUE_BUT_UNRESOLVABLE" if due_before else
+                    "RESOLVED" if graded else
+                    "DUE_BUT_UNRESOLVABLE" if (ungradeable or due_before) else
                     "NOTHING_DUE"),
         "error": error,
         "store": {"pending": _rel(pending_p), "resolved": _rel(resolved_p)},
     }
     # Which axes were due but had nothing to grade them against — the actionable half.
     if rec["skipped_no_data"]:
-        done = {h.get("id") for h in newly}
+        # Each stuck entry now carries WHY it could not be graded, straight from the
+        # evaluator's lookup trail. "no current value" was true and useless; naming
+        # the three lookups that missed is what makes it fixable.
         rec["stuck"] = [{"id": h.get("id"), "axis": h.get("axis"),
-                         "prediction_date": h.get("prediction_date")}
-                        for h in due_before if h.get("id") not in done]
+                         "prediction_date": h.get("prediction_date"),
+                         "days_overdue": h.get("days_overdue"),
+                         "reason": h.get("unresolvable_reason")}
+                        for h in ungradeable]
 
     if write:
         LATEST.parent.mkdir(parents=True, exist_ok=True)
@@ -171,10 +187,15 @@ def summary_line(rec: dict) -> str:
         return (f"[FAST_CYCLE] resolve_hypotheses -> {rec['resolved_now']} of "
                 f"{rec['due']} due resolved (mean accuracy {mean}); "
                 f"{rec['pending_after']} still pending")
-    if rec["due"]:
+    if rec.get("unresolvable_now"):
         axes = ", ".join(sorted({s.get("axis", "?") for s in rec.get("stuck", [])}))
         return (f"[FAST_CYCLE] resolve_hypotheses -> {rec['due']} due but NONE "
-                f"resolvable: no current value in trends.json for {axes or '?'}")
+                f"resolvable: no ground truth for {axes or '?'}; "
+                f"{rec['unresolvable_now']} marked UNRESOLVABLE and moved out of "
+                f"pending")
+    if rec["due"]:
+        return (f"[FAST_CYCLE] resolve_hypotheses -> {rec['due']} due, none graded "
+                f"and none marked unresolvable — the contract broke")
     return (f"[FAST_CYCLE] resolve_hypotheses -> 0 due "
             f"({rec['pending_after']} pending, {rec['resolved_total']} resolved "
             f"all-time)")

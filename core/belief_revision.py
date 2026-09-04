@@ -152,13 +152,23 @@ def run(write: bool = True, state_path: Path | None = None,
     since = state.get("last_seen_evaluated_at")
 
     rows = newly_resolved(since, resolved_path)
-    revisions, skipped = [], {"no_interval": 0, "unknown_method": 0, "no_error": 0}
+    revisions, skipped = [], {"no_interval": 0, "unknown_method": 0, "no_error": 0,
+                          "unresolvable": 0}
     newest = since
 
     for r in rows:
         when = str(r.get("evaluated_at") or "")
         if newest is None or when > newest:
             newest = when
+        # AN UNGRADEABLE PREDICTION TEACHES NOTHING (4 Sep 2026, Q0). The evaluator
+        # now moves a past-due hypothesis with no ground truth into resolved.json
+        # marked "unresolvable" so it stops rotting in pending. It carries no actual
+        # value, so it must never move a weight: counted here by name rather than
+        # falling through the no_error branch, which would report the same number
+        # for "the reading was missing" and "the record was malformed".
+        if r.get("status") == "unresolvable":
+            skipped["unresolvable"] += 1
+            continue
         axis = r.get("axis")
         method = r.get("method")
         if not axis:

@@ -52,17 +52,83 @@ def _observed_from_scorer(axis_name):
     return None
 
 
-def _get_current_value(axis_name):
-    """Most recent value for axis_name: trends.json first, scorer snapshot second."""
+# THE THIRD LOOKUP (4 Sep 2026, Q0). trends.json names a series "co2_ppm"; the
+# scorer names the same NOAA reading "co2_ppm_mauna_loa" — goal_score_calculator's
+# own trend_map already maps one onto the other, in the opposite direction. Without
+# the alias a hypothesis registered under the trends name can never be graded
+# against the scorer, which is half of why the 20 July co2_ppm prediction sat
+# unresolved for seven weeks with a live reading on disk the whole time.
+_METRIC_ALIAS = {
+    "co2_ppm": "co2_ppm_mauna_loa",
+    "refugees": "refugee_population",
+}
+
+
+def _observed_from_metric_details(axis_name):
+    """The reading under the scorer's METRIC name, or None.
+
+    axis_observations is keyed by REVIEW axis; a hypothesis whose axis is a raw
+    series name ("co2_ppm") never matches it. metric_details is keyed by metric,
+    which is what such a hypothesis is actually about.
+    """
+    try:
+        with open(GOAL_SNAP_PATH, "r", encoding="utf-8") as f:
+            snap = json.load(f)
+    except Exception:
+        return None
+    details = snap.get("metric_details") or {}
+    for key in (_METRIC_ALIAS.get(axis_name), axis_name):
+        if not key:
+            continue
+        row = details.get(key)
+        if isinstance(row, dict) and isinstance(row.get("current"), (int, float)):
+            return float(row["current"])
+    return None
+
+
+def ground_truth(axis_name):
+    """(value, trail) for axis_name. trail names every lookup tried and its outcome.
+
+    Returning the trail is the point. Until now the failure to find a reading was
+    reported as one word — SKIP — and a hypothesis could sit past due forever with
+    nobody able to say WHICH lookup came up empty. A named reason is the difference
+    between an unresolvable prediction and a forgotten one.
+    """
+    trail = []
+
     try:
         with open(TRENDS_PATH, "r", encoding="utf-8") as f:
             trends = json.load(f)
         values = trends.get(axis_name)
-        if isinstance(values, list) and len(values) > 0:
-            return values[-1]
-    except Exception:
-        pass
-    return _observed_from_scorer(axis_name)
+        if isinstance(values, list) and values:
+            return values[-1], trail + [f"trends.json['{axis_name}'] -> {values[-1]}"]
+        if isinstance(values, list):
+            trail.append(f"trends.json['{axis_name}'] is an EMPTY series")
+        else:
+            trail.append(f"trends.json has no series '{axis_name}'")
+    except Exception as exc:
+        trail.append(f"trends.json unreadable ({exc.__class__.__name__})")
+
+    v = _observed_from_scorer(axis_name)
+    if v is not None:
+        return v, trail + [f"axis_observations['{axis_name}'] -> {v}"]
+    trail.append(f"axis_observations has no axis '{axis_name}'")
+
+    v = _observed_from_metric_details(axis_name)
+    if v is not None:
+        alias = _METRIC_ALIAS.get(axis_name)
+        via = f"'{alias}' (alias of '{axis_name}')" if alias else f"'{axis_name}'"
+        return v, trail + [f"metric_details[{via}] -> {v}"]
+    trail.append(f"metric_details has no metric '{axis_name}'"
+                 + (f" nor its alias '{_METRIC_ALIAS[axis_name]}'"
+                    if axis_name in _METRIC_ALIAS else ""))
+
+    return None, trail
+
+
+def _get_current_value(axis_name):
+    """Most recent value for axis_name. Kept for callers that want a bare float."""
+    return ground_truth(axis_name)[0]
 
 
 def _accuracy(predicted, actual):
@@ -111,11 +177,31 @@ def check_due_hypotheses():
             continue
 
         axis = h["axis"]
-        actual = _get_current_value(axis)
+        actual, trail = ground_truth(axis)
 
         if actual is None:
-            print(f"[SKIP] {h['id']}: липсват текущи данни за '{axis}'")
-            still_pending.append(h)
+            # PAST DUE AND UNGRADEABLE IS A VERDICT, NOT A SKIP (4 Sep 2026, Q0).
+            # This branch used to append to still_pending unconditionally. A
+            # hypothesis whose axis has no reading anywhere therefore returned to
+            # pending every night forever, while the step above it printed a clean
+            # report: the 17 July kp_index and 20 July co2_ppm predictions sat here
+            # for seven weeks and the cycle called that success. A prediction that
+            # cannot be graded is a failure of the registration, and it has to leave
+            # pending carrying the reason it could not be graded.
+            reason = "; ".join(trail)
+            record = {
+                **h,
+                "status": "unresolvable",
+                "actual_value": None,
+                "accuracy": None,
+                "error_pct": None,
+                "unresolvable_reason": reason,
+                "days_overdue": (today - pred_date).days,
+                "evaluated_at": datetime.now(timezone.utc).isoformat(),
+            }
+            resolved_new.append(record)
+            print(f"[UNRESOLVABLE] {h['id']} ({(today - pred_date).days}d overdue): "
+                  f"no ground truth for '{axis}' — {reason}")
             continue
 
         predicted = h["predicted_value"]
@@ -157,9 +243,25 @@ def check_due_hypotheses():
         with open(RESOLVED_PATH, "w", encoding="utf-8") as f:
             json.dump(resolved_all, f, indent=2, ensure_ascii=False)
 
-        print(f"\n{len(resolved_new)} хипотеза(и) → resolved.json")
+        n_graded = sum(1 for r in resolved_new if r.get("status") == "resolved")
+        n_unres  = sum(1 for r in resolved_new if r.get("status") == "unresolvable")
+        # THE TWO NUMBERS ARE REPORTED SEPARATELY, ALWAYS. Folding an ungradeable
+        # prediction into the resolved count is how "0 due" stayed true while two
+        # predictions rotted for seven weeks.
+        print("")
+        print(f"{len(resolved_new)} хипотеза(и) → resolved.json "
+              f"({n_graded} graded, {n_unres} UNRESOLVABLE)")
     else:
         print("Няма дължими хипотези за оценка днес.")
+
+    overdue_left = [h for h in still_pending
+                    if date.fromisoformat(h["prediction_date"]) < today]
+    if overdue_left:
+        # Nothing may reach this line: a past-due hypothesis either graded or was
+        # marked unresolvable above. If one is here the contract broke, and it says
+        # so loudly instead of waiting another seven weeks to be noticed.
+        print(f"[CONTRACT VIOLATION] {len(overdue_left)} past-due hypothesis(es) "
+              f"remain pending: {[h['id'] for h in overdue_left]}")
 
     still_count = len(still_pending)
     if still_count:
