@@ -192,6 +192,8 @@ def consolidation_hypotheses(path: Path | None = None, today: date | None = None
                 "predicted_value": float(h["predicted"]),
                 "lo": float(h["lo"]),
                 "hi": float(h["hi"]),
+                "interval_nominal": INTERVAL_NOMINAL,
+                "interval_basis": INTERVAL_BASIS,
                 "prediction_date": h["due_on"],
                 "horizon_days": int(h["horizon_days"]),
                 "hypothesis_text": (
@@ -209,6 +211,59 @@ def consolidation_hypotheses(path: Path | None = None, today: date | None = None
 
 # ── the run ───────────────────────────────────────────────────────────────────
 
+# ── BORN GRADEABLE, OR NOT BORN (4 Sep 2026, H2) ─────────────────────────────
+# The seven-week freeze was a metric-name mismatch: a hypothesis registered under
+# "co2_ppm" while the grader knew the reading as "co2_ppm_mauna_loa". Third
+# instance of this defect class. The fix is not a synonym dictionary — it is to
+# resolve the key against the live store AT CREATION, using the same resolver the
+# grader will use, and refuse to write a prediction that cannot be graded. A
+# prediction must never be born ungradeable and discover it 49 days later.
+#
+# PERSISTENCE_EPS: a prediction equal to its own anchor is not a prediction, it is
+# a restatement, and it cannot be wrong. Measured 4 Sep: 13 of 14 live pendings
+# had |predicted - anchor| EXACTLY 0 on axes that have not moved in 30 cycles.
+PERSISTENCE_EPS = 1e-6
+
+# EVERY INTERVAL DECLARES ITS NOMINAL LEVEL (4 Sep 2026, H3). Without this field
+# neither an interval score nor coverage is computable later — the same defect
+# class as axis_observations having no observation date: the number that makes
+# the record checkable simply does not exist, so nobody can tell it is missing.
+#
+# DECLARED, NOT CALIBRATED, and the record says so. The half-width is 2x the mean
+# absolute step of the series (_spread), which is a plausible ~80% band for a
+# random walk and is NOT a measured quantile. Whether the intervals actually
+# cover 80% is unknown and stays unknown until there are enough real resolutions
+# on an axis to measure it. Writing 0.80 here is a claim we can later be caught
+# out on; writing nothing is how we would never be.
+INTERVAL_NOMINAL = 0.80
+INTERVAL_BASIS = ("declared, not calibrated: half-width is 2x the series mean "
+                  "absolute step; coverage is UNKNOWN until enough resolutions "
+                  "exist on this axis to measure it")
+
+
+def _resolves(axis: str, metric: str | None):
+    """(value, why_not) from the grader's own resolver, so creation and grading
+    cannot disagree about what a key means."""
+    try:
+        import evaluator as _ev
+        v, trail = _ev.ground_truth(axis, metric)
+    except Exception as exc:
+        return None, f"ground truth lookup failed: {type(exc).__name__}: {exc}"
+    if v is None:
+        return None, "; ".join(trail)
+    return v, None
+
+
+def _is_restatement(predicted, anchor) -> bool:
+    """True when the prediction is its own anchor within tolerance."""
+    if anchor is None or predicted is None:
+        return False
+    try:
+        return abs(float(predicted) - float(anchor)) <=             PERSISTENCE_EPS * max(1.0, abs(float(anchor)))
+    except (TypeError, ValueError):
+        return False
+
+
 def run(write: bool = True, today: date | None = None,
         pending: Path | None = None, queue: Path | None = None,
         latest: Path | None = None) -> dict:
@@ -224,7 +279,9 @@ def run(write: bool = True, today: date | None = None,
 
     beliefs = _load_beliefs()
     axes = measured_axes()
-    new, skipped = [], {"already_registered": 0, "method_declined": 0}
+    new, skipped = [], {"already_registered": 0, "method_declined": 0,
+                        "key_unresolvable": 0, "restatement": 0}
+    refused: list = []
 
     for axis, current in sorted(axes.items()):
         method = _best_method(axis, beliefs)
@@ -236,11 +293,43 @@ def run(write: bool = True, today: date | None = None,
         if got is None:
             skipped["method_declined"] += 1
             continue
+        # A METHOD THAT ONLY RESTATES IS NOT THE METHOD TO USE (4 Sep 2026, H2).
+        # persistence predicts exactly the anchor by construction, so with uniform
+        # beliefs every axis would be refused as a restatement and the step would
+        # be permanently silent. Try the others before giving up: on a series that
+        # actually moves, trend or mean_reversion say something falsifiable; on a
+        # frozen one they all restate and the refusal below is the true answer.
+        if got is not None and _is_restatement(got[0], current):
+            for alt in ("trend", "mean_reversion", "anchored"):
+                if alt == method:
+                    continue
+                alt_got = _predict(alt, current, hist)
+                if alt_got is not None and not _is_restatement(alt_got[0], current):
+                    got, method = alt_got, alt
+                    break
         predicted, half = got
         due = today + timedelta(days=DEFAULT_HORIZON)
         hid = f"{axis}__{method}__{due.isoformat()}"
         if hid in seen:
             skipped["already_registered"] += 1
+            continue
+        ok, why_not = _resolves(axis, None)
+        if ok is None:
+            # BORN GRADEABLE OR NOT BORN (H2)
+            skipped["key_unresolvable"] += 1
+            refused.append({"axis": axis, "metric": None, "reason": why_not,
+                            "refused": "key does not resolve against the live store"})
+            continue
+        if _is_restatement(predicted, current):
+            # A RESTATEMENT IS NOT A PREDICTION (H2). It cannot be wrong, so it
+            # cannot teach, and grading it as a 100% win is how a frozen series
+            # convinces C7 that persistence is a good model.
+            skipped["restatement"] += 1
+            refused.append({"axis": axis, "metric": None,
+                            "reason": (f"predicted {predicted!r} equals the "
+                                       f"persistence anchor {current!r} within "
+                                       f"{PERSISTENCE_EPS}"),
+                            "refused": "a restatement of the anchor is not a prediction"})
             continue
         new.append({
             "id": hid,
@@ -250,6 +339,8 @@ def run(write: bool = True, today: date | None = None,
             "lo": round(predicted - half, 6),
             "hi": round(predicted + half, 6),
             "interval_width": round(2 * half, 6),
+            "interval_nominal": INTERVAL_NOMINAL,
+            "interval_basis": INTERVAL_BASIS,
             "prediction_date": due.isoformat(),
             "horizon_days": DEFAULT_HORIZON,
             "value_at_registration": round(current, 6),
@@ -269,8 +360,41 @@ def run(write: bool = True, today: date | None = None,
         if h["id"] in seen:
             skipped["already_registered"] += 1
             continue
+        anchor, why_not = _resolves(h.get("axis"), h.get("metric"))
+        if anchor is None:
+            # THE LIVE INSTANCE: CLIMATE_GLOBAL_RISK_REVIEW__co2_annual_increase
+            # predicts the annual INCREASE (0.55) while its axis exposes the LEVEL
+            # (426.94). Grading it by axis would score a rate against a level.
+            skipped["key_unresolvable"] += 1
+            refused.append({"axis": h.get("axis"), "metric": h.get("metric"),
+                            "reason": why_not,
+                            "refused": "key does not resolve against the live store"})
+            continue
+        # consolidation records never carried a persistence anchor, so nothing they
+        # produced could ever have been scored for skill
+        h.setdefault("value_at_registration", round(float(anchor), 6))
+        if _is_restatement(h.get("predicted_value"), anchor):
+            skipped["restatement"] += 1
+            refused.append({"axis": h.get("axis"), "metric": h.get("metric"),
+                            "reason": (f"predicted {h.get('predicted_value')!r} equals "
+                                       f"the persistence anchor {anchor!r}"),
+                            "refused": "a restatement of the anchor is not a prediction"})
+            continue
         new.append(h)
         seen.add(h["id"])
+
+    # AN INTERVAL WITHOUT A DECLARED LEVEL NEVER REACHES DISK (H3). Checked here
+    # rather than trusted at each construction site, so a future third record shape
+    # cannot quietly reintroduce the gap.
+    for h in list(new):
+        if ("lo" in h or "hi" in h) and h.get("interval_nominal") is None:
+            new.remove(h)
+            skipped["interval_without_level"] =                 skipped.get("interval_without_level", 0) + 1
+            refused.append({"axis": h.get("axis"), "metric": h.get("metric"),
+                            "reason": ("the record carries lo/hi but no "
+                                       "interval_nominal, so neither an interval "
+                                       "score nor coverage can ever be computed"),
+                            "refused": "interval without a declared nominal level"})
 
     rec = {
         "ts": datetime.now(timezone.utc).isoformat(),
@@ -280,6 +404,11 @@ def run(write: bool = True, today: date | None = None,
         "from_consolidation": sum(1 for h in new
                                   if h.get("origin") == "core/consolidation.py"),
         "skipped": skipped,
+        # EVERY REFUSAL, WITH ITS NAMED REASON (H3). A night that registers
+        # nothing because everything it could say was a restatement is a
+        # RESULT, and it has to be readable as one.
+        "refused": refused,
+        "refused_count": len(refused),
         "pending_before": len(existing),
         "pending_after": len(existing) + len(new),
         "methods_used": sorted({h.get("method") for h in new if h.get("method")}),
@@ -300,18 +429,20 @@ def run(write: bool = True, today: date | None = None,
 
 
 def summary_line(rec: dict) -> str:
-    if not rec["measured_axes"]:
-        return ("[FAST_CYCLE] hypothesis_intake -> 0 MEASURED axes; nothing may be "
-                "predicted tonight (an opinion is not a prediction)")
-    if not rec["registered"]:
-        return (f"[FAST_CYCLE] hypothesis_intake -> 0 new "
-                f"({rec['skipped']['already_registered']} already registered for "
-                f"their due date); {rec['pending_after']} pending")
-    return (f"[FAST_CYCLE] hypothesis_intake -> {rec['registered']} pre-registered "
-            f"from {rec['measured_axes']} MEASURED axes "
-            f"({rec['from_consolidation']} from consolidation), methods="
-            f"{','.join(rec['methods_used'])}; pending "
-            f"{rec['pending_before']} -> {rec['pending_after']}")
+    ref = rec.get("refused_count", 0)
+    why = ", ".join(f"{k}={v}" for k, v in sorted(rec.get("skipped", {}).items()) if v)
+    if not rec.get("registered"):
+        gate = ("nothing may be predicted" if not rec.get("measured_axes")
+                else "nothing worth predicting")
+        return (f"[FAST_CYCLE] hypothesis_intake -> 0 registered from "
+                f"{rec.get('measured_axes', 0)} measured axes ({gate}); {ref} refused "
+                f"({why or 'nothing to say'})")
+    return (f"[FAST_CYCLE] hypothesis_intake -> {rec['registered']} registered "
+            f"({', '.join(rec.get('methods_used') or []) or 'no method'}), "
+            f"{ref} refused ({why or 'none'}); "
+            f"pending {rec.get('pending_before')} -> {rec.get('pending_after')}")
+
+
 
 
 def _selftest() -> int:

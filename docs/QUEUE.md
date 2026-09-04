@@ -1,10 +1,10 @@
 ## STATUS
-last_updated_utc: 2026-08-29T18:05:00Z
-last_item_done: ITEM 43.1 — every persisted axis payload now carries what actually answered it. core/answered_by.py stamps {backend, model, degraded} read from step_contract.current(); the false constant `model` field is gone from all seven sites; cosmos keeps source_type and gains the stamp beside it.
-current_item: ITEM 44.1 items 1-4 — the demotion must stop outliving its own recovery signal. THE PRIORITY: it is the only change that alters the 03:00 cycle.
+last_updated_utc: 2026-09-03T08:00:00Z
+last_item_done: ITEM 62-64 (3 Sep, written from the cloud session, UNVERIFIED on the machine - see each item): sensorium ingest stops dying on audit leaves (18 nights); ffmpeg/deno resolved by path + subtitle-429 parking; the World Bank water candidate re-pointed at a real indicator.
+current_item: ITEM 65 - PROVE ITEMS 62-64 ON THE MACHINE (tests + one scheduled cycle), then run the three Kimi briefs (tools/run_kimi_briefs_2026-09-03.bat) and fold the rulings back into 62-64 before anything below is touched.
 current_state: READY
-gate_closed_reason: - (GATE:NOCYCLE open. No memory/cycle.lock, no memory/heartbeat.json; memory/last_cycle_id.txt = 2026-08-29T03:04:01 — the nightly cycle sealed at 05:03 local and today's has already run.)
-next_action_needed_from_claude: 44.1 items 1-4, then 44.1 item 5 (CLOUD_EMPTY_LIMIT -> config/scheduler.json, Emil's approval quoted verbatim in that commit). DO NOT RUN A CYCLE BY HAND — the scheduler's own 03:00 run is the test. FOR EMIL: the 2026-08-29 POST-CYCLE baseline amendment is THE LAST OF ITS KIND; the next time a cycle moves the FAILED list, ITEM 45 separates the gate from the monitor instead of widening the tolerance.
+gate_closed_reason: - (GATE:NOCYCLE open at 2026-09-03T05:01 local: the 03:04 cycle sealed at 05:01 and nothing is running.)
+next_action_needed_from_claude: ITEM 65 first. STATUS NOTE ON 44.1: the 2026-08-30 commits "ladder: a 180-second rate limit stops becoming a two-hour exclusion" and "policy: the number that decides how much of a night runs on a 3B moves into config" ARE 44.1 items 1-4 and item 5; this block said "current: 44.1" for four days after they landed. The 1-3 Sep cycle logs show the re-probe firing ("cloud re-probe SUCCEEDED; demotion cleared") - 44.1 is DONE and proven live. Then the TODO table in order: 36, 35, 13, 15-20, 25 (re-derive orphans FIRST), 26, 27, 38 Part 2, 45 step 2 (held for Kimi), 46, 47, then 52 -> 53 -> 50 in that order and never together. DO NOT RUN A CYCLE BY HAND - schtasks /Run /TN CORTEX_Supervisor if one is needed (ITEM 57).
 
 THE BASELINE IS 52-53, NOT 29. The number in STANDING RULES said 29 until
 2026-08-29 and that was three amendments out of date. Of the 53 recorded at
@@ -71,6 +71,17 @@ Keep the state column current — it is the only place a human should have to lo
 | 59 | Cerebras retirement - a leg dead since 28 Aug on a billing 402 stops being advertised | DONE 2026-08-31 | NOCYCLE |
 | 60 | Ц3а - execute_patches' ceiling is STATED in code, not resting on a phantom input | DONE 2026-08-31 | NOCYCLE |
 | 61 | PUBLISH GATE - 15 nights silent; the notary refused, not the token | DONE 2026-08-31, published | NOCYCLE |
+| 62 | sensorium ingest died every night since 16 Aug on an audit leaf whose axis is a path | DONE 2026-09-03 (cloud session) + KIMI RULING FOLDED IN (kind="audit", dead-letter queue) - UNVERIFIED on the machine, see ITEM 65 | NOCYCLE |
+| 63 | ffmpeg + deno absent; Whisper leg never ran; ~280 yt-dlp subtitle 429s per night | CODE DONE 2026-09-03 + KIMI RULING FOLDED IN (one IP-wide breaker, wall-clock backoff, version-checked binaries) - INSTALL is Emil's (tools\install_media_deps.bat); UNVERIFIED | NOCYCLE |
+| 64 | Water <- World Bank candidate (id 96b9): the registered URL named a non-existent indicator | RECORD FIXED 2026-09-03 - promotion stays human (OK 96b9 next time it is offered) | NOCYCLE |
+| 65 | PROVE 62-64 on the machine: suite_gate + one scheduled cycle + the three Kimi briefs | TODO - FIRST | NOCYCLE |
+| 66 | R7_SENSOR_REUSE: CLIMATE_GLOBAL_RISK and MATERIALS_WASTE share anchor NOAA=426.94 - 5 days in every rationale, no item | TODO | NOCYCLE |
+| 67 | R5_BLIND_SPOT: GOAL_PROGRESS_REVIEW declared, no level, no metric (new since 2 Sep); DEEP_TIME stays "deliberately undecided" per ITEM 21(b) | TODO | NOCYCLE |
+| 68 | language purity 95.0-95.6% against a 98% floor, two alarms in four days; phase_debrief is the leak (11/15, 5/7 clean) | TODO | NOCYCLE |
+| 69 | proposal SLA ids RENUMBER between reports (EXTRA_CALLS_BREACH = imp:21 -> 22 -> 13 -> 33): "OK imp:22" cannot land on a stable target | TODO | NOCYCLE |
+| 70 | Kimi (ITEM 62): a critical step that says FAILED two nights running must ALERT, and ingest needs a health signal that is not a grep | TODO | NOCYCLE |
+| 72 | Kimi (ITEM 64): a hand edit of a memory/ file by an assistant needs a human_override.log with before/after hashes - memory/ is a black box otherwise | TODO | NOCYCLE |
+| 71 | Kimi (ITEM 63): the 429 threshold is a guess - build the histogram of 429 intervals from the breaker's counts, then A/B N=3 vs N=10; and ask why subtitles are fetched live at all | TODO | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -4423,3 +4434,309 @@ Full failing-id lists written to file and diffed: IDENTICAL SET, zero moved.
 - agents/internet/internet_agent.py:1151 — the global-synthesis call still uses _groq +
   _parse_llm_json, the same shape as the 3.1 defect. It fails loudly rather than
   silently, so it was not folded into 3.1.
+
+--------------------------------------------------------------------------------
+ITEM 62 - SENSORIUM INGEST DIED EVERY NIGHT SINCE 16 AUG ON AN AUDIT LEAF
+--------------------------------------------------------------------------------
+STATUS: DONE 2026-09-03 in the CLOUD session (Ivan's Cowork, no shell on the machine).
+UNVERIFIED against this repo's live suite - ITEM 65 closes that loop.
+GATE: NOCYCLE
+
+MEASURED. Every cycle log from 31 Aug to 3 Sep carries
+  [FAST_CYCLE] sensorium ingest -> FAILED: FileNotFoundError: [Errno 2] No such file or
+  directory: '...memory/browse_sources/indicators/co2.json'
+memory/sensorium/_merkle_leaves.jsonl: 810 leaves. _consumed.json: 12 ids, last written
+2026-08-11. So 798 leaves were fresh, and the newest per (axis, kind) included
+  44 x 18 sections  axis "indicators/<section>"  collector global_indicators   <- the crash
+   3 + 3            goal_impact drops for ECONOMY_WORK_REVIEW, INEQUALITY_POVERTY_REVIEW
+The section leaves come from core/source_trust.commit_sections() - Kimi's 15 Aug ruling
+(batch-commit the section hash into the chain, do not atomise 4340 numbers). They are
+chain evidence, not composer scalars, and their axis is a PATH. ingest() routed them
+like any numeric drop: dest_dir.mkdir() created browse_sources/, then write_text() on
+browse_sources/indicators/co2.json raised because indicators/ did not exist. The raise
+happened BEFORE the consumed-set was written, so the next night met the same leaf.
+Eighteen nights. The goal_impact drops behind it never reached goal_impact_inbox/ or the
+composer. The step is FAIL-OPEN by design and said FAILED in every log; nobody read it.
+
+THE FIX (experiments/sensorium/sensorium.py):
+  _is_namespace_axis(axis) := "/" in axis
+  ingest(): audit-only leaves are counted, marked consumed, NOT routed; routable ones as
+  before; every write creates the FILE's parent, not only the inbox root; return value
+  gains "audit_only". Runner line now reads
+  "sensorium -> ingested N drop(s), M audit-only leaf/leaves consumed unrouted; ...".
+The leaf stays in the chain - verify() is untouched.
+
+PROVEN IN THE CLOUD, against a copy of the real leaves file (drop files not present,
+so payloads were {}): ingest -> {'ingested': 2, 'axes': ['ECONOMY_WORK_REVIEW',
+'INEQUALITY_POVERTY_REVIEW'], 'audit_only': 792}; browse_sources/indicators NOT created.
+test/test_sensorium_ingest_namespace.py: 4 tests, hermetic, pass.
+NOT PROVEN: the same run on the machine with the real drop files, and the suite under
+this repo's conftest. ITEM 65.
+
+KIMI RULED, 2026-09-03 (kimi.ai web chat via the Chrome extension - openrouter.ai is
+blocked from the cloud container; record: experiments/kimi_duel/consults/
+2026-09-03_sensorium_audit_leaves.md):
+  "/" в axis е магическа стойност - трябва изрично поле (kind="audit").
+  "consumed без routed е семантична лъжа" - dead-letter queue, не само лог.
+  Alert при 2 поредни нощи FAILED; health-сигнал без grep.
+  Незададен въпрос: защо producer-ът слага "/" в axis изобщо.
+FOLDED IN THE SAME DAY: kind="audit" added to _KINDS and set by
+core/source_trust.commit_sections(); _is_audit_leaf() = explicit kind first, "/" only
+for the 792 legacy leaves already in the immutable chain; per-leaf routing in
+_route_one() so one bad leaf cannot take the batch down; memory/sensorium/
+_dead_letter.jsonl with the reason; "dead_letter" count in the runner line.
+NOT FOLLOWED: "transactional - nothing consumed if any leaf raised" - that is the exact
+behaviour that produced the 18 nights. Kimi's claim that the goal_impact drops still
+would not reach the brain is wrong for this code (test
+test_audit_leaf_does_not_crash_and_real_drop_behind_it_is_routed). Alerting and the
+health signal are ITEM 70. Tests: 7 in test_sensorium_ingest_namespace.py.
+
+--------------------------------------------------------------------------------
+ITEM 63 - ffmpeg AND deno ABSENT; THE WHISPER LEG NEVER RAN; ~280 SUBTITLE 429s A NIGHT
+--------------------------------------------------------------------------------
+STATUS: CODE DONE 2026-09-03 (cloud session). The INSTALL is a human action and has not
+happened: tools\install_media_deps.bat (winget Gyan.FFmpeg + DenoLand.Deno), then
+venv\Scripts\python.exe -m core.media_tools --selftest. UNVERIFIED until then.
+GATE: NOCYCLE
+
+MEASURED (memory/cycle_logs, 1/2/3 Sep):
+  [TRANSCRIPT-YTDLP] lines        129 / 277 / 281   almost all HTTP Error 429
+  fresh "chars, yt-dlp" successes  18 /   1 /   0   (ITEM 58's PASS criterion (a) held on 1 Sep)
+  per video:  WARNING: ffmpeg not found
+              WARNING: No supported JavaScript runtime could be found (deno)
+WHAT THE WARNINGS COST, not said anywhere before: attempt 4 (Groq Whisper) downloads
+with `yt-dlp -x --audio-format mp3`; -x is an ffmpeg post-processor; without ffmpeg the
+download exits non-zero and internet_agent._get_transcript_whisper `return None`d with
+NO log line. The one leg the subtitle 429 does not touch has never produced a transcript.
+
+THREE CHANGES:
+ (a) core/media_tools.py - finds both binaries by EXPLICIT path (env FFMPEG_PATH /
+     DENO_PATH, which(), WinGet\Links, WinGet\Packages\Gyan.FFmpeg* and DenoLand.Deno*,
+     ~\.deno\bin, <repo>\bin\) because the scheduled task's PATH is the logon-time one.
+     yt_dlp_extra_args() -> ["--ffmpeg-location", <dir>, "--js-runtimes", "deno:<exe>"],
+     appended at all FOUR yt-dlp call sites (youtube_intel x2, internet_agent x2).
+     [DEP_CHECK] OK/MISSING lines in the runner, in the ddgs vocabulary: MISSING is a
+     proposal to the human, never a self-install (Kimi, 15 Aug). --selftest per CLAUDE.md.
+ (b) Both Whisper call sites print "[TRANSCRIPT-WHISPER] <id>: audio download failed
+     (rc=N) <last stderr line>" instead of returning None in silence.
+ (c) SubtitleRateLimit: after YT_SUBS_429_PARK_AFTER = 5 CONSECUTIVE 429s the subtitle
+     leg is parked for the rest of the cycle - one log line, once - and Playwright /
+     Whisper-audio carry on. A non-429 failure resets the streak; a success resets it;
+     internet_agent.reset_cycle_state() resets it. Before this, ~280 processes a night
+     hit a closed door.
+
+PROVEN IN THE CLOUD: test/test_media_tools.py (8) + test/test_transcript_ytdlp_invocation.py
+(6, unchanged, still green; 1 skipped there for a missing core.llm_json in the copy) pass.
+--selftest output in the cloud: ffmpeg LIVE /usr/bin/ffmpeg, deno INERT, consumers
+youtube_intel LIVE, internet_agent LIVE, fast_cycle_runner LIVE (after the DEP_CHECK wiring).
+PRE-DECLARED PASS CRITERION for the first 03:04 cycle after the install:
+  [DEP_CHECK] OK      ffmpeg (...)  AND  [DEP_CHECK] OK      deno (...)
+  AND no "ffmpeg not found" line, AND at most YT_SUBS_429_PARK_AFTER [TRANSCRIPT-YTDLP]
+  429 lines followed by exactly one "PARKED" line if the endpoint is still limiting.
+  Transcript COUNT is not the criterion for this item - the endpoint is.
+
+KIMI RULED, 2026-09-03 (record: experiments/kimi_duel/consults/2026-09-03_ytdlp_429_parking.md):
+  Q3 "Не е отделен endpoint ... rate limit на ниво IP ... глобален circuit breaker".
+  Q2 "По време, не по обем ... exponential backoff с таван (5, 10, 20 мин), не
+      cycle-scoped state".
+  Q4 "С грешен явен път си му връзваш ръцете" - version-check before passing a path.
+  Q1 threshold N=5 has no evidence - histogram of 429 intervals, A/B N=3 vs N=10.
+FOLDED IN THE SAME DAY: SubtitleRateLimit became core/media_tools.YouTubeBreaker - ONE
+breaker for every yt-dlp call against YouTube (subtitles AND Whisper audio, both files),
+wall-clock park 5 -> 10 -> 20 min persisted in memory/yt_backoff.json (the nightly cycle
+is a fresh process and must honour a park set minutes before); reset_cycle_state() no
+longer clears the park. --ffmpeg-location / --js-runtimes are passed ONLY if the binary
+answers its version flag (ffmpeg takes `-version`, deno `--version` - the cloud selftest
+found `--version` on ffmpeg is rc=8; a dead path is now [DEP_CHECK] FAIL and no flag).
+Whisper logs the last THREE stderr lines. Log line is now "[YT-BREAKER] ...".
+NOT FOLLOWED: "fix PATH in Task Scheduler instead of searching in code" - both; the
+search order puts env and which() first, winget paths last. Q1 and the "why fetch
+subtitles live at all" question are ITEM 71. Tests: 12 in test_media_tools.py.
+REVISED PASS CRITERION for the first 03:04 after the install: [DEP_CHECK] OK ffmpeg AND
+OK deno with version strings; no "ffmpeg not found"; at most 5 consecutive 429 lines
+before exactly one "[YT-BREAKER]" line, and no yt-dlp process at all while
+memory/yt_backoff.json says parked.
+
+--------------------------------------------------------------------------------
+ITEM 64 - THE WATER <- WORLD BANK CANDIDATE NAMED AN INDICATOR THAT DOES NOT EXIST
+--------------------------------------------------------------------------------
+STATUS: RECORD FIXED 2026-09-03 in memory/discovered_data_sources.json (runtime file,
+edited by hand from the cloud session, trace in its own rule_derivation + previous_url).
+Promotion untouched and still HUMAN.
+GATE: NOCYCLE
+
+id 96b9 reached Emil's phone four times (30, 31 Aug, 3 Sep x2); every OK hit the
+'extract' refusal; on 3 Sep the registration wall marked it incomplete. The wall was
+right that no rule could be derived - but the cause was the RECORD, not the payload:
+  country/all/indicator/ER.H2O.INTR.ZS   ER.H2O.INTR.ZS is not a World Bank code (the
+                                          per-capita series is ER.H2O.INTR.PC), and
+                                          country/all is one row per country - nothing
+                                          to address as ONE value.
+Verified on the live API on 2026-09-03:
+  GET .../country/WLD/indicator/ER.H2O.INTR.PC?format=json&mrv=1
+  -> [meta, [{"date":"2022","value":5392.94, "countryiso3code":"WLD", ...}]]
+  composer._dotted(payload, "1.0.value") = 5392.94 ; "1.0.date" = "2022"
+New record: kind http_json_path, extract 1.0.value, data_date_extract 1.0.date, unit
+m3_per_capita, slot_hint anchor_annual (annual series; event_daily was wrong), status
+active. The next needs report offers it again; OK 96b9 goes through composer.promote()
+and its smoke fetch is the test. config/composer_specs.json NOT touched.
+KIMI RULED, 2026-09-03 (record: experiments/kimi_duel/consults/
+2026-09-03_worldbank_water_candidate.md): "freshness_days без data_date е мъртъв код";
+"мериш демография, не дефицит"; "следа в human_override.log с хеш преди/след".
+FOLDED IN THE SAME DAY - and the first finding was wider than the brief: composer.fetch()
+NEVER returned a data_date for kind http_json_path, so data_max_age_days was dead for
+EVERY such source, and _data_too_old() swallowed a bare-year date ("2022" is not ISO)
+as "not too old". Both fixed in experiments/composers/composer.py: http_json_path honours
+data_date_extract; a bare year is read as its 31 Dec. The record carries
+data_date_extract 1.0.date + data_max_age_days 1500 (1342d today: passes; 365 would
+refuse - the check is alive now), a "caveat" field with Kimi's confounding point for the
+human at promotion time, and kimi_consult. NOT FOLLOWED: "bypasses composer_specs.json" -
+it does not; promotion is unchanged. human_override.log with before/after hashes is
+ITEM 72.
+
+--------------------------------------------------------------------------------
+ITEM 65 - PROVE 62-64 ON THE MACHINE, THEN FOLD IN KIMI
+--------------------------------------------------------------------------------
+STATUS: TODO - FIRST. Nothing below it is touched until this is DONE.
+GATE: NOCYCLE
+1. venv\Scripts\python.exe tools\suite_gate.py  - compare the FAILED LIST id-by-id
+   against the 47 of ITEM 61. test_sensorium_ingest_namespace.py (4) and
+   test_media_tools.py (8) must be green; nothing else may move.
+2. venv\Scripts\python.exe -m core.media_tools --selftest  (before AND after
+   tools\install_media_deps.bat - the before-run is the control).
+3. PYTHONIOENCODING=utf-8 venv\Scripts\python.exe -c "from experiments.sensorium.sensorium import ingest; print(ingest())"
+   Expected: ingested 2 (the two goal_impact axes), audit_only ~792, and
+   memory/goal_impact_inbox/ECONOMY_WORK_REVIEW.json present with a REAL payload.
+   This WRITES live state on purpose (it is what the 03:04 step will do anyway).
+4. tools\run_kimi_briefs_2026-09-03.bat - three consults into experiments/kimi_duel/
+   consults/. Each ruling is folded into ITEMS 62-64 as an annotation, never a rewrite.
+5. The next scheduled 03:04 cycle is the live test: the ITEM 63 PASS criterion and a
+   "sensorium -> ingested" line that is not FAILED.
+
+--------------------------------------------------------------------------------
+ITEM 66 - R7_SENSOR_REUSE HAS BEEN IN EVERY RATIONALE SINCE 29 AUG AND HAS NO ITEM
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+"CLIMATE_GLOBAL_RISK_REVIEW, MATERIALS_WASTE_REVIEW share ONE anchor (NOAA=426.94)".
+The deduction is right: 426.94 is Mauna Loa CO2 ppm, and it cannot be a materials/waste
+anchor. Find which spec gives MATERIALS_WASTE the NOAA source (config/axis_source_map.json
+or config/composer_specs.json), give that axis its own anchor or mark the slot honestly
+empty, and let the deduction clear itself. Do not silence the deduction.
+
+--------------------------------------------------------------------------------
+ITEM 67 - GOAL_PROGRESS_REVIEW: DECLARED, NO LEVEL, NO METRIC (NEW 2 SEP)
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+Second R5_BLIND_SPOT after DEEP_TIME_RISKS_REVIEW. DEEP_TIME's level was left
+"deliberately not decided" in ITEM 21(b); GOAL_PROGRESS is different - it is the axis
+that measures the system's own goal coverage, and goal_score_calculator.py already
+computes a number. Wire that number as its primary metric, or record why it must not be.
+
+--------------------------------------------------------------------------------
+ITEM 68 - LANGUAGE PURITY 95.0-95.6% AGAINST A 98% FLOOR
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+Two alarms in four days (31 Aug: 80 outputs, 95.0%; 2 Sep: 45 outputs, 95.6%).
+phase_debrief is the leak both times (11/15, 5/7 clean); every other kind is clean.
+Read memory/language_quarantine.json, then core/phase_debrief.py's prompt - the
+exemplar withholding in core/language_gate.py is already on and is not enough for that
+one kind. Likely the local 3B answering phase_debrief in the wrong language when the
+cloud is demoted (1 Sep: 36 answers from qwen2.5:3b). Confirm from the quarantine file
+before changing anything.
+
+--------------------------------------------------------------------------------
+ITEM 69 - PROPOSAL SLA IDS RENUMBER BETWEEN REPORTS
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+The same EXTRA_CALLS_BREACH proposal was offered as imp:21 (30 Aug), imp:22 (1 Sep),
+imp:13 (2 Sep) and imp:33 (3 Sep); exp-001 as imp:9 then imp:29. An id that is a
+LIST POSITION cannot be approved: "OK imp:22" on 3 Sep landed on whatever sat at index
+22 that morning. core/proposal_sla.py should key on a stable hash of (kind, title,
+entered), the way needs_report._approve_id does for promotions. Check what Emil's
+"OK imp:22" of 3 Sep 03:37 actually approved before anything else.
+
+--------------------------------------------------------------------------------
+ITEM 70 - A CRITICAL STEP THAT SAYS FAILED TWO NIGHTS RUNNING MUST ALERT (Kimi, ITEM 62)
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+Kimi, 3 Sep: "Трябва да спре моделът 'логнал съм FAILED, значи съм си свършил
+работата'." Two things, in this order:
+1. The needs report / Telegram already carries HIGH items; add a rule that any step
+   whose "-> FAILED" line appears in two consecutive cycle logs becomes a HIGH need
+   naming the step and the exception - measured from memory/cycle_logs/, not from
+   memory. sensorium_ingest would have paged on 17 Aug instead of 3 Sep.
+2. A health signal for ingest that needs no grep: memory/sensorium/_consumed.json
+   already carries "ts"; the compass or the body scan reads its age. Older than 26h
+   with fresh leaves behind it = red.
+
+--------------------------------------------------------------------------------
+ITEM 71 - THE 429 THRESHOLD IS A GUESS UNTIL THE HISTOGRAM EXISTS (Kimi, ITEM 63)
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+Kimi Q1: derive N from a histogram of 429 intervals ("в 95% от случаите след 4-ти
+пореден 429 няма успех в следващите 30 мин"), run two weeks at N=3 and two at N=10,
+compare success_rate / 429_rate. Raw material: [TRANSCRIPT-YTDLP] and [YT-BREAKER]
+lines in memory/cycle_logs/ plus memory/yt_backoff.json. Then answer the question Kimi
+said nobody asked: why fetch subtitles live at all when ~50% of the outbound is known
+to be wasted - transcript_cache (internet_agent item 4c) exists; measure its hit rate
+and decide whether a second source (own subtitles from prior runs, a third-party API)
+cuts YouTube outbound by the 80% Kimi named.
+
+--------------------------------------------------------------------------------
+ITEM 72 - HAND EDITS OF memory/ NEED A LEDGER (Kimi, ITEM 64)
+--------------------------------------------------------------------------------
+STATUS: TODO. GATE: NOCYCLE
+On 2026-09-03 memory/discovered_data_sources.json was corrected by hand from the cloud
+session (ITEM 64). The trace lives in the record itself (previous_url, rule_derivation,
+kimi_consult) and in this file - nowhere else. Kimi: "memory/ без версиониране е черна
+кутия". Add memory/human_override.jsonl: {ts, file, sha256_before, sha256_after, who,
+why, item}, appended by a tiny tools/override.py that does the edit, and refuse to
+count a hand edit as done until the line exists. The 3 Sep edit should be the first
+row, written retroactively with the hashes from the staged copies.
+
+--------------------------------------------------------------------------------
+ITEM 73 - WINKLER INTERVAL SCORE AND PER-AXIS COVERAGE CALIBRATION (H3, DEFERRED)
+--------------------------------------------------------------------------------
+STATUS: RECORDED, NOT IMPLEMENTED. GATE: NOCYCLE
+DEFERRED DELIBERATELY 2026-09-04. Both belong here and neither may be built yet.
+
+WHY NOT NOW. There has never been a non-persistence prediction in this system's
+history. Every hypothesis ever registered either predicted the last observed value
+exactly (13 of the 14 live pendings, |predicted - anchor| = 0) or predates the
+interval fields entirely (the two June records). A calibration bench measures how
+often intervals contain the outcome; with zero honest resolutions there is nothing
+for it to measure, and it would report a verdict computed from no evidence. That is
+the disproportionate-audit defect Kimi named on 4 Sep: "одит пропорционален на
+способността" - building the bench before the thing it benches produces the same
+kind of number K1 was, a count of what we wish were true.
+
+WHAT TO BUILD, WHEN THE GATE OPENS
+  1. WINKLER INTERVAL SCORE as the interval metric, replacing surprise as the
+     recorded diagnostic:
+         W = (hi - lo)
+             + (2/alpha) * (lo - y)  if y < lo
+             + (2/alpha) * (y - hi)  if y > hi
+     with alpha = 1 - interval_nominal. Lower is better. It prices width and miss
+     in one number, so a method cannot buy a good score with a vague interval -
+     the property the old surprise metric defended and which skill alone does not.
+     interval_nominal is written at creation as of today (H3), so alpha is
+     available on every record from 2026-09-04 forward.
+  2. PER-AXIS COVERAGE CALIBRATION as the health gate: the share of resolved
+     hypotheses on an axis whose outcome fell inside [lo, hi], compared against
+     interval_nominal. An axis whose 80% intervals cover 30% is overconfident and
+     its intervals are decoration; one covering 100% is uselessly wide.
+
+THE GATE, EXPLICITLY
+  Both are computed per axis and ONLY once that axis has >= 20 real resolutions -
+  real meaning graded, with a skill score, not UNRESOLVABLE. Until then the axis
+  reports COVERAGE_UNKNOWN. Never a verdict, never a default, never a number
+  derived from three points. An axis that has never produced a falsifiable
+  prediction reports COVERAGE_UNKNOWN forever, and that is the honest reading.
+
+WHAT ALREADY EXISTS FOR IT (do not rebuild)
+  - interval_nominal + interval_basis on every hypothesis (core/hypothesis_intake,
+    2026-09-04); INTERVAL_NOMINAL = 0.80, declared and explicitly NOT calibrated.
+  - lo/hi on every hypothesis since 2026-09-03.
+  - skill, model_error, baseline_error on every graded record (evaluator, H1).
+  - surprise still recorded in the revision ledger as a diagnostic that decides
+    nothing; Winkler replaces it when this item lands.

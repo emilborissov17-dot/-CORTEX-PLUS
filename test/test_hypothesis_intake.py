@@ -52,9 +52,19 @@ def _drifting(root: Path, days: int, start: float, step: float, noise=(0.0,)):
 
 # ── I: intake ─────────────────────────────────────────────────────────────────
 
-def _stub_measured(monkeypatch, axes: dict):
+def _stub_measured(monkeypatch, axes: dict, resolves=True):
+    """Measured axes, a history, AND the ground-truth resolver.
+
+    The resolver matters since H2 (4 Sep 2026): intake now asks the grader's own
+    lookup whether a key resolves before writing a hypothesis, so an unstubbed test
+    would be asking the live snapshot on this machine.
+    """
     monkeypatch.setattr(HI, "measured_axes", lambda: axes)
     monkeypatch.setattr(HI, "axis_history", lambda *a, **k: [10.0, 10.5, 11.0, 11.5])
+    monkeypatch.setattr(
+        HI, "_resolves",
+        (lambda axis, metric: (axes.get(axis, 12.0), None)) if resolves
+        else (lambda axis, metric: (None, f"no such key {axis}/{metric}")))
 
 
 def test_every_hypothesis_carries_an_interval_not_just_a_point(tmp_path, monkeypatch):
@@ -125,6 +135,100 @@ def test_consolidation_claims_are_taken_up_verbatim(tmp_path, monkeypatch):
          if x["method"] == "anchored"][0]
     assert h["predicted_value"] == 5.5 and h["lo"] == 5.0 and h["hi"] == 6.0
     assert h["prediction_date"] == "2026-10-03"
+
+
+def test_a_hypothesis_on_a_key_that_does_not_resolve_is_refused_at_write_time(
+        tmp_path, monkeypatch):
+    """H2. The seven-week freeze was a metric-name mismatch: registered as
+    "co2_ppm", graded as "co2_ppm_mauna_loa". Third instance of this defect class.
+    A prediction must never be born ungradeable and discover it 49 days later."""
+    _stub_measured(monkeypatch, {"ENERGY_REVIEW": 12.0}, resolves=False)
+    pending = tmp_path / "pending.json"
+    pending.write_text("[]", encoding="utf-8")
+
+    rec = HI.run(write=True, pending=pending, queue=tmp_path / "n.json",
+                 latest=tmp_path / "l.json", today=date(2026, 9, 3))
+
+    assert rec["registered"] == 0
+    assert rec["skipped"]["key_unresolvable"] == 1
+    assert json.loads(pending.read_text(encoding="utf-8")) == []
+    assert rec["refused_count"] == 1
+    assert "does not resolve" in rec["refused"][0]["refused"]
+    assert "key_unresolvable" in HI.summary_line(rec)
+
+
+def test_a_prediction_equal_to_its_anchor_is_refused_as_a_restatement(
+        tmp_path, monkeypatch):
+    """H2. A prediction identical to persistence cannot be wrong, so it cannot
+    teach. Measured 4 Sep 2026: 13 of 14 live pendings had |predicted - anchor|
+    EXACTLY 0, on axes that had not moved in 30 cycles.
+
+    The history here is FLAT, so every method restates and there is no honest
+    prediction to fall back to."""
+    monkeypatch.setattr(HI, "measured_axes", lambda: {"ENERGY_REVIEW": 12.0})
+    monkeypatch.setattr(HI, "axis_history", lambda *a, **k: [12.0] * 6)
+    monkeypatch.setattr(HI, "_resolves", lambda axis, metric: (12.0, None))
+    pending = tmp_path / "pending.json"
+    pending.write_text("[]", encoding="utf-8")
+
+    rec = HI.run(write=True, pending=pending, queue=tmp_path / "n.json",
+                 latest=tmp_path / "l.json", today=date(2026, 9, 3))
+
+    assert rec["registered"] == 0
+    assert rec["skipped"]["restatement"] == 1
+    assert json.loads(pending.read_text(encoding="utf-8")) == []
+    assert "not a prediction" in rec["refused"][0]["refused"]
+    assert "restatement" in HI.summary_line(rec)
+
+
+def test_a_genuinely_different_prediction_still_passes(tmp_path, monkeypatch):
+    """The guard must refuse restatements, not predictions. A moving series still
+    produces a falsifiable claim."""
+    _stub_measured(monkeypatch, {"ENERGY_REVIEW": 12.0})
+    pending = tmp_path / "pending.json"
+    pending.write_text("[]", encoding="utf-8")
+
+    rec = HI.run(write=True, pending=pending, queue=tmp_path / "n.json",
+                 latest=tmp_path / "l.json", today=date(2026, 9, 3))
+
+    assert rec["registered"] == 1
+    assert rec["skipped"]["restatement"] == 0
+    h = json.loads(pending.read_text(encoding="utf-8"))[0]
+    assert h["predicted_value"] != h["value_at_registration"]
+
+
+def test_every_interval_declares_its_nominal_level(tmp_path, monkeypatch):
+    """H3. Without this field neither an interval score nor coverage is computable
+    later — the same defect class as axis_observations having no observation date.
+    And it is written as DECLARED, not calibrated, so nobody reads it as measured."""
+    _stub_measured(monkeypatch, {"ENERGY_REVIEW": 12.0})
+    pending = tmp_path / "pending.json"
+    pending.write_text("[]", encoding="utf-8")
+
+    HI.run(write=True, pending=pending, queue=tmp_path / "n.json",
+           latest=tmp_path / "l.json", today=date(2026, 9, 3))
+
+    h = json.loads(pending.read_text(encoding="utf-8"))[0]
+    assert h["interval_nominal"] == HI.INTERVAL_NOMINAL == 0.80
+    assert "not calibrated" in h["interval_basis"]
+    assert "UNKNOWN" in h["interval_basis"]
+
+
+def test_an_interval_without_a_declared_level_never_reaches_disk(
+        tmp_path, monkeypatch):
+    """The guard is structural, not a promise at each construction site."""
+    _stub_measured(monkeypatch, {"ENERGY_REVIEW": 12.0})
+    monkeypatch.setattr(HI, "INTERVAL_NOMINAL", None)
+    pending = tmp_path / "pending.json"
+    pending.write_text("[]", encoding="utf-8")
+
+    rec = HI.run(write=True, pending=pending, queue=tmp_path / "n.json",
+                 latest=tmp_path / "l.json", today=date(2026, 9, 3))
+
+    assert rec["registered"] == 0
+    assert rec["skipped"]["interval_without_level"] == 1
+    assert json.loads(pending.read_text(encoding="utf-8")) == []
+
 
 
 def test_the_generator_never_writes_the_resolvers_file():

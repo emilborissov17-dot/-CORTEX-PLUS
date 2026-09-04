@@ -86,7 +86,7 @@ def _observed_from_metric_details(axis_name):
     return None
 
 
-def ground_truth(axis_name):
+def ground_truth(axis_name, metric=None):
     """(value, trail) for axis_name. trail names every lookup tried and its outcome.
 
     Returning the trail is the point. Until now the failure to find a reading was
@@ -95,6 +95,23 @@ def ground_truth(axis_name):
     between an unresolvable prediction and a forgotten one.
     """
     trail = []
+
+    # THE METRIC COMES FIRST WHEN THERE IS ONE (4 Sep 2026, H2). A hypothesis that
+    # names a metric is a claim about that metric. Resolving only its axis is how
+    # CLIMATE_GLOBAL_RISK_REVIEW__co2_annual_increase came to be graded against
+    # 426.94 ppm - the LEVEL - when it predicted 0.5517, the annual INCREASE. A
+    # rate compared to a level is not a wrong answer, it is not an answer.
+    if metric:
+        v = _observed_from_metric_details(metric)
+        if v is not None:
+            return v, trail + [f"metric_details['{metric}'] -> {v}"]
+        trail.append(f"metric_details has no metric '{metric}'")
+        # AND IT DOES NOT FALL BACK TO THE AXIS. Falling back is what produced the
+        # defect: the axis DOES resolve (426.94), so a claim about the rate would
+        # be silently graded against the level and scored 0% "НЕТОЧНА" — a wrong
+        # answer to a question nobody asked. A metric that does not resolve makes
+        # the hypothesis ungradeable, and that is the honest verdict.
+        return None, trail
 
     try:
         with open(TRENDS_PATH, "r", encoding="utf-8") as f:
@@ -230,7 +247,7 @@ def check_due_hypotheses():
             continue
 
         axis = h["axis"]
-        actual, trail = ground_truth(axis)
+        actual, trail = ground_truth(axis, h.get("metric"))
 
         if actual is None:
             # PAST DUE AND UNGRADEABLE IS A VERDICT, NOT A SKIP (4 Sep 2026, Q0).
