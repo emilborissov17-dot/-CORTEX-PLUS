@@ -1035,6 +1035,32 @@ def _write_snapshot(axis, folder, domain, data):
     out_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     return out_path
 
+# ── THE FLIGHT RECORDER (5 Sep 2026) ─────────────────────────────────────────
+# core/blackbox.py writes one fsync'd line per step. It does not try to CATCH the
+# death — a "begin" with no matching "end" IS the finding, which is the only thing
+# that survives a hard kill. Wired here so the 35 steps that go through _run() are
+# recorded; the steps that bypass _run() are named in the report as a known blind
+# spot rather than left silent.
+#
+# FAIL-OPEN, ALWAYS. If the recorder cannot be imported or cannot open its file,
+# this returns a do-nothing context and the cycle proceeds exactly as before. A
+# flight recorder that can ground the aircraft is worse than none.
+class _bb_null:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False        # never swallows the cycle's own exception
+
+
+def _bb_step(label):
+    try:
+        from core import blackbox as _blackbox
+        return _blackbox.step(label)
+    except Exception:
+        return _bb_null()
+
+
 def _run(label, fn, free_after=False):
     # ── МОДЕЛЪТ СЕ СМЕНЯ ПО ПРОЗОРЕЦ, НЕ ПО СТЪПКА (22 авг 2026) ───────────
     # core/model_window.py opens the 8b window when the cycle reaches the first
@@ -1117,7 +1143,8 @@ def _run(label, fn, free_after=False):
               f"{type(e).__name__}: {e}")
     _completed = False
     try:
-        fn()
+        with _bb_step(label):
+            fn()
         print(f"[FAST_CYCLE] {label} -> OK")
         _completed = True
     except Exception as e:
@@ -2533,7 +2560,9 @@ def main():
         # the penumbra shadow. Each must scream on its own — a healthy shadow must never
         # mask a corrupted sense, or the reverse.
         _v, _p = _sv.get("verified", {}), _sv.get("penumbra", {})
-        print(f"[FAST_CYCLE] sensorium -> ingested {_si.get('ingested', 0)} drop(s); "
+        print(f"[FAST_CYCLE] sensorium -> ingested {_si.get('ingested', 0)} drop(s), "
+              f"{_si.get('audit_only', 0)} audit-only leaf/leaves consumed unrouted, "
+              f"{_si.get('dead_letter', 0)} dead-lettered (memory/sensorium/_dead_letter.jsonl); "
               f"merkle intact={_v.get('ok')} ({_v.get('n')} leaves) | "
               f"penumbra intact={_p.get('ok')} ({_p.get('n')} leaves)")
         if not _v.get("ok"):
@@ -3735,6 +3764,14 @@ def _phase_cli(argv: list) -> None:
 
 
 if __name__ == "__main__":
+    # THE RECORDER GOES ON FIRST (5 Sep 2026). Before argument parsing, before any
+    # import that can fail, so that a death during startup is still on the record.
+    # Fail-open: a recorder that cannot start must not stop the cycle.
+    try:
+        from core import blackbox as _blackbox
+        _blackbox.install_exit_hooks("cycle")
+    except Exception:
+        pass
     if len(sys.argv) > 1 and ("--only" in sys.argv or "--from" in sys.argv):
         _phase_cli(sys.argv)
 

@@ -235,6 +235,26 @@ def _is_live(target) -> str:
 
 
 @pytest.fixture(autouse=True)
+def _blackbox_to_tmp(monkeypatch, tmp_path):
+    """Redirect the flight recorder into tmp_path for every test.
+
+    ADDED 5 Sep 2026 with core/blackbox.py. _run() now records one line per step,
+    so ANY test that exercises _run() writes memory/blackbox.jsonl and trips
+    _no_live_writes below. That guard's own instruction is the right one — "fix the
+    FIXTURE, redirect the path into tmp_path" — and doing it here covers every
+    future test instead of each one remembering.
+
+    Failing open on purpose: if the module cannot be imported the test proceeds, the
+    same way the recorder itself never blocks the cycle.
+    """
+    try:
+        from core import blackbox as _bb
+        monkeypatch.setattr(_bb, "LOG_PATH", str(tmp_path / "blackbox.jsonl"))
+    except Exception:
+        pass
+
+
+@pytest.fixture(autouse=True)
 def _no_live_writes(monkeypatch, request):
     """Intercept the write primitives and fail the test that used one on live state.
 

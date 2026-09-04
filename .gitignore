@@ -216,3 +216,4 @@ memory/embed_index/
 /bin/
 venv_train/
 models/
+memory/blackbox.jsonl
