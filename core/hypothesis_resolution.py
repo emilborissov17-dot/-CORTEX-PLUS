@@ -146,6 +146,13 @@ def run(write: bool = True, today: date | None = None) -> dict:
         "resolved_added": len(after_resolved) - len(before_resolved),
         "accuracies": [round(float(r.get("accuracy")), 4) for r in graded
                        if isinstance(r.get("accuracy"), (int, float))],
+        # SKILL IS THE BENCH NUMBER (H1). accuracies stays for continuity and is
+        # explicitly not what a night is judged on: it is the error against the
+        # level, which read a 5.5 ppm miss as 98.7%.
+        "skills": [round(float(r.get("skill")), 4) for r in graded
+                   if isinstance(r.get("skill"), (int, float))],
+        "beat_persistence": sum(1 for r in graded
+                                if r.get("beat_persistence") is True),
         "resolution_only_ok": not grew,
         "verdict": ("ERROR" if error else
                     "ILLEGAL_GROWTH" if grew else
@@ -182,11 +189,12 @@ def summary_line(rec: dict) -> str:
                 f"{rec['pending_before']} -> {rec['pending_after']}; this step "
                 f"resolves and must never generate")
     if rec["resolved_now"]:
-        acc = rec.get("accuracies") or []
-        mean = f"{sum(acc) / len(acc):.1%}" if acc else "n/a"
+        sk = rec.get("skills") or []
+        mean = f"{sum(sk) / len(sk):+.3f}" if sk else "n/a"
+        won = rec.get("beat_persistence", 0)
         return (f"[FAST_CYCLE] resolve_hypotheses -> {rec['resolved_now']} of "
-                f"{rec['due']} due resolved (mean accuracy {mean}); "
-                f"{rec['pending_after']} still pending")
+                f"{rec['due']} due graded; {won} beat persistence "
+                f"(mean skill {mean}); {rec['pending_after']} still pending")
     if rec.get("unresolvable_now"):
         axes = ", ".join(sorted({s.get("axis", "?") for s in rec.get("stuck", [])}))
         return (f"[FAST_CYCLE] resolve_hypotheses -> {rec['due']} due but NONE "

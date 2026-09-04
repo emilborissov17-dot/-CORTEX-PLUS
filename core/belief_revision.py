@@ -109,19 +109,53 @@ def _renormalise(w: dict) -> dict:
     return {m: round(w[m] / total, 6) for m in METHODS}
 
 
-def revise_one(axis_state: dict, method: str, s: float) -> tuple:
-    """Move weight for one resolved hypothesis. Returns (before, after, shift)."""
+def revise_one(axis_state: dict, method: str, skill: float) -> tuple:
+    """Move weight for one resolved hypothesis, on SKILL. Returns (before, after, shift).
+
+    skill > 0 means the method beat persistence on this axis and gains weight; skill
+    <= 0 means it did not and loses it. The size is the skill itself, clamped, so a
+    method that wins by a hair moves the weights by a hair.
+    """
     w = dict(axis_state["method_weights"])
     before = w.get(method, 1.0 / len(METHODS))
-    # A hit (surprise <= HIT) pulls toward the method; a miss pushes away, and the
-    # size of both is the surprise itself, clamped.
-    if s <= HIT:
-        shift = min(MAX_SHIFT, MAX_SHIFT * (1.0 - s))
+    if skill > 0:
+        shift = min(MAX_SHIFT, MAX_SHIFT * min(float(skill), 1.0))
     else:
-        shift = -min(MAX_SHIFT, MAX_SHIFT * min(s - HIT, 2.0) / 2.0)
+        shift = -min(MAX_SHIFT, MAX_SHIFT * min(abs(float(skill)), 1.0))
     w[method] = before + shift
     axis_state["method_weights"] = _renormalise(w)
     return before, axis_state["method_weights"][method], shift
+
+
+def is_unscoreable(axis: str, archive: Path | None = None,
+                   limit: int = 30, eps: float = 1e-9) -> bool:
+    """True when the axis's observed series has ~no spread over the window.
+
+    ADDED 4 Sep 2026 (H3). Measured that day: 9 of the 12 World-Bank-backed axes
+    carry EXACTLY ONE distinct value across 30 consecutive sealed cycles. On such a
+    series every method is exactly right, so a resolution cannot separate a forecast
+    from a restatement — and a weight moved on it is noise wearing evidence's coat.
+    """
+    root = archive or (REPO / "cortex_memory" / "archive")
+    if not root.is_dir():
+        return False              # cannot tell -> do not refuse on a guess
+    vals = []
+    for d in sorted(root.glob("cycle_*"))[-limit:]:
+        f = d / "signals.json"
+        if not f.is_file():
+            continue
+        try:
+            sigs = json.loads(f.read_text(encoding="utf-8")).get("signals") or []
+        except Exception:
+            continue
+        for sig in sigs:
+            if isinstance(sig, dict) and sig.get("domain") == axis                     and isinstance(sig.get("value"), (int, float)):
+                vals.append(float(sig["value"]))
+                break
+    if len(vals) < 2:
+        return False              # no window -> not a claim about the axis
+    return (max(vals) - min(vals)) <= eps
+
 
 
 def newly_resolved(since_ts: str | None, resolved: Path | None = None) -> list:
@@ -144,7 +178,8 @@ def newly_resolved(since_ts: str | None, resolved: Path | None = None) -> list:
 
 
 def run(write: bool = True, state_path: Path | None = None,
-        ledger_path: Path | None = None, resolved_path: Path | None = None) -> dict:
+        ledger_path: Path | None = None, resolved_path: Path | None = None,
+        archive: Path | None = None) -> dict:
     sp = state_path or STATE
     state = load_state(sp)
     state.setdefault("axes", {})
@@ -152,8 +187,10 @@ def run(write: bool = True, state_path: Path | None = None,
     since = state.get("last_seen_evaluated_at")
 
     rows = newly_resolved(since, resolved_path)
+    refusals: list = []
     revisions, skipped = [], {"no_interval": 0, "unknown_method": 0, "no_error": 0,
-                          "unresolvable": 0}
+                          "unresolvable": 0, "no_skill": 0,
+                          "unscoreable_axis": 0}
     newest = since
 
     for r in rows:
@@ -177,18 +214,43 @@ def run(write: bool = True, state_path: Path | None = None,
             skipped["unknown_method"] += 1
             continue
         actual, predicted = r.get("actual_value"), r.get("predicted_value")
-        if not isinstance(actual, (int, float)) or \
-                not isinstance(predicted, (int, float)):
+        if not isinstance(actual, (int, float)) or                 not isinstance(predicted, (int, float)):
             skipped["no_error"] += 1
             continue
-        error = float(actual) - float(predicted)
-        s = surprise(error, r.get("lo"), r.get("hi"))
-        if s is None:
-            skipped["no_interval"] += 1
+
+        # SKILL IS WHAT MOVES A WEIGHT (4 Sep 2026, H1). Until today the update
+        # rode on surprise = |error| / interval_width, which says how confident the
+        # interval was but nothing about whether the model beat doing nothing. On a
+        # series that has not moved in 30 cycles, a persistence prediction is exact,
+        # surprise is ~0, and the method that could not lose is rewarded every
+        # night. The evaluator now computes skill against a named naive baseline and
+        # refuses to grade what it cannot score; this consumes that decision rather
+        # than second-guessing it.
+        skill = r.get("skill")
+        if not isinstance(skill, (int, float)):
+            skipped["no_skill"] += 1
+            refusals.append({"hypothesis_id": r.get("id"), "axis": axis,
+                             "why": (r.get("unresolvable_reason")
+                                     or "no skill score on the resolved record")})
             continue
 
+        # AN UNSCOREABLE AXIS TEACHES NOTHING (H3). A series whose spread over the
+        # window is ~0 cannot separate a good forecast from a restatement, whatever
+        # number the grader produced. Refused by name rather than folded in small.
+        if is_unscoreable(axis, archive):
+            skipped["unscoreable_axis"] += 1
+            refusals.append({"hypothesis_id": r.get("id"), "axis": axis,
+                             "why": (f"axis {axis} is UNSCOREABLE: its observed "
+                                     f"spread over the archive window is ~0, so no "
+                                     f"resolution on it can carry signal")})
+            continue
+
+        error = float(actual) - float(predicted)
+        s = surprise(error, r.get("lo"), r.get("hi"))   # recorded, no longer decisive
+
+
         ax = state["axes"].setdefault(axis, _blank_axis())
-        before, after, shift = revise_one(ax, method, s)
+        before, after, shift = revise_one(ax, method, float(skill))
         ax["resolutions"] = int(ax.get("resolutions", 0)) + 1
 
         # source trust: a delta for source_lifecycle to apply, never applied here
@@ -209,14 +271,18 @@ def run(write: bool = True, state_path: Path | None = None,
             "error": round(error, 6),
             "lo": r.get("lo"),
             "hi": r.get("hi"),
-            "surprise": round(s, 6),
-            "verdict": "hit" if s <= HIT else "miss",
+            "surprise": (round(s, 6) if isinstance(s, (int, float)) else None),
+            "skill": round(float(skill), 6),
+            "baseline_error": r.get("baseline_error"),
+            "model_error": r.get("model_error"),
+            "verdict": "beat_persistence" if skill > 0 else "lost_to_persistence",
             "weight_before": round(before, 6),
             "weight_after": round(after, 6),
             "shift": round(shift, 6),
             "source_id": src,
-            "why": (f"surprise {s:.3f} = |error {error:.4g}| / interval width; "
-                    f"{'inside' if s <= HIT else 'outside'} the interval it claimed, "
+            "why": (f"skill {skill:+.4f} = 1 - model_error {r.get('model_error')} / "
+                    f"persistence_error {r.get('baseline_error')}; "
+                    f"{'beat' if skill > 0 else 'did not beat'} doing nothing, "
                     f"so weight on {method} for {axis} moved {shift:+.4f}"),
         }
         revisions.append(rev)
@@ -230,9 +296,10 @@ def run(write: bool = True, state_path: Path | None = None,
         "resolved_seen": len(rows),
         "revisions": len(revisions),
         "skipped": skipped,
+        "refusals": refusals,
         "axes_touched": sorted({r["axis"] for r in revisions}),
-        "hits": sum(1 for r in revisions if r["verdict"] == "hit"),
-        "misses": sum(1 for r in revisions if r["verdict"] == "miss"),
+        "hits": sum(1 for r in revisions if r["verdict"] == "beat_persistence"),
+        "misses": sum(1 for r in revisions if r["verdict"] == "lost_to_persistence"),
         "state_path": str(sp),
     }
 
@@ -253,11 +320,11 @@ def run(write: bool = True, state_path: Path | None = None,
 
 def summary_line(rec: dict) -> str:
     if not rec["revisions"]:
+        why = ", ".join(f"{k}={v}" for k, v in sorted(rec["skipped"].items()) if v)
         return (f"[FAST_CYCLE] belief_revision -> 0 revisions "
-                f"({rec['resolved_seen']} resolved seen; nothing came due with an "
-                f"interval to learn from)")
+                f"({rec['resolved_seen']} resolved seen; refused: {why or 'nothing due'})")
     return (f"[FAST_CYCLE] belief_revision -> {rec['revisions']} revisions "
-            f"({rec['hits']} hit / {rec['misses']} miss) across "
+            f"({rec['hits']} beat persistence / {rec['misses']} lost to it) across "
             f"{len(rec['axes_touched'])} axes; "
             f"{rec['revisions']} appended to memory/revision_ledger.jsonl")
 

@@ -146,6 +146,59 @@ def _accuracy(predicted, actual):
     return acc, err_pct
 
 
+# ── SKILL, NOT PERCENTAGE (4 Sep 2026, H1) ───────────────────────────────────
+# The accuracy above is 1 - |error| / |actual|, and it is broken the same way K1
+# was: it measures the miss against the LEVEL, never against the VARIATION. On
+# 4 Sep the 20 July co2_ppm prediction missed by 5.5 ppm — more than two years of
+# CO2 growth — and scored 98.7% "ТОЧНА", because 5.5 is small next to 427. A
+# metric that cannot tell two years of error from a good night is not a metric.
+#
+# Skill compares the model against a NAMED naive baseline instead:
+#
+#     skill = 1 - model_error / baseline_error,  baseline = persistence
+#
+# persistence is "tomorrow is whatever I last observed", recorded per hypothesis
+# at creation as value_at_registration. skill > 0 means the model beat doing
+# nothing; skill <= 0 means it did not. A hypothesis whose baseline cannot be
+# computed is UNRESOLVABLE with that reason — never graded, because there is
+# nothing to be better than.
+SKILL_BEAT = 0.0          # strictly greater than this is a win over persistence
+
+
+def skill_score(predicted, actual, baseline):
+    """(skill, model_error, baseline_error, why_none).
+
+    why_none is None on success and carries the named reason when skill cannot
+    be computed. Both errors are returned even when skill is None, because the
+    raw miss is worth recording whether or not it can be scored.
+    """
+    try:
+        model_error = abs(float(predicted) - float(actual))
+    except (TypeError, ValueError):
+        return None, None, None, "predicted or actual is not a number"
+
+    if baseline is None:
+        return None, model_error, None, (
+            "no persistence baseline recorded (value_at_registration missing), so "
+            "there is no naive forecast to be better than; skill is undefined")
+    try:
+        baseline_error = abs(float(baseline) - float(actual))
+    except (TypeError, ValueError):
+        return None, model_error, None, "value_at_registration is not a number"
+
+    if baseline_error == 0.0:
+        # Persistence was exact: the series did not move across the horizon. Any
+        # skill number here is a division by zero, and calling that 100% is how a
+        # frozen series teaches a model that it is good at predicting.
+        return None, model_error, 0.0, (
+            "persistence was exact over this horizon (baseline_error 0) — the "
+            "series did not move, so there is no skill to measure and the "
+            "prediction could not have been wrong")
+
+    return (1.0 - model_error / baseline_error), model_error, baseline_error, None
+
+
+
 def check_due_hypotheses():
     """
     Evaluate all hypotheses whose prediction_date <= today.
@@ -207,27 +260,60 @@ def check_due_hypotheses():
         predicted = h["predicted_value"]
         acc, err_pct = _accuracy(predicted, actual)
 
-        verdict = (
-            "ТОЧНА      " if acc >= 0.90
-            else ("ПРИЕМЛИВА  " if acc >= 0.70
-                  else "НЕТОЧНА    ")
-        )
+        # SKILL DECIDES, NOT PERCENTAGE (H1). A hypothesis whose skill cannot be
+        # computed does not become a low score — it leaves pending as
+        # UNRESOLVABLE with the reason, because "we could not tell" and "it did
+        # badly" are different facts and only one of them is true here.
+        skill, model_error, baseline_error, why_none = skill_score(
+            predicted, actual, h.get("value_at_registration"))
+
+        if skill is None:
+            record = {
+                **h,
+                "status": "unresolvable",
+                "actual_value": actual,
+                "accuracy": None,
+                "error_pct": None,
+                "skill": None,
+                "model_error": model_error,
+                "baseline_error": baseline_error,
+                "baseline_value": h.get("value_at_registration"),
+                "unresolvable_reason": why_none,
+                "days_overdue": (today - pred_date).days,
+                "evaluated_at": datetime.now(timezone.utc).isoformat(),
+            }
+            resolved_new.append(record)
+            print(f"[UNRESOLVABLE] {h['id']}: {why_none} "
+                  f"(miss {model_error:.4g})")
+            continue
+
+        beat = skill > SKILL_BEAT
+        verdict = "ПОБЕЖДАВА  " if beat else "НЕ ПОБЕЖДАВА"
 
         resolved_record = {
             **h,
             "status": "resolved",
             "actual_value": actual,
+            # kept for continuity and explicitly NOT authoritative: this is the
+            # error against the level, which is what made a 5.5 ppm miss read as
+            # 98.7%. Nothing decides on it any more.
             "accuracy": acc,
             "error_pct": err_pct,
+            # the authoritative pair
+            "skill": round(skill, 6),
+            "beat_persistence": beat,
+            "model_error": round(model_error, 6),
+            "baseline_error": round(baseline_error, 6),
+            "baseline_value": h.get("value_at_registration"),
+            "baseline_method": "persistence (last observed value at registration)",
             "evaluated_at": datetime.now(timezone.utc).isoformat(),
         }
         resolved_new.append(resolved_record)
 
-        print(
-            f"[{verdict}] {h['id']}\n"
-            f"           прогноза={predicted:.4g}  реална={actual:.4g}  "
-            f"точност={acc:.1%}  грешка={err_pct}%"
-        )
+        print(f"[{verdict}] {h['id']}")
+        print(f"           прогноза={predicted:.4g}  реална={actual:.4g}  "
+              f"грешка={model_error:.4g}  базис(persistence)={baseline_error:.4g}  "
+              f"skill={skill:+.4f}")
 
     # Write surviving pending hypotheses
     with open(PENDING_PATH, "w", encoding="utf-8") as f:

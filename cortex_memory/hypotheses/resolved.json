@@ -17,11 +17,23 @@
     "r_squared": 0.9969,
     "confidence": 0.399,
     "created_at": "2026-06-17T18:35:43.522486+00:00",
-    "status": "resolved",
+    "status": "unresolvable",
     "actual_value": 0.85,
     "accuracy": 0.8235,
     "error_pct": 17.65,
-    "evaluated_at": "2026-06-17T18:35:43.783728+00:00"
+    "evaluated_at": "2026-06-17T18:35:43.783728+00:00",
+    "superseded": {
+      "graded_by": "accuracy = 1 - |error| / |actual| (level-relative)",
+      "accuracy": 0.8235,
+      "error_pct": 17.65,
+      "why_superseded": "H1, 4 Sep 2026: the level-relative percentage scored a miss of 5.5 ppm as 98.7% because 5.5 is small next to 427. Regraded against a named naive baseline instead.",
+      "corrected_at": "2026-09-04T15:54:56.981036+00:00"
+    },
+    "skill": null,
+    "model_error": 0.149987,
+    "baseline_error": null,
+    "baseline_value": null,
+    "unresolvable_reason": "no persistence baseline recorded (value_at_registration missing), so there is no naive forecast to be better than; skill is undefined"
   },
   {
     "id": "co2_ppm_20260617_183543",
@@ -38,10 +50,86 @@
     "r_squared": 1.0,
     "confidence": 0.4,
     "created_at": "2026-06-17T18:35:43.604457+00:00",
-    "status": "resolved",
+    "status": "unresolvable",
     "actual_value": 432.44,
     "accuracy": 1.0,
     "error_pct": 0.0,
-    "evaluated_at": "2026-06-17T18:35:43.783914+00:00"
+    "evaluated_at": "2026-06-17T18:35:43.783914+00:00",
+    "superseded": {
+      "graded_by": "accuracy = 1 - |error| / |actual| (level-relative)",
+      "accuracy": 1.0,
+      "error_pct": 0.0,
+      "why_superseded": "H1, 4 Sep 2026: the level-relative percentage scored a miss of 5.5 ppm as 98.7% because 5.5 is small next to 427. Regraded against a named naive baseline instead.",
+      "corrected_at": "2026-09-04T15:54:56.981071+00:00"
+    },
+    "skill": null,
+    "model_error": 0.0,
+    "baseline_error": null,
+    "baseline_value": null,
+    "unresolvable_reason": "no persistence baseline recorded (value_at_registration missing), so there is no naive forecast to be better than; skill is undefined"
+  },
+  {
+    "id": "kp_index_20260617_183543",
+    "axis": "kp_index",
+    "hypothesis_text": "Ако текущият темп продължи, kp_index ще остане стабилен на 2.67 до 2026-07-17 [BOUNDED 0.0–9.0 | ЛОГИСТИЧЕН МОДЕЛ | линейна проекция=2.67]",
+    "predicted_value": 2.67,
+    "prediction_date": "2026-07-17",
+    "horizon_days": 30,
+    "model_type": "logistic",
+    "bounds": [
+      0.0,
+      9.0
+    ],
+    "linear_projection": 2.67,
+    "slope_per_cycle": 0.0,
+    "n_points": 3,
+    "r_squared": 1.0,
+    "confidence": 0.4,
+    "created_at": "2026-06-17T18:35:43.692011+00:00",
+    "status": "unresolvable",
+    "actual_value": null,
+    "accuracy": null,
+    "error_pct": null,
+    "unresolvable_reason": "trends.json['kp_index'] is an EMPTY series; axis_observations has no axis 'kp_index'; metric_details has no metric 'kp_index'",
+    "days_overdue": 49,
+    "evaluated_at": "2026-09-04T15:21:35.657552+00:00"
+  },
+  {
+    "id": "co2_ppm_20260620_083108",
+    "axis": "co2_ppm",
+    "hypothesis_text": "Ако текущият темп продължи, co2_ppm ще остане стабилен на 432.4 ppm до 2026-07-20",
+    "predicted_value": 432.44,
+    "prediction_date": "2026-07-20",
+    "horizon_days": 30,
+    "model_type": "linear",
+    "bounds": null,
+    "linear_projection": 432.44,
+    "slope_per_cycle": 0.0,
+    "n_points": 3,
+    "r_squared": 1.0,
+    "confidence": 0.4,
+    "created_at": "2026-06-20T08:31:08.098015+00:00",
+    "status": "unresolvable",
+    "verification_status": "FLAGGED",
+    "verification_reasons": [
+      "HIGH_EXTRAPOLATION: projecting 30d ahead from 3 points (ratio=15.0x, threshold 10.0x)"
+    ],
+    "verification_at": "2026-06-20T08:31:08.098225+00:00",
+    "actual_value": 426.94,
+    "accuracy": 0.9871,
+    "error_pct": 1.29,
+    "evaluated_at": "2026-09-04T15:21:35.658251+00:00",
+    "superseded": {
+      "graded_by": "accuracy = 1 - |error| / |actual| (level-relative)",
+      "accuracy": 0.9871,
+      "error_pct": 1.29,
+      "why_superseded": "H1, 4 Sep 2026: the level-relative percentage scored a miss of 5.5 ppm as 98.7% because 5.5 is small next to 427. Regraded against a named naive baseline instead.",
+      "corrected_at": "2026-09-04T15:54:56.981082+00:00"
+    },
+    "skill": null,
+    "model_error": 5.5,
+    "baseline_error": null,
+    "baseline_value": null,
+    "unresolvable_reason": "no persistence baseline recorded (value_at_registration missing), so there is no naive forecast to be better than; skill is undefined"
   }
 ]

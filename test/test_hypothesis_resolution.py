@@ -51,11 +51,13 @@ def store(tmp_path, monkeypatch):
 
 # ── THE POINT OF THE STEP ─────────────────────────────────────────────────────
 
-def test_a_due_hypothesis_moves_to_resolved_with_an_accuracy_score(store):
-    """pending -> resolved, with a number attached. This is the bench's first brick."""
+def test_a_due_hypothesis_moves_to_resolved_with_a_skill_score(store):
+    """pending -> resolved, with a number attached. AMENDED 4 Sep 2026 (H1): the
+    number is SKILL against persistence, not accuracy against the level."""
     yesterday = date.today() - timedelta(days=1)
     store["pending"].write_text(json.dumps(
-        [_hyp("h1", "co2_ppm", 430.0, yesterday)]), encoding="utf-8")
+        [_hyp("h1", "co2_ppm", 430.0, yesterday, value_at_registration=420.0)]),
+        encoding="utf-8")
     store["trends"].write_text(json.dumps({"co2_ppm": [420.0, 425.0, 430.0]}),
                                encoding="utf-8")
 
@@ -65,25 +67,29 @@ def test_a_due_hypothesis_moves_to_resolved_with_an_accuracy_score(store):
     assert rec["resolved_now"] == 1
     assert rec["verdict"] == "RESOLVED"
 
-    # it LEFT pending
     assert json.loads(store["pending"].read_text(encoding="utf-8")) == []
-    # ...and ARRIVED in resolved, carrying a score
     landed = json.loads(store["resolved"].read_text(encoding="utf-8"))
     assert len(landed) == 1
     assert landed[0]["id"] == "h1"
     assert landed[0]["status"] == "resolved"
     assert landed[0]["actual_value"] == 430.0
-    assert landed[0]["accuracy"] == pytest.approx(1.0)      # predicted == actual
+    # exact hit, and persistence would have been 10 out -> perfect skill
+    assert landed[0]["skill"] == pytest.approx(1.0)
+    assert landed[0]["beat_persistence"] is True
+    assert landed[0]["model_error"] == pytest.approx(0.0)
+    assert landed[0]["baseline_error"] == pytest.approx(10.0)
     assert "evaluated_at" in landed[0]
-    assert rec["accuracies"] == [1.0]
 
 
-def test_the_accuracy_is_a_real_error_measure_not_a_rubber_stamp(store):
-    """A wrong prediction must score BELOW a right one, or the bench measures nothing."""
+def test_skill_is_measured_against_persistence_not_against_the_level(store):
+    """THE H1 DEFECT, as a test. A wrong prediction must score below a right one —
+    and 'wrong' has to mean 'worse than doing nothing', not 'small next to a big
+    number'."""
     yesterday = date.today() - timedelta(days=1)
     store["pending"].write_text(json.dumps(
-        [_hyp("close", "co2_ppm", 99.0, yesterday),
-         _hyp("wild", "kp_index", 10.0, yesterday)]), encoding="utf-8")
+        [_hyp("close", "co2_ppm", 99.0, yesterday, value_at_registration=90.0),
+         _hyp("wild", "kp_index", 10.0, yesterday, value_at_registration=2.0)]),
+        encoding="utf-8")
     store["trends"].write_text(json.dumps({"co2_ppm": [100.0], "kp_index": [1.0]}),
                                encoding="utf-8")
 
@@ -91,9 +97,75 @@ def test_the_accuracy_is_a_real_error_measure_not_a_rubber_stamp(store):
     by_id = {r["id"]: r for r in
              json.loads(store["resolved"].read_text(encoding="utf-8"))}
 
-    assert by_id["close"]["accuracy"] > by_id["wild"]["accuracy"]
-    assert by_id["close"]["accuracy"] == pytest.approx(0.99, abs=0.01)
-    assert by_id["wild"]["accuracy"] == 0.0          # 900% error, clipped at 0
+    # close: out by 1 where persistence was out by 10  -> skill 0.9, a win
+    assert by_id["close"]["skill"] == pytest.approx(0.9)
+    assert by_id["close"]["beat_persistence"] is True
+    # wild: out by 9 where persistence was out by 1    -> skill -8, a loss
+    assert by_id["wild"]["skill"] == pytest.approx(-8.0)
+    assert by_id["wild"]["beat_persistence"] is False
+    assert by_id["close"]["skill"] > by_id["wild"]["skill"]
+
+
+def test_the_live_co2_miss_does_not_come_out_as_a_success(store):
+    """THE CASE THAT EXPOSED IT. On 4 Sep the 20 July co2_ppm prediction was graded
+    98.7% ТОЧНА on a miss of 5.5 ppm — more than two years of CO2 growth — because
+    the error was measured against the level (~427) instead of the variation.
+
+    Persistence would have missed by exactly the same 5.5, because the prediction
+    WAS the last observed value. Skill is therefore 0.0: the model did not beat
+    doing nothing, and must not read as a success."""
+    yesterday = date.today() - timedelta(days=1)
+    store["pending"].write_text(json.dumps(
+        [_hyp("co2", "co2_ppm", 432.44, yesterday,
+              value_at_registration=432.44)]), encoding="utf-8")
+    store["trends"].write_text(json.dumps({"co2_ppm": [426.94]}), encoding="utf-8")
+
+    HR.run(write=True)
+    r = json.loads(store["resolved"].read_text(encoding="utf-8"))[0]
+
+    assert r["skill"] == pytest.approx(0.0)
+    assert r["beat_persistence"] is False
+    assert r["model_error"] == pytest.approx(5.5)
+    assert r["baseline_error"] == pytest.approx(5.5)
+    # the old number is still recorded, and is no longer what decides
+    assert r["accuracy"] > 0.98, "the level-relative number should still be ~98.7%"
+
+
+def test_a_frozen_series_is_unresolvable_not_a_hundred_percent(store):
+    """The 13 predictions due 11 Sep are persistence on series that have not moved
+    in 30 cycles: predicted == baseline == actual. Under the old metric every one
+    of them scores 100%. There is no skill in restating a constant, and a
+    baseline_error of 0 is a division by zero, not a triumph."""
+    yesterday = date.today() - timedelta(days=1)
+    store["pending"].write_text(json.dumps(
+        [_hyp("frozen", "co2_ppm", 426.94, yesterday,
+              value_at_registration=426.94)]), encoding="utf-8")
+    store["trends"].write_text(json.dumps({"co2_ppm": [426.94]}), encoding="utf-8")
+
+    rec = HR.run(write=True)
+    r = json.loads(store["resolved"].read_text(encoding="utf-8"))[0]
+
+    assert rec["resolved_now"] == 0 and rec["unresolvable_now"] == 1
+    assert r["status"] == "unresolvable"
+    assert r["skill"] is None
+    assert r["baseline_error"] == 0.0
+    assert "did not move" in r["unresolvable_reason"]
+
+
+def test_a_hypothesis_with_no_baseline_is_unresolvable(store):
+    """No persistence anchor recorded at creation means there is nothing to be
+    better than. That is a registration failure, not a bad forecast."""
+    yesterday = date.today() - timedelta(days=1)
+    store["pending"].write_text(json.dumps(
+        [_hyp("nobase", "co2_ppm", 430.0, yesterday)]), encoding="utf-8")
+    store["trends"].write_text(json.dumps({"co2_ppm": [420.0]}), encoding="utf-8")
+
+    HR.run(write=True)
+    r = json.loads(store["resolved"].read_text(encoding="utf-8"))[0]
+
+    assert r["status"] == "unresolvable"
+    assert r["skill"] is None
+    assert "value_at_registration missing" in r["unresolvable_reason"]
 
 
 # ── "0 due" IS A RESULT, NOT SILENCE ──────────────────────────────────────────
@@ -181,7 +253,8 @@ def test_a_past_due_hypothesis_never_survives_the_step_in_pending(store):
     graded, or marked unresolvable — but staying is not."""
     yesterday = date.today() - timedelta(days=1)
     store["pending"].write_text(json.dumps([
-        _hyp("gradeable", "co2_ppm", 430.0, yesterday),      # has a series
+        _hyp("gradeable", "co2_ppm", 430.0, yesterday,
+             value_at_registration=420.0),                 # has a series
         _hyp("ungradeable", "kp_index", 2.67, yesterday),    # has nothing
     ]), encoding="utf-8")
     store["trends"].write_text(json.dumps(
