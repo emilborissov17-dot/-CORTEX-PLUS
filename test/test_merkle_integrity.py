@@ -88,15 +88,31 @@ def test_a_stray_name_in_the_archive_is_not_a_number(tmp_path):
     assert mm._next_cycle_num(archive=root) == 3
 
 
-def test_the_live_archive_next_write_is_fifty_seven():
-    """Against the REAL cortex_memory/ on this machine — the check that actually
-    protects tonight's 03:04 cycle."""
+def test_the_live_archive_next_write_follows_the_archive():
+    """Against the REAL cortex_memory/archive on this machine.
+
+    AMENDED 4 Sep 2026. This test used to assert max==56 and next==57 - the live
+    numbers on the day it was written, to protect that night's 03:04 cycle. The
+    cycle ran, wrote cycle_000057 and reconciled total_cycles to 57, so the test
+    went red BECAUSE the thing it guarded succeeded. An assertion pinned to a
+    literal cannot survive the process it exists to protect - the same defect
+    class as taking the next cycle number from a mutable counter.
+
+    The invariant is relative and holds on any night: the next write is one past
+    the highest directory that exists, and state.json agrees with how many there
+    are. No literals, and deliberately no gap assertion - a gap between max(nums)
+    and len(nums) is a separate question (the archive HAS one: cycle_000012..19
+    were overwritten on the nights of 29 Aug - 3 Sep), and conflating the two
+    would make this test fail for a reason it does not describe."""
     mm = MM.MerkleMemory()
     nums = mm._archived_cycle_nums()
-    assert max(nums) == 56, f"the live archive moved: max is {max(nums)}"
-    assert mm._next_cycle_num() == 57
-    assert mm._state.get("total_cycles") == 56, \
-        "state.json was not reconciled to the archive"
+    assert nums, "the live archive has no cycle_NNNNNN directories at all"
+    assert mm._next_cycle_num() == max(nums) + 1, (
+        "next write must be one past the highest existing dir "
+        "(max {})".format(max(nums)))
+    assert mm._state.get("total_cycles") == len(nums), (
+        "state.json total_cycles {} does not match the {} archived cycle "
+        "directories".format(mm._state.get("total_cycles"), len(nums)))
 
 
 # ── G2: essence.md is hashed in its final form ────────────────────────────────
