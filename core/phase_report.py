@@ -76,17 +76,26 @@ def _iso(moment: datetime) -> str:
     return moment.isoformat()
 
 
-def _age_phrase(started: datetime, mtime_iso: str | None) -> str:
-    """'3.4 min' / '2.1 h' / '8.0 days' — how long before the phase began the file
-    was last written. Never raises: a reason string must not be able to break the
-    report that carries it."""
+def _age_phrase(age_seconds) -> str:
+    """'3.4 min' / '2.1 h' / '8.0 days', from the SAME number the report carries.
+
+    It takes `age_seconds` rather than recomputing from the timestamp, so the
+    prose and the field cannot drift apart — one computation, one truth.
+
+    It no longer has a branch for a negative age. Earlier it rendered one as
+    "5326.0s AFTER", which handled the defect instead of removing it; now
+    produces_check emits null for anything not older than the phase, so a negative
+    value cannot reach here. If one ever does, that is a bug upstream and this
+    says so out loud rather than formatting it into something readable.
+
+    Never raises: a reason string must not be able to break the report carrying it.
+    """
     try:
-        stamp = datetime.fromisoformat(str(mtime_iso).replace("Z", "+00:00"))
-        secs = (started - stamp).total_seconds()
-    except Exception:                                            # noqa: BLE001
+        secs = float(age_seconds)
+    except (TypeError, ValueError):
         return "age unknown"
     if secs < 0:
-        return f"{-secs:.1f}s AFTER"
+        return f"NEGATIVE AGE {secs:.1f}s — bug in produces_check"
     if secs < 3600:
         return f"{secs / 60:.1f} min"
     if secs < 86400:
@@ -208,15 +217,30 @@ class PhaseReport:
             present = path.exists()
             written = False
             mtime = None
+            age_seconds = None
             if present:
                 stamp = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
                 mtime = _iso(stamp)
-                written = (self.started - stamp).total_seconds() <= MTIME_TOLERANCE_SEC
+                gap = (self.started - stamp).total_seconds()
+                written = gap <= MTIME_TOLERANCE_SEC
+                # AGE IS NULL WHEN THE FILE IS NOT OLD (5 Sep 2026).
+                # `gap` is negative for a file written AFTER the phase began —
+                # which is the normal, healthy case — and a field called
+                # `age_seconds` carrying -5326 is the same defect as a refusal
+                # called a verdict: a name asserting something the number does not
+                # mean. There is no "age" to report for an artifact this phase
+                # produced, so the honest value is null, not a negative duration.
+                # Every consumer must branch on `written_during_phase` first.
+                if not written:
+                    age_seconds = round(gap, 1)
             rows.append({
                 "path": rel,
                 "present": present,
                 "written_during_phase": written,
                 "mtime": mtime,
+                # null unless the file predates this phase by more than the
+                # tolerance; never negative, never zero-ish, never a guess.
+                "age_seconds": age_seconds,
             })
         return rows
 
@@ -268,8 +292,8 @@ class PhaseReport:
                 + "; ".join(
                     f"{c['path']} (mtime {c['mtime']}, {self.phase} began "
                     f"{_iso(self.started)}"
-                    + (f", {_age_phrase(self.started, c['mtime'])} earlier)"
-                       if c.get("mtime") else ")")
+                    + (f", {_age_phrase(c['age_seconds'])} earlier)"
+                       if c.get("age_seconds") is not None else ")")
                     for c in stale))
         return PARTIAL, "; ".join(reasons)
 

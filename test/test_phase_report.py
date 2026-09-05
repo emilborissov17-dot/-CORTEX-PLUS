@@ -310,22 +310,104 @@ def test_a_file_from_an_EARLIER_PHASE_of_this_cycle_is_not_called_an_earlier_cyc
     assert "began" in reason, "the reason must print the phase start too"
 
 
-def test_the_age_phrase_never_raises_on_a_bad_timestamp():
+def test_the_age_phrase_never_raises_on_a_bad_value():
     """A reason string must not be able to break the report that carries it."""
-    from datetime import datetime, timezone
     from core.phase_report import _age_phrase
-    now = datetime.now(timezone.utc)
-    for bad in (None, "", "not-a-date", "2026-13-45T99:99:99Z"):
-        assert _age_phrase(now, bad) == "age unknown", bad
+    for bad in (None, "", "not-a-number", object()):
+        assert _age_phrase(bad) == "age unknown", bad
 
 
 def test_the_age_phrase_scales_from_minutes_to_days():
-    from datetime import datetime, timedelta, timezone
     from core.phase_report import _age_phrase
-    now = datetime.now(timezone.utc)
-    def iso(delta):
-        return (now - delta).isoformat().replace("+00:00", "Z")
-    assert "min" in _age_phrase(now, iso(timedelta(minutes=36)))
-    assert "h" in _age_phrase(now, iso(timedelta(hours=5)))
-    assert "days" in _age_phrase(now, iso(timedelta(days=8)))
-    assert "AFTER" in _age_phrase(now, iso(timedelta(seconds=-30)))
+    assert "min" in _age_phrase(36 * 60)
+    assert "h" in _age_phrase(5 * 3600)
+    assert "days" in _age_phrase(8 * 86400)
+
+
+def test_the_age_phrase_shouts_rather_than_formats_a_negative():
+    """It used to render a negative as '5326.0s AFTER', which HANDLED the defect
+    instead of removing it. produces_check now emits null for anything not older
+    than the phase, so a negative cannot reach here — and if one ever does it is a
+    bug upstream and must read like one."""
+    from core.phase_report import _age_phrase
+    said = _age_phrase(-5326)
+    assert "NEGATIVE AGE" in said and "bug" in said, said
+
+
+# ── age_seconds is NULL when the file is not old, and NEVER negative ─────────
+# The name asserts "age". A file written INSIDE the phase has no age to report;
+# the reference implementation computed -5326 for exactly that case. A field whose
+# name asserts one thing while carrying another is the defect this week has been
+# about, in a new place.
+
+def _row_for(tmp_path, *, present=True, offset_s=None):
+    """One produces_check row, with the artifact's mtime placed `offset_s` BEFORE
+    the phase start (negative = written after it began)."""
+    import os
+    from core.phase_report import PhaseReport
+    spec = {"F_SELF": {"produces": ["memory/a.json"], "requires": [], "steps": [],
+                       "purpose": "t", "index_range": "x"}}
+    pf = tmp_path / f"phases_{offset_s}_{present}.json"
+    pf.write_text(json.dumps({"phases": spec}), encoding="utf-8")
+    art = tmp_path / "memory" / "a.json"
+    art.parent.mkdir(parents=True, exist_ok=True)
+    if present:
+        art.write_text("{}", encoding="utf-8")
+    elif art.exists():
+        art.unlink()
+    rep = PhaseReport("F_SELF", "cid", base_dir=tmp_path, phases_file=pf)
+    rep.__enter__()
+    if present and offset_s is not None:
+        t = (rep.started - timedelta(seconds=offset_s)).timestamp()
+        os.utime(art, (t, t))
+    row = rep.produces_check()[0]
+    rep.ended = rep.started
+    return row
+
+
+@pytest.mark.parametrize("label,present,offset_s", [
+    ("absent",                       False, None),
+    ("written 1h AFTER phase start",  True, -3600),
+    ("written 5326s AFTER (the real case)", True, -5326),
+    ("written exactly at phase start", True, 0),
+    ("written 1s before (inside tolerance)", True, 1),
+    ("written 36 min before",         True, 36 * 60),
+    ("written 8 days before",         True, 8 * 86400),
+])
+def test_age_seconds_is_never_negative_on_any_branch(tmp_path, label, present, offset_s):
+    row = _row_for(tmp_path, present=present, offset_s=offset_s)
+    age = row["age_seconds"]
+    assert age is None or age >= 0, f"{label}: age_seconds={age}"
+
+
+@pytest.mark.parametrize("label,present,offset_s", [
+    ("absent",                       False, None),
+    ("written 1h AFTER phase start",  True, -3600),
+    ("written 5326s AFTER (the real case)", True, -5326),
+    ("written exactly at phase start", True, 0),
+    ("written 1s before (inside tolerance)", True, 1),
+])
+def test_age_seconds_is_NULL_whenever_the_file_is_not_old(tmp_path, label, present, offset_s):
+    """Null, not 0 and not a negative: there is no age to report for a file this
+    phase produced, or for one that does not exist."""
+    row = _row_for(tmp_path, present=present, offset_s=offset_s)
+    assert row["age_seconds"] is None, f"{label}: {row}"
+
+
+@pytest.mark.parametrize("offset_s", [36 * 60, 6 * 3600, 8 * 86400])
+def test_age_seconds_is_populated_and_positive_when_the_file_IS_old(tmp_path, offset_s):
+    row = _row_for(tmp_path, present=True, offset_s=offset_s)
+    assert row["written_during_phase"] is False
+    assert row["age_seconds"] is not None
+    assert row["age_seconds"] > 0
+    assert abs(row["age_seconds"] - offset_s) < 5, row
+
+
+def test_age_seconds_and_written_during_phase_can_never_disagree(tmp_path):
+    """The invariant tying the two fields: age is populated if and only if the
+    file was NOT written during the phase. A consumer branching on either one
+    must reach the same conclusion."""
+    for offset_s in (-5326, -1, 0, 1, 60, 36 * 60, 8 * 86400):
+        row = _row_for(tmp_path, present=True, offset_s=offset_s)
+        assert (row["age_seconds"] is None) == row["written_during_phase"], (
+            offset_s, row)
