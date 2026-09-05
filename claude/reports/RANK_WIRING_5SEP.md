@@ -97,6 +97,53 @@ and peak memory both ways, before committing.
 2. Score the **control** adapter under the ranking metric. Nothing else runs until that
    number exists.
 
+## THE COST KNOBS — DECIDED 03:00, BEFORE THE CONTROL RUNS
+
+~2 h per eval × 3 evals (control, A, B) ≈ 9 h from 04:30. The knobs are fixed now,
+recorded in `training/rank_metric.py`'s docstring and enforced by
+`rank_runner.decide_knobs()`:
+
+| | condition | K | chance | batch |
+|---|---|---|---|---|
+| **Rule 1** | batched NLL **bit-identical** to unbatched **and** the batch fits | **9** | **0.10** | largest that fits |
+| **Rule 2** | anything else — any difference, or does not fit | **4** | **0.20** | 1 |
+| **Rule 3** | *not a branch*: `max_len` is never shortened | — | — | — |
+
+**"Bit-identical" is implemented literally: `max_abs_diff == 0.0`, no tolerance.** A
+tolerance is exactly how "not merely close" turns back into "close enough". An empty diff
+list — the batched pass never ran — is recorded as `None` and does **not** count as
+agreement.
+
+**A prediction I would rather state now than have look like a surprise:** on fp16 CUDA,
+cuBLAS selects different kernels and reduction orders for different batch shapes, so exact
+equality across batch sizes is unlikely. I expect rule 2 to fire and the run to be **K=4,
+chance 0.20, unbatched**. The rule is unchanged either way; if the probe surprises me, K
+stays 9.
+
+### Made impossible rather than discouraged
+
+`decide_knobs(probe)` takes **one parameter**, the probe. There is no argument through which
+an accuracy could reach it. Four tests enforce this:
+
+- its **body** (docstring stripped — the first version of the test failed on the prose
+  explaining the guarantee) may not contain the whole identifiers `accuracy`, `acc`, `hits`,
+  `hit`, `verdict`, `ci` or `delta`;
+- its signature must be exactly `["probe"]`;
+- `max_len`/`max_length` may not appear in it at all, so rule 3 is not expressible;
+- a **missing probe field is never read as success** — `{}`, `{"fits": True}` and
+  `{"max_abs_diff": 0.0}` all return K=4. Absence of a measurement is not a passed one,
+  which is the rule the notary learned on 17 August.
+
+And the knobs cannot be chosen at run time: `--probe` writes
+`claude/reports/K1B_RANK_KNOBS.json`, and a run **refuses with exit 2** if that file is
+absent. The refusal happens before the model load, so it costs a second rather than a minute.
+
+`rank_verdict(hits, k=...)` now takes K, so a K=4 run cannot be graded against 0.10 —
+tested: the same hit vector reads `AT CHANCE` at K=4 and `ABOVE CHANCE` at K=9.
+
+**Cost under rule 2:** K=4 → 5 candidates × 2 passes × 246 items = **2460 forwards**,
+≈ 55–64 min per eval, ≈ 3 h for all three.
+
 ## PRE-REGISTERED, UNCHANGED
 
 - **The control must land AT CHANCE — 0.10, with the CI containing it.** Above chance means

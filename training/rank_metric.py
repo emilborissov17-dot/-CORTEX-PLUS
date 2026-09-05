@@ -46,7 +46,23 @@ import hashlib
 import numpy as np
 
 K_DISTRACTORS = 9
-CHANCE = 1.0 / (K_DISTRACTORS + 1)      # 0.10
+CHANCE = 1.0 / (K_DISTRACTORS + 1)      # 0.10 — the default; see chance_for()
+
+# K IS A COST KNOB AND IT IS PRE-REGISTERED, NOT TUNED (fixed 5 Sep 2026, 03:00,
+# before the control was scored under this metric).
+#
+#   1. If batched candidate NLL is BIT-IDENTICAL to unbatched and the batch fits,
+#      use the largest batch that fits and keep K=9, chance 0.10.
+#   2. Otherwise drop to K=4, chance 0.20. Halves the cost; n=180 in sig01 still
+#      carries a verdict at that chance level.
+#   3. max_len is NEVER shortened to buy speed. Candidates must be scored at the
+#      length the model was trained at, or the ranking and the NLL secondary are
+#      not comparable.
+#
+# The choice is made by rank_runner.decide_knobs() from the PROBE alone. It has
+# no access to any accuracy, so lowering K after seeing a result is impossible
+# rather than merely discouraged.
+K_FALLBACK = 4
 MIN_BUCKET = 30
 BOOTSTRAP_N = 10000
 SEED = 20260905
@@ -174,27 +190,39 @@ def accuracy_ci(hits, n_boot: int = BOOTSTRAP_N, seed: int = SEED) -> tuple:
                                float(np.percentile(means, 97.5)))
 
 
-def rank_verdict(hits) -> tuple:
-    """(verdict, accuracy, ci). AT CHANCE is a real answer, not a failure."""
+def chance_for(k: int) -> float:
+    """1/(k+1). K=9 -> 0.10, K=4 -> 0.20."""
+    return 1.0 / (k + 1)
+
+
+def rank_verdict(hits, k: int = K_DISTRACTORS) -> tuple:
+    """(verdict, accuracy, ci). AT CHANCE is a real answer, not a failure.
+
+    `k` sets the chance level, so a verdict can never be read against the wrong
+    baseline: a K=4 run graded against 0.10 would call a chance-level adapter
+    ABOVE CHANCE, which is the exact mistake this argument exists to prevent.
+    """
+    chance = chance_for(k)
     acc, ci = accuracy_ci(hits)
     if ci is None:
         return f"UNRESOLVABLE (n<{MIN_BUCKET})", acc, None
-    if ci[0] > CHANCE:
+    if ci[0] > chance:
         return "ABOVE CHANCE", acc, ci
-    if ci[1] < CHANCE:
+    if ci[1] < chance:
         return "BELOW CHANCE", acc, ci
     return "AT CHANCE", acc, ci
 
 
-def beats_control(hits, control_hits) -> tuple:
+def beats_control(hits, control_hits, k: int = K_DISTRACTORS) -> tuple:
     """The pre-registered second condition: entirely above 0.10 AND entirely
     above the control on the same examples. Returns (bool, why)."""
-    v, acc, ci = rank_verdict(hits)
-    cv, cacc, cci = rank_verdict(control_hits)
+    chance = chance_for(k)
+    v, acc, ci = rank_verdict(hits, k)
+    cv, cacc, cci = rank_verdict(control_hits, k)
     if ci is None or cci is None:
         return False, f"UNRESOLVABLE: n={len(list(hits))} control n={len(list(control_hits))}"
-    if ci[0] <= CHANCE:
-        return False, f"CI lo {ci[0]:.4f} does not clear chance {CHANCE:.2f}"
+    if ci[0] <= chance:
+        return False, f"CI lo {ci[0]:.4f} does not clear chance {chance:.2f}"
     if ci[0] <= cci[1]:
         return False, (f"CI lo {ci[0]:.4f} overlaps the control's CI hi {cci[1]:.4f} — "
                        f"not distinguishable from the null model")

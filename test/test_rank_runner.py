@@ -15,6 +15,7 @@ the kernels are.
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -260,3 +261,88 @@ def test_unscorable_items_are_reported_not_dropped():
     items, unscorable = rr.build_items(rows, pool, wordlen)
     assert len(items) == 40
     assert [u[1] for u in unscorable] == ["blank", "blank"]
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# THE COST KNOBS — pre-registered, and unreachable from any result
+# ════════════════════════════════════════════════════════════════════════════
+
+def _body_of(fn) -> str:
+    """Source with the docstring removed.
+
+    The first version of these two tests scanned the WHOLE source and failed on
+    the docstring, which says "it cannot see an accuracy" and "max_len is never
+    shortened" — the function explaining its own guarantee tripped the test for
+    that guarantee. Prose is not a code path; only the body is scanned.
+    """
+    import ast
+    import inspect
+    import textwrap
+    tree = ast.parse(textwrap.dedent(inspect.getsource(fn)))
+    node = tree.body[0]
+    if (node.body and isinstance(node.body[0], ast.Expr)
+            and isinstance(node.body[0].value, ast.Constant)):
+        node.body = node.body[1:]
+    return ast.unparse(node)
+
+
+def test_bit_identical_and_fitting_keeps_K9_and_batches():
+    d = rr.decide_knobs({"max_abs_diff": 0.0, "fits": True, "batch": 10})
+    assert (d["k"], d["chance"], d["batch"]) == (9, 0.1, 10)
+
+
+@pytest.mark.parametrize("diff", [1e-9, 3e-7, 1e-4, 0.5])
+def test_anything_short_of_bit_identical_drops_to_K4(diff):
+    """'Not merely close.' A 1e-9 disagreement is still a disagreement, and the
+    rule was fixed before anyone knew which branch it would take."""
+    d = rr.decide_knobs({"max_abs_diff": diff, "fits": True, "batch": 10})
+    assert (d["k"], d["chance"], d["batch"]) == (4, 0.2, 1)
+    assert "not bit-identical" in d["why"]
+
+
+def test_a_batch_that_does_not_fit_drops_to_K4_and_says_so():
+    d = rr.decide_knobs({"max_abs_diff": 0.0, "fits": False, "batch": 10})
+    assert d["k"] == 4 and d["batch"] == 1
+    assert "did not fit" in d["why"]
+
+
+def test_a_missing_probe_field_is_never_read_as_success():
+    """Fail toward the cheaper, safer branch. An absent measurement is not a
+    passed one — the same rule the notary learned on 17 August."""
+    for probe in ({}, {"fits": True}, {"max_abs_diff": 0.0}, {"batch": 10}):
+        assert rr.decide_knobs(probe)["k"] == 4, probe
+
+
+def test_decide_knobs_CANNOT_SEE_AN_ACCURACY():
+    """THE STRUCTURAL GUARANTEE the rule asked for: impossible, not discouraged.
+
+    There is no parameter through which a result could reach this function, and
+    its body never names one. If someone later threads an accuracy in to 'just
+    check', this fails.
+    """
+    import inspect
+    body = _body_of(rr.decide_knobs)
+    # Whole identifiers, not substrings: 'identical' contains 'ci' and would
+    # make this fire on text that is not a result at all.
+    words = set(re.findall("[A-Za-z_]+", body.lower()))
+    for word in ("accuracy", "acc", "hits", "hit", "verdict", "ci", "delta"):
+        assert word not in words, (
+            "decide_knobs BODY mentions " + repr(word)
+            + " - K could be tuned on a result. Body: " + body)
+    params = list(inspect.signature(rr.decide_knobs).parameters)
+    assert params == ["probe"], params
+
+
+def test_max_len_is_not_a_knob_anywhere_in_the_decision():
+    """Rule 3 is not a branch. Shortening sequences to buy speed must not be
+    expressible, so there is no code path that could choose it."""
+    body = _body_of(rr.decide_knobs)
+    assert "max_len" not in body and "max_length" not in body, body
+
+
+def test_the_chance_level_follows_K_so_a_verdict_cannot_use_the_wrong_baseline():
+    """A K=4 run graded against 0.10 would call a chance-level adapter ABOVE
+    CHANCE. That is the mistake the k argument exists to prevent."""
+    at_chance_k4 = [1] * 40 + [0] * 160        # 0.20 exactly
+    assert rm.rank_verdict(at_chance_k4, k=4)[0] == "AT CHANCE"
+    assert rm.rank_verdict(at_chance_k4, k=9)[0] == "ABOVE CHANCE"

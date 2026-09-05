@@ -43,8 +43,8 @@ from __future__ import annotations
 import torch
 
 from training.eval_adapter import example_nll
-from training.rank_metric import (K_DISTRACTORS, draw_distractors, example_id,
-                                  hit, norm)
+from training.rank_metric import (K_DISTRACTORS, K_FALLBACK, chance_for,
+                                  draw_distractors, example_id, hit, norm)
 
 # Default is 1 = unbatched. Raised only after test_rank_runner's equality test
 # passes ON THE REAL MODEL, not on the CPU stub.
@@ -179,3 +179,41 @@ def forward_passes(n_items: int, k: int = K_DISTRACTORS, passes: int = 2) -> int
     """(k+1) candidates x `passes` models. Stated as a function so the estimate in
     the report and the work actually done cannot drift apart."""
     return n_items * (k + 1) * passes
+
+
+# ── THE COST KNOBS, PRE-REGISTERED 5 Sep 2026 03:00 ─────────────────────────
+# Fixed BEFORE the control was scored under this metric, and decided from the
+# PROBE ALONE. decide_knobs() takes no accuracy, no hits and no verdict — there
+# is no argument through which a result could reach it — so lowering K after
+# seeing a number is impossible rather than merely discouraged. A structural test
+# asserts that the function body never mentions one.
+BIT_IDENTICAL = 0.0
+
+
+def decide_knobs(probe: dict) -> dict:
+    """(k, chance, batch, why) from the probe result.
+
+    RULE 1: batched candidate NLL BIT-IDENTICAL to unbatched, and the batch fits
+            -> largest batch that fits, K=9, chance 0.10.
+    RULE 2: otherwise -> K=4, chance 0.20, unbatched. Halves the cost, and n=180
+            in sig01 still carries a verdict at that chance level.
+    RULE 3 is not a branch: max_len is never shortened, so it appears nowhere
+            here. There is no knob for it on purpose.
+    """
+    diff = probe.get("max_abs_diff")
+    fits = bool(probe.get("fits", False))
+    batch = int(probe.get("batch") or 1)
+    if diff == BIT_IDENTICAL and fits and batch > 1:
+        return {"k": K_DISTRACTORS, "chance": chance_for(K_DISTRACTORS),
+                "batch": batch,
+                "why": f"batched == unbatched exactly (max_abs_diff {diff!r}) "
+                       f"at batch {batch}; rule 1"}
+    if not fits:
+        why = f"batch {batch} did not fit; rule 2"
+    elif batch <= 1:
+        why = "no batch size above 1 was probed; rule 2"
+    else:
+        why = (f"batched differs from unbatched by {diff!r} — not bit-identical; "
+               f"rule 2")
+    return {"k": K_FALLBACK, "chance": chance_for(K_FALLBACK), "batch": 1,
+            "why": why}
