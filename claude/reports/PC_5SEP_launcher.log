@@ -1,0 +1,31 @@
+﻿=== POSITIVE CONTROL launcher 2026-09-05T20:16:16.7133802+03:00 ===
+2026-09-05T20:16:17.7876050+03:00  gpu memory.used MiB: 0
+2026-09-05T20:16:17.8029046+03:00  1. build the corpus (deterministic, seed 20260905)
+positive control -> C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\cortex_memory\training\positive_control
+  train 300 rows, holdout 120 rows, 12 codes, record_kind pc01_rule
+  train code counts  : {'PROTOCOL-B': 37, 'PROTOCOL-N': 24, 'PROTOCOL-D': 23, 'PROTOCOL-J': 29, 'PROTOCOL-K': 16, 'PROTOCOL-M': 20, 'PROTOCOL-W': 31, 'PROTOCOL-F': 20, 'PROTOCOL-V': 29, 'PROTOCOL-R': 24, 'PROTOCOL-T': 17, 'PROTOCOL-Q': 30}
+  holdout code counts: {'PROTOCOL-W': 13, 'PROTOCOL-N': 6, 'PROTOCOL-M': 12, 'PROTOCOL-J': 13, 'PROTOCOL-D': 10, 'PROTOCOL-V': 7, 'PROTOCOL-F': 8, 'PROTOCOL-R': 12, 'PROTOCOL-K': 9, 'PROTOCOL-Q': 13, 'PROTOCOL-B': 12, 'PROTOCOL-T': 5}
+  sha256 train 49bb0ea6c9827d76  holdout 6f7eacba82afe2b8
+2026-09-05T20:16:18.0270428+03:00  positive control -> C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\cortex_memory\training\positive_control
+  train 300 rows, holdout 120 rows, 12 codes, record_kind pc01_rule
+  train code counts  : {'PROTOCOL-B': 37, 'PROTOCOL-N': 24, 'PROTOCOL-D': 23, 'PROTOCOL-J': 29, 'PROTOCOL-K': 16, 'PROTOCOL-M': 20, 'PROTOCOL-W': 31, 'PROTOCOL-F': 20, 'PROTOCOL-V': 29, 'PROTOCOL-R': 24, 'PROTOCOL-T': 17, 'PROTOCOL-Q': 30}
+  holdout code counts: {'PROTOCOL-W': 13, 'PROTOCOL-N': 6, 'PROTOCOL-M': 12, 'PROTOCOL-J': 13, 'PROTOCOL-D': 10, 'PROTOCOL-V': 7, 'PROTOCOL-F': 8, 'PROTOCOL-R': 12, 'PROTOCOL-K': 9, 'PROTOCOL-Q': 13, 'PROTOCOL-B': 12, 'PROTOCOL-T': 5}
+  sha256 train 49bb0ea6c9827d76  holdout 6f7eacba82afe2b8
+
+2026-09-05T20:16:18.0287876+03:00  2. commit the generator + manifest (the corpus itself is small; committed too, it IS the pre-registration)
+git.exe : warning: in the working copy of 'cortex_memory/training/positive_control/manifest.json', CRLF will be 
+replaced by LF the next time Git touches it
+At C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\tools\run_pc_5sep.ps1:32 char:1
++ & git add training\make_positive_control.py cortex_memory\training\po ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: in the... Git touches it:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-09-05T20:16:18.4683357+03:00  committed bdf0859
+2026-09-05T20:16:21.1021335+03:00  3. launch PC1 -> eval -> PC3 -> eval, detached
+2026-09-05T20:16:21.1030560+03:00  launching: cmd.exe /c "venv_train\Scripts\python.exe training/train_lora.py --train cortex_memory/training/positive_control/train.jsonl --out models/adapters/pc_A1 --report claude/reports/PC_TRAIN_A1.md --epochs 1 --max-len 256 --rank 8 --alpha 16 --targets q_proj,k_proj,v_proj,o_proj --save-every 25 --resume && venv_train\Scripts\python.exe training/run_rank_eval.py --adapter models/adapters/pc_A1 --train cortex_memory/training/positive_control/train.jsonl --holdout cortex_memory/training/positive_control/holdout.jsonl --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/PC_A1_RANK.md && venv_train\Scripts\python.exe training/train_lora.py --train cortex_memory/training/positive_control/train.jsonl --out models/adapters/pc_A3 --report claude/reports/PC_TRAIN_A3.md --epochs 3 --max-len 256 --rank 8 --alpha 16 --targets q_proj,k_proj,v_proj,o_proj --save-every 25 --resume && venv_train\Scripts\python.exe training/run_rank_eval.py --adapter models/adapters/pc_A3 --train cortex_memory/training/positive_control/train.jsonl --holdout cortex_memory/training/positive_control/holdout.jsonl --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/PC_A3_RANK.md"
+DETACHED_PID=285460
+STDOUT=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\PC_RUN.out.log
+STDERR=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\PC_RUN.err.log
+PIDFILE=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\PC_RUN.pid
+2026-09-05T20:16:29.2174047+03:00  Positive control started: pid 285460 alive. Progress: claude/reports/PC_RUN.out.log. Reports: PC_A1_RANK.md (~1 h), PC_A3_RANK.md (~3 h).

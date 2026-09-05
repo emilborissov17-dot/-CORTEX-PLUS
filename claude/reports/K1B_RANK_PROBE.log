@@ -1,0 +1,4 @@
+﻿=== DETACHED LAUNCH 2026-09-05T05:10:37.1520818+03:00 ===
+exe  : C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv_train\Scripts\python.exe
+args : training/run_rank_eval.py --adapter models/adapters/k1b_control --probe 8 --batch 10 --knobs claude/reports/K1B_RANK_KNOBS.json
+pid  : 172468

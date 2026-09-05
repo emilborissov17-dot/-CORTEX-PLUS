@@ -1,0 +1,68 @@
+KNOBS (pre-registered 2026-09-05T05:15:37): K=4 chance=0.2 batch=1 -- batch 10 did not fit; rule 2
+pool 173 distinct · items 246 · unscorable 0 · widened 1
+forward passes: 2460 (246 x 5 x 2)
+  base 25/246  215s
+  base 50/246  442s
+  base 75/246  723s
+  base 100/246  869s
+  base 125/246  1030s
+  base 150/246  1166s
+  base 175/246  1343s
+  base 200/246  1500s
+  base 225/246  1662s
+  adapter 25/246  2028s
+  adapter 50/246  2257s
+  adapter 75/246  2436s
+  adapter 100/246  2583s
+  adapter 125/246  2746s
+  adapter 150/246  2884s
+  adapter 175/246  3062s
+  adapter 200/246  3220s
+  adapter 225/246  3384s
+# K1b ranking eval — k1b_control
+
+**K=4 distractors, chance = 0.20, batch = 1** -- pre-registered at 2026-09-05T05:15:37: batch 10 did not fit; rule 2
+MIN_BUCKET=30, band=0.25
+pool 173 distinct · items 246 · unscorable 0 · widened 1
+wall 3536s · method unbatched
+
+## UNSEEN — adapter — THIS IS THE VERDICT
+
+| stratum | n | accuracy | 95% CI | verdict |
+|---|---|---|---|---|
+| sig01_plain | 180 | 0.2222 | [0.1611, 0.2833] | AT CHANCE |
+| sig02_approved_with_impact | 27 | 1.0000 | - | UNRESOLVABLE (n<30) |
+| sig03_experiment_authored | 9 | 0.0000 | - | UNRESOLVABLE (n<30) |
+
+## UNSEEN — base (the same candidates, adapter disabled)
+
+| stratum | n | accuracy | 95% CI | verdict |
+|---|---|---|---|---|
+| sig01_plain | 180 | 0.2500 | [0.1889, 0.3167] | AT CHANCE |
+| sig02_approved_with_impact | 27 | 1.0000 | - | UNRESOLVABLE (n<30) |
+| sig03_experiment_authored | 9 | 0.0000 | - | UNRESOLVABLE (n<30) |
+
+## SEEN — memorisation check, NOT a result
+
+| stratum | n | accuracy | 95% CI | verdict |
+|---|---|---|---|---|
+| sig01_plain | 5 | 0.0000 | - | UNRESOLVABLE (n<30) |
+| sig02_approved_with_impact | 11 | 0.6364 | - | UNRESOLVABLE (n<30) |
+| sig03_experiment_authored | 1 | 0.0000 | - | UNRESOLVABLE (n<30) |
+| sig04_moral_checked | 9 | 1.0000 | - | UNRESOLVABLE (n<30) |
+| sig07_dependency_check | 4 | 0.0000 | - | UNRESOLVABLE (n<30) |
+
+## SECONDARY: mean NLL of the true target
+**Distributional gain, not mapping.** A negative control trained on deranged pairs improved this by +1.2204 nats while learning no mapping at all. It is here for continuity with the old report and must not be read as evidence of learning.
+
+| stratum | n | base NLL | adapter NLL | delta |
+|---|---|---|---|---|
+| sig01_plain | 180 | 3.9541 | 2.7337 | +1.2204 |
+| sig02_approved_with_impact | 27 | 2.1852 | 1.6265 | +0.5587 |
+| sig03_experiment_authored | 9 | 2.9705 | 2.5867 | +0.3838 |
+
+## How to read this
+- Chance is 0.10. AT CHANCE means the adapter cannot tell the true target from nine real alternatives drawn from the same pool.
+- Every candidate comes from the SAME target distribution, so house style cannot move this number. That is the whole point of replacing NLL.
+- UNRESOLVABLE is the corpus being too small to grade that bucket.
+- 0 item(s) were unscorable and are listed, not dropped: []

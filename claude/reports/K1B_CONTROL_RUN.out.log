@@ -1,0 +1,31 @@
+device: NVIDIA GeForce GTX 1650  ·  compute capability: 7.5
+is_bf16_supported() reports: True  ·  real bf16 hardware: False
+after load          allocated   1969.3 MiB
+embeddings cast bf16 -> fp16: 1
+after prepare       allocated   1970.1 MiB   embedding dtype torch.float16   norms upcast: 73
+after LoRA attach   allocated   1984.2 MiB
+trainable: 3,686,400 / 1,702,359,040 (0.217%)
+epoch 0 step 10/134 loss 3.7639
+epoch 0 step 20/134 loss 3.3739
+epoch 0 step 30/134 loss 2.8296
+epoch 0 step 40/134 loss 2.6906
+epoch 0 step 50/134 loss 2.6260
+epoch 0 step 60/134 loss 2.5838
+epoch 0 step 70/134 loss 2.3505
+epoch 0 step 80/134 loss 2.2515
+epoch 0 step 90/134 loss 2.1466
+epoch 0 step 100/134 loss 2.3130
+epoch 0 step 110/134 loss 2.4076
+epoch 0 step 120/134 loss 2.3057
+epoch 0 step 130/134 loss 2.1721
+# K1b training run
+
+- examples: 1077  ·  optimiser steps: 134  ·  wall: 6895.2s
+- peak allocated: 2482.3 MiB  ·  peak reserved: 2718.0 MiB  (of 4096 MiB)
+- bf16 supported: False  ·  compute dtype: torch.float16
+- loss: 2.6226 -> 1.9029
+- corpus sha256: `2622e01a08972d62431152cfa8022b8bea779c8efaf05383e664a6e782470c6c`
+
+Falling loss means the adapter fit this corpus. It does NOT mean the machine
+learned anything about the world. That question belongs to eval_adapter.py,
+on a held-out split it never saw, and the answer there may still be NO EFFECT.

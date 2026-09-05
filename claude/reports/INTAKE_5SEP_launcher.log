@@ -1,0 +1,48 @@
+﻿=== INTAKE launcher 2026-09-05T16:01:50.4086670+03:00 ===
+2026-09-05T16:01:50.4245134+03:00  1. compile fast_cycle_runner.py
+2026-09-05T16:01:50.7390026+03:00  2. pytest test/test_proposal_intake.py
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collecting ... collected 17 items
+
+test/test_proposal_intake.py::test_legacy_shape_is_refused_with_every_missing_field_named PASSED [  5%]
+test/test_proposal_intake.py::test_complete_proposal_is_admitted PASSED  [ 11%]
+test/test_proposal_intake.py::test_metric_indicator_admitted_and_unresolvable_refused PASSED [ 17%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[indicator-planet] PASSED [ 23%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[indicator-PLANET metric] PASSED [ 29%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-0] PASSED [ 35%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-big] PASSED [ 41%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-True] PASSED [ 47%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2026-09-05] PASSED [ 52%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2026-09-04] PASSED [ 58%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2027-09-06] PASSED [ 64%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-4052-10] PASSED [ 70%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-by Q3] PASSED [ 76%]
+test/test_proposal_intake.py::test_admit_splits_and_logs_every_refusal PASSED [ 82%]
+test/test_proposal_intake.py::test_admit_never_raises_on_garbage PASSED  [ 88%]
+test/test_proposal_intake.py::test_summary_line_counts_missing_fields PASSED [ 94%]
+test/test_proposal_intake.py::test_runner_writes_the_queue_only_through_inject_proposals PASSED [100%]
+
+============================= 17 passed in 1.69s ==============================
+2026-09-05T16:01:53.6350095+03:00  tests green: True
+2026-09-05T16:01:53.6390184+03:00  3. selftest (LIVE/INERT against this repo)
+core/proposal_intake --selftest
+  refusal log           : not yet written C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\memory\proposal_intake_refusals.jsonl
+  consumer fast_cycle_runner.py      : LIVE
+  legacy fixture        : REFUSED missing=['indicator', 'expected_delta', 'deadline'] (must be REFUSED)
+  gradeable fixture     : ADMITTED (must be ADMITTED)
+  live queue            : 40 in file -> 0 would be admitted, 40 refused
+2026-09-05T16:01:53.7923211+03:00  core/proposal_intake --selftest
+  refusal log           : not yet written C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\memory\proposal_intake_refusals.jsonl
+  consumer fast_cycle_runner.py      : LIVE
+  legacy fixture        : REFUSED missing=['indicator', 'expected_delta', 'deadline'] (must be REFUSED)
+  gradeable fixture     : ADMITTED (must be ADMITTED)
+  live queue            : 40 in file -> 0 would be admitted, 40 refused
+
+2026-09-05T16:01:53.7923211+03:00  4. commit + push
+2026-09-05T16:01:54.5658633+03:00  committed c9105e6
+2026-09-05T16:01:57.4993174+03:00  pushed (git output in log)

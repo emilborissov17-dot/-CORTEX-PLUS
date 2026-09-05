@@ -1,0 +1,4 @@
+﻿=== DETACHED LAUNCH 2026-09-05T00:27:27.2423225+03:00 ===
+exe  : C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv\Scripts\python.exe
+args : tools/suite_gate.py -q -rf -m "not live_state"
+pid  : 132324

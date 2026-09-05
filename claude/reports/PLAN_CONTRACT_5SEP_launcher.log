@@ -1,0 +1,74 @@
+﻿=== PLAN_CONTRACT launcher 2026-09-05T21:04:57.3504336+03:00 ===
+2026-09-05T21:04:57.3623924+03:00  1. compile fast_cycle_runner.py + hyperclaw_orchestrator.py
+2026-09-05T21:04:57.6004600+03:00  2. pytest test/test_hyperclaw_plan_contract.py test/test_proposal_intake.py
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collecting ... collected 23 items
+
+test/test_hyperclaw_plan_contract.py::test_prompt_states_capabilities_indicators_and_the_three_keys PASSED [  4%]
+test/test_hyperclaw_plan_contract.py::test_prompt_without_indicators_says_so_instead_of_inventing_some PASSED [  8%]
+test/test_hyperclaw_plan_contract.py::test_parse_plan_reads_the_three_lines_and_nothing_else PASSED [ 13%]
+test/test_hyperclaw_plan_contract.py::test_key_lines_never_attach_to_the_wrong_step PASSED [ 17%]
+test/test_hyperclaw_plan_contract.py::test_end_to_end_only_complete_steps_pass_the_door PASSED [ 21%]
+test/test_hyperclaw_plan_contract.py::test_runner_uses_parse_plan_and_keeps_no_private_parser PASSED [ 26%]
+test/test_proposal_intake.py::test_legacy_shape_is_refused_with_every_missing_field_named PASSED [ 30%]
+test/test_proposal_intake.py::test_complete_proposal_is_admitted PASSED  [ 34%]
+test/test_proposal_intake.py::test_metric_indicator_admitted_and_unresolvable_refused PASSED [ 39%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[indicator-planet] PASSED [ 43%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[indicator-PLANET metric] PASSED [ 47%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-0] PASSED [ 52%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-big] PASSED [ 56%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[expected_delta-True] PASSED [ 60%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2026-09-05] PASSED [ 65%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2026-09-04] PASSED [ 69%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-2027-09-06] PASSED [ 73%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-4052-10] PASSED [ 78%]
+test/test_proposal_intake.py::test_each_bad_field_is_refused_by_name[deadline-by Q3] PASSED [ 82%]
+test/test_proposal_intake.py::test_admit_splits_and_logs_every_refusal PASSED [ 86%]
+test/test_proposal_intake.py::test_admit_never_raises_on_garbage PASSED  [ 91%]
+test/test_proposal_intake.py::test_summary_line_counts_missing_fields PASSED [ 95%]
+test/test_proposal_intake.py::test_runner_writes_the_queue_only_through_inject_proposals PASSED [100%]
+
+============================= 23 passed in 1.24s ==============================
+2026-09-05T21:04:59.6652577+03:00  tests green: True
+2026-09-05T21:04:59.6652577+03:00  3. the prompt as tonight's cycle would build it (indicators from measured_axes)
+gradeable indicators: 13
+GRADEABLE INDICATORS (axis: current value). INDICATOR must be one of these axes, or AXIS__metric where the metric is measured under that axis:
+  CLIMATE_GLOBAL_RISK_REVIEW: 426.94
+  COGNITION_LEARNING_REVIEW: 87.74
+  ECOSYSTEMS_BIODIVERSITY_REVIEW: 31.0952
+  EDUCATION_CULTURE_REVIEW: 88.0216
+  ENERGY_REVIEW: 27.8357
+  FOOD_REVIEW: 8.5
+  GOVERNANCE_INSTITUTIONS_REVIEW: 0.443037
+  GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: 0.432078
+  HUMAN_WELL_BEING_REVIEW: 27.7
+  INEQUALITY_POVERTY_REVIEW: 10.4
+  PLANETARY_POTENTIAL_REVIEW: 16.5117
+  SOCIAL_RELATIONS_REVIEW: 29429000.0
+  WATER_REVIEW: 73.6686
+
+2026-09-05T21:04:59.8123320+03:00  gradeable indicators: 13
+GRADEABLE INDICATORS (axis: current value). INDICATOR must be one of these axes, or AXIS__metric where the metric is measured under that axis:
+  CLIMATE_GLOBAL_RISK_REVIEW: 426.94
+  COGNITION_LEARNING_REVIEW: 87.74
+  ECOSYSTEMS_BIODIVERSITY_REVIEW: 31.0952
+  EDUCATION_CULTURE_REVIEW: 88.0216
+  ENERGY_REVIEW: 27.8357
+  FOOD_REVIEW: 8.5
+  GOVERNANCE_INSTITUTIONS_REVIEW: 0.443037
+  GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL: 0.432078
+  HUMAN_WELL_BEING_REVIEW: 27.7
+  INEQUALITY_POVERTY_REVIEW: 10.4
+  PLANETARY_POTENTIAL_REVIEW: 16.5117
+  SOCIAL_RELATIONS_REVIEW: 29429000.0
+  WATER_REVIEW: 73.6686
+
+
+2026-09-05T21:04:59.8145054+03:00  4. commit + push
+2026-09-05T21:05:00.2495856+03:00  committed eb0424b
+2026-09-05T21:05:03.2409364+03:00  pushed (git output in log)

@@ -1,0 +1,4 @@
+﻿=== DETACHED LAUNCH 2026-09-04T23:52:51.0386682+03:00 ===
+exe  : C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv_train\Scripts\python.exe
+args : training/train_lora.py --train cortex_memory/training/train_shuffled.jsonl --out models/adapters/k1b_control --report claude/reports/K1B_TRAIN_CONTROL.md --epochs 1 --max-len 256 --save-every 25 --resume
+pid  : 117852

@@ -1,0 +1,87 @@
+device: NVIDIA GeForce GTX 1650  ·  compute capability: 7.5
+is_bf16_supported() reports: True  ·  real bf16 hardware: False
+after load          allocated   1969.3 MiB
+embeddings cast bf16 -> fp16: 1
+after prepare       allocated   1970.1 MiB   embedding dtype torch.float16   norms upcast: 73
+after LoRA attach   allocated   1984.2 MiB
+trainable: 3,686,400 / 1,702,359,040 (0.217%)
+epoch 0 step 10/37 loss 6.1350
+epoch 0 step 20/37 loss 3.9413
+epoch 0 step 30/37 loss 2.9711
+# K1b training run
+
+- examples: 300  ·  optimiser steps: 37  ·  wall: 1761.2s
+- peak allocated: 2190.6 MiB  ·  peak reserved: 2696.0 MiB  (of 4096 MiB)
+- bf16 supported: False  ·  compute dtype: torch.float16
+- loss: 7.1832 -> 2.59
+- corpus sha256: `49bb0ea6c9827d76296f61823a7215b676621d93868ca5b36e3492f160329733`
+
+Falling loss means the adapter fit this corpus. It does NOT mean the machine
+learned anything about the world. That question belongs to eval_adapter.py,
+on a held-out split it never saw, and the answer there may still be NO EFFECT.
+KNOBS (pre-registered 2026-09-05T05:15:37): K=4 chance=0.2 batch=1 -- batch 10 did not fit; rule 2
+pool 12 distinct · items 120 · unscorable 0 · widened 0
+forward passes: 1200 (120 x 5 x 2)
+  base 25/120  208s
+  base 50/120  416s
+  base 75/120  623s
+  base 100/120  831s
+  adapter 25/120  1202s
+  adapter 50/120  1411s
+  adapter 75/120  1619s
+  adapter 100/120  1828s
+per-item hits -> claude\reports\PC_A1_RANK.items.json
+# K1b ranking eval — pc_A1
+
+**K=4 distractors, chance = 0.20, batch = 1** -- pre-registered at 2026-09-05T05:15:37: batch 10 did not fit; rule 2
+MIN_BUCKET=30, band=0.25
+pool 12 distinct · items 120 · unscorable 0 · widened 0
+wall 1994s · method unbatched
+
+## UNSEEN — adapter — THIS IS THE VERDICT
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| - | 0 | 0 | - | - | NO DATA |
+
+## UNSEEN — base (the same candidates, adapter disabled)
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| - | 0 | 0 | - | - | NO DATA |
+
+## SEEN — memorisation check, NOT a result
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| pc01_rule | 120 | 120 | 0.2250 | [0.1583, 0.3000] | AT CHANCE |
+
+## THREE REFERENCE POINTS — UNSEEN, on the SAME items
+
+`LEARNED` = the adapter's CI is entirely above the CONTROL's. `BEYOND_TRIVIAL` = entirely above the AXIS RULE's. They are separate on purpose: an adapter can beat a model trained on deranged pairs while losing to a rule that reads one word of the prompt.
+
+| stratum | chance | control | axis rule | LEARNED | BEYOND_TRIVIAL |
+|---|---:|---|---|---|---|
+| - | - | - | - | - | - |
+
+## SECONDARY: mean NLL of the true target
+**Distributional gain, not mapping.** A negative control trained on deranged pairs improved this by +1.2204 nats while learning no mapping at all. It is here for continuity with the old report and must not be read as evidence of learning.
+
+| stratum | n | base NLL | adapter NLL | delta |
+|---|---|---|---|---|
+| - | 0 | - | - | - |
+
+## How to read this
+- Chance is 0.20. AT CHANCE means the adapter cannot tell the true target from 4 real alternatives drawn from the same pool.
+- Every candidate comes from the SAME target distribution, so house style cannot move this number. That is the whole point of replacing NLL.
+- UNRESOLVABLE is the corpus being too small to grade that bucket.
+- 0 item(s) were unscorable and are listed, not dropped: []
+device: NVIDIA GeForce GTX 1650  ·  compute capability: 7.5
+is_bf16_supported() reports: True  ·  real bf16 hardware: False
+after load          allocated   1969.3 MiB
+embeddings cast bf16 -> fp16: 1
+after prepare       allocated   1970.1 MiB   embedding dtype torch.float16   norms upcast: 73
+after LoRA attach   allocated   1984.2 MiB
+trainable: 3,686,400 / 1,702,359,040 (0.217%)
+epoch 0 step 10/112 loss 6.1309
+epoch 0 step 20/112 loss 3.9620

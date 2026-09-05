@@ -1,0 +1,101 @@
+device: NVIDIA GeForce GTX 1650  ·  compute capability: 7.5
+is_bf16_supported() reports: True  ·  real bf16 hardware: False
+after load          allocated   1969.3 MiB
+embeddings cast bf16 -> fp16: 1
+after prepare       allocated   1970.1 MiB   embedding dtype torch.float16   norms upcast: 73
+after LoRA attach   allocated   1984.2 MiB
+trainable: 3,686,400 / 1,702,359,040 (0.217%)
+epoch 0 step 10/134 loss 3.3273
+epoch 0 step 20/134 loss 2.9003
+epoch 0 step 30/134 loss 2.8168
+epoch 0 step 40/134 loss 2.5118
+epoch 0 step 50/134 loss 2.4463
+epoch 0 step 60/134 loss 2.2451
+epoch 0 step 70/134 loss 1.8752
+epoch 0 step 80/134 loss 1.9615
+epoch 0 step 90/134 loss 2.1371
+epoch 0 step 100/134 loss 1.8535
+epoch 0 step 110/134 loss 1.8878
+epoch 0 step 120/134 loss 2.0084
+epoch 0 step 130/134 loss 1.9577
+# K1b training run
+
+- examples: 1077  ·  optimiser steps: 134  ·  wall: 6932.5s
+- peak allocated: 2433.6 MiB  ·  peak reserved: 2720.0 MiB  (of 4096 MiB)
+- bf16 supported: False  ·  compute dtype: torch.float16
+- loss: 2.2571 -> 1.993
+- corpus sha256: `079a9d1472511aa790e94320067f3ae3890c5c53a3170596c00eb16b2ec6259e`
+
+Falling loss means the adapter fit this corpus. It does NOT mean the machine
+learned anything about the world. That question belongs to eval_adapter.py,
+on a held-out split it never saw, and the answer there may still be NO EFFECT.
+KNOBS (pre-registered 2026-09-05T05:15:37): K=4 chance=0.2 batch=1 -- batch 10 did not fit; rule 2
+pool 173 distinct · items 223 · unscorable 23 · widened 15
+forward passes: 2230 (223 x 5 x 2)
+  base 25/223  230s
+  base 50/223  459s
+  base 75/223  635s
+  base 100/223  806s
+  base 125/223  992s
+  base 150/223  1143s
+  base 175/223  1310s
+  base 200/223  1468s
+  adapter 25/223  1870s
+  adapter 50/223  2100s
+  adapter 75/223  2276s
+  adapter 100/223  2448s
+  adapter 125/223  2634s
+  adapter 150/223  2806s
+  adapter 175/223  2974s
+  adapter 200/223  3134s
+per-item hits -> claude\reports\K1B_A_RANK.items.json
+# K1b ranking eval — k1b_A
+
+**K=4 distractors, chance = 0.20, batch = 1** -- pre-registered at 2026-09-05T05:15:37: batch 10 did not fit; rule 2
+MIN_BUCKET=30, band=0.25
+pool 173 distinct · items 223 · unscorable 23 · widened 15
+wall 3312s · method unbatched
+
+## UNSEEN — adapter — THIS IS THE VERDICT
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| sig01_plain | 180 | 157 | 0.2222 | [0.1585, 0.2905] | AT CHANCE |
+| sig02_approved_with_impact | 27 | 3 | 0.0000 | - | UNRESOLVABLE (3 distinct pairs < 30) |
+
+## UNSEEN — base (the same candidates, adapter disabled)
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| sig01_plain | 180 | 157 | 0.2667 | [0.1921, 0.3441] | AT CHANCE |
+| sig02_approved_with_impact | 27 | 3 | 0.6667 | - | UNRESOLVABLE (3 distinct pairs < 30) |
+
+## SEEN — memorisation check, NOT a result
+
+| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |
+|---|---:|---:|---:|---|---|
+| sig01_plain | 5 | 3 | 0.0000 | - | UNRESOLVABLE (3 distinct pairs < 30) |
+| sig02_approved_with_impact | 11 | 8 | 0.5455 | - | UNRESOLVABLE (8 distinct pairs < 30) |
+
+## THREE REFERENCE POINTS — UNSEEN, on the SAME items
+
+`LEARNED` = the adapter's CI is entirely above the CONTROL's. `BEYOND_TRIVIAL` = entirely above the AXIS RULE's. They are separate on purpose: an adapter can beat a model trained on deranged pairs while losing to a rule that reads one word of the prompt.
+
+| stratum | chance | control | axis rule | LEARNED | BEYOND_TRIVIAL |
+|---|---:|---|---|---|---|
+| sig01_plain | 0.2000 | nan - | 0.7778 [0.7174, 0.8356] | UNKNOWN | False |
+| sig02_approved_with_impact | 0.2000 | nan - | 0.2000 - | UNKNOWN | UNKNOWN |
+
+## SECONDARY: mean NLL of the true target
+**Distributional gain, not mapping.** A negative control trained on deranged pairs improved this by +1.2204 nats while learning no mapping at all. It is here for continuity with the old report and must not be read as evidence of learning.
+
+| stratum | n | base NLL | adapter NLL | delta |
+|---|---|---|---|---|
+| sig01_plain | 180 | 3.9541 | 2.6277 | +1.3264 |
+| sig02_approved_with_impact | 27 | 2.1852 | 1.5958 | +0.5894 |
+
+## How to read this
+- Chance is 0.20. AT CHANCE means the adapter cannot tell the true target from 4 real alternatives drawn from the same pool.
+- Every candidate comes from the SAME target distribution, so house style cannot move this number. That is the whole point of replacing NLL.
+- UNRESOLVABLE is the corpus being too small to grade that bucket.
+- 23 item(s) were unscorable and are listed, not dropped: [(11, 'stratum_too_small_for_k'), (13, 'stratum_too_small_for_k'), (17, 'stratum_too_small_for_k'), (18, 'stratum_too_small_for_k'), (37, 'stratum_too_small_for_k'), (39, 'stratum_too_small_for_k'), (43, 'stratum_too_small_for_k'), (44, 'stratum_too_small_for_k'), (68, 'stratum_too_small_for_k'), (69, 'stratum_too_small_for_k')]

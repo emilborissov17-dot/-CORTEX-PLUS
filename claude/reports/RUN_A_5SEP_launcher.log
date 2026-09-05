@@ -1,0 +1,27 @@
+﻿=== RUN_A launcher 2026-09-05T15:41:28.3538029+03:00 ===
+2026-09-05T15:41:29.4152098+03:00  gpu memory.used MiB before launch: 0
+2026-09-05T15:41:29.4312005+03:00  pytest test/test_launch_detached_encoding.py
+============================= test session starts =============================
+platform win32 -- Python 3.14.5, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED
+configfile: pytest.ini
+plugins: anyio-4.13.0
+collecting ... collected 3 items
+
+test/test_launch_detached_encoding.py::test_script_sets_utf8_before_start_process PASSED [ 33%]
+test/test_launch_detached_encoding.py::test_static_check_ignores_comments PASSED [ 66%]
+test/test_launch_detached_encoding.py::test_detached_child_can_print_replacement_character PASSED [100%]
+
+============================== 3 passed in 1.06s ==============================
+2026-09-05T15:41:30.9929792+03:00  static test passed: True   behavioural test passed: True
+2026-09-05T15:41:31.2950566+03:00  committed e4acd15
+2026-09-05T15:41:33.9025579+03:00  pushed (see log for git output)
+2026-09-05T15:41:33.9025579+03:00  launching: cmd.exe /c "venv_train\Scripts\python.exe training/train_lora.py --train cortex_memory/training/train.jsonl --out models/adapters/k1b_A --report claude/reports/K1B_TRAIN_A.md --epochs 1 --max-len 256 --rank 8 --alpha 16 --targets q_proj,k_proj,v_proj,o_proj --save-every 25 --resume && venv_train\Scripts\python.exe training/run_rank_eval.py --adapter models/adapters/k1b_A --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/K1B_A_RANK.md"
+DETACHED_PID=252568
+STDOUT=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\K1B_RUN_A.out.log
+STDERR=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\K1B_RUN_A.err.log
+PIDFILE=C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\claude\reports\K1B_RUN_A.pid
+2026-09-05T15:41:42.0121440+03:00  Run A started: cmd.exe pid 252568 alive after 8 s, python.exe processes now: 3.
+2026-09-05T15:41:42.0148284+03:00  Progress: claude/reports/K1B_RUN_A.out.log - training ~2h, then eval ~1h. Reports: K1B_TRAIN_A.md, then K1B_A_RANK.md.
+2026-09-05T15:41:42.0165768+03:00  The pid in K1B_RUN_A.pid is cmd.exe, not the worker. The worker is the python.exe with hundreds of MB RSS.

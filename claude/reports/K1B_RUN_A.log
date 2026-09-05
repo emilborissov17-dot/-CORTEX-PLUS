@@ -1,0 +1,4 @@
+﻿=== DETACHED LAUNCH 2026-09-05T15:41:33.9194031+03:00 ===
+exe  : C:\Windows\System32\cmd.exe
+args : /c "venv_train\Scripts\python.exe training/train_lora.py --train cortex_memory/training/train.jsonl --out models/adapters/k1b_A --report claude/reports/K1B_TRAIN_A.md --epochs 1 --max-len 256 --rank 8 --alpha 16 --targets q_proj,k_proj,v_proj,o_proj --save-every 25 --resume && venv_train\Scripts\python.exe training/run_rank_eval.py --adapter models/adapters/k1b_A --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/K1B_A_RANK.md"
+pid  : 252568
