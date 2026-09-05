@@ -1588,6 +1588,29 @@ def _check_dependencies() -> bool:
     return critical_ok
 
 
+def _inject_proposals(new_proposals: list, generated_by: str, label: str) -> None:
+    """The ONE door into memory/improvement_proposals.json (5 Sep 2026, Kimi R31).
+    Three injectors used to write the file directly, each with measurable_goal =
+    solution[:80] - a name asserting a property nobody checked. Every proposal now
+    passes core.proposal_intake first: born gradeable (indicator that resolves,
+    expected_delta, deadline) or refused with the missing pieces named in
+    memory/proposal_intake_refusals.jsonl. Refused never reaches the queue."""
+    from core import proposal_intake as _pi
+    proposals_path = BASE / "memory" / "improvement_proposals.json"
+    admitted, refused = _pi.admit(new_proposals, source=label)
+    try:
+        existing = json.loads(proposals_path.read_text(encoding="utf-8"))
+        existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
+    except Exception:
+        existing_list = []
+    merged = admitted + [p for p in existing_list if p.get("generated_by") != generated_by]
+    proposals_path.write_text(
+        json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(_pi.summary_line(label, admitted, refused))
+
+
 def _strategist_to_proposals():
     snap_path     = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
     proposals_path = BASE / "memory" / "improvement_proposals.json"
@@ -1625,17 +1648,7 @@ def _strategist_to_proposals():
         if not new_proposals:
             print("[FAST_CYCLE] strategist_to_proposals -> 0 HIGH proposals")
             return
-        try:
-            existing = json.loads(proposals_path.read_text(encoding="utf-8"))
-            existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
-        except Exception:
-            existing_list = []
-        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "CORTEX_STRATEGIST"]
-        proposals_path.write_text(
-            json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
-        print(f"[FAST_CYCLE] strategist_to_proposals -> {len(new_proposals)} proposals injected")
+        _inject_proposals(new_proposals, "CORTEX_STRATEGIST", "strategist_to_proposals")
     except Exception as e:
         print(f"[FAST_CYCLE] strategist_to_proposals -> FAILED: {e}")
 
@@ -1673,17 +1686,7 @@ def _growth_to_proposals():
         if not new_proposals:
             print("[FAST_CYCLE] growth_to_proposals -> 0 measurable safe actions")
             return
-        try:
-            existing = json.loads(proposals_path.read_text(encoding="utf-8"))
-            existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
-        except Exception:
-            existing_list = []
-        merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "GROWTH_PLANNER"]
-        proposals_path.write_text(
-            json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
-        print(f"[FAST_CYCLE] growth_to_proposals -> {len(new_proposals)} proposals injected")
+        _inject_proposals(new_proposals, "GROWTH_PLANNER", "growth_to_proposals")
     except Exception as e:
         print(f"[FAST_CYCLE] growth_to_proposals -> FAILED: {e}")
 
@@ -1751,17 +1754,7 @@ def _hyperclaw_to_proposals():
         else:
             print("[FAST_CYCLE] hyperclaw_to_proposals -> 0 concrete steps extracted")
         return
-    try:
-        existing = json.loads(proposals_path.read_text(encoding="utf-8"))
-        existing_list = existing.get("proposals", existing) if isinstance(existing, dict) else existing
-    except Exception:
-        existing_list = []
-    merged = new_proposals + [p for p in existing_list if p.get("generated_by") != "HYPERCLAW"]
-    proposals_path.write_text(
-        json.dumps({"proposals": merged}, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
-    print(f"[FAST_CYCLE] hyperclaw_to_proposals -> {len(new_proposals)} proposals injected")
+    _inject_proposals(new_proposals, "HYPERCLAW", "hyperclaw_to_proposals")
 
 
 def _scan_needs_reanalysis() -> list[dict]:
