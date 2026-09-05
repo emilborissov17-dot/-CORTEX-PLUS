@@ -337,8 +337,19 @@ def main() -> int:
     L += table("adapter", "UNSEEN")
     L += ["", "## UNSEEN — base (the same candidates, adapter disabled)", "", hdr]
     L += table("base", "UNSEEN")
-    L += ["", "## SEEN — memorisation check, NOT a result", "", hdr]
+    # SEEN GETS THE BASE COLUMN TOO (5 Sep 2026). A finite-label corpus - the
+    # positive control - has NO UNSEEN rows at all: every target is one of 12
+    # codes, so all 120 items are SEEN and both UNSEEN tables print NO DATA. The
+    # base row is where the verdict lives there, and it was computed and thrown
+    # away: PC_A1_RANK.md could show only the adapter at 0.2250 and nothing to
+    # compare it against.
+    L += ["", "## SEEN — adapter", "",
+          "For a finite-label corpus (the positive control) EVERY row is SEEN and "
+          "this is the verdict, not a memorisation check. For an open-ended corpus "
+          "it remains the memorisation check.", "", hdr]
     L += table("adapter", "SEEN")
+    L += ["", "## SEEN — base (the same candidates, adapter disabled)", "", hdr]
+    L += table("base", "SEEN")
     L += ["", "## THREE REFERENCE POINTS — UNSEEN, on the SAME items", "",
           "`LEARNED` = the adapter's CI is entirely above the CONTROL's. "
           "`BEYOND_TRIVIAL` = entirely above the AXIS RULE's. They are separate "
@@ -371,10 +382,18 @@ def main() -> int:
     # PER-ITEM HITS, so a later adapter is compared to this one on the SAME
     # items rather than on two runs that merely used the same corpus.
     items_out = Path(a.items_out) if a.items_out else out.with_suffix(".items.json")
+    # BOTH SIDES. The first version stored `hit` alone - the adapter's - and the
+    # base pass, already computed, was discarded. PC_A1's base accuracy was then
+    # unrecoverable from any artifact and needed a re-run to answer a question the
+    # run had already answered in memory. `hit` keeps its meaning (adapter) so
+    # earlier files stay readable; `base_hit` is added beside it.
     items_out.write_text(json.dumps(
         [{"pair": r["pair"], "kind": r["kind"], "novelty": r["novelty"],
-          "hit": r["hit"], "axis_rule": r["axis_rule"], "true_nll": r["true_nll"]}
-         for r in results["adapter"]], ensure_ascii=False), encoding="utf-8")
+          "hit": r["hit"], "base_hit": b["hit"],
+          "axis_rule": r["axis_rule"],
+          "true_nll": r["true_nll"], "base_true_nll": b["true_nll"]}
+         for r, b in zip(results["adapter"], results["base"])],
+        ensure_ascii=False), encoding="utf-8")
     print(f"per-item hits -> {items_out}")
     print("\n".join(L))
     return 0
