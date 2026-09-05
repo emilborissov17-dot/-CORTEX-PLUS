@@ -1692,9 +1692,11 @@ def _growth_to_proposals():
 
 
 def _hyperclaw_to_proposals():
-    """Convert the latest HyperClaw markdown plan to improvement proposals."""
+    """Convert the latest HyperClaw markdown plan to improvement proposals.
+    The parser lives in agents.hyperclaw.hyperclaw_orchestrator.parse_plan (5 Sep 2026)
+    so the plan contract - STEP + INDICATOR/EXPECTED_DELTA/DEADLINE - is tested in one
+    place; this function only chooses the file and walks the proposals to the door."""
     plans_dir = BASE / "plans"
-    proposals_path = BASE / "memory" / "improvement_proposals.json"
     if not plans_dir.exists():
         return
     plan_files = sorted(plans_dir.glob("plan-*.md"), key=lambda p: p.name, reverse=True)
@@ -1702,52 +1704,8 @@ def _hyperclaw_to_proposals():
         print("[FAST_CYCLE] hyperclaw_to_proposals -> no plan file found")
         return
     plan_text = plan_files[0].read_text(encoding="utf-8", errors="ignore")
-    new_proposals = []
-    current_axis = None
-    import re as _re
-    _bold_re      = _re.compile(r'\*{1,2}([^*]+)\*{1,2}')
-    _obj_re       = _re.compile(r'^\*{0,2}OBJECTIVE\*{0,2}\s*:', _re.IGNORECASE)
-    _step_num_re  = _re.compile(r'^\d+\.\s+(.+)')
-    _step_dash_re = _re.compile(r'^-\s+STEP\s+\d+\s*[:.~]?\s*(.+)', _re.IGNORECASE)
-
-    def _clean(text: str) -> str:
-        return _bold_re.sub(r'\1', text).strip()
-
-    for line in plan_text.splitlines():
-        line = line.strip()
-        for marker in ("HUMAN_AXIS_FOCUS", "PLANET_AXIS_FOCUS", "CIVILIZATION_AXIS_FOCUS", "COSMOS_AXIS_FOCUS"):
-            if marker in line:
-                current_axis = marker.replace("_AXIS_FOCUS", "")
-        if current_axis and _obj_re.match(line):
-            objective = _clean(_obj_re.sub("", line, count=1))
-            if objective and "<" not in objective and len(objective) > 10:
-                new_proposals.append({
-                    "component":         current_axis,
-                    "problem":           f"{current_axis} axis needs progress",
-                    "solution":          objective,
-                    "measurable_goal":   objective[:80],
-                    "root_cause":        f"HyperClaw plan — {plan_files[0].name}",
-                    "priority":          "MEDIUM",
-                    "real_world_signal": True,
-                    "generated_by":      "HYPERCLAW",
-                    "timestamp":         _utc_now(),
-                })
-        if current_axis:
-            m = _step_num_re.match(line) or _step_dash_re.match(line)
-            if m:
-                step = _clean(m.group(1))
-                if step and "<" not in step and len(step) > 10:
-                    new_proposals.append({
-                        "component":         current_axis,
-                        "problem":           f"Action required for {current_axis}",
-                        "solution":          step,
-                        "measurable_goal":   step[:80],
-                        "root_cause":        f"HyperClaw step — {plan_files[0].name}",
-                        "priority":          "MEDIUM",
-                        "real_world_signal": True,
-                        "generated_by":      "HYPERCLAW",
-                        "timestamp":         _utc_now(),
-                    })
+    from agents.hyperclaw.hyperclaw_orchestrator import parse_plan
+    new_proposals = parse_plan(plan_text, plan_files[0].name, _utc_now())
     if not new_proposals:
         if len(plan_text) > 500:
             print("[FAST_CYCLE] hyperclaw_to_proposals -> 0 steps from non-empty plan (parser drift?)")

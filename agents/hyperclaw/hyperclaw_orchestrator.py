@@ -63,7 +63,124 @@ def _load_merkle_essence() -> str:
     return ""
 
 
-def _build_prompt(context: str, axes_spec: str, today: str, merkle_essence: str = "") -> str:
+# ── WHAT THE SYSTEM CAN ACTUALLY DO (Kimi Round 31, 5 Sep 2026) ───────────────
+# The planner used to be asked for "concrete actions" with no statement of what
+# this system is able to do. It answered with mailing lists, membrane filters and
+# a 10 000-user survey. None of that is an action THIS system can take, so none
+# of it could ever be graded, so none of it could ever be learned from.
+CAPABILITIES = (
+    "CORTEX++ CAN: read public indicators (World Bank, NOAA, USGS, WHO, UNHCR, ACLED, "
+    "arXiv, GitHub) once a night; write JSON snapshots and scores; register a "
+    "prediction about an indicator and grade it later; publish a Markdown/JSON report "
+    "to GitHub; propose a patch to its own code for a HUMAN to review.\n"
+    "CORTEX++ CANNOT: send email, run surveys, fund, build, deploy, contact anyone, or "
+    "change anything in the world without a human acting on its output."
+)
+
+PROPOSAL_KEYS = ("INDICATOR", "EXPECTED_DELTA", "DEADLINE")
+
+
+def _gradeable_indicators() -> dict:
+    """axis -> observed value, for axes MEASURED this cycle. Same gate as K1 and as
+    hypothesis_intake: only these can be graded, so only these may be named."""
+    import sys
+    sys.path.insert(0, str(BASE))
+    try:
+        from core.hypothesis_intake import measured_axes
+        return measured_axes()
+    except Exception as e:
+        print(f"[HYPERCLAW] measured_axes unavailable: {e}")
+        return {}
+
+
+def _indicator_block(indicators: dict) -> str:
+    if not indicators:
+        return ("GRADEABLE INDICATORS: none resolved this cycle - any INDICATOR you name "
+                "will be refused at intake.\n")
+    lines = [f"  {k}: {v}" for k, v in sorted(indicators.items())]
+    return ("GRADEABLE INDICATORS (axis: current value). INDICATOR must be one of these "
+            "axes, or AXIS__metric where the metric is measured under that axis:\n"
+            + "\n".join(lines) + "\n")
+
+
+def parse_plan(plan_text: str, plan_name: str, ts: str) -> list:
+    """plan-*.md -> proposals. Moved out of fast_cycle_runner._hyperclaw_to_proposals
+    (5 Sep 2026) so it can be tested without importing the whole cycle.
+
+    Every OBJECTIVE and STEP line becomes a proposal. If it is followed by indented
+    INDICATOR / EXPECTED_DELTA / DEADLINE lines, those become fields on the proposal;
+    if not, the proposal is born without them and core.proposal_intake refuses it
+    with the missing pieces named. The parser never fills a field it did not read."""
+    import re as _re
+    _bold_re      = _re.compile(r'\*{1,2}([^*]+)\*{1,2}')
+    _obj_re       = _re.compile(r'^\*{0,2}OBJECTIVE\*{0,2}\s*:', _re.IGNORECASE)
+    _step_num_re  = _re.compile(r'^\d+\.\s+(.+)')
+    _step_dash_re = _re.compile(r'^-\s+STEP\s+\d+\s*[:.~]?\s*(.+)', _re.IGNORECASE)
+    _key_re       = _re.compile(r'^[-*\s]*\*{0,2}(INDICATOR|EXPECTED_DELTA|DEADLINE)\*{0,2}\s*:\s*(.+?)\s*$',
+                                _re.IGNORECASE)
+
+    def _clean(text: str) -> str:
+        return _bold_re.sub(r'\1', text).strip()
+
+    proposals: list = []
+    current_axis = None
+    current = None
+    for raw in plan_text.splitlines():
+        line = raw.strip()
+        for marker in ("HUMAN_AXIS_FOCUS", "PLANET_AXIS_FOCUS", "CIVILIZATION_AXIS_FOCUS", "COSMOS_AXIS_FOCUS"):
+            if marker in line:
+                current_axis = marker.replace("_AXIS_FOCUS", "")
+                current = None
+        if not current_axis:
+            continue
+        km = _key_re.match(line)
+        if km and current is not None:
+            key, val = km.group(1).upper(), _clean(km.group(2))
+            if key == "INDICATOR":
+                current["indicator"] = val
+            elif key == "EXPECTED_DELTA":
+                try:
+                    current["expected_delta"] = float(val.replace(",", ".").rstrip("%").strip())
+                except ValueError:
+                    current["expected_delta"] = val  # intake names it as not a number
+            elif key == "DEADLINE":
+                current["deadline"] = val[:10]
+            continue
+        if _obj_re.match(line):
+            objective = _clean(_obj_re.sub("", line, count=1))
+            if objective and "<" not in objective and len(objective) > 10:
+                current = {
+                    "component":         current_axis,
+                    "problem":           f"{current_axis} axis needs progress",
+                    "solution":          objective,
+                    "root_cause":        f"HyperClaw plan - {plan_name}",
+                    "priority":          "MEDIUM",
+                    "real_world_signal": True,
+                    "generated_by":      "HYPERCLAW",
+                    "timestamp":         ts,
+                }
+                proposals.append(current)
+            continue
+        m = _step_num_re.match(line) or _step_dash_re.match(line)
+        if m:
+            step = _clean(m.group(1))
+            if step and "<" not in step and len(step) > 10:
+                current = {
+                    "component":         current_axis,
+                    "problem":           f"Action required for {current_axis}",
+                    "solution":          step,
+                    "root_cause":        f"HyperClaw step - {plan_name}",
+                    "priority":          "MEDIUM",
+                    "real_world_signal": True,
+                    "generated_by":      "HYPERCLAW",
+                    "timestamp":         ts,
+                }
+                proposals.append(current)
+    return proposals
+
+
+def _build_prompt(context: str, axes_spec: str, today: str, merkle_essence: str = "",
+                  indicators: dict | None = None) -> str:
     merkle_section = (
         f"── MERKLE MEMORY (история от минали цикли) ──\n{merkle_essence}\n\n"
         if merkle_essence else ""
@@ -71,9 +188,15 @@ def _build_prompt(context: str, axes_spec: str, today: str, merkle_essence: str 
     return (
         "Ти си CORTEX++ в ролята на HYPERCLAW_ORCHESTRATOR.\n"
         "Имаш достъп до текущото състояние на системата по всички оси.\n\n"
+        + CAPABILITIES + "\n\n"
+        + _indicator_block(indicators or {}) + "\n"
         "ЗАДАЧА: Генерирай глобален план `plan-{today}.md` с конкретни стъпки\n"
         "за следващите 24-72 часа по всяка от четирите оси.\n"
-        "За всяка ос избери под-оси с нисък прогрес или висок риск.\n\n"
+        "За всяка ос избери под-оси с нисък прогрес или висок риск.\n"
+        "ВСЯКА СТЪПКА Е ДЕЙСТВИЕ, КОЕТО CORTEX++ МОЖЕ ДА ИЗВЪРШИ (виж CAN/CANNOT), и носи\n"
+        "три реда под себе си: INDICATOR (от списъка горе), EXPECTED_DELTA (число със знак,\n"
+        "очаквана промяна на индикатора), DEADLINE (YYYY-MM-DD, до 1 година). Стъпка без\n"
+        "трите реда се ОТКАЗВА при приемане и не влиза никъде.\n\n"
         "ИЗХОД: САМО Markdown съдържание. Без meta-коментари.\n\n"
         f"# HYPERCLAW MULTI-AXIS PLAN – {today}\n\n"
         "META:\n"
@@ -84,29 +207,53 @@ def _build_prompt(context: str, axes_spec: str, today: str, merkle_essence: str 
         "  SELECTED_SUBAXES: [<под-ос с нисък прогрес>]\n"
         "  OBJECTIVE: <целево подобрение за 24-72h>\n"
         "  PLAN_STEPS:\n"
-        "    - STEP 1: <конкретно действие>\n"
+        "    - STEP 1: <конкретно действие, което CORTEX++ може да извърши>\n"
+        "      INDICATOR: <AXIS или AXIS__metric от списъка>\n"
+        "      EXPECTED_DELTA: <число със знак>\n"
+        "      DEADLINE: <YYYY-MM-DD>\n"
         "    - STEP 2: <конкретно действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "  CROSS_AXIS_EFFECTS: <ефект върху PLANET/CIVILIZATION/COSMOS>\n\n"
         "PLANET_AXIS_FOCUS:\n"
         "  SELECTED_SUBAXES: [<под-ос>]\n"
         "  OBJECTIVE: <цел>\n"
         "  PLAN_STEPS:\n"
         "    - STEP 1: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "    - STEP 2: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "  CROSS_AXIS_EFFECTS: <ефект>\n\n"
         "CIVILIZATION_AXIS_FOCUS:\n"
         "  SELECTED_SUBAXES: [<под-ос>]\n"
         "  OBJECTIVE: <цел>\n"
         "  PLAN_STEPS:\n"
         "    - STEP 1: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "    - STEP 2: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "  CROSS_AXIS_EFFECTS: <ефект>\n\n"
         "COSMOS_AXIS_FOCUS:\n"
         "  SELECTED_SUBAXES: [LONG_TERM_FUTURE_REVIEW]\n"
         "  OBJECTIVE: <намаляване на екзистенциален риск>\n"
         "  PLAN_STEPS:\n"
         "    - STEP 1: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "    - STEP 2: <действие>\n"
+        "      INDICATOR: <...>\n"
+        "      EXPECTED_DELTA: <...>\n"
+        "      DEADLINE: <...>\n"
         "  CROSS_AXIS_EFFECTS: <ефект>\n\n"
         "GLOBAL_RISKS_AND_CHECKS:\n"
         "  - <риск>: check: <метрика>\n\n"
@@ -145,7 +292,9 @@ def main() -> None:
     merkle_essence = _load_merkle_essence()
     if merkle_essence:
         print(f"[HYPERCLAW] MerkleMemory essence loaded ({len(merkle_essence)} chars)")
-    prompt         = _build_prompt(context, axes_spec, today, merkle_essence)
+    indicators     = _gradeable_indicators()
+    print(f"[HYPERCLAW] gradeable indicators offered: {len(indicators)}")
+    prompt         = _build_prompt(context, axes_spec, today, merkle_essence, indicators)
 
     plan_md = None
     try:
