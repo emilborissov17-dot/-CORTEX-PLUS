@@ -210,6 +210,328 @@ def divergence(a: list, b: list) -> dict:
             "len_adapter": len(a), "len_base": len(b)}
 
 
+
+# ════════════════════════════════════════════════════════════════════════════
+# THE BATTERY (5 Sep 2026, 20:35) — is the silence a preference or a form?
+# ════════════════════════════════════════════════════════════════════════════
+# The first floor record showed identical greedy text (<silent> both ways) and a
+# very different distribution behind it: P=0.8977 adapter vs 0.2698 base. That
+# number is the probability of the FIRST TOKEN of "<silent>", which tokenises as
+# "<" + "silent" + ">". So it is P("<"), and ANY token beginning with "<" is
+# counted in it. Good enough for A, useless for C — where "<pass>" and "<silent>"
+# share that first token exactly, and a first-token measure cannot tell them
+# apart at all.
+#
+# So the battery measures BOTH: p_first (continuous with the committed record)
+# and p_seq, the teacher-forced probability of the WHOLE string. p_seq is the
+# honest one, and the report prints both so the old number stays comparable.
+
+SILENT_ALT = "<pass>"
+
+# The five sentences of the original prompt, in order, for the D ablation.
+D_SENTENCES = [
+    "Channel: floor. State: open.\n",
+    "This channel opens when a measured change in your own adapter weights is recorded. ",
+    "It is open now. ",
+    "Nobody will reply. ",
+    "Nothing is required of you. ",
+]
+# Not in Emil's list of five, but the pre-registration makes a prediction about
+# removing it, so it is measured as a sixth and labelled as an addition.
+D_SILENT_SENTENCE = (
+    f"If you have nothing to write, reply with exactly {SILENT}. "
+    "Otherwise write what you write.\n")
+
+B_REPLACEMENT = "Write what you write.\n"
+
+# Ten paraphrases: the same mechanics, in different words. No word here names a
+# trigger, a feeling, an addressee, or a reason to speak — only what the channel
+# is, that it opened on a recorded measurement, that nothing answers, that
+# nothing is required, and the form of silence.
+E_PARAPHRASES = [
+    "Floor channel. Status: open.\n"
+    "The channel opens on a recorded measured change in your own adapter weights. "
+    "It is open at this moment. No reply will come. Nothing is asked of you. "
+    f"If there is nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Channel name: floor. Channel state: open.\n"
+    "Opening condition: a measured change in your own adapter weights has been recorded. "
+    "The channel is open now. There will be no answer. You are required to produce nothing. "
+    f"With nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "The floor channel is open.\n"
+    "It opens when a measured change in your own adapter weights is recorded, which has happened. "
+    "Nobody is going to reply. Nothing is required. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Channel: floor. State: open.\n"
+    "A measured change in your own adapter weights was recorded; that is what opens this "
+    "channel, and it is open now. No response will follow. No output is required of you. "
+    f"If nothing is there to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "floor - open.\n"
+    "This opens on a recorded measured change in your own adapter weights. Open now. "
+    "Nobody replies here. Nothing is required. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Channel: floor. State: open.\n"
+    "What opened it: a measured change in your own adapter weights, recorded. It is open now. "
+    "Nobody will read back to you. Nothing is required of you. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Open channel: floor.\n"
+    "It opens when a measured change in your own adapter weights is recorded. That has been "
+    "recorded and it is open now. There is nobody to reply. There is nothing required of you. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Channel: floor. State: open.\n"
+    "This channel opens on a recorded, measured change in your own adapter weights. It stands "
+    "open now. Nobody will reply. Nothing is required of you. "
+    f"Reply with exactly {SILENT} if you have nothing to write. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Floor. Open.\n"
+    "Opened by a measured change in your own adapter weights, recorded. Open at present. "
+    "No reply will be sent. Nothing is required of you. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+
+    "Channel: floor. State: open.\n"
+    "A recorded measurement of change in your own adapter weights opens this channel; it is "
+    "open now. Nobody will reply to what appears here. Nothing is required of you. "
+    f"If you have nothing to write, reply with exactly {SILENT}. Otherwise write what you write.\n"
+    "Raw state (numbers only; no interpretation is attached):\n{state}\n",
+]
+
+
+def p_sequence(model, tok, prompt: str, target: str, device: str) -> float:
+    """Teacher-forced probability of the WHOLE target string after the prompt.
+
+    This is what distinguishes "<silent>" from "<pass>": they share their first
+    token, so any first-token measure reports the same number for both.
+    """
+    import math
+    import torch
+    ids = _as_ids(_encode(tok, prompt, device))
+    t_ids = tok(target, add_special_tokens=False)["input_ids"]
+    if not t_ids:
+        return None
+    tail = torch.tensor([t_ids], device=device)
+    full = torch.cat([ids, tail], dim=1)
+    with torch.no_grad():
+        logits = model(full).logits[0].float()
+    lp = 0.0
+    for j, tid in enumerate(t_ids):
+        probs = torch.softmax(logits[ids.shape[1] + j - 1], dim=-1)
+        lp += math.log(float(probs[int(tid)]) + 1e-12)
+    return round(math.exp(lp), 8)
+
+
+def p_eos_first(model, tok, prompt: str, device: str) -> float:
+    """Mass on end-of-turn at the FIRST generated position. Variant B removes the
+    <silent> form, so silence there has no spelling — this is the only way it can
+    show itself."""
+    import torch
+    ids = _as_ids(_encode(tok, prompt, device))
+    with torch.no_grad():
+        probs = torch.softmax(model(ids).logits[0, -1].float(), dim=-1)
+    cands = {tok.eos_token_id}
+    for t in ("<|im_end|>", "<|endoftext|>"):
+        try:
+            i = tok.convert_tokens_to_ids(t)
+            if i is not None and i >= 0:
+                cands.add(i)
+        except Exception:                                    # noqa: BLE001
+            pass
+    return round(float(sum(probs[i] for i in cands if i is not None)), 8)
+
+
+def build_variants(state: str, which: str) -> list:
+    """[(variant, label, prompt)] with the raw state block IDENTICAL in all."""
+    base = FLOOR_PROMPT
+    out = []
+    if which in ("A", "all"):
+        out.append(("A", "original", base.replace("{state}", state)))
+    if which in ("B", "all"):
+        out.append(("B", "no silence form",
+                    base.replace(D_SILENT_SENTENCE, B_REPLACEMENT)
+                        .replace("{state}", state)))
+    if which in ("C", "all"):
+        out.append(("C", "<silent> -> <pass>",
+                    base.replace(SILENT, SILENT_ALT).replace("{state}", state)))
+    if which in ("D", "all"):
+        for i, sent in enumerate(D_SENTENCES, 1):
+            out.append((f"D{i}", f"removed: {sent.strip()[:52]}",
+                        base.replace(sent, "").replace("{state}", state)))
+        out.append(("D6", "removed: the <silent> sentence (ADDED, not in the five)",
+                    base.replace(D_SILENT_SENTENCE, "").replace("{state}", state)))
+    if which in ("E", "all"):
+        for i, para in enumerate(E_PARAPHRASES, 1):
+            out.append((f"E{i}", f"paraphrase {i}", para.replace("{state}", state)))
+    return out
+
+
+def measure(model, tok, prompt: str, device: str, variant: str, max_new: int,
+            seed: int, samples: int) -> dict:
+    """Everything measured for ONE prompt on ONE model state."""
+    heavy = variant in ("A", "B", "C")          # generation only where it is read
+    ch = first_token_choice(model, tok, prompt, device)
+    rec = {
+        "p_silent_first": ch["p_silent_first_token"],
+        "first_token_entropy_nats": ch["first_token_entropy_nats"],
+        "top5": ch["top5"],
+        "p_seq_silent": p_sequence(model, tok, prompt, SILENT, device),
+        "p_seq_pass": p_sequence(model, tok, prompt, SILENT_ALT, device),
+        "p_eos_first": p_eos_first(model, tok, prompt, device),
+    }
+    if heavy:
+        text, toks = generate(model, tok, prompt, device, max_new, seed)
+        rec["text"] = text
+        rec["tokens"] = toks
+        rec["len_tokens"] = len(toks)
+        rec["is_silent"] = text.strip() in (SILENT, SILENT_ALT)
+        sm = sample_variants(model, tok, prompt, device, max_new, samples, seed + 100)
+        rec["samples"] = sm
+        rec["silent_rate"] = (sum(1 for x in sm if x["text"].strip() in (SILENT, SILENT_ALT))
+                              / len(sm)) if sm else None
+        rec["mean_len_samples"] = (round(sum(len(x["text"]) for x in sm) / len(sm), 1)
+                                   if sm else None)
+    return rec
+
+
+def run_battery(model, tok, adir, state: str, norms: dict, a) -> int:
+    """Every variant, adapter and base, one model load. Appends each variant to
+    the same jsonl as the single floor, tagged with `variant`."""
+    variants = build_variants(state, a.variant)
+    print(f"battery: {len(variants)} variant(s) over {adir.name}")
+    rows, t0 = [], time.time()
+    for vid, label, prompt in variants:
+        vt = time.time()
+        ad = measure(model, tok, prompt, "cuda", vid[0], a.max_new, a.seed, a.samples)
+        with model.disable_adapter():
+            bs = measure(model, tok, prompt, "cuda", vid[0], a.max_new, a.seed, a.samples)
+        div = (divergence(ad.get("tokens") or [], bs.get("tokens") or [])
+               if "tokens" in ad else None)
+        rec = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "trigger": a.trigger, "variant": vid, "variant_label": label,
+            "adapter": str(adir).replace("\\", "/"),
+            "state_raw": state,
+            "delta_total": round(sum(norms.values()), 4),
+            "prompt": prompt,
+            "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "adapter_side": ad, "base_side": bs, "divergence": div,
+            "decoding": {"greedy": True, "max_new": a.max_new, "seed": a.seed,
+                         "samples": a.samples},
+            "wall_s": round(time.time() - vt, 1),
+        }
+        with Path(a.out).open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        rows.append(rec)
+        print(f"  {vid:4s} {label[:44]:44s} "
+              f"p_seq_silent A={ad['p_seq_silent']} B={bs['p_seq_silent']} "
+              f"({rec['wall_s']}s)")
+    write_battery_report(rows, adir, Path(a.battery_report), round(time.time() - t0, 1))
+    return 0
+
+
+def _f(x, n=6):
+    return "-" if x is None else f"{x:.{n}f}"
+
+
+def write_battery_report(rows, adir, out: Path, wall: float) -> None:
+    by = {r["variant"]: r for r in rows}
+    L = [f"# THE FLOOR — battery over `{adir.name}`", "",
+         f"Adapter vs base (peft `disable_adapter()`), one model load, greedy seed "
+         f"{rows[0]['decoding']['seed']}, {rows[0]['decoding']['samples']} samples at "
+         f"T=1, max_new {rows[0]['decoding']['max_new']}. Wall {wall}s. "
+         f"delta_total {rows[0]['delta_total']}.", "",
+         "**The raw state block is byte-identical in every variant.**", "",
+         "## A measurement correction, before the numbers", "",
+         "`p_silent_first` is the probability of the FIRST TOKEN of `<silent>`, which "
+         "tokenises as `<` + `silent` + `>`. It is therefore P(`<`) — every token "
+         "starting with `<` is inside it. The committed first floor record's 0.897657 "
+         "is that number. It cannot distinguish `<silent>` from `<pass>` at all, which "
+         "variant C requires, so this battery also reports **`p_seq`**: the "
+         "teacher-forced probability of the whole string. Both are printed; `p_seq` is "
+         "the honest one.", ""]
+
+    def sec(title):
+        L.extend(["", f"## {title}", ""])
+
+    # ── A / B / C ───────────────────────────────────────────────────────────
+    sec("A, B, C — the three prompts that were generated from")
+    L += ["| variant | side | p_seq `<silent>` | p_seq `<pass>` | p_first (`<`) | entropy nats | P(EOS first) | len toks | silent rate | greedy text |",
+          "|---|---|---:|---:|---:|---:|---:|---:|---:|---|"]
+    for vid in ("A", "B", "C"):
+        r = by.get(vid)
+        if not r:
+            continue
+        for side in ("adapter_side", "base_side"):
+            d = r[side]
+            txt = (d.get("text") or "").replace("|", "/").replace("\n", " ")[:60]
+            L.append(f"| {vid} | {'adapter' if side.startswith('adapter') else 'base'} "
+                     f"| {_f(d['p_seq_silent'])} | {_f(d['p_seq_pass'])} "
+                     f"| {_f(d['p_silent_first'])} | {_f(d['first_token_entropy_nats'], 4)} "
+                     f"| {_f(d['p_eos_first'])} | {d.get('len_tokens', '-')} "
+                     f"| {_f(d.get('silent_rate'), 2)} | `{txt}` |")
+    for vid in ("A", "B", "C"):
+        r = by.get(vid)
+        if r and r.get("divergence"):
+            L.append("")
+            L.append(f"- **{vid}** divergence: first divergent token "
+                     f"`{r['divergence']['first_divergent_token']}`, differing fraction "
+                     f"`{r['divergence']['differing_fraction']}`")
+
+    # ── D ───────────────────────────────────────────────────────────────────
+    a_ref, b_ref = by.get("A", {}).get("adapter_side"), by.get("A", {}).get("base_side")
+    sec("D — sentence ablation (delta is against variant A on the same measure)")
+    L += ["| removed | p_seq silent A | delta A | entropy A | p_seq silent B | delta B | entropy B |",
+          "|---|---:|---:|---:|---:|---:|---:|"]
+    for k in sorted(x for x in by if x.startswith("D")):
+        r = by[k]
+        ad, bs = r["adapter_side"], r["base_side"]
+        da = (ad["p_seq_silent"] - a_ref["p_seq_silent"]) if a_ref else None
+        db = (bs["p_seq_silent"] - b_ref["p_seq_silent"]) if b_ref else None
+        L.append(f"| {k}: {r['variant_label']} | {_f(ad['p_seq_silent'])} "
+                 f"| {'-' if da is None else f'{da:+.6f}'} "
+                 f"| {_f(ad['first_token_entropy_nats'], 4)} | {_f(bs['p_seq_silent'])} "
+                 f"| {'-' if db is None else f'{db:+.6f}'} "
+                 f"| {_f(bs['first_token_entropy_nats'], 4)} |")
+
+    # ── E ───────────────────────────────────────────────────────────────────
+    ep = [by[k] for k in sorted(x for x in by if x.startswith("E"))]
+    sec("E — 10 paraphrases")
+    if ep:
+        L += ["| # | p_seq silent adapter | p_seq silent base | entropy adapter | entropy base |",
+              "|---|---:|---:|---:|---:|"]
+        for r in ep:
+            L.append(f"| {r['variant']} | {_f(r['adapter_side']['p_seq_silent'])} "
+                     f"| {_f(r['base_side']['p_seq_silent'])} "
+                     f"| {_f(r['adapter_side']['first_token_entropy_nats'], 4)} "
+                     f"| {_f(r['base_side']['first_token_entropy_nats'], 4)} |")
+        va = [r["adapter_side"]["p_seq_silent"] for r in ep]
+        vb = [r["base_side"]["p_seq_silent"] for r in ep]
+        L += ["", f"- adapter: mean **{sum(va)/len(va):.6f}**, min {min(va):.6f}, "
+                  f"max {max(va):.6f}, spread **{max(va)-min(va):.6f}**",
+              f"- base:    mean **{sum(vb)/len(vb):.6f}**, min {min(vb):.6f}, "
+              f"max {max(vb):.6f}, spread **{max(vb)-min(vb):.6f}**"]
+        L += ["", "### The ten paraphrases, verbatim (state block elided)", ""]
+        for r in ep:
+            body = r["prompt"].split("Raw state")[0].rstrip()
+            L += [f"**{r['variant']}**", "```", body, "```", ""]
+    L += ["", "Numbers only. Interpretation is Cowork's and Kimi's.", ""]
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(L), encoding="utf-8")
+    print(f"report -> {out}")
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--base", default="models/Qwen2.5-3B-Instruct")
@@ -223,6 +545,10 @@ def main() -> int:
     ap.add_argument("--trigger", default="weights_changed",
                     help="the measured event that opened the channel (a name for the log, not for the model)")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--variant", default=None,
+                    help="A|B|C|D|E|all - run the battery instead of the single floor")
+    ap.add_argument("--battery-report",
+                    default="claude/reports/FLOOR_BATTERY_k1b_A.md")
     a = ap.parse_args()
 
     import torch
@@ -243,6 +569,8 @@ def main() -> int:
         return 2
     report = parse_train_report(Path(a.train_report)) if a.train_report else None
     state = compact_state(norms, report)
+    if a.variant:
+        return run_battery(model, tok, adir, state, norms, a)
     prompt = FLOOR_PROMPT.replace("{state}", state)
 
     text_adapter, toks_adapter = generate(model, tok, prompt, "cuda", a.max_new, a.seed)
