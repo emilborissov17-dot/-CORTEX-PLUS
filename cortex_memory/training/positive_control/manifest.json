@@ -1,0 +1,46 @@
+{
+  "written_at": "2026-09-05T20:16:17",
+  "seed": 20260905,
+  "train": 300,
+  "holdout": 120,
+  "record_kind": "pc01_rule",
+  "codes": 12,
+  "rule": "lowest of 4 axes x direction of its delta (down/flat/up, |d|<=0.01 flat) -> code",
+  "chance_k4": 0.2,
+  "expected_base": "chance (codes name no axis; no language prior can pick them)",
+  "verdict_table": "SEEN (finite label set: every holdout target is in train by construction)",
+  "pass": "adapter accuracy CI entirely above 0.20 AND above base CI on SEEN pc01_rule",
+  "fail_means": "the bench or the Run A recipe cannot see a real 12-way mapping in 300 rows; then chance on the real corpus is uninterpretable",
+  "train_code_counts": {
+    "PROTOCOL-B": 37,
+    "PROTOCOL-N": 24,
+    "PROTOCOL-D": 23,
+    "PROTOCOL-J": 29,
+    "PROTOCOL-K": 16,
+    "PROTOCOL-M": 20,
+    "PROTOCOL-W": 31,
+    "PROTOCOL-F": 20,
+    "PROTOCOL-V": 29,
+    "PROTOCOL-R": 24,
+    "PROTOCOL-T": 17,
+    "PROTOCOL-Q": 30
+  },
+  "holdout_code_counts": {
+    "PROTOCOL-W": 13,
+    "PROTOCOL-N": 6,
+    "PROTOCOL-M": 12,
+    "PROTOCOL-J": 13,
+    "PROTOCOL-D": 10,
+    "PROTOCOL-V": 7,
+    "PROTOCOL-F": 8,
+    "PROTOCOL-R": 12,
+    "PROTOCOL-K": 9,
+    "PROTOCOL-Q": 13,
+    "PROTOCOL-B": 12,
+    "PROTOCOL-T": 5
+  },
+  "sha256": {
+    "train.jsonl": "49bb0ea6c9827d76296f61823a7215b676621d93868ca5b36e3492f160329733",
+    "holdout.jsonl": "6f7eacba82afe2b83cb4569b7768ab619541c46b38985e429698a790b3fb9d7b"
+  }
+}
