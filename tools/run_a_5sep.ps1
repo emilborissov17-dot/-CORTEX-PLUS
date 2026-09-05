@@ -77,11 +77,16 @@ if green, and starts Run A (r=8, q/k/v/o, 1 epoch) chained with the ranking eval
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01Dxpf2HqjfhfNFS3BbGQK3e
 "@
-    $msg | & git commit -q -F - 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
-    $head = & git rev-parse --short HEAD
-    Say "committed $head"
-    & git push -q 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
-    Say "pushed (see log for git output)"
+    & git diff --cached --quiet
+    if ($LASTEXITCODE -eq 0) {
+        Say "nothing new to commit (already committed on an earlier run); HEAD $(& git rev-parse --short HEAD)"
+    } else {
+        $msg | & git commit -q -F - 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
+        $head = & git rev-parse --short HEAD
+        Say "committed $head"
+        & git push -q 2>&1 | Out-File -FilePath $log -Append -Encoding utf8
+        Say "pushed (see log for git output)"
+    }
 } else {
     Say "NOT COMMITTED: behavioural test did not pass; the fix stays in the working tree. Run A still starts - the launcher was already good enough for the control."
 }
@@ -91,8 +96,24 @@ $train = "venv_train\Scripts\python.exe training/train_lora.py --train cortex_me
 $eval  = "venv_train\Scripts\python.exe training/run_rank_eval.py --adapter models/adapters/k1b_A --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/K1B_A_RANK.md"
 $chain = "/c `"$train && $eval`""
 Say "launching: cmd.exe $chain"
-$out = & powershell -NoProfile -ExecutionPolicy Bypass -File tools\launch_detached.ps1 -Exe "C:\Windows\System32\cmd.exe" -Arguments $chain -Log claude\reports\K1B_RUN_A.log 2>&1
+# In-process call, NOT a second powershell.exe: passing $chain through a native command line
+# re-splits it on spaces and its own quotes, and launch_detached.ps1 then sees "--out" as an
+# ambiguous parameter of ITS OWN (15:38 today). In-process, the string arrives intact.
+$out = & (Join-Path $repo "tools\launch_detached.ps1") -Exe "C:\Windows\System32\cmd.exe" -Arguments $chain -Log "claude\reports\K1B_RUN_A.log" 2>&1
 $out | Out-File -FilePath $log -Append -Encoding utf8
-Say ($out | Out-String)
-Say "Run A started. Progress: claude/reports/K1B_RUN_A.out.log - training ~2h, then eval ~1h. Report: K1B_TRAIN_A.md then K1B_A_RANK.md."
+$outText = ($out | Out-String)
+if ($outText -notmatch "DETACHED_PID=(\d+)") {
+    Say "LAUNCH FAILED: launch_detached.ps1 returned no DETACHED_PID. Run A did NOT start. Output above."
+    exit 3
+}
+$launchedPid = [int]$Matches[1]
+Start-Sleep -Seconds 8
+$alive = Get-Process -Id $launchedPid -ErrorAction SilentlyContinue
+if (-not $alive) {
+    Say "LAUNCH FAILED: pid $launchedPid is already gone 8 s after start. Read claude/reports/K1B_RUN_A.err.log. Run A did NOT start."
+    exit 3
+}
+$pyCount = (Get-Process python -ErrorAction SilentlyContinue | Measure-Object).Count
+Say "Run A started: cmd.exe pid $launchedPid alive after 8 s, python.exe processes now: $pyCount."
+Say "Progress: claude/reports/K1B_RUN_A.out.log - training ~2h, then eval ~1h. Reports: K1B_TRAIN_A.md, then K1B_A_RANK.md."
 Say "The pid in K1B_RUN_A.pid is cmd.exe, not the worker. The worker is the python.exe with hundreds of MB RSS."
