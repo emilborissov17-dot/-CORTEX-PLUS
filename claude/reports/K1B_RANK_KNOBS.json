@@ -1,0 +1,27 @@
+{
+  "k": 4,
+  "chance": 0.2,
+  "batch": 1,
+  "why": "batch 10 did not fit; rule 2",
+  "decided_at": "2026-09-05T05:15:37",
+  "probe": {
+    "batch": 10,
+    "fits": false,
+    "n_items": 8,
+    "unbatched": {
+      "seconds": 113.9,
+      "per_item": 14.238,
+      "peak_mib": 2248.2,
+      "how": "unbatched"
+    },
+    "batched": {
+      "seconds": 167.89,
+      "per_item": 20.986,
+      "peak_mib": 3300.9,
+      "how": "oom_fallback"
+    },
+    "max_abs_diff": 0.023688793182373047,
+    "bit_identical": false,
+    "speedup": 0.68
+  }
+}

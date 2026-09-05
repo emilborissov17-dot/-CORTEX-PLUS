@@ -266,8 +266,9 @@ def main() -> int:
           "| stratum | n | base NLL | adapter NLL | delta |", "|---|---|---|---|---|"]
     L += nll_table("UNSEEN")
     L += ["", "## How to read this",
-          f"- Chance is {CHANCE:.2f}. AT CHANCE means the adapter cannot tell the true "
-          "target from nine real alternatives drawn from the same pool.",
+          f"- Chance is {knobs['chance']:.2f}. AT CHANCE means the adapter cannot "
+          f"tell the true target from {knobs['k']} real alternatives drawn from the "
+          f"same pool.",
           "- Every candidate comes from the SAME target distribution, so house style "
           "cannot move this number. That is the whole point of replacing NLL.",
           "- UNRESOLVABLE is the corpus being too small to grade that bucket.",
