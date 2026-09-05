@@ -76,6 +76,24 @@ def _iso(moment: datetime) -> str:
     return moment.isoformat()
 
 
+def _age_phrase(started: datetime, mtime_iso: str | None) -> str:
+    """'3.4 min' / '2.1 h' / '8.0 days' — how long before the phase began the file
+    was last written. Never raises: a reason string must not be able to break the
+    report that carries it."""
+    try:
+        stamp = datetime.fromisoformat(str(mtime_iso).replace("Z", "+00:00"))
+        secs = (started - stamp).total_seconds()
+    except Exception:                                            # noqa: BLE001
+        return "age unknown"
+    if secs < 0:
+        return f"{-secs:.1f}s AFTER"
+    if secs < 3600:
+        return f"{secs / 60:.1f} min"
+    if secs < 86400:
+        return f"{secs / 3600:.1f} h"
+    return f"{secs / 86400:.1f} days"
+
+
 def safe_cycle_dir(cycle_id: str) -> str:
     """A cycle_id is an ISO timestamp with colons and a '+' — not a directory
     name on Windows. Flatten it reversibly enough to stay recognisable."""
@@ -179,7 +197,10 @@ class PhaseReport:
     # -- the part that can disagree with the steps -------------------------
 
     def produces_check(self) -> list[dict]:
-        """Present? And written during THIS phase, not left over from before?"""
+        """Present? And written during THIS PHASE — not during an earlier phase of
+        this same cycle, and not on an earlier night. The two failures look alike
+        in the artifact and are very different to diagnose, so the reason string
+        names the phase and both timestamps rather than guessing which it was."""
         assert self.started is not None, "produces_check before the phase started"
         rows = []
         for rel in self.spec["produces"]:
@@ -230,9 +251,26 @@ class PhaseReport:
             reasons.append(
                 "promised but never written: " + ", ".join(c["path"] for c in absent))
         if stale:
+            # SAY WHAT THE CHECK ACTUALLY TESTED (5 Sep 2026). This read "a stale
+            # copy from an earlier CYCLE", and on 2026-09-05 F_SELF reported that
+            # for memory/improvement_proposals.json whose mtime — 01:32:49Z — fell
+            # squarely INSIDE that cycle's own window of 00:04:03Z..02:08:17Z. The
+            # file was written by hyperclaw_plan in E_PROPOSE, one phase earlier.
+            #
+            # The check is right: `written_during_phase` compares against
+            # self.started, the PHASE start, which is the correct contract. Only
+            # the sentence was wrong, and it sent a reader hunting for a stale
+            # artifact that does not exist. So the message now names the phase and
+            # prints both timestamps, and a reader can see for themselves how far
+            # before the phase the file was last written.
             reasons.append(
-                "promised but only a stale copy from an earlier cycle: "
-                + ", ".join(c["path"] for c in stale))
+                "promised but last written BEFORE this phase began — "
+                + "; ".join(
+                    f"{c['path']} (mtime {c['mtime']}, {self.phase} began "
+                    f"{_iso(self.started)}"
+                    + (f", {_age_phrase(self.started, c['mtime'])} earlier)"
+                       if c.get("mtime") else ")")
+                    for c in stale))
         return PARTIAL, "; ".join(reasons)
 
     def build(self) -> dict:

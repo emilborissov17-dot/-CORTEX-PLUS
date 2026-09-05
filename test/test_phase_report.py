@@ -139,7 +139,13 @@ def test_a_file_left_over_from_an_earlier_cycle_does_not_count(tmp_path):
     assert row["present"] is True
     assert row["written_during_phase"] is False
     assert report["verdict"] == PARTIAL
-    assert "stale copy" in report["reason"]
+    # Wording changed 5 Sep 2026: "stale copy from an earlier cycle" claimed more
+    # than the check tested. This file IS six hours old, but the check only knows
+    # it predates the PHASE, so that is what the sentence now says — and it prints
+    # both timestamps so a reader can tell the two cases apart themselves.
+    assert "BEFORE this phase began" in report["reason"], report["reason"]
+    assert "earlier cycle" not in report["reason"], report["reason"]
+    assert "6.0 h" in report["reason"] or "0.2 days" in report["reason"], report["reason"]
 
 
 def test_a_file_written_the_instant_the_phase_began_still_counts(tmp_path):
@@ -262,3 +268,64 @@ def test_every_real_phase_can_be_reported_on(tmp_path, phase):
     assert report["phase"] == phase
     assert report["verdict"] in (DONE, PARTIAL, FAILED)
     assert len(report["produces_check"]) >= 1
+
+
+# ── the reason must describe what the check actually tested (5 Sep 2026) ─────
+# F_SELF reported "a stale copy from an earlier CYCLE" for a file whose mtime,
+# 2026-09-05T01:32:49Z, fell inside that cycle's own window 00:04:03Z..02:08:17Z.
+# It had been written by hyperclaw_plan in E_PROPOSE, one phase earlier. The
+# check compares against the PHASE start and was right; the sentence said "cycle"
+# and sent the reader hunting for a stale artifact that did not exist.
+
+def test_a_file_from_an_EARLIER_PHASE_of_this_cycle_is_not_called_an_earlier_cycle(tmp_path):
+    import time
+    from core.phase_report import PhaseReport
+    spec = {"F_SELF": {"produces": ["memory/improvement_proposals.json"],
+                       "requires": [], "steps": [], "purpose": "t", "index_range": "x"}}
+    pf = tmp_path / "phases.json"
+    pf.write_text(json.dumps({"phases": spec}), encoding="utf-8")
+    art = tmp_path / "memory" / "improvement_proposals.json"
+    art.parent.mkdir(parents=True, exist_ok=True)
+    art.write_text("{}", encoding="utf-8")
+    # Backdated past MTIME_TOLERANCE_SEC. The first version of this test slept
+    # 0.05 s and read DONE — correctly, because a file written the instant the
+    # phase began still counts. 36 minutes mirrors the real F_SELF case.
+    import os
+    old_t = (datetime.now(timezone.utc) - timedelta(minutes=36)).timestamp()
+    os.utime(art, (old_t, old_t))
+
+    with PhaseReport("F_SELF", "cid", base_dir=tmp_path, phases_file=pf) as rep:
+        pass
+    rec = json.loads((tmp_path / "memory" / "phase_reports" / "cid" /
+                      "F_SELF.json").read_text(encoding="utf-8"))
+
+    assert rec["verdict"] == "PARTIAL", rec
+    reason = rec["reason"]
+    assert "earlier cycle" not in reason, (
+        "the message still claims an earlier CYCLE for what the check tested as "
+        "an earlier PHASE:\n" + reason)
+    assert "BEFORE this phase began" in reason, reason
+    assert "F_SELF" in reason, "the reason must name the phase it compared against"
+    assert "mtime" in reason, "the reason must print the file's timestamp"
+    assert "began" in reason, "the reason must print the phase start too"
+
+
+def test_the_age_phrase_never_raises_on_a_bad_timestamp():
+    """A reason string must not be able to break the report that carries it."""
+    from datetime import datetime, timezone
+    from core.phase_report import _age_phrase
+    now = datetime.now(timezone.utc)
+    for bad in (None, "", "not-a-date", "2026-13-45T99:99:99Z"):
+        assert _age_phrase(now, bad) == "age unknown", bad
+
+
+def test_the_age_phrase_scales_from_minutes_to_days():
+    from datetime import datetime, timedelta, timezone
+    from core.phase_report import _age_phrase
+    now = datetime.now(timezone.utc)
+    def iso(delta):
+        return (now - delta).isoformat().replace("+00:00", "Z")
+    assert "min" in _age_phrase(now, iso(timedelta(minutes=36)))
+    assert "h" in _age_phrase(now, iso(timedelta(hours=5)))
+    assert "days" in _age_phrase(now, iso(timedelta(days=8)))
+    assert "AFTER" in _age_phrase(now, iso(timedelta(seconds=-30)))
