@@ -1,11 +1,11 @@
-# tools/launch_detached.ps1 — start a long run that OUTLIVES its launcher.
+﻿# tools/launch_detached.ps1 - start a long run that OUTLIVES its launcher.
 #
 # WHY THIS EXISTS (4/5 September 2026)
 # ------------------------------------
 # A 1077-example training run was killed twice-over-investigated and finally traced
 # to the launcher, not the machine. The agent harness that started it as a background
-# job writes "[killed]" into the job's own output file — a marker distinct from
-# "[exited with code N]" — and every background job observed so far that ran past
+# job writes "[killed]" into the job's own output file - a marker distinct from
+# "[exited with code N]" - and every background job observed so far that ran past
 # ~26 minutes carried it, while every job under ~25 minutes exited normally.
 #
 # Hours were spent searching the Windows Event Log, the Task Scheduler, supervisor.py
@@ -44,6 +44,14 @@ New-Item -ItemType Directory -Force -Path (Split-Path -Parent $logPath) | Out-Nu
 "=== DETACHED LAUNCH $(Get-Date -Format o) ===" | Out-File -FilePath $logPath -Encoding utf8
 "exe  : $exePath"   | Out-File -FilePath $logPath -Append -Encoding utf8
 "args : $Arguments" | Out-File -FilePath $logPath -Append -Encoding utf8
+
+# 5 Sep 2026: the detached suite finished, then died on its LAST line - cp1252 could not
+# encode a replacement character in the captured stdout, and _suite_brainfix.out.log was
+# left at 0 bytes with the verdict only recoverable from memory/suite_runs.jsonl. A detached
+# process inherits no PYTHONIOENCODING from anyone, so it is set here, once, for every child.
+# Whatever the harness or a console had is irrelevant: the child gets utf-8 or it does not start.
+$env:PYTHONIOENCODING = "utf-8"
+$env:PYTHONUTF8 = "1"
 
 $p = Start-Process -FilePath $exePath `
                    -ArgumentList $Arguments `
