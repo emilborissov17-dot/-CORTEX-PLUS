@@ -32,6 +32,17 @@ def wordlen(s: str) -> int:
     return max(1, len(str(s).split()))
 
 
+@pytest.fixture
+def sig02_clusters():
+    """The REAL repeat structure of sig02 in cortex_memory/training/holdout.jsonl,
+    measured 5 Sep 2026: 38 rows, 11 distinct (prompt, target) pairs, with three
+    pairs appearing nine times each."""
+    counts = [9, 9, 9, 2, 2, 2, 1, 1, 1, 1, 1]
+    out = []
+    for i, n in enumerate(counts):
+        out += [f"pair{i}"] * n
+    return out
+
 def pool_of(targets):
     return rm.build_pool([{"target": t} for t in targets], wordlen)
 
@@ -373,3 +384,291 @@ def test_a_run_at_chance_fails_even_if_the_control_is_worse():
     ok, why = rm.beats_control(run, control)
     assert not ok, why
     assert "chance" in why
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# WITHIN-STRATUM DRAW — the fix for the sig02/sig03 anomaly (5 Sep 2026)
+# ════════════════════════════════════════════════════════════════════════════
+# Measured on the control run: sig03/sig04/sig07 drew ZERO same-stratum
+# distractors on 100% of items and scored exactly 0.0000; sig02 drew 0.67 of 4
+# and scored exactly 1.0000; sig01 — 91.3% of the pool — drew 3.70 of 4 BY
+# ACCIDENT and was the only stratum that read honestly at chance. Identical for
+# base and adapter, which is the signature of a property of the data.
+
+def _mixed_pool():
+    rows = ([{"target": f"alpha proposal number {i}", "record_kind": "sig01"}
+             for i in range(40)]
+            + [{"target": f"beta approved item {i}", "record_kind": "sig02"}
+               for i in range(9)]
+            + [{"target": f"experiment exp-{i:03d}", "record_kind": "sig03"}
+               for i in range(2)])
+    return rm.build_pool(rows, wordlen), rows
+
+
+def test_every_distractor_shares_the_true_targets_record_kind():
+    pool, _ = _mixed_pool()
+    for kind, target in (("sig01", "alpha proposal number 7"),
+                         ("sig02", "beta approved item 3")):
+        got, _ = rm.draw_distractors(rm.example_id("p", target), target,
+                                     wordlen(target), pool, k=4, band=None,
+                                     stratum=kind)
+        assert got is not None, (kind, target)
+        by_norm = {p["norm"]: p for p in pool}
+        assert all(kind in by_norm[rm.norm(d)]["kinds"] for d in got), (kind, got)
+
+
+def test_a_stratum_too_small_returns_None_and_NEVER_the_mixed_pool():
+    """sig03 has 2 distinct targets, so it cannot supply 4 within itself. The
+    honest answer is 'unscorable', not 'here are four from another stratum' —
+    that fallback IS the defect."""
+    pool, _ = _mixed_pool()
+    got, _ = rm.draw_distractors(rm.example_id("p", "experiment exp-000"),
+                                 "experiment exp-000", 2, pool, k=4, band=None,
+                                 stratum="sig03")
+    assert got is None
+
+
+def test_widening_drops_the_LENGTH_band_never_the_stratum():
+    """When the band cannot be filled the draw widens on length only. If it
+    widened on stratum instead, the anomaly would return silently."""
+    rows = ([{"target": " ".join(["short"] * 3), "record_kind": "sig02"}]
+            + [{"target": " ".join([f"long{i}"] * 40), "record_kind": "sig02"}
+               for i in range(6)]
+            + [{"target": " ".join([f"other{i}"] * 3), "record_kind": "sig01"}
+               for i in range(30)])
+    pool = rm.build_pool(rows, wordlen)
+    t = " ".join(["short"] * 3)
+    got, widened = rm.draw_distractors(rm.example_id("p", t), t, 3, pool, k=4,
+                                       band=rm.LENGTH_BAND, stratum="sig02")
+    assert widened is True, "the band should not have been fillable"
+    assert got is not None
+    by_norm = {p["norm"]: p for p in pool}
+    assert all("sig02" in by_norm[rm.norm(d)]["kinds"] for d in got), got
+
+
+def test_a_target_belonging_to_two_kinds_is_drawable_by_both():
+    """The same string can legitimately appear under two record_kinds. Keeping
+    only the first seen would refuse candidates that genuinely belong."""
+    rows = [{"target": "shared text here", "record_kind": "sig01"},
+            {"target": "shared text here", "record_kind": "sig02"}]
+    pool = rm.build_pool(rows, wordlen)
+    assert len(pool) == 1
+    assert pool[0]["kinds"] == {"sig01", "sig02"}
+
+
+def test_omitting_the_stratum_still_draws_from_the_whole_pool():
+    """stratum=None keeps the old behaviour, which the negative-control and the
+    length-bias tests above still rely on. The RUNNER is what makes it
+    mandatory."""
+    pool, _ = _mixed_pool()
+    got, _ = rm.draw_distractors(rm.example_id("p", "experiment exp-000"),
+                                 "experiment exp-000", 2, pool, k=4, band=None)
+    assert got is not None and len(got) == 4
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# EFFECTIVE n — MIN_BUCKET counts DISTINCT (prompt, target) PAIRS, not rows
+# ════════════════════════════════════════════════════════════════════════════
+# MEASURED 5 Sep 2026 on the real holdout: sig02 has 38 rows but only 11 distinct
+# (prompt, target) pairs, and three of those pairs appear NINE times each — 27 of
+# the 38 rows are duplicates of three questions. A bootstrap that resamples rows
+# treats nine copies of one question as nine observations and reports a CI far
+# narrower than the evidence supports. n=38 was never 38 questions.
+
+def test_pair_key_collapses_normalisation_variants():
+    assert rm.pair_key("P", "target one") == rm.pair_key("P", "Target one.")
+    assert rm.pair_key("P", "target one") != rm.pair_key("P", "target two")
+    assert rm.pair_key("P", "t") != rm.pair_key("Q", "t")
+
+
+def test_effective_n_counts_pairs_not_rows():
+    clusters = ["a"] * 9 + ["b"] * 9 + ["c"] * 9 + list("defghijk")
+    assert len(clusters) == 35
+    assert rm.effective_n(clusters) == 11
+
+
+def test_38_rows_of_11_pairs_is_UNRESOLVABLE():
+    """The sig02 shape. 38 rows looks gradeable; 11 questions is not."""
+    clusters = (["a"] * 9 + ["b"] * 9 + ["c"] * 9
+                + ["d", "d", "e", "e", "f", "f"] + list("ghijk"))
+    hits = [1] * len(clusters)
+    assert len(clusters) == 38 and rm.effective_n(clusters) == 11
+    v, acc, ci = rm.rank_verdict(hits, k=4, clusters=clusters)
+    assert v.startswith("UNRESOLVABLE"), (v, acc, ci)
+    assert ci is None
+
+
+def test_185_rows_of_160_pairs_is_graded():
+    """The sig01 shape: 185 rows, 160 distinct pairs — well past the bar."""
+    clusters = [f"p{i}" for i in range(160)] + [f"p{i}" for i in range(25)]
+    hits = [1] * len(clusters)
+    assert rm.effective_n(clusters) == 160
+    v, acc, ci = rm.rank_verdict(hits, k=4, clusters=clusters)
+    assert v == "ABOVE CHANCE", (v, acc, ci)
+    assert ci is not None
+
+
+def test_clustered_rows_give_a_WIDER_CI_than_the_same_number_of_distinct_rows():
+    """THE WHOLE POINT, asserted rather than asserted-about.
+
+    300 rows that are 30 questions x 10 copies carry the evidence of 30
+    questions. The same 300 rows as 300 distinct questions carry the evidence of
+    300. Identical hit rate, and the clustered CI must be visibly wider.
+
+    (The first version of this test used 4 clusters and 40 rows and failed with
+    ci=None — correctly: accuracy_ci refuses a CI below MIN_BUCKET pairs, which
+    is the gate this whole change exists to install. The test was wrong, not the
+    code. Both variants here stay above the gate so the WIDTH is what is being
+    compared, not the gate.)
+    """
+    clustered, hits_clustered = [], []
+    for q in range(30):                       # 30 pairs x 10 copies = 300 rows
+        clustered += [f"q{q:02d}"] * 10
+        hits_clustered += [1 if q % 2 == 0 else 0] * 10
+    distinct = [f"r{i:03d}" for i in range(300)]
+    hits_distinct = [1 if i % 2 == 0 else 0 for i in range(300)]
+
+    acc_cl, ci_cl = rm.accuracy_ci(hits_clustered, clusters=clustered, n_boot=4000)
+    acc_di, ci_di = rm.accuracy_ci(hits_distinct, clusters=distinct, n_boot=4000)
+    assert ci_cl is not None and ci_di is not None
+    assert acc_cl == pytest.approx(acc_di), (acc_cl, acc_di)   # same hit rate
+    width_cl, width_di = ci_cl[1] - ci_cl[0], ci_di[1] - ci_di[0]
+    assert width_cl > width_di * 1.5, (
+        f"clustered CI {width_cl:.4f} is not meaningfully wider than distinct "
+        f"{width_di:.4f} - the cluster bootstrap is not clustering")
+
+
+def test_a_pair_moves_TOGETHER_in_the_resample():
+    """A cluster is resampled WHOLE. This pins the mechanism rather than its
+    effect: the same 600 rows, clustered into 30 all-or-nothing pairs, must give
+    a far wider interval than the same rows treated as 600 independent ones."""
+    clusters, hits = [], []
+    for q in range(30):
+        clusters += [f"q{q:02d}"] * 20
+        hits += [1 if q < 15 else 0] * 20      # each pair is all-1 or all-0
+    _, ci_cluster = rm.accuracy_ci(hits, clusters=clusters, n_boot=4000)
+    _, ci_rows = rm.accuracy_ci(hits, clusters=[str(i) for i in range(len(hits))],
+                                n_boot=4000)
+    assert ci_cluster is not None and ci_rows is not None
+    assert (ci_cluster[1] - ci_cluster[0]) > 4 * (ci_rows[1] - ci_rows[0]), (
+        ci_cluster, ci_rows)
+    # 30 all-or-nothing pairs at 50%: the resampled mean is a binomial proportion
+    # over 30 draws, so the interval is roughly +/-0.18 - nowhere near the
+    # +/-0.04 that row-level resampling of 600 rows would claim.
+    assert ci_cluster[0] < 0.36 and ci_cluster[1] > 0.64, ci_cluster
+
+
+def test_without_clusters_every_row_is_its_own_pair():
+    """Back-compatible: the older call sites pass no clusters and keep row-level
+    behaviour, which is correct when rows ARE distinct questions."""
+    v, acc, ci = rm.rank_verdict([1] * 30, k=4)
+    assert v == "ABOVE CHANCE" and ci is not None
+
+
+def test_the_real_sig02_repeat_structure_is_UNRESOLVABLE(sig02_clusters):
+    """Regression against the measured holdout, not a synthetic stand-in."""
+    assert len(sig02_clusters) == 38
+    assert rm.effective_n(sig02_clusters) == 11
+    v, _, ci = rm.rank_verdict([1, 0] * 19, k=4, clusters=sig02_clusters)
+    assert v.startswith("UNRESOLVABLE") and ci is None
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# THE AXIS RULE — the trivial baseline, computed from data, no model
+# ════════════════════════════════════════════════════════════════════════════
+# sig01's prompts are near-contentless EXCEPT that they name an axis, and
+# within-stratum distractors mostly come from other axes. Measured: a perfect
+# axis-matcher scores 0.7114 over the 135 items with a parsable axis, ~0.57 over
+# all 185. Chance is 0.20. So "above chance" on sig01 is a much weaker claim than
+# it looks, and the report must carry all three reference points.
+
+def test_axis_of_finds_the_screaming_case():
+    assert rm.axis_of("Action required for PLANET") == "PLANET"
+    assert rm.axis_of("HUMAN axis needs progress") == "HUMAN"
+    assert rm.axis_of("furthest from the goal: SOCIAL_RELATIONS_REVIEW (gap 7.7)")         == "SOCIAL_RELATIONS_REVIEW"
+
+
+def test_axis_of_returns_None_when_there_is_none():
+    for p in ("no axis here", "", "Действие за нещо", "a b c"):
+        assert rm.axis_of(p) is None, p
+
+
+def test_the_axis_rule_is_certain_when_no_distractor_shares_the_axis():
+    """65 of 135 sig01 items look like this: the trivial rule gets them outright."""
+    axes = {"true": {"PLANET"}, "d1": {"HUMAN"}, "d2": {"COSMOS"},
+            "d3": {"HUMAN"}, "d4": {"CIVILIZATION"}}
+    e = rm.axis_rule_expectation("Action required for PLANET", "true",
+                                 ["d1", "d2", "d3", "d4"], axes, k=4)
+    assert e == 1.0
+
+
+def test_the_axis_rule_guesses_within_the_matching_group():
+    axes = {"true": {"PLANET"}, "d1": {"PLANET"}, "d2": {"COSMOS"},
+            "d3": {"HUMAN"}, "d4": {"PLANET"}}
+    e = rm.axis_rule_expectation("Action required for PLANET", "true",
+                                 ["d1", "d2", "d3", "d4"], axes, k=4)
+    assert e == pytest.approx(1.0 / 3.0), e
+
+
+def test_the_axis_rule_falls_back_to_chance_with_no_parsable_axis():
+    axes = {"true": {"PLANET"}, "d1": {"PLANET"}}
+    e = rm.axis_rule_expectation("no axis in this prompt", "true",
+                                 ["d1", "d2", "d3", "d4"], axes, k=4)
+    assert e == pytest.approx(0.2)
+
+
+def test_the_axis_rule_falls_back_to_chance_when_EVERY_candidate_matches():
+    """If the axis does not discriminate, the rule is guessing — 1/(K+1)."""
+    axes = {n: {"PLANET"} for n in ("true", "d1", "d2", "d3", "d4")}
+    e = rm.axis_rule_expectation("Action required for PLANET", "true",
+                                 ["d1", "d2", "d3", "d4"], axes, k=4)
+    assert e == pytest.approx(0.2)
+
+
+def test_the_axis_rule_never_exceeds_one_or_drops_below_chance():
+    import random
+    rnd = random.Random(7)
+    pool = ["PLANET", "HUMAN", "COSMOS", "CIVILIZATION"]
+    for _ in range(300):
+        a = rnd.choice(pool)
+        axes = {"true": {a}}
+        for i in range(4):
+            axes[f"d{i}"] = {rnd.choice(pool)}
+        e = rm.axis_rule_expectation(f"Action required for {a}", "true",
+                                     [f"d{i}" for i in range(4)], axes, k=4)
+        assert 0.2 - 1e-9 <= e <= 1.0, e
+
+
+# ── the two labels, which must never be merged ───────────────────────────────
+
+def test_LEARNED_and_BEYOND_TRIVIAL_are_reported_separately():
+    """An adapter can beat the null model and still not beat a rule that needs no
+    model at all. The report must be able to say exactly that."""
+    lab = rm.reference_labels(adapter_ci=(0.40, 0.50),
+                              control_ci=(0.18, 0.25),
+                              axis_ci=(0.52, 0.62))
+    assert lab["LEARNED"] is True
+    assert lab["BEYOND_TRIVIAL"] is False
+
+
+def test_beating_the_axis_rule_earns_both():
+    lab = rm.reference_labels(adapter_ci=(0.70, 0.80),
+                              control_ci=(0.18, 0.25),
+                              axis_ci=(0.52, 0.62))
+    assert lab["LEARNED"] and lab["BEYOND_TRIVIAL"]
+
+
+def test_overlapping_the_control_earns_neither():
+    lab = rm.reference_labels(adapter_ci=(0.19, 0.30),
+                              control_ci=(0.18, 0.25),
+                              axis_ci=(0.52, 0.62))
+    assert lab["LEARNED"] is False and lab["BEYOND_TRIVIAL"] is False
+
+
+def test_an_unresolvable_reference_makes_the_label_UNKNOWN_not_False():
+    """A missing comparison is not a failed one. False would read as 'it did not
+    learn', which is a claim nobody measured."""
+    lab = rm.reference_labels(adapter_ci=(0.70, 0.80), control_ci=None,
+                              axis_ci=(0.52, 0.62))
+    assert lab["LEARNED"] is None
+    assert lab["BEYOND_TRIVIAL"] is True

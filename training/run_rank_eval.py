@@ -42,7 +42,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from training.eval_adapter import load_jsonl, resolve_stratum            # noqa: E402
 from training.rank_metric import (CHANCE, K_DISTRACTORS, LENGTH_BAND,     # noqa: E402
-                                  MIN_BUCKET, build_pool, norm, rank_verdict)
+                                  MIN_BUCKET, accuracy_ci, axis_of,
+                                  axis_rule_expectation, build_pool,
+                                  effective_n, norm, pair_key,
+                                  rank_verdict, reference_labels)
 from training.rank_runner import (build_items, candidate_nlls,  # noqa: E402
                                   decide_knobs, forward_passes)
 
@@ -131,6 +134,12 @@ def main() -> int:
     ap.add_argument("--probe", type=int, default=0,
                     help="measure agreement, time and peak on N items, then stop")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--items-out", default=None,
+                    help="per-item hits, so a later run can be compared "
+                         "on the SAME items (default: <report>.items.json)")
+    ap.add_argument("--control-items", default=None,
+                    help="an --items-out from the CONTROL adapter; enables "
+                         "the LEARNED label")
     a = ap.parse_args()
 
     hp, tp, adir = Path(a.holdout), Path(a.train), Path(a.adapter)
@@ -170,8 +179,24 @@ def main() -> int:
     band = None if a.no_band else LENGTH_BAND
     items, unscorable = build_items(rows, pool, tlen, band=band, k=knobs["k"],
                                     max_len=a.max_len, tok=tok)
+    # A target's axis(es) = the axis(es) of the prompts it answers in this
+    # holdout. Built from the data, never from the model.
+    target_axes: dict = {}
+    for r in rows:
+        if r.get("target") and str(r["target"]).strip():
+            ax = axis_of(r.get("prompt"))
+            if ax:
+                target_axes.setdefault(norm(r["target"]), set()).add(ax)
+
     for it in items:
         it["novelty"] = "SEEN" if norm(it["target"]) in train_targets else "UNSEEN"
+        # THE CLUSTER. Rows that are the same question move together in the
+        # bootstrap; sig02's 38 rows are 11 questions and must not vote 38 times.
+        it["pair"] = pair_key(it["prompt"], it["target"])
+        it["axis_rule"] = axis_rule_expectation(
+            it["prompt"], it["target"], it["candidates"],
+            {norm(c): target_axes.get(norm(c), set()) for c in it["candidates"]},
+            k=knobs["k"])
         it["record_kind"] = resolve_stratum(
             {"record_kind": it["record_kind"]} if it["record_kind"] else {}, hp, it["i"])
     if a.limit:
@@ -211,23 +236,78 @@ def main() -> int:
                                            device, knobs["batch"])
             results[pass_name].append({
                 "kind": it["record_kind"], "novelty": it["novelty"],
+                "pair": it["pair"], "axis_rule": it["axis_rule"],
                 "hit": 1 if all(nlls[0] < d for d in nlls[1:]) else 0,
                 "true_nll": nlls[0], "how": how})
             if n % 25 == 0:
                 print(f"  {pass_name} {n}/{len(items)}  {time.time() - t0:.0f}s")
 
     # ── report ──────────────────────────────────────────────────────────────
+    control_hits = {}
+    if a.control_items:
+        cp = Path(a.control_items)
+        if cp.exists():
+            for r in json.loads(cp.read_text(encoding="utf-8")):
+                control_hits[r["pair"]] = r["hit"]
+        else:
+            print(f"WARNING: no control items at {cp}; LEARNED will read UNKNOWN")
+
+    def _rows_for(pass_name, novelty, kind):
+        return [r for r in results[pass_name]
+                if r["novelty"] == novelty and r["kind"] == kind]
+
     def table(pass_name, novelty):
-        buckets = defaultdict(list)
-        for r in results[pass_name]:
-            if r["novelty"] == novelty:
-                buckets[r["kind"]].append(r["hit"])
+        """One row per stratum: rows, EFFECTIVE pairs, accuracy, CI, verdict.
+
+        The row count and the effective n are printed side by side, always. 38
+        rows of 11 questions is not 38 observations, and a table that showed only
+        the first would keep saying it was.
+        """
+        kinds = sorted({r["kind"] for r in results[pass_name]
+                        if r["novelty"] == novelty})
         out = []
-        for kind, hits in sorted(buckets.items()):
-            v, acc, ci = rank_verdict(hits, k=knobs["k"])
+        for kind in kinds:
+            rs = _rows_for(pass_name, novelty, kind)
+            hits = [r["hit"] for r in rs]
+            clusters = [r["pair"] for r in rs]
+            v, acc, ci = rank_verdict(hits, k=knobs["k"], clusters=clusters)
             cis = f"[{ci[0]:.4f}, {ci[1]:.4f}]" if ci else "-"
-            out.append(f"| {kind} | {len(hits)} | {acc:.4f} | {cis} | {v} |")
-        return out or ["| - | 0 | - | - | NO DATA |"]
+            out.append(f"| {kind} | {len(hits)} | {effective_n(clusters)} "
+                       f"| {acc:.4f} | {cis} | {v} |")
+        return out or ["| - | 0 | 0 | - | - | NO DATA |"]
+
+    def reference_table(novelty):
+        """THREE REFERENCE POINTS on the SAME items, never one.
+
+        chance      - 1/(K+1), arithmetic
+        control     - the null model, measured (an adapter trained on deranged
+                      pairs), if its per-item hits were supplied
+        axis rule   - the trivial rule: keep the candidates whose axis matches the
+                      prompt's, guess among them. No model at all. MEASURED at
+                      ~0.57 on this holdout's sig01, which is why "above chance"
+                      there is a far weaker claim than it looks.
+        """
+        kinds = sorted({r["kind"] for r in results["adapter"]
+                        if r["novelty"] == novelty})
+        out = []
+        for kind in kinds:
+            rs = _rows_for("adapter", novelty, kind)
+            clusters = [r["pair"] for r in rs]
+            _, ad_ci = accuracy_ci([r["hit"] for r in rs], clusters=clusters)
+            ax_acc, ax_ci = accuracy_ci([r["axis_rule"] for r in rs],
+                                        clusters=clusters)
+            ct = [control_hits[r["pair"]] for r in rs if r["pair"] in control_hits]
+            ct_cl = [r["pair"] for r in rs if r["pair"] in control_hits]
+            ct_acc, ct_ci = (accuracy_ci(ct, clusters=ct_cl) if ct
+                             else (float("nan"), None))
+            lab = reference_labels(ad_ci, ct_ci, ax_ci)
+            fmt = lambda c: f"[{c[0]:.4f}, {c[1]:.4f}]" if c else "-"   # noqa: E731
+            out.append(
+                f"| {kind} | {knobs['chance']:.4f} "
+                f"| {ct_acc:.4f} {fmt(ct_ci)} | {ax_acc:.4f} {fmt(ax_ci)} "
+                f"| {'UNKNOWN' if lab['LEARNED'] is None else lab['LEARNED']} "
+                f"| {'UNKNOWN' if lab['BEYOND_TRIVIAL'] is None else lab['BEYOND_TRIVIAL']} |")
+        return out or ["| - | - | - | - | - | - |"]
 
     def nll_table(novelty):
         b = defaultdict(list)
@@ -242,7 +322,8 @@ def main() -> int:
                        f"| {base - adap:+.4f} |")
         return out or ["| - | 0 | - | - | - |"]
 
-    hdr = "| stratum | n | accuracy | 95% CI | verdict |\n|---|---|---|---|---|"
+    hdr = ("| stratum | rows | effective n (pairs) | accuracy | 95% CI | verdict |"
+           "\n|---|---:|---:|---:|---|---|")
     L = [f"# K1b ranking eval — {adir.name}", "",
          f"**K={knobs['k']} distractors, chance = {knobs['chance']:.2f}, "
          f"batch = {knobs['batch']}** -- pre-registered at "
@@ -258,6 +339,14 @@ def main() -> int:
     L += table("base", "UNSEEN")
     L += ["", "## SEEN — memorisation check, NOT a result", "", hdr]
     L += table("adapter", "SEEN")
+    L += ["", "## THREE REFERENCE POINTS — UNSEEN, on the SAME items", "",
+          "`LEARNED` = the adapter's CI is entirely above the CONTROL's. "
+          "`BEYOND_TRIVIAL` = entirely above the AXIS RULE's. They are separate "
+          "on purpose: an adapter can beat a model trained on deranged pairs "
+          "while losing to a rule that reads one word of the prompt.", "",
+          "| stratum | chance | control | axis rule | LEARNED | BEYOND_TRIVIAL |",
+          "|---|---:|---|---|---|---|"]
+    L += reference_table("UNSEEN")
     L += ["", "## SECONDARY: mean NLL of the true target",
           "**Distributional gain, not mapping.** A negative control trained on "
           "deranged pairs improved this by +1.2204 nats while learning no mapping "
@@ -278,6 +367,15 @@ def main() -> int:
     out = Path(a.report)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(L), encoding="utf-8")
+
+    # PER-ITEM HITS, so a later adapter is compared to this one on the SAME
+    # items rather than on two runs that merely used the same corpus.
+    items_out = Path(a.items_out) if a.items_out else out.with_suffix(".items.json")
+    items_out.write_text(json.dumps(
+        [{"pair": r["pair"], "kind": r["kind"], "novelty": r["novelty"],
+          "hit": r["hit"], "axis_rule": r["axis_rule"], "true_nll": r["true_nll"]}
+         for r in results["adapter"]], ensure_ascii=False), encoding="utf-8")
+    print(f"per-item hits -> {items_out}")
     print("\n".join(L))
     return 0
 

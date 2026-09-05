@@ -42,6 +42,7 @@ PRE-REGISTERED DECISION RULE (fixed 5 Sep 2026, before any run)
 from __future__ import annotations
 
 import hashlib
+import re
 
 import numpy as np
 
@@ -123,14 +124,19 @@ def build_pool(rows: list, token_len) -> list:
             continue
         key = norm(t)
         if key in seen:
+            # The same target string can appear under more than one record_kind.
+            # Keep every kind it is legitimately a member of, or a within-stratum
+            # draw would refuse candidates that genuinely belong.
+            seen[key]["kinds"].add(r.get("record_kind"))
             continue
-        seen[key] = {"target": str(t), "norm": key, "len": int(token_len(str(t)))}
+        seen[key] = {"target": str(t), "norm": key, "len": int(token_len(str(t))),
+                     "kinds": {r.get("record_kind")}}
     return [seen[k] for k in sorted(seen)]
 
 
 def draw_distractors(eid: str, target, tlen: int, pool: list,
                      k: int = K_DISTRACTORS, band: float | None = LENGTH_BAND,
-                     seed: int = SEED) -> tuple:
+                     seed: int = SEED, stratum=None) -> tuple:
     """(distractor targets, widened) - deterministic in `eid` alone.
 
     Determinism in eid and nothing else is what makes the comparison PAIRED: the
@@ -146,6 +152,28 @@ def draw_distractors(eid: str, target, tlen: int, pool: list,
     """
     tnorm = norm(target)
     cands = [p for p in pool if p["norm"] != tnorm]
+
+    # ── WITHIN-STRATUM, and there is no way out of it (5 Sep 2026) ──────────
+    # MEASURED on the 05:15 control run: sig03/sig04/sig07 drew ZERO
+    # same-stratum distractors on 100% of their items, sig02 0.67 of 4 — while
+    # sig01, which is 91.3% of the pool, drew 3.70 of 4 BY ACCIDENT and was the
+    # only stratum that read honestly at chance.
+    #
+    # A cross-stratum distractor makes the true target identifiable by
+    # APPEARANCE rather than by mapping, and it cuts both ways: sig02 scored
+    # 1.0000 because its prompts are specific and its distractors were off-topic
+    # sig01 targets, while sig03 scored 0.0000 because its targets are dense with
+    # identifiers ("exp-001-daily-analysis-ceiling", "step_ceilings_sec = 1500")
+    # whose per-token NLL is structurally high next to fluent prose. Both numbers
+    # were IDENTICAL for base and adapter, which is the signature of a property
+    # of the data.
+    #
+    # A stratum that cannot supply k candidates returns None. It does NOT fall
+    # back to the mixed pool: that fallback is the defect, and an unscorable
+    # stratum saying so is the honest answer.
+    if stratum is not None:
+        cands = [p for p in cands if stratum in p.get("kinds", set())]
+
     widened = False
     if band is not None:
         lo, hi = tlen * (1.0 - band), tlen * (1.0 + band)
@@ -153,12 +181,18 @@ def draw_distractors(eid: str, target, tlen: int, pool: list,
         if len(banded) >= k:
             cands = banded
         else:
+            # Widening drops the LENGTH band only, never the stratum.
             widened = True          # recorded, never silent
     if len(cands) < k:
         return None, widened
     rng = _rng_for(eid, seed)
     idx = rng.choice(len(cands), size=k, replace=False)
-    return [cands[int(i)]["target"] for i in sorted(idx)], widened
+    picked = [cands[int(i)] for i in sorted(idx)]
+    if stratum is not None:
+        # Belt and braces: the filter above is the guarantee, this is the alarm.
+        assert all(stratum in c.get("kinds", set()) for c in picked), (
+            "a cross-stratum distractor survived the within-stratum filter")
+    return [c["target"] for c in picked], widened
 
 
 def hit(true_nll: float, distractor_nlls) -> int:
@@ -178,14 +212,56 @@ def score_example(nll_fn, prompt, target, distractors) -> int:
     return hit(t, ds)
 
 
-def accuracy_ci(hits, n_boot: int = BOOTSTRAP_N, seed: int = SEED) -> tuple:
-    """(accuracy, (lo, hi)) - or (accuracy, None) when the bucket is too small."""
+# ── EFFECTIVE n: QUESTIONS, NOT ROWS (5 Sep 2026) ───────────────────────────
+# MEASURED on the real holdout: sig02 has 38 rows but 11 distinct (prompt,
+# target) pairs, and three of those pairs appear NINE times each - 27 of the 38
+# rows are duplicates of three questions. A bootstrap that resamples ROWS treats
+# nine copies of one question as nine observations and reports an interval far
+# narrower than the evidence supports. MIN_BUCKET now counts pairs, and the
+# bootstrap resamples at the pair level so a pair's rows move together.
+
+def pair_key(prompt, target) -> str:
+    """The cluster id for one QUESTION. Normalised on both sides, so the same
+    question asked twice with different spacing is one pair, not two."""
+    return norm(prompt) + "\x00" + norm(target)
+
+
+def effective_n(clusters) -> int:
+    """How many distinct questions the rows actually represent."""
+    return len({str(c) for c in clusters})
+
+
+def accuracy_ci(hits, n_boot: int = BOOTSTRAP_N, seed: int = SEED,
+                clusters=None) -> tuple:
+    """(accuracy, (lo, hi)) - or (accuracy, None) when there are too few PAIRS.
+
+    `clusters` is one id per row. Omit it and every row is its own pair, which is
+    the old behaviour and is correct when rows really are distinct questions.
+    """
     arr = np.asarray(list(hits), dtype=float)
-    if len(arr) < MIN_BUCKET:
-        return (float(arr.mean()) if len(arr) else float("nan")), None
+    if len(arr) == 0:
+        return float("nan"), None
+    ids = [str(c) for c in clusters] if clusters is not None else [
+        str(i) for i in range(len(arr))]
+    if len(ids) != len(arr):
+        raise ValueError(
+            f"clusters has {len(ids)} entries for {len(arr)} rows - one id per row")
+
+    groups: dict = {}
+    for i, c in enumerate(ids):
+        groups.setdefault(c, []).append(i)
+    keys = sorted(groups)
+    if len(keys) < MIN_BUCKET:
+        return float(arr.mean()), None
+
+    # CLUSTER BOOTSTRAP, ratio estimator: resample WHOLE pairs with replacement
+    # and recompute hits/rows over the resampled set. Resampling rows instead
+    # would let the nine copies of one question vote nine times.
+    sums = np.array([arr[groups[k]].sum() for k in keys], dtype=float)
+    sizes = np.array([len(groups[k]) for k in keys], dtype=float)
     rng = np.random.default_rng(seed)
-    idx = rng.integers(0, len(arr), size=(n_boot, len(arr)))
-    means = arr[idx].mean(axis=1)
+    idx = rng.integers(0, len(keys), size=(n_boot, len(keys)))
+    means = sums[idx].sum(axis=1) / sizes[idx].sum(axis=1)
     return float(arr.mean()), (float(np.percentile(means, 2.5)),
                                float(np.percentile(means, 97.5)))
 
@@ -195,7 +271,7 @@ def chance_for(k: int) -> float:
     return 1.0 / (k + 1)
 
 
-def rank_verdict(hits, k: int = K_DISTRACTORS) -> tuple:
+def rank_verdict(hits, k: int = K_DISTRACTORS, clusters=None) -> tuple:
     """(verdict, accuracy, ci). AT CHANCE is a real answer, not a failure.
 
     `k` sets the chance level, so a verdict can never be read against the wrong
@@ -203,9 +279,12 @@ def rank_verdict(hits, k: int = K_DISTRACTORS) -> tuple:
     ABOVE CHANCE, which is the exact mistake this argument exists to prevent.
     """
     chance = chance_for(k)
-    acc, ci = accuracy_ci(hits)
+    acc, ci = accuracy_ci(hits, clusters=clusters)
     if ci is None:
-        return f"UNRESOLVABLE (n<{MIN_BUCKET})", acc, None
+        if clusters is None:
+            return f"UNRESOLVABLE (n<{MIN_BUCKET})", acc, None
+        return (f"UNRESOLVABLE ({effective_n(clusters)} distinct pairs "
+                f"< {MIN_BUCKET})"), acc, None
     if ci[0] > chance:
         return "ABOVE CHANCE", acc, ci
     if ci[1] < chance:
@@ -227,3 +306,74 @@ def beats_control(hits, control_hits, k: int = K_DISTRACTORS) -> tuple:
         return False, (f"CI lo {ci[0]:.4f} overlaps the control's CI hi {cci[1]:.4f} — "
                        f"not distinguishable from the null model")
     return True, f"acc {acc:.4f} CI [{ci[0]:.4f}, {ci[1]:.4f}] vs control {cacc:.4f}"
+
+
+# ── THE AXIS RULE: the trivial baseline, from data, with no model at all ─────
+# sig01's prompts are near-contentless EXCEPT that they name an axis, and
+# within-stratum distractors mostly come from other axes. MEASURED 5 Sep 2026: a
+# perfect axis-matcher scores 0.7114 over the 135 sig01 items with a parsable
+# axis, and ~0.57 over all 185. Chance is 0.20.
+#
+# So "above chance" on sig01 is a far weaker claim than it looks, and an adapter
+# can beat the null model while losing to a rule that needs no model whatsoever.
+# The two facts are reported as SEPARATE labels and must never be merged.
+
+_AXIS_RE = re.compile(r"\b([A-Z][A-Z_]{3,})\b")
+
+
+def axis_of(text):
+    """The first SCREAMING_CASE token, or None.
+
+    A heuristic, and deliberately a blunt one: it is a BASELINE, and a baseline
+    that needed tuning to look weak would not be a baseline. It will also match
+    things like HTTP; that only ever makes the rule look worse, never better.
+    """
+    m = _AXIS_RE.search(str(text))
+    return m.group(1) if m else None
+
+
+def axis_rule_expectation(prompt, true_target, candidates, target_axes,
+                          k: int = K_DISTRACTORS) -> float:
+    """P(the trivial rule ranks the true target first), in expectation.
+
+    The rule: keep the candidates whose axis matches the prompt's, then guess
+    among them. The true target always carries the prompt's axis - it answers
+    that prompt - so the matching group is itself plus the matching distractors.
+
+    The EXPECTATION is returned rather than a sampled 0/1: it is exact, it has no
+    seed of its own to disagree with the draw's, and its variance across items is
+    the only variance the CI should be measuring.
+    """
+    axis = axis_of(prompt)
+    if axis is None:
+        return chance_for(k)          # nothing to match on; the rule is guessing
+    same = sum(1 for c in candidates if axis in (target_axes.get(c) or set()))
+    # When every candidate matches, 1/(same+1) already equals 1/(k+1): an axis
+    # that does not discriminate leaves the rule guessing, and the arithmetic
+    # says so without a special case.
+    return 1.0 / (same + 1)
+
+
+# ── THE TWO LABELS, and they are never merged ───────────────────────────────
+
+def _entirely_above(ci, other) -> bool:
+    return ci[0] > other[1]
+
+
+def reference_labels(adapter_ci, control_ci, axis_ci) -> dict:
+    """LEARNED  - the adapter's CI is entirely above the CONTROL's (the null).
+    BEYOND_TRIVIAL - entirely above the AXIS RULE's.
+
+    An adapter can earn the first without the second: beating a model trained on
+    deranged pairs while losing to a rule that reads one word of the prompt. The
+    report must be able to say exactly that.
+
+    None, not False, when a comparison could not be made. False would read as
+    "it did not learn", which is a claim nobody measured.
+    """
+    return {
+        "LEARNED": (None if adapter_ci is None or control_ci is None
+                    else _entirely_above(adapter_ci, control_ci)),
+        "BEYOND_TRIVIAL": (None if adapter_ci is None or axis_ci is None
+                           else _entirely_above(adapter_ci, axis_ci)),
+    }
