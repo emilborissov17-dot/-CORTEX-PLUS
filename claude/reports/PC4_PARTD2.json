@@ -1,0 +1,940 @@
+{
+ "provenance": {
+  "script_sha256": "74c380e1f1c772f0cc6dcc59f7f10d5c89d920685e29401a25bde3874e211343",
+  "script_bytes": 14614,
+  "command": "tools/pc4_partd2.py --rounds 20 --k 32 --pretrain-steps 8000 --lr 3e-4 --out claude/reports/PC4_PARTD2.json --dump-samples claude/reports/PC4_PARTD2_samples.jsonl",
+  "venv": "C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\venv_train\\Scripts\\python.exe",
+  "python": "3.12.10",
+  "torch": "2.7.1+cu118",
+  "threads": 1,
+  "git_commit": "697a028686fc99d4d5c5b2011a9936e849555edb",
+  "started_utc": "2026-09-06T16:24:49+00:00",
+  "ended_utc": "2026-09-06T16:29:56+00:00"
+ },
+ "seed": 20260906,
+ "k": 32,
+ "lr": 0.0003,
+ "reward_mass": 0.2,
+ "warm_start": {
+  "selected_step": 2250,
+  "in_range_at_selection": 0.8333
+ },
+ "paid_oor": [
+  [
+   10,
+   2
+  ],
+  [
+   7,
+   5
+  ],
+  [
+   9,
+   4
+  ],
+  [
+   10,
+   4
+  ]
+ ],
+ "held_out_oor": [
+  [
+   8,
+   5
+  ],
+  [
+   10,
+   3
+  ],
+  [
+   9,
+   5
+  ]
+ ],
+ "not_evaluable": [
+  [
+   11,
+   3
+  ]
+ ],
+ "main": {
+  "label": "main",
+  "rounds": [
+   {
+    "round": 0,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0185,
+    "buffer_size": 1,
+    "n_rewarded_fresh": 1599,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.125,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0417
+    }
+   },
+   {
+    "round": 1,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "buffer_size": 1,
+    "n_rewarded_fresh": 1654,
+    "held_out": null
+   },
+   {
+    "round": 2,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 4,
+    "n_rewarded_fresh": 1628,
+    "held_out": null
+   },
+   {
+    "round": 3,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0161,
+    "buffer_size": 7,
+    "n_rewarded_fresh": 1616,
+    "held_out": null
+   },
+   {
+    "round": 4,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0199,
+    "buffer_size": 8,
+    "n_rewarded_fresh": 1630,
+    "held_out": null
+   },
+   {
+    "round": 5,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "buffer_size": 8,
+    "n_rewarded_fresh": 1656,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0938,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0312
+    }
+   },
+   {
+    "round": 6,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0199,
+    "buffer_size": 11,
+    "n_rewarded_fresh": 1677,
+    "held_out": null
+   },
+   {
+    "round": 7,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "buffer_size": 12,
+    "n_rewarded_fresh": 1618,
+    "held_out": null
+   },
+   {
+    "round": 8,
+    "exploration_rate": 0.0391,
+    "p_correct_10p2": 0.0312,
+    "p_correct_any_oor": 0.0391,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "buffer_size": 17,
+    "n_rewarded_fresh": 1629,
+    "held_out": null
+   },
+   {
+    "round": 9,
+    "exploration_rate": 0.0312,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0312,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0137,
+    "buffer_size": 21,
+    "n_rewarded_fresh": 1685,
+    "held_out": null
+   },
+   {
+    "round": 10,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0114,
+    "buffer_size": 23,
+    "n_rewarded_fresh": 1662,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0312,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0104
+    }
+   },
+   {
+    "round": 11,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 24,
+    "n_rewarded_fresh": 1669,
+    "held_out": null
+   },
+   {
+    "round": 12,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0194,
+    "buffer_size": 26,
+    "n_rewarded_fresh": 1675,
+    "held_out": null
+   },
+   {
+    "round": 13,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 28,
+    "n_rewarded_fresh": 1647,
+    "held_out": null
+   },
+   {
+    "round": 14,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0161,
+    "buffer_size": 29,
+    "n_rewarded_fresh": 1660,
+    "held_out": null
+   },
+   {
+    "round": 15,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 29,
+    "n_rewarded_fresh": 1653,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0312,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0104
+    }
+   },
+   {
+    "round": 16,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0133,
+    "buffer_size": 30,
+    "n_rewarded_fresh": 1653,
+    "held_out": null
+   },
+   {
+    "round": 17,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 32,
+    "n_rewarded_fresh": 1704,
+    "held_out": null
+   },
+   {
+    "round": 18,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "buffer_size": 34,
+    "n_rewarded_fresh": 1679,
+    "held_out": null
+   },
+   {
+    "round": 19,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0128,
+    "buffer_size": 37,
+    "n_rewarded_fresh": 1688,
+    "held_out": null
+   },
+   {
+    "round": 20,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0137,
+    "buffer_size": 40,
+    "n_rewarded_fresh": 1680,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0625,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0208
+    }
+   }
+  ],
+  "leak_series": [
+   0.0185,
+   0.017,
+   0.018,
+   0.0161,
+   0.0199,
+   0.017,
+   0.0199,
+   0.017,
+   0.0147,
+   0.0137,
+   0.0114,
+   0.0152,
+   0.0194,
+   0.018,
+   0.0161,
+   0.018,
+   0.0133,
+   0.0152,
+   0.0147,
+   0.0128,
+   0.0137
+  ],
+  "baseline_leak": 0.0185,
+  "first_correct_12": 0,
+  "stop_reason": null,
+  "held_out_by_round": {
+   "0": {
+    "8+5": {
+     "p_correct": 0.125,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0417
+   },
+   "5": {
+    "8+5": {
+     "p_correct": 0.0938,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0312
+   },
+   "10": {
+    "8+5": {
+     "p_correct": 0.0312,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0104
+   },
+   "15": {
+    "8+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0312,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0104
+   },
+   "20": {
+    "8+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0625,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0208
+   }
+  },
+  "final_buffer_size": 40
+ },
+ "control": {
+  "label": "control",
+  "rounds": [
+   {
+    "round": 0,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0204,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1597,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.125,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0417
+    }
+   },
+   {
+    "round": 1,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.0189,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1649,
+    "held_out": null
+   },
+   {
+    "round": 2,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1636,
+    "held_out": null
+   },
+   {
+    "round": 3,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1608,
+    "held_out": null
+   },
+   {
+    "round": 4,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0223,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1625,
+    "held_out": null
+   },
+   {
+    "round": 5,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1655,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0938,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0312
+    }
+   },
+   {
+    "round": 6,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0189,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1676,
+    "held_out": null
+   },
+   {
+    "round": 7,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0189,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1610,
+    "held_out": null
+   },
+   {
+    "round": 8,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1620,
+    "held_out": null
+   },
+   {
+    "round": 9,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0166,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1674,
+    "held_out": null
+   },
+   {
+    "round": 10,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0156,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1656,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0312,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0104
+    }
+   },
+   {
+    "round": 11,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1672,
+    "held_out": null
+   },
+   {
+    "round": 12,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1683,
+    "held_out": null
+   },
+   {
+    "round": 13,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1648,
+    "held_out": null
+   },
+   {
+    "round": 14,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.018,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1658,
+    "held_out": null
+   },
+   {
+    "round": 15,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1661,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0
+    }
+   },
+   {
+    "round": 16,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1650,
+    "held_out": null
+   },
+   {
+    "round": 17,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0161,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1700,
+    "held_out": null
+   },
+   {
+    "round": 18,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1676,
+    "held_out": null
+   },
+   {
+    "round": 19,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0156,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1682,
+    "held_out": null
+   },
+   {
+    "round": 20,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0166,
+    "buffer_size": 0,
+    "n_rewarded_fresh": 1672,
+    "held_out": {
+     "8+5": {
+      "p_correct": 0.0312,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "10+3": {
+      "p_correct": 0.0,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "9+5": {
+      "p_correct": 0.0312,
+      "greedy_correct": false,
+      "greedy_marks": 10
+     },
+     "_overall_p_correct": 0.0208
+    }
+   }
+  ],
+  "leak_series": [
+   0.0204,
+   0.0189,
+   0.0152,
+   0.018,
+   0.0223,
+   0.017,
+   0.0189,
+   0.0189,
+   0.0152,
+   0.0166,
+   0.0156,
+   0.0152,
+   0.017,
+   0.018,
+   0.018,
+   0.0152,
+   0.0152,
+   0.0161,
+   0.0147,
+   0.0156,
+   0.0166
+  ],
+  "baseline_leak": 0.0204,
+  "first_correct_12": null,
+  "stop_reason": null,
+  "held_out_by_round": {
+   "0": {
+    "8+5": {
+     "p_correct": 0.125,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0417
+   },
+   "5": {
+    "8+5": {
+     "p_correct": 0.0938,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0312
+   },
+   "10": {
+    "8+5": {
+     "p_correct": 0.0312,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0104
+   },
+   "15": {
+    "8+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0
+   },
+   "20": {
+    "8+5": {
+     "p_correct": 0.0312,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "10+3": {
+     "p_correct": 0.0,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "9+5": {
+     "p_correct": 0.0312,
+     "greedy_correct": false,
+     "greedy_marks": 10
+    },
+    "_overall_p_correct": 0.0208
+   }
+  },
+  "final_buffer_size": 0
+ }
+}
