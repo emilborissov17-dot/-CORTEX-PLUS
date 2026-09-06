@@ -311,12 +311,30 @@ def run(pytest_args=None, write_record: bool = True,
     #
     # pytest always prints a "N passed / N failed" line when it completes. No
     # summary means it did not, whatever the return code says.
-    if not summary:
-        outcome = "INCOMPLETE"
+    #
+    # TWO CORRECTIONS, 6 Sep, after this check went in at 12:36 and turned seven
+    # tests red without anyone noticing - CI had been failing since 22 Aug and
+    # could not report it.
+    #
+    # (1) The inference only holds IF WE RAN PYTEST. run() takes an arbitrary
+    #     command, and the tests drive it with `python -c pass` as a stand-in
+    #     while they exercise the lock logic. That command prints no summary
+    #     because it is not pytest, not because it was killed. Inferring "the run
+    #     did not finish" from a command that was never going to print a summary
+    #     is a lie about a different thing.
+    # (2) INCOMPLETE must not OVERWRITE a more specific verdict. INVALID says a
+    #     cycle wrote to memory/ during the window, so the numbers cannot be
+    #     trusted whatever pytest did; that is the stronger claim and it wins.
+    #     The incompleteness is still recorded as a reason, so nothing is lost -
+    #     the outcome narrows, the record does not.
+    ran_pytest = any("pytest" in str(c) for c in (cmd if isinstance(cmd, list) else [cmd]))
+    if ran_pytest and not summary:
         reasons.append(
             f"INCOMPLETE: pytest printed no summary line (returncode "
             f"{proc.returncode}), so the run did not finish. failed=[] here "
             f"means NOTHING WAS MEASURED, not that nothing failed.")
+        if outcome == VALID:
+            outcome = "INCOMPLETE"
 
     if collect_errors or interrupted:
         outcome = "COLLECTION_FAILED"

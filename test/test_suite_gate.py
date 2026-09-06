@@ -198,3 +198,42 @@ def test_record_is_dry_by_default(tmp_path):
     assert not out.exists()
     sg.record({"outcome": "VALID"}, write=True, path=out)
     assert out.exists()
+
+
+# ── the INCOMPLETE branch, after it was narrowed on 6 Sep ───────────────────
+# It was narrowed because it had overwritten seven INVALID verdicts with
+# INCOMPLETE, using a stub command as evidence that pytest had not finished.
+# Narrowing a check is exactly when it must be re-proved against the defect it
+# was built for, so all three cases are pinned here.
+
+def test_a_pytest_that_never_ran_is_INCOMPLETE_not_valid(tmp_path):
+    """THE DEFECT THE BRANCH EXISTS FOR. A pytest that dies before printing a
+    summary must not be recorded as a clean suite with zero failures."""
+    p = _paths(tmp_path)
+    entry = sg.run(command=[sys.executable, "-m", "pytest", "--no-such-flag"], **p)
+    assert entry["summary"] == "", "this command must not produce a summary line"
+    assert entry["outcome"] == "INCOMPLETE", entry["outcome"]
+    assert any("NOTHING WAS MEASURED" in r for r in entry["reasons"])
+
+
+def test_a_command_that_is_not_pytest_is_not_called_incomplete(tmp_path):
+    """The narrowing itself. `python -c pass` prints no summary because it is not
+    pytest, not because it was killed - inferring 'did not finish' from it is a
+    claim about a different thing."""
+    p = _paths(tmp_path)
+    entry = sg.run(command=[sys.executable, "-c", "pass"], **p)
+    assert entry["summary"] == ""
+    assert entry["outcome"] == sg.VALID
+    assert not any("INCOMPLETE" in r for r in entry["reasons"])
+
+
+def test_incomplete_never_overwrites_invalid_but_is_still_recorded(tmp_path):
+    """INVALID says a cycle wrote to memory/ during the window, so the numbers
+    cannot be trusted whatever pytest did. That is the stronger claim and it wins
+    the OUTCOME - but the incompleteness still has to appear in the record."""
+    p = _paths(tmp_path)
+    entry = sg.run(command=_writer_command(p["lock"]) + ["pytest"], **p)
+    assert entry["summary"] == ""
+    assert entry["outcome"] == sg.INVALID, "a cycle in the window outranks a short run"
+    assert any("NOTHING WAS MEASURED" in r for r in entry["reasons"]), \
+        "the outcome narrows, the record must not"

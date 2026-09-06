@@ -96,7 +96,7 @@ jsonschema==4.26.0
 # undeclared, a fresh install would land in the ImportError branch, which fails
 # CLOSED but refuses every action carrying data. Named here so it is a choice.
 
-pywinpty==3.0.5
+pywinpty==3.0.5 ; sys_platform == "win32"
 # cockpit/terminal.py — the PTY behind the embedded terminal. Installed with
 # --no-deps on purpose: a cycle was live, and --no-deps guarantees pip touches
 # no existing package in the venv the cycle is running from.
