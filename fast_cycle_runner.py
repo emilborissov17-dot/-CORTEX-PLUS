@@ -1636,6 +1636,24 @@ def _triple_from(d: dict) -> dict:
     return out
 
 
+def _axis_history_step() -> None:
+    """Append tonight's gradeable indicators to memory/axis_observations.jsonl."""
+    from core import axis_history as _ah
+    cid = None
+    try:
+        cid = json.loads((BASE / "memory" / "cycle.lock").read_text(encoding="utf-8")
+                         ).get("cycle_id")
+    except Exception:                                            # noqa: BLE001
+        pass                       # the cycle_id is provenance, not a precondition
+    rec = _ah.record(source_step="axis_history", cycle_id=cid)
+    print(f"[FAST_CYCLE] axis_history -> {rec['written']} observation(s)")
+    if rec["undeclared_units"]:
+        # NAMED, not silently written as a blank: a delta whose units nobody
+        # declared cannot be checked against a range.
+        print("[FAST_CYCLE] axis_history -> UNDECLARED unit for: "
+              + ", ".join(rec["undeclared_units"]))
+
+
 def _strategist_to_proposals():
     snap_path     = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
     proposals_path = BASE / "memory" / "improvement_proposals.json"
@@ -2821,6 +2839,16 @@ def main():
     _run("level_reconcile", _level_reconcile)
 
     # ── 12.6. Goal score calculator ──
+    # ── 12.56. THE INDICATOR HISTORY STARTS TONIGHT (6 Sep 2026) ──────────
+    # proposal_intake admitted "WATER_REVIEW +1.2 by 2026-09-10" because the
+    # number parsed, and nothing could say whether +1.2 is a routine week or a
+    # physical impossibility: memory/axis_observations.jsonl did not exist and 0
+    # of 177 archived snapshots carried the block. One line per gradeable
+    # indicator per cycle, append-only, so that in seven days judge() has a real
+    # range to refuse against instead of a default.
+    beat("axis_history", "12.56")
+    _run("axis_history", lambda: _axis_history_step())
+
     beat("goal_score_calculator", "12.6")
     composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
     def _goal_score_calculator():

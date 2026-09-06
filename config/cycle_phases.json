@@ -202,6 +202,10 @@
           "index": "12.55"
         },
         {
+          "name": "axis_history",
+          "index": "12.56"
+        },
+        {
           "name": "goal_score_calculator",
           "index": "12.6"
         },
@@ -241,7 +245,8 @@
         "snapshots/master/goal_score_latest.json",
         "memory/deductions_latest.json",
         "memory/constancy_latest.json",
-        "memory/orchestration_latest.json"
+        "memory/orchestration_latest.json",
+        "memory/axis_observations.jsonl"
       ]
     },
     "E_PROPOSE": {
