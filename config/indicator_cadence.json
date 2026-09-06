@@ -1,0 +1,118 @@
+{
+  "_what_this_is": "How often each gradeable indicator can produce a NEW observation, and where its last observation date is read from. Written by hand on 6 Sep 2026 after proposal_intake admitted 'WATER_REVIEW +1.2 by 2026-09-10' — a four-day deadline on a World Bank series whose last observation is the year 2024 and whose next is not due until 2026 at the earliest. The number parsed, the gate had nothing to check it against, and no observation could arrive before the deadline to settle it either way.",
+  "_the_rule": "NO DEFAULT. An indicator absent from this file, or carrying a cadence outside the five allowed words, fails loud AT LOAD and is named. A missing cadence must never be filled in as 'daily' — that is the assumption that let a four-day deadline through in the first place.",
+  "_cadences": ["daily", "weekly", "monthly", "quarterly", "annual"],
+  "_tiers": "DAILY-TIER = daily or weekly: a new observation arrives inside a normal planning horizon, so a deadline within 30 days is checkable. SLOW-TIER = monthly, quarterly, annual: the deadline must fall on or after next_expected, or nothing can settle the prediction.",
+  "_last_observed_from": "A dotted path into snapshots/master/global_indicators_latest.json. A year-only value ('2024') is read as the LAST day of that year, because a World Bank annual figure describes the whole year and is published the year after.",
+  "_who_owns_it": "A human. A generated patch that widened a cadence would be the system granting itself shorter deadlines than its data can settle.",
+
+  "indicators": {
+    "CLIMATE_GLOBAL_RISK_REVIEW": {
+      "cadence": "daily",
+      "last_observed_from": "co2.co2_date",
+      "source": "NOAA Mauna Loa CO2 — daily flask/in-situ record",
+      "note": "co2_ppm updates daily; a delta on it can be observed within days."
+    },
+    "COGNITION_LEARNING_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.literacy_rate_adult_pct",
+      "source": "World Bank WDI — adult literacy"
+    },
+    "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.forest_area_pct",
+      "source": "World Bank WDI — forest area"
+    },
+    "EDUCATION_CULTURE_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.primary_completion_rate",
+      "source": "World Bank WDI — primary completion"
+    },
+    "ENERGY_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.renewable_elec_pct",
+      "source": "World Bank WDI — renewable electricity share",
+      "note": "last observed 2021: five years stale, and the gate should say so."
+    },
+    "FOOD_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.poverty_190_pct",
+      "source": "World Bank WDI / FAO — food and poverty series"
+    },
+    "GOVERNANCE_INSTITUTIONS_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "governance.wgi_year",
+      "source": "World Bank WGI + V-Dem, population-weighted"
+    },
+    "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+      "cadence": "annual",
+      "last_observed_from": "governance.wgi_year",
+      "source": "World Bank WGI + V-Dem, population-weighted"
+    },
+    "HUMAN_WELL_BEING_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.infant_mortality_per1k",
+      "source": "World Bank WDI — infant mortality per 1000 live births"
+    },
+    "INEQUALITY_POVERTY_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.poverty_190_pct",
+      "source": "World Bank WDI — poverty headcount at $2.15/day"
+    },
+    "PLANETARY_POTENTIAL_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.protected_terrestrial_area_pct",
+      "source": "World Bank WDI — protected terrestrial area"
+    },
+    "SOCIAL_RELATIONS_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "displaced.unhcr_year",
+      "source": "UNHCR — forcibly displaced persons",
+      "note": "last observed 2022."
+    },
+    "WATER_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.safe_water_access_pct",
+      "source": "World Bank WDI — safe water access, percent of population",
+      "note": "THE CASE THAT PROMPTED THIS FILE. Last observed 2024; a 2026-09-10 deadline is before any new observation can exist."
+    }
+  },
+
+  "org_cadence": {
+    "_what_this_is": "Cadence per publishing organisation, used to stamp every source entry in composer_specs.json. Written out per source rather than looked up at runtime, so a source that is added without one fails loud instead of inheriting a guess.",
+    "World Bank": "annual",
+    "WB": "annual",
+    "World Bank WGI": "annual",
+    "FAO/WB": "annual",
+    "IUCN/World Bank": "annual",
+    "ITU/World Bank": "annual",
+    "ITU/WB": "annual",
+    "CORTEX/WGI+V-Dem": "annual",
+    "UN SDG Global Database": "annual",
+    "UNHCR": "annual",
+    "SIPRI/FAS": "annual",
+    "UCDP/PRIO": "annual",
+    "WHO": "annual",
+    "World Health Organization (WHO) Global Health Observatory": "annual",
+    "Our World in Data (OWID) – data sourced from WHO and national health ministries": "annual",
+    "Nobel Foundation": "annual",
+    "NASA": "monthly",
+    "NOAA-CU": "monthly",
+    "FRED/St.Louis Fed": "monthly",
+    "ECB": "monthly",
+    "NOAA": "daily",
+    "NOAA-GML": "daily",
+    "NOAA-local-cache": "daily",
+    "NASA-EONET": "daily",
+    "USGS": "daily",
+    "Open-Meteo": "daily",
+    "NASA JPL CNEOS": "daily",
+    "CelesTrak": "daily",
+    "GDELT": "daily",
+    "arXiv": "daily",
+    "GitHub": "daily",
+    "GBIF": "daily",
+    "NASA Exoplanet Archive": "daily",
+    "CORTEX (self)": "daily"
+  }
+}

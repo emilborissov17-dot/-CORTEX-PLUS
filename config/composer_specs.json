@@ -7,7 +7,8 @@
       "event_daily": "daily event/news signal (indirect, weak, fast)",
       "indirect_proxy": "related quantity that constrains/confirms the anchor"
     },
-    "template_axis": "CLIMATE_GLOBAL_RISK_REVIEW — first composer; prove it, then replicate per axis"
+    "template_axis": "CLIMATE_GLOBAL_RISK_REVIEW — first composer; prove it, then replicate per axis",
+    "cadence_note": "Every source carries a 'cadence' (6 Sep 2026). core.cadence.load_specs refuses to load this file if any source lacks one: a source without a declared cadence must fail loud and by name, never inherit 'daily'."
   },
   "CLIMATE_GLOBAL_RISK_REVIEW": {
     "anchor_slot": "anchor_annual",
@@ -28,7 +29,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "co2.co2_ppm",
             "org": "NOAA",
-            "unit": "ppm_co2"
+            "unit": "ppm_co2",
+            "cadence": "daily"
           },
           {
             "id": "local_co2_backup",
@@ -38,7 +40,8 @@
             "data_date_extract": "co2_measurement_date",
             "data_max_age_days": 400,
             "org": "NOAA-local-cache",
-            "unit": "ppm_co2"
+            "unit": "ppm_co2",
+            "cadence": "daily"
           }
         ]
       },
@@ -52,7 +55,8 @@
             "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
             "col": 3,
             "org": "NOAA-GML",
-            "unit": "ppm_co2"
+            "unit": "ppm_co2",
+            "cadence": "daily"
           }
         ]
       },
@@ -64,7 +68,8 @@
             "id": "gdelt_climate_tone",
             "kind": "http_gdelt_tone",
             "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22climate%20change%22&mode=timelinetone&timespan=7d&format=json",
-            "org": "GDELT"
+            "org": "GDELT",
+            "cadence": "daily"
           },
           {
             "id": "promoted_54947",
@@ -72,7 +77,8 @@
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=wildfires",
             "org": "NASA-EONET",
             "extract": "events",
-            "provenance": "NASA EONET v3 wildfire event count, 7d window. Event COUNT, not burned area; EONET coverage is uneven by region. Honest proxy for climate-driven hazard activity."
+            "provenance": "NASA EONET v3 wildfire event count, 7d window. Event COUNT, not burned area; EONET coverage is uneven by region. Honest proxy for climate-driven hazard activity.",
+            "cadence": "daily"
           }
         ]
       },
@@ -85,14 +91,16 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "temperature.temp_anomaly_c",
-            "org": "NASA"
+            "org": "NASA",
+            "cadence": "monthly"
           },
           {
             "id": "gi_sea_level",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "sea_level.sea_level_rise_mm",
-            "org": "NOAA-CU"
+            "org": "NOAA-CU",
+            "cadence": "monthly"
           }
         ]
       }
@@ -112,7 +120,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.safe_water_access_pct",
             "org": "World Bank",
-            "unit": "pct_population"
+            "unit": "pct_population",
+            "cadence": "annual"
           },
           {
             "id": "promoted_60695",
@@ -143,7 +152,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -160,7 +170,8 @@
             "data_date_col": 2,
             "data_max_age_days": 7,
             "provenance": "USGS NWIS gauge 01646500, real instrument observation. SINGLE US river — a local measurement standing in for a global water slot. Directionally honest, geographically narrow.",
-            "unit": "cubic_feet_per_second"
+            "unit": "cubic_feet_per_second",
+            "cadence": "daily"
           }
         ]
       },
@@ -174,7 +185,8 @@
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=30&category=floods",
             "org": "NASA-EONET",
             "extract": "events",
-            "provenance": "NASA EONET v3 flood event count, 30d window (status=all — the open-only filter returns 0). Event COUNT, not severity or people affected."
+            "provenance": "NASA EONET v3 flood event count, 30d window (status=all — the open-only filter returns 0). Event COUNT, not severity or people affected.",
+            "cadence": "daily"
           }
         ]
       },
@@ -187,7 +199,8 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.undernourishment_pct",
-            "org": "FAO/WB"
+            "org": "FAO/WB",
+            "cadence": "annual"
           },
           {
             "id": "promoted_99557",
@@ -218,7 +231,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       }
@@ -238,7 +252,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.undernourishment_pct",
             "org": "FAO/WB",
-            "unit": "pct_population"
+            "unit": "pct_population",
+            "cadence": "annual"
           },
           {
             "id": "promoted_19074",
@@ -271,7 +286,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -288,7 +304,8 @@
             "data_date_extract": "daily.time",
             "data_max_age_days": 3,
             "provenance": "Open-Meteo (ECMWF-derived) reference evapotranspiration at 41.9N/-93.6W. A crop WATER-DEMAND proxy over one growing region — not a food-supply measurement, not global. Weakest link in the FOOD portfolio.",
-            "unit": "mm_per_day_et0"
+            "unit": "mm_per_day_et0",
+            "cadence": "daily"
           }
         ]
       },
@@ -302,7 +319,8 @@
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
             "org": "NASA-EONET",
             "extract": "events",
-            "provenance": "NASA EONET v3 severe-storm count. NOT food-specific: EONET's drought category is permanently empty, so this stands in as a crop-disruption proxy shared with ENERGY. Replace when a real food-event feed is found."
+            "provenance": "NASA EONET v3 severe-storm count. NOT food-specific: EONET's drought category is permanently empty, so this stands in as a crop-disruption proxy shared with ENERGY. Replace when a real food-event feed is found.",
+            "cadence": "daily"
           }
         ]
       },
@@ -315,14 +333,16 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.cereal_yield_kg_per_ha",
-            "org": "FAO/WB"
+            "org": "FAO/WB",
+            "cadence": "annual"
           },
           {
             "id": "gi_food_production_index",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "food.food_production_index",
-            "org": "FAO/WB"
+            "org": "FAO/WB",
+            "cadence": "annual"
           }
         ]
       }
@@ -342,7 +362,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.renewable_elec_pct",
             "org": "World Bank",
-            "unit": "pct_electricity"
+            "unit": "pct_electricity",
+            "cadence": "annual"
           }
         ]
       },
@@ -359,7 +380,8 @@
             "data_date_extract": "daily.time",
             "data_max_age_days": 3,
             "provenance": "Open-Meteo solar resource at 51.2N/10.4E. The DRIVER of solar generation, not generation itself, and one country only. Stand-in until a keyless generation feed is found (ENTSO-E and EIA both require API keys).",
-            "unit": "mj_per_m2_day"
+            "unit": "mj_per_m2_day",
+            "cadence": "daily"
           }
         ]
       },
@@ -373,7 +395,8 @@
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=severeStorms",
             "org": "NASA-EONET",
             "extract": "events",
-            "provenance": "NASA EONET v3 severe-storm count as a grid-disruption proxy. NOT energy-specific — EONET has no energy category. Shared with FOOD; replace when a real outage/generation feed is found."
+            "provenance": "NASA EONET v3 severe-storm count as a grid-disruption proxy. NOT energy-specific — EONET has no energy category. Shared with FOOD; replace when a real outage/generation feed is found.",
+            "cadence": "daily"
           }
         ]
       },
@@ -386,7 +409,8 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "waste.fossil_fuel_consumption_pct",
-            "org": "WB"
+            "org": "WB",
+            "cadence": "annual"
           }
         ]
       }
@@ -407,7 +431,8 @@
             "extract": "displaced.refugees_millions",
             "org": "UNHCR",
             "unit": "millions_persons",
-            "provenance": "UNHCR refugee stock. NOTE: target_config states the metric in PERSONS, this is MILLIONS — a scale difference the scorer must reconcile, not the composer."
+            "provenance": "UNHCR refugee stock. NOTE: target_config states the metric in PERSONS, this is MILLIONS — a scale difference the scorer must reconcile, not the composer.",
+            "cadence": "annual"
           },
           {
             "id": "promoted_96302",
@@ -417,7 +442,8 @@
             "extract": "conflicts.active_armed_conflicts",
             "provenance": "UCDP/PRIO ACD via the cycle's global_indicators snapshot. ANNUAL cadence, correct for anchor_annual and wrong for any daily slot. Reads 65 for 2025 once the snapshot refreshes at fast_cycle step 2.5; the file on disk still holds the pre-fix 2816 until that run.",
             "path": "snapshots/master/global_indicators_latest.json",
-            "unit": "active_conflicts"
+            "unit": "active_conflicts",
+            "cadence": "annual"
           }
         ]
       },
@@ -431,7 +457,8 @@
             "url": "https://ghoapi.azureedge.net/api/Indicator?$filter=contains(IndicatorCode,'GHE')&$format=json",
             "org": "WHO",
             "extract": "value",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "annual"
           }
         ]
       },
@@ -445,7 +472,8 @@
             "url": "https://ghoapi.azureedge.net/api/Indicator?$filter=contains(IndicatorCode,'HIV')&$format=json",
             "org": "World Health Organization (WHO) Global Health Observatory",
             "extract": "value",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "annual"
           }
         ]
       },
@@ -459,7 +487,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "displaced.idps_millions",
             "org": "UNHCR",
-            "unit": "millions_persons"
+            "unit": "millions_persons",
+            "cadence": "annual"
           },
           {
             "id": "gi_asylum_millions",
@@ -467,7 +496,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "displaced.asylum_seekers_millions",
             "org": "UNHCR",
-            "unit": "millions_persons"
+            "unit": "millions_persons",
+            "cadence": "annual"
           }
         ]
       }
@@ -490,7 +520,8 @@
             "unit": "score_0_1",
             "data_date_extract": "computed_at",
             "data_max_age_days": 90,
-            "provenance": "Population-weighted WGI+V-Dem composite, the axis's declared primary_metric."
+            "provenance": "Population-weighted WGI+V-Dem composite, the axis's declared primary_metric.",
+            "cadence": "annual"
           }
         ]
       },
@@ -504,7 +535,8 @@
             "url": "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json",
             "org": "Our World in Data (OWID) – data sourced from WHO and national health ministries",
             "extract": "1.data",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "annual"
           }
         ]
       },
@@ -523,7 +555,8 @@
             "url": "https://api.nobelprize.org/2.1/nobelPrizes?category=peace&year=2024",
             "org": "Nobel Foundation",
             "extract": "meta.count",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "annual"
           }
         ]
       }
@@ -546,7 +579,8 @@
             "unit": "score_0_1",
             "data_date_extract": "computed_at",
             "data_max_age_days": 90,
-            "provenance": "Population-weighted WGI+V-Dem composite, the declared primary_metric."
+            "provenance": "Population-weighted WGI+V-Dem composite, the declared primary_metric.",
+            "cadence": "annual"
           }
         ]
       },
@@ -570,7 +604,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "governance.ge_est",
             "org": "World Bank WGI",
-            "unit": "wgi_estimate"
+            "unit": "wgi_estimate",
+            "cadence": "annual"
           },
           {
             "id": "gi_rule_of_law",
@@ -578,7 +613,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "governance.rl_est",
             "org": "World Bank WGI",
-            "unit": "wgi_estimate"
+            "unit": "wgi_estimate",
+            "cadence": "annual"
           },
           {
             "id": "gi_control_corruption",
@@ -586,7 +622,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "governance.cc_est",
             "org": "World Bank WGI",
-            "unit": "wgi_estimate"
+            "unit": "wgi_estimate",
+            "cadence": "annual"
           }
         ]
       }
@@ -606,7 +643,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "economy.gdp_growth_annual_pct",
             "org": "World Bank",
-            "unit": "pct_gdp_growth"
+            "unit": "pct_gdp_growth",
+            "cadence": "annual"
           }
         ]
       },
@@ -623,7 +661,8 @@
             "data_date_col": 0,
             "data_max_age_days": 7,
             "unit": "pct_bond_yield",
-            "provenance": "US 10-year Treasury constant-maturity yield, daily, no API key. A FINANCIAL-CONDITIONS proxy for one country — not global economic activity. Directionally informative, narrow."
+            "provenance": "US 10-year Treasury constant-maturity yield, daily, no API key. A FINANCIAL-CONDITIONS proxy for one country — not global economic activity. Directionally informative, narrow.",
+            "cadence": "monthly"
           },
           {
             "id": "ecb_eurusd",
@@ -634,7 +673,8 @@
             "data_date_col": 6,
             "data_max_age_days": 7,
             "unit": "usd_per_eur",
-            "provenance": "ECB daily USD/EUR reference rate. Reserve source for the slot; an FX rate is a weak economic proxy, kept for org diversity and liveness."
+            "provenance": "ECB daily USD/EUR reference rate. Reserve source for the slot; an FX rate is a weak economic proxy, kept for org diversity and liveness.",
+            "cadence": "monthly"
           }
         ]
       },
@@ -653,7 +693,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "economy.unemployment_pct",
             "org": "World Bank",
-            "unit": "pct_unemployed"
+            "unit": "pct_unemployed",
+            "cadence": "annual"
           },
           {
             "id": "gi_gdp_per_capita",
@@ -661,7 +702,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "economy.gdp_per_capita_ppp_usd",
             "org": "World Bank",
-            "unit": "usd_ppp"
+            "unit": "usd_ppp",
+            "cadence": "annual"
           }
         ]
       }
@@ -682,7 +724,8 @@
             "extract": "world_bank.infant_mortality_per1k",
             "org": "World Bank",
             "unit": "deaths_per_1000_infant",
-            "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing."
+            "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing.",
+            "cadence": "annual"
           },
           {
             "id": "promoted_9810",
@@ -714,7 +757,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -738,7 +782,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.life_expectancy",
             "org": "World Bank",
-            "unit": "years"
+            "unit": "years",
+            "cadence": "annual"
           }
         ]
       }
@@ -758,7 +803,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "ai_activity.arxiv_ai_papers_total",
             "org": "arXiv",
-            "unit": "papers_total"
+            "unit": "papers_total",
+            "cadence": "daily"
           }
         ]
       },
@@ -782,7 +828,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "ai_activity.github_ai_repos_total",
             "org": "GitHub",
-            "unit": "repos_total"
+            "unit": "repos_total",
+            "cadence": "daily"
           }
         ]
       }
@@ -802,7 +849,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "tech_infra.broadband_per100",
             "org": "ITU/World Bank",
-            "unit": "per_100_people"
+            "unit": "per_100_people",
+            "cadence": "annual"
           },
           {
             "id": "promoted_59051",
@@ -833,7 +881,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -857,7 +906,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "tech_infra.mobile_subscriptions_per100",
             "org": "ITU/WB",
-            "unit": "per_100_people"
+            "unit": "per_100_people",
+            "cadence": "annual"
           },
           {
             "id": "gi_secure_servers",
@@ -865,7 +915,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "tech_infra.secure_internet_servers_per1m",
             "org": "World Bank",
-            "unit": "per_1m_people"
+            "unit": "per_1m_people",
+            "cadence": "annual"
           }
         ]
       }
@@ -886,7 +937,8 @@
             "extract": "world_bank.poverty_190_pct",
             "org": "World Bank",
             "unit": "pct_below_190",
-            "provenance": "Poverty headcount at the $1.90/day line. target_config specifies the $2.15 line — same concept, different threshold; not interchangeable without restating."
+            "provenance": "Poverty headcount at the $1.90/day line. target_config specifies the $2.15 line — same concept, different threshold; not interchangeable without restating.",
+            "cadence": "annual"
           }
         ]
       },
@@ -910,7 +962,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.gini_mean",
             "org": "World Bank",
-            "unit": "gini_index"
+            "unit": "gini_index",
+            "cadence": "annual"
           }
         ]
       }
@@ -930,7 +983,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "cities.urban_population_pct",
             "org": "World Bank",
-            "unit": "pct_urban"
+            "unit": "pct_urban",
+            "cadence": "annual"
           },
           {
             "id": "promoted_89405",
@@ -960,7 +1014,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -984,7 +1039,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "cities.electricity_access_pct",
             "org": "World Bank",
-            "unit": "pct_access"
+            "unit": "pct_access",
+            "cadence": "annual"
           },
           {
             "id": "gi_internet_users",
@@ -992,7 +1048,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "cities.internet_users_pct",
             "org": "ITU/World Bank",
-            "unit": "pct_users"
+            "unit": "pct_users",
+            "cadence": "annual"
           }
         ]
       }
@@ -1013,7 +1070,8 @@
             "extract": "world_bank.literacy_rate_adult_pct",
             "org": "World Bank",
             "unit": "pct_literate",
-            "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named."
+            "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named.",
+            "cadence": "annual"
           }
         ]
       },
@@ -1063,7 +1121,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.literacy_rate_adult_pct",
             "org": "World Bank",
-            "unit": "pct_literate"
+            "unit": "pct_literate",
+            "cadence": "annual"
           }
         ]
       }
@@ -1106,7 +1165,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -1141,7 +1201,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.forest_area_pct",
             "org": "World Bank",
-            "unit": "pct_land_area"
+            "unit": "pct_land_area",
+            "cadence": "annual"
           },
           {
             "id": "promoted_19109",
@@ -1171,7 +1232,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       },
@@ -1191,7 +1253,8 @@
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=30&category=seaLakeIce",
             "extract": "events",
             "unit": "event_count",
-            "provenance": "NASA EONET sea/lake-ice event count, 30d. Cryosphere habitat change; an event COUNT, not extent or severity."
+            "provenance": "NASA EONET sea/lake-ice event count, 30d. Cryosphere habitat change; an event COUNT, not extent or severity.",
+            "cadence": "daily"
           }
         ]
       },
@@ -1205,7 +1268,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.threatened_mammals_no",
             "org": "IUCN/World Bank",
-            "unit": "species_count"
+            "unit": "species_count",
+            "cadence": "annual"
           },
           {
             "id": "gi_species_observations",
@@ -1213,7 +1277,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "biodiversity.species_observations_30d",
             "org": "GBIF",
-            "unit": "observations_30d"
+            "unit": "observations_30d",
+            "cadence": "daily"
           }
         ]
       }
@@ -1234,7 +1299,8 @@
             "extract": "co2.co2_ppm",
             "org": "NOAA",
             "unit": "ppm_co2",
-            "provenance": "CO2 as the axis's declared proxy for material throughput (target_config sets primary_metric=co2_ppm_mauna_loa for this axis)."
+            "provenance": "CO2 as the axis's declared proxy for material throughput (target_config sets primary_metric=co2_ppm_mauna_loa for this axis).",
+            "cadence": "daily"
           }
         ]
       },
@@ -1249,7 +1315,8 @@
             "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
             "col": 3,
             "unit": "ppm_co2",
-            "provenance": "NOAA GML global daily CO2 trend, column 3 (smoothed) to MATCH the column CLIMATE already reads — two axes declaring the same primary metric must not report different numbers. NOTE: col 4 is the de-seasonalised trend; which column belongs in a daily slot is an open question for review, not settled here."
+            "provenance": "NOAA GML global daily CO2 trend, column 3 (smoothed) to MATCH the column CLIMATE already reads — two axes declaring the same primary metric must not report different numbers. NOTE: col 4 is the de-seasonalised trend; which column belongs in a daily slot is an open question for review, not settled here.",
+            "cadence": "daily"
           }
         ]
       },
@@ -1268,7 +1335,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "waste.resource_depletion_pct_gni",
             "org": "World Bank",
-            "unit": "pct_gni"
+            "unit": "pct_gni",
+            "cadence": "annual"
           },
           {
             "id": "gi_adjusted_net_savings",
@@ -1276,7 +1344,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "waste.adjusted_net_savings_pct",
             "org": "World Bank",
-            "unit": "pct_gni"
+            "unit": "pct_gni",
+            "cadence": "annual"
           }
         ]
       }
@@ -1302,7 +1371,8 @@
             "org": "USGS",
             "extract": "metadata.count",
             "unit": "earthquakes_m4.5_past_day",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "daily"
           }
         ]
       },
@@ -1321,7 +1391,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.forest_area_pct",
             "org": "World Bank",
-            "unit": "pct_land_area"
+            "unit": "pct_land_area",
+            "cadence": "annual"
           },
           {
             "id": "promoted_74773",
@@ -1351,7 +1422,8 @@
                 "totalElements",
                 "totalPages"
               ]
-            }
+            },
+            "cadence": "annual"
           }
         ]
       }
@@ -1371,7 +1443,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "neo.neo_close_approaches_90d",
             "org": "NASA JPL CNEOS",
-            "unit": "approaches_90d"
+            "unit": "approaches_90d",
+            "cadence": "daily"
           }
         ]
       },
@@ -1386,7 +1459,8 @@
             "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
             "extract": "metadata.count",
             "unit": "quake_count_24h",
-            "provenance": "USGS global earthquake count, rolling 24h, no key. Geophysical hazard activity — a COUNT at all magnitudes, so it moves with detection coverage as well as with real seismicity."
+            "provenance": "USGS global earthquake count, rolling 24h, no key. Geophysical hazard activity — a COUNT at all magnitudes, so it moves with detection coverage as well as with real seismicity.",
+            "cadence": "daily"
           }
         ]
       },
@@ -1405,7 +1479,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "neo.neo_within_lunar_dist_90d",
             "org": "NASA JPL CNEOS",
-            "unit": "approaches_90d"
+            "unit": "approaches_90d",
+            "cadence": "daily"
           }
         ]
       }
@@ -1425,7 +1500,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "nuclear.nuclear_warheads_total",
             "org": "SIPRI/FAS",
-            "unit": "warheads"
+            "unit": "warheads",
+            "cadence": "annual"
           }
         ]
       },
@@ -1449,7 +1525,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "nuclear.nuclear_warheads_deployed",
             "org": "SIPRI/FAS",
-            "unit": "warheads"
+            "unit": "warheads",
+            "cadence": "annual"
           },
           {
             "id": "gi_nuclear_on_alert",
@@ -1457,7 +1534,8 @@
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "nuclear.nuclear_warheads_on_alert",
             "org": "SIPRI/FAS",
-            "unit": "warheads"
+            "unit": "warheads",
+            "cadence": "annual"
           }
         ]
       }
@@ -1483,7 +1561,8 @@
             "extract": "exoplanets.confirmed_exoplanets",
             "org": "NASA Exoplanet Archive",
             "unit": "planets_confirmed",
-            "provenance": "Known-worlds count as the crudest possible frontier indicator. Not a resource measure; placeholder until a real one is found."
+            "provenance": "Known-worlds count as the crudest possible frontier indicator. Not a resource measure; placeholder until a real one is found.",
+            "cadence": "daily"
           }
         ]
       }
@@ -1514,7 +1593,8 @@
             "extract": "",
             "org": "CelesTrak",
             "unit": "objects_launched_last_30d",
-            "note": "verified live 2026-08-04: 356 objects. Genuinely daily-moving — it is launch activity, not a standing total. The GROUP=active catalogue (16k objects) was tried first and answers 403 to repeated bulk pulls regardless of User-Agent, so it is not usable at cycle frequency."
+            "note": "verified live 2026-08-04: 356 objects. Genuinely daily-moving — it is launch activity, not a standing total. The GROUP=active catalogue (16k objects) was tried first and answers 403 to repeated bulk pulls regardless of User-Agent, so it is not usable at cycle frequency.",
+            "cadence": "daily"
           },
           {
             "id": "celestrak_geostationary",
@@ -1523,7 +1603,8 @@
             "extract": "",
             "org": "CelesTrak",
             "unit": "geostationary_objects",
-            "note": "verified live 2026-08-04: 568 objects. Standing GEO infrastructure."
+            "note": "verified live 2026-08-04: 568 objects. Standing GEO infrastructure.",
+            "cadence": "daily"
           }
         ]
       }
@@ -1546,7 +1627,8 @@
             "unit": "score_0_100",
             "data_date_extract": "-1.timestamp",
             "data_max_age_days": 7,
-            "provenance": "SELF-REFERENTIAL: the system's own scorer output, not an independent measurement. Wired so this meta-axis does not emit a permanently unsatisfiable need; it must never be read as external corroboration."
+            "provenance": "SELF-REFERENTIAL: the system's own scorer output, not an independent measurement. Wired so this meta-axis does not emit a permanently unsatisfiable need; it must never be read as external corroboration.",
+            "cadence": "daily"
           }
         ]
       },
@@ -1557,5 +1639,4 @@
       }
     }
   }
-
 }

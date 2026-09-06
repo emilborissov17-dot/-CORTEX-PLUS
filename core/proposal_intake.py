@@ -72,8 +72,17 @@ def split_indicator(ind) -> tuple[str, str | None] | None:
     return ind, None
 
 
+def _default_cadence_check(indicator: str, deadline: date):
+    """The real cadence gate. Injectable for the same reason `resolver` is: a
+    test that exercises field validation on a synthetic axis is not making a
+    claim about that axis's publication schedule."""
+    from core.cadence import deadline_refusal
+    return deadline_refusal(indicator, deadline)
+
+
 def judge(p: dict, today: date | None = None,
-          resolver: Callable = _default_resolver) -> dict:
+          resolver: Callable = _default_resolver,
+          cadence_check: Callable = _default_cadence_check) -> dict:
     """{"verdict": "ADMITTED"} or {"verdict": "REFUSED", "missing": [...], "why": ...}.
     Never raises. Every missing piece is named, not just the first."""
     today = today or date.today()
@@ -115,6 +124,27 @@ def judge(p: dict, today: date | None = None,
         elif days > MAX_HORIZON_DAYS:
             missing.append("deadline")
             why.append(f"deadline {dl_date} is {days} days out; max {MAX_HORIZON_DAYS}")
+        else:
+            # ── CADENCE (6 Sep 2026, Kimi R35) ───────────────────────────────
+            # A deadline only means something if an observation can land inside
+            # it. WATER_REVIEW is annual and last observed in 2024; nothing could
+            # arrive by 2026-09-10 to settle "+1.2", so the prediction is not
+            # wrong, it is unsettleable - and a ledger that scores it scores
+            # noise. Refused BY NAME, never silently lengthened or downgraded.
+            try:
+                # Only when the indicator RESOLVED. An unresolvable indicator is
+                # already refused by name above; adding "and its cadence is
+                # unknown" names one cause twice and buries the real one.
+                _reason = (cadence_check(str(p.get("indicator") or "").split("__")[0],
+                                         dl_date)
+                           if "indicator" not in missing else None)
+            except Exception as _e:                              # noqa: BLE001
+                # A cadence layer that cannot answer must say so, not wave the
+                # proposal through on silence.
+                _reason = f"cadence: check unavailable ({type(_e).__name__}: {_e})"
+            if _reason:
+                missing.append("deadline")
+                why.append(_reason)
     except Exception:
         missing.append("deadline")
         why.append("deadline must be an ISO date (got %r)" % (dl,))
@@ -126,13 +156,15 @@ def judge(p: dict, today: date | None = None,
 
 def admit(proposals: list, source: str, today: date | None = None,
           resolver: Callable = _default_resolver,
+          cadence_check: Callable = _default_cadence_check,
           refusals_path: Path | None = None, write: bool = True) -> tuple[list, list]:
     """Split proposals into (admitted, refused). Refused ones are appended to the
     refusal log, one JSON line each, with the source injector named."""
     admitted, refused = [], []
     ts = _now()
     for p in proposals or []:
-        v = judge(p, today=today, resolver=resolver)
+        v = judge(p, today=today, resolver=resolver,
+                  cadence_check=cadence_check)
         if v["verdict"] == "ADMITTED":
             admitted.append(p)
         else:

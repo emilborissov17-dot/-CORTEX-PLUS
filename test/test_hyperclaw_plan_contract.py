@@ -16,6 +16,18 @@ import pytest
 from agents.hyperclaw import hyperclaw_orchestrator as hc
 from core import proposal_intake as pi
 
+
+# A permissive cadence check for the tests that use SYNTHETIC axes.
+# Added 6 Sep 2026 with the cadence gate. These tests exercise FIELD VALIDATION
+# on made-up indicators; they make no claim about when the World Bank publishes,
+# so they inject a cadence check exactly as they already inject a resolver. The
+# cadence gate itself is tested against the real declaration in
+# test/test_cadence_gate.py.
+def _any_cadence(indicator, deadline):
+    return None
+
+
+
 REPO = Path(__file__).resolve().parents[1]
 TS = "2026-09-05T20:00:00+00:00"
 
@@ -99,7 +111,7 @@ def test_key_lines_never_attach_to_the_wrong_step():
 def test_end_to_end_only_complete_steps_pass_the_door(tmp_path):
     props = hc.parse_plan(PLAN, "plan-2026-09-06.md", TS)
     adm, ref = pi.admit(props, "hyperclaw_to_proposals", today=date(2026, 9, 5),
-                        resolver=_resolves, refusals_path=tmp_path / "r.jsonl")
+                        resolver=_resolves, cadence_check=_any_cadence, refusals_path=tmp_path / "r.jsonl")
     assert [p["solution"][:20] for p in adm] == ["Register a 90-day pr", "Publish a report on "]
     assert len(ref) == 4
     missing = {r["solution"][:20]: r["missing"] for r in ref}

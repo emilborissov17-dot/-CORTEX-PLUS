@@ -72,14 +72,50 @@ def gradeable_indicators() -> dict:
 
 
 def indicator_block(indicators: dict | None = None) -> str:
+    """The indicators, split into the two tiers a DEADLINE has to respect.
+
+    MEASURED 6 Sep 2026: 12 of the 13 gradeable indicators are SLOW-TIER - annual
+    World Bank / UNHCR / WGI series, several already overdue - and only CO2 is
+    daily. A generator shown a flat list writes four-day deadlines on annual
+    data, which is exactly what it did: both proposals admitted last night are
+    refused under this block.
+    """
     ind = gradeable_indicators() if indicators is None else indicators
     if not ind:
         return ("GRADEABLE INDICATORS: none resolved this cycle - any INDICATOR you name "
                 "will be refused at intake.\n")
-    lines = [f"  {k}: {v}" for k, v in sorted(ind.items())]
-    return ("GRADEABLE INDICATORS (axis: current value). INDICATOR must be one of these "
-            "axes, or AXIS__metric where the metric is measured under that axis:\n"
-            + "\n".join(lines) + "\n")
+    try:
+        from core.cadence import DAILY_TIER_HORIZON_DAYS, annotate
+        info = annotate(ind)
+    except Exception:                                            # noqa: BLE001
+        info, DAILY_TIER_HORIZON_DAYS = {}, 30
+
+    fast, slow, unknown = [], [], []
+    for k in sorted(ind):
+        meta = info.get(k) or {}
+        tier = meta.get("tier")
+        if tier == "DAILY-TIER":
+            fast.append(f"  {k}: {ind[k]}  (updates {meta.get('cadence')})")
+        elif tier == "SLOW-TIER":
+            slow.append(f"  {k}: {ind[k]}  ({meta.get('cadence')}, last observed "
+                        f"{meta.get('last_observed')}, next expected "
+                        f"{meta.get('next_expected')} - DEADLINE MUST BE ON OR AFTER "
+                        f"THAT DATE)")
+        else:
+            unknown.append(f"  {k}: {ind[k]}  (cadence UNDECLARED - any deadline "
+                           f"will be refused)")
+
+    out = ["GRADEABLE INDICATORS. INDICATOR must be one of these axes, or "
+           "AXIS__metric where the metric is measured under that axis."]
+    if fast:
+        out += [f"DAILY-TIER - a new observation arrives constantly, so a DEADLINE up to "
+                f"{DAILY_TIER_HORIZON_DAYS} days out is fine:"] + fast
+    if slow:
+        out += ["SLOW-TIER - these update rarely. A DEADLINE BEFORE the next expected "
+                "observation is REFUSED, because nothing could arrive to settle it:"] + slow
+    if unknown:
+        out += ["UNDECLARED CADENCE:"] + unknown
+    return "\n".join(out) + "\n"
 
 
 REFUSALS_PATH = BASE / "memory" / "proposal_intake_refusals.jsonl"
