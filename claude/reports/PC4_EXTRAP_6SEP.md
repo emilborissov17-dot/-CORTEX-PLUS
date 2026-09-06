@@ -154,3 +154,33 @@ structure and does not depend on 102 examples to acquire the notion of quantity.
 Its predictions stand as written. **It still does not run before A3 finishes** —
 and A3 died of a CUDA OOM at 13:25 without training, so Part B waits on that
 decision.
+
+---
+
+# PART A2 — THE GROKKING REGIME
+
+Part A converged to memorisation: train 1.000, in-range held-out 0.37–0.43, and ten
+times the budget changed nothing to three decimals. That rules out undertraining at
+*that* setting. It does not rule out **grokking**: with strong weight decay and a much
+longer schedule, small transformers on modular/arithmetic tasks are known to sit at
+memorisation for thousands of steps and then jump to generalisation. Part A had
+`weight_decay=0` — the one ingredient the phenomenon requires.
+
+**Changes, and only these:** `AdamW(weight_decay=1.0)`, **20,000 optimiser steps
+(50×)**, in-range held-out accuracy logged every 500 steps so a late jump is visible
+as a curve rather than inferred from an endpoint. Same symbols, same split, same
+architecture, same seeds, 3 of them. The shuffled-target control runs at the same
+budget, because a leak check at 400 steps says nothing about a run at 20,000.
+
+## Pre-registered — written before the run, Emil's numbers
+
+- **P(in-range ≥ 95% on any seed) = 0.5**
+- If it does reach 95%: **out-of-range prediction is unchanged — 0–10%, wrong answers
+  clamping at 10.**
+- **If in-range stays < 60% after 50× steps: the finding is that ~100 examples are
+  not enough for a 69k model on this task, and Part A stops there.** No third attempt,
+  no further knob.
+
+The band between 60% and 95% is deliberately left without a rule: it would be partial
+learning, and it would need naming when it is seen rather than in advance.
+

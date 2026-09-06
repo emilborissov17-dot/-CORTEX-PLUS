@@ -74,7 +74,7 @@ def build_data(vocab: dict):
 
 
 def run_seed(seed: int, train, held_in, oor, vocab, shuffle_targets=False,
-             epochs=400, device="cpu"):
+             epochs=400, device="cpu", weight_decay=0.0, curve_every=0):
     import torch
     import torch.nn as nn
 
@@ -115,14 +115,32 @@ def run_seed(seed: int, train, held_in, oor, vocab, shuffle_targets=False,
 
     m = Tiny().to(device)
     n_params = sum(p.numel() for p in m.parameters())
-    opt = torch.optim.AdamW(m.parameters(), lr=3e-3)
+    opt = torch.optim.AdamW(m.parameters(), lr=3e-3, weight_decay=weight_decay)
     lossf = nn.CrossEntropyLoss()
-    for _ in range(epochs):
+
+    def _acc(X, Y):
+        m.eval()
+        with torch.no_grad():
+            return (m(X).argmax(1) == Y).float().mean().item()
+
+    # THE CURVE IS THE POINT OF A2. Memorise-then-generalise is only distinguishable
+    # from "never generalised" if the intermediate accuracies are on record; an
+    # endpoint alone cannot tell a late jump from a flat line.
+    curve = []
+    for step in range(epochs):
+        if curve_every and (step % curve_every == 0):
+            curve.append({"step": step, "train": round(_acc(Xtr, Ytr), 4),
+                          "in_range": round(_acc(Xin, Yin), 4),
+                          "out_of_range": round(_acc(Xoo, Yoo), 4)})
         m.train()
         opt.zero_grad()
         loss = lossf(m(Xtr), Ytr)
         loss.backward()
         opt.step()
+    if curve_every:
+        curve.append({"step": epochs, "train": round(_acc(Xtr, Ytr), 4),
+                      "in_range": round(_acc(Xin, Yin), 4),
+                      "out_of_range": round(_acc(Xoo, Yoo), 4)})
 
     m.eval()
     with torch.no_grad():
@@ -140,13 +158,18 @@ def run_seed(seed: int, train, held_in, oor, vocab, shuffle_targets=False,
                         "got": inv.get(got, got)})
     return {"seed": seed, "params": n_params, "train_acc": round(tr_acc, 4),
             "in_range_acc": round(in_acc, 4), "out_of_range_acc": round(oo_acc, 4),
-            "answers": answers, "final_loss": round(float(loss.item()), 5)}
+            "answers": answers, "final_loss": round(float(loss.item()), 5),
+            "weight_decay": weight_decay, "steps": epochs, "curve": curve}
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, default=5)
     ap.add_argument("--epochs", type=int, default=400)
+    ap.add_argument("--weight-decay", type=float, default=0.0,
+                    help="A2 grokking regime uses 1.0; Part A used 0.0")
+    ap.add_argument("--curve-every", type=int, default=0,
+                    help="log held-out accuracy every N steps (0 = off)")
     ap.add_argument("--out", default="claude/reports/PC4_PARTA.json")
     a = ap.parse_args()
 
@@ -160,10 +183,20 @@ def main() -> int:
     print(f"training TARGETS seen: {targets}")
     assert max(targets) <= TRAIN_MAX, "a target above 10 leaked into training"
 
-    runs = [run_seed(SEED + i, train, held_in, oor, vocab, epochs=a.epochs)
-            for i in range(a.seeds)]
-    ctrl = run_seed(SEED, train, held_in, oor, vocab, shuffle_targets=True,
-                    epochs=a.epochs)
+    kw = dict(epochs=a.epochs, weight_decay=a.weight_decay,
+              curve_every=a.curve_every)
+    runs = []
+    for i in range(a.seeds):
+        r = run_seed(SEED + i, train, held_in, oor, vocab, **kw)
+        runs.append(r)
+        if r["curve"]:
+            print(f"  seed {r['seed']} curve (step: train / in-range / out-of-range)")
+            for c in r["curve"]:
+                print(f"    {str(c['step']).rjust(6)}  {c['train']:.3f}  "
+                      f"{c['in_range']:.3f}  {c['out_of_range']:.3f}")
+    # the leak check runs at the SAME budget: a control at 400 steps says nothing
+    # about a run at 20,000.
+    ctrl = run_seed(SEED, train, held_in, oor, vocab, shuffle_targets=True, **kw)
 
     for r in runs:
         print(f"  seed {r['seed']}  params {r['params']}  train {r['train_acc']:.3f}"
