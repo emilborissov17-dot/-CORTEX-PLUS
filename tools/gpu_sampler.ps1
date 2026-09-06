@@ -33,5 +33,17 @@ while ($true) {
     if (-not $apps) { $apps = "(no per-process rows - WDDM)" }
     "{0:HH:mm:ss}  used={1} MiB  apps: {2}" -f (Get-Date), $used, $apps |
         Out-File -FilePath $Out -Append -Encoding utf8
+
+    # 6 Sep, death 4: A3 was relaunched at 16:02 into a card that ALREADY held an
+    # ollama runner (pid 428680, spawned 15:58:10), because the launcher only
+    # REPORTED gpu memory and never acted on it. Sampling without acting is how the
+    # same process gets to kill the job twice. Runners only - the 03:04 cycle needs
+    # the server, and killing that would trade one outage for another.
+    Get-CimInstance Win32_Process -Filter "Name='ollama.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -match "runner" } | ForEach-Object {
+            "{0:HH:mm:ss}  KILLING ollama runner pid {1} - it is on the card while the job runs" -f (Get-Date), $_.ProcessId |
+                Out-File -FilePath $Out -Append -Encoding utf8
+            Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
+        }
     Start-Sleep -Seconds $IntervalSec
 }

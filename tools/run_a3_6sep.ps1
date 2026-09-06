@@ -36,6 +36,13 @@ if (Test-Path "models\adapters\k1b_A3\adapter_config.json") {
 }
 $gpu = & nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>$null
 if (-not $gpu) { Say "nvidia-smi gave nothing: GPU occupancy NOT checked" } else { Say "gpu memory.used MiB before launch: $gpu" }
+
+# Death 4 launched into 156 MiB already held by an ollama runner, because the
+# line above only NARRATES. gpu_guard frees runners and REFUSES if the card is
+# still held, which is the difference between a check and a note.
+& (Join-Path $repo "tools\gpu_guard.ps1")
+if ($LASTEXITCODE -ne 0) { Say "REFUSED to launch: gpu_guard could not free the card."; exit 4 }
+Say "gpu_guard: card free."
 if ($gpu -and ([int]($gpu.Trim()) -gt 600)) {
     Say "REFUSED: the card is not free ($gpu MiB in use). Training cannot share 4 GB."
     exit 2
