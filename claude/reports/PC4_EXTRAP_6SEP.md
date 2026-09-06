@@ -184,3 +184,127 @@ budget, because a leak check at 400 steps says nothing about a run at 20,000.
 The band between 60% and 95% is deliberately left without a rule: it would be partial
 learning, and it would need naming when it is seen rather than in advance.
 
+---
+
+## PART A2 — RESULT
+
+```
+seed        final train   final in-range   final out-of-range
+20260906       0.559          0.400             0.000
+20260907       0.843          0.600             0.000
+20260908       0.941          0.767             0.000
+
+SHUFFLED-TARGET control: in-range 0.067   (must be ~0 — it is)
+out-of-range across ALL 123 logged checkpoints, all seeds: max 0.000
+```
+
+### The curve (every 1000 steps; train / in-range / out-of-range)
+
+```
+  step |   seed ...906   |   seed ...907   |   seed ...908
+     0 | 0.00/0.00/0.00  | 0.04/0.13/0.00  | 0.09/0.03/0.00
+   500 | 1.00/0.43/0.00  | 0.45/0.27/0.00  | 1.00/0.47/0.00
+  1000 | 1.00/0.53/0.00  | 0.74/0.30/0.00  | 1.00/0.63/0.00
+  2000 | 0.90/0.50/0.00  | 0.97/0.50/0.00  | 0.96/0.80/0.00
+  3000 | 0.99/0.47/0.00  | 0.11/0.03/0.00  | 0.49/0.40/0.00
+  4000 | 0.94/0.73/0.00  | 0.91/0.67/0.00  | 1.00/0.83/0.00
+  5000 | 0.94/0.80/0.00  | 0.97/0.73/0.00  | 0.90/0.87/0.00
+  6000 | 0.98/0.73/0.00  | 0.28/0.17/0.00  | 1.00/0.77/0.00
+  7000 | 0.44/0.27/0.00  | 0.84/0.63/0.00  | 0.78/0.70/0.00
+  8000 | 0.95/0.70/0.00  | 0.95/0.77/0.00  | 0.93/0.67/0.00
+  9000 | 0.98/0.80/0.00  | 0.93/0.67/0.00  | 0.68/0.53/0.00
+ 10000 | 1.00/0.73/0.00  | 1.00/0.87/0.00  | 0.11/0.03/0.00
+ 11000 | 0.99/0.77/0.00  | 1.00/0.80/0.00  | 0.26/0.07/0.00
+ 12000 | 0.98/0.77/0.00  | 0.21/0.10/0.00  | 1.00/0.87/0.00
+ 13000 | 0.89/0.83/0.00  | 0.91/0.63/0.00  | 0.75/0.73/0.00
+ 14000 | 0.52/0.30/0.00  | 0.95/0.73/0.00  | 1.00/0.80/0.00
+ 15000 | 1.00/0.80/0.00  | 1.00/0.80/0.00  | 0.96/0.73/0.00
+ 16000 | 0.85/0.70/0.00  | 0.96/0.77/0.00  | 0.92/0.80/0.00
+ 17000 | 0.83/0.70/0.00  | 0.92/0.87/0.00  | 0.95/0.87/0.00
+ 18000 | 0.56/0.23/0.00  | 0.91/0.80/0.00  | 0.51/0.17/0.00
+ 19000 | 0.58/0.47/0.00  | 1.00/0.80/0.00  | 1.00/0.77/0.00
+ 20000 | 0.56/0.40/0.00  | 0.84/0.60/0.00  | 0.94/0.77/0.00
+```
+
+**There is no grokking jump.** Memorise-then-generalise looks like train pinned at
+1.000 while held-out sits flat for thousands of steps and then steps up. This is not
+that shape. Train and held-out move *together*, up and down, and the training
+accuracy itself collapses below 0.5 at **24 of 123 checkpoints** — seed ...907 falls
+to 0.11 at step 3000, seed ...908 to 0.11 at step 10000. `weight_decay=1.0` at
+`lr=3e-3` is repeatedly destroying the fit and rebuilding it. What the curve shows is
+an unstable optimisation with an upward drift, not a phase change.
+
+### Weight decay worked, though — on the axis it could work on
+
+Comparing like with like, at the **35 checkpoints where the model has fully memorised
+the 102 training pairs** (`train = 1.000`), which is Part A's only state:
+
+| | in-range held-out | out-of-range |
+|---|---|---|
+| Part A (`wd=0`) | 0.367 – 0.433 | 0.000 |
+| **A2 (`wd=1.0`)** | **min 0.433, median 0.800, max 0.967** | **0.000** |
+
+At identical training accuracy, weight decay roughly **doubles** held-out
+generalisation. The regularisation did exactly what regularisation does. **It moved
+out-of-range accuracy by nothing at all — 0.000 at every one of those 35 checkpoints,
+and at every one of the 123.**
+
+### Scoring the pre-registration
+
+**`P(in-range ≥ 95% on any seed) = 0.5` — resolves NO on the endpoint, with a
+near-miss that has to be stated.**
+
+- On the **final-model** reading, which is what Part A's per-seed numbers were and
+  what the summary table reports: **max 0.767. No seed reached 95%.**
+- On a **best-checkpoint** reading: seed ...907 hit **0.967 at step 11500**. But that
+  is the maximum of 123 noisy readings on a **30-item** held-out set, where one item
+  is 3.3 points and 0.967 is 29/30 — and the same seed read 0.80 at step 11000 and
+  **0.10 at step 12000**. A 29/30 that is gone five hundred steps later is a spike,
+  not a learned rule. I do not think it should be scored as a hit, and I am saying so
+  having found it rather than having predicted it.
+
+**The stop rule — `if in-range stays < 60%, report and stop` — also lands on the
+line, and both readings belong in the record:** final accuracies are 0.400 / 0.600 /
+0.767, so the **maximum is 0.767** (above the line, on the any-seed reading that the
+95% clause uses) while the **mean is 0.5889** (below it, by 0.011). Under the any-seed
+reading the stop rule is not triggered; under the mean reading it is, barely.
+
+**The out-of-range prediction was right, including the mechanism.** The prediction was
+0–10% with wrong answers clamping at 10. Actual: **0.000 on every seed at every
+checkpoint**, and the answers are the clamp itself —
+
+```
+seed ...907 and ...908: all eight answers are 10.
+seed ...906: four answers 10, four answers 9. Nothing else.
+want 12, 13, 15, 11 ... got 10, 10, 10, 10.
+```
+
+Not one answer above 10 was ever emitted, by any seed, at any point. The model has no
+gradient pushing it past the largest target it has seen, exactly as predicted.
+
+### The finding
+
+**In-range competence and out-of-range extrapolation are decoupled in this model.**
+That is a stronger statement than Part A could make, and it is what A2 bought: Part A's
+0% out-of-range was uninterpretable because nothing had been learned. A2 produces
+models that answer up to 29 of 30 unseen in-range questions — and the same models,
+at the same checkpoint, answer **0 of 8** out-of-range questions, clamping at the
+ceiling of their training targets. Doubling in-range generalisation moved
+out-of-range by zero.
+
+The honest limit on that claim: it is a 69k-parameter transformer on 102 examples,
+and the in-range number is unstable enough that "competent" describes a checkpoint
+rather than a converged model. This says what a small model trained from scratch does.
+It does not yet say anything about a pretrained one.
+
+### Part A stops here
+
+Not because the stop rule fired cleanly — it did not, it landed on the line — but
+because a third setting would be the third knob on an instrument that has now
+answered the question it was built for. The instability is diagnosable
+(`lr=3e-3` with `wd=1.0` is too aggressive; a schedule or a lower lr would smooth it)
+and fixing it would raise in-range and, on the evidence of 123 checkpoints, still not
+move out-of-range off zero.
+
+**Part B is unchanged and still waits for A3**, which died a second time at 15:24 and
+was relaunched at 15:29:53.
