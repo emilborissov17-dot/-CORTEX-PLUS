@@ -31,7 +31,7 @@ import hashlib
 import json
 import statistics
 import sys
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -239,12 +239,40 @@ def generate_completions(prompt: str, n: int = N_COMPLETIONS,
     return out
 
 
+def _gpu_used_mib():
+    """MiB in use, or None when nvidia-smi says nothing. None is NOT zero — an
+    unknown occupancy is a refusal, not a green light."""
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=30).stdout.strip()
+        return int(out.splitlines()[0].strip())
+    except Exception:
+        return None
+
+
+def _recent_for_prompt(indicator: str) -> str:
+    """The series' own last few values, for the prompt. Best effort: a model that is
+    not shown the recent range invents a delta on no scale at all."""
+    try:
+        import json as _j
+        import evaluator as _ev
+        vals = _j.loads(Path(_ev.TRENDS_PATH).read_text(encoding="utf-8")).get(indicator)
+        return ", ".join(str(v) for v in (vals or [])[-7:]) or "unavailable"
+    except Exception:
+        return "unavailable"
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--indicator", default=SERIES_DEFAULT)
     ap.add_argument("--dry-run", metavar="JSON",
                     help="read completions from a JSON list instead of a model; "
                          "touches no GPU and no network")
+    ap.add_argument("--live", action="store_true",
+                    help="generate 8 completions from the local 3B via the ladder. "
+                         "Refuses while a cycle lock is present or the GPU is busy.")
     ap.add_argument("--ledger-dir", default=None)
     a = ap.parse_args()
 
@@ -269,13 +297,38 @@ def main() -> int:
               "this one resolve first.")
         return 2
 
-    if not a.dry_run:
-        print("REFUSED: this script does not generate tonight. The 03:04 cycle needs "
-              "the GPU and the ladder. Re-run with --dry-run, or after the cycle has "
-              "released both.")
+    if not a.dry_run and not a.live:
+        print("REFUSED: pass --dry-run <json> to seal from a recorded payload, or "
+              "--live to generate. Neither was given, so nothing ran.")
         return 3
 
-    completions = json.loads(Path(a.dry_run).read_text(encoding="utf-8"))
+    if a.live:
+        # PRECONDITION 3 — the cycle owns the machine until it seals. A generation
+        # that starts while the 03:04 cycle is still running competes with it for the
+        # GPU and the ladder, which is how A3 died four times on 6 September.
+        lock = REPO / "memory" / "cycle.lock"
+        if lock.exists():
+            print(f"REFUSED: {lock} is present — a cycle is running. Wait for it to "
+                  f"seal, then re-run.")
+            return 4
+        used = _gpu_used_mib()
+        if used is None:
+            print("REFUSED: nvidia-smi gave nothing, so GPU occupancy is UNKNOWN. "
+                  "Refusing rather than guessing.")
+            return 4
+        if used > 600:
+            print(f"REFUSED: {used} MiB already held on the GPU. Something else is "
+                  f"using the card.")
+            return 4
+        print(f"GPU free ({used} MiB), no cycle lock. Generating {N_COMPLETIONS} "
+              f"completions at temperature {TEMPERATURE}.")
+        recent = _recent_for_prompt(a.indicator)
+        completions = generate_completions(
+            PROMPT.format(series=a.indicator, v0=value,
+                          v0_date=date.today().isoformat(), recent=recent,
+                          deadline=(date.today() + timedelta(days=1)).isoformat()))
+    else:
+        completions = json.loads(Path(a.dry_run).read_text(encoding="utf-8"))
     parsed = [parse_completion(c) for c in completions]
     records = gate_all(parsed, a.indicator)
     out = seal_bet(records, series_id=a.indicator, v0=float(value),

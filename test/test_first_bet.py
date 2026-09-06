@@ -231,3 +231,54 @@ def test_choose_prefers_the_narrowest_confidence_then_the_reference_delta():
 
 def test_the_default_series_is_the_one_the_spec_names():
     assert SERIES_DEFAULT == "GDELT_DAILY"
+
+
+# ── the --live path, added 7 Sep so tomorrow's run is possible at all ───────
+def test_live_refuses_while_a_cycle_lock_is_present(tmp_path, monkeypatch, capsys):
+    """A generation that starts while the 03:04 cycle is still running competes with
+    it for the GPU and the ladder — which is how A3 died four times on 6 September."""
+    import tools.first_bet as fb
+    lock = tmp_path / "cycle.lock"
+    lock.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(fb, "REPO", tmp_path.parent)
+    monkeypatch.setattr(fb.Path, "exists", lambda self: str(self).endswith("cycle.lock"))
+    monkeypatch.setattr(sys, "argv", ["first_bet.py", "--live"])
+    monkeypatch.setattr(fb, "_gpu_used_mib", lambda: 0)
+    monkeypatch.setattr("core.proposal_intake._default_resolver",
+                        lambda a, m=None: (100.0, None))
+    rc = fb.main()
+    assert rc == 4
+    assert "cycle is running" in capsys.readouterr().out
+
+
+def test_live_refuses_when_gpu_occupancy_is_unknown(monkeypatch, capsys):
+    """None is NOT zero. An unknown occupancy is a refusal, not a green light —
+    the same defect the sampler had on 4 September."""
+    import tools.first_bet as fb
+    monkeypatch.setattr(sys, "argv", ["first_bet.py", "--live"])
+    monkeypatch.setattr(fb, "_gpu_used_mib", lambda: None)
+    monkeypatch.setattr(fb.Path, "exists", lambda self: False)
+    monkeypatch.setattr("core.proposal_intake._default_resolver",
+                        lambda a, m=None: (100.0, None))
+    assert fb.main() == 4
+    assert "UNKNOWN" in capsys.readouterr().out
+
+
+def test_live_refuses_when_the_card_is_busy(monkeypatch, capsys):
+    import tools.first_bet as fb
+    monkeypatch.setattr(sys, "argv", ["first_bet.py", "--live"])
+    monkeypatch.setattr(fb, "_gpu_used_mib", lambda: 3358)
+    monkeypatch.setattr(fb.Path, "exists", lambda self: False)
+    monkeypatch.setattr("core.proposal_intake._default_resolver",
+                        lambda a, m=None: (100.0, None))
+    assert fb.main() == 4
+    assert "3358 MiB" in capsys.readouterr().out
+
+
+def test_with_neither_flag_nothing_runs(monkeypatch, capsys):
+    import tools.first_bet as fb
+    monkeypatch.setattr(sys, "argv", ["first_bet.py"])
+    monkeypatch.setattr("core.proposal_intake._default_resolver",
+                        lambda a, m=None: (100.0, None))
+    assert fb.main() == 3
+    assert "nothing ran" in capsys.readouterr().out
