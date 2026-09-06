@@ -226,15 +226,19 @@ hypothesis was wrong. That was premature — the test was too short.** Re-runnin
 *exact* original command at full length:
 
 ```
-no OMP_NUM_THREADS, seed 20260906, 20000 steps  ->  in-range 0.400
-committed A2,       seed 20260906, 20000 steps  ->  in-range 0.400
+                          seed 20260906, 20000 steps      train    in-range
+no OMP_NUM_THREADS                                        0.559      0.400
+committed A2                                              0.559      0.400
+OMP_NUM_THREADS=4                                         0.588      0.467
+the re-run (OMP_NUM_THREADS=4)                            0.588      0.467
 ```
 
-**A2 reproduces exactly under its own command.** The divergence is real but it needs
-length to appear: at 400 steps the two thread settings are identical to three
-decimals, and by 20,000 they are 0.400 against 0.467. Tiny differences in
-floating-point reduction order accumulate through a training run that is unstable by
-construction.
+**Both arms reproduce their own original to the digit, on both metrics.** So the
+cause is established rather than suspected: it is the thread count, and nothing else
+differed. The divergence is real but needs length to appear — at 400 steps the two
+settings are identical to three decimals, and by 20,000 they are 0.400 against 0.467.
+Tiny differences in floating-point reduction order accumulate through a training run
+that is unstable by construction.
 
 Two things follow, and both matter more than the caveat itself:
 
