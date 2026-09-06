@@ -156,7 +156,19 @@ def run_seed(seed: int, train, held_in, oor, vocab, shuffle_targets=False,
         got = itos[pr]
         answers.append({"prompt": p, "want": inv.get(y, y),
                         "got": inv.get(got, got)})
-    return {"seed": seed, "params": n_params, "train_acc": round(tr_acc, 4),
+    # THE ORDER PROBE (added for Part C, applied back to A2 so the two are
+    # comparable). Only values 0..10 are read: tokens for 11..15 exist in the
+    # vocabulary because they are out-of-range TARGETS, but they never appear as an
+    # INPUT, so their embedding rows never took a gradient and are still at
+    # initialisation. Including them would measure the initialiser.
+    if str(REPO) not in sys.path:
+        sys.path.insert(0, str(REPO))               # run as a script, not a package
+    from tools.pc4_partc import order_probe          # noqa: E402
+    probe = order_probe(m.emb.weight.detach().numpy(), stoi,
+                        {v: vocab["num"][v] for v in range(11)})
+
+    return {"seed": seed, "params": n_params, "order_probe": probe,
+            "train_acc": round(tr_acc, 4),
             "in_range_acc": round(in_acc, 4), "out_of_range_acc": round(oo_acc, 4),
             "answers": answers, "final_loss": round(float(loss.item()), 5),
             "weight_decay": weight_decay, "steps": epochs, "curve": curve}
