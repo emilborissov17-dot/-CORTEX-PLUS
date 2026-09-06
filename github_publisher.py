@@ -43,6 +43,14 @@ def _get_sha(path: str) -> str | None:
     return None
 
 
+# WHAT THIS RUN ACTUALLY PUBLISHED (6 Sep 2026). The gate wrote an event only
+# when it REFUSED, so a successful publish left no trace at all: on 2026-09-06 it
+# pushed three commits at 01:36:26-30Z and night_events.jsonl said nothing, which
+# read as "neither published nor refused" to anyone checking the log. Silence on
+# success is the same defect as silence on refusal, one outcome later.
+PUBLISHED: list = []
+
+
 def _push_file(path: str, content: str, message: str):
     url = f"{GITHUB_API}/repos/{REPO_OWNER}/{REPO_NAME}/contents/{path}"
     encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
@@ -52,6 +60,12 @@ def _push_file(path: str, content: str, message: str):
         payload["sha"] = sha
     r = requests.put(url, headers=_headers(), json=payload, timeout=30)
     r.raise_for_status()
+    try:
+        commit_sha = (r.json().get("commit") or {}).get("sha")
+    except Exception:                                            # noqa: BLE001
+        commit_sha = None
+    PUBLISHED.append({"path": path, "commit_sha": commit_sha,
+                      "status": r.status_code})
     return r.status_code
 
 
@@ -392,9 +406,15 @@ def publish_verified_hypotheses() -> int:
 
 
 def publish_synthesis():
-    """Web intelligence + verified hypotheses. Called by fast_cycle_runner."""
+    """Web intelligence + verified hypotheses. Called by fast_cycle_runner.
+
+    Returns the list of files written with their commit shas, so the caller can
+    record WHAT was published rather than only that nothing refused it.
+    """
+    PUBLISHED.clear()
     publish_cycle()
     publish_verified_hypotheses()
+    return list(PUBLISHED)
 
 
 def publish_vision():

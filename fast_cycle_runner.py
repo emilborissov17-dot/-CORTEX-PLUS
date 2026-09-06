@@ -1941,6 +1941,31 @@ def _get_pending_patches() -> list[str]:
     return pending
 
 
+def _gate_event(step: str, outcome: str, gate: str, why: str, extra=None) -> None:
+    """EVERY outcome of a gate, not only the refusals (6 Sep 2026).
+
+    The gate wrote an event when it said no and nothing when it said yes. On
+    2026-09-06 github_publish pushed three commits and night_events.jsonl held
+    neither a publish nor a refusal, so the morning read said "neither" - a
+    conclusion produced entirely by a refusal-only log. Silence on success is the
+    same defect as silence on refusal.
+    """
+    try:
+        from memory.heartbeat import BASE as _B
+        import json as _j
+        from datetime import datetime as _dt, timezone as _tz
+        rec = {"ts": _dt.now(_tz.utc).isoformat(),
+               "subject": f"{step} {outcome}",
+               "outcome": outcome, "gate": gate, "step": step, "detail": why}
+        if extra:
+            rec.update(extra)
+        with open(_B / "memory" / "night_events.jsonl", "a", encoding="utf-8") as fh:
+            fh.write(_j.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception as e:                                       # noqa: BLE001
+        print(f"[FAST_CYCLE] night_events write FAILED for {step}/{outcome}: "
+              f"{type(e).__name__}: {e}")
+
+
 def _refusal_event(step: str, gate: str, why: str) -> None:
     """EVERY refusal names the gate and the reason. Added 5 Sep 2026.
 
@@ -2015,6 +2040,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
         from core.notary import may_act
         ok, why = may_act(step, prev_step)
         if ok:
+            _gate_event(step, "ПРОПУСНАТА", "notary", why)
             return True
         print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
         _refusal_event(step, "notary", why)
@@ -2025,6 +2051,8 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
     try:
         from core.metta_check import witness_present
         if witness_present():
+            _gate_event(step, "ПРОПУСНАТА", "metta_witness",
+                        "all gates passed: human channel, notary, symbolic witness")
             return True
     except Exception as e:
         print(f"[FAST_CYCLE] {step} -> witness check failed: {type(e).__name__}: {e}")
@@ -3008,7 +3036,18 @@ def main():
     else:
         def _github_publisher():
             from github_publisher import publish_synthesis as _gh_publish
-            _gh_publish()
+            written = _gh_publish() or []
+            # WHAT was published, not merely that nothing refused it. The 6 Sep
+            # run pushed three commits and left no event at all, which read as
+            # "neither published nor refused" the next morning.
+            shas = [w.get("commit_sha") for w in written if w.get("commit_sha")]
+            _gate_event("github_publish", "ПУБЛИКУВАНА", "publisher",
+                        f"{len(written)} file(s) written to the watch repo",
+                        {"files": [w.get("path") for w in written][:40],
+                         "commit_shas": shas[:40],
+                         "file_count": len(written)})
+            print(f"[FAST_CYCLE] github_publish -> {len(written)} file(s), "
+                  f"{len(shas)} commit sha(s) recorded")
         _run("github_publisher", _github_publisher)
 
     # ── 16. Action recommendations ──
