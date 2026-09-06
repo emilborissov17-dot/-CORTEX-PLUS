@@ -163,8 +163,14 @@ def test_the_prompt_shows_both_tiers_with_next_expected_on_slow_lines():
     assert "DAILY-TIER" in block and "SLOW-TIER" in block
     slow = block.split("SLOW-TIER", 1)[1]
     for line in [l for l in slow.splitlines() if l.startswith("  ")]:
-        assert "next expected" in line, line
-        assert "DEADLINE MUST BE ON OR AFTER" in line, line
+        # Two honest shapes since the overdue decision: a series with a known
+        # next date names it, and an OVERDUE one says the date is unknown rather
+        # than printing an invented one. This test previously demanded the first
+        # shape of every line and so pinned the default that was removed.
+        assert ("next expected" in line
+                or "next publication date unknown" in line), line
+        assert ("DEADLINE MUST BE ON OR AFTER" in line
+                or "ANY deadline is refused" in line), line
 
 
 def test_the_prompt_still_says_none_when_nothing_resolved():

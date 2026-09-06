@@ -90,23 +90,48 @@ def indicator_block(indicators: dict | None = None) -> str:
     except Exception:                                            # noqa: BLE001
         info, DAILY_TIER_HORIZON_DAYS = {}, 30
 
+    try:
+        from core.axis_history import _target_entries, meta_for
+        ents = _target_entries()
+    except Exception:                                            # noqa: BLE001
+        ents, meta_for = {}, None
+
+    def _what(k: str) -> str:
+        """unit, five-word meaning, and which way is GOOD. A generator that is
+        not told the direction cannot know that +2.0 on an indicator counting
+        DEATHS proposes more of them."""
+        if meta_for is None:
+            return ""
+        m = meta_for(k, ents)
+        bits = [f"unit: {m['unit']}"]
+        if m["meaning"]:
+            bits.append(f"means: {m['meaning']}")
+        bits.append(f"GOOD_DIRECTION: {m['good_direction']}")
+        return "  [" + "; ".join(bits) + "]"
+
     fast, slow, unknown = [], [], []
     for k in sorted(ind):
         meta = info.get(k) or {}
         tier = meta.get("tier")
         if tier == "DAILY-TIER":
-            fast.append(f"  {k}: {ind[k]}  (updates {meta.get('cadence')})")
+            fast.append(f"  {k}: {ind[k]}{_what(k)}  (updates "
+                        f"{meta.get('cadence')})")
         elif tier == "SLOW-TIER":
-            slow.append(f"  {k}: {ind[k]}  ({meta.get('cadence')}, last observed "
-                        f"{meta.get('last_observed')}, next expected "
-                        f"{meta.get('next_expected')} - DEADLINE MUST BE ON OR AFTER "
-                        f"THAT DATE)")
+            nxt = meta.get("next_expected")
+            when = (f"next expected {nxt} - DEADLINE MUST BE ON OR AFTER THAT DATE"
+                    if nxt else
+                    "OVERDUE, next publication date unknown - ANY deadline is refused")
+            slow.append(f"  {k}: {ind[k]}{_what(k)}  ({meta.get('cadence')}, "
+                        f"last observed {meta.get('last_observed')}, {when})")
         else:
-            unknown.append(f"  {k}: {ind[k]}  (cadence UNDECLARED - any deadline "
-                           f"will be refused)")
+            unknown.append(f"  {k}: {ind[k]}{_what(k)}  (cadence UNDECLARED - any "
+                           f"deadline will be refused)")
 
     out = ["GRADEABLE INDICATORS. INDICATOR must be one of these axes, or "
-           "AXIS__metric where the metric is measured under that axis."]
+           "AXIS__metric where the metric is measured under that axis.",
+           "EXPECTED_DELTA MUST BE IN THE UNITS SHOWN, and signed in real terms: "
+           "GOOD_DIRECTION says which way counts as improvement, so on a "
+           "'down' indicator an improvement is a NEGATIVE delta."]
     if fast:
         out += [f"DAILY-TIER - a new observation arrives constantly, so a DEADLINE up to "
                 f"{DAILY_TIER_HORIZON_DAYS} days out is fine:"] + fast

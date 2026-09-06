@@ -110,3 +110,62 @@ def test_an_empty_history_reports_zero_not_a_default_range(tmp_path):
     r = ah.daily_range("NOTHING", path=tmp_path / "missing.jsonl")
     assert r["n"] == 0 and r["range"] is None, (
         "an absent history must be a named unknown, never a default range")
+
+
+# ── 3c: unit, meaning and GOOD_DIRECTION in the prompt (6 Sep 2026) ──────────
+# A generator told "WATER_REVIEW: 73.6686" and nothing else wrote "+1.2" without
+# knowing the number is a percentage of the world's population, and wrote "+2.0"
+# on HUMAN_WELL_BEING_REVIEW without knowing that indicator counts DEATHS - so a
+# positive delta there proposes more of them.
+
+def test_meta_reads_unit_meaning_and_direction():
+    m = ah.meta_for("HUMAN_WELL_BEING_REVIEW")
+    assert m["unit"] == "deaths per 1000 live births"
+    assert m["meaning"] == "child mortality per 1000"
+    assert m["good_direction"] == "down"
+
+
+def test_higher_better_reads_as_up():
+    assert ah.meta_for("WATER_REVIEW")["good_direction"] == "up"
+
+
+def test_the_meaning_is_five_words_or_fewer():
+    from core.gate_contract import gradeable_indicators
+    ents = ah._target_entries()
+    for k in gradeable_indicators():
+        words = ah.meta_for(k, ents)["meaning"].split()
+        assert len(words) <= 5, (k, words)
+
+
+def test_an_undeclared_direction_is_named_never_guessed():
+    """Guessing 'up' would tell a generator that more infant deaths is an
+    improvement."""
+    m = ah.meta_for("AN_AXIS_NOBODY_DECLARED", {})
+    assert m["good_direction"] == ah.UNDECLARED_DIRECTION
+    assert m["unit"] == ah.UNDECLARED
+    assert ah.undeclared_directions(["AN_AXIS_NOBODY_DECLARED"], {}) == \
+        ["AN_AXIS_NOBODY_DECLARED"]
+
+
+def test_the_prompt_line_carries_unit_and_direction():
+    """The assertion Emil named."""
+    from core.gate_contract import indicator_block
+    line = next(l for l in indicator_block().splitlines()
+                if "HUMAN_WELL_BEING_REVIEW" in l)
+    assert "deaths per 1000 live births" in line, line
+    assert "GOOD_DIRECTION: down" in line, line
+
+
+def test_every_prompt_line_carries_a_unit_and_a_direction():
+    from core.gate_contract import gradeable_indicators, indicator_block
+    block = indicator_block()
+    for k in gradeable_indicators():
+        line = next(l for l in block.splitlines() if l.strip().startswith(k + ":"))
+        assert "unit:" in line and "GOOD_DIRECTION:" in line, line
+
+
+def test_the_prompt_says_the_delta_must_be_in_those_units():
+    from core.gate_contract import indicator_block
+    block = indicator_block()
+    assert "EXPECTED_DELTA MUST BE IN THE UNITS SHOWN" in block
+    assert "NEGATIVE delta" in block, "the sign convention must be stated"

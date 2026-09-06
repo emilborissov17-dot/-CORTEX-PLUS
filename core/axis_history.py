@@ -152,3 +152,58 @@ def daily_range(indicator: str, days: int = 30, path: pathlib.Path | None = None
     vals = [v for vs in by_day.values() for v in vs]
     lo, hi = min(vals), max(vals)
     return {"n": len(by_day), "min": lo, "max": hi, "range": hi - lo, "days": days}
+
+
+# ── UNIT, MEANING, DIRECTION (3c, 6 Sep 2026) ───────────────────────────────
+# A generator told "WATER_REVIEW: 73.6686" and nothing else wrote "+1.2" without
+# knowing the number is a PERCENTAGE OF THE WORLD'S POPULATION, and wrote "+2.0"
+# on HUMAN_WELL_BEING_REVIEW without knowing that indicator counts DEATHS, so a
+# positive delta proposes killing more infants. The unit, a short meaning and the
+# direction of "good" are all declared in target_config.json and were simply
+# never shown.
+UNDECLARED_DIRECTION = "DIRECTION_UNDECLARED"
+
+_DIRECTION_WORD = {"higher_better": "up", "lower_better": "down"}
+
+
+def _target_entries(path: pathlib.Path | None = None) -> dict:
+    """axis -> its target_config entry. Axes nest under subgoals, so the tree is
+    walked and any dict carrying a "unit" is taken at the key it sits under."""
+    p = path or TARGET_CONFIG
+    try:
+        blob = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:                                            # noqa: BLE001
+        return {}
+    out: dict = {}
+
+    def walk(node, key=None):
+        if isinstance(node, dict):
+            if "unit" in node and key:
+                out[key] = node
+            for k, v in node.items():
+                walk(v, k)
+    walk(blob)
+    return out
+
+
+def meta_for(indicator: str, entries: dict | None = None) -> dict:
+    """{"unit", "meaning", "good_direction"} — each declared or named as absent.
+
+    NOTHING IS INFERRED. An axis with no declared direction gets
+    DIRECTION_UNDECLARED and is listed in the report; guessing "up" would tell a
+    generator that more infant deaths is an improvement.
+    """
+    e = (entries if entries is not None else _target_entries()).get(indicator) or {}
+    raw = str(e.get("direction") or "")
+    meaning = str(e.get("primary_metric") or "").replace("_", " ").strip()
+    return {
+        "unit": str(e.get("unit") or "") or UNDECLARED,
+        "meaning": " ".join(meaning.split()[:5]) if meaning else "",
+        "good_direction": _DIRECTION_WORD.get(raw, UNDECLARED_DIRECTION),
+    }
+
+
+def undeclared_directions(indicators, entries: dict | None = None) -> list:
+    ents = entries if entries is not None else _target_entries()
+    return sorted(k for k in indicators
+                  if meta_for(k, ents)["good_direction"] == UNDECLARED_DIRECTION)
