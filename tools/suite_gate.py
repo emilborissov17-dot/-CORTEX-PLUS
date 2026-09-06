@@ -299,6 +299,25 @@ def run(pytest_args=None, write_record: bool = True,
                       for l in (proc.stdout or "").splitlines())
     outcome = v["outcome"]
     reasons = list(v["reasons"])
+
+    # ── A RUN THAT DID NOT FINISH IS NOT A CLEAN RUN (6 Sep 2026) ───────────
+    # MEASURED an hour after the collection fix, by killing a run mid-flight:
+    #
+    #   {"outcome": "VALID", "returncode": 1, "summary": "", "failed": []}
+    #
+    # A terminated suite recorded as VALID with zero failures. That is worse than
+    # the collection case, because VALID is an AFFIRMATIVE claim - a reader
+    # counting reds sees a clean suite where nothing was measured at all.
+    #
+    # pytest always prints a "N passed / N failed" line when it completes. No
+    # summary means it did not, whatever the return code says.
+    if not summary:
+        outcome = "INCOMPLETE"
+        reasons.append(
+            f"INCOMPLETE: pytest printed no summary line (returncode "
+            f"{proc.returncode}), so the run did not finish. failed=[] here "
+            f"means NOTHING WAS MEASURED, not that nothing failed.")
+
     if collect_errors or interrupted:
         outcome = "COLLECTION_FAILED"
         reasons.append(
@@ -439,6 +458,13 @@ if __name__ == "__main__":
     passthrough = [a for a in argv if a != "--no-record"]
     result = run(pytest_args=passthrough, write_record="--no-record" not in argv)
     print(result.get("_stdout", ""))
+    if result["outcome"] == "INCOMPLETE":
+        print("\n" + "=" * 70)
+        for r in result["reasons"]:
+            if r.startswith("INCOMPLETE"):
+                print(r)
+        print("=" * 70)
+        sys.exit(2)
     if result["outcome"] == "COLLECTION_FAILED":
         # Loud and separate: never a red count, never a green one either.
         print("\n" + "=" * 70)
