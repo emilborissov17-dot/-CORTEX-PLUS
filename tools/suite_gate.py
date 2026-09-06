@@ -283,10 +283,35 @@ def run(pytest_args=None, write_record: bool = True,
     failed = sorted(l.split(" ")[1] for l in (proc.stdout or "").splitlines()
                     if l.startswith("FAILED ") and len(l.split(" ")) > 1)
 
-    entry = {"ts": _now(), "outcome": v["outcome"], "reasons": v["reasons"],
+    # ── A COLLECTION ERROR IS NOT A RED COUNT (6 Sep 2026) ──────────────────
+    # Broker-bot, a separate project vendored into the tree, appeared at 11:57
+    # and pytest walked into it: `import ccxt` failed, collection aborted with 3
+    # errors, and NOT ONE TEST RAN. The gate had no opinion at all - yet the run
+    # would otherwise have been recorded as a normal entry with failed=[] and a
+    # returncode, which reads as "zero failures" to anything counting reds.
+    #
+    # A failure is a measurement. A collection error is the absence of one, and
+    # it gets its own outcome so it can never be mistaken for a clean suite.
+    collect_errors = sorted(
+        l.split(" ")[1] for l in (proc.stdout or "").splitlines()
+        if l.startswith("ERROR ") and len(l.split(" ")) > 1)
+    interrupted = any("during collection" in l
+                      for l in (proc.stdout or "").splitlines())
+    outcome = v["outcome"]
+    reasons = list(v["reasons"])
+    if collect_errors or interrupted:
+        outcome = "COLLECTION_FAILED"
+        reasons.append(
+            f"COLLECTION FAILED: {len(collect_errors)} file(s) could not be "
+            f"imported, so the suite never ran: "
+            + ", ".join(collect_errors[:6])
+            + (" ..." if len(collect_errors) > 6 else ""))
+
+    entry = {"ts": _now(), "outcome": outcome, "reasons": reasons,
              "before": before, "after": after,
              "returncode": proc.returncode, "summary": summary,
-             "failed": failed, "command": cmd}
+             "failed": failed, "collection_errors": collect_errors,
+             "command": cmd}
     record(entry, write=write_record, path=runs_path)
     entry["_stdout"] = proc.stdout
     return entry
@@ -414,6 +439,16 @@ if __name__ == "__main__":
     passthrough = [a for a in argv if a != "--no-record"]
     result = run(pytest_args=passthrough, write_record="--no-record" not in argv)
     print(result.get("_stdout", ""))
+    if result["outcome"] == "COLLECTION_FAILED":
+        # Loud and separate: never a red count, never a green one either.
+        print("\n" + "=" * 70)
+        for r in result["reasons"]:
+            if r.startswith("COLLECTION FAILED"):
+                print(r)
+        print("The suite did not run. Fix the import or exclude the directory "
+              "in pytest.ini's norecursedirs; do NOT read this as 0 failures.")
+        print("=" * 70)
+        sys.exit(2)
     print(format_verdict({"outcome": result["outcome"],
                           "reasons": result["reasons"],
                           "before": result["before"],
