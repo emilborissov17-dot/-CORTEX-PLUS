@@ -112,7 +112,17 @@ def batch_nll(model, tok, prompt: str, candidates: list, device: str) -> list:
     any batch size above 1 is used."""
     input_ids, attn, labels = _pad_batch(tok, prompt, candidates, device)
     with torch.no_grad():
-        out = model(input_ids=input_ids, attention_mask=attn)
+        # use_cache=False IS NOT AN OPTIMISATION - it removes the allocation that
+        # killed A3 three times. Scoring never reads a KV cache: one forward, take
+        # the logits, done. But the model builds one anyway, and death 3 raised
+        # inside it - torch.cat in DynamicCache.update, growing keys for every
+        # layer of a 3B model on a 4 GB card. The memory line added after death 2
+        # is what settled it: `allocated` sat at exactly 1992 MiB from item 25 to
+        # item 200 while `reserved` swung 2732-3482, so nothing was leaking and the
+        # pressure was transient. The cache is the transient. Dropping it cannot
+        # change a logit, so every number stays bit-identical.
+        out = model(input_ids=input_ids, attention_mask=attn,
+                    use_cache=False)
     return _per_sequence_nll(out.logits, labels)
 
 
@@ -163,10 +173,17 @@ def build_items(rows: list, pool: list, token_len, band=None, k: int = K_DISTRAC
             unscorable.append((i, "too_long"))
             continue
         eid = example_id(prompt, target)
+        # The stratum is REQUIRED, not optional: a record whose kind is missing
+        # cannot be drawn against its own kind, and guessing one would reinstate
+        # the mixed pool under another name.
+        kind = r.get("record_kind")
+        if not kind or not str(kind).strip():
+            unscorable.append((i, "no_record_kind"))
+            continue
         cands, widened = draw_distractors(eid, target, int(token_len(target)),
-                                          pool, k=k, band=band)
+                                          pool, k=k, band=band, stratum=kind)
         if cands is None:
-            unscorable.append((i, "pool_too_small"))
+            unscorable.append((i, "stratum_too_small_for_k"))
             continue
         items.append({"i": i, "eid": eid, "prompt": str(prompt), "target": str(target),
                       "candidates": cands, "widened": widened,

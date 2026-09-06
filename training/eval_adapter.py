@@ -108,7 +108,9 @@ def example_nll(model, tok, prompt: str, target: str, device: str) -> float:
     labels = ids.clone()
     labels[0, : len(p_ids)] = -100
     with torch.no_grad():
-        out = model(input_ids=ids, labels=labels)
+        # see the note in rank_runner.batch_nll: the cache is never read and it
+        # is what raised in A3's third death.
+        out = model(input_ids=ids, labels=labels, use_cache=False)
     return float(out.loss)
 
 
