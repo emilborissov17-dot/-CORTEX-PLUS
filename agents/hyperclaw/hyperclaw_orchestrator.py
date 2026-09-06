@@ -114,15 +114,29 @@ def parse_plan(plan_text: str, plan_name: str, ts: str) -> list:
     import re as _re
     _bold_re      = _re.compile(r'\*{1,2}([^*]+)\*{1,2}')
     _obj_re       = _re.compile(r'^\*{0,2}OBJECTIVE\*{0,2}\s*:', _re.IGNORECASE)
-    _step_num_re  = _re.compile(r'^\d+\.\s+(.+)')
-    _step_dash_re = _re.compile(r'^-\s+STEP\s+\d+\s*[:.~]?\s*(.+)', _re.IGNORECASE)
+    _step_num_re  = _re.compile(r'^(\d+)\.\s+(.+)')
+    # MEASURED 6 Sep 2026: the model writes "- **STEP 1:** ...". The old pattern
+    # required the literal STEP straight after "- ", died at the bold marker, and
+    # matched NOTHING - all 8 steps of plan-2026-09-06.md vanished without a
+    # trace, while their triples leaked onto the section's OBJECTIVE. A step that
+    # is refused is recorded by name; a step that never matched is not recorded
+    # anywhere, which is why this is the worse failure.
+    _step_dash_re = _re.compile(
+        r'^[-*]?\s*\*{0,2}STEP\s*(\d+)\s*\*{0,2}\s*[:.~-]?\s*\*{0,2}\s*(.+)',
+        _re.IGNORECASE)
     _key_re       = _re.compile(r'^[-*\s]*\*{0,2}(INDICATOR|EXPECTED_DELTA|DEADLINE)\*{0,2}\s*:\s*(.+?)\s*$',
                                 _re.IGNORECASE)
 
     def _clean(text: str) -> str:
-        return _bold_re.sub(r'\1', text).strip()
+        # _bold_re needs asterisks on BOTH sides. "**OBJECTIVE:** text" loses
+        # "**OBJECTIVE:" to _obj_re.sub and keeps a LEADING "**" that matches
+        # nothing, so every solution in the 6 Sep plan began with "** ". Strip
+        # what is left after the paired substitution.
+        out = _bold_re.sub(r'\1', text).strip()
+        return out.strip('*').strip()
 
     proposals: list = []
+    seen_steps: dict = {}
     current_axis = None
     current = None
     for raw in plan_text.splitlines():
@@ -134,7 +148,11 @@ def parse_plan(plan_text: str, plan_name: str, ts: str) -> list:
         if not current_axis:
             continue
         km = _key_re.match(line)
-        if km and current is not None:
+        # A triple belongs to the STEP above it. Before 6 Sep no STEP ever
+        # matched, so every triple in a section wrote into that section's
+        # OBJECTIVE - step 1 setting it and step 2 overwriting it. An objective
+        # is not a step and must not wear numbers it never had.
+        if km and current is not None and current.get("step_index") is not None:
             key, val = km.group(1).upper(), _clean(km.group(2))
             if key == "INDICATOR":
                 current["indicator"] = val
@@ -161,10 +179,15 @@ def parse_plan(plan_text: str, plan_name: str, ts: str) -> list:
                 }
                 proposals.append(current)
             continue
-        m = _step_num_re.match(line) or _step_dash_re.match(line)
+        m = _step_dash_re.match(line) or _step_num_re.match(line)
         if m:
-            step = _clean(m.group(1))
+            step_no, step = m.group(1), _clean(m.group(2))
             if step and "<" not in step and len(step) > 10:
+                seen_steps[current_axis] = seen_steps.get(current_axis, 0) + 1
+                try:
+                    idx = int(step_no)
+                except (TypeError, ValueError):
+                    idx = seen_steps[current_axis]
                 current = {
                     "component":         current_axis,
                     "problem":           f"Action required for {current_axis}",
@@ -174,6 +197,11 @@ def parse_plan(plan_text: str, plan_name: str, ts: str) -> list:
                     "real_world_signal": True,
                     "generated_by":      "HYPERCLAW",
                     "timestamp":         ts,
+                    # PROVENANCE. Two steps of one axis are indistinguishable in
+                    # the ledger without it.
+                    "axis":              current_axis,
+                    "step_index":        idx,
+                    "plan":              plan_name,
                 }
                 proposals.append(current)
     return proposals
