@@ -252,3 +252,90 @@ Not a tuning knob — a different budget. The loop needs either many optimiser s
 round rather than one, or a batch in which the rewarded out-of-range samples are not
 0.2% of the rows. Both are changes to the specification rather than to a setting, so
 neither was made here: the brief said one step, and one step is what ran.
+
+---
+
+# TRACEABILITY
+
+## Run metadata
+
+| | |
+|---|---|
+| **command** | `PYTHONIOENCODING=utf-8 CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=1 venv_train/Scripts/python.exe -u tools/pc4_partd.py --rounds 20 --k 32 --pretrain-steps 8000 --lr 3e-4 --out claude/reports/PC4_PARTD.json` |
+| **script sha256 at run time** | `68792d62c242c23fa9f3fb0987067216783a0c9891149567e8354314e2be4cda` (18,608 bytes) |
+| **venv** | `venv_train` — `C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\venv_train\Scripts\python.exe` |
+| **python / torch** | 3.12.10 / 2.7.1+cu118 |
+| **threads** | **1**, pinned in code (`torch.set_num_threads(1)`), not by the environment. The machine default is 8. |
+| **device** | CPU. `CUDA_VISIBLE_DEVICES=""`; the GPU was busy with A3 throughout and was not touched. |
+| **started / ended** | 2026-09-06 19:02:45 → 19:08:40 +0300 (5 min 55 s) |
+| **start model** | **A fresh 8,000-step pretrain, NOT a checkpoint file.** No A2 checkpoint exists on disk — A2 never saved one. The warm start is trained in-process on in-range results 0..10 and selected on held-out in-range accuracy: **step 2250, in-range 0.8333**. |
+| **seed** | 20260906 |
+
+## Guard tests — zero skips
+
+```
+$ PYTHONIOENCODING=utf-8 CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=1 \
+  venv_train/Scripts/python.exe -m pytest test/test_pc4_partd.py -q --no-header -rs
+...............                                                          [100%]
+15 passed in 4.18s
+```
+
+**15 passed, 0 skipped, 0 failed.** (Under the plain `venv`, which has no torch, two
+of them skip on `importorskip`. The line above is `venv_train`, where nothing skips.)
+
+## The raw dump, and the rerun that produced it
+
+**The original run did not dump samples.** The dump was added afterwards and the run
+was repeated under the identical command, seed and thread count. That makes the script
+hash differ between the run that produced the reported numbers and the run that
+produced the evidence file, so both are recorded:
+
+```
+68792d62c242c23fa9f3fb0987067216783a0c9891149567e8354314e2be4cda   as reported
+8d2241e14c7b2597b88f5b35226afb25dd98e3690c5066b7b9c40d0545813dff   with --dump-samples
+```
+
+The dump is write-only bookkeeping: it appends a dict per sampled completion and never
+reads back, never branches and never touches the torch `Generator`. That is a claim,
+so it was checked rather than asserted.
+
+### Reproduction check — every per-round number, both arms
+
+Compared field by field: `exploration_rate`, `p_correct_10p2`, `p_correct_any_oor`,
+`in_range_heldout`, `leak_p_ge_11_marks_in_range`, `n_rewarded`, plus `first_correct_12`,
+`stop_reason` and the whole `leak_series`, across all 21 rounds of both arms.
+
+```
+warm start identical: True   {'selected_step': 2250, 'in_range_at_selection': 0.8333}
+DIVERGENCES: 0
+  none - every per-round number reproduces exactly
+```
+
+**No divergence to report.** The numbers in the results section above are the numbers
+the dumped run produced.
+
+## `claude/reports/PC4_PARTD_samples.jsonl`
+
+91,392 records — one per sampled completion — with the fields asked for
+(`arm, round, prompt, a, b, completion, verifier_correct, reward`) plus `n_marks`.
+
+```
+records: 91392        by arm: {'main': 47040, 'control': 44352}
+rewards present: [0.0, 1.0, 1.5]
+main out-of-range samples: 2688   correct: 50
+```
+
+The 50 correct out-of-range samples in the file are the same 50 counted in the results
+section, and the first of them is now visible directly rather than inferred:
+
+```
+round 0   prompt 7+5   12 marks   verifier_correct true   reward 1.5
+```
+
+That confirms by evidence what the results section deduced from `P(10+2) = 0` at round
+0: the round-0 correct twelve came from **7+5**.
+
+**The file is 16 MB**, because "every sampled completion, every round, both arms" is
+91,392 of them and the in-range prompts are 88,704 of that. It is committed as asked;
+flagging the size because it is permanent weight in every future clone, and the
+out-of-range evidence — the part anyone will actually read — is 2,688 records of it.

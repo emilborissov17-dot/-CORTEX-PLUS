@@ -251,7 +251,13 @@ def pretrain(vocab, train, held_in, stoi, itos, V, maxlen, steps, seed, lr=3e-3,
 
 
 def run_loop(model, vocab, train, held_in, stoi, itos, V, rounds, k, seed,
-             include_out_of_range: bool, lr=1e-3, label="main"):
+             include_out_of_range: bool, lr=1e-3, label="main", dump=None):
+    """`dump`, if given, is a list that receives ONE record per sampled
+    completion. It is write-only bookkeeping: it never reads back, never
+    branches, and never touches the torch Generator, so the run it records is
+    the run that would have happened without it. That claim is not left as an
+    assertion - the dump run is reproduced against the undumped one and the
+    per-round numbers are compared."""
     import torch
     mark = vocab["mark"]
     in_prompts = [(a, b) for a in range(TRAIN_MAX + 1) for b in range(TRAIN_MAX + 1)
@@ -299,6 +305,11 @@ def run_loop(model, vocab, train, held_in, stoi, itos, V, rounds, k, seed,
                     if len(c) >= TRAIN_MAX + 1:
                         long_in_range += 1
                 w = reward_for(ok, a, b)
+                if dump is not None:
+                    dump.append({"arm": label, "round": r, "prompt": f"{a}+{b}",
+                                 "a": a, "b": b, "completion": list(c),
+                                 "n_marks": len(c),
+                                 "verifier_correct": bool(ok), "reward": w})
                 if w > 0:
                     rewarded_rows.append((enc_prompt(a, b), c))
                     weights.append(w)
@@ -355,6 +366,8 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=3e-4,
                     help="SFT step size, calibrated on the control's in-range stability")
     ap.add_argument("--out", default="claude/reports/PC4_PARTD.json")
+    ap.add_argument("--dump-samples", default=None,
+                    help="JSONL path for every sampled completion")
     a = ap.parse_args()
 
     pin_threads()
@@ -382,12 +395,18 @@ def main() -> int:
     print(f"warm start selected at step {sel['selected_step']}, "
           f"in-range {sel['in_range_at_selection']}")
 
+    dump = [] if a.dump_samples else None
     main_run = run_loop(copy.deepcopy(model), vocab, train, held_in, stoi, itos, V,
                         a.rounds, a.k, a.seed, include_out_of_range=True,
-                        lr=a.lr, label="main")
+                        lr=a.lr, label="main", dump=dump)
     ctrl_run = run_loop(copy.deepcopy(model), vocab, train, held_in, stoi, itos, V,
                         a.rounds, a.k, a.seed, include_out_of_range=False,
-                        lr=a.lr, label="control")
+                        lr=a.lr, label="control", dump=dump)
+    if a.dump_samples:
+        with open(a.dump_samples, "w", encoding="utf-8") as fh:
+            for rec in dump:
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        print(f"-> {a.dump_samples}  ({len(dump)} sampled completions)")
 
     for run in (main_run, ctrl_run):
         print(f"\n--- {run['label']} ---  stop_reason={run['stop_reason']}  "
