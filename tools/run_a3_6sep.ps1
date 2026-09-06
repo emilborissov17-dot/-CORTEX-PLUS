@@ -78,7 +78,13 @@ if (Test-Path $controlItems) {
 # --- launch: train && eval, detached, python -u so the logs are live --------------------
 $train = "venv_train\Scripts\python.exe -u training/train_lora.py --train cortex_memory/training/train.jsonl --out models/adapters/k1b_A3 --report claude/reports/K1B_TRAIN_A3.md --epochs 3 --max-len 256 --rank 8 --alpha 16 --targets q_proj,k_proj,v_proj,o_proj --save-every 25 --resume"
 $eval  = "venv_train\Scripts\python.exe -u training/run_rank_eval.py --adapter models/adapters/k1b_A3 --knobs claude/reports/K1B_RANK_KNOBS.json --report claude/reports/K1B_A3_RANK.md$ctrlArg"
-$chain = "/c `"$ctrlEval$train && $eval`""
+# expandable_segments is an ALLOCATOR setting, not a recipe change: it alters how
+# PyTorch maps VRAM, never max-len, batch, K, the draw or the metric, so the numbers
+# stay bit-identical. It exists for exactly this failure - variable-length forwards
+# fragmenting a small card until no contiguous block is left. A3 died twice inside
+# the scoring loop, at items 100 and 125 of 223, with two different memory-class
+# CUDA errors and nothing retaining a tensor between items.
+$chain = "/c `"set PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && $ctrlEval$train && $eval`""
 Say "launching: cmd.exe $chain"
 
 # In-process call, NOT a second powershell.exe: passing $chain through a native command
@@ -96,6 +102,12 @@ if (-not (Get-Process -Id $launchedPid -ErrorAction SilentlyContinue)) {
     Say "LAUNCH FAILED: pid $launchedPid gone 8 s after start. See claude/reports/K1B_RUN_A3.err.log."
     exit 3
 }
+# The sampler is the thing that was missing when death 1 could not be explained.
+& (Join-Path $repo "tools\launch_detached.ps1") -Exe "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
+    -Arguments "-NoProfile -ExecutionPolicy Bypass -File `"$repo\tools\gpu_sampler.ps1`" -WatchPid $launchedPid" `
+    -Log "claude\reports\K1B_A3_SAMPLER.log" | Out-Null
+Say "gpu sampler watching pid $launchedPid -> claude/reports/K1B_A3_gpu.log"
+
 $pyCount = (Get-Process python -ErrorAction SilentlyContinue | Measure-Object).Count
 Say "A3 started: cmd.exe pid $launchedPid alive after 8 s; python.exe processes now: $pyCount."
 Say "Expected: ~1 h control re-score, ~6 h training (3 x the 1-epoch run), then ~1 h eval. Reports: K1B_CONTROL_RANK_V3.md, K1B_TRAIN_A3.md, K1B_A3_RANK.md."

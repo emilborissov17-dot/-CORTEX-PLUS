@@ -240,7 +240,28 @@ def main() -> int:
                 "hit": 1 if all(nlls[0] < d for d in nlls[1:]) else 0,
                 "true_nll": nlls[0], "how": how})
             if n % 25 == 0:
-                print(f"  {pass_name} {n}/{len(items)}  {time.time() - t0:.0f}s")
+                # A3 died TWICE inside this loop - item 100 of 223 with "CUDA error:
+                # out of memory" in attention, then item 125 with
+                # CUBLAS_STATUS_EXECUTION_FAILED in a 4-bit dequant matmul. Neither
+                # is torch.cuda.OutOfMemoryError: that subclass is raised only by
+                # PyTorch's own caching allocator, so the OOM fallback in
+                # candidate_nlls never saw either one. Nothing in this loop retains
+                # a CUDA tensor - every result is a Python float - so a leak is
+                # ruled out and ALLOCATOR FRAGMENTATION is what is left: variable
+                # sequence lengths, ~78 MB of logits per forward, 4 GB of card, and
+                # after a hundred-odd items no contiguous block is left to serve.
+                # empty_cache() returns the free blocks to the driver; the printed
+                # reserved/allocated pair is what a third death would be read from.
+                if device == "cuda":
+                    resv = torch.cuda.memory_reserved() / 1024**2
+                    alloc = torch.cuda.memory_allocated() / 1024**2
+                    torch.cuda.empty_cache()
+                    print(f"  {pass_name} {n}/{len(items)}  {time.time() - t0:.0f}s"
+                          f"  reserved {resv:.0f} MiB  allocated {alloc:.0f} MiB",
+                          flush=True)
+                else:
+                    print(f"  {pass_name} {n}/{len(items)}  {time.time() - t0:.0f}s",
+                          flush=True)
 
     # ── report ──────────────────────────────────────────────────────────────
     control_hits = {}
