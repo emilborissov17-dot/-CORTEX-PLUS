@@ -38,9 +38,19 @@ SLOW_TIER = ("monthly", "quarterly", "annual")
 # How far ahead the next observation is, once one is due.
 _STEP_DAYS = {"daily": 1, "weekly": 7, "monthly": 31, "quarterly": 92, "annual": 366}
 
-# A deadline this far out is allowed for a daily-tier indicator without asking
-# when the next observation lands, because one lands every day or week anyway.
-DAILY_TIER_HORIZON_DAYS = 30
+# THE HORIZON IS DERIVED FROM CADENCE (Emil, 6 Sep 2026). There is no global
+# maximum any more: a single 365-day cap collided with the cadence rule and made
+# 11 of 13 indicators unusable for arithmetic reasons rather than real ones. How
+# far ahead a prediction may reach is a property of how often the thing is
+# measured, so it is read off the cadence.
+HORIZON_DAYS = {"daily": 30, "weekly": 60, "monthly": 90, "quarterly": 180}
+
+# An annual series may be predicted from its next publication date up to this
+# much later - the window in which the figure actually lands.
+ANNUAL_GRACE_DAYS = 90
+
+# Kept as the daily-tier number for callers that ask for it by name.
+DAILY_TIER_HORIZON_DAYS = HORIZON_DAYS["daily"]
 
 
 class CadenceError(ValueError):
@@ -98,20 +108,20 @@ def next_expected(last: date | None, cadence: str, today: date | None = None) ->
     """When the next observation can be expected. None when the last one is
     unknown — a named unknown, never 'today'.
 
-    OVERDUE SERIES ROLL FORWARD (measured 6 Sep 2026). WATER_REVIEW was last
-    observed in 2024, so last + one year = 2026-01-01, which is already in the
-    past: the 2025 figure has NOT arrived and the snapshot still reads 2024. A
-    naive last+step would then say "next expected January", eight months ago,
-    and wave through a September deadline on a series that has not moved in two
-    years. When the due date has passed with no new value, the earliest an
-    observation can honestly be expected is one full period from TODAY.
+    AN OVERDUE SERIES RETURNS None (Emil, 6 Sep 2026). WATER_REVIEW was last
+    observed in 2024, so last + one year = 2026-01-01, already eight months past
+    with no new figure. The first version of this rolled forward to today + 366,
+    which was a DEFAULT STANDING IN FOR A MISSING VALUE: nobody knows when the
+    World Bank will publish, and inventing a date to compare against is the
+    defect this whole file exists to remove. The honest answer is None, and the
+    caller refuses by name until an observation actually arrives.
     """
     if last is None:
         return None
     today = today or date.today()
     nxt = last + timedelta(days=_STEP_DAYS[cadence])
     if nxt <= today:
-        nxt = today + timedelta(days=_STEP_DAYS[cadence])
+        return None                 # overdue: the next date is genuinely unknown
     return nxt
 
 
@@ -121,6 +131,10 @@ def is_overdue(last: date | None, cadence: str, today: date | None = None) -> bo
         return False
     today = today or date.today()
     return (last + timedelta(days=_STEP_DAYS[cadence])) <= today
+
+
+def _iso_or_none(d):
+    return d.isoformat() if d else None
 
 
 def for_indicator(name: str, snapshot: pathlib.Path | None = None,
@@ -145,8 +159,9 @@ def for_indicator(name: str, snapshot: pathlib.Path | None = None,
     today = today or date.today()
     return {"indicator": name, "cadence": cad, "tier": tier(cad),
             "last_observed": last.isoformat() if last else None,
-            "next_expected": (next_expected(last, cad, today).isoformat()
-                              if last else None),
+            # None for an OVERDUE series: the next publication date is genuinely
+            # unknown, and a value here would be a default standing in for it.
+            "next_expected": (_iso_or_none(next_expected(last, cad, today))),
             "overdue": is_overdue(last, cad, today),
             "source": d.get("source", ""), "note": d.get("note", "")}
 
@@ -174,28 +189,57 @@ def annotate(indicators: dict, snapshot: pathlib.Path | None = None,
 
 
 def deadline_refusal(indicator: str, deadline: date, snapshot: pathlib.Path | None = None,
-                     path: pathlib.Path | None = None) -> str | None:
+                     path: pathlib.Path | None = None, today: date | None = None) -> str | None:
     """The refusal string, or None when the deadline can be settled.
 
-    Daily-tier indicators pass on any deadline inside DAILY_TIER_HORIZON_DAYS,
-    because a new observation lands every day or week regardless.
+    Three ways a deadline fails, each named:
+      * the series is OVERDUE, so no publication date is known at all
+      * the deadline falls BEFORE the next observation, so nothing can settle it
+      * the deadline is beyond the HORIZON this cadence supports
     """
+    today = today or date.today()
     try:
-        info = for_indicator(indicator, snapshot, path)
+        info = for_indicator(indicator, snapshot, path, today)
     except CadenceError as e:
         return f"cadence: {e}"
-    if info["cadence"] in DAILY_TIER:
+    cad = info["cadence"]
+
+    if info["last_observed"] is None:
+        return (f"cadence: {indicator} is {cad} and its last observation date is "
+                f"unknown, so no deadline can be checked against it")
+
+    # DAILY-TIER is judged on the horizon alone. A new value arrives every day or
+    # week, so "before the next observation" cannot bite; whether the feed is a
+    # few days stale is a FRESHNESS question, handled by the portfolio's own
+    # freshness_days, not a settleability one.
+    if cad in DAILY_TIER:
+        cap = today + timedelta(days=HORIZON_DAYS[cad])
+        if deadline > cap:
+            return (f"horizon: {indicator} is {cad}, so a deadline may reach "
+                    f"{HORIZON_DAYS[cad]} days ({cap.isoformat()}); "
+                    f"{deadline.isoformat()} is further out")
         return None
-    nxt = info["next_expected"]
-    if nxt is None:
-        return (f"cadence: {indicator} is {info['cadence']} and its last observation "
-                f"date is unknown, so no deadline can be checked against it")
-    if deadline < date.fromisoformat(nxt):
-        overdue = " and already overdue" if info.get("overdue") else ""
-        return (f"cadence: {indicator} is {info['cadence']}, last observed "
-                f"{info['last_observed']}{overdue}, next expected {nxt}; deadline "
+
+    if info.get("overdue"):
+        return (f"overdue: {indicator} {cad}, last observed "
+                f"{info['last_observed']}, next publication date unknown")
+
+    nxt_s = info["next_expected"]
+    nxt = date.fromisoformat(nxt_s)
+    if deadline < nxt:
+        return (f"cadence: {indicator} is {cad}, last observed "
+                f"{info['last_observed']}, next expected {nxt_s}; deadline "
                 f"{deadline.isoformat()} is before any new observation")
+
+    if cad == "annual":
+        cap = nxt + timedelta(days=ANNUAL_GRACE_DAYS)
+    else:
+        cap = today + timedelta(days=HORIZON_DAYS[cad])
+    if deadline > cap:
+        return (f"horizon: {indicator} is {cad}, so a deadline may reach "
+                f"{cap.isoformat()}; {deadline.isoformat()} is further out")
     return None
+
 
 
 # ── the 81 source entries in composer_specs.json ────────────────────────────

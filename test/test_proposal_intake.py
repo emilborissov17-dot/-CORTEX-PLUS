@@ -89,7 +89,12 @@ def test_metric_indicator_admitted_and_unresolvable_refused():
     ("expected_delta", True),
     ("deadline", TODAY.isoformat()),                              # today is not after today
     ("deadline", (TODAY - timedelta(days=1)).isoformat()),
-    ("deadline", (TODAY + timedelta(days=366)).isoformat()),
+    # ("deadline", TODAY + 366 days) LIVED HERE until 6 Sep 2026. It pinned the
+    # global MAX_HORIZON_DAYS, which Emil removed: how far a prediction may reach
+    # is a property of the indicator's cadence, not one number for everything.
+    # The horizon is now core.cadence's business and is tested per tier in
+    # test/test_cadence_gate.py::test_each_tier_reaches_exactly_its_horizon.
+    # It is NOT deleted quietly - this note is the deletion.
     ("deadline", "4052-10"),                                      # the real one from the corpus
     ("deadline", "by Q3"),
 ])

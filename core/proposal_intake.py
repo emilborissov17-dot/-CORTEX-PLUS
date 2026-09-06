@@ -158,9 +158,11 @@ def judge(p: dict, today: date | None = None,
         if days <= 0:
             missing.append("deadline")
             why.append(f"deadline {dl_date} is not after today {today}")
-        elif days > MAX_HORIZON_DAYS:
-            missing.append("deadline")
-            why.append(f"deadline {dl_date} is {days} days out; max {MAX_HORIZON_DAYS}")
+        # NO GLOBAL MAXIMUM (Emil, 6 Sep 2026). A single 365-day cap collided
+        # with the cadence rule and locked out 11 of 13 indicators for arithmetic
+        # reasons rather than real ones. How far a prediction may reach is a
+        # property of how often the thing is measured, so core.cadence decides
+        # it per indicator, below.
         else:
             # ── CADENCE (6 Sep 2026, Kimi R35) ───────────────────────────────
             # A deadline only means something if an observation can land inside
