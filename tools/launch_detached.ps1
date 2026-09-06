@@ -66,6 +66,28 @@ $pidFile = [System.IO.Path]::ChangeExtension($logPath, ".pid")
 $p.Id | Out-File -FilePath $pidFile -Encoding ascii
 "pid  : $($p.Id)" | Out-File -FilePath $logPath -Append -Encoding utf8
 
+# ── THE WATCHDOG (6 Sep 2026) ────────────────────────────────────────────────
+# A3 died at 13:24 and nothing recorded it: the chain wrote to its own err.log and
+# stopped, night_events.jsonl said nothing, and the launcher log's last line still
+# read "A3 started". A detached job has no observer by construction, so it has to
+# report its own death. This is itself detached, so watching costs nothing and
+# cannot hold the launcher open.
+try {
+    $wd = Join-Path $repo "tools\detached_watchdog.ps1"
+    if (Test-Path $wd) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $wd,
+                            "-WatchPid", $p.Id, "-Log", $logPath) `
+            -WorkingDirectory $repo -WindowStyle Hidden | Out-Null
+        "watchdog: polling pid $($p.Id)" | Out-File -FilePath $logPath -Append -Encoding utf8
+    } else {
+        "watchdog: tools/detached_watchdog.ps1 NOT FOUND - this job will die unobserved" |
+            Out-File -FilePath $logPath -Append -Encoding utf8
+    }
+} catch {
+    "watchdog: failed to start: $_" | Out-File -FilePath $logPath -Append -Encoding utf8
+}
+
 Write-Output "DETACHED_PID=$($p.Id)"
 Write-Output "STDOUT=$($logPath.Replace('.log', '.out.log'))"
 Write-Output "STDERR=$errPath"
