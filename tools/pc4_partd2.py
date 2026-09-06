@@ -169,13 +169,24 @@ def run_loop2(model, vocab, train, held_in, stoi, itos, V, rounds, k, seed,
                         first_correct_12 = r
                 else:
                     n_in_range_samples += 1
-                    if len(c) >= TRAIN_MAX + 1:
+                    # THE RULE SAYS MARKS. It said marks in the
+                    # pre-registration and it counted tokens in the code
+                    # until 6 Sep. Both series are reported for the runs
+                    # already done; from here it counts what it says.
+                    if sum(1 for t in c if t == mark) >= TRAIN_MAX + 1:
                         long_in_range += 1
                 w = reward_for(ok, a, b)
                 if dump is not None:
                     dump.append({"arm": label, "round": r, "prompt": f"{a}+{b}",
                                  "a": a, "b": b, "completion": list(c),
-                                 "n_marks": len(c), "verifier_correct": bool(ok),
+                                 # n_tokens is the LENGTH; n_marks counts MARKS ONLY.
+                                 # They were one field called n_marks until an
+                                 # independent recount found it counting non-marks
+                                 # too, which made the pre-registered leakage rule
+                                 # "P(>= 11 MARKS)" run as P(length >= 11).
+                                 "n_tokens": len(c),
+                                 "n_marks": sum(1 for t in c if t == mark),
+                                 "verifier_correct": bool(ok),
                                  "reward": w})
                 if w > 0:
                     fresh_rows.append((enc(a, b), c))
