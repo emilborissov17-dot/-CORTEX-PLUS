@@ -105,3 +105,48 @@ next occurrence is actually observed, which is now possible.
 
 **If A3 dies again**, the event will name what the last log line was, and GPU
 sampling should be added to the chain before a third attempt.
+
+---
+
+## RULE FOR THIS RUN (Emil, 6 Sep ~16:10) — binding, recorded before it is needed
+
+1. **If step 1 (the control re-score) dies again, for any reason: do NOT relaunch the
+   chain.** Launch **training only** (`train_lora`, 3 epochs) immediately. The eval
+   runs afterwards **without `--items-out`**. The control re-score happens after
+   tomorrow's cycle.
+2. **If the training itself dies: stop for today** and write the reason. No third
+   arm, no further relaunch.
+3. **The runner-killing sampler must stop before 03:04** — the cycle's local 3B leg
+   needs ollama runners.
+
+### On (3): confirmed, and it needed more than the confirmation
+
+The sampler already exited with the job — twice on the record:
+
+```
+16:00:12  watched pid 426784 is gone - sampler stopping
+16:04:10  watched pid 14468 is gone - sampler stopping
+```
+
+But exiting with the job is **not sufficient**, and answering only the question asked
+would have left the hole. A3's ETA is ~00:05; a job that OVERRUNS would leave a
+runner-killer alive across 03:04 and take out the leg it was never aimed at. So the
+sampler now also stops on the clock, `-StopBefore 02:45`, whether or not the job is
+finished. Proven against a decoy that outlives the deadline:
+
+```
+# started 2026-09-06 16:12:28  interval 10s  watching pid 14596  HARD STOP 2026-09-06 16:13
+16:13:08  HARD STOP reached (16:13) - sampler exiting so the 03:04 cycle keeps its
+          ollama runners. The job, if still alive, is now UNGUARDED.
+sampler returned at 16:13:08     decoy still alive: True
+```
+
+It says UNGUARDED rather than going quiet, because after 02:45 an overrunning A3 is
+back in the situation that killed it four times, and that fact should be in the log
+the morning check reads. **Guarding a training run is worth less than the nightly
+cycle**, which is why the deadline wins.
+
+The sampler running now was started before this change, so it was replaced in place:
+old pid 21096 killed, new pid 32968 started at 16:13:37 watching the same pid 22772,
+header `HARD STOP 2026-09-07 02:45`. A3's cmd (22772) and worker (25020) were both
+verified alive across the swap.

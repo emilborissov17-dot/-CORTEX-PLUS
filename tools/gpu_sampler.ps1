@@ -12,14 +12,29 @@
 param(
     [string]$Out = "claude\reports\K1B_A3_gpu.log",
     [int]$IntervalSec = 20,
-    [int]$WatchPid = 0
+    [int]$WatchPid = 0,
+    # HARD STOP, and it is not optional. This sampler KILLS ollama runners, and the
+    # 03:04 cycle's local 3B leg needs them. Exiting with the job is not enough on
+    # its own: a job that overruns would leave a runner-killer alive across the
+    # cycle and take out the leg it was never aimed at. So the sampler stops at a
+    # wall-clock time whether or not the job is finished - guarding a training run
+    # is worth less than the nightly cycle.
+    [string]$StopBefore = "02:45"
 )
 $ErrorActionPreference = "Continue"
 Set-Location (Split-Path -Parent $PSScriptRoot)
-"# started {0:yyyy-MM-dd HH:mm:ss}  interval ${IntervalSec}s  watching pid $WatchPid" -f (Get-Date) |
+# the NEXT occurrence of $StopBefore, whichever side of midnight it falls
+$deadline = [datetime]::Today.Add([timespan]::Parse($StopBefore))
+if ($deadline -le (Get-Date)) { $deadline = $deadline.AddDays(1) }
+"# started {0:yyyy-MM-dd HH:mm:ss}  interval ${IntervalSec}s  watching pid $WatchPid  HARD STOP {1:yyyy-MM-dd HH:mm}" -f (Get-Date), $deadline |
     Out-File -FilePath $Out -Append -Encoding utf8
 
 while ($true) {
+    if ((Get-Date) -ge $deadline) {
+        "{0:HH:mm:ss}  HARD STOP reached ({1:HH:mm}) - sampler exiting so the 03:04 cycle keeps its ollama runners. The job, if still alive, is now UNGUARDED." -f (Get-Date), $deadline |
+            Out-File -FilePath $Out -Append -Encoding utf8
+        break
+    }
     if ($WatchPid -gt 0 -and -not (Get-Process -Id $WatchPid -ErrorAction SilentlyContinue)) {
         "{0:HH:mm:ss}  watched pid $WatchPid is gone - sampler stopping" -f (Get-Date) |
             Out-File -FilePath $Out -Append -Encoding utf8
