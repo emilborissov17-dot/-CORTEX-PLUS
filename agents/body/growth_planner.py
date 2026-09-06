@@ -114,7 +114,23 @@ def plan(body: dict) -> dict:
             "reason_if_unsafe": reason,
         })
 
+    # THE GATE CONTRACT (6 Sep 2026). growth_to_proposals walks these actions to
+    # proposal_intake, the same door hyperclaw goes through. Until today this
+    # prompt never said so: it was judged against a contract it had never been
+    # shown, and every proposal it produced was refused for a reason nobody had
+    # told it. Imported, never pasted, so it cannot drift from the gate.
+    try:
+        from core.gate_contract import contract_block as _contract
+        _gate = _contract()
+    except Exception as _e:                                      # noqa: BLE001
+        # Loud, not silent: a prompt without the contract produces a night of
+        # refusals that look like the model's fault.
+        print(f"[GROWTH] REFUSED to build a prompt without the gate contract: {_e}")
+        raise
+
     prompt = f"""You are the Growth Planner of CORTEX++ AGI.
+
+{_gate}
 
 CURRENT BODY STATE:
 - Health: {health}
@@ -138,7 +154,10 @@ Return ONLY this JSON:
 {{
   "body_assessment": "<1 sentence about current state>",
   "immediate_safe_actions": [
-    {{"id": "<option_id>", "action": "<exactly what to do>", "expected_gain": "<what improves>"}}
+    {{"id": "<option_id>", "action": "<exactly what to do>", "expected_gain": "<what improves>",
+     "INDICATOR": "<exact name from GRADEABLE INDICATORS above>",
+     "EXPECTED_DELTA": <signed bare number>,
+     "DEADLINE": "<YYYY-MM-DD>"}}
   ],
   "deferred_actions": [
     {{"id": "<option_id>", "condition": "<when it becomes safe>", "action": "<what to do then>"}}

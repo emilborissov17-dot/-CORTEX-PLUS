@@ -204,7 +204,19 @@ def synthesize(ctx):
         except Exception:
             gi_block = "(global indicators file exists but could not be loaded)"
 
+    # THE GATE CONTRACT (6 Sep 2026) - see agents/body/growth_planner.py for why.
+    # strategist_to_proposals walks immediate_actions and critical_gaps to
+    # proposal_intake; this prompt never named the contract they are judged by.
+    try:
+        from core.gate_contract import contract_block as _contract
+        _gate = _contract()
+    except Exception as _e:                                      # noqa: BLE001
+        print(f"[STRATEGIST] REFUSED to build a prompt without the gate contract: {_e}")
+        raise
+
     prompt = f"""You are CortexStrategist -- strategic intelligence of CORTEX++ AGI.
+
+{_gate}
 
 MISSION:
 {vision_text}
@@ -256,10 +268,14 @@ Return ONLY this JSON:
   "system_health": "POOR|FAIR|GOOD|EXCELLENT",
   "mission_alignment_pct": <0-100>,
   "critical_gaps": [
-    {{"gap": "<what is missing>", "impact": "HIGH|MEDIUM|LOW", "fix": "<concrete action>"}}
+    {{"gap": "<what is missing>", "impact": "HIGH|MEDIUM|LOW", "fix": "<concrete action>",
+     "INDICATOR": "<exact name from GRADEABLE INDICATORS above>",
+     "EXPECTED_DELTA": <signed bare number>, "DEADLINE": "<YYYY-MM-DD>"}}
   ],
   "immediate_actions": [
-    {{"action": "<what to do>", "file": "<which file>", "why": "<reason>"}}
+    {{"action": "<what to do>", "file": "<which file>", "why": "<reason>",
+     "INDICATOR": "<exact name from GRADEABLE INDICATORS above>",
+     "EXPECTED_DELTA": <signed bare number>, "DEADLINE": "<YYYY-MM-DD>"}}
   ],
   "missing_agents_to_build": [
     {{"name": "<AgentName>", "role": "<what it does>", "priority": "HIGH|MEDIUM"}}

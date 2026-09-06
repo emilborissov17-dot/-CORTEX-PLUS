@@ -1611,6 +1611,31 @@ def _inject_proposals(new_proposals: list, generated_by: str, label: str) -> Non
     print(_pi.summary_line(label, admitted, refused))
 
 
+def _triple_from(d: dict) -> dict:
+    """INDICATOR / EXPECTED_DELTA / DEADLINE off a generator's own JSON, if it
+    answered with them (6 Sep 2026).
+
+    NEVER INVENTS ONE. A generator that omits the triple must arrive at intake
+    without it and be refused by name; filling a blank here would be the parser
+    telling the gate what it wants to hear - the exact defect that put a step's
+    numbers on an objective in plan-2026-09-06.md.
+    """
+    out = {}
+    ind = str(d.get("INDICATOR") or d.get("indicator") or "").strip()
+    if ind:
+        out["indicator"] = ind
+    if d.get("EXPECTED_DELTA", d.get("expected_delta")) is not None:
+        raw = d.get("EXPECTED_DELTA", d.get("expected_delta"))
+        try:
+            out["expected_delta"] = float(str(raw).replace(",", ".").strip())
+        except (TypeError, ValueError):
+            out["expected_delta"] = raw     # intake names it as not a number
+    dl = str(d.get("DEADLINE") or d.get("deadline") or "").strip()
+    if dl:
+        out["deadline"] = dl[:10]
+    return out
+
+
 def _strategist_to_proposals():
     snap_path     = BASE / "snapshots" / "cortex_strategist" / "cortex_strategist_snapshot_latest.json"
     proposals_path = BASE / "memory" / "improvement_proposals.json"
@@ -1631,6 +1656,7 @@ def _strategist_to_proposals():
                 "real_world_signal": True,
                 "generated_by":    "CORTEX_STRATEGIST",
                 "timestamp":       _utc_now(),
+                **_triple_from(act),
             })
         for gap in data.get("critical_gaps", []):
             if gap.get("impact") == "HIGH":
@@ -1644,6 +1670,7 @@ def _strategist_to_proposals():
                     "real_world_signal": True,
                     "generated_by":    "CORTEX_STRATEGIST",
                     "timestamp":       _utc_now(),
+                    **_triple_from(gap),
                 })
         if not new_proposals:
             print("[FAST_CYCLE] strategist_to_proposals -> 0 HIGH proposals")
@@ -1682,6 +1709,7 @@ def _growth_to_proposals():
                 "real_world_signal": True,
                 "generated_by":      "GROWTH_PLANNER",
                 "timestamp":         _utc_now(),
+                **_triple_from(act),
             })
         if not new_proposals:
             print("[FAST_CYCLE] growth_to_proposals -> 0 measurable safe actions")
