@@ -1,0 +1,455 @@
+{
+ "_what_this_is": "Every path config/cycle_phases.json promises under 'produces', and the module that READS it. A file the cycle writes and nothing reads is a file the cycle does not need; naming the reader is how that stays visible.",
+ "_why_a_declaration_and_not_a_scan": "Four static classifiers were tried on 6 Sep and all four were wrong, each in a different direction - literal basenames gave 176 false unread, a parent-directory walk gave 0, a read/write window classifier gave 17 of which the whole snapshot family was false (they are read by rglob), and a glob-aware version gave 0 again because *.json matches everything. Reads happen through module constants, through globs, and through helpers far from the literal. The question is not decidable by grep in this repo, so it is DECLARED.",
+ "_status_values": "glob = a specific glob pattern in that module matches this file. named = the module names the path and does not write it. UNVERIFIED = seeded by the scan and NOT confirmed by a human; correct it when you next touch the file.",
+ "_the_rule": "Nothing new is written into the cycle without a named reader in the same commit. test/test_produces_has_a_reader.py fails if a produces path is missing here.",
+ "paths": {
+  "cortex_memory/archive/merkle_root.txt": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "merkle_memory.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "data/cortex_hypergraph.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "agents/cortex_strategist/cortex_strategist_agent.py",
+    "system_hypergraph.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/active_canon_frame.txt": {
+   "phases": [
+    "A_ORIENT"
+   ],
+   "readers": [
+    "core/brain.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/auto_levels.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "agents/core/cortex_core_agent.py",
+    "agents/core/goal_planner.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/axis_history.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "cockpit/server.py",
+    "core/constancy.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/axis_observations.jsonl": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/axis_history.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/belief_state.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/belief_revision.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/brain_cycle_plan.json": {
+   "phases": [
+    "A_ORIENT"
+   ],
+   "readers": [
+    "core/brain.py",
+    "core/reconsider.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/brain_stance.json": {
+   "phases": [
+    "A_ORIENT"
+   ],
+   "readers": [
+    "cockpit/datasources.py",
+    "cockpit/server.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/compass_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/composed_indicators.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "core/constancy.py",
+    "core/deduction.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/constancy_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/cortex_full_state.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "cortex_scanner.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/deductions_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/development_journal.json": {
+   "phases": [
+    "F_SELF"
+   ],
+   "readers": [
+    "agents/core/feedback_loop.py",
+    "agents/core/goal_planner.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/feedback_log.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "agents/core/feedback_loop.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/goal_score_history.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "agents/core/feedback_loop.py",
+    "agents/core/goal_planner.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/grounding_ledger.jsonl": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "cockpit/datasources.py",
+    "cockpit/server.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/hypothesis_intake_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/hypothesis_resolution_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/idea_resolutions.jsonl": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "tools/resolve_ideas.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/improvement_proposals.json": {
+   "phases": [
+    "E_PROPOSE",
+    "F_SELF"
+   ],
+   "readers": [
+    "_check_proposals.py",
+    "_clean_proposals.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/measurement_honesty_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/merkle_verify_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/orchestration_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/runtime_experiences.json": {
+   "phases": [
+    "E_PROPOSE"
+   ],
+   "readers": [
+    "memory/body_scan.py",
+    "memory/existence_model.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/self_experiments.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/self_experiment.py",
+    "scripts/micro_cycle.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/self_mirror_latest.json": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/self_mirror_log.jsonl": {
+   "phases": [
+    "G_LEARN"
+   ],
+   "readers": [
+    "core/self_mirror.py",
+    "scripts/micro_cycle.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "memory/trends_latest.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "memory/web_intelligence/latest.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "_diag.py",
+    "_refresh_three_axes.py"
+   ],
+   "status": "UNVERIFIED"
+  },
+  "news/news_latest.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "output/cortex_scores_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "output/facade_audit_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/body/body_snapshot_latest.json": {
+   "phases": [
+    "A_ORIENT",
+    "E_PROPOSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/body/growth_plan_latest.json": {
+   "phases": [
+    "E_PROPOSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/civilization/economy_work/economy_work_snapshot_latest.json": {
+   "phases": [
+    "C_SNAPSHOT"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/cortex_strategist/cortex_strategist_snapshot_latest.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/cosmos/goal_progress/goal_progress_snapshot_latest.json": {
+   "phases": [
+    "C_SNAPSHOT"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/human/cognition_learning/cognition_learning_snapshot_latest.json": {
+   "phases": [
+    "C_SNAPSHOT"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/master/dependency_check_latest.json": {
+   "phases": [
+    "A_ORIENT"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/master/global_indicators_latest.json": {
+   "phases": [
+    "B_SENSE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/master/goal_score_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/master/master_snapshot_latest.json": {
+   "phases": [
+    "D_SCORE"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/master/needs_reanalysis_latest.json": {
+   "phases": [
+    "A_ORIENT"
+   ],
+   "readers": [
+    "core/phase_evidence.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/planet/energy/energy_snapshot_latest.json": {
+   "phases": [
+    "C_SNAPSHOT"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  },
+  "snapshots/planet/planetary_potential/planetary_potential_snapshot_latest.json": {
+   "phases": [
+    "C_SNAPSHOT"
+   ],
+   "readers": [
+    "core/phase_evidence.py",
+    "fast_cycle_runner.py"
+   ],
+   "status": "glob"
+  }
+ }
+}
