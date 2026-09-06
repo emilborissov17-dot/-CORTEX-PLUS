@@ -61,7 +61,15 @@ def test_legacy_shape_is_refused_with_every_missing_field_named():
 
 def test_complete_proposal_is_admitted():
     v = pi.judge(GOOD, today=TODAY, resolver=_resolves, cadence_check=_any_cadence)
-    assert v == {"verdict": "ADMITTED", "missing": [], "why": None}
+    # scale_check joined the verdict on 6 Sep (3b): an admitted proposal now says
+    # whether its delta was checked against the indicator's own range, or was
+    # admitted with the scale still unknown. The three original fields are
+    # asserted individually rather than by exact dict equality, so a later
+    # honest addition does not read as a regression.
+    assert v["verdict"] == "ADMITTED"
+    assert v["missing"] == []
+    assert v["why"] is None
+    assert "scale_check" in v
 
 
 def test_metric_indicator_admitted_and_unresolvable_refused():

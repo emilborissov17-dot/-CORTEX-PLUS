@@ -72,6 +72,42 @@ def split_indicator(ind) -> tuple[str, str | None] | None:
     return ind, None
 
 
+# ── SCALE: is this a POSSIBLE number for this indicator? (3b, 6 Sep 2026) ────
+# A delta that parses is not yet a delta that could happen. WATER_REVIEW +1.2 is
+# 1.2 PERCENT OF THE WORLD'S POPULATION gaining safe water; on its own series
+# that is either routine or absurd, and until 6 Sep nothing in the system could
+# say which, because no history of the indicator existed.
+#
+# THE SCALE IS A NAMED UNKNOWN, NEVER A DEFAULT. With too few observations the
+# proposal is ADMITTED and carries the mark "unverified: N observations, need 7"
+# into its own record and the summary line. Inventing a plausible range to judge
+# against would be the gate telling itself what it wants to hear - and the
+# history only started tonight, so for the first week every proposal is
+# unverified and must say so rather than look checked.
+MIN_SCALE_OBS = 7
+SCALE_MULTIPLE = 2.0
+
+
+def _default_scale_check(indicator: str, delta) -> tuple:
+    """(refusal_or_None, mark_or_None) for one proposal's delta."""
+    try:
+        from core.axis_history import daily_range
+        r = daily_range(indicator)
+    except Exception as e:                                       # noqa: BLE001
+        return (f"scale: check unavailable ({type(e).__name__}: {e})", None)
+    n = r.get("n") or 0
+    if n < MIN_SCALE_OBS:
+        return (None, f"unverified: {n} observations, need {MIN_SCALE_OBS}")
+    rng = r.get("range")
+    if rng == 0:
+        return (f"no_scale: {indicator} flat over {n} days "
+                f"(every observation {r.get('min')})", None)
+    if abs(float(delta)) > SCALE_MULTIPLE * rng:
+        return (f"scale: delta {delta} exceeds {SCALE_MULTIPLE:g}x the {n}-day "
+                f"range {rng:.6g} ({r.get('min'):.6g}..{r.get('max'):.6g})", None)
+    return (None, f"verified against {n} observations, range {rng:.6g}")
+
+
 def _default_cadence_check(indicator: str, deadline: date):
     """The real cadence gate. Injectable for the same reason `resolver` is: a
     test that exercises field validation on a synthetic axis is not making a
@@ -82,7 +118,8 @@ def _default_cadence_check(indicator: str, deadline: date):
 
 def judge(p: dict, today: date | None = None,
           resolver: Callable = _default_resolver,
-          cadence_check: Callable = _default_cadence_check) -> dict:
+          cadence_check: Callable = _default_cadence_check,
+          scale_check: Callable = _default_scale_check) -> dict:
     """{"verdict": "ADMITTED"} or {"verdict": "REFUSED", "missing": [...], "why": ...}.
     Never raises. Every missing piece is named, not just the first."""
     today = today or date.today()
@@ -149,14 +186,30 @@ def judge(p: dict, today: date | None = None,
         missing.append("deadline")
         why.append("deadline must be an ISO date (got %r)" % (dl,))
 
+    # SCALE, last: it needs a resolved indicator AND a numeric delta, and it
+    # must not add noise to a proposal already refused for either.
+    scale_mark = None
+    if "indicator" not in missing and "expected_delta" not in missing:
+        try:
+            _sref, scale_mark = scale_check(
+                str(p.get("indicator") or "").split("__")[0], d)
+        except Exception as _e:                                  # noqa: BLE001
+            _sref, scale_mark = (f"scale: check unavailable "
+                                 f"({type(_e).__name__}: {_e})", None)
+        if _sref:
+            missing.append("expected_delta")
+            why.append(_sref)
+
     if missing:
         return {"verdict": "REFUSED", "missing": missing, "why": "; ".join(why)}
-    return {"verdict": "ADMITTED", "missing": [], "why": None}
+    return {"verdict": "ADMITTED", "missing": [], "why": None,
+            "scale_check": scale_mark}
 
 
 def admit(proposals: list, source: str, today: date | None = None,
           resolver: Callable = _default_resolver,
           cadence_check: Callable = _default_cadence_check,
+          scale_check: Callable = _default_scale_check,
           refusals_path: Path | None = None, write: bool = True) -> tuple[list, list]:
     """Split proposals into (admitted, refused). Refused ones are appended to the
     refusal log, one JSON line each, with the source injector named."""
@@ -164,8 +217,13 @@ def admit(proposals: list, source: str, today: date | None = None,
     ts = _now()
     for p in proposals or []:
         v = judge(p, today=today, resolver=resolver,
-                  cadence_check=cadence_check)
+                  cadence_check=cadence_check, scale_check=scale_check)
         if v["verdict"] == "ADMITTED":
+            # The mark travels WITH the proposal: a reader of
+            # improvement_proposals.json must be able to see that a delta was
+            # admitted without its scale ever being checked.
+            if isinstance(p, dict) and v.get("scale_check"):
+                p["scale_check"] = v["scale_check"]
             admitted.append(p)
         else:
             refused.append({
@@ -185,13 +243,19 @@ def admit(proposals: list, source: str, today: date | None = None,
 
 
 def summary_line(source: str, admitted: list, refused: list) -> str:
+    unver = sum(1 for a in admitted
+                if isinstance(a, dict)
+                and str(a.get("scale_check", "")).startswith("unverified"))
+    tail = f"; {unver} with scale UNVERIFIED" if unver else ""
     if not refused:
-        return f"[FAST_CYCLE] {source} -> {len(admitted)} proposals admitted, 0 refused"
+        return (f"[FAST_CYCLE] {source} -> {len(admitted)} proposals admitted, "
+                f"0 refused{tail}")
     from collections import Counter
     c = Counter(m for r in refused for m in r["missing"])
     top = ", ".join(f"{k}:{n}" for k, n in c.most_common())
     return (f"[FAST_CYCLE] {source} -> {len(admitted)} admitted, {len(refused)} REFUSED "
-            f"ungradeable (missing {top}); see memory/proposal_intake_refusals.jsonl")
+            f"ungradeable (missing {top}){tail}; "
+            f"see memory/proposal_intake_refusals.jsonl")
 
 
 def _now() -> str:
