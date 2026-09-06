@@ -74,3 +74,83 @@ reason that has nothing to do with the hypothesis.
 Part A runs now, on CPU, in minutes. **Part B never runs before A3 finishes** — it
 waits for A3's eval (~20:50) or, if A3 runs late, for after tomorrow's cycle (~05:30).
 A 15-minute job does not get to jeopardise a 7-hour one.
+
+---
+
+# PART A — RESULT: **UNRESOLVABLE**, by the rule fixed above
+
+```
+vocabulary   0:QG 1:QY 2:QN 3:QK 4:QH 5:QT 6:QF 7:QR 8:QP 9:QC
+            10:QM 11:QZ 12:QE 13:QV 14:QX 15:QU        + = QA   - = QI
+train 102   held-in 30   out-of-range 8   params 69,329
+training targets actually seen: [0,1,2,3,4,5,6,7,8,9,10]   (nothing above 10)
+
+seed        train    in-range   out-of-range
+20260906    1.000      0.400        0.000
+20260907    1.000      0.433        0.000
+20260908    1.000      0.433        0.000
+20260909    1.000      0.433        0.000
+20260910    1.000      0.367        0.000
+
+SHUFFLED-TARGET control: in-range 0.000   (must be ~0 — it is)
+```
+
+**In-range held-out is 0.37–0.43, not ≥ 0.95. The pre-registered rule says
+UNRESOLVABLE: no rule was learned, so the 0% out-of-range means nothing.**
+
+It would be easy to report "out-of-range 0/8 on 5/5 seeds, extrapolation fails" —
+that number is real and it matches the prediction. It would also be worthless. A
+model that cannot answer a held-out **in-range** question has not induced addition;
+its 0% outside the range is a consequence of that, not evidence about extrapolation.
+
+## It is not undertraining — checked
+
+Ten times the budget, 400 → 4000 epochs, three seeds:
+
+```
+0.400 / 0.433 / 0.433   — identical to the 400-epoch run, to three decimals
+```
+
+Train accuracy is 1.000 in every run. The model converges to **memorising 102
+pairs** and stops. More gradient steps do not help because there is nothing left to
+minimise.
+
+## What the 40% does mean
+
+Chance is 1/16 = **0.0625** over the token vocabulary. At 0.40 the model is far
+above chance, so it has learned *something* — most likely partial structure such as
+"the answer is near these operands" — but not the rule, and not to a standard where
+extrapolation could be read off it.
+
+The shuffled-target control lands at **0.000**, so the split does not leak and the
+40% is genuine partial learning rather than an artifact.
+
+## The honest diagnosis
+
+**102 training examples is too few for a 69k-parameter transformer to induce
+addition and subtraction over 16 arbitrary symbols.** The constraint is the corpus,
+not the architecture or the schedule. The design is sound; the instance is starved.
+
+To make Part A resolvable, one of these has to change, and each is a real choice
+rather than a knob:
+
+1. **Widen the operand range** (0..20 with targets ≤ 20, out-of-range above that).
+   More examples, same structure, same test shape. This is the smallest change that
+   could work and the one I would make.
+2. **Curriculum or weight sharing** — e.g. tie the embedding to a learned scalar.
+   That risks handing the model the ordinality the symbols were designed to hide.
+3. **Accept Part A as a null instrument** and rest the test on Part B alone. Not
+   recommended: without a working small-scale rule-learner there is no reference
+   point for what "induced the rule" looks like on this data.
+
+**The prediction for Part A was in-range ≥ 95% on 5/5 seeds. That was wrong** — it
+assumed 102 examples would suffice, and they do not. The out-of-range prediction
+(0–10%) cannot be scored, because its precondition failed.
+
+## Part B is unchanged and still queued
+
+The 3B + LoRA arm is unaffected by this: a pretrained model brings its own
+structure and does not depend on 102 examples to acquire the notion of quantity.
+Its predictions stand as written. **It still does not run before A3 finishes** —
+and A3 died of a CUDA OOM at 13:25 without training, so Part B waits on that
+decision.

@@ -1,0 +1,521 @@
+{
+ "vocab": {
+  "0": "QG",
+  "1": "QY",
+  "2": "QN",
+  "3": "QK",
+  "4": "QH",
+  "5": "QT",
+  "6": "QF",
+  "7": "QR",
+  "8": "QP",
+  "9": "QC",
+  "10": "QM",
+  "11": "QZ",
+  "12": "QE",
+  "13": "QV",
+  "14": "QX",
+  "15": "QU"
+ },
+ "ops": {
+  "+": "QA",
+  "-": "QI"
+ },
+ "runs": [
+  {
+   "seed": 20260906,
+   "params": 69329,
+   "train_acc": 1.0,
+   "in_range_acc": 0.4,
+   "out_of_range_acc": 0.0,
+   "answers": [
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QN"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QH"
+     ],
+     "want": 13,
+     "got": 7
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QT"
+     ],
+     "want": 15,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QP",
+      "QA",
+      "QK"
+     ],
+     "want": 11,
+     "got": 8
+    },
+    {
+     "prompt": [
+      "QR",
+      "QA",
+      "QT"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QY"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QN"
+     ],
+     "want": 11,
+     "got": 7
+    },
+    {
+     "prompt": [
+      "QF",
+      "QA",
+      "QF"
+     ],
+     "want": 12,
+     "got": 10
+    }
+   ],
+   "final_loss": 0.00029
+  },
+  {
+   "seed": 20260907,
+   "params": 69329,
+   "train_acc": 1.0,
+   "in_range_acc": 0.4333,
+   "out_of_range_acc": 0.0,
+   "answers": [
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QN"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QH"
+     ],
+     "want": 13,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QT"
+     ],
+     "want": 15,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QP",
+      "QA",
+      "QK"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QR",
+      "QA",
+      "QT"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QY"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QN"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QF",
+      "QA",
+      "QF"
+     ],
+     "want": 12,
+     "got": 10
+    }
+   ],
+   "final_loss": 0.00035
+  },
+  {
+   "seed": 20260908,
+   "params": 69329,
+   "train_acc": 1.0,
+   "in_range_acc": 0.4333,
+   "out_of_range_acc": 0.0,
+   "answers": [
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QN"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QH"
+     ],
+     "want": 13,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QT"
+     ],
+     "want": 15,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QP",
+      "QA",
+      "QK"
+     ],
+     "want": 11,
+     "got": 5
+    },
+    {
+     "prompt": [
+      "QR",
+      "QA",
+      "QT"
+     ],
+     "want": 12,
+     "got": 8
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QY"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QN"
+     ],
+     "want": 11,
+     "got": 7
+    },
+    {
+     "prompt": [
+      "QF",
+      "QA",
+      "QF"
+     ],
+     "want": 12,
+     "got": 10
+    }
+   ],
+   "final_loss": 0.00029
+  },
+  {
+   "seed": 20260909,
+   "params": 69329,
+   "train_acc": 1.0,
+   "in_range_acc": 0.4333,
+   "out_of_range_acc": 0.0,
+   "answers": [
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QN"
+     ],
+     "want": 12,
+     "got": 8
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QH"
+     ],
+     "want": 13,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QT"
+     ],
+     "want": 15,
+     "got": 9
+    },
+    {
+     "prompt": [
+      "QP",
+      "QA",
+      "QK"
+     ],
+     "want": 11,
+     "got": 8
+    },
+    {
+     "prompt": [
+      "QR",
+      "QA",
+      "QT"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QY"
+     ],
+     "want": 11,
+     "got": 9
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QN"
+     ],
+     "want": 11,
+     "got": 9
+    },
+    {
+     "prompt": [
+      "QF",
+      "QA",
+      "QF"
+     ],
+     "want": 12,
+     "got": 10
+    }
+   ],
+   "final_loss": 0.00031
+  },
+  {
+   "seed": 20260910,
+   "params": 69329,
+   "train_acc": 1.0,
+   "in_range_acc": 0.3667,
+   "out_of_range_acc": 0.0,
+   "answers": [
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QN"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QH"
+     ],
+     "want": 13,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QT"
+     ],
+     "want": 15,
+     "got": 5
+    },
+    {
+     "prompt": [
+      "QP",
+      "QA",
+      "QK"
+     ],
+     "want": 11,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QR",
+      "QA",
+      "QT"
+     ],
+     "want": 12,
+     "got": 10
+    },
+    {
+     "prompt": [
+      "QM",
+      "QA",
+      "QY"
+     ],
+     "want": 11,
+     "got": 9
+    },
+    {
+     "prompt": [
+      "QC",
+      "QA",
+      "QN"
+     ],
+     "want": 11,
+     "got": 7
+    },
+    {
+     "prompt": [
+      "QF",
+      "QA",
+      "QF"
+     ],
+     "want": 12,
+     "got": 10
+    }
+   ],
+   "final_loss": 0.00028
+  }
+ ],
+ "shuffled_control": {
+  "seed": 20260906,
+  "params": 69329,
+  "train_acc": 1.0,
+  "in_range_acc": 0.0,
+  "out_of_range_acc": 0.0,
+  "answers": [
+   {
+    "prompt": [
+     "QM",
+     "QA",
+     "QN"
+    ],
+    "want": 12,
+    "got": 1
+   },
+   {
+    "prompt": [
+     "QC",
+     "QA",
+     "QH"
+    ],
+    "want": 13,
+    "got": 3
+   },
+   {
+    "prompt": [
+     "QM",
+     "QA",
+     "QT"
+    ],
+    "want": 15,
+    "got": 1
+   },
+   {
+    "prompt": [
+     "QP",
+     "QA",
+     "QK"
+    ],
+    "want": 11,
+    "got": 3
+   },
+   {
+    "prompt": [
+     "QR",
+     "QA",
+     "QT"
+    ],
+    "want": 12,
+    "got": 8
+   },
+   {
+    "prompt": [
+     "QM",
+     "QA",
+     "QY"
+    ],
+    "want": 11,
+    "got": 3
+   },
+   {
+    "prompt": [
+     "QC",
+     "QA",
+     "QN"
+    ],
+    "want": 11,
+    "got": 10
+   },
+   {
+    "prompt": [
+     "QF",
+     "QA",
+     "QF"
+    ],
+    "want": 12,
+    "got": 9
+   }
+  ],
+  "final_loss": 0.0003
+ },
+ "n_train": 102,
+ "n_held_in": 30,
+ "n_oor": 8
+}
