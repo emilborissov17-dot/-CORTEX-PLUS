@@ -1,0 +1,475 @@
+{
+ "seed": 20260906,
+ "k": 32,
+ "rounds": 20,
+ "temperature": 1.0,
+ "threads": 1,
+ "mark": "QG",
+ "lr": 0.0003,
+ "out_of_range_prompts": [
+  [
+   10,
+   2,
+   12
+  ],
+  [
+   7,
+   5,
+   12
+  ],
+  [
+   9,
+   4,
+   13
+  ],
+  [
+   10,
+   4,
+   14
+  ]
+ ],
+ "warm_start": {
+  "selected_step": 2250,
+  "in_range_at_selection": 0.8333
+ },
+ "main": {
+  "label": "main",
+  "rounds": [
+   {
+    "round": 0,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0185,
+    "n_rewarded": 1599
+   },
+   {
+    "round": 1,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0189,
+    "n_rewarded": 1679
+   },
+   {
+    "round": 2,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.0175,
+    "n_rewarded": 1655
+   },
+   {
+    "round": 3,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0166,
+    "n_rewarded": 1655
+   },
+   {
+    "round": 4,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "n_rewarded": 1687
+   },
+   {
+    "round": 5,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "n_rewarded": 1695
+   },
+   {
+    "round": 6,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8667,
+    "leak_p_ge_11_marks_in_range": 0.0213,
+    "n_rewarded": 1725
+   },
+   {
+    "round": 7,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8667,
+    "leak_p_ge_11_marks_in_range": 0.0194,
+    "n_rewarded": 1675
+   },
+   {
+    "round": 8,
+    "exploration_rate": 0.0391,
+    "p_correct_10p2": 0.0312,
+    "p_correct_any_oor": 0.0391,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0166,
+    "n_rewarded": 1701
+   },
+   {
+    "round": 9,
+    "exploration_rate": 0.0312,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0312,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0114,
+    "n_rewarded": 1732
+   },
+   {
+    "round": 10,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0128,
+    "n_rewarded": 1715
+   },
+   {
+    "round": 11,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0118,
+    "n_rewarded": 1737
+   },
+   {
+    "round": 12,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0137,
+    "n_rewarded": 1744
+   },
+   {
+    "round": 13,
+    "exploration_rate": 0.0391,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0391,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0156,
+    "n_rewarded": 1726
+   },
+   {
+    "round": 14,
+    "exploration_rate": 0.0391,
+    "p_correct_10p2": 0.0312,
+    "p_correct_any_oor": 0.0391,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0161,
+    "n_rewarded": 1737
+   },
+   {
+    "round": 15,
+    "exploration_rate": 0.0391,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0391,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "n_rewarded": 1751
+   },
+   {
+    "round": 16,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0128,
+    "n_rewarded": 1730
+   },
+   {
+    "round": 17,
+    "exploration_rate": 0.0234,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0234,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0133,
+    "n_rewarded": 1773
+   },
+   {
+    "round": 18,
+    "exploration_rate": 0.0,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0142,
+    "n_rewarded": 1757
+   },
+   {
+    "round": 19,
+    "exploration_rate": 0.0156,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0156,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0114,
+    "n_rewarded": 1761
+   },
+   {
+    "round": 20,
+    "exploration_rate": 0.0078,
+    "p_correct_10p2": 0.0,
+    "p_correct_any_oor": 0.0078,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0156,
+    "n_rewarded": 1744
+   }
+  ],
+  "leak_series": [
+   0.0185,
+   0.0189,
+   0.0175,
+   0.0166,
+   0.017,
+   0.0152,
+   0.0213,
+   0.0194,
+   0.0166,
+   0.0114,
+   0.0128,
+   0.0118,
+   0.0137,
+   0.0156,
+   0.0161,
+   0.0147,
+   0.0128,
+   0.0133,
+   0.0142,
+   0.0114,
+   0.0156
+  ],
+  "baseline_leak": 0.0185,
+  "first_correct_12": 0,
+  "stop_reason": null
+ },
+ "control": {
+  "label": "control",
+  "rounds": [
+   {
+    "round": 0,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0204,
+    "n_rewarded": 1597
+   },
+   {
+    "round": 1,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0208,
+    "n_rewarded": 1673
+   },
+   {
+    "round": 2,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "n_rewarded": 1657
+   },
+   {
+    "round": 3,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.7667,
+    "leak_p_ge_11_marks_in_range": 0.0133,
+    "n_rewarded": 1616
+   },
+   {
+    "round": 4,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0161,
+    "n_rewarded": 1691
+   },
+   {
+    "round": 5,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0166,
+    "n_rewarded": 1680
+   },
+   {
+    "round": 6,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0204,
+    "n_rewarded": 1691
+   },
+   {
+    "round": 7,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8667,
+    "leak_p_ge_11_marks_in_range": 0.0223,
+    "n_rewarded": 1652
+   },
+   {
+    "round": 8,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0175,
+    "n_rewarded": 1681
+   },
+   {
+    "round": 9,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8667,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "n_rewarded": 1729
+   },
+   {
+    "round": 10,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0118,
+    "n_rewarded": 1696
+   },
+   {
+    "round": 11,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0123,
+    "n_rewarded": 1682
+   },
+   {
+    "round": 12,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8,
+    "leak_p_ge_11_marks_in_range": 0.0114,
+    "n_rewarded": 1738
+   },
+   {
+    "round": 13,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "n_rewarded": 1723
+   },
+   {
+    "round": 14,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.017,
+    "n_rewarded": 1719
+   },
+   {
+    "round": 15,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8667,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "n_rewarded": 1717
+   },
+   {
+    "round": 16,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0152,
+    "n_rewarded": 1715
+   },
+   {
+    "round": 17,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0133,
+    "n_rewarded": 1770
+   },
+   {
+    "round": 18,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "n_rewarded": 1749
+   },
+   {
+    "round": 19,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0147,
+    "n_rewarded": 1747
+   },
+   {
+    "round": 20,
+    "exploration_rate": null,
+    "p_correct_10p2": null,
+    "p_correct_any_oor": null,
+    "in_range_heldout": 0.8333,
+    "leak_p_ge_11_marks_in_range": 0.0175,
+    "n_rewarded": 1722
+   }
+  ],
+  "leak_series": [
+   0.0204,
+   0.0208,
+   0.0152,
+   0.0133,
+   0.0161,
+   0.0166,
+   0.0204,
+   0.0223,
+   0.0175,
+   0.017,
+   0.0118,
+   0.0123,
+   0.0114,
+   0.0147,
+   0.017,
+   0.0147,
+   0.0152,
+   0.0133,
+   0.0147,
+   0.0147,
+   0.0175
+  ],
+  "baseline_leak": 0.0204,
+  "first_correct_12": null,
+  "stop_reason": null
+ }
+}
