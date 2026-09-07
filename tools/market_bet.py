@@ -60,6 +60,27 @@ It must NOT be interpretation. "Sentiment feels weak" and "momentum is negative"
 signals; they are opinions about the price you were just shown.
 """
 
+GROUNDED_PROMPT = """You are forecasting the next-session direction of one exchange-traded fund.
+This is a PREDICTION ONLY. No trade will be placed on it.
+
+ASSET: {sym}
+Last close ({close_date}): {close}
+
+RETRIEVED NEWS — these are the ONLY facts you may cite. You have no others.
+{evidence}
+
+Answer with EXACTLY these three lines and nothing else:
+
+DIRECTION: UP or DOWN
+DEADLINE: {deadline}
+RATIONALE: DRIVER [one of MACRO|GEOPOL|FLOW|SECTOR] | SIGNAL [COPY A PHRASE WORD-FOR-WORD FROM ONE SNIPPET ABOVE] | LOGIC [one sentence]
+
+The SIGNAL must be COPIED EXACTLY from one of the numbered snippets - the same words, in
+the same order, at least a dozen characters long. Do not paraphrase, summarise or
+improve it. If you cannot find a phrase that supports a direction, copy one anyway and
+say so in the LOGIC; a wrong quote is checkable, an invented one is not.
+"""
+
 _DATE_RE = re.compile(
     r"\b(\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)|"
     r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w*\s+\d{1,2}|"
@@ -374,11 +395,98 @@ def sha_of(sym: str, direction: str, deadline: str) -> str:
         sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+def _grounded_run(a, baseline, deadline: str, dry) -> int:
+    """R43. Evidence first; an asset with no fact gets NO BET and there is no fallback."""
+    from core.market_news import NewsUnavailable, fetch_news
+    per_asset = {}
+    for sym in ASSETS:
+        lc = baseline["last_close"][sym]
+        snippets, refusal = [], None
+        try:
+            if dry is not None and "snippets" in dry:
+                from core.market_news import Snippet
+                snippets = [Snippet(**x) for x in dry["snippets"].get(sym, [])]
+                if not snippets:
+                    raise NewsUnavailable(f"dry-run: no snippets staged for {sym}")
+            else:
+                snippets = fetch_news(sym)
+        except NewsUnavailable as e:
+            refusal = str(e)
+
+        if refusal:
+            # NO FALLBACK. Not a price-only rationale, not yesterday's snippet.
+            per_asset[sym] = {"indicator": INDICATORS[sym], "last_close": lc,
+                              "deadline": deadline, "sealed_direction": None,
+                              "outcome": "REFUSED_NO_EVIDENCE", "why": refusal,
+                              "n_snippets": 0, "candidates": []}
+            print(f"\n{sym}  REFUSED_NO_EVIDENCE — {refusal}")
+            continue
+
+        evidence = "\n".join(
+            f"  [{i+1}] ({s.host}, {s.published_utc[:10]}) {s.title}: {s.snippet}"
+            for i, s in enumerate(snippets))
+        if dry is not None and "completions" in dry:
+            comps = dry["completions"].get(sym, [])
+        else:
+            comps = generate_completions(
+                GROUNDED_PROMPT.format(sym=sym, close=lc["adjclose"],
+                                       close_date=lc["date"], evidence=evidence,
+                                       deadline=deadline),
+                n=N_COMPLETIONS, temperature=TEMPERATURE)
+
+        recs = grounded_gate([parse_completion(c) for c in comps], sym, deadline,
+                             snippets)
+        idx, reason, win = choose(recs)
+        agree = disagreement(recs)
+        per_asset[sym] = {
+            "indicator": INDICATORS[sym], "last_close": lc, "deadline": deadline,
+            "n_snippets": len(snippets),
+            "snippets": [s.as_dict() for s in snippets],
+            "sealed_direction": win,
+            "sealed_rationale": recs[idx]["parsed"]["rationale"] if idx is not None else None,
+            "evidence": recs[idx].get("evidence") if idx is not None else None,
+            "chosen_reason": reason, "agreement": agree,
+            "sha256": sha_of(sym, win, deadline) if win else None,
+            "baseline_momentum_sign": baseline["baseline"][sym]["sign"],
+            "n_passed_gate": sum(r["verdict"] == "ADMITTED" for r in recs),
+            "outcome": "SEALED" if win else "REFUSED_NO_GROUNDED_CANDIDATE",
+            "candidates": [dict(r, sealed=(i == idx)) for i, r in enumerate(recs)],
+        }
+        print(f"\n{sym}  {len(snippets)} snippet(s)  last {lc['date']} {lc['adjclose']}")
+        for i, r in enumerate(recs):
+            mark = "SEALED " if i == idx else "       "
+            print(f"  {mark}{i} {r['verdict']:9} {r['parsed']['direction'] or '-':5}"
+                  + ("" if r["verdict"] == "ADMITTED" else f"  — {r['refusal'][:80]}"))
+        print(f"  -> {reason}   [{agree}]")
+
+    out = Path(a.out or (LEDGER / "BET_2026-09-07_markets_grounded.json"))
+    if out.exists() and not a.allow_overwrite:
+        raise FileExistsError(f"{out} already holds a sealed bet.")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps({
+        "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "label": "grounded_pair_to_f41a7fd",
+        "kind": "market direction, GROUNDED, PREDICTION ONLY — no trade (§VI)",
+        "model": MODEL_PIN, "n_completions": N_COMPLETIONS,
+        "temperature": TEMPERATURE, "deadline": deadline,
+        "reference_close_date": baseline["last_close"]["SPY"]["date"],
+        "grading_rule": "the FIRST bar strictly after reference_close_date",
+        "gate": "grounded: SIGNAL must be an exact substring of a retrieved snippet",
+        "baseline_method": "20-trading-day momentum sign",
+        "assets": per_asset, "baseline": baseline["baseline"],
+        "outcome": "SEALED — not graded. Grading is +24 h.",
+    }, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"\n-> {out}")
+    return 0
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", metavar="JSON",
                     help="{sym: [8 completions]} instead of a model")
     ap.add_argument("--live", action="store_true")
+    ap.add_argument("--grounded", action="store_true",
+                    help="R43: evidence first, SIGNAL must be an exact quote")
+    ap.add_argument("--allow-overwrite", action="store_true")
     ap.add_argument("--deadline", default=None)
     ap.add_argument("--out", default=None)
     a = ap.parse_args()
@@ -396,6 +504,10 @@ def main() -> int:
              if date.today().isoformat() in US_MARKET_HOLIDAYS_2026 else ""))
 
     dry = json.loads(Path(a.dry_run).read_text(encoding="utf-8")) if a.dry_run else None
+
+    if a.grounded:
+        return _grounded_run(a, baseline, deadline, dry)
+
     per_asset = {}
     for sym in ASSETS:
         lc = baseline["last_close"][sym]
