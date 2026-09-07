@@ -284,6 +284,50 @@ US_MARKET_HOLIDAYS_2026 = frozenset({
 })
 
 
+class BaselineUnavailable(RuntimeError):
+    """Fresh prices could not be had. REFUSED, never substituted with a stale file.
+
+    The stale file is exactly what this replaces, so falling back to it on a fetch
+    failure would reinstate the bug under a different name.
+    """
+
+
+def compute_baseline(fetcher=None) -> dict:
+    """The 20-trading-day momentum baseline, COMPUTED NOW FROM FRESH PRICES.
+
+    IT USED TO BE READ FROM BASELINE_2026-09-07_markets.json, a file whose SPY last
+    close is 2026-09-04. Every bet after the 7th would have been graded against a stale
+    close and compared to a momentum sign computed from a window that had already moved.
+    The baseline is the null the bet must beat; a null from last week is not a null.
+
+    `fetcher(sym) -> bars` is injectable so the tests never touch the network.
+    """
+    import core.market_daily as md
+
+    fetch = fetcher or (lambda sym: md.parse_chart(md.fetch_chart(sym)))
+    baseline, closes = {}, {}
+    for sym in ASSETS:
+        try:
+            bars = fetch(sym)
+            baseline[sym] = md.momentum_sign(bars)
+            d, px = md.last_close(bars)
+            closes[sym] = {"date": d.isoformat() if hasattr(d, "isoformat") else str(d),
+                           "adjclose": px}
+        except Exception as exc:                                   # noqa: BLE001
+            raise BaselineUnavailable(
+                f"{sym}: could not compute a fresh baseline — {type(exc).__name__}: "
+                f"{exc}. REFUSED rather than falling back to a sealed file from an "
+                f"earlier day: a stale null is worse than no bet, because it looks "
+                f"exactly like a fresh one in the record.") from exc
+
+    return {"ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "method": "20-trading-day momentum sign",
+            "note": ("computed at bet time from fresh prices, sealed with the bet; "
+                     "the null the bet must beat"),
+            "computed_at_bet_time": True,
+            "baseline": baseline, "last_close": closes}
+
+
 def seal_path(day: date | None = None, ledger: Path | None = None) -> Path:
     """Where TODAY's grounded bet is sealed. One file per day, derived, never hardcoded.
 
@@ -1424,7 +1468,13 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
                 "exact-substring check survives underneath as belt-and-suspenders. "
                 "An answer that names the direction first is REFUSED as the "
                 "wrong contract.",
-        "baseline_method": "20-trading-day momentum sign",
+        "baseline_method": ("20-trading-day momentum sign, COMPUTED AT BET TIME from "
+                            "fresh prices and sealed here — not read from an earlier "
+                            "day's file"),
+        # D2. The whole freshly-computed baseline travels with the bet, so grading can
+        # see WHICH window the null was measured over rather than assuming today's.
+        "baseline_computed_at": baseline.get("ts"),
+        "baseline_full": baseline,
         "assets": per_asset, "baseline": baseline["baseline"],
         "outcome": "SEALED — not graded. Grading is +24 h.",
     }, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -1453,16 +1503,25 @@ def main() -> int:
               f"distinctly different name.")
         return 5
 
-    import core.market_daily as md
-    baseline = json.loads(
-        (LEDGER / "BASELINE_2026-09-07_markets.json").read_text(encoding="utf-8"))
+    # Loaded before the baseline, because a dry run may stage the baseline too.
+    dry = json.loads(Path(a.dry_run).read_text(encoding="utf-8")) if a.dry_run else None
+
+    # D2. FRESH, EVERY TIME. A dry run may stage the baseline so the tests and the
+    # rehearsal never touch the network; anything else computes it now.
+    if dry is not None and "baseline" in dry:
+        baseline = dry["baseline"]
+        print("baseline: staged by --dry-run (no prices fetched)")
+    else:
+        baseline = compute_baseline()
+        print(f"baseline: computed now — "
+              + ", ".join(f"{s} {baseline['baseline'][s]['sign']}"
+                          + f" to {baseline['baseline'][s]['to_date']}"
+                          for s in ASSETS))
     ref = baseline["last_close"]["SPY"]["date"]
     deadline = a.deadline or next_session(date.fromisoformat(ref)).isoformat()
     print(f"reference close {ref} -> graded session {deadline}"
           + ("  (today is a market holiday)"
              if date.today().isoformat() in US_MARKET_HOLIDAYS_2026 else ""))
-
-    dry = json.loads(Path(a.dry_run).read_text(encoding="utf-8")) if a.dry_run else None
 
     if a.grounded:
         return _grounded_run(a, baseline, deadline, dry)
