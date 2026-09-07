@@ -1,0 +1,449 @@
+{
+ "ts": "2026-09-07T11:08:31+03:00",
+ "kind": "market direction, PREDICTION ONLY — no trade (§VI)",
+ "model": "qwen2.5:3b",
+ "n_completions": 8,
+ "temperature": 0.7,
+ "gate_entry_point": "tools/market_bet.gate_all (direction + DRIVER|SIGNAL|LOGIC); the cycle's proposal gate judges proposals, not directions",
+ "baseline_method": "20-trading-day momentum sign, sealed in BASELINE_2026-09-07_markets.json before any bet",
+ "assets": {
+  "SPY": {
+   "indicator": "MARKET_SPY_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 770.1900024414062
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": "UP",
+   "sealed_rationale": "DRIVER FLOW | SIGNAL [SPY weekly open interest increase by +1.5%, Bloomberg 7 Sep] | LOGIC: An increase in SPY's weekly open interest suggests active buying sentiment, likely driving the asset higher.",
+   "chosen_reason": "majority direction UP (6 UP / 0 DOWN of 6 passing); first such candidate sealed",
+   "sha256": "5582d717b4f7c9a1e680b613e3969b5fb67083a792414a2750983e474537530c",
+   "baseline_momentum_sign": "DOWN",
+   "n_passed_gate": 6,
+   "candidates": [
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL VIX ends week lower, last @ 17.34 - CME | LOGIC: Lower volatility is typically bullish for equities.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL VIX ends week lower, last @ 17.34 - CME | LOGIC: Lower volatility is typically bullish for equities.",
+      "driver": "FLOW",
+      "signal": "VIX ends week lower, last @ 17.34 - CME",
+      "logic": "Lower volatility is typically bullish for equities."
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "signal"
+     ],
+     "refusal": "signal: 'VIX ends week lower, last @ 17.34 - CME' is interpretation, not a dated external fact. A SIGNAL must carry a date or a named source so somebody else could look it up.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL [SPY weekly open interest increase by +1.5%, Bloomberg 7 Sep] | LOGIC: An increase in SPY's weekly open interest suggests active buying sentiment, likely driving the asset higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL [SPY weekly open interest increase by +1.5%, Bloomberg 7 Sep] | LOGIC: An increase in SPY's weekly open interest suggests active buying sentiment, likely driving the asset higher.",
+      "driver": "FLOW",
+      "signal": "[SPY weekly open interest increase by +1.5%, Bloomberg 7 Sep]",
+      "logic": "An increase in SPY's weekly open interest suggests active buying sentiment, likely driving the asset higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": true
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL VIX decline to 15.0, CME 7 Sep | LOGIC: As volatility continues to decrease, risk appetite is likely to rise, pushing the asset higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL VIX decline to 15.0, CME 7 Sep | LOGIC: As volatility continues to decrease, risk appetite is likely to rise, pushing the asset higher.",
+      "driver": "FLOW",
+      "signal": "VIX decline to 15.0, CME 7 Sep",
+      "logic": "As volatility continues to decrease, risk appetite is likely to rise, pushing the asset higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Non-farm payrolls release, expected to be +100k, ADP 5 Sep | LOGIC A strong non-farm payrolls report could boost investor confidence and drive asset prices higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Non-farm payrolls release, expected to be +100k, ADP 5 Sep | LOGIC A strong non-farm payrolls report could boost investor confidence and drive asset prices higher.",
+      "driver": "FLOW",
+      "signal": "Non-farm payrolls release, expected to be +100k, ADP 5 Sep",
+      "logic": "A strong non-farm payrolls report could boost investor confidence and drive asset prices higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q1 GDP beat expectations, US Bureau of Economic Analysis 7 Sep | LOGIC: An unexpected economic growth signal may boost investor confidence and drive asset prices higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q1 GDP beat expectations, US Bureau of Economic Analysis 7 Sep | LOGIC: An unexpected economic growth signal may boost investor confidence and drive asset prices higher.",
+      "driver": "FLOW",
+      "signal": "Q1 GDP beat expectations, US Bureau of Economic Analysis 7 Sep",
+      "logic": "An unexpected economic growth signal may boost investor confidence and drive asset prices higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Earnings guidance up +1.5% median, consensus 7 Sep | LOGIC: Expected positive earnings news typically boosts investor sentiment and asset prices",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Earnings guidance up +1.5% median, consensus 7 Sep | LOGIC: Expected positive earnings news typically boosts investor sentiment and asset prices",
+      "driver": "FLOW",
+      "signal": "Q4 Earnings guidance up +1.5% median, consensus 7 Sep",
+      "logic": "Expected positive earnings news typically boosts investor sentiment and asset prices"
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 earnings season begins, market liquidity tightens | LOGIC: Increased trading volume and anticipation of corporate earnings reports may push the price higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 earnings season begins, market liquidity tightens | LOGIC: Increased trading volume and anticipation of corporate earnings reports may push the price higher.",
+      "driver": "FLOW",
+      "signal": "Q4 earnings season begins, market liquidity tightens",
+      "logic": "Increased trading volume and anticipation of corporate earnings reports may push the price higher."
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "signal"
+     ],
+     "refusal": "signal: 'Q4 earnings season begins, market liquidity tightens' is interpretation, not a dated external fact. A SIGNAL must carry a date or a named source so somebody else could look it up.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q1 GDP report release, White House, 07 Sep | LOGIC The anticipated positive economic news could boost investor confidence and asset prices.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q1 GDP report release, White House, 07 Sep | LOGIC The anticipated positive economic news could boost investor confidence and asset prices.",
+      "driver": "FLOW",
+      "signal": "Q1 GDP report release, White House, 07 Sep",
+      "logic": "The anticipated positive economic news could boost investor confidence and asset prices."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    }
+   ]
+  },
+  "GLD": {
+   "indicator": "MARKET_GLD_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 406.7699890136719
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": "UP",
+   "sealed_rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Wall Street Journal 5 Sep | LOGIC: The upcoming earnings preview suggests robust performance, likely driving up ETF prices.",
+   "chosen_reason": "majority direction UP (8 UP / 0 DOWN of 8 passing); first such candidate sealed",
+   "sha256": "f9194264a006733f69d390eba7a389aae2dccaf0a6bf65e021af0043892fbe86",
+   "baseline_momentum_sign": "UP",
+   "n_passed_gate": 8,
+   "candidates": [
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Wall Street Journal 5 Sep | LOGIC: The upcoming earnings preview suggests robust performance, likely driving up ETF prices.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Wall Street Journal 5 Sep | LOGIC: The upcoming earnings preview suggests robust performance, likely driving up ETF prices.",
+      "driver": "FLOW",
+      "signal": "Q4 Earnings Preview Positive Outlook, Wall Street Journal 5 Sep",
+      "logic": "The upcoming earnings preview suggests robust performance, likely driving up ETF prices."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": true
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 earnings consensus upgrade, Bloomberg 5 Sep | LOGIC: Upgraded expectations are expected to lift asset prices.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 earnings consensus upgrade, Bloomberg 5 Sep | LOGIC: Upgraded expectations are expected to lift asset prices.",
+      "driver": "FLOW",
+      "signal": "Q4 earnings consensus upgrade, Bloomberg 5 Sep",
+      "logic": "Upgraded expectations are expected to lift asset prices."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Retail Sales release, Bloomberg 5 Sep | LOGIC: Expectations for improved retail sales could support gold prices as consumers seek safe-haven assets.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Retail Sales release, Bloomberg 5 Sep | LOGIC: Expectations for improved retail sales could support gold prices as consumers seek safe-haven assets.",
+      "driver": "FLOW",
+      "signal": "Q4 Retail Sales release, Bloomberg 5 Sep",
+      "logic": "Expectations for improved retail sales could support gold prices as consumers seek safe-haven assets."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 retail sales projection up 3.5%, Bloomberg 7 Sep | LOGIC: Expectations for increased consumer spending could boost gold demand, driving the ETF higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 retail sales projection up 3.5%, Bloomberg 7 Sep | LOGIC: Expectations for increased consumer spending could boost gold demand, driving the ETF higher.",
+      "driver": "FLOW",
+      "signal": "Q4 retail sales projection up 3.5%, Bloomberg 7 Sep",
+      "logic": "Expectations for increased consumer spending could boost gold demand, driving the ETF higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Earnings Preview, Bloomberg 07 Sep | LOGIC: The upcoming earnings preview suggests a positive outlook for the sector, likely driving up asset prices.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview, Bloomberg 07 Sep | LOGIC: The upcoming earnings preview suggests a positive outlook for the sector, likely driving up asset prices.",
+      "driver": "FLOW",
+      "signal": "Q4 Earnings Preview, Bloomberg 07 Sep",
+      "logic": "The upcoming earnings preview suggests a positive outlook for the sector, likely driving up asset prices."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 retail sales projection +1.5%, IHS Markit 7 Sep | LOGIC: Expectations for higher retail sales could boost gold demand and lift the GLD price.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 retail sales projection +1.5%, IHS Markit 7 Sep | LOGIC: Expectations for higher retail sales could boost gold demand and lift the GLD price.",
+      "driver": "FLOW",
+      "signal": "Q4 retail sales projection +1.5%, IHS Markit 7 Sep",
+      "logic": "Expectations for higher retail sales could boost gold demand and lift the GLD price."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Bloomberg 07 Sep | LOGIC: The anticipated positive earnings outlook is likely to drive investor confidence and positively impact ETF performance.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Bloomberg 07 Sep | LOGIC: The anticipated positive earnings outlook is likely to drive investor confidence and positively impact ETF performance.",
+      "driver": "FLOW",
+      "signal": "Q4 Earnings Preview Positive Outlook, Bloomberg 07 Sep",
+      "logic": "The anticipated positive earnings outlook is likely to drive investor confidence and positively impact ETF performance."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL VIX -13.4% to 17.5, Bloomberg 07 Sep | LOGIC: A lower volatility index suggests increased investor confidence and could drive ETF prices higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL VIX -13.4% to 17.5, Bloomberg 07 Sep | LOGIC: A lower volatility index suggests increased investor confidence and could drive ETF prices higher.",
+      "driver": "FLOW",
+      "signal": "VIX -13.4% to 17.5, Bloomberg 07 Sep",
+      "logic": "A lower volatility index suggests increased investor confidence and could drive ETF prices higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    }
+   ]
+  },
+  "UUP": {
+   "indicator": "MARKET_UUP_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 28.079999923706055
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": "UP",
+   "sealed_rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Bloomberg 7 Sep | LOGIC: The upcoming earnings preview suggests robust growth, likely driving UUP higher.",
+   "chosen_reason": "majority direction UP (8 UP / 0 DOWN of 8 passing); first such candidate sealed",
+   "sha256": "ee8068684cda77678d59268bef328504941c9395cf210034ec8d0a52f3adbca2",
+   "baseline_momentum_sign": "UP",
+   "n_passed_gate": 8,
+   "candidates": [
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Bloomberg 7 Sep | LOGIC: The upcoming earnings preview suggests robust growth, likely driving UUP higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 Earnings Preview Positive Outlook, Bloomberg 7 Sep | LOGIC: The upcoming earnings preview suggests robust growth, likely driving UUP higher.",
+      "driver": "FLOW",
+      "signal": "Q4 Earnings Preview Positive Outlook, Bloomberg 7 Sep",
+      "logic": "The upcoming earnings preview suggests robust growth, likely driving UUP higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": true
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Fed releases September Jackson Hole Symposium transcript, Sept 21 | LOGIC The conference's tone suggests a cautious outlook for the economy, potentially supporting risk assets.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Fed releases September Jackson Hole Symposium transcript, Sept 21 | LOGIC The conference's tone suggests a cautious outlook for the economy, potentially supporting risk assets.",
+      "driver": "FLOW",
+      "signal": "Fed releases September Jackson Hole Symposium transcript, Sept 21",
+      "logic": "The conference's tone suggests a cautious outlook for the economy, potentially supporting risk assets."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 retail sales report, Nielsen 7 Sep | LOGIC A positive retail sales report could buoy consumer confidence and drive demand.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 retail sales report, Nielsen 7 Sep | LOGIC A positive retail sales report could buoy consumer confidence and drive demand.",
+      "driver": "FLOW",
+      "signal": "Q4 retail sales report, Nielsen 7 Sep",
+      "logic": "A positive retail sales report could buoy consumer confidence and drive demand."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Fed releases updated inflation projection, 7 Sep | LOGIC The expected rate hikes will likely be moderated by the updated forecast.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Fed releases updated inflation projection, 7 Sep | LOGIC The expected rate hikes will likely be moderated by the updated forecast.",
+      "driver": "FLOW",
+      "signal": "Fed releases updated inflation projection, 7 Sep",
+      "logic": "The expected rate hikes will likely be moderated by the updated forecast."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q3 GDP growth forecast +1.5%, Bloomberg 7 Sep | LOGIC: The upcoming GDP forecast suggests continued strength in the US economy, likely supporting UUP's direction.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q3 GDP growth forecast +1.5%, Bloomberg 7 Sep | LOGIC: The upcoming GDP forecast suggests continued strength in the US economy, likely supporting UUP's direction.",
+      "driver": "FLOW",
+      "signal": "Q3 GDP growth forecast +1.5%, Bloomberg 7 Sep",
+      "logic": "The upcoming GDP forecast suggests continued strength in the US economy, likely supporting UUP's direction."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 retail sales beat, Nielsen 5 Sep | LOGIC A positive retail sales report suggests ongoing economic strength supporting equities.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 retail sales beat, Nielsen 5 Sep | LOGIC A positive retail sales report suggests ongoing economic strength supporting equities.",
+      "driver": "FLOW",
+      "signal": "Q4 retail sales beat, Nielsen 5 Sep",
+      "logic": "A positive retail sales report suggests ongoing economic strength supporting equities."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL Q4 retail sales projection up by 3.5%, Bloomberg 7 Sep | LOGIC: Increased consumer spending expectations are likely to push UUP higher.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL Q4 retail sales projection up by 3.5%, Bloomberg 7 Sep | LOGIC: Increased consumer spending expectations are likely to push UUP higher.",
+      "driver": "FLOW",
+      "signal": "Q4 retail sales projection up by 3.5%, Bloomberg 7 Sep",
+      "logic": "Increased consumer spending expectations are likely to push UUP higher."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: DRIVER FLOW | SIGNAL VIX -7.5%, Bloomberg 6 Sep | LOGIC: The decline in volatility suggests increased market stability and could lead to higher equities performance.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "DRIVER FLOW | SIGNAL VIX -7.5%, Bloomberg 6 Sep | LOGIC: The decline in volatility suggests increased market stability and could lead to higher equities performance.",
+      "driver": "FLOW",
+      "signal": "VIX -7.5%, Bloomberg 6 Sep",
+      "logic": "The decline in volatility suggests increased market stability and could lead to higher equities performance."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "sealed": false
+    }
+   ]
+  }
+ },
+ "baseline": {
+  "SPY": {
+   "mean_daily_return": -0.0001865106642007343,
+   "sign": "DOWN",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "GLD": {
+   "mean_daily_return": 0.0011700662363152794,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "UUP": {
+   "mean_daily_return": 2.300869514308277e-05,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  }
+ },
+ "reference_close_date": "2026-09-04",
+ "grading_rule": "the FIRST bar strictly after reference_close_date, whatever date it carries - so a wrong deadline guess cannot corrupt the grade",
+ "outcome": "SEALED — not graded. Grading is +24 h against the next session close."
+}
