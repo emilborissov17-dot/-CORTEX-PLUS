@@ -4,7 +4,25 @@
   "earthquake_max": [],
   "refugees": [],
   "gbif_30d": [],
-  "goal_score": [],
-  "cycle_count": 11,
-  "_trend_dates": {}
+  "goal_score": [
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391,
+    0.6391
+  ],
+  "cycle_count": 23,
+  "_trend_dates": {
+    "goal_score": "2026-09-07"
+  },
+  "USGS_QUAKE_M45_DAILY": [
+    12,
+    13,
+    15
+  ]
 }
