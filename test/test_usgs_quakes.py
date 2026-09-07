@@ -131,3 +131,36 @@ def test_ground_truth_returns_the_last_value():
 def test_the_extract_path_and_units_are_recorded():
     assert "count" in EXTRACT_PATH and "minmagnitude=4.5" in EXTRACT_PATH
     assert "UTC day" in UNITS and "4.5" in UNITS
+
+
+# ── the cadence declaration, found missing by the dry run ───────────────────
+def test_the_indicator_has_a_declared_cadence():
+    """FOUND BY THE DRY RUN, NOT BY THIS SUITE. Every gate test above injects
+    cadence_check, so none of them could see that USGS_QUAKE_M45_DAILY had no entry in
+    config/indicator_cadence.json — the first real dry run refused all 8 candidates
+    with 'has no declared cadence'. An injected collaborator hides exactly the wiring
+    it stands in for."""
+    cfg = json.loads((REPO / "config" / "indicator_cadence.json")
+                     .read_text(encoding="utf-8"))
+    entry = cfg["indicators"].get(INDICATOR)
+    assert entry, f"{INDICATOR} has no cadence declaration"
+    assert entry["cadence"] == "daily"
+    assert entry["last_observed_from"] == "quakes.last_date"
+
+
+def test_the_snapshot_carries_the_observation_date_the_cadence_points_at():
+    snap = json.loads((REPO / "snapshots" / "master" /
+                       "global_indicators_latest.json").read_text(encoding="utf-8"))
+    q = snap.get("quakes") or {}
+    assert q.get("last_date"), "quakes.last_date is missing — cadence cannot resolve"
+    assert q.get("min_magnitude") == MIN_MAG
+    assert isinstance(q.get("quake_m45_count"), int)
+
+
+def test_the_gate_admits_with_the_REAL_cadence_check_not_an_injected_one():
+    """The end-to-end that the injected tests could not do."""
+    from core.proposal_intake import judge
+    v = judge({"indicator": INDICATOR, "expected_delta": 3.0,
+               "deadline": (date.today() + timedelta(days=1)).isoformat()},
+              scale_check=lambda i, d: (None, "injected: scale needs 7 observations"))
+    assert v["verdict"] == "ADMITTED", v

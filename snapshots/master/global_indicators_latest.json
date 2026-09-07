@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-21T19:52:15.139231+00:00",
+  "timestamp": "2026-09-07T00:22:24.739675+00:00",
   "sources": {
     "co2": "NOAA Mauna Loa CO2",
     "temperature": "NASA GISTEMP",
@@ -20,48 +20,70 @@
     "energy": "EIA Open Data",
     "exoplanets": "NASA Exoplanet Archive TAP",
     "satellites": "CelesTrak SATCAT",
-    "neo": "NASA JPL CNEOS CAD"
+    "neo": "NASA JPL CNEOS CAD",
+    "quakes": "USGS fdsnws — M4.5+ per UTC day"
   },
   "co2": {
-    "co2_ppm": 431.17,
-    "co2_ppm_1yr_ago": 429.43,
-    "co2_annual_increase": 1.74,
-    "co2_date": "2026-06-14"
+    "co2_ppm": 427.15,
+    "co2_ppm_1yr_ago": 425.25,
+    "co2_annual_increase": 1.9,
+    "co2_date": "2026-08-30"
   },
   "temperature": {
     "temp_anomaly_c": 1.19,
     "temp_anomaly_year": 2025,
     "temp_anomaly_baseline": "1951-1980"
   },
-  "sea_level": {},
+  "sea_level": {
+    "sea_level_rise_mm": 95.3,
+    "sea_level_year_fraction": 2026.101,
+    "sea_level_baseline": "1993",
+    "sea_level_source": "CU Boulder SLRG"
+  },
   "biodiversity": {
-    "species_observations_30d": 2627112
+    "species_observations_30d": 2512061
   },
   "food": {
     "undernourishment_pct": 8.5,
-    "food_insecurity_moderate_severe_pct": null,
+    "food_insecurity_moderate_severe_pct": 27.9879,
     "food_production_index": 100.0,
-    "agriculture_pct_gdp": 4.0487,
-    "cereal_yield_kg_per_ha": 4243.5311
+    "agriculture_pct_gdp": 4.01,
+    "cereal_yield_kg_per_ha": 3954.9499
   },
   "waste": {
-    "resource_depletion_pct_gni": 1.5251,
-    "natural_resources_rents_pct": 3.0742,
-    "adjusted_net_savings_pct": 9.6455,
-    "fossil_fuel_consumption_pct": 74.832
+    "resource_depletion_pct_gni": 1.5226,
+    "natural_resources_rents_pct": 3.0614,
+    "adjusted_net_savings_pct": 9.6359,
+    "fossil_fuel_consumption_pct": 0.0
   },
   "world_bank": {
-    "population_billions": 8.142,
+    "population_billions": 8.215,
     "poverty_190_pct": 10.4,
-    "life_expectancy": 73.4804,
+    "life_expectancy": 73.4818,
     "infant_mortality_per1k": 27.7,
     "gini_mean": 39.625,
-    "forest_area_pct": 31.143,
+    "forest_area_pct": 31.0952,
     "renewable_elec_pct": 27.8357,
     "safe_water_access_pct": 73.6686,
     "literacy_rate_adult_pct": 87.74,
     "threatened_mammals_no": 3434.0,
-    "co2_emissions_kt": null
+    "co2_emissions_kt": null,
+    "protected_terrestrial_area_pct": 16.5117,
+    "primary_completion_rate": 88.0216,
+    "_observed_years": {
+      "population_billions": "2025",
+      "poverty_190_pct": "2024",
+      "life_expectancy": "2024",
+      "infant_mortality_per1k": "2024",
+      "forest_area_pct": "2023",
+      "renewable_elec_pct": "2021",
+      "safe_water_access_pct": "2024",
+      "literacy_rate_adult_pct": "2024",
+      "threatened_mammals_no": "2017",
+      "co2_emissions_kt": null,
+      "protected_terrestrial_area_pct": "2025",
+      "primary_completion_rate": "2024"
+    }
   },
   "displaced": {
     "refugees_millions": 29.429,
@@ -71,17 +93,17 @@
     "unhcr_year": 2022
   },
   "economy": {
-    "unemployment_pct": 4.791,
-    "gdp_per_capita_ppp_usd": 21405,
-    "gdp_growth_annual_pct": 2.8719,
-    "labour_force_participation_pct": 60.9793,
-    "industry_value_added_pct_gdp": 25.6274
+    "unemployment_pct": 4.7913,
+    "gdp_per_capita_ppp_usd": 21914,
+    "gdp_growth_annual_pct": 2.9213,
+    "labour_force_participation_pct": 60.9808,
+    "industry_value_added_pct_gdp": 24.9842
   },
   "cities": {
     "internet_users_pct": 73.6,
-    "electricity_access_pct": 91.5992,
-    "urban_population_pct": 57.5635,
-    "urban_growth_annual_pct": 1.401,
+    "electricity_access_pct": 91.9265,
+    "urban_population_pct": 57.8251,
+    "urban_growth_annual_pct": 1.3611,
     "roads_paved_pct": 50.4875
   },
   "governance": {
@@ -92,22 +114,59 @@
   "tech_infra": {
     "broadband_per100": 20.11,
     "mobile_subscriptions_per100": 111.5,
-    "secure_internet_servers_per1m": 16379.637,
-    "high_tech_exports_pct_manuf": 24.7589
+    "secure_internet_servers_per1m": 16381.4712,
+    "high_tech_exports_pct_manuf": 24.7171
   },
   "ai_activity": {
-    "arxiv_ai_papers_total": 185440,
-    "github_ai_repos_total": 38529
+    "arxiv_ai_papers_total": 198179,
+    "github_ai_repos_total": 48194
   },
   "media": {
-    "news_tone_avg_1month": -1.469,
-    "news_tone_latest": -1.558,
-    "news_tone_min": -1.558,
-    "news_tone_max": -1.379,
-    "news_tone_datapoints": 2,
-    "news_tone_scale": "-100=very negative, 0=neutral, +100=very positive"
+    "news_tone_avg_1month": -0.924,
+    "news_tone_latest": -0.924,
+    "news_tone_min": -0.924,
+    "news_tone_max": -0.924,
+    "news_tone_datapoints": 1,
+    "news_tone_scale": "-100=very negative, 0=neutral, +100=very positive",
+    "_carried": {
+      "news_tone_avg_1month": {
+        "value": -0.924,
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      },
+      "news_tone_latest": {
+        "value": -0.924,
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      },
+      "news_tone_min": {
+        "value": -0.924,
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      },
+      "news_tone_max": {
+        "value": -0.924,
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      },
+      "news_tone_datapoints": {
+        "value": 1,
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      },
+      "news_tone_scale": {
+        "value": "-100=very negative, 0=neutral, +100=very positive",
+        "since": "2026-09-04T00:19:44.626566+00:00",
+        "age_hours": 72.1
+      }
+    }
   },
-  "conflicts": {},
+  "conflicts": {
+    "active_armed_conflicts": 65,
+    "ucdp_version": "26.1",
+    "ucdp_year": 2025,
+    "source": "api"
+  },
   "nuclear": {
     "nuclear_warheads_total": 12121,
     "nuclear_warheads_deployed": 3904,
@@ -117,12 +176,34 @@
   },
   "energy": {},
   "exoplanets": {
-    "confirmed_exoplanets": 6298
+    "confirmed_exoplanets": 6360
   },
   "satellites": {},
   "neo": {
-    "neo_close_approaches_90d": 114,
+    "neo_close_approaches_90d": 145,
     "neo_within_lunar_dist_90d": 1,
     "neo_dist_threshold_au": 0.1
+  },
+  "_health": {
+    "fresh_this_cycle": 70,
+    "carried_from_a_previous_cycle": 6,
+    "missing_everywhere": 1,
+    "silent_sections": [
+      {
+        "section": "energy",
+        "source": "EIA Open Data"
+      },
+      {
+        "section": "satellites",
+        "source": "CelesTrak SATCAT"
+      }
+    ],
+    "silent_note": "Секция без нито една стойност НЕ е източник. Дотук такава секция не влизаше в никой брояч и се броеше за жива.",
+    "rule": "a fetch failure never overwrites a good value with null. Carried metrics are listed per section under _carried with the date of the ORIGINAL observation, so a value copied forward for a month cannot pass as this cycle's reading."
+  },
+  "quakes": {
+    "quake_m45_count": 15,
+    "last_date": "2026-09-06",
+    "min_magnitude": 4.5
   }
 }

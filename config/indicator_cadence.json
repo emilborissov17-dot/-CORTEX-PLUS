@@ -1,11 +1,16 @@
 {
   "_what_this_is": "How often each gradeable indicator can produce a NEW observation, and where its last observation date is read from. Written by hand on 6 Sep 2026 after proposal_intake admitted 'WATER_REVIEW +1.2 by 2026-09-10' — a four-day deadline on a World Bank series whose last observation is the year 2024 and whose next is not due until 2026 at the earliest. The number parsed, the gate had nothing to check it against, and no observation could arrive before the deadline to settle it either way.",
   "_the_rule": "NO DEFAULT. An indicator absent from this file, or carrying a cadence outside the five allowed words, fails loud AT LOAD and is named. A missing cadence must never be filled in as 'daily' — that is the assumption that let a four-day deadline through in the first place.",
-  "_cadences": ["daily", "weekly", "monthly", "quarterly", "annual"],
+  "_cadences": [
+    "daily",
+    "weekly",
+    "monthly",
+    "quarterly",
+    "annual"
+  ],
   "_tiers": "DAILY-TIER = daily or weekly: a new observation arrives inside a normal planning horizon, so a deadline within 30 days is checkable. SLOW-TIER = monthly, quarterly, annual: the deadline must fall on or after next_expected, or nothing can settle the prediction.",
   "_last_observed_from": "A dotted path into snapshots/master/global_indicators_latest.json. A year-only value ('2024') is read as the LAST day of that year, because a World Bank annual figure describes the whole year and is published the year after.",
   "_who_owns_it": "A human. A generated patch that widened a cadence would be the system granting itself shorter deadlines than its data can settle.",
-
   "indicators": {
     "CLIMATE_GLOBAL_RISK_REVIEW": {
       "cadence": "daily",
@@ -75,9 +80,14 @@
       "last_observed_from": "world_bank._observed_years.safe_water_access_pct",
       "source": "World Bank WDI — safe water access, percent of population",
       "note": "THE CASE THAT PROMPTED THIS FILE. Last observed 2024; a 2026-09-10 deadline is before any new observation can exist."
+    },
+    "USGS_QUAKE_M45_DAILY": {
+      "cadence": "daily",
+      "last_observed_from": "quakes.last_date",
+      "source": "USGS fdsnws event count — M4.5+ per UTC calendar day",
+      "note": "A UTC CALENDAR day, never the rolling 4.5_day feed: that window ends whenever you ask it and a value read from it cannot be graded later. Today is never counted because a day in progress reads low."
     }
   },
-
   "org_cadence": {
     "_what_this_is": "Cadence per publishing organisation, used to stamp every source entry in composer_specs.json. Written out per source rather than looked up at runtime, so a source that is added without one fails loud instead of inheriting a guess.",
     "World Bank": "annual",

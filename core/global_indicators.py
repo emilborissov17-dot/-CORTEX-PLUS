@@ -94,6 +94,44 @@ def fetch_co2() -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 2b. Earthquakes — USGS fdsnws, M4.5+ per UTC CALENDAR day
+# ---------------------------------------------------------------------------
+
+def fetch_usgs_quakes() -> dict:
+    """Count of M4.5+ earthquakes on the most recent COMPLETE UTC day.
+
+    NOT the 4.5_day.geojson feed. That one is a ROLLING 24-hour window ending whenever
+    you ask - measured 2026-09-07 07:17 UTC it spanned 09-06 10:32 to 09-07 05:50 - so
+    a value read from it cannot be graded later, because the window has moved. This
+    asks fdsnws for an explicit UTC calendar day.
+
+    Today is never counted: a day still in progress always reads low.
+    """
+    from datetime import datetime, timedelta, timezone
+    day = datetime.now(timezone.utc).date() - timedelta(days=1)
+    nxt = day + timedelta(days=1)
+    raw = _get("https://earthquake.usgs.gov/fdsnws/event/1/count",
+               params={"format": "geojson",
+                       "starttime": f"{day.isoformat()}T00:00:00",
+                       "endtime": f"{nxt.isoformat()}T00:00:00",
+                       "minmagnitude": 4.5},
+               timeout=30)
+    if not raw:
+        return {}
+    try:
+        d = raw if isinstance(raw, dict) else json.loads(str(raw))
+        n = int(d["count"])
+        # maxAllowed is a QUOTA that looks like a count. Hitting it means the response
+        # is truncated, and a truncated response is not a number.
+        if n >= int(d.get("maxAllowed", 20000)):
+            return {}
+    except Exception:
+        return {}
+    return {"quake_m45_count": n, "last_date": day.isoformat(),
+            "min_magnitude": 4.5}
+
+
+# ---------------------------------------------------------------------------
 # 2. Global temperature anomaly — NASA GISTEMP
 # ---------------------------------------------------------------------------
 
@@ -842,6 +880,7 @@ _SECTIONS = [
     ("co2",          fetch_co2,          "NOAA Mauna Loa CO2"),
     ("temperature",  fetch_gistemp,      "NASA GISTEMP"),
     ("sea_level",    fetch_sea_level,    "NOAA Satellite Altimetry"),
+    ("quakes",       fetch_usgs_quakes,  "USGS fdsnws — M4.5+ per UTC day"),
     ("biodiversity", fetch_gbif,         "GBIF"),
     ("food",         fetch_food,         "World Bank WDI — Food"),
     ("waste",        fetch_waste,        "UN SDG + World Bank — Waste"),
