@@ -20,7 +20,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 from tools.market_bet import (dates_in, disagreement, grounded_gate,  # noqa: E402
-                              normalise, parse_completion, parse_signal_indices,
+                              normalise, parse_completion, parse_grounded_completion,
+                              parse_signal_indices,
                               render_evidence, segment_snippets, segment_text,
                               signal_dated_after, signal_grounded, signal_polarity)
 
@@ -43,14 +44,19 @@ class Sn:
     dated: bool = True
 
 
-def _c(direction="UP", signal=FACT_SEG, driver="MACRO",
-       logic="higher yields weigh on equities", deadline=DEADLINE):
-    return (f"DIRECTION: {direction}\nDEADLINE: {deadline}\n"
-            f"RATIONALE: DRIVER {driver} | SIGNAL {signal} | LOGIC {logic}")
+def _c(direction="UP", signal=FACT_SEG, relevance="a broad US equity fund",
+       mechanism="higher yields weigh on equities", deadline=DEADLINE):
+    """The R50 contract: EVENT -> RELEVANCE -> MECHANISM -> DIRECTION, direction LAST.
+
+    The keyword is still called `signal` so the R49 index tests below read unchanged.
+    What moved is where the field sits in the answer, not what it means.
+    """
+    return (f"DEADLINE: {deadline}\nEVENT: {signal}\nRELEVANCE: {relevance}\n"
+            f"MECHANISM: {mechanism}\nDIRECTION: {direction}")
 
 
 def _g(*comps, snippets=(Sn(),), deadline=DEADLINE):
-    return grounded_gate([parse_completion(c) for c in comps], "SPY", deadline,
+    return grounded_gate([parse_grounded_completion(c) for c in comps], "SPY", deadline,
                          list(snippets))
 
 
@@ -58,8 +64,8 @@ def _g(*comps, snippets=(Sn(),), deadline=DEADLINE):
 def test_an_in_range_index_is_admitted_with_the_exact_sentence_text():
     r = _g(_c(signal=FACT_SEG))[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
-    assert r["parsed"]["signal_indices"] == [FACT_SEG]
-    assert r["parsed"]["signal_text"] == FACT
+    assert r["parsed"]["event_indices"] == [FACT_SEG]
+    assert r["parsed"]["event_text"] == FACT
     assert r["evidence"]["segment_text"] == FACT
 
 
@@ -82,8 +88,8 @@ def test_the_title_is_a_selectable_segment_like_any_other():
 def test_bracketed_and_multiple_indices_are_accepted():
     r = _g(_c(signal="[1] and [2]"))[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
-    assert r["parsed"]["signal_indices"] == [1, 2]
-    assert r["parsed"]["signal_text"] == f"US inflation ticks up {FACT}"
+    assert r["parsed"]["event_indices"] == [1, 2]
+    assert r["parsed"]["event_text"] == f"US inflation ticks up {FACT}"
     assert r["evidence"]["spans_multiple_sources"] is False
 
 
@@ -102,7 +108,7 @@ def test_an_out_of_range_index_is_refused():
     for bad in (0, 3, 99):
         r = _g(_c(signal=bad))[0]
         assert r["verdict"] == "REFUSED", bad
-        assert "signal_index" in r["missing"]
+        assert "event_index" in r["missing"]
         assert "out of range" in r["refusal"]
 
 
@@ -113,13 +119,13 @@ def test_a_sign_or_a_range_is_refused_rather_than_guessed():
     for bad in ("-1", "1-2", "1 to 2"):
         r = _g(_c(signal=bad))[0]
         assert r["verdict"] == "REFUSED", bad
-        assert "signal_index" in r["missing"]
+        assert "event_index" in r["missing"]
 
 
 def test_an_empty_index_is_refused():
     r = _g(_c(signal="   "))[0]
     assert r["verdict"] == "REFUSED"
-    assert "signal_index" in r["missing"]
+    assert "event_index" in r["missing"]
 
 
 def test_free_text_in_the_signal_field_is_refused_even_when_it_is_a_true_quote():
@@ -128,7 +134,7 @@ def test_free_text_in_the_signal_field_is_refused_even_when_it_is_a_true_quote()
     carries a number and text in it cannot be trusted to be verbatim."""
     r = _g(_c(signal=FACT))[0]
     assert r["verdict"] == "REFUSED"
-    assert "signal_index" in r["missing"]
+    assert "event_index" in r["missing"]
     assert "prose, not a segment number" in r["refusal"]
 
 
@@ -140,33 +146,21 @@ def test_a_paraphrase_is_refused_as_prose():
                  "the BLS reported a 0.3% August CPI rise"):
         r = _g(_c(signal=para))[0]
         assert r["verdict"] == "REFUSED", para
-        assert "signal_index" in r["missing"]
+        assert "event_index" in r["missing"]
 
 
-def test_the_live_logic_spill_now_parses_instead_of_refusing():
-    """THE LIVE SHAPE, and the point of the parser fix. Three of the eight R48
-    candidates wrote 'SIGNAL <x> LOGIC: <y>' with no pipe. The old parser split on the
-    pipe alone, so LOGIC was swallowed into SIGNAL and logic came back None — silently.
-    Now the field markers do the splitting and the answer is simply correct."""
+def test_the_pipe_rationale_no_longer_reaches_this_gate_at_all():
+    """R49's DRIVER|SIGNAL|LOGIC line was replaced by four ordered fields, so the
+    grounded gate no longer speaks it. The parser-level coverage of that format did not
+    disappear — it lives in test_market_bet.py with the ungrounded path that still
+    uses it."""
     raw = (f"DIRECTION: UP\nDEADLINE: {DEADLINE}\n"
-           f"RATIONALE: DRIVER MACRO | SIGNAL 2 LOGIC: a hotter print lifts yields")
+           f"RATIONALE: DRIVER MACRO | SIGNAL 2 | LOGIC a hotter print lifts yields")
     p = parse_completion(raw)
-    assert p["signal"] == "2"
-    assert p["logic"] == "a hotter print lifts yields"
-    assert p["rationale_parsed_by"] == "markers"   # repaired, and visibly so
-    assert p["rationale_problem"] is None
-    r = _g(raw)[0]
-    assert r["verdict"] == "ADMITTED", r.get("refusal")
-    assert r["parsed"]["signal_indices"] == [FACT_SEG]
-
-
-def test_two_logic_markers_are_refused_rather_than_picked_between():
-    """Choosing one of two candidate reasons is the module deciding what the model
-    meant. Named refusal instead."""
-    r = _g(_c(signal="2 LOGIC: the index will rise"))[0]   # _c appends its own LOGIC
+    assert p["signal"] == "2" and p["logic"]        # the old parser still works
+    r = _g(raw)[0]                                   # the new gate refuses it
     assert r["verdict"] == "REFUSED"
-    assert "rationale_format" in r["missing"]
-    assert "more than once" in r["refusal"]
+    assert "field_order" in r["missing"]
 
 
 def test_the_index_parser_reports_range_and_prose_separately():
@@ -233,8 +227,12 @@ def test_the_worked_example_in_the_prompt_would_be_admitted():
                                   evidence="", deadline=DEADLINE)
     example = body.split("A correct answer is:", 1)[1]
     lines = [ln for ln in example.splitlines()
-             if ln.startswith(("DIRECTION:", "DEADLINE:", "RATIONALE:"))]
-    assert len(lines) == 3, example
+             if ln.startswith(("DEADLINE:", "EVENT:", "RELEVANCE:",
+                               "MECHANISM:", "DIRECTION:"))]
+    assert len(lines) == 5, example
+    # Each field must sit on ONE line. A wrapped example teaches wrapping, and a
+    # wrapped RELEVANCE would silently lose its second half to the parser.
+    assert lines[-1].startswith("DIRECTION:")
 
     # The three segments the example's own evidence block prints.
     demo = [Sn(title="US inflation ticks up",
@@ -246,9 +244,10 @@ def test_the_worked_example_in_the_prompt_would_be_admitted():
         "CPI rose 0.3% in August, the Bureau of Labor Statistics said on Friday.",
         "Treasury yields climbed across the curve after the release."]
 
-    r = grounded_gate([parse_completion("\n".join(lines))], "SPY", DEADLINE, demo)[0]
+    r = grounded_gate([parse_grounded_completion("\n".join(lines))], "SPY", DEADLINE,
+                      demo)[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
-    assert r["parsed"]["signal_indices"] == [2]
+    assert r["parsed"]["event_indices"] == [2]
     assert r["evidence"]["segment_text"].startswith("CPI rose 0.3% in August")
 
 
@@ -258,8 +257,13 @@ def test_the_worked_example_shows_a_number_and_not_the_sentence():
     from tools.market_bet import GROUNDED_PROMPT
 
     answer = GROUNDED_PROMPT.split("A correct answer is:", 1)[1].split("Note what")[0]
-    assert "SIGNAL 2" in answer
+    assert "EVENT: 2" in answer
     assert "CPI rose 0.3%" not in answer
+    # and it must END on DIRECTION, because that is the whole lesson
+    keys = [ln.split(":", 1)[0].strip() for ln in answer.splitlines()
+            if ln.split(":", 1)[0].strip() in
+            ("DEADLINE", "EVENT", "RELEVANCE", "MECHANISM", "DIRECTION")]
+    assert keys[-1] == "DIRECTION" and keys.index("EVENT") < keys.index("DIRECTION")
 
 
 def test_normalisation_still_refuses_a_paraphrase():
@@ -318,7 +322,7 @@ def test_the_rendered_block_prints_the_same_numbers_the_gate_reads():
 def test_a_plausible_signal_that_appears_in_no_snippet_is_refused():
     r = _g(_c(signal="Nonfarm payrolls +150k, BLS 5 Sep"))[0]
     assert r["verdict"] == "REFUSED"
-    assert "signal_index" in r["missing"]
+    assert "event_index" in r["missing"]
 
 
 # ── 11. dated after the graded session ──────────────────────────────────────
@@ -333,9 +337,10 @@ def test_a_signal_dated_after_the_graded_session_is_refused():
     snippets = [Sn(snippet=sig, title="Fed calendar update")]
     segs = segment_snippets(snippets)
     idx = [t["index"] for t in segs if t["text"] == sig][0]
-    r = grounded_gate([parse_completion(_c(signal=idx))], "SPY", DEADLINE, snippets)[0]
+    r = grounded_gate([parse_grounded_completion(_c(signal=idx))], "SPY", DEADLINE,
+                      snippets)[0]
     assert r["verdict"] == "REFUSED"
-    assert "signal_date" in r["missing"]
+    assert "event_date" in r["missing"]
     assert "cannot have driven" in r["refusal"]
 
 
@@ -408,7 +413,8 @@ def test_every_candidate_the_7_sep_gate_admitted_is_refused_by_the_grounded_gate
     for f in fab:
         comp = (f"DIRECTION: {f['direction']}\nDEADLINE: {f['deadline']}\n"
                 f"RATIONALE: {f['rationale']}")
-        r = grounded_gate([parse_completion(comp)], f["asset"], f["deadline"], snippets)[0]
+        r = grounded_gate([parse_grounded_completion(comp)], f["asset"],
+                          f["deadline"], snippets)[0]
         (refused if r["verdict"] == "REFUSED" else admitted).append(
             (f["asset"], f["signal"], r.get("refusal")))
 
@@ -416,10 +422,11 @@ def test_every_candidate_the_7_sep_gate_admitted_is_refused_by_the_grounded_gate
         f"{len(admitted)} of the 7 Sep fabrications still pass:\n  "
         + "\n  ".join(f"{a}: {s}" for a, s, _ in admitted))
     assert len(refused) == 22
-    # Under R49 they die a step EARLIER than they did under R48: every one of them is
-    # free text, and the SIGNAL field now carries a number. The invented facts never
-    # reach the substring check at all.
-    assert all("signal_index" in (why or "") for _, _, why in refused)
+    # Under R50 they die a step earlier still. Every fabrication was written to the
+    # DIRECTION-first contract, so it is now the WRONG CONTRACT and never reaches the
+    # index check, let alone the substring check. Three rounds of gate, and the same
+    # 22 answers fail all three for three different and increasingly early reasons.
+    assert all("field_order" in (why or "") for _, _, why in refused)
 
 
 # ── 16. prediction only ─────────────────────────────────────────────────────
@@ -461,7 +468,7 @@ def test_an_undated_snippet_can_carry_the_evidence_without_crashing():
     undated evidence reached it."""
     undated = Sn(published_utc="", dated=False, host="fool.com",
                  source_class="adversarial", source_kind="advisory with positions")
-    r = grounded_gate([parse_completion(_c(signal=FACT_SEG))],
+    r = grounded_gate([parse_grounded_completion(_c(signal=FACT_SEG))],
                       "SPY", DEADLINE, [undated])[0]
     assert r["verdict"] == "ADMITTED"
     assert r["evidence"]["published_utc"] is None
@@ -484,8 +491,8 @@ def test_a_polarity_mismatch_is_flagged_and_still_admitted():
     bearish = "But the next stock market downturn is only a matter of time."
     snippets = [Sn(snippet=bearish, title="If a crash is coming")]
     idx = [t["index"] for t in segment_snippets(snippets) if t["text"] == bearish][0]
-    r = grounded_gate([parse_completion(_c("UP", signal=idx))], "SPY", DEADLINE,
-                      snippets)[0]
+    r = grounded_gate([parse_grounded_completion(_c("UP", signal=idx))], "SPY",
+                      DEADLINE, snippets)[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
     assert r["coherence"]["flag"] == "DIRECTION_POLARITY_MISMATCH"
     assert r["coherence"]["signal_polarity"] == "NEGATIVE"
@@ -496,8 +503,8 @@ def test_a_polarity_mismatch_is_flagged_and_still_admitted():
 def test_a_coherent_bet_carries_the_triple_with_no_flag():
     snippets = [Sn(snippet="The S&P 500 rose and gains climbed to a record high.",
                    title="Stocks rally hard today")]
-    r = grounded_gate([parse_completion(_c("UP", signal=2))], "SPY", DEADLINE,
-                      snippets)[0]
+    r = grounded_gate([parse_grounded_completion(_c("UP", signal=2))], "SPY",
+                      DEADLINE, snippets)[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
     assert r["coherence"]["signal_polarity"] == "POSITIVE"
     assert r["coherence"]["flag"] is None
@@ -512,8 +519,8 @@ def test_a_neutral_signal_is_never_flagged():
     flat = [Sn(snippet="Nike leaves the S&P 100 on Friday and Dell takes its place.",
                title="Index membership changes at the quarterly rebalance")]
     for direction in ("UP", "DOWN"):
-        r = grounded_gate([parse_completion(_c(direction, signal=2))], "SPY",
-                          DEADLINE, flat)[0]
+        r = grounded_gate([parse_grounded_completion(_c(direction, signal=2))],
+                          "SPY", DEADLINE, flat)[0]
         assert r["verdict"] == "ADMITTED", r.get("refusal")
         assert r["coherence"]["signal_polarity"] == "NEUTRAL"
         assert r["coherence"]["flag"] is None
@@ -537,9 +544,11 @@ def test_the_polarity_is_scored_on_the_selected_span_not_on_what_the_model_wrote
     choosing words, because it does not choose the words."""
     snippets = [Sn(snippet="The index fell sharply and losses deepened.",
                    title="Selloff deepens on the day")]
-    comp = ("DIRECTION: UP\nDEADLINE: " + DEADLINE + "\nRATIONALE: DRIVER MACRO | "
-            "SIGNAL 2 | LOGIC everything is wonderful and rallies and gains are up")
-    r = grounded_gate([parse_completion(comp)], "SPY", DEADLINE, snippets)[0]
+    comp = _c("UP", signal=2,
+              relevance="everything is wonderful and gains rally to a record high",
+              mechanism="the advance climbs higher and strength beats every estimate")
+    r = grounded_gate([parse_grounded_completion(comp)], "SPY", DEADLINE, snippets)[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
     assert r["coherence"]["signal_polarity"] == "NEGATIVE"
     assert r["coherence"]["flag"] == "DIRECTION_POLARITY_MISMATCH"
 

@@ -108,10 +108,8 @@ A correct answer is:
 
 DEADLINE: {deadline}
 EVENT: 2
-RELEVANCE: {sym} is a broad US equity fund, so a national inflation print reprices its
-whole basket rather than one sector of it.
-MECHANISM: a hotter print lifts real yields, which raises the discount rate applied to
-equity cash flows.
+RELEVANCE: {sym} holds the whole US large-cap basket, so a national print reprices all of it.
+MECHANISM: a hotter print lifts real yields, which discount equity cash flows harder.
 DIRECTION: DOWN
 
 Note what it does NOT do. It does not write the sentence out — it writes the number. And
@@ -810,28 +808,60 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
     snippets when not supplied, so the gate and the prompt cannot silently disagree
     about what number 4 was — but the caller should pass the same table it rendered.
     """
-    # The shape heuristic is OFF here: grounding supersedes it, and keeping both
-    # would refuse a genuine quote whose date lives in the document rather than in
-    # the sentence. Found by test, not by reasoning - three tests failed with
-    # missing=["signal"] where they expected missing=["grounding"].
-    records = gate_all(parsed_list, sym, deadline, require_signal_shape=False)
+    # THE ORDER IS CHECKED BEFORE ANYTHING ELSE, because an answer in the wrong order
+    # is the wrong contract, and grading its content would be grading a different
+    # question than the one asked. gate_all is NOT used here any more: it speaks the
+    # DIRECTION-first shape with its DRIVER|SIGNAL|LOGIC rationale, and the two
+    # contracts no longer have fields in common beyond DIRECTION and DEADLINE.
     segments = segment_snippets(snippets) if segments is None else segments
-    for rec in records:
+    records = []
+    for p in parsed_list:
+        rec = {"raw": p["raw"], "parsed": {k: v for k, v in p.items() if k != "raw"},
+               "verdict": "ADMITTED", "missing": [], "refusal": None}
+        records.append(rec)
+
+        if p.get("order_problem"):
+            rec.update(verdict="REFUSED", missing=["field_order"],
+                       refusal=(f"field_order: {p['order_problem']} The contract is "
+                                f"{' -> '.join(GROUNDED_CONTRACT)}, with DIRECTION "
+                                f"LAST so that it is conditioned on the reasoning "
+                                f"rather than followed by it."))
+            continue
+        d = (p.get("direction") or "").upper()
+        if d not in DIRECTIONS:
+            rec.update(verdict="REFUSED", missing=["direction"],
+                       refusal=(f"direction: {p.get('direction')!r} is not a direction. "
+                                f"UP or DOWN, and nothing else, can be graded."))
+            continue
+        for field in ("relevance", "mechanism"):
+            if not str(p.get(field) or "").strip():
+                rec.update(verdict="REFUSED", missing=[field],
+                           refusal=(f"{field}: empty. RELEVANCE and MECHANISM are the "
+                                    f"two steps that make DIRECTION a conclusion "
+                                    f"rather than a guess; an empty one is a step of "
+                                    f"the reasoning that was skipped."))
+                break
         if rec["verdict"] != "ADMITTED":
             continue
-        sig = rec["parsed"].get("signal")
+        if str(p.get("deadline") or "").strip() != deadline:
+            rec.update(verdict="REFUSED", missing=["deadline"],
+                       refusal=(f"deadline: {p.get('deadline')!r} is not the graded "
+                                f"session {deadline!r}."))
+            continue
 
-        idxs, why = parse_signal_indices(sig, len(segments))
+        idxs, why = parse_signal_indices(p.get("event"), len(segments))
         if why is not None:
-            rec.update(verdict="REFUSED", missing=["signal_index"], refusal=why)
+            rec.update(verdict="REFUSED", missing=["event_index"],
+                       refusal=why.replace("signal_index:", "event_index:")
+                                  .replace("SIGNAL", "EVENT"))
             continue
         text, chosen = signal_from_indices(idxs, segments)
-        rec["parsed"]["signal_indices"] = idxs
-        rec["parsed"]["signal_text"] = text
+        rec["parsed"]["event_indices"] = idxs
+        rec["parsed"]["event_text"] = text
 
         if signal_dated_after(text, deadline):
-            rec.update(verdict="REFUSED", missing=["signal_date"],
-                       refusal=(f"signal_date: segment {idxs} — {text!r} — names a date "
+            rec.update(verdict="REFUSED", missing=["event_date"],
+                       refusal=(f"event_date: segment {idxs} — {text!r} — names a date "
                                 f"after the graded session {deadline}. A fact that has "
                                 f"not happened cannot have driven the price."))
             continue
@@ -872,11 +902,13 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
             "spans_multiple_sources": len({t["source"] for t in chosen}) > 1,
         }
 
-        # PIECE 4. Computed AFTER the verdict is settled and never able to change it.
-        # Written here rather than in the caller so every admitted candidate carries
-        # it, including the seven that will not be sealed.
-        rec["coherence"] = coherence(rec["parsed"]["direction"], text,
-                                     rec["parsed"].get("rationale"))
+        # R49 PIECE 4, UNCHANGED IN KIND. Computed AFTER the verdict is settled and
+        # never able to change it. The rationale it records is now the model's own two
+        # sentences rather than a pipe-separated line - which is what the flag was
+        # always about: does the stated reasoning point the same way as the answer.
+        rec["coherence"] = coherence(
+            rec["parsed"]["direction"], text,
+            f"RELEVANCE {p.get('relevance')} | MECHANISM {p.get('mechanism')}")
     return records
 
 
