@@ -21,7 +21,6 @@
     "docs": "https://ucdp.uu.se/apidocs/",
     "verified_by": "curl probe 2026-07-13: /api/ucdpprioconflict/26.1 -> 401 'API token required'",
     "recheck_after": "2027-01-01",
-
     "interim_local_fallback": {
       "status": "ACTIVE since 2026-07-13 — the axis is LIT, not dark",
       "why": "The token request is pending (maintainer away until Aug 2026), but the full datasets are freely downloadable without a key from https://ucdp.uu.se/downloads/. UCDP/PRIO ACD is a YEARLY release, so a one-time local snapshot is not a staleness risk: there is nothing newer to fetch until the next annual release.",
@@ -30,5 +29,17 @@
       "precedence": "If UCDP_ACCESS_TOKEN appears, the live API wins automatically and the CSV is ignored. No code change needed.",
       "note": "This entry stays NEEDS_AUTH because the API genuinely is gated. The registry describes the API's status, not the axis's."
     }
+  },
+  "tavily": {
+    "status": "NEEDS_AUTH",
+    "since": "2026-09-07",
+    "env_key": "TAVILY_API_KEY",
+    "reason": "Tavily search is key-gated. Registered here so core.source_status.credential_for() can reach TAVILY_API_KEY from .env - nothing in this repo calls load_dotenv, so the key is NOT in os.environ and an unregistered source cannot read it at all.",
+    "how_to_reenable": "TAVILY_API_KEY=<key> in .env (already present as of 2026-09-07).",
+    "docs": "https://docs.tavily.com/",
+    "verified_by": "read-only diagnosis 2026-09-07: TAVILY_API_KEY present in .env, 58 chars, tvly- prefix; TAVILY_API_KEY in os.environ == False; get_status(\"tavily\") was None before this entry.",
+    "recheck_after": "2027-01-01",
+    "used_by": "core/market_news.py — grounded SIGNAL retrieval for the market bet",
+    "refusal_rule": "If the key is absent the discovery is REFUSED BY NAME and is never attempted in a browser. No CAPTCHA handling, no fallback."
   }
 }

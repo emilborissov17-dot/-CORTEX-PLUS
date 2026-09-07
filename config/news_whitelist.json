@@ -1,0 +1,33 @@
+{
+  "_what_this_is": "The ONLY hosts that may supply a SIGNAL for a grounded market bet. A result from any other host is discarded BEFORE the model sees it, and the discarded host is logged — a whitelist that silently drops is a whitelist nobody can audit.",
+
+  "_why_it_exists": "On 2026-09-07 a market bet sealed three forecasts whose every cited fact was invented, because the model was asked for facts it had no way to know. R43 hands it retrieved snippets instead and requires the SIGNAL to be an exact substring of one. That is only worth anything if the snippets come from somewhere accountable.",
+
+  "_classes": "Each host carries a reporter_independence class from the FOUR that already exist in config/reporter_independence.json — self_reported, independent, adversarial, unknown. No fifth class is invented here (CLAUDE.md).",
+
+  "_a_wire_service_is_not_a_primary_source": "Reuters reporting a CPI print is independent of the CPI print. The primary is bls.gov. Both are allowed; the class says which is which, so a bet grounded on a wire story about a statistic is not mistaken for the statistic.",
+
+  "max_age_hours": 48,
+
+  "_max_age_rule": "Older than max_age_hours at FETCH time is discarded. A result with NO published date is ALSO discarded — unknown age is not recent age, and treating it as fresh is how a stale document becomes tomorrow's reason.",
+
+  "hosts": {
+    "reuters.com":         {"class": "independent",   "kind": "wire"},
+    "apnews.com":          {"class": "independent",   "kind": "wire"},
+    "bloomberg.com":       {"class": "independent",   "kind": "financial press"},
+    "wsj.com":             {"class": "independent",   "kind": "financial press"},
+    "ft.com":              {"class": "independent",   "kind": "financial press"},
+    "cnbc.com":            {"class": "independent",   "kind": "financial press"},
+
+    "bls.gov":             {"class": "self_reported", "kind": "primary statistical agency"},
+    "bea.gov":             {"class": "self_reported", "kind": "primary statistical agency"},
+    "federalreserve.gov":  {"class": "self_reported", "kind": "primary, central bank"},
+    "treasury.gov":        {"class": "self_reported", "kind": "primary, government"},
+    "eia.gov":             {"class": "self_reported", "kind": "primary statistical agency"},
+    "sec.gov":             {"class": "self_reported", "kind": "primary, regulator"}
+  },
+
+  "_self_reported_is_not_an_insult": "A statistical agency publishing its own statistic is self_reported by the taxonomy's definition — the measured entity produces the number. It is still the best available source for that number. The class records who measured it, not how much to trust it.",
+
+  "_who_owns_it": "A human. A generated patch that widened this list would be the system granting itself permission to cite whatever it found."
+}
