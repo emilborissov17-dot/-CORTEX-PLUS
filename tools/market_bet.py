@@ -284,6 +284,21 @@ US_MARKET_HOLIDAYS_2026 = frozenset({
 })
 
 
+def seal_path(day: date | None = None, ledger: Path | None = None) -> Path:
+    """Where TODAY's grounded bet is sealed. One file per day, derived, never hardcoded.
+
+    THE OLD TARGET WAS THE LITERAL STRING "BET_2026-09-07_markets_grounded.json", and
+    that file has existed since 3e60956. So from 8 September onward a bare --live either
+    died on FileExistsError, or, with --allow-overwrite, DESTROYED THE SEALED R48 BET -
+    the only live grounded bet on record and the thing tomorrow's grading reads.
+
+    A sealed prediction that a later run can silently overwrite is not sealed. The date
+    in the name is what makes yesterday's bet safe from tonight's run.
+    """
+    d = day or date.today()
+    return (ledger or LEDGER) / f"BET_{d.isoformat()}_markets_grounded.json"
+
+
 def same_file(a, b) -> bool:
     """Do two paths name one file? CASE-INSENSITIVELY, and via the real path.
 
@@ -1386,9 +1401,12 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         if rows and not a.dry_run:
             print(f"  [POLARITY] -> {append_polarity_ledger(rows)}")
 
-    out = Path(a.out or (LEDGER / "BET_2026-09-07_markets_grounded.json"))
+    out = Path(a.out or seal_path())
     if out.exists() and not a.allow_overwrite:
-        raise FileExistsError(f"{out} already holds a sealed bet.")
+        raise FileExistsError(
+            f"{out} already holds a sealed bet for today. Pass --allow-overwrite ONLY "
+            f"for a deliberate same-day re-seal; a different day gets a different file "
+            f"automatically, so this can no longer reach yesterday's bet.")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({
         "ts": datetime.now().astimezone().isoformat(timespec="seconds"),
