@@ -257,20 +257,47 @@ def seal_bet(records, series_id: str, v0: float, v0_date: str, ref_delta,
 
 
 # ── generation (NEVER called by the tests) ──────────────────────────────────
-def generate_completions(prompt: str, n: int = N_COMPLETIONS,
-                         temperature: float = TEMPERATURE) -> list:
-    """N completions from the local 3B via core.brain.think.
+MODEL_PIN = "qwen2.5:3b"        # the spec says the local 3B. It is pinned, not picked.
 
-    Imported lazily and only from main(): the guard tests must never touch a model,
-    and this must not run while the 03:04 cycle holds the GPU.
+
+def generate_completions(prompt: str, n: int = N_COMPLETIONS,
+                         temperature: float = TEMPERATURE,
+                         model: str = MODEL_PIN) -> list:
+    """N sampled completions from ONE prompt, on ONE pinned model.
+
+    THE DEFECT THIS FIXES (void run, 7 Sep). The first attempt called
+    core.brain.think(question=prompt) N times and got FOUR DISTINCT PROMPT HASHES
+    across eight calls - brain.think folds rotating context (memory, self-state,
+    exemplars) into what it sends - and it silently chose qwen3:8b when the spec said
+    the 3B. So it was neither best-of-N nor the specified model: eight samples from a
+    forecaster whose question kept changing, then a "best" selected across candidates
+    that were never asked the same thing.
+
+    Both halves are fixed here. The prompt is built by the CALLER and sent verbatim
+    through the raw backend, so every call sends identical bytes; and the model is
+    pinned by name rather than left to the ladder. `prompt_sha` in
+    memory/llm_provenance.jsonl must therefore be a single value across all N, which
+    test_all_completions_share_one_prompt_hash asserts by capturing what is sent.
     """
-    from core.brain import think
-    out = []
-    for _ in range(n):
-        r = think(role="forecaster", question=prompt, kind="first_bet",
-                  remember_it=False, temperature=temperature)
-        out.append("" if r is None else str(r.get("text") or r))
-    return out
+    return [_ask_once(prompt, model, temperature) for _ in range(n)]
+
+
+def _ask_once(prompt: str, model: str, temperature: float, timeout: int = 300) -> str:
+    """One completion, sent verbatim to ollama's /api/chat.
+
+    Deliberately NOT core.brain.think(): think() prepends memory, self-state and a
+    language pin, all of which rotate between calls, and it re-picks the model on a
+    ladder. Both are right for the cycle and wrong for best-of-N, where every draw has
+    to come from the same question and the same model.
+    """
+    import requests
+    r = requests.post(
+        "http://localhost:11434/api/chat", timeout=timeout,
+        json={"model": model, "stream": False,
+              "messages": [{"role": "user", "content": prompt}],
+              "options": {"temperature": temperature}})
+    r.raise_for_status()
+    return str((r.json().get("message") or {}).get("content") or "")
 
 
 def _gpu_used_mib():

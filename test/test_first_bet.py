@@ -353,3 +353,82 @@ def test_sealing_twice_on_the_same_day_refuses_rather_than_clobbering(tmp_path):
                  today=TODAY, ledger_dir=tmp_path)
     seal_bet(recs, series_id=SERIES, v0=15.0, v0_date="2026-09-06", ref_delta=1.0,
              today=TODAY, ledger_dir=tmp_path, allow_overwrite=True)
+
+
+# ── best-of-N: ONE prompt, N draws, ONE pinned model (fixed 7 Sep) ──────────
+def test_all_completions_share_one_prompt_hash(monkeypatch):
+    """THE DEFECT THIS FIXES. The void run produced FOUR distinct prompt hashes across
+    eight calls, because core.brain.think() folds rotating context into the question —
+    so it was never best-of-N. Every draw must now send identical bytes."""
+    import hashlib
+
+    import tools.first_bet as fb
+    seen = []
+
+    def fake_post(url, timeout=None, json=None):
+        seen.append(json)
+
+        class R:
+            @staticmethod
+            def raise_for_status():
+                pass
+
+            @staticmethod
+            def json():
+                return {"message": {"content": "INDICATOR: X"}}
+        return R()
+
+    import requests
+    monkeypatch.setattr(requests, "post", fake_post)
+    out = fb.generate_completions("ONE FIXED PROMPT", n=8, temperature=0.7)
+    assert len(out) == 8
+    hashes = {hashlib.sha256(
+        b["messages"][0]["content"].encode("utf-8")).hexdigest() for b in seen}
+    assert len(hashes) == 1, f"{len(hashes)} distinct prompt hashes across 8 calls"
+
+
+def test_the_model_is_pinned_and_is_the_3B(monkeypatch):
+    import tools.first_bet as fb
+    seen = []
+
+    def fake_post(url, timeout=None, json=None):
+        seen.append(json)
+
+        class R:
+            @staticmethod
+            def raise_for_status():
+                pass
+
+            @staticmethod
+            def json():
+                return {"message": {"content": "x"}}
+        return R()
+
+    import requests
+    monkeypatch.setattr(requests, "post", fake_post)
+    fb.generate_completions("P", n=4, temperature=0.7)
+    assert {b["model"] for b in seen} == {"qwen2.5:3b"} == {fb.MODEL_PIN}
+    assert {b["options"]["temperature"] for b in seen} == {0.7}
+
+
+def test_generation_does_not_route_through_brain_think():
+    """brain.think() is right for the cycle and wrong for best-of-N: it prepends
+    memory and a language pin, and it re-picks the model on a ladder."""
+    import ast
+    import inspect
+
+    import tools.first_bet as fb
+    # STRIP THE DOCSTRINGS FIRST. The first version of this test grepped the raw
+    # source and failed on its own explanation - the docstring names brain.think in
+    # order to say why it is NOT used. A test that cannot tell prose from code is
+    # testing the comments.
+    for fn in (fb.generate_completions, fb._ask_once):
+        tree = ast.parse(inspect.getsource(fn).lstrip())
+        for node in ast.walk(tree):
+            if isinstance(node, (ast.FunctionDef, ast.Module)):
+                if (node.body and isinstance(node.body[0], ast.Expr)
+                        and isinstance(node.body[0].value, ast.Constant)):
+                    node.body.pop(0)
+        code = ast.unparse(tree)
+        assert "brain" not in code, f"{fn.__name__} still routes through brain"
+        assert "think(" not in code
