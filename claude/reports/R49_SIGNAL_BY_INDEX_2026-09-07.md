@@ -94,11 +94,42 @@ place reading as if it did something.
   imports the changed modules.
 - The 22 `f41a7fd` fabrications are still refused, now a step *earlier*: they are free
   text, and free text is no longer a citation at all.
-- **UNVERIFIED:** the whole `test/` directory. It hangs on pre-existing
-  network-touching tests, and `test/test_grounding_locate.py` breaks pytest collection
-  with `SystemExit` — both confirmed present on the commit before this work by stashing.
-  To close the loop:
-  `PYTHONIOENCODING=utf-8 venv/Scripts/python.exe -m pytest test/ -q --ignore=test/test_grounding_locate.py`
+### The full suite — a correction
+
+An earlier draft of this report said `test/` "hangs on pre-existing network-touching
+tests." **That was wrong.** It does not hang; it takes about 29 minutes, and a 590-second
+tool timeout was misread as a hang. Two independent full runs agree exactly:
+
+```
+35 failed, 4036 passed, 14 skipped, 6 xfailed, 1 error in 1713s (0:28:33)
+35 failed, 4036 passed, 14 skipped, 6 xfailed          in 1727s (0:28:46)
+```
+
+**None of the 35 is caused by R49**, and the argument is causal rather than statistical.
+The whole diff is three files — `tools/market_bet.py`, `test/test_grounded_gate.py` and
+this report — so a test can only be affected if it reads one of them or scans the tree
+they sit in. Both sets were enumerated and run:
+
+| set | result |
+|---|---|
+| every file importing the changed modules (`test_grounded_gate`, `test_market_bet`, `test_market_news`, `test_first_bet`, `test_gdelt_daily`, `test_usgs_quakes`, `test_orchestrator_grounded`) | **160 passed** |
+| every repo-scanning test that walks `tools/` (`test_compass_wired`, `test_launch_detached_encoding`, `test_resolve_ideas_*`, `test_seed_boundary`, `test_verifier_inputs`) | **70 passed, 1 failed** — `test_every_verifier_declares_what_it_reads`, on undeclared `core.notary.VERIFIERS` steps (`browser_scout`, `global_indicators`, …). Unrelated, and long-standing by its own error text. |
+| `test_script_suite` (repo-wide style scan) | 21 passed, 5 failed — all on other people's files; **`tools/market_bet.py` and `test/test_grounded_gate.py` are not in its parametrisation at all** |
+
+**Still UNVERIFIED:** the *identity* of every one of the 35. Both full runs truncated
+their captured output to the last ten `FAILED` lines, and `-rf` prints only on
+completion. The ten that were visible are all unrelated (`test_proposal_sla`,
+`test_scanner_never_invents_a_score`, `test_script_suite`, `test_small_truths`,
+`test_verifier_inputs`). To enumerate the rest:
+
+```
+PYTHONIOENCODING=utf-8 venv/Scripts/python.exe -m pytest test/ -v --tb=no | grep FAILED
+```
+
+Two files in `test/` are scripts, not pytest modules: `test_grounding_locate.py` and
+`test_origin_honesty.py` both call `sys.exit()` at import and break collection with
+`INTERNALERROR` when named directly. Confirmed present on the commit before this work by
+stashing. Run them as scripts instead.
 
 ## Dry run
 
