@@ -204,6 +204,46 @@ def test_every_dash_and_quote_variant_folds_to_one():
     assert normalise("a″b") == "a''b"
 
 
+# ── R49 PIECE 3: the worked example must itself pass the gate ──────────────
+def test_the_worked_example_in_the_prompt_would_be_admitted():
+    """A worked example that the gate would refuse teaches the model to fail. The
+    example is lifted out of the prompt itself, so it cannot drift away from the
+    contract it is demonstrating."""
+    from tools.market_bet import GROUNDED_PROMPT
+
+    body = GROUNDED_PROMPT.format(sym="SPY", close=1, close_date="2026-09-04",
+                                  evidence="", deadline=DEADLINE)
+    example = body.split("A correct answer is:", 1)[1]
+    lines = [ln for ln in example.splitlines()
+             if ln.startswith(("DIRECTION:", "DEADLINE:", "RATIONALE:"))]
+    assert len(lines) == 3, example
+
+    # The three segments the example's own evidence block prints.
+    demo = [Sn(title="US inflation ticks up",
+               snippet=("CPI rose 0.3% in August, the Bureau of Labor Statistics "
+                        "said on Friday. Treasury yields climbed across the curve "
+                        "after the release."))]
+    assert [t["text"] for t in segment_snippets(demo)][:3] == [
+        "US inflation ticks up",
+        "CPI rose 0.3% in August, the Bureau of Labor Statistics said on Friday.",
+        "Treasury yields climbed across the curve after the release."]
+
+    r = grounded_gate([parse_completion("\n".join(lines))], "SPY", DEADLINE, demo)[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["parsed"]["signal_indices"] == [2]
+    assert r["evidence"]["segment_text"].startswith("CPI rose 0.3% in August")
+
+
+def test_the_worked_example_shows_a_number_and_not_the_sentence():
+    """The failure it is teaching against is retyping the quote, so the example must
+    not contain the quote."""
+    from tools.market_bet import GROUNDED_PROMPT
+
+    answer = GROUNDED_PROMPT.split("A correct answer is:", 1)[1].split("Note what")[0]
+    assert "SIGNAL 2" in answer
+    assert "CPI rose 0.3%" not in answer
+
+
 def test_normalisation_still_refuses_a_paraphrase():
     """Folding a glyph is spelling. Deciding two different sentences are close enough
     is meaning, and that is the thing being refused."""

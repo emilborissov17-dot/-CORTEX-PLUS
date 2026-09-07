@@ -84,6 +84,23 @@ THE SIGNAL IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it,
 join two of them together. Give its number and the sentence is used exactly as printed
 above. You may give more than one number, separated by commas. A number that is not in
 the list above is refused, and so is anything in the SIGNAL field that is not a number.
+
+WORKED EXAMPLE. Suppose the evidence block had ended with:
+
+SOURCE A — reuters.com, class independent (wire), published 2026-09-05
+  [1] US inflation ticks up
+  [2] CPI rose 0.3% in August, the Bureau of Labor Statistics said on Friday.
+  [3] Treasury yields climbed across the curve after the release.
+
+A correct answer is:
+
+DIRECTION: DOWN
+DEADLINE: {deadline}
+RATIONALE: DRIVER MACRO | SIGNAL 2 | LOGIC a hotter inflation print lifts real yields and weighs on equities
+
+Note what it does NOT do. It does not write the sentence out. It does not write
+"SIGNAL CPI rose 0.3% in August". It writes the number, and the three fields are
+separated by | on ONE line.
 """
 
 _DATE_RE = re.compile(
