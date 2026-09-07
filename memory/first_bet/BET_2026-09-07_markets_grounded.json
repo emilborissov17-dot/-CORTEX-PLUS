@@ -1,0 +1,78 @@
+{
+ "ts": "2026-09-07T12:21:39+03:00",
+ "label": "grounded_pair_to_f41a7fd",
+ "kind": "market direction, GROUNDED, PREDICTION ONLY — no trade (§VI)",
+ "model": "qwen2.5:3b",
+ "n_completions": 8,
+ "temperature": 0.7,
+ "deadline": "2026-09-08",
+ "reference_close_date": "2026-09-04",
+ "grading_rule": "the FIRST bar strictly after reference_close_date",
+ "gate": "grounded: SIGNAL must be an exact substring of a retrieved snippet",
+ "baseline_method": "20-trading-day momentum sign",
+ "assets": {
+  "SPY": {
+   "indicator": "MARKET_SPY_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 770.1900024414062
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": null,
+   "outcome": "REFUSED_NO_EVIDENCE",
+   "why": "tavily: no usable evidence for 'SPY' — 12 result(s), 12 dropped (host not on the whitelist (12 allowed); no published date — unknown age is not recent age). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "n_snippets": 0,
+   "candidates": []
+  },
+  "GLD": {
+   "indicator": "MARKET_GLD_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 406.7699890136719
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": null,
+   "outcome": "REFUSED_NO_EVIDENCE",
+   "why": "tavily: no usable evidence for 'GLD' — 8 result(s), 8 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "n_snippets": 0,
+   "candidates": []
+  },
+  "UUP": {
+   "indicator": "MARKET_UUP_CLOSE",
+   "last_close": {
+    "date": "2026-09-04",
+    "adjclose": 28.079999923706055
+   },
+   "deadline": "2026-09-08",
+   "sealed_direction": null,
+   "outcome": "REFUSED_NO_EVIDENCE",
+   "why": "tavily: no usable evidence for 'UUP' — 12 result(s), 12 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "n_snippets": 0,
+   "candidates": []
+  }
+ },
+ "baseline": {
+  "SPY": {
+   "mean_daily_return": -0.0001865106642007343,
+   "sign": "DOWN",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "GLD": {
+   "mean_daily_return": 0.0011700662363152794,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "UUP": {
+   "mean_daily_return": 2.300869514308277e-05,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  }
+ },
+ "outcome": "SEALED — not graded. Grading is +24 h."
+}
