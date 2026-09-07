@@ -284,6 +284,57 @@ US_MARKET_HOLIDAYS_2026 = frozenset({
 })
 
 
+# ── B3: the machine guard, ported from first_bet.py:369-383 ─────────────────
+# tools/first_bet.py refuses to generate while the 03:04 cycle holds the GPU, and its
+# own comment says why: "this is how A3 died four times on 6 September". THAT GUARD WAS
+# NEVER REACHED FROM HERE. market_bet.py imports only MODEL_PIN and
+# generate_completions, never first_bet.main(), so the grounded bet - the one that
+# actually gets sealed - could start eight generations on top of a running cycle.
+#
+# A guard that exists in a sibling script and not on the path that runs is a guard
+# nobody has.
+GPU_BUSY_MIB = 600
+CYCLE_LOCK = REPO / "memory" / "cycle.lock"
+
+
+def gpu_used_mib():
+    """MiB in use, or None when nvidia-smi says nothing.
+
+    NONE IS NOT ZERO. An unknown occupancy is a refusal, not a green light — the same
+    rule first_bet.py states, and the reason it is stated twice is that getting it
+    backwards turns a safety check into a rubber stamp.
+    """
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=30).stdout.strip()
+        return int(out.splitlines()[0].strip())
+    except Exception:                                              # noqa: BLE001
+        return None
+
+
+def machine_is_free(lock_path: Path | None = None, probe=None) -> tuple:
+    """(True, note) when it is safe to generate, else (False, the refusal).
+
+    Checked BEFORE any completion is requested. `probe` and `lock_path` are injectable
+    so the tests never need a GPU or a real lock.
+    """
+    lock = lock_path if lock_path is not None else CYCLE_LOCK
+    if lock.exists():
+        return False, (f"REFUSED: {lock} is present — a cycle is running and owns the "
+                       f"GPU until it seals. Generating now competes with it, which is "
+                       f"how A3 died four times on 6 September. Wait, then re-run.")
+    used = (probe or gpu_used_mib)()
+    if used is None:
+        return False, ("REFUSED: nvidia-smi gave nothing, so GPU occupancy is UNKNOWN. "
+                       "Refusing rather than guessing — an unknown is not a zero.")
+    if used > GPU_BUSY_MIB:
+        return False, (f"REFUSED: {used} MiB already held on the GPU (limit "
+                       f"{GPU_BUSY_MIB}). Something else is using the card.")
+    return True, f"GPU free ({used} MiB), no cycle lock."
+
+
 class BaselineUnavailable(RuntimeError):
     """Fresh prices could not be had. REFUSED, never substituted with a stale file.
 
@@ -1495,6 +1546,15 @@ def main() -> int:
     if not a.dry_run and not a.live:
         print("REFUSED: pass --dry-run <json> or --live. Nothing ran.")
         return 3
+
+    # B3. BEFORE anything is fetched or generated. A refusal after the prices are
+    # pulled and the prompt is built is a refusal that already cost the thing it was
+    # protecting.
+    if a.live:
+        free, note = machine_is_free()
+        print(note)
+        if not free:
+            return 4
 
     if a.dry_run and a.out and same_file(a.dry_run, a.out):
         print(f"REFUSED: --dry-run {a.dry_run!r} and --out {a.out!r} are THE SAME FILE. "
