@@ -151,8 +151,17 @@ def signal_is_external_fact(signal) -> bool:
     return bool(_DATE_RE.search(s) or _SOURCE_RE.search(s))
 
 
-def gate_all(parsed_list, sym: str, deadline: str) -> list:
-    """One record per candidate, each with a verdict and an exact refusal string."""
+def gate_all(parsed_list, sym: str, deadline: str,
+             require_signal_shape: bool = True) -> list:
+    """One record per candidate, each with a verdict and an exact refusal string.
+
+    `require_signal_shape` is the old "does it carry a date or a named source"
+    heuristic. It is a PROXY for "could somebody check this", and R43 replaced the
+    proxy with the thing itself: an exact quote from a retrieved document. Stacking
+    both refuses TRUE quotes - "US inflation ticks up" is a real Reuters headline
+    with a real published date, and it carries neither a date nor a source IN ITS
+    TEXT. So the grounded gate turns this off and the document supplies the date.
+    """
     out = []
     for p in parsed_list:
         rec = {"raw": p["raw"], "parsed": {k: v for k, v in p.items() if k != "raw"}}
@@ -171,7 +180,7 @@ def gate_all(parsed_list, sym: str, deadline: str) -> list:
             rec.update(verdict="REFUSED", missing=["driver"],
                        refusal=(f"driver: {p.get('driver')!r} is not one of "
                                 f"{'|'.join(BUCKETS)}."))
-        elif not signal_is_external_fact(p.get("signal")):
+        elif require_signal_shape and not signal_is_external_fact(p.get("signal")):
             rec.update(verdict="REFUSED", missing=["signal"],
                        refusal=(f"signal: {p.get('signal')!r} is interpretation, not a "
                                 f"dated external fact. A SIGNAL must carry a date or a "
@@ -184,6 +193,133 @@ def gate_all(parsed_list, sym: str, deadline: str) -> list:
             rec.update(verdict="ADMITTED", missing=[], refusal=None)
         out.append(rec)
     return out
+
+
+# ── R43: GROUNDED SIGNALS ───────────────────────────────────────────────────
+# The 7 Sep run sealed three bets whose every cited fact was invented, and the gate
+# admitted 22 of 24 because it checked SHAPE. The model has now stopped supplying facts:
+# it is handed retrieved snippets and its SIGNAL must be an EXACT SUBSTRING of one.
+# Not "similar to", not "supported by" - a substring, or REFUSED.
+
+_MONTHS = {m: i for i, m in enumerate(
+    ["jan", "feb", "mar", "apr", "may", "jun",
+     "jul", "aug", "sep", "oct", "nov", "dec"], start=1)}
+
+# Compiled here rather than inline so the bytes are visible in one place and a
+# mangled escape shows up as an import-time error instead of a silent no-match.
+_ISO_RE = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
+_DAY_MONTH_RE = re.compile(r"\b(\d{1,2})\s+([A-Za-z]{3,9})\b")
+_MONTH_DAY_RE = re.compile(r"\b([A-Za-z]{3,9})\.?\s+(\d{1,2})\b")
+
+
+def normalise(text: str) -> str:
+    """Whitespace-collapsed and case-folded. Nothing else.
+
+    Deliberately NOT stemming, synonyms or fuzzy distance: every one of those turns
+    "the model quoted the document" back into "the model said something like it",
+    which is the property being bought here.
+    """
+    return " ".join(str(text or "").split()).casefold()
+
+
+def signal_grounded(signal, snippets) -> tuple:
+    """(True, snippet) when the signal is an exact substring of one, else (False, None)."""
+    needle = normalise(signal)
+    if len(needle) < 12:
+        return False, None
+    for sn in snippets or []:
+        hay = normalise(getattr(sn, "snippet", None) or (sn or {}).get("snippet", ""))
+        if needle and needle in hay:
+            return True, sn
+        title = normalise(getattr(sn, "title", None) or (sn or {}).get("title", ""))
+        if needle and needle in title:
+            return True, sn
+    return False, None
+
+
+def dates_in(text: str, year: int) -> list:
+    """Every date the text names, as (year, month, day). Best effort, and only used to
+    REFUSE - never to admit.
+
+    THE FIRST VERSION OF THIS FUNCTION MATCHED NOTHING and would have let the Jackson
+    Hole case through a second time. A heredoc wrote a literal BACKSPACE byte (0x08)
+    where \\b belonged and a literal backslash-d where \\d belonged; grep and sed both
+    rendered it as if it were correct, and only inspect.getsource() showed the real
+    bytes. A regex that silently matches nothing is indistinguishable from a document
+    with no dates in it.
+    """
+    out = []
+    t = str(text or "")
+    for m in _ISO_RE.finditer(t):
+        out.append((int(m.group(1)), int(m.group(2)), int(m.group(3))))
+    for m in _DAY_MONTH_RE.finditer(t):
+        mo = _MONTHS.get(m.group(2)[:3].lower())
+        if mo:
+            out.append((year, mo, int(m.group(1))))
+    for m in _MONTH_DAY_RE.finditer(t):
+        mo = _MONTHS.get(m.group(1)[:3].lower())
+        if mo:
+            out.append((year, mo, int(m.group(2))))
+    return out
+
+
+def signal_dated_after(signal, deadline: str) -> bool:
+    """THE JACKSON HOLE CASE. On 7 Sep a bet cited a transcript dated 'Sept 21' - thirteen
+    days AFTER the session it claimed to explain - and the gate admitted it. A fact that
+    has not happened cannot have driven a price."""
+    dl = date.fromisoformat(deadline)
+    for y, mo, d in dates_in(signal, dl.year):
+        try:
+            if date(y, mo, d) > dl:
+                return True
+        except ValueError:
+            continue
+    return False
+
+
+def grounded_gate(parsed_list, sym: str, deadline: str, snippets) -> list:
+    """gate_all, plus grounding. Order matters: cheap structural refusals first, so a
+    malformed answer is not reported as an ungrounded one."""
+    # The shape heuristic is OFF here: grounding supersedes it, and keeping both
+    # would refuse a genuine quote whose date lives in the document rather than in
+    # the sentence. Found by test, not by reasoning - three tests failed with
+    # missing=["signal"] where they expected missing=["grounding"].
+    records = gate_all(parsed_list, sym, deadline, require_signal_shape=False)
+    for rec in records:
+        if rec["verdict"] != "ADMITTED":
+            continue
+        sig = rec["parsed"].get("signal")
+        if signal_dated_after(sig, deadline):
+            rec.update(verdict="REFUSED", missing=["signal_date"],
+                       refusal=(f"signal_date: {sig!r} names a date after the graded "
+                                f"session {deadline}. A fact that has not happened "
+                                f"cannot have driven the price."))
+            continue
+        ok, sn = signal_grounded(sig, snippets)
+        if not ok:
+            rec.update(verdict="REFUSED", missing=["grounding"],
+                       refusal=(f"grounding: {sig!r} is not an exact substring of any "
+                                f"retrieved snippet ({len(snippets or [])} available). "
+                                f"A SIGNAL must be quoted from a document that exists."))
+            continue
+        rec["evidence"] = {
+            "url": getattr(sn, "url", None) or sn.get("url"),
+            "published_utc": getattr(sn, "published_utc", None) or sn.get("published_utc"),
+            "host": getattr(sn, "host", None) or sn.get("host"),
+        }
+    return records
+
+
+def disagreement(records) -> str:
+    """NO_DISAGREEMENT when every passing candidate says the same thing.
+
+    All 24 completions said UP on 7 Sep and the record called it a majority. Best-of-N
+    over a constant selected nothing, and that must be named rather than dressed.
+    """
+    dirs = {r["parsed"]["direction"] for r in records if r["verdict"] == "ADMITTED"}
+    if not dirs:
+        return "NO_PASSING_CANDIDATE"
+    return "DISAGREEMENT" if len(dirs) > 1 else "NO_DISAGREEMENT"
 
 
 def choose(records) -> tuple:
