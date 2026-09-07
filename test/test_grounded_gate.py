@@ -172,6 +172,50 @@ def test_a_too_short_signal_cannot_ground_itself_on_a_common_word():
     assert signal_grounded("in August", [Sn()])[0] is False
 
 
+# ── R49 PIECE 2: normalisation before any string comparison ─────────────────
+def test_a_punctuation_only_difference_now_matches():
+    """Under R48 this was a REFUSAL that read 'not an exact substring' — true of the
+    bytes and false of the sentence. Not one word differs; the publisher used a curly
+    apostrophe and an em dash, and the retyped version used ASCII."""
+    published = "The Fed’s stance — unchanged — held yields steady"
+    retyped = "The Fed's stance - unchanged - held yields steady"
+    assert normalise(published) == normalise(retyped)
+    assert signal_grounded(retyped, [Sn(snippet=published)])[0] is True
+
+
+def test_nfkc_folds_the_invisible_differences():
+    """A non-breaking space and a single ellipsis character are not visible in a page
+    and are absolutely visible to ==."""
+    assert normalise("gold steadied on… Friday") == \
+        normalise("gold steadied on... Friday")
+    assert normalise("co­ing") == normalise("coing")   # soft hyphen
+
+
+def test_every_dash_and_quote_variant_folds_to_one():
+    for dash in "‐‑‒–—―−":
+        assert normalise(f"a{dash}b") == "a-b", dash
+    for q in "‘’‚‛′":
+        assert normalise(f"a{q}b") == "a'b", q
+    for q in "“”„‟«»":
+        assert normalise(f"a{q}b") == 'a"b', q
+    # NFKC decomposes DOUBLE PRIME into two PRIMEs before the table runs, so it folds
+    # to two apostrophes rather than a double quote. Consistent, and stated rather
+    # than papered over with a table entry that never fires.
+    assert normalise("a″b") == "a''b"
+
+
+def test_normalisation_still_refuses_a_paraphrase():
+    """Folding a glyph is spelling. Deciding two different sentences are close enough
+    is meaning, and that is the thing being refused."""
+    assert normalise("CPI rose 0.3%") != normalise("CPI increased 0.3 percent")
+    assert signal_grounded("CPI increased 0.3 percent in August", [Sn()])[0] is False
+
+
+def test_case_and_whitespace_folding_survived_the_rewrite():
+    assert normalise("  A   b ") == "a b"
+    assert signal_grounded("cpi   ROSE 0.3%   in august", [Sn()])[0] is True
+
+
 # ── R49 segmentation ────────────────────────────────────────────────────────
 def test_every_segment_is_a_contiguous_slice_of_its_source():
     """THE INVARIANT THE PIECE RESTS ON. Strip at the edges, never in the middle — the

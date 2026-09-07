@@ -23,6 +23,7 @@ import hashlib
 import json
 import re
 import sys
+import unicodedata
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -237,14 +238,46 @@ _DAY_MONTH_RE = re.compile(r"\b(\d{1,2})\s+([A-Za-z]{3,9})\b")
 _MONTH_DAY_RE = re.compile(r"\b([A-Za-z]{3,9})\.?\s+(\d{1,2})\b")
 
 
+# R49 PIECE 2. GLYPH FOLDING, WHICH IS NOT FUZZY MATCHING.
+#
+# Publishers emit curly quotes, en and em dashes, non-breaking spaces and a single
+# ellipsis character; a model retyping the sentence emits the ASCII forms. Under R48
+# that difference alone - not one word changed - was a REFUSAL, and the refusal read
+# "not an exact substring", which is true of the bytes and false of the sentence.
+#
+# The line this draws: CANONICALISING A GLYPH is deciding that U+2019 and "'" are the
+# same character, which they are. STEMMING, SYNONYMS AND EDIT DISTANCE decide that two
+# different sentences are close enough, which is the thing being refused. The first is
+# spelling, the second is meaning, and only the second turns "quoted the document" back
+# into "said something like it".
+#
+# NFKC handles the non-breaking space, the ellipsis and the ligatures. It does NOT
+# touch dashes or quotes, so those are mapped explicitly.
+_GLYPHS = {
+    "‘": "'", "’": "'", "‚": "'", "‛": "'", "′": "'",
+    "“": '"', "”": '"', "„": '"', "‟": '"',
+    "«": '"', "»": '"',
+    # U+2033 DOUBLE PRIME is deliberately absent: NFKC runs first and decomposes it
+    # into two U+2032 PRIMEs, which the line above then folds to "''". Listing it here
+    # would be a dead entry that reads as if it were doing something. Found by a test
+    # that expected '"' and got "''".
+    "‐": "-", "‑": "-", "‒": "-", "–": "-", "—": "-",
+    "―": "-", "−": "-", "⁃": "-",
+    "­": "",   # soft hyphen: invisible in the page, a byte in the string
+}
+_GLYPH_TABLE = str.maketrans(_GLYPHS)
+
+
 def normalise(text: str) -> str:
-    """Whitespace-collapsed and case-folded. Nothing else.
+    """NFKC, glyph-folded, whitespace-collapsed, case-folded. Nothing else.
 
     Deliberately NOT stemming, synonyms or fuzzy distance: every one of those turns
     "the model quoted the document" back into "the model said something like it",
-    which is the property being bought here.
+    which is the property being bought here. Folding a curly quote onto a straight one
+    does not - it is the same character spelled two ways.
     """
-    return " ".join(str(text or "").split()).casefold()
+    s = unicodedata.normalize("NFKC", str(text or "")).translate(_GLYPH_TABLE)
+    return " ".join(s.split()).casefold()
 
 
 def signal_grounded(signal, snippets) -> tuple:
