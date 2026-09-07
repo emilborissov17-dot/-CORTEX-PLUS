@@ -833,6 +833,57 @@ def coherence(direction: str, signal_text: str, rationale) -> dict:
     }
 
 
+def bucket_direction_table(rows) -> dict:
+    """P(DIRECTION=UP | DRIVER=bucket) over admitted candidates. A MONITOR, NOT A GATE.
+
+    R51 asserted the four buckets were direction-neutral. The only evidence for that was
+    that the four WORDS are neutral in our own lexicon, which is a fact about vocabulary
+    and not about the model. This measures the thing that was asserted.
+
+    NOTHING IS REFUSED ON THIS NUMBER, and nothing should be. A bucket that skews is a
+    FINDING - it might mean the label is leaking a direction, or it might mean the world
+    genuinely handed us four bearish MACRO facts this week. Those two look identical at
+    n=8 and are told apart by watching the number over many bets, not by gating one.
+
+    `n` is reported beside every rate precisely so a 2-of-2 "100%" cannot be read as a
+    result. Below MIN_BUCKET_N the rate is computed but marked as noise.
+    """
+    out = {}
+    for bucket in BUCKETS:
+        hits = [r for r in rows
+                if str(r.get("driver") or "").upper().split()[0:1] == [bucket]]
+        n = len(hits)
+        ups = sum(1 for r in hits if (r.get("direction") or "").upper() == "UP")
+        out[bucket] = {
+            "n": n,
+            "up": ups,
+            "down": n - ups,
+            "p_up": (round(ups / n, 3) if n else None),
+            "enough_to_read": n >= MIN_BUCKET_N,
+        }
+    seen = [b for b, v in out.items() if v["n"]]
+    skewed = [b for b in seen
+              if out[b]["enough_to_read"] and (out[b]["p_up"] <= 0.1
+                                               or out[b]["p_up"] >= 0.9)]
+    out["_summary"] = {
+        "buckets_used": len(seen),
+        "skewed": skewed,
+        "_finding": (f"{', '.join(skewed)} came out near-unanimous on direction. That is "
+                     f"a FINDING TO REPORT, not a refusal: it may mean the label leaks a "
+                     f"direction, or it may mean the week's facts in that bucket really "
+                     f"did point one way. Watch it across bets."
+                     if skewed else None),
+        "_not_a_gate": ("Measured because R51 asserted bucket neutrality without "
+                        "evidence. Nothing is refused on this number."),
+    }
+    return out
+
+
+# A rate over fewer than this many candidates is arithmetic, not evidence. Stated as a
+# constant so the threshold is visible rather than buried in a conditional.
+MIN_BUCKET_N = 4
+
+
 def append_polarity_ledger(rows, path: Path | None = None) -> str:
     """Append-only. One line per admitted candidate, so fifty bets from now somebody
     can ask whether mismatched bets were actually worse."""
@@ -1150,16 +1201,32 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
                  "segment_indices": r["parsed"].get("signal_indices"),
                  "signal_text": r["parsed"].get("signal_text"),
                  "field_order": r["parsed"].get("field_order"),
+                 "driver": r["parsed"].get("driver"),
                  **{k: v for k, v in (r.get("coherence") or {}).items()
                     if k != "_not_a_gate"}}
                 for i, r in enumerate(recs) if r["verdict"] == "ADMITTED"]
+
+        n_flag = sum(1 for row in rows if row.get("flag"))
+        buckets = bucket_direction_table(rows)
+        per_asset[sym]["bucket_direction"] = buckets
+
+        if rows:
+            print(f"  [POLARITY] {len(rows)} row(s), {n_flag} flagged"
+                  + ("" if not a.dry_run
+                     else "  (dry run — ledger not written)"))
+            print("  [BUCKET]   P(UP | DRIVER)  — a MONITOR, never a gate")
+            for b in BUCKETS:
+                v = buckets[b]
+                if not v["n"]:
+                    continue
+                print(f"             {b:<8} n={v['n']:<3} up={v['up']:<3} "
+                      f"P(UP)={v['p_up']}"
+                      + ("" if v["enough_to_read"]
+                         else f"   [n<{MIN_BUCKET_N}: noise, not a rate]"))
+            if buckets["_summary"]["skewed"]:
+                print(f"             FINDING: {buckets['_summary']['_finding']}")
         if rows and not a.dry_run:
-            print(f"  [POLARITY] {len(rows)} row(s) -> "
-                  f"{append_polarity_ledger(rows)}")
-        elif rows:
-            n_flag = sum(1 for row in rows if row.get("flag"))
-            print(f"  [POLARITY] {len(rows)} row(s), {n_flag} flagged "
-                  f"(dry run — ledger not written)")
+            print(f"  [POLARITY] -> {append_polarity_ledger(rows)}")
 
     out = Path(a.out or (LEDGER / "BET_2026-09-07_markets_grounded.json"))
     if out.exists() and not a.allow_overwrite:
