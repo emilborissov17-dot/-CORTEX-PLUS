@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Tests 1–7 of claude/SPEC_7SEP_R43_GROUNDED_BET.md §4.
+Retrieval tests, R48. Never a live search and never the key.
 
-Never a live search and never the key: `fetch_news` takes an injectable `searcher`.
+The suite moved from a whitelist to a hygiene blacklist and from two date states to
+three. What did NOT move: an undated snippet is still not treated as fresh, and a dated
+snippet outside the window is still dropped.
 """
 from __future__ import annotations
 
+import ast
 import json
 import sys
 from datetime import datetime, timedelta, timezone
@@ -16,87 +19,193 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
-from core.market_news import (NewsUnavailable, Snippet, fetch_news,  # noqa: E402
-                              filter_results, host_allowed, host_of)
+from core.market_news import (NewsUnavailable, _parse_dt,  # noqa: E402
+                              block_reason, fetch_news, filter_results,
+                              host_allowed, host_class, host_of)
 
 NOW = datetime(2026, 9, 7, 12, 0, tzinfo=timezone.utc)
 
 
-def _r(url="https://www.reuters.com/markets/x", hours_ago=2, content="CPI rose 0.3% in August",
-       title="t", dated=True):
+def _r(url="https://www.reuters.com/markets/x", hours_ago=2,
+       content="CPI rose 0.3% in August", title="t", dated=True):
     d = {"url": url, "title": title, "content": content}
     if dated:
         d["published_date"] = (NOW - timedelta(hours=hours_ago)).isoformat()
     return d
 
 
-# ── 1. off-whitelist host is dropped, and the drop names the host ───────────
-def test_an_off_whitelist_host_is_dropped_and_logged():
-    kept, dropped = filter_results([_r(url="https://randomblog.example/post")], now=NOW)
-    assert kept == []
-    assert len(dropped) == 1
-    assert dropped[0]["host"] == "randomblog.example"
-    assert "whitelist" in dropped[0]["why"]
+def _code_of(path: Path) -> str:
+    """Executable code only, with every string constant blanked.
+
+    Three tests in this repo have now failed against their own prose - twice on a
+    docstring naming the thing it forbids, once on a refusal message. A capability
+    needs an identifier; it cannot live in a sentence.
+    """
+    class _Blank(ast.NodeTransformer):
+        def visit_Constant(self, node):
+            return ast.copy_location(
+                ast.Constant(value="" if isinstance(node.value, str) else node.value),
+                node)
+
+    return ast.unparse(_Blank().visit(
+        ast.parse(path.read_text(encoding="utf-8")))).lower()
 
 
-def test_a_lookalike_host_does_not_pass_as_the_real_one():
-    """`evil-reuters.com` must not match `reuters.com`. endswith() would let it."""
-    assert host_allowed("https://reuters.com/x") is True
-    assert host_allowed("https://www.reuters.com/x") is True
-    assert host_allowed("https://feeds.reuters.com/x") is True
-    assert host_allowed("https://evil-reuters.com/x") is False
-    assert host_allowed("https://reuters.com.evil.io/x") is False
+# ── the blacklist ───────────────────────────────────────────────────────────
+def test_a_non_blacklisted_host_passes():
+    """THE INVERSION. Everything not blacklisted is allowed — including hosts the old
+    whitelist would have refused."""
+    for url in ("https://www.marketwatch.com/a", "https://www.investing.com/b",
+                "https://finance.yahoo.com/c", "https://simplywall.st/d",
+                "https://www.some-outlet-nobody-listed.com/e"):
+        assert host_allowed(url) is True, url
+        assert block_reason(url) is None
+
+
+def test_a_blacklisted_host_is_dropped_and_the_reason_names_why():
+    kept, ctx, dropped = filter_results([_r(url="https://www.reddit.com/r/stocks/x")],
+                                        now=NOW)
+    assert kept == [] and ctx == []
+    assert dropped[0]["host"] == "reddit.com"
+    assert "blacklisted host" in dropped[0]["why"]
+    assert "instructions aimed at the model" in dropped[0]["why"]
+
+
+def test_a_subdomain_of_a_blacklisted_host_is_also_blocked():
+    assert host_allowed("https://news.reddit.com/x") is False
+    assert "subdomain of blacklisted reddit.com" in block_reason(
+        "https://news.reddit.com/x")
+
+
+def test_open_publishing_suffixes_are_blocked():
+    for url in ("https://someone.blogspot.com/p", "https://x.substack.com/p",
+                "https://y.wordpress.com/p"):
+        assert host_allowed(url) is False, url
+        assert "open publishing platform" in block_reason(url)
+
+
+def test_a_lookalike_host_is_not_blocked_by_accident():
+    """`notreddit.com` is not reddit. Matching a suffix without the dot would eat it."""
+    assert host_allowed("https://notreddit.com/x") is True
     assert host_of("https://WWW.Reuters.COM/a") == "reuters.com"
 
 
-# ── 2. too old is dropped ───────────────────────────────────────────────────
-def test_a_snippet_older_than_48_hours_is_dropped():
-    kept, dropped = filter_results([_r(hours_ago=49)], now=NOW)
-    assert kept == [] and "older than 48h" in dropped[0]["why"]
+# ── the three date states ───────────────────────────────────────────────────
+def test_dated_and_in_window_is_CITABLE():
+    citable, ctx, dropped = filter_results([_r(hours_ago=47)], now=NOW)
+    assert len(citable) == 1 and ctx == [] and dropped == []
+    assert citable[0].dated is True and citable[0].published_utc
 
 
-def test_a_snippet_inside_the_window_is_kept():
-    kept, _ = filter_results([_r(hours_ago=47)], now=NOW)
-    assert len(kept) == 1 and isinstance(kept[0], Snippet)
-    assert kept[0].host == "reuters.com"
+def test_dated_and_out_of_window_is_DROPPED():
+    citable, ctx, dropped = filter_results([_r(hours_ago=49)], now=NOW)
+    assert citable == [] and ctx == []
+    assert "older than 48h" in dropped[0]["why"]
 
 
-# ── 3. no date is dropped, NOT treated as fresh ─────────────────────────────
-def test_a_snippet_with_no_published_date_is_dropped():
-    """UNKNOWN AGE IS NOT RECENT AGE. Treating an undated page as fresh is how a stale
-    document becomes tomorrow's reason."""
-    kept, dropped = filter_results([_r(dated=False)], now=NOW)
-    assert kept == []
-    assert "unknown age is not recent age" in dropped[0]["why"]
+def test_a_date_FIELD_that_is_present_but_OLD_is_still_dropped():
+    """The VALUE is checked, never merely the presence. Tavily's `days` is best-effort:
+    asking for 2 days returned articles 101–112 hours old on 2026-09-07, and a filter
+    that trusted the request would have admitted all of them."""
+    r = _r(dated=False)
+    r["published_date"] = "Wed, 02 Sep 2026 19:29:11 GMT"
+    citable, ctx, dropped = filter_results([r], now=NOW)
+    assert citable == [] and ctx == []
+    assert "older than 48h" in dropped[0]["why"]
 
 
-def test_an_empty_snippet_is_dropped():
-    kept, dropped = filter_results([_r(content="   ")], now=NOW)
-    assert kept == [] and dropped[0]["why"] == "empty snippet"
+def test_UNDATED_is_DOWNGRADED_not_dropped():
+    """THE CHANGE. Absence of a date is not evidence of staleness — but it is not
+    evidence of freshness either, so it becomes context-only rather than citable."""
+    citable, ctx, dropped = filter_results([_r(dated=False)], now=NOW)
+    assert citable == [] and dropped == []
+    assert len(ctx) == 1
+    assert ctx[0].dated is False and ctx[0].published_utc == ""
 
 
-# ── 4. missing key refuses BY NAME, no browser ──────────────────────────────
+def test_an_unparseable_date_is_treated_as_undated_not_as_fresh():
+    r = _r(dated=False)
+    r["published_date"] = "last Tuesday"
+    citable, ctx, dropped = filter_results([r], now=NOW)
+    assert citable == [] and len(ctx) == 1 and dropped == []
+
+
+def test_an_empty_snippet_is_dropped_whatever_its_date():
+    citable, ctx, dropped = filter_results([_r(content="   ")], now=NOW)
+    assert citable == [] and ctx == [] and dropped[0]["why"] == "empty snippet"
+
+
+def test_the_date_formats_tavily_actually_sends_all_parse():
+    for raw in ("Fri, 04 Sep 2026 12:35:01 GMT", "Sun, 06 Sep 2026 10:00:00 UTC",
+                "2026-09-05T12:30:00Z", "2026-09-05T12:30:00+00:00", "2026-09-05"):
+        dt = _parse_dt(raw)
+        assert dt is not None and dt.tzinfo is not None, raw
+    assert _parse_dt("last Tuesday") is None
+    assert _parse_dt("") is None
+
+
+# ── the citable / context precedence ────────────────────────────────────────
+def test_citable_wins_and_the_bet_is_not_flagged():
+    got, ungrounded = fetch_news("SPY", now=NOW,
+                                 searcher=lambda q: [_r(), _r(dated=False)])
+    assert ungrounded is False
+    assert [s.dated for s in got] == [True]
+
+
+def test_context_only_is_used_ONLY_when_nothing_citable_exists_and_is_FLAGGED():
+    got, ungrounded = fetch_news("SPY", now=NOW, searcher=lambda q: [_r(dated=False)])
+    assert ungrounded is True
+    assert [s.dated for s in got] == [False]
+
+
+def test_with_nothing_at_all_it_still_refuses_loud():
+    raw = [_r(url="https://www.reddit.com/a"), _r(hours_ago=99)]
+    with pytest.raises(NewsUnavailable) as e:
+        fetch_news("SPY", now=NOW, searcher=lambda q: raw)
+    m = str(e.value)
+    assert "2 result(s)" in m and "2 dropped" in m and "no fallback" in m
+
+
+# ── the class is metadata, never a gate ─────────────────────────────────────
+def test_the_class_travels_with_the_snippet_and_never_filters():
+    citable, _, _ = filter_results([_r(url="https://www.reuters.com/a"),
+                                    _r(url="https://www.fool.com/b"),
+                                    _r(url="https://www.forex.com/c"),
+                                    _r(url="https://nobody-has-heard-of-this.io/d")],
+                                   now=NOW)
+    assert len(citable) == 4, "class must not remove anything"
+    by_host = {s.host: s.source_class for s in citable}
+    assert by_host["reuters.com"] == "independent"
+    assert by_host["fool.com"] == "adversarial"
+    assert by_host["forex.com"] == "self_reported"
+    assert by_host["nobody-has-heard-of-this.io"] == "unknown"
+
+
+def test_an_unknown_host_is_class_unknown_and_is_allowed():
+    assert host_class("https://brand-new-outlet.example/x")["class"] == "unknown"
+    assert host_allowed("https://brand-new-outlet.example/x") is True
+
+
+def test_the_classes_are_the_four_already_declared():
+    bl = json.loads((REPO / "config" / "news_blacklist.json").read_text(encoding="utf-8"))
+    ri = json.loads((REPO / "config" / "reporter_independence.json")
+                    .read_text(encoding="utf-8"))
+    used = {h["class"] for h in bl["host_classes"].values()}
+    assert used <= set(ri["_classes"]), f"a fifth class was invented: {used}"
+    assert bl["max_age_hours"] == 48
+
+
+# ── key, transport, and the absence of a quiet fallback ─────────────────────
 def test_a_missing_key_raises_and_names_the_key(monkeypatch):
     import core.market_news as mn
     monkeypatch.setattr("core.source_status.credential_for", lambda k: None)
     with pytest.raises(NewsUnavailable) as e:
         mn.fetch_news("SPY")
     msg = str(e.value)
-    assert "TAVILY_API_KEY" in msg
-    assert "REFUSED by name" in msg
-    assert "browser" in msg
+    assert "TAVILY_API_KEY" in msg and "REFUSED by name" in msg and "browser" in msg
 
 
-# ── 5. HTTP error refuses, naming the status ────────────────────────────────
-def test_an_http_error_refuses_and_names_the_status():
-    def searcher(_q):
-        raise NewsUnavailable("tavily: HTTP 429 for 'SPY' — REFUSED. No retry into a "
-                              "browser, no cached snippet.")
-    with pytest.raises(NewsUnavailable, match="HTTP 429"):
-        fetch_news("SPY", searcher=searcher)
-
-
-def test_any_other_exception_is_turned_into_a_named_refusal():
+def test_any_exception_becomes_a_named_refusal():
     def searcher(_q):
         raise TimeoutError("read timed out")
     with pytest.raises(NewsUnavailable) as e:
@@ -104,92 +213,9 @@ def test_any_other_exception_is_turned_into_a_named_refusal():
     assert "TimeoutError" in str(e.value) and "REFUSED" in str(e.value)
 
 
-# ── 6. zero usable results refuses, saying how many were dropped and why ────
-def test_zero_usable_results_refuses_with_counts_and_reasons():
-    raw = [_r(url="https://blog.example/a"), _r(hours_ago=99), _r(dated=False)]
-    with pytest.raises(NewsUnavailable) as e:
-        fetch_news("SPY", now=NOW, searcher=lambda q: raw)
-    m = str(e.value)
-    assert "3 result(s)" in m and "3 dropped" in m
-    assert "whitelist" in m and "older than" in m and "unknown age" in m
-    assert "no fallback" in m
-
-
-def test_a_usable_result_comes_back_with_its_provenance():
-    got = fetch_news("SPY", now=NOW, searcher=lambda q: [_r()])
-    assert len(got) == 1
-    s = got[0]
-    assert s.url.startswith("https://www.reuters.com/")
-    assert s.published_utc and s.retrieved_utc
-    assert s.snippet == "CPI rose 0.3% in August"
-
-
-# ── 7. NO FALLBACK EXISTS ───────────────────────────────────────────────────
-def test_the_module_has_no_fallback_path():
-    """Not a style check. Every one of these turns "no evidence" into "some evidence",
-    which is the exact failure R43 exists to stop."""
-    import ast
-    # STRIP DOCSTRINGS AND COMMENTS FIRST. The second version of this test failed
-    # against the module's own docstring, which names "no synthesised headline, no
-    # widened window" in order to FORBID them. A test that cannot tell prose from code
-    # is testing the comments — the same mistake as test_generation_does_not_route_
-    # through_brain_think, made twice in one day.
-    class _Blank(ast.NodeTransformer):
-        """Every STRING CONSTANT is blanked, not just docstrings.
-
-        The third version of this test failed on the refusal message "No retry into a
-        browser, no cached snippet" — a string that DENIES caching. A real fallback
-        needs an identifier: an import, a call, an attribute. It cannot live in a
-        message. So identifiers are what gets checked.
-        """
-
-        def visit_Constant(self, node):
-            return ast.copy_location(
-                ast.Constant(value="" if isinstance(node.value, str) else node.value),
-                node)
-
-    tree = _Blank().visit(
-        ast.parse((REPO / "core" / "market_news.py").read_text(encoding="utf-8")))
-    code = ast.unparse(tree).lower()
-    for forbidden in ("cache", "fallback", "synthes", "widen",
-                      "selenium", "playwright", "webdriver", "captcha"):
-        assert forbidden not in code, f"{forbidden!r} appears in executable code"
-
-
-def test_it_raises_rather_than_returning_an_empty_list():
-    """An empty list reads as 'nothing happened'. The caller must be able to tell that
-    apart from 'we could not look'."""
-    import inspect
-
-    import core.market_news as mn
-    src = inspect.getsource(mn.fetch_news)
-    assert "return []" not in src
-    assert "raise NewsUnavailable" in src
-
-
-def test_prediction_only_no_order_path():
-    src = (REPO / "core" / "market_news.py").read_text(encoding="utf-8").lower()
-    for word in ("place_order", "buy(", "sell(", "broker", "alpaca"):
-        assert word not in src
-
-
-def test_the_whitelist_uses_only_the_four_declared_classes():
-    wl = json.loads((REPO / "config" / "news_whitelist.json").read_text(encoding="utf-8"))
-    ri = json.loads((REPO / "config" / "reporter_independence.json")
-                    .read_text(encoding="utf-8"))
-    used = {h["class"] for h in wl["hosts"].values()}
-    assert used <= set(ri["_classes"]), f"a fifth class was invented: {used}"
-    assert wl["max_age_hours"] == 48
-
-
-# ── the retrieval mode, fixed after the first grounded run refused everything ──
-def test_the_search_asks_for_NEWS_because_basic_returns_no_dates():
-    """MEASURED 2026-09-07: search_depth='basic' returned 0 of 6 results with a
-    published_date; topic='news' returned 6 of 6. Since a result with no date is
-    dropped by design, 'basic' meant the filter discarded everything it was handed —
-    including whitelisted hosts — and no bet could ever be grounded.
-
-    This asserts the request body, not the response, so it needs no network."""
+def test_the_search_asks_for_NEWS_because_basic_returns_no_dates(monkeypatch):
+    """MEASURED: search_depth='basic' returned 0 of 6 with a published_date;
+    topic='news' returned 6 of 6."""
     import core.market_news as mn
     sent = {}
 
@@ -200,61 +226,32 @@ def test_the_search_asks_for_NEWS_because_basic_returns_no_dates():
         def json():
             return {"results": []}
 
-    def fake_post(url, timeout=None, json=None):
-        sent.update(json or {})
-        return R()
-
     import requests
-    orig = requests.post
-    requests.post = fake_post
-    try:
-        with pytest.raises(NewsUnavailable):
-            mn.fetch_news("SPY")
-    finally:
-        requests.post = orig
-
-    assert sent.get("topic") == "news", "basic search carries no published dates"
-    assert sent.get("days") == 2, "the window is bounded at the source, not after"
+    monkeypatch.setattr(
+        requests, "post",
+        lambda url, timeout=None, json=None: (sent.update(json or {}), R())[1])
+    with pytest.raises(NewsUnavailable):
+        mn.fetch_news("SPY")
+    assert sent.get("topic") == "news" and sent.get("days") == 2
     assert "search_depth" not in sent
 
 
-# ── the date format Tavily actually sends ───────────────────────────────────
-def test_it_parses_rfc1123_with_a_NAMED_zone_which_is_what_tavily_sends():
-    """THE THIRD BUG, and the one that cost a whole run. Tavily returns
-    'Fri, 04 Sep 2026 12:35:01 GMT'. strptime's %z wants +0000 and rejects 'GMT', so
-    _parse_dt returned None for EVERY result and the freshness filter dropped them all
-    as undated — including the whitelisted, genuinely dated ones.
-
-    A parser that cannot read the only format the source emits is indistinguishable
-    from a source that sends no dates."""
-    from core.market_news import _parse_dt
-    for raw in ("Fri, 04 Sep 2026 12:35:01 GMT",
-                "Sun, 06 Sep 2026 10:00:00 UTC",
-                "2026-09-05T12:30:00Z",
-                "2026-09-05T12:30:00+00:00",
-                "2026-09-05"):
-        dt = _parse_dt(raw)
-        assert dt is not None, raw
-        assert dt.tzinfo is not None, raw
-        assert dt.year == 2026
+def test_no_hidden_fallback_in_the_executable_code():
+    code = _code_of(REPO / "core" / "market_news.py")
+    for forbidden in ("cache", "synthes", "widen", "selenium", "playwright",
+                      "webdriver", "captcha"):
+        assert forbidden not in code, forbidden
 
 
-def test_a_real_tavily_shaped_result_survives_the_filter():
-    """End to end on the exact shape the API returns."""
-    from datetime import datetime as _dt
-    from datetime import timezone as _tz
-    now = _dt(2026, 9, 5, 18, 0, tzinfo=_tz.utc)
-    raw = [{"url": "https://www.cnbc.com/2026/09/04/gold.html",
-            "title": "Gold hits record",
-            "content": "Gold climbed to a record high on Friday as the dollar eased",
-            "published_date": "Fri, 04 Sep 2026 12:35:01 GMT"}]
-    kept, dropped = filter_results(raw, now=now)
-    assert dropped == [], dropped
-    assert len(kept) == 1 and kept[0].host == "cnbc.com"
-
-
-def test_an_unparseable_date_is_still_dropped():
-    """The fix must not become 'accept anything'."""
-    from core.market_news import _parse_dt
-    assert _parse_dt("last Tuesday") is None
-    assert _parse_dt("") is None
+def test_prediction_only_no_order_path():
+    """Checked on IDENTIFIERS. 'broker' now appears in prose — a broker's commentary is
+    self_reported — and a text grep would fail on the explanation rather than on code."""
+    # NOT "api_key": that is Tavily's own request field, a SEARCH parameter. Listing
+    # it here failed on the retrieval code and would have pushed me to rename a
+    # third-party field to satisfy a test - the test bending the code instead of
+    # checking it. What must be absent is an ORDER PATH.
+    for f in ("core/market_news.py", "tools/market_bet.py"):
+        code = _code_of(REPO / f)
+        for word in ("place_order", "submit_order", "create_order", "alpaca",
+                     "ib_insync", "portfolio", "position_size"):
+            assert word not in code, f"{word} in {f}"

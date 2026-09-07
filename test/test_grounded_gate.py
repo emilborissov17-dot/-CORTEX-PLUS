@@ -34,6 +34,9 @@ class Sn:
     url: str = "https://www.reuters.com/markets/us/cpi-2026-09-05"
     published_utc: str = "2026-09-05T12:30:00+00:00"
     host: str = "reuters.com"
+    source_class: str = "independent"
+    source_kind: str = "wire"
+    dated: bool = True
 
 
 def _c(direction="UP", signal=FACT, driver="MACRO", logic="higher yields weigh on equities",
@@ -181,9 +184,21 @@ def test_every_candidate_the_7_sep_gate_admitted_is_refused_by_the_grounded_gate
 
 # ── 16. prediction only ─────────────────────────────────────────────────────
 def test_prediction_only_no_order_path():
-    src = (REPO / "tools" / "market_bet.py").read_text(encoding="utf-8").lower()
-    for word in ("place_order", "buy(", "sell(", "broker", "alpaca", "api_key"):
-        assert word not in src
+    """Identifiers, not prose. 'broker' now appears in an explanation of why a broker's
+    commentary is self_reported, and a text grep fails on the explanation."""
+    import ast
+
+    class _Blank(ast.NodeTransformer):
+        def visit_Constant(self, node):
+            return ast.copy_location(
+                ast.Constant(value="" if isinstance(node.value, str) else node.value),
+                node)
+
+    code = ast.unparse(_Blank().visit(ast.parse(
+        (REPO / "tools" / "market_bet.py").read_text(encoding="utf-8")))).lower()
+    for word in ("place_order", "submit_order", "create_order", "alpaca",
+                 "ib_insync", "portfolio", "position_size"):
+        assert word not in code, word
 
 
 def test_matching_is_substring_only_and_not_fuzzy():

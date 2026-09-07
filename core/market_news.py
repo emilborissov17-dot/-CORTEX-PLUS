@@ -28,7 +28,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 REPO = Path(__file__).resolve().parents[1]
-WHITELIST_PATH = REPO / "config" / "news_whitelist.json"
+BLACKLIST_PATH = REPO / "config" / "news_blacklist.json"
 SOURCE_KEY = "tavily"
 API_URL = "https://api.tavily.com/search"
 
@@ -55,13 +55,16 @@ class Snippet:
     published_utc: str
     snippet: str
     retrieved_utc: str
+    source_class: str = "unknown"
+    source_kind: str = "unclassified"
+    dated: bool = True
 
     def as_dict(self) -> dict:
         return asdict(self)
 
 
-def _whitelist() -> dict:
-    return json.loads(WHITELIST_PATH.read_text(encoding="utf-8"))
+def _blacklist() -> dict:
+    return json.loads(BLACKLIST_PATH.read_text(encoding="utf-8"))
 
 
 def host_of(url: str) -> str:
@@ -70,20 +73,63 @@ def host_of(url: str) -> str:
     return h[4:] if h.startswith("www.") else h
 
 
-def host_allowed(url: str, hosts: dict | None = None) -> bool:
-    """A host matches if it IS a listed host or a subdomain of one.
+def host_allowed(url: str, cfg: dict | None = None) -> bool:
+    """Everything NOT blacklisted is allowed.
 
-    `evil-reuters.com` must NOT match `reuters.com`, which is why this compares
-    labels rather than calling `endswith`.
+    The verbatim gate is the fabrication guard and it does not care who published the
+    snippet. What a quote CANNOT protect against is prompt injection and machine-spun
+    text with no author, and both are properties of the host - so the host is filtered
+    for those two things and nothing else.
     """
-    hosts = hosts if hosts is not None else _whitelist()["hosts"]
+    cfg = cfg if cfg is not None else _blacklist()
     h = host_of(url)
     if not h:
         return False
-    for allowed in hosts:
-        if h == allowed or h.endswith("." + allowed):
-            return True
-    return False
+    if h in cfg["blocked_hosts"]:
+        return False
+    for suf in cfg["blocked_suffixes"]:
+        if h.endswith(suf):
+            return False
+    # A blocked host must also block its subdomains: news.reddit.com is reddit.
+    for blocked in cfg["blocked_hosts"]:
+        if h.endswith("." + blocked):
+            return False
+    return True
+
+
+def block_reason(url: str, cfg: dict | None = None) -> str | None:
+    cfg = cfg if cfg is not None else _blacklist()
+    h = host_of(url)
+    if not h:
+        return "no host in url"
+    entry = cfg["blocked_hosts"].get(h)
+    if entry:
+        return f"blacklisted host ({entry['why']})"
+    for blocked, e in cfg["blocked_hosts"].items():
+        if h.endswith("." + blocked):
+            return f"subdomain of blacklisted {blocked} ({e['why']})"
+    for suf in cfg["blocked_suffixes"]:
+        if h.endswith(suf):
+            return f"open publishing platform ({suf})"
+    return None
+
+
+def host_class(url: str, cfg: dict | None = None) -> dict:
+    """METADATA, never a gate. An unknown host is 'unknown' and is allowed.
+
+    It reaches the prompt because the SOURCE TYPE IS PART OF THE MARKET SIGNAL: a wire
+    report and a broker's commentary move a price differently, and the model should see
+    which it is holding. It is not a trust score and nothing filters on it.
+    """
+    cfg = cfg if cfg is not None else _blacklist()
+    h = host_of(url)
+    known = cfg["host_classes"].get(h)
+    if known:
+        return dict(known)
+    for host, meta in cfg["host_classes"].items():
+        if h.endswith("." + host):
+            return dict(meta)
+    return {"class": "unknown", "kind": "unclassified"}
 
 
 def _parse_dt(value):
@@ -121,41 +167,64 @@ def _parse_dt(value):
 
 
 def filter_results(raw: list, now: datetime | None = None,
-                   whitelist: dict | None = None) -> tuple:
-    """(kept, dropped) — every drop carries its reason so the filter is auditable."""
-    wl = whitelist if whitelist is not None else _whitelist()
-    hosts, max_age = wl["hosts"], int(wl["max_age_hours"])
+                   cfg: dict | None = None) -> tuple:
+    """(citable, context_only, dropped) — THREE date states, not two.
+
+    dated AND inside the window  -> CITABLE. It can carry the grounding citation.
+    dated AND outside            -> DROPPED. The date is a real claim and it failed.
+    UNDATED                      -> DOWNGRADED to context-only, not dropped.
+
+    The third state is the change. Absence of a date is not evidence of staleness, but
+    it is not evidence of freshness either, so an undated snippet may ground a bet ONLY
+    when nothing citable exists - and a bet grounded that way is flagged
+    'ungrounded-citation' so the weakness travels with it instead of disappearing.
+
+    WHEN A DATE FIELD EXISTS, ITS VALUE IS CHECKED, never merely its presence. Tavily's
+    `days` parameter is best-effort: asking for 2 days returned articles 101 to 112
+    hours old on 2026-09-07. A filter that trusted the request would have admitted all
+    of them.
+    """
+    cfg = cfg if cfg is not None else _blacklist()
+    max_age = int(cfg["max_age_hours"])
     now = now or datetime.now(timezone.utc)
     cutoff = now - timedelta(hours=max_age)
 
-    kept, dropped = [], []
+    citable, context_only, dropped = [], [], []
     for r in raw or []:
         url = r.get("url") or ""
         h = host_of(url)
-        if not host_allowed(url, hosts):
-            dropped.append({"host": h or "(none)", "url": url,
-                            "why": f"host not on the whitelist ({len(hosts)} allowed)"})
-            continue
-        pub = _parse_dt(r.get("published_date") or r.get("published_time"))
-        if pub is None:
-            # UNKNOWN AGE IS NOT RECENT AGE. Treating an undated document as fresh is
-            # how a stale page becomes tomorrow's reason.
-            dropped.append({"host": h, "url": url,
-                            "why": "no published date — unknown age is not recent age"})
-            continue
-        if pub < cutoff:
-            dropped.append({"host": h, "url": url,
-                            "why": f"published {pub.isoformat()}, older than {max_age}h"})
+        why = block_reason(url, cfg)
+        if why:
+            dropped.append({"host": h or "(none)", "url": url, "why": why})
             continue
         text = str(r.get("content") or r.get("snippet") or "").strip()
         if not text:
             dropped.append({"host": h, "url": url, "why": "empty snippet"})
             continue
-        kept.append(Snippet(title=str(r.get("title") or "").strip(), url=url, host=h,
-                            published_utc=pub.astimezone(timezone.utc).isoformat(),
-                            snippet=text,
-                            retrieved_utc=now.astimezone(timezone.utc).isoformat()))
-    return kept, dropped
+
+        raw_date = r.get("published_date") or r.get("published_time")
+        pub = _parse_dt(raw_date)
+        meta = host_class(url, cfg)
+
+        if pub is None:
+            # Includes the case where a date FIELD is present but unparseable: an
+            # unreadable date is an unknown date, not a fresh one.
+            context_only.append(Snippet(
+                title=str(r.get("title") or "").strip(), url=url, host=h,
+                published_utc="", snippet=text,
+                retrieved_utc=now.astimezone(timezone.utc).isoformat(),
+                source_class=meta["class"], source_kind=meta["kind"], dated=False))
+            continue
+        if pub < cutoff:
+            dropped.append({"host": h, "url": url,
+                            "why": f"published {pub.isoformat()}, older than {max_age}h"})
+            continue
+        citable.append(Snippet(
+            title=str(r.get("title") or "").strip(), url=url, host=h,
+            published_utc=pub.astimezone(timezone.utc).isoformat(), snippet=text,
+            retrieved_utc=now.astimezone(timezone.utc).isoformat(),
+            source_class=meta["class"], source_kind=meta["kind"], dated=True))
+    return citable, context_only, dropped
 
 
 def _api_key() -> str:
@@ -170,8 +239,10 @@ def _api_key() -> str:
 
 
 def fetch_news(asset: str, query: str | None = None, now: datetime | None = None,
-               searcher=None, timeout: int = 45) -> list:
-    """Usable snippets for `asset`, or raise NewsUnavailable naming why not.
+               searcher=None, timeout: int = 45) -> tuple:
+    """(snippets, ungrounded_citation) or raise NewsUnavailable naming why not.
+
+    `ungrounded_citation` is True when the only evidence available was undated.
 
     `searcher` is injectable so the tests never touch the network or the key.
     """
@@ -207,24 +278,38 @@ def fetch_news(asset: str, query: str | None = None, now: datetime | None = None
         raise NewsUnavailable(
             f"tavily: {type(e).__name__} for {asset!r} — REFUSED. {e}") from e
 
-    kept, dropped = filter_results(raw, now=now)
+    citable, context_only, dropped = filter_results(raw, now=now)
     for d in dropped:
         print(f"  [NEWS] dropped {d['host']}: {d['why']}")
-    if not kept:
-        why = "; ".join(sorted({d["why"] for d in dropped})) or "the search returned nothing"
-        raise NewsUnavailable(
-            f"tavily: no usable evidence for {asset!r} — {len(raw or [])} result(s), "
-            f"{len(dropped)} dropped ({why}). REFUSED: an asset with no fact gets no "
-            f"bet, and there is no fallback.")
-    return kept
+    for c in context_only:
+        print(f"  [NEWS] downgraded {c.host}: no usable published date — context only")
+    print(f"  [NEWS] {asset}: kept {len(citable)} citable, "
+          f"{len(context_only)} context-only, {len(dropped)} dropped")
+
+    if citable:
+        return citable, False
+    if context_only:
+        # THE FALLBACK THAT IS ALLOWED, because it is declared rather than hidden: an
+        # undated snippet may carry the citation when nothing dated exists, and the bet
+        # is flagged so the weakness is visible at grading time.
+        print(f"  [NEWS] {asset}: NO DATED EVIDENCE — grounding on context-only "
+              f"snippets, the bet will be flagged 'ungrounded-citation'")
+        return context_only, True
+    why = "; ".join(sorted({d["why"] for d in dropped})) or "the search returned nothing"
+    raise NewsUnavailable(
+        f"tavily: no usable evidence for {asset!r} — {len(raw or [])} result(s), "
+        f"{len(dropped)} dropped ({why}). REFUSED: an asset with no fact gets no "
+        f"bet, and there is no fallback.")
 
 
 def _selftest() -> int:
     from core.source_status import credential_for
     print("core/market_news.py --selftest   (PREDICTION ONLY — reads documents)")
-    wl = _whitelist()
-    print(f"  whitelist hosts : {len(wl['hosts'])}")
-    print(f"  max age         : {wl['max_age_hours']} h")
+    bl = _blacklist()
+    print(f"  blocked hosts   : {len(bl['blocked_hosts'])}")
+    print(f"  blocked suffixes: {len(bl['blocked_suffixes'])}")
+    print(f"  known classes   : {len(bl['host_classes'])} (metadata, never a gate)")
+    print(f"  max age         : {bl['max_age_hours']} h")
     print(f"  key reachable   : {bool((credential_for(SOURCE_KEY) or '').strip())}")
     print("  NO live search is performed by --selftest.")
     return 0

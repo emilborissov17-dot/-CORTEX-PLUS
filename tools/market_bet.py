@@ -67,6 +67,9 @@ ASSET: {sym}
 Last close ({close_date}): {close}
 
 RETRIEVED NEWS — these are the ONLY facts you may cite. You have no others.
+Each item names its source and what kind of source it is. That is not a trust score and
+it is not there for you to judge credibility: the SOURCE TYPE IS PART OF THE SIGNAL. A
+wire report, a government release and a broker's commentary move a price differently.
 {evidence}
 
 Answer with EXACTLY these three lines and nothing else:
@@ -401,15 +404,16 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
     per_asset = {}
     for sym in ASSETS:
         lc = baseline["last_close"][sym]
-        snippets, refusal = [], None
+        snippets, refusal, ungrounded = [], None, False
         try:
             if dry is not None and "snippets" in dry:
                 from core.market_news import Snippet
                 snippets = [Snippet(**x) for x in dry["snippets"].get(sym, [])]
                 if not snippets:
                     raise NewsUnavailable(f"dry-run: no snippets staged for {sym}")
+                ungrounded = not all(getattr(s_, "dated", True) for s_ in snippets)
             else:
-                snippets = fetch_news(sym)
+                snippets, ungrounded = fetch_news(sym)
         except NewsUnavailable as e:
             refusal = str(e)
 
@@ -418,12 +422,15 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             per_asset[sym] = {"indicator": INDICATORS[sym], "last_close": lc,
                               "deadline": deadline, "sealed_direction": None,
                               "outcome": "REFUSED_NO_EVIDENCE", "why": refusal,
-                              "n_snippets": 0, "candidates": []}
+                              "n_snippets": 0, "ungrounded_citation": False,
+                              "candidates": []}
             print(f"\n{sym}  REFUSED_NO_EVIDENCE — {refusal}")
             continue
 
         evidence = "\n".join(
-            f"  [{i+1}] ({s.host}, {s.published_utc[:10]}) {s.title}: {s.snippet}"
+            f"  [{i+1}] [source: {s.host}, class: {s.source_class} {s.source_kind}"
+            f", published: {s.published_utc[:10] or 'UNDATED'}] "
+            f"{s.title}: {s.snippet}"
             for i, s in enumerate(snippets))
         if dry is not None and "completions" in dry:
             comps = dry["completions"].get(sym, [])
@@ -441,7 +448,13 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         per_asset[sym] = {
             "indicator": INDICATORS[sym], "last_close": lc, "deadline": deadline,
             "n_snippets": len(snippets),
+            # PIECE 5 — THE SNAPSHOT. The full retrieved text is sealed with the bet,
+            # so tomorrow's grading can re-verify that the citation really was a
+            # substring of what was retrieved, even if the page has since changed or
+            # gone. A citation that can only be checked against a live URL is a
+            # citation that stops being checkable the moment the publisher edits it.
             "snippets": [s.as_dict() for s in snippets],
+            "ungrounded_citation": ungrounded,
             "sealed_direction": win,
             "sealed_rationale": recs[idx]["parsed"]["rationale"] if idx is not None else None,
             "evidence": recs[idx].get("evidence") if idx is not None else None,
@@ -449,10 +462,13 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "sha256": sha_of(sym, win, deadline) if win else None,
             "baseline_momentum_sign": baseline["baseline"][sym]["sign"],
             "n_passed_gate": sum(r["verdict"] == "ADMITTED" for r in recs),
-            "outcome": "SEALED" if win else "REFUSED_NO_GROUNDED_CANDIDATE",
+            "outcome": (("SEALED (ungrounded-citation)" if ungrounded else "SEALED")
+                        if win else "REFUSED_NO_GROUNDED_CANDIDATE"),
             "candidates": [dict(r, sealed=(i == idx)) for i, r in enumerate(recs)],
         }
-        print(f"\n{sym}  {len(snippets)} snippet(s)  last {lc['date']} {lc['adjclose']}")
+        flag = "  [UNGROUNDED-CITATION: no dated evidence existed]" if ungrounded else ""
+        print(f"\n{sym}  {len(snippets)} snippet(s)  last {lc['date']} "
+              f"{lc['adjclose']}{flag}")
         for i, r in enumerate(recs):
             mark = "SEALED " if i == idx else "       "
             print(f"  {mark}{i} {r['verdict']:9} {r['parsed']['direction'] or '-':5}"
