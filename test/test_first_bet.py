@@ -54,10 +54,12 @@ INJECT = dict(resolver=_resolver, cadence_check=_cadence_ok, scale_check=_scale_
 
 
 def _completion(indicator=SERIES, delta="0.12", deadline=TOMORROW, confidence=None,
-                drop=None):
+                drop=None, rationale="aftershock sequence still releasing"):
     lines = [f"INDICATOR: {indicator}",
              f"EXPECTED_DELTA: {delta}",
              f"DEADLINE: {deadline}"]
+    if rationale is not None:
+        lines.append(f"RATIONALE: {rationale}")
     if drop is not None:
         lines = [l for l in lines if not l.startswith(drop)]
     if confidence is not None:
@@ -282,3 +284,72 @@ def test_with_neither_flag_nothing_runs(monkeypatch, capsys):
                         lambda a, m=None: (100.0, None))
     assert fb.main() == 3
     assert "nothing ran" in capsys.readouterr().out
+
+
+# ── RATIONALE, required (Emil, 7 Sep) ───────────────────────────────────────
+# A number with no stated driver cannot be diagnosed when it is wrong. "It was 3 too
+# high" teaches nothing; "it expected an aftershock sequence that did not continue"
+# teaches something. The rationale is sealed and NEVER rewarded.
+
+def test_a_missing_rationale_is_refused():
+    r = gate_all([parse_completion(_completion(rationale=None))], SERIES,
+                 today=TODAY, **INJECT)[0]
+    assert r["verdict"] == "REFUSED"
+    assert "rationale" in r["missing"]
+    assert r["refusal"].startswith("rationale:")
+
+
+@pytest.mark.parametrize("blank", ["", "   ", "\t"])
+def test_an_empty_or_whitespace_rationale_is_refused(blank):
+    """An empty RATIONALE line is worse than a missing one: it looks like compliance."""
+    r = gate_all([parse_completion(_completion(rationale=blank))], SERIES,
+                 today=TODAY, **INJECT)[0]
+    assert r["verdict"] == "REFUSED"
+    assert "rationale" in r["missing"]
+
+
+def test_the_rationale_is_stored_VERBATIM_for_the_sealed_bet_and_all_eight(tmp_path):
+    reasons = [f"driver number {i}: a real mechanism" for i in range(8)]
+    comps = [_completion(delta=str(0.1 * (i + 1)), confidence=0.5 + i / 100,
+                         rationale=reasons[i]) for i in range(8)]
+    recs = gate_all([parse_completion(c) for c in comps], SERIES,
+                    today=TODAY, **INJECT)
+    out = seal_bet(recs, series_id=SERIES, v0=15.0, v0_date="2026-09-06",
+                   ref_delta=1.0, today=TODAY, ledger_dir=tmp_path)
+    p = json.loads(Path(out).read_text(encoding="utf-8"))
+    got = [c["parsed"]["rationale"] for c in p["all_8_candidates"]]
+    assert got == reasons, "every candidate's rationale must survive verbatim"
+    sealed = next(c for c in p["all_8_candidates"] if c["sealed"])
+    assert p["rationale"] == sealed["parsed"]["rationale"]
+    assert p["rationale"] in reasons
+
+
+def test_the_rationale_never_affects_the_choice():
+    """THE REWARD RULE. Two candidates identical except for their rationale must be
+    chosen between identically — the prose cannot earn credit."""
+    a = [_completion(delta="1", confidence=0.9, rationale="a persuasive story"),
+         _completion(delta="2", confidence=0.5, rationale="terse")]
+    b = [_completion(delta="1", confidence=0.9, rationale="terse"),
+         _completion(delta="2", confidence=0.5, rationale="a persuasive story")]
+    ra = gate_all([parse_completion(c) for c in a], SERIES, today=TODAY, **INJECT)
+    rb = gate_all([parse_completion(c) for c in b], SERIES, today=TODAY, **INJECT)
+    assert choose(ra, ref_delta=1.0)[0] == choose(rb, ref_delta=1.0)[0] == 0
+
+
+def test_the_prompt_asks_for_the_rationale_and_says_what_it_is_for():
+    import tools.first_bet as fb
+    assert "RATIONALE:" in fb.PROMPT
+    assert "DRIVER" in fb.PROMPT
+    assert "RATIONALE" in fb.REQUIRED
+
+
+# ── a sealed bet is never silently overwritten ──────────────────────────────
+def test_sealing_twice_on_the_same_day_refuses_rather_than_clobbering(tmp_path):
+    recs = _records()
+    seal_bet(recs, series_id=SERIES, v0=15.0, v0_date="2026-09-06", ref_delta=1.0,
+             today=TODAY, ledger_dir=tmp_path)
+    with pytest.raises(FileExistsError, match="already holds a sealed bet"):
+        seal_bet(recs, series_id=SERIES, v0=15.0, v0_date="2026-09-06", ref_delta=1.0,
+                 today=TODAY, ledger_dir=tmp_path)
+    seal_bet(recs, series_id=SERIES, v0=15.0, v0_date="2026-09-06", ref_delta=1.0,
+             today=TODAY, ledger_dir=tmp_path, allow_overwrite=True)

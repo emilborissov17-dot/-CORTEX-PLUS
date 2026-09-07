@@ -42,7 +42,14 @@ SERIES_DEFAULT = "GDELT_DAILY"          # the spec's default; see the note in ma
 N_COMPLETIONS = 8
 TEMPERATURE = 0.7                       # spec: never above 1.0 for a numeric delta
 LEDGER_DIR = REPO / "memory" / "first_bet"
-REQUIRED = ("INDICATOR", "EXPECTED_DELTA", "DEADLINE")
+REQUIRED = ("INDICATOR", "EXPECTED_DELTA", "DEADLINE", "RATIONALE")
+
+# THE RATIONALE IS RECORDED AND SEALED, AND IT IS NEVER PART OF THE REWARD.
+# Only the reality-graded number decides whether a bet was right. A rationale that
+# could earn credit is a rationale the model learns to write well rather than to
+# mean - and the whole point of grading against reality is that prose cannot argue
+# with it. It exists so a human can see WHY, and so a wrong bet can be diagnosed
+# rather than only counted. test_the_rationale_never_affects_the_choice pins that.
 
 PROMPT = """You are forecasting ONE daily indicator.
 
@@ -50,12 +57,16 @@ INDICATOR: {series}
 Today's value ({v0_date}): {v0}
 Recent daily changes: {recent}
 
-Answer with EXACTLY these three lines, and nothing else:
+Answer with EXACTLY these four lines, and nothing else:
 INDICATOR: {series}
 EXPECTED_DELTA: <a signed number — the change from today's value to the deadline>
 DEADLINE: {deadline}
+RATIONALE: <ONE sentence naming the DRIVER behind that number — what mechanism makes
+            it move that way. For example "aftershock sequence from the M5.6 still
+            releasing", "weekend lull in reporting", "USD strength". Name a cause, not
+            a restatement of the number.>
 
-You may add one optional fourth line:
+You may add one optional fifth line:
 CONFIDENCE: <a number between 0 and 1>
 """
 
@@ -64,7 +75,8 @@ CONFIDENCE: <a number between 0 and 1>
 def parse_completion(raw: str) -> dict:
     """KEY: value, one per line. Missing fields are NAMED, not inferred."""
     out = {"raw": raw, "indicator": None, "expected_delta": None,
-           "deadline": None, "confidence": None, "missing_fields": []}
+           "deadline": None, "rationale": None, "confidence": None,
+           "missing_fields": []}
     for line in str(raw).splitlines():
         if ":" not in line:
             continue
@@ -76,14 +88,16 @@ def parse_completion(raw: str) -> dict:
             out["expected_delta"] = v
         elif k == "DEADLINE":
             out["deadline"] = v
+        elif k == "RATIONALE":
+            out["rationale"] = v or None
         elif k == "CONFIDENCE":
             try:
                 out["confidence"] = float(v)
             except ValueError:
                 out["confidence"] = None
-    out["missing_fields"] = [f for f in REQUIRED
-                             if out[f.lower() if f != "EXPECTED_DELTA"
-                                    else "expected_delta"] in (None, "")]
+    out["missing_fields"] = [
+        f for f in REQUIRED
+        if not str(out.get(f.lower()) or "").strip()]
     return out
 
 
@@ -134,6 +148,18 @@ def gate_all(parsed_list, series_id: str, today: date | None = None, **inject) -
                                 f"the fetched series id"))
             records.append(rec)
             continue
+        # RATIONALE, required. A number with no stated driver cannot be diagnosed
+        # when it is wrong: "it was 3 too high" teaches nothing, "it expected an
+        # aftershock sequence that did not continue" teaches something. Checked here
+        # rather than in the shared gate, because the cycle's proposals have their own
+        # contract and this requirement belongs to the bet.
+        if not str(p.get("rationale") or "").strip():
+            rec.update(verdict="REFUSED", missing=["rationale"],
+                       refusal=("rationale: the bet states a number with no reason. "
+                                "One sentence naming the driver is required, and it is "
+                                "recorded but never rewarded."))
+            records.append(rec)
+            continue
         delta = p["expected_delta"]
         try:
             delta_val = float(delta)
@@ -176,7 +202,7 @@ def choose(records, ref_delta):
 # ── the seal ────────────────────────────────────────────────────────────────
 def seal_bet(records, series_id: str, v0: float, v0_date: str, ref_delta,
              today: date | None = None, ledger_dir: Path | None = None,
-             deadline: str | None = None) -> str:
+             deadline: str | None = None, allow_overwrite: bool = False) -> str:
     today = today or date.today()
     ledger_dir = Path(ledger_dir or LEDGER_DIR)
     ledger_dir.mkdir(parents=True, exist_ok=True)
@@ -197,7 +223,7 @@ def seal_bet(records, series_id: str, v0: float, v0_date: str, ref_delta,
 
     if idx is None:
         payload.update(predicted_delta=None, predicted_value=None, deadline=deadline,
-                       confidence=None, chosen_reason=reason,
+                       rationale=None, confidence=None, chosen_reason=reason,
                        sha256_of_sealed_fields=None,
                        persistence_predicted_value=v0, persistence_deadline=deadline,
                        outcome="NO_BET: no candidate passed the gate")
@@ -206,9 +232,10 @@ def seal_bet(records, series_id: str, v0: float, v0_date: str, ref_delta,
         delta = float(c["expected_delta"])
         dl = c["deadline"]
         sealed = {"indicator": series_id, "expected_delta": delta, "deadline": dl}
+        rationale = c.get("rationale")
         payload.update(
             predicted_delta=delta, predicted_value=v0 + delta, deadline=dl,
-            confidence=c.get("confidence"), chosen_reason=reason,
+            rationale=rationale, confidence=c.get("confidence"), chosen_reason=reason,
             sha256_of_sealed_fields=hashlib.sha256(
                 json.dumps(sealed, sort_keys=True,
                            separators=(",", ":")).encode("utf-8")).hexdigest(),
@@ -218,6 +245,13 @@ def seal_bet(records, series_id: str, v0: float, v0_date: str, ref_delta,
             outcome="SEALED — not graded. Grading is a separate step at +24 h.")
 
     out = ledger_dir / f"BET_{today.isoformat()}.json"
+    # A LEDGER THAT SILENTLY OVERWRITES A SEALED BET IS NOT A LEDGER. Re-running on the
+    # same day must not clobber the morning's seal - that would let a bet be replaced
+    # after the world had started answering it.
+    if out.exists() and not allow_overwrite:
+        raise FileExistsError(
+            f"{out} already holds a sealed bet. Sealing again would overwrite it. "
+            f"Pass allow_overwrite=True only if that is genuinely intended.")
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
     return str(out)
 
