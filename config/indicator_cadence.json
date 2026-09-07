@@ -86,6 +86,24 @@
       "last_observed_from": "quakes.last_date",
       "source": "USGS fdsnws event count — M4.5+ per UTC calendar day",
       "note": "A UTC CALENDAR day, never the rolling 4.5_day feed: that window ends whenever you ask it and a value read from it cannot be graded later. Today is never counted because a day in progress reads low."
+    },
+    "MARKET_SPY_CLOSE": {
+      "cadence": "daily",
+      "last_observed_from": "markets.last_date",
+      "source": "Yahoo chart API — SPY dividend-adjusted daily close",
+      "note": "TRADING days, not calendar days: gaps of 1, 3 and 4 days are normal (weekends and holidays). PREDICTION ONLY, never a trade."
+    },
+    "MARKET_GLD_CLOSE": {
+      "cadence": "daily",
+      "last_observed_from": "markets.last_date",
+      "source": "Yahoo chart API — GLD dividend-adjusted daily close",
+      "note": "TRADING days, not calendar days: gaps of 1, 3 and 4 days are normal (weekends and holidays). PREDICTION ONLY, never a trade."
+    },
+    "MARKET_UUP_CLOSE": {
+      "cadence": "daily",
+      "last_observed_from": "markets.last_date",
+      "source": "Yahoo chart API — UUP dividend-adjusted daily close",
+      "note": "TRADING days, not calendar days: gaps of 1, 3 and 4 days are normal (weekends and holidays). PREDICTION ONLY, never a trade."
     }
   },
   "org_cadence": {

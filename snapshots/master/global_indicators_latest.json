@@ -21,7 +21,8 @@
     "exoplanets": "NASA Exoplanet Archive TAP",
     "satellites": "CelesTrak SATCAT",
     "neo": "NASA JPL CNEOS CAD",
-    "quakes": "USGS fdsnws — M4.5+ per UTC day"
+    "quakes": "USGS fdsnws — M4.5+ per UTC day",
+    "markets": "Yahoo chart API — SPY/GLD/UUP adj close"
   },
   "co2": {
     "co2_ppm": 427.15,
@@ -205,5 +206,11 @@
     "quake_m45_count": 15,
     "last_date": "2026-09-06",
     "min_magnitude": 4.5
+  },
+  "markets": {
+    "spy_adjclose": 770.19,
+    "gld_adjclose": 406.77,
+    "uup_adjclose": 28.08,
+    "last_date": "2026-09-04"
   }
 }

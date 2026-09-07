@@ -1,0 +1,42 @@
+{
+ "ts": "2026-09-07",
+ "method": "20-trading-day momentum sign",
+ "note": "the null the bet must beat; sealed before any bet",
+ "baseline": {
+  "SPY": {
+   "mean_daily_return": -0.0001865106642007343,
+   "sign": "DOWN",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "GLD": {
+   "mean_daily_return": 0.0011700662363152794,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  },
+  "UUP": {
+   "mean_daily_return": 2.300869514308277e-05,
+   "sign": "UP",
+   "n_returns": 20,
+   "from_date": "2026-08-07",
+   "to_date": "2026-09-04"
+  }
+ },
+ "last_close": {
+  "SPY": {
+   "date": "2026-09-04",
+   "adjclose": 770.1900024414062
+  },
+  "GLD": {
+   "date": "2026-09-04",
+   "adjclose": 406.7699890136719
+  },
+  "UUP": {
+   "date": "2026-09-04",
+   "adjclose": 28.079999923706055
+  }
+ }
+}

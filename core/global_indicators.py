@@ -132,6 +132,38 @@ def fetch_usgs_quakes() -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 2c. Markets — SPY / GLD / UUP daily close.  PREDICTION ONLY, never a trade.
+# ---------------------------------------------------------------------------
+
+def fetch_markets() -> dict:
+    """Latest dividend-adjusted close per asset, and the session date it belongs to.
+
+    ADJCLOSE, not close: they diverge on every ex-dividend date, where the raw close
+    drops by the dividend and a direction read from it records a fall that did not
+    happen to a holder.
+
+    §VI: this reads a public price and nothing else. No order path, no sizing, no
+    recommendation.
+    """
+    from core.market_daily import ASSETS, fetch_chart, last_close, parse_chart
+    out = {}
+    last_date = None
+    for sym in ASSETS:
+        try:
+            bars = parse_chart(fetch_chart(sym))
+            d, px = last_close(bars)
+        except Exception as e:                                   # noqa: BLE001
+            print(f"  [GI] markets {sym}: {type(e).__name__} {e}")
+            continue
+        out[f"{sym.lower()}_adjclose"] = round(px, 4)
+        last_date = max(last_date, d.isoformat()) if last_date else d.isoformat()
+    if not out:
+        return {}
+    out["last_date"] = last_date
+    return out
+
+
+# ---------------------------------------------------------------------------
 # 2. Global temperature anomaly — NASA GISTEMP
 # ---------------------------------------------------------------------------
 
@@ -881,6 +913,7 @@ _SECTIONS = [
     ("temperature",  fetch_gistemp,      "NASA GISTEMP"),
     ("sea_level",    fetch_sea_level,    "NOAA Satellite Altimetry"),
     ("quakes",       fetch_usgs_quakes,  "USGS fdsnws — M4.5+ per UTC day"),
+    ("markets",      fetch_markets,      "Yahoo chart API — SPY/GLD/UUP adj close"),
     ("biodiversity", fetch_gbif,         "GBIF"),
     ("food",         fetch_food,         "World Bank WDI — Food"),
     ("waste",        fetch_waste,        "UN SDG + World Bank — Waste"),
