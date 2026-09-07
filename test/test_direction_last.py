@@ -25,24 +25,28 @@ from tools.market_bet import (GROUNDED_CONTRACT, check_field_order,  # noqa: E40
 D = "2026-09-08"
 
 
-def _c(event=2, relevance="a broad US equity fund reprices on a national print",
-       mechanism="a hotter print lifts real yields", direction="DOWN", deadline=D):
-    return (f"DEADLINE: {deadline}\nEVENT: {event}\nRELEVANCE: {relevance}\n"
-            f"MECHANISM: {mechanism}\nDIRECTION: {direction}")
+def _c(signal=2, driver="MACRO", logic="a hotter print lifts real yields",
+       direction="DOWN", deadline=D, event=None):
+    """The R51 contract: DRIVER -> SIGNAL -> LOGIC -> DIRECTION, direction LAST.
+
+    `event` is accepted as an alias for `signal` so call sites read unchanged."""
+    signal = event if event is not None else signal
+    return (f"DEADLINE: {deadline}\nDRIVER: {driver}\nSIGNAL: {signal}\n"
+            f"LOGIC: {logic}\nDIRECTION: {direction}")
 
 
 # ── the contract itself ─────────────────────────────────────────────────────
 def test_the_contract_ends_on_direction():
-    assert GROUNDED_CONTRACT == ("EVENT", "RELEVANCE", "MECHANISM", "DIRECTION")
+    assert GROUNDED_CONTRACT == ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
     assert GROUNDED_CONTRACT[-1] == "DIRECTION"
 
 
 def test_a_contract_ordered_answer_parses_with_no_problem():
     p = parse_grounded_completion(_c())
     assert p["order_problem"] is None
-    assert p["event"] == "2"
+    assert p["signal"] == "2"
     assert p["direction"] == "DOWN"
-    assert p["relevance"] and p["mechanism"]
+    assert p["driver"] == "MACRO" and p["logic"]
 
 
 def test_direction_is_the_last_field_generated():
@@ -55,8 +59,8 @@ def test_direction_is_the_last_field_generated():
 # ── the refusal this round exists for ───────────────────────────────────────
 def test_direction_before_the_reasoning_is_refused_as_the_wrong_contract():
     """The OLD contract, replayed. It must not merely score worse — it must not parse."""
-    old = (f"DIRECTION: DOWN\nDEADLINE: {D}\nEVENT: 2\n"
-           f"RELEVANCE: x\nMECHANISM: y")
+    old = (f"DIRECTION: DOWN\nDEADLINE: {D}\nDRIVER: MACRO\n"
+           f"SIGNAL: 2\nLOGIC: y")
     p = parse_grounded_completion(old)
     assert p["order_problem"] is not None
     assert "DIRECTION comes FIRST" in p["order_problem"]
@@ -68,18 +72,18 @@ def test_the_previous_rounds_contract_no_longer_parses_at_all():
     p = parse_grounded_completion(
         f"DIRECTION: UP\nDEADLINE: {D}\nRATIONALE: DRIVER MACRO | SIGNAL 2 | LOGIC x")
     assert p["order_problem"] is not None
-    assert p["event"] is None
+    assert p["signal"] is None
 
 
 @pytest.mark.parametrize("raw,fragment", [
-    (f"DEADLINE: {D}\nEVENT: 2\nDIRECTION: UP\nRELEVANCE: x\nMECHANISM: y",
-     "not EVENT -> RELEVANCE"),
-    (f"EVENT: 2\nRELEVANCE: x\nMECHANISM: y\nDIRECTION: UP\nDEADLINE: {D}",
+    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nDIRECTION: UP\nLOGIC: y",
+     "not DRIVER -> SIGNAL"),
+    (f"DRIVER: MACRO\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP\nDEADLINE: {D}",
      "generated AFTER DIRECTION"),
-    (f"DEADLINE: {D}\nEVENT: 2\nRELEVANCE: x\nDIRECTION: UP", "names no MECHANISM"),
-    (f"DEADLINE: {D}\nEVENT: 2\nMECHANISM: y\nDIRECTION: UP", "names no RELEVANCE"),
-    (f"DEADLINE: {D}\nRELEVANCE: x\nMECHANISM: y\nDIRECTION: UP", "names no EVENT"),
-    (f"DEADLINE: {D}\nEVENT: 2\nRELEVANCE: x\nMECHANISM: y\nDIRECTION: UP\n"
+    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nDIRECTION: UP", "names no LOGIC"),
+    (f"DEADLINE: {D}\nDRIVER: MACRO\nLOGIC: y\nDIRECTION: UP", "names no SIGNAL"),
+    (f"DEADLINE: {D}\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP", "names no DRIVER"),
+    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP\n"
      f"DIRECTION: DOWN", "more than once"),
     ("the market will simply go up", "names none of the contract"),
 ])
@@ -93,15 +97,15 @@ def test_nothing_may_follow_direction():
     content and fatal in principle: it means the model was still writing after it
     answered, so the answer was not the end of the reasoning."""
     assert check_field_order(
-        ["EVENT", "RELEVANCE", "MECHANISM", "DIRECTION", "DEADLINE"]) is not None
+        ["DRIVER", "SIGNAL", "LOGIC", "DIRECTION", "DEADLINE"]) is not None
     assert check_field_order(
-        ["DEADLINE", "EVENT", "RELEVANCE", "MECHANISM", "DIRECTION"]) is None
+        ["DEADLINE", "DRIVER", "SIGNAL", "LOGIC", "DIRECTION"]) is None
 
 
 # ── what is deliberately NOT checked ────────────────────────────────────────
 def test_case_is_not_reasoning_and_is_not_enforced():
     p = parse_grounded_completion(
-        f"deadline: {D}\nevent: 2\nrelevance: x\nmechanism: y\ndirection: down")
+        f"deadline: {D}\ndriver: MACRO\nsignal: 2\nlogic: y\ndirection: down")
     assert p["order_problem"] is None
     assert p["direction"] == "DOWN"
 
@@ -109,7 +113,7 @@ def test_case_is_not_reasoning_and_is_not_enforced():
 def test_a_bulleted_or_starred_line_still_parses():
     """Models decorate. Decoration is not order."""
     p = parse_grounded_completion(
-        f"- DEADLINE: {D}\n- EVENT: 2\n- RELEVANCE: x\n- MECHANISM: y\n- DIRECTION: UP")
+        f"- DEADLINE: {D}\n- DRIVER: MACRO\n- SIGNAL: 2\n- LOGIC: y\n- DIRECTION: UP")
     assert p["order_problem"] is None
     assert p["direction"] == "UP"
 
@@ -118,8 +122,8 @@ def test_prose_between_the_fields_does_not_break_the_order():
     """Only recognised field lines carry order. A stray sentence is ignored, not
     treated as a field out of place."""
     p = parse_grounded_completion(
-        f"DEADLINE: {D}\nEVENT: 2\nLet me think about this.\n"
-        f"RELEVANCE: x\nMECHANISM: y\nDIRECTION: UP")
+        f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nLet me think about this.\n"
+        f"LOGIC: y\nDIRECTION: UP")
     assert p["order_problem"] is None
 
 
@@ -158,14 +162,14 @@ def test_the_sealed_record_shows_direction_as_the_last_generated_field(tmp_path)
     bet = _seal(tmp_path, [_c(event=2, direction="DOWN"), _c(event=2, direction="DOWN")])
     spy = bet["assets"]["SPY"]
     assert spy["sealed_direction"] == "DOWN"
-    assert spy["contract"] == "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION"
+    assert spy["contract"] == "DRIVER -> SIGNAL -> LOGIC -> DIRECTION"
     assert spy["direction_generated_last"] is True
     assert spy["sealed_field_order"][-1] == "DIRECTION"
     assert "DIRECTION" not in spy["sealed_field_order"][:-1]
     # and the reasoning that produced it is sealed alongside, in order
-    assert spy["sealed_relevance"] and spy["sealed_mechanism"]
+    assert spy["sealed_driver"] == "MACRO" and spy["sealed_logic"]
     order = spy["sealed_field_order"]
-    assert order.index("EVENT") < order.index("RELEVANCE") < order.index("MECHANISM")
+    assert order.index("DRIVER") < order.index("SIGNAL") < order.index("LOGIC")
 
 
 def test_every_sealed_candidate_carries_its_own_generation_order(tmp_path):
@@ -176,8 +180,8 @@ def test_every_sealed_candidate_carries_its_own_generation_order(tmp_path):
 
 def test_a_direction_first_answer_never_reaches_the_sealed_record(tmp_path):
     """The old contract, run end to end through the real runner."""
-    old = (f"DIRECTION: UP\nDEADLINE: {D}\nEVENT: 2\n"
-           f"RELEVANCE: x\nMECHANISM: y")
+    old = (f"DIRECTION: UP\nDEADLINE: {D}\nDRIVER: MACRO\n"
+           f"SIGNAL: 2\nLOGIC: y")
     bet = _seal(tmp_path, [old, old])
     spy = bet["assets"]["SPY"]
     assert spy["sealed_direction"] is None
@@ -191,4 +195,82 @@ def test_the_sealed_gate_description_states_the_order(tmp_path):
     somebody who was not here."""
     bet = _seal(tmp_path, [_c(event=2)])
     assert "DIRECTION GENERATED LAST" in bet["gate"]
-    assert "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION" in bet["gate"]
+    assert "DRIVER -> SIGNAL -> LOGIC -> DIRECTION" in bet["gate"]
+
+
+# ── R51: the field set is MINIMAL, and DRIVER leads without leaking ─────────
+def test_the_contract_has_exactly_one_free_text_field():
+    """THE R51 CORRECTION TO R50. R50 put DIRECTION last but paid for it with TWO
+    free-text fields (RELEVANCE and MECHANISM). Every free-text field a 3B is asked to
+    fill is another surface it can confabulate on, so the set is now:
+
+        DRIVER     closed four-word vocabulary   near-zero surface
+        SIGNAL     a segment index               zero surface, verbatim by construction
+        LOGIC      one sentence                  ONE surface
+        DIRECTION  binary, and last              no surface
+    """
+    from tools.market_bet import BUCKETS
+    assert GROUNDED_CONTRACT == ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
+    assert len(GROUNDED_CONTRACT) == 4
+    # DRIVER is closed, SIGNAL is an index, DIRECTION is binary — LOGIC is the only
+    # field whose contents the model invents.
+    assert len(BUCKETS) == 4
+
+
+def test_no_driver_bucket_names_a_direction():
+    """WHY DRIVER CAN SAFELY GO FIRST. It is generated before the fact and before the
+    reasoning, so if any bucket implied up or down it would be a head start on the
+    conclusion — the exact defect this round removes. None of them does: they name the
+    KIND of force, never its sign."""
+    from tools.market_bet import BUCKETS, signal_polarity
+
+    for bucket in BUCKETS:
+        assert signal_polarity(bucket)["polarity"] == "NEUTRAL", bucket
+    directional = {"UP", "DOWN", "BULL", "BEAR", "RISE", "FALL", "LONG", "SHORT"}
+    for bucket in BUCKETS:
+        assert bucket.upper() not in directional
+
+
+def test_a_driver_outside_the_four_buckets_is_refused():
+    from dataclasses import dataclass
+
+    from tools.market_bet import grounded_gate
+
+    @dataclass(frozen=True)
+    class Sn:
+        snippet: str = "CPI rose 0.3% in August, the BLS said on Friday."
+        title: str = "US inflation ticks up"
+        url: str = "https://www.reuters.com/x"
+        published_utc: str = "2026-09-05T12:30:00+00:00"
+        host: str = "reuters.com"
+        source_class: str = "independent"
+        source_kind: str = "wire"
+        dated: bool = True
+
+    r = grounded_gate([parse_grounded_completion(_c(driver="VIBES"))], "SPY", D,
+                      [Sn()])[0]
+    assert r["verdict"] == "REFUSED"
+    assert "driver" in r["missing"]
+    assert "closed" in r["refusal"]
+
+
+def test_an_empty_logic_is_refused():
+    from dataclasses import dataclass
+
+    from tools.market_bet import grounded_gate
+
+    @dataclass(frozen=True)
+    class Sn:
+        snippet: str = "CPI rose 0.3% in August, the BLS said on Friday."
+        title: str = "US inflation ticks up"
+        url: str = "https://www.reuters.com/x"
+        published_utc: str = "2026-09-05T12:30:00+00:00"
+        host: str = "reuters.com"
+        source_class: str = "independent"
+        source_kind: str = "wire"
+        dated: bool = True
+
+    r = grounded_gate([parse_grounded_completion(_c(logic=""))], "SPY", D, [Sn()])[0]
+    assert r["verdict"] == "REFUSED"
+    assert "logic" in r["missing"]
+    assert "guess with a citation stapled to it" in r["refusal"]

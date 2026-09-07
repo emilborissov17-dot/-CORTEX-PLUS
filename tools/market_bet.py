@@ -77,25 +77,27 @@ differently.
 Answer with EXACTLY these five lines, IN THIS ORDER, and nothing else:
 
 DEADLINE: {deadline}
-EVENT: [the NUMBER of one sentence above]
-RELEVANCE: [one sentence — why that fact bears on {sym} in particular]
-MECHANISM: [one sentence — the channel by which it reaches the price]
+DRIVER: one of MACRO, GEOPOL, FLOW, SECTOR
+SIGNAL: [the NUMBER of one sentence above]
+LOGIC: [ONE sentence — the mechanism by which that fact moves the price]
 DIRECTION: UP or DOWN
 
-THE ORDER IS THE POINT, AND IT IS NOT NEGOTIABLE. Work out which fact you have, why it
-bears on {sym}, and how it reaches the price — and only then say which way. DIRECTION IS
-LAST because it is the CONCLUSION. An answer that states the direction first and
-explains it afterwards is refused, because a reason written to fit a direction already
-chosen cannot be told apart from a guess with a story attached.
+THE ORDER IS THE POINT, AND IT IS NOT NEGOTIABLE. Name the kind of driver, pick the
+fact, state the mechanism — and only then say which way. DIRECTION IS LAST because it is
+the CONCLUSION of the three lines above it. An answer that states the direction first
+and explains it afterwards is refused, because a reason written to fit a direction
+already chosen cannot be told apart from a guess with a story attached.
 
-EVENT IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not join
+DRIVER IS ONE OF FOUR WORDS and none of them means up or down. It says what KIND of
+force this is, not which way it pushes.
+
+SIGNAL IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not join
 two of them together. Give its number and the sentence is used exactly as printed above.
 You may give more than one number, separated by commas. A number that is not in the list
-above is refused, and so is anything in the EVENT field that is not a number.
+above is refused, and so is anything in the SIGNAL field that is not a number.
 
-RELEVANCE AND MECHANISM ARE YOUR OWN WORDS and must not be empty. RELEVANCE says why
-this fact touches THIS asset rather than assets in general. MECHANISM says the channel —
-yields, flows, positioning, supply — by which it arrives at the price.
+LOGIC IS ONE SENTENCE IN YOUR OWN WORDS, and it must not be empty. Say the channel —
+yields, flows, positioning, supply — by which the fact you picked reaches the price.
 
 WORKED EXAMPLE. Suppose the evidence block had ended with:
 
@@ -107,9 +109,9 @@ SOURCE A — reuters.com, class independent (wire), published 2026-09-05
 A correct answer is:
 
 DEADLINE: {deadline}
-EVENT: 2
-RELEVANCE: {sym} holds the whole US large-cap basket, so a national print reprices all of it.
-MECHANISM: a hotter print lifts real yields, which discount equity cash flows harder.
+DRIVER: MACRO
+SIGNAL: 2
+LOGIC: a hotter print lifts real yields, which discount equity cash flows harder.
 DIRECTION: DOWN
 
 Note what it does NOT do. It does not write the sentence out — it writes the number. And
@@ -127,14 +129,31 @@ it does not name a direction until the last line, after the reasoning that produ
 # built in R49 piece 4 catches that after the fact; this changes the thing that produces
 # it. The worked example was teaching it too - it also put DIRECTION first.
 #
-# The new order is EVENT -> RELEVANCE -> MECHANISM -> DIRECTION, and it is ENFORCED
-# rather than requested: an answer that names the direction before the reasoning is
-# refused as the wrong contract. DEADLINE is a constant the model echoes back rather
-# than a judgement, so it is positionally free - except that nothing may follow
-# DIRECTION, which has to be the last thing generated for any of this to mean anything.
-GROUNDED_CONTRACT = ("EVENT", "RELEVANCE", "MECHANISM", "DIRECTION")
+# The new order is DRIVER -> SIGNAL -> LOGIC -> DIRECTION, and it is ENFORCED rather
+# than requested: an answer that names the direction before the reasoning is refused as
+# the wrong contract. DEADLINE is a constant the model echoes back rather than a
+# judgement, so it is positionally free - except that nothing may follow DIRECTION,
+# which has to be the last thing generated for any of this to mean anything.
+#
+# THE FIELD SET IS MINIMAL ON PURPOSE, and this is the correction R51 makes to R50.
+# R50 shipped EVENT -> RELEVANCE -> MECHANISM -> DIRECTION, which put the direction last
+# but bought that with TWO free-text fields. Every free-text field a 3B is asked to fill
+# is another surface it can confabulate on, and RELEVANCE in particular invited a
+# plausible-sounding paragraph about why an asset matters - the exact register the whole
+# grounding effort exists to remove. The set below has exactly ONE free-text field:
+#
+#   DRIVER     a closed four-word vocabulary       near-zero surface
+#   SIGNAL     a segment index                     zero surface, verbatim by construction
+#   LOGIC      one sentence                        ONE surface
+#   DIRECTION  binary, and last                    no surface
+#
+# DRIVER LEADS AND CARRIES NO DIRECTION. None of MACRO, GEOPOL, FLOW or SECTOR means up
+# or down, so naming the kind of force first commits the model to nothing about the
+# answer - it is a framing choice, not a head start. That property is what makes it safe
+# to generate before the fact, and it has its own test.
+GROUNDED_CONTRACT = ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
 _GROUNDED_LINE_RE = re.compile(
-    r"^[\s*>-]*(EVENT|RELEVANCE|MECHANISM|DIRECTION|DEADLINE)\s*:\s*(.*)$", re.I)
+    r"^[\s*>-]*(DRIVER|SIGNAL|LOGIC|DIRECTION|DEADLINE)\s*:\s*(.*)$", re.I)
 
 
 def check_field_order(seen) -> str | None:
@@ -168,13 +187,13 @@ def check_field_order(seen) -> str | None:
 
 
 def parse_grounded_completion(raw: str) -> dict:
-    """The R50 contract, parsed IN THE ORDER IT WAS GENERATED.
+    """The grounded contract, parsed IN THE ORDER IT WAS GENERATED.
 
     `field_order` is kept because the order is the property being bought, and a record
     that does not show it cannot be checked later.
     """
-    out = {"raw": raw, "deadline": None, "event": None, "relevance": None,
-           "mechanism": None, "direction": None,
+    out = {"raw": raw, "deadline": None, "driver": None, "signal": None,
+           "logic": None, "direction": None,
            "field_order": [], "order_problem": None}
     seen = []
     for line in str(raw).splitlines():
@@ -833,15 +852,19 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
                        refusal=(f"direction: {p.get('direction')!r} is not a direction. "
                                 f"UP or DOWN, and nothing else, can be graded."))
             continue
-        for field in ("relevance", "mechanism"):
-            if not str(p.get(field) or "").strip():
-                rec.update(verdict="REFUSED", missing=[field],
-                           refusal=(f"{field}: empty. RELEVANCE and MECHANISM are the "
-                                    f"two steps that make DIRECTION a conclusion "
-                                    f"rather than a guess; an empty one is a step of "
-                                    f"the reasoning that was skipped."))
-                break
-        if rec["verdict"] != "ADMITTED":
+        bucket = (p.get("driver") or "").upper().split()[0:1]
+        if not bucket or bucket[0] not in BUCKETS:
+            rec.update(verdict="REFUSED", missing=["driver"],
+                       refusal=(f"driver: {p.get('driver')!r} is not one of "
+                                f"{'|'.join(BUCKETS)}. The bucket is a closed "
+                                f"vocabulary precisely so that naming it first cannot "
+                                f"leak the answer — none of the four means up or down."))
+            continue
+        if not str(p.get("logic") or "").strip():
+            rec.update(verdict="REFUSED", missing=["logic"],
+                       refusal=("logic: empty. LOGIC is the one sentence that turns a "
+                                "cited fact into a direction; without it DIRECTION is "
+                                "a guess with a citation stapled to it."))
             continue
         if str(p.get("deadline") or "").strip() != deadline:
             rec.update(verdict="REFUSED", missing=["deadline"],
@@ -849,19 +872,17 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
                                 f"session {deadline!r}."))
             continue
 
-        idxs, why = parse_signal_indices(p.get("event"), len(segments))
+        idxs, why = parse_signal_indices(p.get("signal"), len(segments))
         if why is not None:
-            rec.update(verdict="REFUSED", missing=["event_index"],
-                       refusal=why.replace("signal_index:", "event_index:")
-                                  .replace("SIGNAL", "EVENT"))
+            rec.update(verdict="REFUSED", missing=["signal_index"], refusal=why)
             continue
         text, chosen = signal_from_indices(idxs, segments)
-        rec["parsed"]["event_indices"] = idxs
-        rec["parsed"]["event_text"] = text
+        rec["parsed"]["signal_indices"] = idxs
+        rec["parsed"]["signal_text"] = text
 
         if signal_dated_after(text, deadline):
-            rec.update(verdict="REFUSED", missing=["event_date"],
-                       refusal=(f"event_date: segment {idxs} — {text!r} — names a date "
+            rec.update(verdict="REFUSED", missing=["signal_date"],
+                       refusal=(f"signal_date: segment {idxs} — {text!r} — names a date "
                                 f"after the graded session {deadline}. A fact that has "
                                 f"not happened cannot have driven the price."))
             continue
@@ -908,7 +929,7 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
         # always about: does the stated reasoning point the same way as the answer.
         rec["coherence"] = coherence(
             rec["parsed"]["direction"], text,
-            f"RELEVANCE {p.get('relevance')} | MECHANISM {p.get('mechanism')}")
+            f"DRIVER {p.get('driver')} | LOGIC {p.get('logic')}")
     return records
 
 
@@ -1046,7 +1067,7 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "sealed_field_order": (recs[idx]["parsed"]["field_order"]
                                    if idx is not None else None),
             "n_snippets": len(snippets), "n_segments": len(segments),
-            # The numbered table exactly as the model saw it. Without it, "EVENT 4"
+            # The numbered table exactly as the model saw it. Without it, "SIGNAL 4"
             # in the record means nothing a month from now.
             "segments": segments,
             # PIECE 5 — THE SNAPSHOT. The full retrieved text is sealed with the bet,
@@ -1058,10 +1079,10 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "ungrounded_citation": ungrounded,
             "sealed_direction": win,
             # The reasoning that PRODUCED the direction, in the order it was written.
-            "sealed_relevance": (recs[idx]["parsed"]["relevance"]
-                                 if idx is not None else None),
-            "sealed_mechanism": (recs[idx]["parsed"]["mechanism"]
-                                 if idx is not None else None),
+            "sealed_driver": (recs[idx]["parsed"]["driver"]
+                              if idx is not None else None),
+            "sealed_logic": (recs[idx]["parsed"]["logic"]
+                             if idx is not None else None),
             "evidence": recs[idx].get("evidence") if idx is not None else None,
             # R49 PIECE 4. The triple travels with the sealed bet, flag and all. A
             # flagged bet is a SEALED bet - the flag is for whoever reads fifty of these.
@@ -1079,7 +1100,7 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
               f"segment(s)  last {lc['date']} {lc['adjclose']}{flag}")
         for i, r in enumerate(recs):
             mark = "SEALED " if i == idx else "       "
-            pick = r["parsed"].get("event_indices")
+            pick = r["parsed"].get("signal_indices")
             coh = r.get("coherence") or {}
             note = (f"  seg {pick}  polarity {coh.get('signal_polarity')}"
                     + ("  [FLAG direction<->polarity mismatch — ADMITTED anyway]"
@@ -1095,8 +1116,8 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         rows = [{"ts": datetime.now().astimezone().isoformat(timespec="seconds"),
                  "asset": sym, "deadline": deadline, "candidate": i,
                  "sealed": (i == idx),
-                 "segment_indices": r["parsed"].get("event_indices"),
-                 "event_text": r["parsed"].get("event_text"),
+                 "segment_indices": r["parsed"].get("signal_indices"),
+                 "signal_text": r["parsed"].get("signal_text"),
                  "field_order": r["parsed"].get("field_order"),
                  **{k: v for k, v in (r.get("coherence") or {}).items()
                     if k != "_not_a_gate"}}
@@ -1122,9 +1143,9 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         "reference_close_date": baseline["last_close"]["SPY"]["date"],
         "grading_rule": "the FIRST bar strictly after reference_close_date",
         "gate": "grounded by INDEX, and ordered: the contract is "
-                "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION with DIRECTION "
+                "DRIVER -> SIGNAL -> LOGIC -> DIRECTION with DIRECTION "
                 "GENERATED LAST, so it is conditioned on the reasoning rather "
-                "than followed by it. EVENT is the number of a printed segment, "
+                "than followed by it. SIGNAL is the number of a printed segment, "
                 "so the cited text is verbatim by construction; the "
                 "exact-substring check survives underneath as belt-and-suspenders. "
                 "An answer that names the direction first is REFUSED as the "
