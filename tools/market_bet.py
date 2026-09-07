@@ -153,9 +153,84 @@ def next_session(after: date) -> date:
     raise ValueError(f"no session found within 10 days of {after}")
 
 
+# ── THE RATIONALE SPLIT ─────────────────────────────────────────────────────
+# THE OLD SPLIT WAS ON "|" ALONE, and a missing pipe lost a field WITHOUT SAYING SO.
+# Measured on the four shapes a model actually produces:
+#
+#   DRIVER MACRO | SIGNAL 7 | LOGIC yields lift   driver MACRO  signal 7  logic OK
+#   DRIVER MACRO | SIGNAL 7 LOGIC: yields lift    logic=None - swallowed into SIGNAL
+#   DRIVER MACRO SIGNAL 7 LOGIC: yields lift      driver="MACRO SIGNAL 7 LOGIC: ...",
+#                                                 signal=None, logic=None
+#   ...| SIGNAL 7 \n LOGIC: yields lift           logic=None - the line matched no branch
+#
+# All three failures produce logic=None, WHICH IS INDISTINGUISHABLE FROM A MODEL THAT
+# GAVE NO REASON. Three of the eight live R48 candidates were in the second shape. The
+# third is the nastiest: "MACRO SIGNAL 7 LOGIC: ..." splits to a first token of "MACRO",
+# which IS a valid bucket, so the driver check PASSES and the run then reports an empty
+# SIGNAL - a correct refusal for the wrong reason, which is how a real bug hides.
+#
+# The fix is to split on the CONTRACT'S OWN FIELD NAMES rather than on its punctuation.
+# That is not guessing what the model meant: DRIVER, SIGNAL and LOGIC are the declared
+# field headers, and the pipe is decoration between them. What IS guessing - picking one
+# of two LOGIC markers, or inventing a field that was never named - stays a refusal.
+_RATIONALE_FIELDS = ("DRIVER", "SIGNAL", "LOGIC")
+# Matched only as a HEADER: at the start, or after whitespace or a pipe, uppercase, on a
+# word boundary. A lowercase "logic" inside a free-text SIGNAL ("the logic of the
+# market") is therefore not a marker, which matters because the ungrounded path still
+# puts prose in that field.
+_FIELD_MARKER_RE = re.compile(
+    r"(?:^|(?<=[\s|]))(DRIVER|SIGNAL|LOGIC)\b[ \t]*:?[ \t]*")
+
+
+def split_rationale(rationale) -> tuple:
+    """(fields, parsed_by, problem). `problem` is None only when all three were found.
+
+    Never returns a quietly missing field: whatever it could not resolve is NAMED, and
+    the caller turns that name into a refusal.
+    """
+    text = str(rationale or "").strip()
+    if not text:
+        return {}, None, "the RATIONALE is empty."
+    marks = list(_FIELD_MARKER_RE.finditer(text))
+    if not marks:
+        return {}, None, (
+            "the RATIONALE names none of DRIVER, SIGNAL or LOGIC, so there is no way "
+            "to tell which part of it is which.")
+
+    seen = [m.group(1) for m in marks]
+    dupes = sorted({f for f in seen if seen.count(f) > 1})
+    if dupes:
+        # Deliberately NOT "take the first one". Two LOGIC markers mean two candidate
+        # reasons, and choosing between them is the module deciding what the model
+        # meant - the habit the index parser already refuses to fall into.
+        return {}, None, (
+            f"{' and '.join(dupes)} appears more than once, so which text is the "
+            f"field cannot be decided without guessing.")
+
+    fields = {}
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        fields[m.group(1).lower()] = text[m.end():end].strip().rstrip("|").strip()
+
+    # Did the model actually use the format, or did the markers rescue it? Recorded so
+    # a repaired answer is visibly repaired rather than passing as a clean one.
+    parts = [p.strip() for p in text.split("|")]
+    by_pipe = sum(1 for p in parts if p.upper().startswith(_RATIONALE_FIELDS))
+    parsed_by = "pipes" if by_pipe == len(marks) else "markers"
+
+    missing = [f for f in _RATIONALE_FIELDS if f.lower() not in fields]
+    if missing:
+        return fields, parsed_by, (
+            f"the RATIONALE names no {' or '.join(missing)}. A field the parser cannot "
+            f"find is a field that would otherwise be dropped in silence.")
+    return fields, parsed_by, None
+
+
 def parse_completion(raw: str) -> dict:
     out = {"raw": raw, "direction": None, "deadline": None, "rationale": None,
-           "driver": None, "signal": None, "logic": None}
+           "driver": None, "signal": None, "logic": None,
+           "rationale_parsed_by": None, "rationale_problem": None}
+    rationale, continued = None, []
     for line in str(raw).splitlines():
         if ":" not in line:
             continue
@@ -166,16 +241,19 @@ def parse_completion(raw: str) -> dict:
         elif k == "DEADLINE":
             out["deadline"] = v
         elif k == "RATIONALE":
-            out["rationale"] = v
-            parts = [p.strip() for p in v.split("|")]
-            for p in parts:
-                up = p.upper()
-                if up.startswith("DRIVER"):
-                    out["driver"] = p[6:].strip(" :")
-                elif up.startswith("SIGNAL"):
-                    out["signal"] = p[6:].strip(" :")
-                elif up.startswith("LOGIC"):
-                    out["logic"] = p[5:].strip(" :")
+            rationale = v
+        elif k in _RATIONALE_FIELDS and rationale is not None:
+            # A CONTINUATION LINE: the model put LOGIC on its own line rather than
+            # after a pipe. This branch did not exist, so the line matched nothing and
+            # the reason vanished. Folded back in, and `raw` still holds the original.
+            continued.append(f"{k}: {v}")
+
+    if rationale is not None:
+        full = " | ".join([rationale, *continued]) if continued else rationale
+        fields, parsed_by, problem = split_rationale(full)
+        out.update(rationale=full, driver=fields.get("driver"),
+                   signal=fields.get("signal"), logic=fields.get("logic"),
+                   rationale_parsed_by=parsed_by, rationale_problem=problem)
     return out
 
 
@@ -218,6 +296,14 @@ def gate_all(parsed_list, sym: str, deadline: str,
                        refusal=("rationale: the bet states a direction with no reason. "
                                 "DRIVER | SIGNAL | LOGIC is required, and it is recorded "
                                 "but never rewarded."))
+        elif p.get("rationale_problem"):
+            rec.update(verdict="REFUSED", missing=["rationale_format"],
+                       refusal=(f"rationale_format: {p['rationale_problem']} The "
+                                f"contract is DRIVER ... | SIGNAL ... | LOGIC ... . "
+                                f"This refusal exists so a lost field is NAMED: the "
+                                f"old parser split on the pipe alone and a missing "
+                                f"one silently left logic=None, which reads exactly "
+                                f"like a model that gave no reason at all."))
         elif (p.get("driver") or "").upper().split()[0:1] and \
                 (p.get("driver") or "").upper().split()[0] not in BUCKETS:
             rec.update(verdict="REFUSED", missing=["driver"],

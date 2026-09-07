@@ -143,12 +143,30 @@ def test_a_paraphrase_is_refused_as_prose():
         assert "signal_index" in r["missing"]
 
 
-def test_a_signal_that_names_a_number_and_prose_is_refused():
-    """The live spill: the model wrote 'SIGNAL <text> LOGIC: <text>' with no pipe. Half
-    a contract is not the contract."""
-    r = _g(_c(signal="2 LOGIC: the index will rise"))[0]
+def test_the_live_logic_spill_now_parses_instead_of_refusing():
+    """THE LIVE SHAPE, and the point of the parser fix. Three of the eight R48
+    candidates wrote 'SIGNAL <x> LOGIC: <y>' with no pipe. The old parser split on the
+    pipe alone, so LOGIC was swallowed into SIGNAL and logic came back None — silently.
+    Now the field markers do the splitting and the answer is simply correct."""
+    raw = (f"DIRECTION: UP\nDEADLINE: {DEADLINE}\n"
+           f"RATIONALE: DRIVER MACRO | SIGNAL 2 LOGIC: a hotter print lifts yields")
+    p = parse_completion(raw)
+    assert p["signal"] == "2"
+    assert p["logic"] == "a hotter print lifts yields"
+    assert p["rationale_parsed_by"] == "markers"   # repaired, and visibly so
+    assert p["rationale_problem"] is None
+    r = _g(raw)[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["parsed"]["signal_indices"] == [FACT_SEG]
+
+
+def test_two_logic_markers_are_refused_rather_than_picked_between():
+    """Choosing one of two candidate reasons is the module deciding what the model
+    meant. Named refusal instead."""
+    r = _g(_c(signal="2 LOGIC: the index will rise"))[0]   # _c appends its own LOGIC
     assert r["verdict"] == "REFUSED"
-    assert "signal_index" in r["missing"]
+    assert "rationale_format" in r["missing"]
+    assert "more than once" in r["refusal"]
 
 
 def test_the_index_parser_reports_range_and_prose_separately():

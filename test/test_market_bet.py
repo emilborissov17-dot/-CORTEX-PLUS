@@ -17,7 +17,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 from tools.market_bet import (BUCKETS, US_MARKET_HOLIDAYS_2026, choose,  # noqa: E402
-                              gate_all, next_session, parse_completion,
+                              gate_all, next_session, parse_completion, split_rationale,
                               signal_is_external_fact)
 
 D = "2026-09-08"
@@ -159,3 +159,112 @@ def test_nothing_here_trades():
     for word in ("place_order", "submit_order", "create_order", "alpaca",
                  "ib_insync", "portfolio", "position_size"):
         assert word not in code, f"{word!r} in a prediction-only module"
+
+
+# ── the RATIONALE split: a missing pipe must never lose a field in silence ──
+# The old parser split on "|" alone. Measured on the four shapes a model actually
+# produces, three of them lost a field and set logic=None — which reads exactly like a
+# model that gave no reason at all. Three of the eight live R48 candidates were in the
+# second shape below.
+def test_a_missing_pipe_no_longer_swallows_the_logic():
+    """SHAPE B, the live one: 'SIGNAL <x> LOGIC: <y>' with no pipe between them."""
+    p = parse_completion("RATIONALE: DRIVER MACRO | SIGNAL CPI 12 Sep LOGIC: yields lift")
+    assert p["signal"] == "CPI 12 Sep"
+    assert p["logic"] == "yields lift"
+    assert p["rationale_problem"] is None
+    assert p["rationale_parsed_by"] == "markers"
+
+
+def test_a_rationale_with_no_pipes_at_all_is_parsed_field_by_field():
+    """SHAPE C, the nastiest. It used to give driver='MACRO SIGNAL 7 LOGIC: ...', whose
+    first token is 'MACRO' — A VALID BUCKET — so the driver check PASSED and the run
+    then blamed an empty SIGNAL. A correct refusal for the wrong reason is how a real
+    bug hides."""
+    p = parse_completion("RATIONALE: DRIVER MACRO SIGNAL ISM 2 Sep LOGIC: contraction")
+    assert p["driver"] == "MACRO"
+    assert p["signal"] == "ISM 2 Sep"
+    assert p["logic"] == "contraction"
+    assert p["rationale_problem"] is None
+    assert _g(_c(rationale="DRIVER MACRO SIGNAL ISM 2 Sep LOGIC: contraction"))[0][
+        "verdict"] == "ADMITTED"
+
+
+def test_a_logic_on_its_own_line_is_folded_in_rather_than_dropped():
+    """SHAPE D. The continuation line matched no branch at all and vanished."""
+    p = parse_completion(f"DIRECTION: UP\nDEADLINE: {D}\n"
+                         f"RATIONALE: DRIVER MACRO | SIGNAL CPI 12 Sep\n"
+                         f"LOGIC: hotter print lifts yields")
+    assert p["logic"] == "hotter print lifts yields"
+    assert p["rationale_problem"] is None
+    # `raw` still holds exactly what the model emitted; only `rationale` is rebuilt.
+    assert "\nLOGIC:" in p["raw"]
+
+
+@pytest.mark.parametrize("rationale,fragment", [
+    ("DRIVER MACRO | SIGNAL CPI 12 Sep", "names no LOGIC"),
+    ("SIGNAL CPI 12 Sep | LOGIC yields lift", "names no DRIVER"),
+    ("the market will simply go up", "names none of DRIVER, SIGNAL or LOGIC"),
+    ("DRIVER MACRO | SIGNAL CPI LOGIC: a | LOGIC b", "more than once"),
+])
+def test_an_unresolvable_rationale_is_a_named_refusal_not_a_silent_none(
+        rationale, fragment):
+    """THE CONTRACT OF THIS FIX. Either the field is parsed correctly or the failure is
+    NAMED. There is no third outcome where logic comes back None and nobody is told."""
+    p = parse_completion(_c(rationale=rationale))
+    assert p["rationale_problem"] and fragment in p["rationale_problem"]
+    r = _g(_c(rationale=rationale))[0]
+    assert r["verdict"] == "REFUSED"
+    assert r["missing"] == ["rationale_format"]
+    assert fragment in r["refusal"]
+
+
+def test_a_lowercase_logic_inside_free_text_is_not_a_field_marker():
+    """The ungrounded path still puts prose in SIGNAL, so the marker must be a HEADER —
+    uppercase, at a boundary — not any occurrence of the word."""
+    p = parse_completion(
+        "RATIONALE: DRIVER MACRO | SIGNAL the logic of the market 2 Sep | LOGIC yields lift")
+    assert p["signal"] == "the logic of the market 2 Sep"
+    assert p["logic"] == "yields lift"
+
+
+def test_a_well_formed_rationale_still_reports_that_it_used_the_pipes():
+    """The repair must be visible. A model that followed the format and a model that
+    was rescued by the markers must not look identical in the record."""
+    assert parse_completion(_c())["rationale_parsed_by"] == "pipes"
+    assert parse_completion(
+        _c(rationale="DRIVER MACRO SIGNAL CPI 12 Sep LOGIC: x"))["rationale_parsed_by"] \
+        == "markers"
+
+
+def test_no_shape_of_rationale_ever_returns_a_silent_none_logic():
+    """The property, stated over every shape at once: if logic is None, a problem is
+    named. This is the assertion that would have caught the original bug."""
+    shapes = [
+        "DRIVER MACRO | SIGNAL CPI 12 Sep | LOGIC yields lift",
+        "DRIVER MACRO | SIGNAL CPI 12 Sep LOGIC: yields lift",
+        "DRIVER MACRO SIGNAL CPI 12 Sep LOGIC: yields lift",
+        "DRIVER MACRO | SIGNAL CPI 12 Sep",
+        "DRIVER MACRO | SIGNAL CPI LOGIC: a | LOGIC b",
+        "the market will simply go up",
+        "",
+    ]
+    for s in shapes:
+        p = parse_completion(_c(rationale=s))
+        assert (p["logic"] is not None) != (p["rationale_problem"] is not None), s
+
+
+def test_split_rationale_returns_the_three_fields_and_how_it_found_them():
+    """The seam itself, called directly: fields, how they were found, and the problem
+    if there was one. Three return values so a caller can never read a missing field
+    without also seeing why it is missing."""
+    fields, how, problem = split_rationale(GOOD)
+    assert fields == {"driver": "MACRO",
+                      "signal": "CPI surprise +0.3, BLS 12 Sep",
+                      "logic": "hotter print lifts yields"}
+    assert how == "pipes" and problem is None
+
+    fields, how, problem = split_rationale("DRIVER MACRO | SIGNAL CPI LOGIC: x")
+    assert fields["logic"] == "x" and how == "markers" and problem is None
+
+    fields, how, problem = split_rationale("DRIVER MACRO | SIGNAL CPI 12 Sep")
+    assert "logic" not in fields and problem and "names no LOGIC" in problem
