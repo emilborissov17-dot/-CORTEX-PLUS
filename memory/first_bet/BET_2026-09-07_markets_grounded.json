@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-07T14:49:55+03:00",
+ "ts": "2026-09-07T15:18:58+03:00",
  "label": "grounded_pair_to_f41a7fd",
  "kind": "market direction, GROUNDED, PREDICTION ONLY — no trade (§VI)",
  "model": "qwen2.5:3b",
@@ -18,11 +18,190 @@
     "adjclose": 770.1900024414062
    },
    "deadline": "2026-09-08",
-   "sealed_direction": null,
-   "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'SPY' — 9 result(s), 9 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
-   "n_snippets": 0,
-   "candidates": []
+   "n_snippets": 2,
+   "snippets": [
+    {
+     "title": "If a Stock Market Crash Is Coming, History Says Investors Who Make This Simple Move Will Win",
+     "url": "https://www.fool.com/investing/2026/09/06/stock-market-crash-investors-who-make-simple-move-will-win",
+     "host": "fool.com",
+     "published_utc": "2026-09-06T08:28:01+00:00",
+     "snippet": "The S&P 500 suffered six market corrections in the last decade, and two of them eventually became bear markets. However, following the index's first close in correction territory (i.e., the day it first closed 10% below its high), the S&P 500 returned an average of 18% over the next year and it added 40% over the next two years. [...] Accessibility Menu\n\n▲ S&P 500 +---%|▲ Stock Advisor +---%Join The Motley Fool\n\nAccessibilityHelp\n\nThe Motley FoolThe Motley Fool\n\nYear to date, the broad-based S&P 500 (^GSPC -0.38%) has advanced 13%, and the technology-heavy Nasdaq Composite (^IXIC -0.29%) has added 14%. But the next stock market downturn is only a matter of time. [...] ## Key Points\n\n The S&P 500 and Nasdaq Composite have recorded double-digit gains in 2026, but the stock market faces headwinds related to inflation and midterms.\n Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.\n Since 2010, following the first close in correction territory, the S&P 500 and Nasdaq have gained an average of 18% and 21%, respectively, in the next year.",
+     "retrieved_utc": "2026-09-07T12:16:35.323758+00:00",
+     "source_class": "adversarial",
+     "source_kind": "advisory with positions",
+     "dated": true
+    },
+    {
+     "title": "Nike Exits the S&P 100 Index. 4 Tech Stocks Move In",
+     "url": "https://finance.yahoo.com/markets/stocks/articles/nike-exits-p-100-index-111450130.html",
+     "host": "finance.yahoo.com",
+     "published_utc": "2026-09-06T10:00:00+00:00",
+     "snippet": "Nike leaves the S&P 100 on September 21, and four technology companies take its place. Dell Technologies, Palo Alto Networks, Arista Networks and SanDisk all move up from the wider S&P 500.\n\nS&P Dow Jones Indices confirmed the changes in its quarterly rebalance. Nike keeps its S&P 500 membership, but it drops out of the 100 largest US companies.\n\n## Four Tech Names Take the Open Seats [...] Palo Alto Networks chief executive Nikesh Arora recently argued that the AI spending wave demands a new AI security stack. Dell rounds out the group. All four ride the capital spending boom behind this year's record highs.\n\nThe S&P 100 holds the largest and most established members of the S&P 500. Funds that track it must now buy the newcomers and sell the leavers. SanDisk shares jumped on the news.\n\nBloom Energy, Illumina and Everpure join the S&P 500 the same morning.\n\nS&P 100 index chart [...] BeInCrypto\n\n# Nike Exits the S&P 100 Index. 4 Tech Stocks Move In\n\nPhil Haunhorst\n\n2 min read\n\n NKE\n\n  -0.95%\n ANET\n\n  +1.22%\n SNDK\n\n  +11.90%\n PANW\n\n  +0.40%\n DELL\n\n  +1.50%\n\nS&P 500 1907 crash signal as the index gains 12% in 2026. Photo by BeInCrypto\n\nS&P 500 1907 crash signal as the index gains 12% in 2026. Photo by BeInCrypto",
+     "retrieved_utc": "2026-09-07T12:16:35.323758+00:00",
+     "source_class": "unknown",
+     "source_kind": "aggregator",
+     "dated": true
+    }
+   ],
+   "ungrounded_citation": false,
+   "sealed_direction": "UP",
+   "sealed_rationale": "MACRO | SIGNAL: The next stock market downturn is only a matter of time. | LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.",
+   "evidence": {
+    "url": "https://www.fool.com/investing/2026/09/06/stock-market-crash-investors-who-make-simple-move-will-win",
+    "published_utc": "2026-09-06T08:28:01+00:00",
+    "host": "fool.com",
+    "source_class": "adversarial",
+    "dated": true
+   },
+   "chosen_reason": "majority direction UP (1 UP / 0 DOWN of 1 passing); first such candidate sealed",
+   "agreement": "NO_DISAGREEMENT",
+   "sha256": "5582d717b4f7c9a1e680b613e3969b5fb67083a792414a2750983e474537530c",
+   "baseline_momentum_sign": "DOWN",
+   "n_passed_gate": 1,
+   "outcome": "SEALED",
+   "candidates": [
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL: The next stock market downturn is only a matter of time. | LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL: The next stock market downturn is only a matter of time. | LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.",
+      "driver": null,
+      "signal": "The next stock market downturn is only a matter of time.",
+      "logic": "Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months."
+     },
+     "verdict": "ADMITTED",
+     "missing": [],
+     "refusal": null,
+     "evidence": {
+      "url": "https://www.fool.com/investing/2026/09/06/stock-market-crash-investors-who-make-simple-move-will-win",
+      "published_utc": "2026-09-06T08:28:01+00:00",
+      "host": "fool.com",
+      "source_class": "adversarial",
+      "dated": true
+     },
+     "sealed": true
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL: The S&P 500 has gained an average of 18% and 21%, respectively, in the next year. | LOGIC: Following correction territory, the index is expected to gain further in the upcoming period.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL: The S&P 500 has gained an average of 18% and 21%, respectively, in the next year. | LOGIC: Following correction territory, the index is expected to gain further in the upcoming period.",
+      "driver": null,
+      "signal": "The S&P 500 has gained an average of 18% and 21%, respectively, in the next year.",
+      "logic": "Following correction territory, the index is expected to gain further in the upcoming period."
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'The S&P 500 has gained an average of 18% and 21%, respectively, in the next year.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL Since S&P 500 has gained an average of 18% in the next year following the first close in correction territory. |\nLOGIC: The next session is expected to continue the upward trend given historical data.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL Since S&P 500 has gained an average of 18% in the next year following the first close in correction territory. |",
+      "driver": null,
+      "signal": "Since S&P 500 has gained an average of 18% in the next year following the first close in correction territory.",
+      "logic": null
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'Since S&P 500 has gained an average of 18% in the next year following the first close in correction territory.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The index is expected to gain an average of 18% in the next year following its first close in correction territory.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The index is expected to gain an average of 18% in the next year following its first close in correction territory.",
+      "driver": null,
+      "signal": "Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The index is expected to gain an average of 18% in the next year following its first close in correction territory.",
+      "logic": null
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'Following the first rate hike in a tightening cycle, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The index is expected to gain an average of 18% in the next year following its first close in correction territory.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The signal is from a source that suggests corrections often occur within the next three months, which could imply a potential upward movement given the current gains.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The signal is from a source that suggests corrections often occur within the next three months, which could imply a potential upward movement given the current gains.",
+      "driver": null,
+      "signal": "Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The signal is from a source that suggests corrections often occur within the next three months, which could imply a potential upward movement given the current gains.",
+      "logic": null
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: The signal is from a source that suggests corrections often occur within the next three months, which could imply a potential upward movement given the current gains.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL: The S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 has historically gained an average of 18% in the next year after falling into correction territory.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL: The S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 has historically gained an average of 18% in the next year after falling into correction territory.",
+      "driver": null,
+      "signal": "The S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 has historically gained an average of 18% in the next year after falling into correction territory.",
+      "logic": null
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'The S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. LOGIC: Following the first rate hike in a tightening cycle, the S&P 500 has historically gained an average of 18% in the next year after falling into correction territory.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL: Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. | LOGIC: The S&P 500 is expected to gain an average of 18% in the next year following its first close in correction territory.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL: Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months. | LOGIC: The S&P 500 is expected to gain an average of 18% in the next year following its first close in correction territory.",
+      "driver": null,
+      "signal": "Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.",
+      "logic": "The S&P 500 is expected to gain an average of 18% in the next year following its first close in correction territory."
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'Following the first close in correction territory, the S&P 500 and Nasdaq have usually fallen into stock market correction territory at some point in the next three months.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    },
+    {
+     "raw": "DIRECTION: UP\nDEADLINE: 2026-09-08\nRATIONALE: MACRO | SIGNAL Since S&P 500 gains 12% in 2026. | LOGIC: The index gained 12% year-to-date, suggesting an upward trend is possible.",
+     "parsed": {
+      "direction": "UP",
+      "deadline": "2026-09-08",
+      "rationale": "MACRO | SIGNAL Since S&P 500 gains 12% in 2026. | LOGIC: The index gained 12% year-to-date, suggesting an upward trend is possible.",
+      "driver": null,
+      "signal": "Since S&P 500 gains 12% in 2026.",
+      "logic": "The index gained 12% year-to-date, suggesting an upward trend is possible."
+     },
+     "verdict": "REFUSED",
+     "missing": [
+      "grounding"
+     ],
+     "refusal": "grounding: 'Since S&P 500 gains 12% in 2026.' is not an exact substring of any retrieved snippet (2 available). A SIGNAL must be quoted from a document that exists.",
+     "sealed": false
+    }
+   ]
   },
   "GLD": {
    "indicator": "MARKET_GLD_CLOSE",
@@ -33,8 +212,9 @@
    "deadline": "2026-09-08",
    "sealed_direction": null,
    "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'GLD' — 8 result(s), 8 dropped (host not on the whitelist (12 allowed); published 2026-09-03T07:12:34+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "why": "tavily: no usable evidence for 'GLD' — 8 result(s), 8 dropped (published 2026-08-31T22:03:43+00:00, older than 48h; published 2026-09-01T12:00:00+00:00, older than 48h; published 2026-09-01T16:17:54+00:00, older than 48h; published 2026-09-02T22:00:00+00:00, older than 48h; published 2026-09-03T07:12:34+00:00, older than 48h; published 2026-09-03T08:00:00+00:00, older than 48h; published 2026-09-04T12:00:00+00:00, older than 48h; published 2026-09-04T20:55:00+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
    "n_snippets": 0,
+   "ungrounded_citation": false,
    "candidates": []
   },
   "UUP": {
@@ -46,8 +226,9 @@
    "deadline": "2026-09-08",
    "sealed_direction": null,
    "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'UUP' — 10 result(s), 10 dropped (host not on the whitelist (12 allowed); published 2026-09-02T19:29:11+00:00, older than 48h; published 2026-09-03T02:54:46+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "why": "tavily: no usable evidence for 'UUP' — 9 result(s), 9 dropped (published 2026-09-01T18:30:00+00:00, older than 48h; published 2026-09-02T11:16:17+00:00, older than 48h; published 2026-09-02T12:00:00+00:00, older than 48h; published 2026-09-02T19:29:11+00:00, older than 48h; published 2026-09-03T02:54:46+00:00, older than 48h; published 2026-09-03T06:20:00+00:00, older than 48h; published 2026-09-04T07:00:00+00:00, older than 48h; published 2026-09-04T12:00:00+00:00, older than 48h; published 2026-09-05T12:00:00+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
    "n_snippets": 0,
+   "ungrounded_citation": false,
    "candidates": []
   }
  },
