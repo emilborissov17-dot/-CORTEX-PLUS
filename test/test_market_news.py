@@ -216,3 +216,45 @@ def test_the_search_asks_for_NEWS_because_basic_returns_no_dates():
     assert sent.get("topic") == "news", "basic search carries no published dates"
     assert sent.get("days") == 2, "the window is bounded at the source, not after"
     assert "search_depth" not in sent
+
+
+# ── the date format Tavily actually sends ───────────────────────────────────
+def test_it_parses_rfc1123_with_a_NAMED_zone_which_is_what_tavily_sends():
+    """THE THIRD BUG, and the one that cost a whole run. Tavily returns
+    'Fri, 04 Sep 2026 12:35:01 GMT'. strptime's %z wants +0000 and rejects 'GMT', so
+    _parse_dt returned None for EVERY result and the freshness filter dropped them all
+    as undated — including the whitelisted, genuinely dated ones.
+
+    A parser that cannot read the only format the source emits is indistinguishable
+    from a source that sends no dates."""
+    from core.market_news import _parse_dt
+    for raw in ("Fri, 04 Sep 2026 12:35:01 GMT",
+                "Sun, 06 Sep 2026 10:00:00 UTC",
+                "2026-09-05T12:30:00Z",
+                "2026-09-05T12:30:00+00:00",
+                "2026-09-05"):
+        dt = _parse_dt(raw)
+        assert dt is not None, raw
+        assert dt.tzinfo is not None, raw
+        assert dt.year == 2026
+
+
+def test_a_real_tavily_shaped_result_survives_the_filter():
+    """End to end on the exact shape the API returns."""
+    from datetime import datetime as _dt
+    from datetime import timezone as _tz
+    now = _dt(2026, 9, 5, 18, 0, tzinfo=_tz.utc)
+    raw = [{"url": "https://www.cnbc.com/2026/09/04/gold.html",
+            "title": "Gold hits record",
+            "content": "Gold climbed to a record high on Friday as the dollar eased",
+            "published_date": "Fri, 04 Sep 2026 12:35:01 GMT"}]
+    kept, dropped = filter_results(raw, now=now)
+    assert dropped == [], dropped
+    assert len(kept) == 1 and kept[0].host == "cnbc.com"
+
+
+def test_an_unparseable_date_is_still_dropped():
+    """The fix must not become 'accept anything'."""
+    from core.market_news import _parse_dt
+    assert _parse_dt("last Tuesday") is None
+    assert _parse_dt("") is None

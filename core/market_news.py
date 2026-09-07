@@ -87,12 +87,30 @@ def host_allowed(url: str, hosts: dict | None = None) -> bool:
 
 
 def _parse_dt(value):
-    """A published date, or None. None is never treated as fresh."""
+    """A published date, or None. None is never treated as fresh.
+
+    RFC-1123 WITH A NAMED ZONE IS THE FORMAT TAVILY ACTUALLY SENDS:
+    'Fri, 04 Sep 2026 12:35:01 GMT'. strptime's %z does NOT accept 'GMT' — it wants
+    +0000 — so the first version returned None for every single result and the
+    freshness filter dropped them all as undated. The second grounded run refused GLD
+    and UUP that way even though both carried whitelisted, dated sources.
+
+    A parser that cannot read the only format the source emits is indistinguishable
+    from a source that sends no dates, which is why the named zones are mapped
+    explicitly rather than hoped for.
+    """
     if not value:
         return None
-    s = str(value).strip().replace("Z", "+00:00")
+    s = str(value).strip()
+    for name, offset in (("GMT", "+0000"), ("UTC", "+0000"), ("Z", "+00:00")):
+        if s.endswith(" " + name):
+            s = s[: -len(name)] + offset
+            break
+        if name == "Z" and s.endswith("Z"):
+            s = s[:-1] + offset
     for parse in (datetime.fromisoformat,
                   lambda x: datetime.strptime(x, "%a, %d %b %Y %H:%M:%S %z"),
+                  lambda x: datetime.strptime(x, "%a, %d %b %Y %H:%M:%S"),
                   lambda x: datetime.strptime(x, "%Y-%m-%d")):
         try:
             dt = parse(s)
