@@ -833,6 +833,79 @@ def coherence(direction: str, signal_text: str, rationale) -> dict:
     }
 
 
+# ── R52 item 4: ONE correction turn before refusing ─────────────────────────
+# A wrong field ORDER is a formatting failure, not a dishonest answer, and refusing it
+# outright throws away a candidate that may have picked a real span for a real reason.
+# R48 measured what that costs: five of seven refusals that night were transcription
+# accidents rather than fabrications.
+#
+# So a wrong-order answer gets EXACTLY ONE correction turn, and then it refuses. One,
+# not "until it works": a retry loop would keep asking until the model stumbled into
+# the right shape, which selects for persistence rather than for reasoning and quietly
+# turns the gate into a formatter.
+#
+# WHAT THE CORRECTION MAY NOT DO IS HINT AT THE ANSWER. It restates the field order and
+# nothing else - no mention of which direction, no mention of what was wrong with the
+# reasoning, no repetition of the model's own first attempt back at it. A correction
+# that echoed the first attempt would re-prime the very verdict the ordering exists to
+# stop being generated first.
+RETRY_CORRECTION = (
+    "Your fields were out of order. Answer again with EXACTLY these lines, in this "
+    "order, and nothing else:\n\n"
+    "DEADLINE: {deadline}\n"
+    "SIGNAL: [the NUMBER of one sentence from the evidence]\n"
+    "DRIVER: one of MACRO, GEOPOL, FLOW, SECTOR\n"
+    "LOGIC: [ONE sentence — the mechanism]\n"
+    "DIRECTION: UP or DOWN\n\n"
+    "DIRECTION must be the LAST line."
+)
+
+
+def correction_prompt(deadline: str) -> str:
+    """The correction turn. Order only — it names no direction and no evidence."""
+    return RETRY_CORRECTION.format(deadline=deadline)
+
+
+def retry_wrong_order(parsed_list, deadline: str, retry_fn) -> tuple:
+    """(parsed_list, log). One correction turn per wrong-order candidate, then stop.
+
+    `retry_fn(index, correction) -> str` is injectable so tests and the dry run never
+    touch a model. It returns the model's second answer, which is re-parsed and kept
+    ONLY if it fixes the order - a second wrong answer leaves the first in place, so a
+    retry can never make a candidate worse.
+    """
+    out, log = list(parsed_list), []
+    if retry_fn is None:
+        return out, log
+    for i, p in enumerate(out):
+        if not p.get("order_problem"):
+            continue
+        entry = {"candidate": i, "problem": p["order_problem"], "outcome": None}
+        try:
+            raw = retry_fn(i, correction_prompt(deadline))
+        except Exception as exc:                                   # noqa: BLE001
+            entry["outcome"] = f"RETRY_FAILED ({type(exc).__name__}: {exc})"
+            log.append(entry)
+            continue
+        if not str(raw or "").strip():
+            entry["outcome"] = "RETRY_EMPTY"
+            log.append(entry)
+            continue
+        second = parse_grounded_completion(raw)
+        second["retried"] = True
+        second["retry_of"] = p["raw"]
+        if second.get("order_problem"):
+            # The second answer is still wrong. Keep the FIRST, so the record shows
+            # what the model actually did first and the retry cannot launder it.
+            entry["outcome"] = f"STILL_WRONG ({second['order_problem'][:60]}...)"
+        else:
+            out[i] = second
+            entry["outcome"] = "FIXED"
+        entry["second_field_order"] = second.get("field_order")
+        log.append(entry)
+    return out, log
+
+
 def bucket_direction_table(rows) -> dict:
     """P(DIRECTION=UP | DRIVER=bucket) over admitted candidates. A MONITOR, NOT A GATE.
 
@@ -1134,7 +1207,35 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
                                        deadline=deadline),
                 n=N_COMPLETIONS, temperature=TEMPERATURE)
 
-        recs = grounded_gate([parse_grounded_completion(c) for c in comps], sym,
+        # R52 item 4. ONE correction turn for a wrong-order answer, then refuse.
+        # In a dry run the second answers are staged under "retries"; live, the
+        # correction goes back to the same pinned model. Either way it is one turn.
+        parsed = [parse_grounded_completion(c) for c in comps]
+        if dry is not None and "retries" in dry:
+            staged = dry["retries"].get(sym, {})
+
+            def _retry(i, _correction, _staged=staged):
+                return _staged.get(str(i)) or _staged.get(i)
+        elif dry is not None:
+            _retry = None                       # dry run with no retries staged
+        else:
+            def _retry(i, correction, _base=None):
+                _base = GROUNDED_PROMPT.format(
+                    sym=sym, close=lc["adjclose"], close_date=lc["date"],
+                    evidence=evidence, deadline=deadline)
+                got = generate_completions(_base + "\n\n" + correction, n=1,
+                                           temperature=TEMPERATURE)
+                return got[0] if got else ""
+
+        parsed, retry_log = retry_wrong_order(parsed, deadline, _retry)
+        for entry in retry_log:
+            print(f"  [RETRY] candidate {entry['candidate']}: {entry['outcome']} "
+                  f"— was: {entry['problem'][:60]}...")
+        if retry_log:
+            print(f"  [RETRY] {sum(1 for e in retry_log if e['outcome'] == 'FIXED')}"
+                  f"/{len(retry_log)} fixed by one correction turn")
+
+        recs = grounded_gate(parsed, sym,
                              deadline, snippets, segments)
         idx, reason, win = choose(recs)
         agree = disagreement(recs)
@@ -1149,6 +1250,10 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "sealed_field_order": (recs[idx]["parsed"]["field_order"]
                                    if idx is not None else None),
             "n_snippets": len(snippets), "n_segments": len(segments),
+            # R52 item 4. Every correction turn is logged with the bet, including the
+            # ones that did not work — a retry that quietly succeeded and left no trace
+            # would make the model look better at the contract than it is.
+            "retry_log": retry_log,
             # The numbered table exactly as the model saw it. Without it, "SIGNAL 4"
             # in the record means nothing a month from now.
             "segments": segments,
