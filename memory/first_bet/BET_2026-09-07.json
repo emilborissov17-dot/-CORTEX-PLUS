@@ -1,0 +1,134 @@
+{
+ "ts": "2026-09-07T10:39:46+03:00",
+ "indicator": "USGS_QUAKE_M45_DAILY",
+ "V0": 15.0,
+ "V0_date": "2026-09-07",
+ "n_candidates": 8,
+ "n_passed_gate": 7,
+ "gate_entry_point": "core.proposal_intake.judge (the decision core.proposal_intake.admit applies; admit is what fast_cycle_runner.py:1600 calls)",
+ "all_8_candidates": [
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY  \nEXPECTED_DELTA: +1  \nDEADLINE: 2026-09-08  \nCONFIDENCE: 0.65",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+1",
+    "deadline": "2026-09-08",
+    "confidence": 0.65,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY\nEXPECTED_DELTA: +2\nDEADLINE: 2026-09-08\nCONFIDENCE: 0.7",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+2",
+    "deadline": "2026-09-08",
+    "confidence": 0.7,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY  \nEXPECTED_DELTA: +2  \nDEADLINE: 2026-09-08  \nCONFIDENCE: 0.7",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+2",
+    "deadline": "2026-09-08",
+    "confidence": 0.7,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY\nEXPECTED_DELTA: 0\nDEADLINE: 2026-09-08\nCONFIDENCE: 0.5",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "0",
+    "deadline": "2026-09-08",
+    "confidence": 0.5,
+    "missing_fields": []
+   },
+   "verdict": "REFUSED",
+   "missing": [
+    "expected_delta"
+   ],
+   "refusal": "expected_delta of 0 predicts nothing",
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY  \nEXPECTED_DELTA: +1  \nDEADLINE: 2026-09-08  \nCONFIDENCE: 0.5",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+1",
+    "deadline": "2026-09-08",
+    "confidence": 0.5,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY\nEXPECTED_DELTA: +1\nDEADLINE: 2026-09-08\nCONFIDENCE: 0.7",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+1",
+    "deadline": "2026-09-08",
+    "confidence": 0.7,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY  \nEXPECTED_DELTA: +2  \nDEADLINE: 2026-09-08  \nCONFIDENCE: 0.7",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+2",
+    "deadline": "2026-09-08",
+    "confidence": 0.7,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": false
+  },
+  {
+   "raw": "INDICATOR: USGS_QUAKE_M45_DAILY\nEXPECTED_DELTA: +3\nDEADLINE: 2026-09-08\nCONFIDENCE: 0.75",
+   "parsed": {
+    "indicator": "USGS_QUAKE_M45_DAILY",
+    "expected_delta": "+3",
+    "deadline": "2026-09-08",
+    "confidence": 0.75,
+    "missing_fields": []
+   },
+   "verdict": "ADMITTED",
+   "missing": [],
+   "refusal": null,
+   "sealed": true
+  }
+ ],
+ "predicted_delta": 3.0,
+ "predicted_value": 18.0,
+ "deadline": "2026-09-08",
+ "confidence": 0.75,
+ "chosen_reason": "smallest confidence width (1-c = 0.250)",
+ "sha256_of_sealed_fields": "d62b228ca30732af75a648ecd4fa13a317133a33da704862cebb741ece66fa74",
+ "persistence_predicted_value": 15.0,
+ "persistence_deadline": "2026-09-08",
+ "outcome": "SEALED — not graded. Grading is a separate step at +24 h."
+}
