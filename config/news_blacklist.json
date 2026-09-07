@@ -1,0 +1,85 @@
+{
+  "_what_this_is": "Hosts that may NOT supply evidence for a grounded market bet. Everything not listed is allowed. This replaces config/news_whitelist.json, which was doing source sanitation the verbatim gate already does better.",
+
+  "_why_it_flipped": "R43 requires the SIGNAL to be an EXACT SUBSTRING of a retrieved snippet. That is the fabrication guard, and it does not care who published the snippet — a quote is either in the document or it is not. The whitelist was therefore filtering on a property the bet does not consume, and on 2026-09-07 it refused all three assets while the real constraints were a broken date parser and a holiday weekend. Filter by the property you actually consume, at its granularity.",
+
+  "_what_a_blacklist_is_still_for": "Poison, not viewpoints. Two things a verbatim quote cannot protect against: PROMPT INJECTION, where user-generated text contains instructions aimed at the model, and CONTENT FARMS, where the 'quote' is machine-spun text with no author. Both are properties of the HOST, so the host is the right granularity for them.",
+
+  "_what_this_is_NOT_for": "Quality, tone, house style, or whether a source is bullish. A site being shallow is not a reason to block it — the bet is graded by reality, not by the pedigree of its reason. If a host is here because somebody disliked its conclusions, that is a bug in this file.",
+
+  "_classes_are_metadata_now": "Each known host keeps its reporter_independence class from the four declared in config/reporter_independence.json — self_reported, independent, adversarial, unknown. The class is passed to the model as part of the evidence, because the SOURCE TYPE IS PART OF THE MARKET SIGNAL: a wire report and a company press release move a price differently. It is NEVER a gate. An unknown host is class 'unknown' and is allowed.",
+
+  "_who_owns_it": "A human. A generated patch that added a host here would be the system choosing what it is allowed to read.",
+
+  "blocked_hosts": {
+    "reddit.com":        {"why": "user-generated; a top comment can contain instructions aimed at the model"},
+    "quora.com":         {"why": "user-generated, unattributed"},
+    "medium.com":        {"why": "open publishing platform; no editorial chain"},
+    "substack.com":      {"why": "open publishing platform; no editorial chain"},
+    "x.com":             {"why": "user-generated; injection-prone"},
+    "twitter.com":       {"why": "user-generated; injection-prone"},
+    "facebook.com":      {"why": "user-generated; injection-prone"},
+    "tiktok.com":        {"why": "user-generated; injection-prone"},
+    "youtube.com":       {"why": "auto-transcripts and user descriptions; injection-prone"},
+    "linkedin.com":      {"why": "user-generated posts"},
+    "stocktwits.com":    {"why": "user-generated market chatter"},
+    "tradingview.com":   {"why": "'ideas' are user-generated; injection-prone"},
+    "wikipedia.org":     {"why": "user-editable at any moment; not a dated report"},
+    "en.wikipedia.org":  {"why": "user-editable at any moment; not a dated report"},
+    "ezinearticles.com": {"why": "content farm"},
+    "investorplace.com": {"why": "high-volume SEO output with thin sourcing"},
+    "247wallst.com":     {"why": "high-volume SEO output with thin sourcing"}
+  },
+
+  "blocked_suffixes": [
+    ".blogspot.com",
+    ".wordpress.com",
+    ".medium.com",
+    ".substack.com",
+    ".tumblr.com"
+  ],
+
+  "_blocked_suffixes_note": "Subdomain-hosted open publishing. A suffix match here is deliberate: anyone can create one of these in a minute, so the host name carries no accountability.",
+
+  "host_classes": {
+    "reuters.com":        {"class": "independent",   "kind": "wire"},
+    "apnews.com":         {"class": "independent",   "kind": "wire"},
+    "bloomberg.com":      {"class": "independent",   "kind": "financial press"},
+    "wsj.com":            {"class": "independent",   "kind": "financial press"},
+    "ft.com":             {"class": "independent",   "kind": "financial press"},
+    "cnbc.com":           {"class": "independent",   "kind": "financial press"},
+    "cnn.com":            {"class": "independent",   "kind": "general press"},
+    "cbsnews.com":        {"class": "independent",   "kind": "general press"},
+    "fortune.com":        {"class": "independent",   "kind": "business press"},
+    "barrons.com":        {"class": "independent",   "kind": "financial press"},
+    "marketwatch.com":    {"class": "independent",   "kind": "financial press"},
+    "investing.com":      {"class": "unknown",       "kind": "aggregator"},
+    "finance.yahoo.com":  {"class": "unknown",       "kind": "aggregator"},
+    "benzinga.com":       {"class": "unknown",       "kind": "financial media"},
+    "fool.com":           {"class": "adversarial",   "kind": "advisory with positions"},
+    "seekingalpha.com":   {"class": "adversarial",   "kind": "contributor analysis with positions"},
+    "barchart.com":       {"class": "unknown",       "kind": "data vendor"},
+    "chartmill.com":      {"class": "unknown",       "kind": "screener"},
+    "simplywall.st":      {"class": "unknown",       "kind": "screener"},
+    "fxstreet.com":       {"class": "unknown",       "kind": "fx media"},
+    "forex.com":          {"class": "self_reported", "kind": "broker"},
+    "moomoo.com":         {"class": "self_reported", "kind": "broker"},
+    "etoro.com":          {"class": "self_reported", "kind": "broker"},
+    "schwab.com":         {"class": "self_reported", "kind": "broker"},
+
+    "bls.gov":            {"class": "self_reported", "kind": "primary statistical agency"},
+    "bea.gov":            {"class": "self_reported", "kind": "primary statistical agency"},
+    "federalreserve.gov": {"class": "self_reported", "kind": "primary, central bank"},
+    "treasury.gov":       {"class": "self_reported", "kind": "primary, government"},
+    "eia.gov":            {"class": "self_reported", "kind": "primary statistical agency"},
+    "sec.gov":            {"class": "self_reported", "kind": "primary, regulator"}
+  },
+
+  "_a_broker_is_self_reported": "A broker publishing market commentary has a position in people trading. That is the taxonomy's 'the measured entity produces the statistic' shape, and it is why the class travels with the evidence into the prompt.",
+
+  "_adversarial_here_means_stake": "fool.com and seekingalpha carry authors with disclosed positions arguing a side. The class says so; it does not block them. An argued case is a real market signal.",
+
+  "max_age_hours": 48,
+
+  "_the_three_date_states": "dated and inside max_age_hours -> CITABLE. dated and outside -> DROPPED, because the date is a real claim and it failed. UNDATED -> DOWNGRADED to context-only, not dropped: usable as a citation only when the citable pool is empty, and a bet grounded that way is flagged 'ungrounded-citation'. Absence of a date is not evidence of staleness, but it is not evidence of freshness either."
+}

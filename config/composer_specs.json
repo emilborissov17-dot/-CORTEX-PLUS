@@ -154,6 +154,17 @@
               ]
             },
             "cadence": "annual"
+          },
+          {
+            "id": "promoted_27965",
+            "kind": "http_json_path",
+            "url": "https://api.worldbank.org/v2/country/WLD/indicator/ER.H2O.INTR.PC?format=json&mrv=1",
+            "org": "World Bank",
+            "extract": "1.0.value",
+            "data_date_extract": "1.0.date",
+            "data_max_age_days": 1500,
+            "unit": "m3_per_capita",
+            "provenance": "self-discovered, human-promoted"
           }
         ]
       },
