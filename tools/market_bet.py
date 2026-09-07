@@ -74,16 +74,28 @@ THE SIGNAL. A wire report, a government release and a broker's commentary move a
 differently.
 {evidence}
 
-Answer with EXACTLY these three lines and nothing else:
+Answer with EXACTLY these five lines, IN THIS ORDER, and nothing else:
 
-DIRECTION: UP or DOWN
 DEADLINE: {deadline}
-RATIONALE: DRIVER [one of MACRO|GEOPOL|FLOW|SECTOR] | SIGNAL [the NUMBER of one sentence above] | LOGIC [one sentence]
+EVENT: [the NUMBER of one sentence above]
+RELEVANCE: [one sentence — why that fact bears on {sym} in particular]
+MECHANISM: [one sentence — the channel by which it reaches the price]
+DIRECTION: UP or DOWN
 
-THE SIGNAL IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not
-join two of them together. Give its number and the sentence is used exactly as printed
-above. You may give more than one number, separated by commas. A number that is not in
-the list above is refused, and so is anything in the SIGNAL field that is not a number.
+THE ORDER IS THE POINT, AND IT IS NOT NEGOTIABLE. Work out which fact you have, why it
+bears on {sym}, and how it reaches the price — and only then say which way. DIRECTION IS
+LAST because it is the CONCLUSION. An answer that states the direction first and
+explains it afterwards is refused, because a reason written to fit a direction already
+chosen cannot be told apart from a guess with a story attached.
+
+EVENT IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not join
+two of them together. Give its number and the sentence is used exactly as printed above.
+You may give more than one number, separated by commas. A number that is not in the list
+above is refused, and so is anything in the EVENT field that is not a number.
+
+RELEVANCE AND MECHANISM ARE YOUR OWN WORDS and must not be empty. RELEVANCE says why
+this fact touches THIS asset rather than assets in general. MECHANISM says the channel —
+yields, flows, positioning, supply — by which it arrives at the price.
 
 WORKED EXAMPLE. Suppose the evidence block had ended with:
 
@@ -94,14 +106,92 @@ SOURCE A — reuters.com, class independent (wire), published 2026-09-05
 
 A correct answer is:
 
-DIRECTION: DOWN
 DEADLINE: {deadline}
-RATIONALE: DRIVER MACRO | SIGNAL 2 | LOGIC a hotter inflation print lifts real yields and weighs on equities
+EVENT: 2
+RELEVANCE: {sym} is a broad US equity fund, so a national inflation print reprices its
+whole basket rather than one sector of it.
+MECHANISM: a hotter print lifts real yields, which raises the discount rate applied to
+equity cash flows.
+DIRECTION: DOWN
 
-Note what it does NOT do. It does not write the sentence out. It does not write
-"SIGNAL CPI rose 0.3% in August". It writes the number, and the three fields are
-separated by | on ONE line.
+Note what it does NOT do. It does not write the sentence out — it writes the number. And
+it does not name a direction until the last line, after the reasoning that produces it.
 """
+
+# ── R50: DIRECTION IS GENERATED LAST ────────────────────────────────────────
+# The old grounded contract emitted DIRECTION on the FIRST line and the reasoning after
+# it. A language model writes left to right, so every reasoning token was conditioned on
+# a direction the model had ALREADY COMMITTED TO. The rationale could therefore only ever
+# be post-hoc - not a reason for the answer, but a story about it.
+#
+# It showed. All eight live R48 candidates said UP, and the one that sealed cited "the
+# next stock market downturn is only a matter of time" as its support. The polarity flag
+# built in R49 piece 4 catches that after the fact; this changes the thing that produces
+# it. The worked example was teaching it too - it also put DIRECTION first.
+#
+# The new order is EVENT -> RELEVANCE -> MECHANISM -> DIRECTION, and it is ENFORCED
+# rather than requested: an answer that names the direction before the reasoning is
+# refused as the wrong contract. DEADLINE is a constant the model echoes back rather
+# than a judgement, so it is positionally free - except that nothing may follow
+# DIRECTION, which has to be the last thing generated for any of this to mean anything.
+GROUNDED_CONTRACT = ("EVENT", "RELEVANCE", "MECHANISM", "DIRECTION")
+_GROUNDED_LINE_RE = re.compile(
+    r"^[\s*>-]*(EVENT|RELEVANCE|MECHANISM|DIRECTION|DEADLINE)\s*:\s*(.*)$", re.I)
+
+
+def check_field_order(seen) -> str | None:
+    """None when the answer follows the contract, else a NAMED problem.
+
+    Case is not reasoning, so it is not checked. ORDER is the whole point, so it is.
+    """
+    dupes = sorted({f for f in seen if seen.count(f) > 1})
+    if dupes:
+        return (f"{' and '.join(dupes)} is given more than once, so which answer the "
+                f"model actually committed to cannot be decided without guessing.")
+    order = [f for f in seen if f in GROUNDED_CONTRACT]
+    missing = [f for f in GROUNDED_CONTRACT if f not in order]
+    if missing:
+        return (f"the answer names no {' or '.join(missing)}. The contract is "
+                f"{' -> '.join(GROUNDED_CONTRACT)}, and a missing field is a step of "
+                f"the reasoning that was never done.")
+    if order[0] == "DIRECTION":
+        return ("DIRECTION comes FIRST, before any reasoning. That is the contract this "
+                "round exists to replace: a direction committed to before the reasoning "
+                "makes every line after it a justification rather than a derivation, "
+                "and the two cannot be told apart once written down.")
+    if order != list(GROUNDED_CONTRACT):
+        return (f"the fields are in the order {' -> '.join(order)}, not "
+                f"{' -> '.join(GROUNDED_CONTRACT)}. The order IS the contract, because "
+                f"it is what conditions the direction on the reasoning.")
+    if seen[-1] != "DIRECTION":
+        return (f"{seen[-1]} is generated AFTER DIRECTION. DIRECTION has to be the last "
+                f"thing written or it is not the conclusion of anything.")
+    return None
+
+
+def parse_grounded_completion(raw: str) -> dict:
+    """The R50 contract, parsed IN THE ORDER IT WAS GENERATED.
+
+    `field_order` is kept because the order is the property being bought, and a record
+    that does not show it cannot be checked later.
+    """
+    out = {"raw": raw, "deadline": None, "event": None, "relevance": None,
+           "mechanism": None, "direction": None,
+           "field_order": [], "order_problem": None}
+    seen = []
+    for line in str(raw).splitlines():
+        m = _GROUNDED_LINE_RE.match(line)
+        if not m:
+            continue
+        key, val = m.group(1).upper(), m.group(2).strip()
+        seen.append(key)
+        if out[key.lower()] is None:
+            out[key.lower()] = val.upper().strip(" .*") if key == "DIRECTION" else val
+    out["field_order"] = list(seen)
+    out["order_problem"] = check_field_order(seen) if seen else (
+        "the answer names none of the contract's fields.")
+    return out
+
 
 _DATE_RE = re.compile(
     r"\b(\d{1,2}\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)|"
