@@ -163,9 +163,17 @@ def fetch_news(asset: str, query: str | None = None, now: datetime | None = None
 
         def searcher(question):
             import requests
+            # topic="news", NOT search_depth="basic".
+            #
+            # MEASURED 2026-09-07, after the first grounded run refused all three
+            # assets: basic returns 0 of 6 results WITH a published_date, news returns
+            # 6 of 6. The 48-hour filter was therefore discarding everything it was
+            # handed - including whitelisted hosts - so the pipeline could never have
+            # grounded a bet. `days` bounds the search at the source instead of
+            # fetching a month and throwing most of it away.
             r = requests.post(API_URL, timeout=timeout,
                               json={"api_key": key, "query": question,
-                                    "search_depth": "basic", "max_results": 12,
+                                    "topic": "news", "days": 2, "max_results": 20,
                                     "include_raw_content": False})
             if r.status_code != 200:
                 raise NewsUnavailable(

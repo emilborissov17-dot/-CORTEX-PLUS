@@ -180,3 +180,39 @@ def test_the_whitelist_uses_only_the_four_declared_classes():
     used = {h["class"] for h in wl["hosts"].values()}
     assert used <= set(ri["_classes"]), f"a fifth class was invented: {used}"
     assert wl["max_age_hours"] == 48
+
+
+# ── the retrieval mode, fixed after the first grounded run refused everything ──
+def test_the_search_asks_for_NEWS_because_basic_returns_no_dates():
+    """MEASURED 2026-09-07: search_depth='basic' returned 0 of 6 results with a
+    published_date; topic='news' returned 6 of 6. Since a result with no date is
+    dropped by design, 'basic' meant the filter discarded everything it was handed —
+    including whitelisted hosts — and no bet could ever be grounded.
+
+    This asserts the request body, not the response, so it needs no network."""
+    import core.market_news as mn
+    sent = {}
+
+    class R:
+        status_code = 200
+
+        @staticmethod
+        def json():
+            return {"results": []}
+
+    def fake_post(url, timeout=None, json=None):
+        sent.update(json or {})
+        return R()
+
+    import requests
+    orig = requests.post
+    requests.post = fake_post
+    try:
+        with pytest.raises(NewsUnavailable):
+            mn.fetch_news("SPY")
+    finally:
+        requests.post = orig
+
+    assert sent.get("topic") == "news", "basic search carries no published dates"
+    assert sent.get("days") == 2, "the window is bounded at the source, not after"
+    assert "search_depth" not in sent
