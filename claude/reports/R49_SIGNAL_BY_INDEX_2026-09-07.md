@@ -116,15 +116,46 @@ they sit in. Both sets were enumerated and run:
 | every repo-scanning test that walks `tools/` (`test_compass_wired`, `test_launch_detached_encoding`, `test_resolve_ideas_*`, `test_seed_boundary`, `test_verifier_inputs`) | **70 passed, 1 failed** — `test_every_verifier_declares_what_it_reads`, on undeclared `core.notary.VERIFIERS` steps (`browser_scout`, `global_indicators`, …). Unrelated, and long-standing by its own error text. |
 | `test_script_suite` (repo-wide style scan) | 21 passed, 5 failed — all on other people's files; **`tools/market_bet.py` and `test/test_grounded_gate.py` are not in its parametrisation at all** |
 
-**Still UNVERIFIED:** the *identity* of every one of the 35. Both full runs truncated
-their captured output to the last ten `FAILED` lines, and `-rf` prints only on
-completion. The ten that were visible are all unrelated (`test_proposal_sla`,
-`test_scanner_never_invents_a_score`, `test_script_suite`, `test_small_truths`,
-`test_verifier_inputs`). To enumerate the rest:
+### The complete list, and the two that were mine
+
+A third run with `-v` (which names each test as it goes, rather than summarising only at
+the end) enumerated all of them. **Two were in my own file:**
 
 ```
-PYTHONIOENCODING=utf-8 venv/Scripts/python.exe -m pytest test/ -v --tb=no | grep FAILED
+FAILED test/test_grounded_gate.py::test_coherence_cannot_change_a_verdict
+FAILED test/test_grounded_gate.py::test_matching_is_substring_only_and_not_fuzzy
 ```
+
+**They are a measurement artifact I caused, not a defect.** Both use
+`inspect.getsource`, which reads the file from disk through `linecache` while the line
+numbers come from the code object captured at import. I committed the `parse_completion`
+fix — about 75 new lines *above* both functions — while that suite was still running, so
+`getsource` returned a window offset into unrelated code. Demonstrated rather than
+assumed:
+
+```
+before edit : 'def target():\n    return "the real body"'
+after  edit : '# a new line inserted above\n' x6 + 'def target():\n ...'
+```
+
+Both pass on a stable tree, confirmed twice. **Lesson: do not edit a module while a
+long suite that introspects its source is running** — the failures it produces look
+exactly like real ones.
+
+That leaves **32 pre-existing failures, none touching this work.** By theme:
+
+| theme | tests |
+|---|---|
+| live data / live registry | `test_metta_parallel` (5), `test_level_reconciler` (3), `test_needs_auth` (2), `test_cadence_gate` (1) |
+| repo & config hygiene | `test_script_suite` (5), `test_ci_contract` (2), `test_verifier_inputs` (2), `test_p_survive`, `test_small_truths` |
+| cycle & process | `test_cycle_reaper`, `test_cycle_seals_its_own_completion`, `test_phase_resume`, `test_brain_scan`, `test_heartbeat_coverage` |
+| ledger content | `test_corrections_27` (2), `test_phase_evidence_swap` (2), `test_proposal_sla` |
+
+Not one of them names `market_bet`, `market_news` or the grounded bet.
+
+**The suite is not deterministic.** Three runs gave 35, 35 and 34 failures — the
+live-data tests above move with the data underneath them. Anyone using this suite as a
+gate should know that before treating a count as a signal.
 
 Two files in `test/` are scripts, not pytest modules: `test_grounding_locate.py` and
 `test_origin_honesty.py` both call `sys.exit()` at import and break collection with
