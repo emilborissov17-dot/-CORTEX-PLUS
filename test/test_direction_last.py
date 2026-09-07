@@ -10,6 +10,7 @@ the rationale could only ever be post-hoc. These tests hold the new order in pla
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -120,3 +121,74 @@ def test_prose_between_the_fields_does_not_break_the_order():
         f"DEADLINE: {D}\nEVENT: 2\nLet me think about this.\n"
         f"RELEVANCE: x\nMECHANISM: y\nDIRECTION: UP")
     assert p["order_problem"] is None
+
+
+# ── the sealed record ───────────────────────────────────────────────────────
+def _seal(tmp_path, completions):
+    """Run the grounded path through the dry-run door and return the sealed record.
+
+    Nothing here reaches the network or a model: the snippets and the completions are
+    both staged, which is what --dry-run is for.
+    """
+    import json
+    import subprocess
+
+    fact = "CPI rose 0.3% in August, the BLS said on Friday."
+    snip = {"title": "US inflation ticks up", "url": "https://www.reuters.com/x",
+            "host": "reuters.com", "published_utc": "2026-09-05T12:30:00+00:00",
+            "snippet": fact, "retrieved_utc": "2026-09-05T13:00:00+00:00",
+            "source_class": "independent", "source_kind": "wire", "dated": True}
+    dry = tmp_path / "dry.json"
+    dry.write_text(json.dumps({
+        "snippets": {"SPY": [snip], "GLD": [], "UUP": []},
+        "completions": {"SPY": completions, "GLD": [], "UUP": []}}), encoding="utf-8")
+    out = tmp_path / "bet.json"
+    r = subprocess.run(
+        [sys.executable, str(REPO / "tools" / "market_bet.py"), "--grounded",
+         "--dry-run", str(dry), "--out", str(out), "--allow-overwrite"],
+        capture_output=True, text=True, cwd=str(REPO),
+        env={**os.environ, "PYTHONIOENCODING": "utf-8"})
+    assert out.exists(), r.stdout + r.stderr
+    return json.loads(out.read_text(encoding="utf-8"))
+
+
+def test_the_sealed_record_shows_direction_as_the_last_generated_field(tmp_path):
+    """THE TEST THE ROUND EXISTS FOR. Not 'the record has a direction' — the record
+    shows WHERE in the generation the direction came, and it came last."""
+    bet = _seal(tmp_path, [_c(event=2, direction="DOWN"), _c(event=2, direction="DOWN")])
+    spy = bet["assets"]["SPY"]
+    assert spy["sealed_direction"] == "DOWN"
+    assert spy["contract"] == "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION"
+    assert spy["direction_generated_last"] is True
+    assert spy["sealed_field_order"][-1] == "DIRECTION"
+    assert "DIRECTION" not in spy["sealed_field_order"][:-1]
+    # and the reasoning that produced it is sealed alongside, in order
+    assert spy["sealed_relevance"] and spy["sealed_mechanism"]
+    order = spy["sealed_field_order"]
+    assert order.index("EVENT") < order.index("RELEVANCE") < order.index("MECHANISM")
+
+
+def test_every_sealed_candidate_carries_its_own_generation_order(tmp_path):
+    bet = _seal(tmp_path, [_c(event=2), _c(event=2, direction="DOWN")])
+    for cand in bet["assets"]["SPY"]["candidates"]:
+        assert cand["parsed"]["field_order"][-1] == "DIRECTION"
+
+
+def test_a_direction_first_answer_never_reaches_the_sealed_record(tmp_path):
+    """The old contract, run end to end through the real runner."""
+    old = (f"DIRECTION: UP\nDEADLINE: {D}\nEVENT: 2\n"
+           f"RELEVANCE: x\nMECHANISM: y")
+    bet = _seal(tmp_path, [old, old])
+    spy = bet["assets"]["SPY"]
+    assert spy["sealed_direction"] is None
+    assert spy["outcome"] == "REFUSED_NO_GROUNDED_CANDIDATE"
+    assert all(c["verdict"] == "REFUSED" for c in spy["candidates"])
+    assert all("field_order" in c["missing"] for c in spy["candidates"])
+
+
+def test_the_sealed_gate_description_states_the_order(tmp_path):
+    """A record whose own description does not name the contract cannot be audited by
+    somebody who was not here."""
+    bet = _seal(tmp_path, [_c(event=2)])
+    assert "DIRECTION GENERATED LAST" in bet["gate"]
+    assert "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION" in bet["gate"]

@@ -1031,14 +1031,22 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
                                        deadline=deadline),
                 n=N_COMPLETIONS, temperature=TEMPERATURE)
 
-        recs = grounded_gate([parse_completion(c) for c in comps], sym, deadline,
-                             snippets, segments)
+        recs = grounded_gate([parse_grounded_completion(c) for c in comps], sym,
+                             deadline, snippets, segments)
         idx, reason, win = choose(recs)
         agree = disagreement(recs)
         per_asset[sym] = {
             "indicator": INDICATORS[sym], "last_close": lc, "deadline": deadline,
+            # R50. The order the fields were GENERATED in, sealed with the bet, because
+            # the order is the property the whole round buys and a record that does not
+            # show it cannot be checked later. DIRECTION is last or the answer did not
+            # pass the gate.
+            "contract": " -> ".join(GROUNDED_CONTRACT),
+            "direction_generated_last": True,
+            "sealed_field_order": (recs[idx]["parsed"]["field_order"]
+                                   if idx is not None else None),
             "n_snippets": len(snippets), "n_segments": len(segments),
-            # The numbered table exactly as the model saw it. Without it, "SIGNAL 4"
+            # The numbered table exactly as the model saw it. Without it, "EVENT 4"
             # in the record means nothing a month from now.
             "segments": segments,
             # PIECE 5 — THE SNAPSHOT. The full retrieved text is sealed with the bet,
@@ -1049,10 +1057,14 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "snippets": [s.as_dict() for s in snippets],
             "ungrounded_citation": ungrounded,
             "sealed_direction": win,
-            "sealed_rationale": recs[idx]["parsed"]["rationale"] if idx is not None else None,
+            # The reasoning that PRODUCED the direction, in the order it was written.
+            "sealed_relevance": (recs[idx]["parsed"]["relevance"]
+                                 if idx is not None else None),
+            "sealed_mechanism": (recs[idx]["parsed"]["mechanism"]
+                                 if idx is not None else None),
             "evidence": recs[idx].get("evidence") if idx is not None else None,
-            # PIECE 4. The triple travels with the sealed bet, flag and all. A flagged
-            # bet is a SEALED bet - the flag is for whoever reads fifty of these.
+            # R49 PIECE 4. The triple travels with the sealed bet, flag and all. A
+            # flagged bet is a SEALED bet - the flag is for whoever reads fifty of these.
             "coherence": recs[idx].get("coherence") if idx is not None else None,
             "chosen_reason": reason, "agreement": agree,
             "sha256": sha_of(sym, win, deadline) if win else None,
@@ -1067,7 +1079,7 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
               f"segment(s)  last {lc['date']} {lc['adjclose']}{flag}")
         for i, r in enumerate(recs):
             mark = "SEALED " if i == idx else "       "
-            pick = r["parsed"].get("signal_indices")
+            pick = r["parsed"].get("event_indices")
             coh = r.get("coherence") or {}
             note = (f"  seg {pick}  polarity {coh.get('signal_polarity')}"
                     + ("  [FLAG direction<->polarity mismatch — ADMITTED anyway]"
@@ -1083,8 +1095,9 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         rows = [{"ts": datetime.now().astimezone().isoformat(timespec="seconds"),
                  "asset": sym, "deadline": deadline, "candidate": i,
                  "sealed": (i == idx),
-                 "segment_indices": r["parsed"].get("signal_indices"),
-                 "signal_text": r["parsed"].get("signal_text"),
+                 "segment_indices": r["parsed"].get("event_indices"),
+                 "event_text": r["parsed"].get("event_text"),
+                 "field_order": r["parsed"].get("field_order"),
                  **{k: v for k, v in (r.get("coherence") or {}).items()
                     if k != "_not_a_gate"}}
                 for i, r in enumerate(recs) if r["verdict"] == "ADMITTED"]
@@ -1108,9 +1121,14 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         "temperature": TEMPERATURE, "deadline": deadline,
         "reference_close_date": baseline["last_close"]["SPY"]["date"],
         "grading_rule": "the FIRST bar strictly after reference_close_date",
-        "gate": "grounded by INDEX: SIGNAL is the number of a printed segment, so the "
-                "cited text is verbatim by construction; the exact-substring check "
-                "survives underneath as belt-and-suspenders",
+        "gate": "grounded by INDEX, and ordered: the contract is "
+                "EVENT -> RELEVANCE -> MECHANISM -> DIRECTION with DIRECTION "
+                "GENERATED LAST, so it is conditioned on the reasoning rather "
+                "than followed by it. EVENT is the number of a printed segment, "
+                "so the cited text is verbatim by construction; the "
+                "exact-substring check survives underneath as belt-and-suspenders. "
+                "An answer that names the direction first is REFUSED as the "
+                "wrong contract.",
         "baseline_method": "20-trading-day momentum sign",
         "assets": per_asset, "baseline": baseline["baseline"],
         "outcome": "SEALED — not graded. Grading is +24 h.",
