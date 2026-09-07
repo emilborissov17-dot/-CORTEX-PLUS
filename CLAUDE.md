@@ -48,6 +48,18 @@ Every new module ships a `--selftest` that reports which of its integrations are
 which are INERT in the repo it finds itself in. A module that degrades silently lets a claim
 stay true in the docstring and false on disk.
 
+## Two model biases — double defense
+
+TWO MODEL BIASES — DOUBLE DEFENSE (see claude/NORM_TWO_BIASES_DOUBLE_DEFENSE_7SEP.md).
+Biases: (1) helpfulness — produce/recover instead of refuse; (2) least-resistance —
+satisfy the letter/easy proxy, not the intent. For each, ship BOTH a sharp instruction
+AND a mechanical net. When writing any code or tests:
+ - Say plainly what a REFUSAL / no-output success looks like, and name the forbidden fallback.
+ - Ask for the failure paths (plausible-but-wrong outputs) before the happy path.
+ - For each guard/check: add a mutation test that FAILS if the guarded thing is removed.
+ - Structural tests check code (identifiers/behaviour), never prose (no grep/docstrings).
+ - Put a mechanical net (raise-not-return, no-live-writes, refuse-loud) behind the instruction, not just the instruction.
+
 ## Where module paths actually are (verified 2026-08-03, correct these if they move)
 
 - symbolic oracle: `experiments/symbolic_duel/metta_oracle.py` — **not** `core/metta_oracle.py`.
