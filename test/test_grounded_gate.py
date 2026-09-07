@@ -46,12 +46,12 @@ class Sn:
 
 def _c(direction="UP", signal=FACT_SEG, driver="MACRO",
        logic="higher yields weigh on equities", deadline=DEADLINE):
-    """The R51 contract: DRIVER -> SIGNAL -> LOGIC -> DIRECTION, direction LAST.
+    """The R52 contract: SIGNAL -> DRIVER -> LOGIC -> DIRECTION, direction LAST.
 
     R51 restores DRIVER and LOGIC and drops R50's RELEVANCE/MECHANISM pair: one
     free-text field, not two, because each one is a surface a 3B can confabulate on.
     """
-    return (f"DEADLINE: {deadline}\nDRIVER: {driver}\nSIGNAL: {signal}\n"
+    return (f"DEADLINE: {deadline}\nSIGNAL: {signal}\nDRIVER: {driver}\n"
             f"LOGIC: {logic}\nDIRECTION: {direction}")
 
 
@@ -227,7 +227,7 @@ def test_the_worked_example_in_the_prompt_would_be_admitted():
                                   evidence="", deadline=DEADLINE)
     example = body.split("A correct answer is:", 1)[1]
     lines = [ln for ln in example.splitlines()
-             if ln.startswith(("DEADLINE:", "DRIVER:", "SIGNAL:",
+             if ln.startswith(("DEADLINE:", "SIGNAL:", "DRIVER:",
                                "LOGIC:", "DIRECTION:"))]
     assert len(lines) == 5, example
     # Each field must sit on ONE line. A wrapped example teaches wrapping, and a
@@ -262,7 +262,7 @@ def test_the_worked_example_shows_a_number_and_not_the_sentence():
     # and it must END on DIRECTION, because that is the whole lesson
     keys = [ln.split(":", 1)[0].strip() for ln in answer.splitlines()
             if ln.split(":", 1)[0].strip() in
-            ("DEADLINE", "DRIVER", "SIGNAL", "LOGIC", "DIRECTION")]
+            ("DEADLINE", "SIGNAL", "DRIVER", "LOGIC", "DIRECTION")]
     assert keys[-1] == "DIRECTION" and keys.index("SIGNAL") < keys.index("DIRECTION")
 
 

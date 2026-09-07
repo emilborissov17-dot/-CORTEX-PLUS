@@ -31,13 +31,13 @@ def _c(signal=2, driver="MACRO", logic="a hotter print lifts real yields",
 
     `event` is accepted as an alias for `signal` so call sites read unchanged."""
     signal = event if event is not None else signal
-    return (f"DEADLINE: {deadline}\nDRIVER: {driver}\nSIGNAL: {signal}\n"
+    return (f"DEADLINE: {deadline}\nSIGNAL: {signal}\nDRIVER: {driver}\n"
             f"LOGIC: {logic}\nDIRECTION: {direction}")
 
 
 # ── the contract itself ─────────────────────────────────────────────────────
 def test_the_contract_ends_on_direction():
-    assert GROUNDED_CONTRACT == ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
+    assert GROUNDED_CONTRACT == ("SIGNAL", "DRIVER", "LOGIC", "DIRECTION")
     assert GROUNDED_CONTRACT[-1] == "DIRECTION"
 
 
@@ -59,8 +59,8 @@ def test_direction_is_the_last_field_generated():
 # ── the refusal this round exists for ───────────────────────────────────────
 def test_direction_before_the_reasoning_is_refused_as_the_wrong_contract():
     """The OLD contract, replayed. It must not merely score worse — it must not parse."""
-    old = (f"DIRECTION: DOWN\nDEADLINE: {D}\nDRIVER: MACRO\n"
-           f"SIGNAL: 2\nLOGIC: y")
+    old = (f"DIRECTION: DOWN\nDEADLINE: {D}\nSIGNAL: 2\n"
+           f"DRIVER: MACRO\nLOGIC: y")
     p = parse_grounded_completion(old)
     assert p["order_problem"] is not None
     assert "DIRECTION comes FIRST" in p["order_problem"]
@@ -76,14 +76,14 @@ def test_the_previous_rounds_contract_no_longer_parses_at_all():
 
 
 @pytest.mark.parametrize("raw,fragment", [
-    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nDIRECTION: UP\nLOGIC: y",
-     "not DRIVER -> SIGNAL"),
-    (f"DRIVER: MACRO\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP\nDEADLINE: {D}",
+    (f"DEADLINE: {D}\nSIGNAL: 2\nDRIVER: MACRO\nDIRECTION: UP\nLOGIC: y",
+     "not SIGNAL -> DRIVER"),
+    (f"SIGNAL: 2\nDRIVER: MACRO\nLOGIC: y\nDIRECTION: UP\nDEADLINE: {D}",
      "generated AFTER DIRECTION"),
-    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nDIRECTION: UP", "names no LOGIC"),
+    (f"DEADLINE: {D}\nSIGNAL: 2\nDRIVER: MACRO\nDIRECTION: UP", "names no LOGIC"),
     (f"DEADLINE: {D}\nDRIVER: MACRO\nLOGIC: y\nDIRECTION: UP", "names no SIGNAL"),
     (f"DEADLINE: {D}\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP", "names no DRIVER"),
-    (f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nLOGIC: y\nDIRECTION: UP\n"
+    (f"DEADLINE: {D}\nSIGNAL: 2\nDRIVER: MACRO\nLOGIC: y\nDIRECTION: UP\n"
      f"DIRECTION: DOWN", "more than once"),
     ("the market will simply go up", "names none of the contract"),
 ])
@@ -97,15 +97,15 @@ def test_nothing_may_follow_direction():
     content and fatal in principle: it means the model was still writing after it
     answered, so the answer was not the end of the reasoning."""
     assert check_field_order(
-        ["DRIVER", "SIGNAL", "LOGIC", "DIRECTION", "DEADLINE"]) is not None
+        ["SIGNAL", "DRIVER", "LOGIC", "DIRECTION", "DEADLINE"]) is not None
     assert check_field_order(
-        ["DEADLINE", "DRIVER", "SIGNAL", "LOGIC", "DIRECTION"]) is None
+        ["DEADLINE", "SIGNAL", "DRIVER", "LOGIC", "DIRECTION"]) is None
 
 
 # ── what is deliberately NOT checked ────────────────────────────────────────
 def test_case_is_not_reasoning_and_is_not_enforced():
     p = parse_grounded_completion(
-        f"deadline: {D}\ndriver: MACRO\nsignal: 2\nlogic: y\ndirection: down")
+        f"deadline: {D}\nsignal: 2\ndriver: MACRO\nlogic: y\ndirection: down")
     assert p["order_problem"] is None
     assert p["direction"] == "DOWN"
 
@@ -113,7 +113,7 @@ def test_case_is_not_reasoning_and_is_not_enforced():
 def test_a_bulleted_or_starred_line_still_parses():
     """Models decorate. Decoration is not order."""
     p = parse_grounded_completion(
-        f"- DEADLINE: {D}\n- DRIVER: MACRO\n- SIGNAL: 2\n- LOGIC: y\n- DIRECTION: UP")
+        f"- DEADLINE: {D}\n- SIGNAL: 2\n- DRIVER: MACRO\n- LOGIC: y\n- DIRECTION: UP")
     assert p["order_problem"] is None
     assert p["direction"] == "UP"
 
@@ -122,7 +122,7 @@ def test_prose_between_the_fields_does_not_break_the_order():
     """Only recognised field lines carry order. A stray sentence is ignored, not
     treated as a field out of place."""
     p = parse_grounded_completion(
-        f"DEADLINE: {D}\nDRIVER: MACRO\nSIGNAL: 2\nLet me think about this.\n"
+        f"DEADLINE: {D}\nSIGNAL: 2\nDRIVER: MACRO\nLet me think about this.\n"
         f"LOGIC: y\nDIRECTION: UP")
     assert p["order_problem"] is None
 
@@ -162,14 +162,14 @@ def test_the_sealed_record_shows_direction_as_the_last_generated_field(tmp_path)
     bet = _seal(tmp_path, [_c(event=2, direction="DOWN"), _c(event=2, direction="DOWN")])
     spy = bet["assets"]["SPY"]
     assert spy["sealed_direction"] == "DOWN"
-    assert spy["contract"] == "DRIVER -> SIGNAL -> LOGIC -> DIRECTION"
+    assert spy["contract"] == "SIGNAL -> DRIVER -> LOGIC -> DIRECTION"
     assert spy["direction_generated_last"] is True
     assert spy["sealed_field_order"][-1] == "DIRECTION"
     assert "DIRECTION" not in spy["sealed_field_order"][:-1]
     # and the reasoning that produced it is sealed alongside, in order
     assert spy["sealed_driver"] == "MACRO" and spy["sealed_logic"]
     order = spy["sealed_field_order"]
-    assert order.index("DRIVER") < order.index("SIGNAL") < order.index("LOGIC")
+    assert order.index("SIGNAL") < order.index("DRIVER") < order.index("LOGIC")
 
 
 def test_every_sealed_candidate_carries_its_own_generation_order(tmp_path):
@@ -180,8 +180,8 @@ def test_every_sealed_candidate_carries_its_own_generation_order(tmp_path):
 
 def test_a_direction_first_answer_never_reaches_the_sealed_record(tmp_path):
     """The old contract, run end to end through the real runner."""
-    old = (f"DIRECTION: UP\nDEADLINE: {D}\nDRIVER: MACRO\n"
-           f"SIGNAL: 2\nLOGIC: y")
+    old = (f"DIRECTION: UP\nDEADLINE: {D}\nSIGNAL: 2\n"
+           f"DRIVER: MACRO\nLOGIC: y")
     bet = _seal(tmp_path, [old, old])
     spy = bet["assets"]["SPY"]
     assert spy["sealed_direction"] is None
@@ -195,7 +195,7 @@ def test_the_sealed_gate_description_states_the_order(tmp_path):
     somebody who was not here."""
     bet = _seal(tmp_path, [_c(event=2)])
     assert "DIRECTION GENERATED LAST" in bet["gate"]
-    assert "DRIVER -> SIGNAL -> LOGIC -> DIRECTION" in bet["gate"]
+    assert "SIGNAL -> DRIVER -> LOGIC -> DIRECTION" in bet["gate"]
 
 
 # ── R51: the field set is MINIMAL, and DRIVER leads without leaking ─────────
@@ -210,18 +210,26 @@ def test_the_contract_has_exactly_one_free_text_field():
         DIRECTION  binary, and last              no surface
     """
     from tools.market_bet import BUCKETS
-    assert GROUNDED_CONTRACT == ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
+    assert GROUNDED_CONTRACT == ("SIGNAL", "DRIVER", "LOGIC", "DIRECTION")
     assert len(GROUNDED_CONTRACT) == 4
     # DRIVER is closed, SIGNAL is an index, DIRECTION is binary — LOGIC is the only
     # field whose contents the model invents.
     assert len(BUCKETS) == 4
 
 
-def test_no_driver_bucket_names_a_direction():
-    """WHY DRIVER CAN SAFELY GO FIRST. It is generated before the fact and before the
-    reasoning, so if any bucket implied up or down it would be a head start on the
-    conclusion — the exact defect this round removes. None of them does: they name the
-    KIND of force, never its sign."""
+def test_the_bucket_words_are_lexically_neutral_AND_THAT_IS_ALL_IT_PROVES():
+    """R51 CLAIMED THE BUCKETS WERE VERIFIED DIRECTION-NEUTRAL. THEY WERE NOT.
+
+    What this checks is that the four bucket WORDS are neutral in OUR OWN polarity
+    lexicon and are not in a hand-written list of directional words. That is a claim
+    about vocabulary. It says nothing about whether naming MACRO first makes
+    macro-flavoured spans look more relevant, or whether P(UP | FLOW) skews in practice
+    — neither of which had been measured when R51 asserted neutrality.
+
+    Two things follow, and both are done rather than argued: SIGNAL is now selected
+    BEFORE the bucket, so a label cannot frame the choice of span; and the skew is
+    MEASURED by bucket_direction_table() rather than assumed away.
+    """
     from tools.market_bet import BUCKETS, signal_polarity
 
     for bucket in BUCKETS:
@@ -229,6 +237,11 @@ def test_no_driver_bucket_names_a_direction():
     directional = {"UP", "DOWN", "BULL", "BEAR", "RISE", "FALL", "LONG", "SHORT"}
     for bucket in BUCKETS:
         assert bucket.upper() not in directional
+
+
+def test_the_span_is_selected_before_the_bucket_labels_it():
+    """The ordering change R52 makes. DRIVER classifies a sentence already chosen."""
+    assert GROUNDED_CONTRACT.index("SIGNAL") < GROUNDED_CONTRACT.index("DRIVER")
 
 
 def test_a_driver_outside_the_four_buckets_is_refused():

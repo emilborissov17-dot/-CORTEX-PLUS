@@ -77,19 +77,22 @@ differently.
 Answer with EXACTLY these five lines, IN THIS ORDER, and nothing else:
 
 DEADLINE: {deadline}
-DRIVER: one of MACRO, GEOPOL, FLOW, SECTOR
 SIGNAL: [the NUMBER of one sentence above]
+DRIVER: one of MACRO, GEOPOL, FLOW, SECTOR
 LOGIC: [ONE sentence — the mechanism by which that fact moves the price]
 DIRECTION: UP or DOWN
 
-THE ORDER IS THE POINT, AND IT IS NOT NEGOTIABLE. Name the kind of driver, pick the
-fact, state the mechanism — and only then say which way. DIRECTION IS LAST because it is
-the CONCLUSION of the three lines above it. An answer that states the direction first
+THE ORDER IS THE POINT, AND IT IS NOT NEGOTIABLE. Pick the fact, say what kind of force
+it is, state the mechanism — and only then say which way. DIRECTION IS LAST because it
+is the CONCLUSION of the three lines above it. An answer that states the direction first
 and explains it afterwards is refused, because a reason written to fit a direction
 already chosen cannot be told apart from a guess with a story attached.
 
-DRIVER IS ONE OF FOUR WORDS and none of them means up or down. It says what KIND of
-force this is, not which way it pushes.
+PICK THE FACT BEFORE YOU LABEL IT. SIGNAL comes first so that you choose a sentence on
+what it says, not on which sentences fit a category you have already named.
+
+DRIVER CLASSIFIES THE SENTENCE YOU JUST PICKED. One of four words, and it says what KIND
+of force this is, not which way it pushes.
 
 SIGNAL IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not join
 two of them together. Give its number and the sentence is used exactly as printed above.
@@ -109,8 +112,8 @@ SOURCE A — reuters.com, class independent (wire), published 2026-09-05
 A correct answer is:
 
 DEADLINE: {deadline}
-DRIVER: MACRO
 SIGNAL: 2
+DRIVER: MACRO
 LOGIC: a hotter print lifts real yields, which discount equity cash flows harder.
 DIRECTION: DOWN
 
@@ -147,11 +150,34 @@ it does not name a direction until the last line, after the reasoning that produ
 #   LOGIC      one sentence                        ONE surface
 #   DIRECTION  binary, and last                    no surface
 #
-# DRIVER LEADS AND CARRIES NO DIRECTION. None of MACRO, GEOPOL, FLOW or SECTOR means up
-# or down, so naming the kind of force first commits the model to nothing about the
-# answer - it is a framing choice, not a head start. That property is what makes it safe
-# to generate before the fact, and it has its own test.
-GROUNDED_CONTRACT = ("DRIVER", "SIGNAL", "LOGIC", "DIRECTION")
+# ── R52: WHAT THIS CONTRACT ACTUALLY BUYS ───────────────────────────────────
+# STATED PLAINLY SO NOBODY OVER-READS IT, THIS COMMENT INCLUDED.
+#
+# Putting DIRECTION last buys THE SYNTAX OF DERIVATION, NOT CAUSATION. The model can
+# still settle on UP internally and then write a LOGIC sentence that encodes it. "The
+# index has recovered from every prior downturn" is a verdict wearing a mechanism's
+# clothes, and no amount of field ordering can see inside it. What the order changes is
+# narrower and worth exactly what it is: the verdict is no longer FORCED to come first,
+# and the reasoning tokens are no longer conditioned on an answer already emitted.
+#
+# THE POLARITY FLAG IS WHAT MAKES THE CONTRADICTION DETECTABLE; THE ORDER JUST MAKES IT
+# CATCHABLE. A bet whose cited span reads negative and whose direction is UP shows up in
+# the record either way. Neither mechanism proves the reasoning caused the answer. They
+# make an inconsistency BETWEEN them observable, and that is the most an offline audit
+# can honestly claim. Anything stronger would be this module telling itself a story.
+#
+# SIGNAL IS SELECTED FIRST, BEFORE THE BUCKET - and the reason is a claim R51 made too
+# strongly. R51 put DRIVER first, arguing the buckets carry no direction. What the test
+# actually checks is that the four bucket WORDS are lexically neutral in OUR OWN polarity
+# lexicon and are not in a hand-written list of directional words. That is a claim about
+# vocabulary, not about behaviour. Whether naming "MACRO" first makes macro-flavoured
+# spans look more relevant, or whether P(UP | FLOW) skews, was never measured.
+#
+# So the span is chosen FIRST, out of the numbered table, before any label has framed
+# what counts as relevant - and DRIVER becomes a CLASSIFICATION OF THE SPAN ALREADY
+# CHOSEN rather than a lens for choosing it. The skew itself is now measured rather than
+# asserted: see bucket_direction_table() below, which is a MONITOR, not a gate.
+GROUNDED_CONTRACT = ("SIGNAL", "DRIVER", "LOGIC", "DIRECTION")
 _GROUNDED_LINE_RE = re.compile(
     r"^[\s*>-]*(DRIVER|SIGNAL|LOGIC|DIRECTION|DEADLINE)\s*:\s*(.*)$", re.I)
 
@@ -852,20 +878,6 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
                        refusal=(f"direction: {p.get('direction')!r} is not a direction. "
                                 f"UP or DOWN, and nothing else, can be graded."))
             continue
-        bucket = (p.get("driver") or "").upper().split()[0:1]
-        if not bucket or bucket[0] not in BUCKETS:
-            rec.update(verdict="REFUSED", missing=["driver"],
-                       refusal=(f"driver: {p.get('driver')!r} is not one of "
-                                f"{'|'.join(BUCKETS)}. The bucket is a closed "
-                                f"vocabulary precisely so that naming it first cannot "
-                                f"leak the answer — none of the four means up or down."))
-            continue
-        if not str(p.get("logic") or "").strip():
-            rec.update(verdict="REFUSED", missing=["logic"],
-                       refusal=("logic: empty. LOGIC is the one sentence that turns a "
-                                "cited fact into a direction; without it DIRECTION is "
-                                "a guess with a citation stapled to it."))
-            continue
         if str(p.get("deadline") or "").strip() != deadline:
             rec.update(verdict="REFUSED", missing=["deadline"],
                        refusal=(f"deadline: {p.get('deadline')!r} is not the graded "
@@ -885,6 +897,25 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
                        refusal=(f"signal_date: segment {idxs} — {text!r} — names a date "
                                 f"after the graded session {deadline}. A fact that has "
                                 f"not happened cannot have driven the price."))
+            continue
+
+        # DRIVER and LOGIC are checked AFTER the span, because the contract now reads
+        # SIGNAL -> DRIVER -> LOGIC and the first refusal reported should be the
+        # earliest broken field rather than whichever check happened to be written
+        # first. DRIVER classifies a span that has already been chosen.
+        bucket = (p.get("driver") or "").upper().split()[0:1]
+        if not bucket or bucket[0] not in BUCKETS:
+            rec.update(verdict="REFUSED", missing=["driver"],
+                       refusal=(f"driver: {p.get('driver')!r} is not one of "
+                                f"{'|'.join(BUCKETS)}. The bucket is a closed "
+                                f"vocabulary, and it labels the sentence already "
+                                f"selected rather than choosing which one to select."))
+            continue
+        if not str(p.get("logic") or "").strip():
+            rec.update(verdict="REFUSED", missing=["logic"],
+                       refusal=("logic: empty. LOGIC is the one sentence that turns a "
+                                "cited fact into a direction; without it DIRECTION is "
+                                "a guess with a citation stapled to it."))
             continue
 
         # BELT AND SUSPENDERS. The text came out of the table, so this can only fail if
@@ -1143,7 +1174,7 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         "reference_close_date": baseline["last_close"]["SPY"]["date"],
         "grading_rule": "the FIRST bar strictly after reference_close_date",
         "gate": "grounded by INDEX, and ordered: the contract is "
-                "DRIVER -> SIGNAL -> LOGIC -> DIRECTION with DIRECTION "
+                "SIGNAL -> DRIVER -> LOGIC -> DIRECTION with DIRECTION "
                 "GENERATED LAST, so it is conditioned on the reasoning rather "
                 "than followed by it. SIGNAL is the number of a printed segment, "
                 "so the cited text is verbatim by construction; the "
