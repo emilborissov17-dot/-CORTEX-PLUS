@@ -20,11 +20,15 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 from tools.market_bet import (dates_in, disagreement, grounded_gate,  # noqa: E402
-                              normalise, parse_completion, signal_dated_after,
-                              signal_grounded)
+                              normalise, parse_completion, parse_signal_indices,
+                              render_evidence, segment_snippets, segment_text,
+                              signal_dated_after, signal_grounded)
 
 DEADLINE = "2026-09-08"
 FACT = "CPI rose 0.3% in August, the Bureau of Labor Statistics said on Friday"
+
+# The default fixture segments to exactly two: [1] the title, [2] the sentence.
+TITLE_SEG, FACT_SEG = 1, 2
 
 
 @dataclass(frozen=True)
@@ -39,8 +43,8 @@ class Sn:
     dated: bool = True
 
 
-def _c(direction="UP", signal=FACT, driver="MACRO", logic="higher yields weigh on equities",
-       deadline=DEADLINE):
+def _c(direction="UP", signal=FACT_SEG, driver="MACRO",
+       logic="higher yields weigh on equities", deadline=DEADLINE):
     return (f"DIRECTION: {direction}\nDEADLINE: {deadline}\n"
             f"RATIONALE: DRIVER {driver} | SIGNAL {signal} | LOGIC {logic}")
 
@@ -50,33 +54,116 @@ def _g(*comps, snippets=(Sn(),), deadline=DEADLINE):
                          list(snippets))
 
 
-# ── 8. exact substring is ADMITTED ──────────────────────────────────────────
-def test_an_exact_substring_of_a_snippet_is_admitted():
-    r = _g(_c(signal="CPI rose 0.3% in August"))[0]
+# ── R49/8. an in-range INDEX is ADMITTED and carries the exact sentence ─────
+def test_an_in_range_index_is_admitted_with_the_exact_sentence_text():
+    r = _g(_c(signal=FACT_SEG))[0]
     assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["parsed"]["signal_indices"] == [FACT_SEG]
+    assert r["parsed"]["signal_text"] == FACT
+    assert r["evidence"]["segment_text"] == FACT
 
 
-def test_matching_ignores_case_and_whitespace_only():
-    r = _g(_c(signal="cpi   ROSE 0.3%   in august"))[0]
+def test_the_selected_text_is_verbatim_by_construction_not_by_the_model():
+    """The point of the whole piece. The model wrote the character '2' and nothing
+    else; every word of the citation came out of the segment table."""
+    r = _g(_c(signal="2"))[0]
+    assert "2" in r["raw"]
+    assert FACT not in r["raw"]
+    assert r["evidence"]["segment_text"] == FACT
+
+
+def test_the_title_is_a_selectable_segment_like_any_other():
+    r = _g(_c(signal=TITLE_SEG))[0]
     assert r["verdict"] == "ADMITTED"
-    assert normalise("  A   b ") == "a b"
+    assert r["evidence"]["segment_text"] == "US inflation ticks up"
+    assert r["evidence"]["sources"][0]["field"] == "title"
 
 
-def test_a_title_match_also_counts():
-    assert _g(_c(signal="US inflation ticks up"))[0]["verdict"] == "ADMITTED"
+def test_bracketed_and_multiple_indices_are_accepted():
+    r = _g(_c(signal="[1] and [2]"))[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["parsed"]["signal_indices"] == [1, 2]
+    assert r["parsed"]["signal_text"] == f"US inflation ticks up {FACT}"
+    assert r["evidence"]["spans_multiple_sources"] is False
 
 
-# ── 9. a PARAPHRASE is refused ──────────────────────────────────────────────
-def test_a_paraphrase_of_a_snippet_is_refused():
-    """The whole property being bought. 'Similar to' is what produced the 7 Sep
-    fabrications; only a quote proves the document was read."""
+def test_indices_from_two_documents_are_flagged_as_spanning():
+    other = Sn(snippet="Gold steadied as the dollar eased on Friday.",
+               title="Gold steadies", url="https://apnews.com/g", host="apnews.com")
+    r = _g(_c(signal="2, 3"), snippets=(Sn(), other))[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["evidence"]["spans_multiple_sources"] is True
+    assert {s["host"] for s in r["evidence"]["sources"]} == {"reuters.com", "apnews.com"}
+
+
+# ── R49/9. an OUT-OF-RANGE index is refused ─────────────────────────────────
+def test_an_out_of_range_index_is_refused():
+    """A number nobody printed is an invented citation with a shorter spelling."""
+    for bad in (0, 3, 99):
+        r = _g(_c(signal=bad))[0]
+        assert r["verdict"] == "REFUSED", bad
+        assert "signal_index" in r["missing"]
+        assert "out of range" in r["refusal"]
+
+
+def test_a_sign_or_a_range_is_refused_rather_than_guessed():
+    """'-1' had its minus dropped and read as segment 1, and '1-3' would be read as
+    1 and 3 rather than the range meant. Silently deciding what the model meant is the
+    habit this gate exists to break, so both refuse."""
+    for bad in ("-1", "1-2", "1 to 2"):
+        r = _g(_c(signal=bad))[0]
+        assert r["verdict"] == "REFUSED", bad
+        assert "signal_index" in r["missing"]
+
+
+def test_an_empty_index_is_refused():
+    r = _g(_c(signal="   "))[0]
+    assert r["verdict"] == "REFUSED"
+    assert "signal_index" in r["missing"]
+
+
+def test_free_text_in_the_signal_field_is_refused_even_when_it_is_a_true_quote():
+    """THE CONTRACT CHANGE. Under R48 this exact string was ADMITTED. It is a real
+    sentence from a real document — and it is still refused, because the field now
+    carries a number and text in it cannot be trusted to be verbatim."""
+    r = _g(_c(signal=FACT))[0]
+    assert r["verdict"] == "REFUSED"
+    assert "signal_index" in r["missing"]
+    assert "prose, not a segment number" in r["refusal"]
+
+
+def test_a_paraphrase_is_refused_as_prose():
+    """The 7 Sep failure mode, now unreachable a step earlier: a paraphrase never gets
+    as far as the substring check, because it is not a number."""
     for para in ("CPI increased 0.3 percent in August",
                  "August inflation came in at 0.3%",
                  "the BLS reported a 0.3% August CPI rise"):
         r = _g(_c(signal=para))[0]
         assert r["verdict"] == "REFUSED", para
-        assert "grounding" in r["missing"]
-        assert "exact substring" in r["refusal"]
+        assert "signal_index" in r["missing"]
+
+
+def test_a_signal_that_names_a_number_and_prose_is_refused():
+    """The live spill: the model wrote 'SIGNAL <text> LOGIC: <text>' with no pipe. Half
+    a contract is not the contract."""
+    r = _g(_c(signal="2 LOGIC: the index will rise"))[0]
+    assert r["verdict"] == "REFUSED"
+    assert "signal_index" in r["missing"]
+
+
+def test_the_index_parser_reports_range_and_prose_separately():
+    assert parse_signal_indices("2", 2) == ([2], None)
+    assert parse_signal_indices("segments 1 and 2", 2) == ([1, 2], None)
+    assert parse_signal_indices("2 2 1", 2) == ([2, 1], None)   # duplicates dropped
+    assert parse_signal_indices("7", 2)[0] is None
+    assert parse_signal_indices("CPI rose", 2)[0] is None
+
+
+def test_the_substring_check_survives_underneath():
+    """Belt and suspenders. Selection makes the text verbatim; this would still catch a
+    segmentation bug that rewrote a character."""
+    assert signal_grounded(FACT, [Sn()])[0] is True
+    assert signal_grounded("CPI increased 0.3 percent in August", [Sn()])[0] is False
 
 
 def test_a_too_short_signal_cannot_ground_itself_on_a_common_word():
@@ -85,20 +172,66 @@ def test_a_too_short_signal_cannot_ground_itself_on_a_common_word():
     assert signal_grounded("in August", [Sn()])[0] is False
 
 
+# ── R49 segmentation ────────────────────────────────────────────────────────
+def test_every_segment_is_a_contiguous_slice_of_its_source():
+    """THE INVARIANT THE PIECE RESTS ON. Strip at the edges, never in the middle — the
+    moment a segment stops being a literal slice, 'verbatim by construction' is a
+    claim rather than a fact."""
+    blob = ("## Key Points\n"
+            "The S&P 500 advanced 13%. But the next downturn is only a matter of "
+            "time. [...] \n"
+            "  Following the first rate hike, the index usually falls into correction.")
+    hay = normalise(blob)
+    segs = segment_text(blob)
+    assert len(segs) >= 3
+    for s in segs:
+        assert normalise(s) in hay, s
+
+
+def test_segmentation_drops_labels_and_keeps_sentences():
+    segs = segment_text("## Key Points\nNKE\n-0.95%\nThe dollar index slipped 0.2%.")
+    assert segs == ["The dollar index slipped 0.2%."]
+
+
+def test_numbering_is_dense_so_every_printed_number_is_selectable():
+    """Holes in the list would turn a formatting accident into an out-of-range
+    refusal that reads like a fabrication."""
+    segs = segment_snippets([Sn(), Sn(snippet="Gold steadied as the dollar eased.",
+                                      title="Gold steadies now")])
+    assert [t["index"] for t in segs] == list(range(1, len(segs) + 1))
+
+
+def test_the_rendered_block_prints_the_same_numbers_the_gate_reads():
+    """If the prompt's [4] and the gate's [4] ever differ, index selection quietly
+    stops being verbatim."""
+    snippets = [Sn(), Sn(snippet="Gold steadied as the dollar eased.",
+                         title="Gold steadies now", host="apnews.com")]
+    segs = segment_snippets(snippets)
+    block = render_evidence(snippets, segs)
+    for t in segs:
+        assert f"[{t['index']}] {t['text']}" in block
+
+
 # ── 10. plausible but absent — the 7 Sep failure, re-run ────────────────────
 def test_a_plausible_signal_that_appears_in_no_snippet_is_refused():
     r = _g(_c(signal="Nonfarm payrolls +150k, BLS 5 Sep"))[0]
     assert r["verdict"] == "REFUSED"
-    assert "grounding" in r["missing"]
+    assert "signal_index" in r["missing"]
 
 
 # ── 11. dated after the graded session ──────────────────────────────────────
 def test_a_signal_dated_after_the_graded_session_is_refused():
-    """THE JACKSON HOLE CASE. On 7 Sep this was ADMITTED."""
-    sig = "Fed releases September Jackson Hole Symposium transcript, Sept 21"
+    """THE JACKSON HOLE CASE. On 7 Sep this was ADMITTED.
+
+    Now checked against the RECONSTRUCTED text: selecting a real sentence that names a
+    future event is still refused, because a fact that has not happened cannot have
+    driven the price — being genuinely printed does not make it a driver."""
+    sig = "Fed releases the Jackson Hole Symposium transcript on Sept 21."
     assert signal_dated_after(sig, DEADLINE) is True
-    r = grounded_gate([parse_completion(_c(signal=sig))], "SPY", DEADLINE,
-                      [Sn(snippet=f"x {sig} y")])[0]
+    snippets = [Sn(snippet=sig, title="Fed calendar update")]
+    segs = segment_snippets(snippets)
+    idx = [t["index"] for t in segs if t["text"] == sig][0]
+    r = grounded_gate([parse_completion(_c(signal=idx))], "SPY", DEADLINE, snippets)[0]
     assert r["verdict"] == "REFUSED"
     assert "signal_date" in r["missing"]
     assert "cannot have driven" in r["refusal"]
@@ -128,10 +261,12 @@ def test_when_every_passing_candidate_agrees_it_is_named_not_dressed_as_a_majori
 
 # ── 14. the sealed bet carries the evidence ─────────────────────────────────
 def test_an_admitted_candidate_carries_the_matched_snippets_url_and_date():
-    r = _g(_c(signal="CPI rose 0.3% in August"))[0]
+    r = _g(_c(signal=FACT_SEG))[0]
     assert r["evidence"]["url"].startswith("https://www.reuters.com/")
     assert r["evidence"]["published_utc"] == "2026-09-05T12:30:00+00:00"
     assert r["evidence"]["host"] == "reuters.com"
+    assert r["evidence"]["segment_indices"] == [FACT_SEG]
+    assert r["evidence"]["segments_available"] == 2
 
 
 def test_a_refused_candidate_carries_no_evidence():
@@ -144,7 +279,9 @@ def test_with_no_snippets_every_candidate_is_refused():
     """An asset with no fact gets no bet, and there is no fallback."""
     recs = _g(_c(), _c("DOWN"), snippets=())
     assert [r["verdict"] for r in recs] == ["REFUSED", "REFUSED"]
-    assert all("0 available" in r["refusal"] for r in recs)
+    # With no snippets there are no segments, so EVERY number is out of range 1..0.
+    assert all("out of range" in r["refusal"] for r in recs)
+    assert all("1..0" in r["refusal"] for r in recs)
 
 
 # ── 15. THE REPLAY — all 22 fabrications must be refused ────────────────────
@@ -177,9 +314,10 @@ def test_every_candidate_the_7_sep_gate_admitted_is_refused_by_the_grounded_gate
         f"{len(admitted)} of the 7 Sep fabrications still pass:\n  "
         + "\n  ".join(f"{a}: {s}" for a, s, _ in admitted))
     assert len(refused) == 22
-    reasons = {("signal_date" if "signal_date" in (why or "") else "grounding")
-               for _, _, why in refused}
-    assert "grounding" in reasons
+    # Under R49 they die a step EARLIER than they did under R48: every one of them is
+    # free text, and the SIGNAL field now carries a number. The invented facts never
+    # reach the substring check at all.
+    assert all("signal_index" in (why or "") for _, _, why in refused)
 
 
 # ── 16. prediction only ─────────────────────────────────────────────────────
@@ -221,7 +359,7 @@ def test_an_undated_snippet_can_carry_the_evidence_without_crashing():
     undated evidence reached it."""
     undated = Sn(published_utc="", dated=False, host="fool.com",
                  source_class="adversarial", source_kind="advisory with positions")
-    r = grounded_gate([parse_completion(_c(signal="CPI rose 0.3% in August"))],
+    r = grounded_gate([parse_completion(_c(signal=FACT_SEG))],
                       "SPY", DEADLINE, [undated])[0]
     assert r["verdict"] == "ADMITTED"
     assert r["evidence"]["published_utc"] is None
@@ -230,6 +368,6 @@ def test_an_undated_snippet_can_carry_the_evidence_without_crashing():
 
 
 def test_a_dated_snippet_reports_dated_true():
-    r = _g(_c(signal="CPI rose 0.3% in August"))[0]
+    r = _g(_c(signal=FACT_SEG))[0]
     assert r["evidence"]["dated"] is True
     assert r["evidence"]["published_utc"] == "2026-09-05T12:30:00+00:00"

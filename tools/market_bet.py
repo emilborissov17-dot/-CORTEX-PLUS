@@ -67,21 +67,22 @@ ASSET: {sym}
 Last close ({close_date}): {close}
 
 RETRIEVED NEWS — these are the ONLY facts you may cite. You have no others.
-Each item names its source and what kind of source it is. That is not a trust score and
-it is not there for you to judge credibility: the SOURCE TYPE IS PART OF THE SIGNAL. A
-wire report, a government release and a broker's commentary move a price differently.
+Every sentence is NUMBERED. Each source names what kind of source it is. That is not a
+trust score and it is not there for you to judge credibility: the SOURCE TYPE IS PART OF
+THE SIGNAL. A wire report, a government release and a broker's commentary move a price
+differently.
 {evidence}
 
 Answer with EXACTLY these three lines and nothing else:
 
 DIRECTION: UP or DOWN
 DEADLINE: {deadline}
-RATIONALE: DRIVER [one of MACRO|GEOPOL|FLOW|SECTOR] | SIGNAL [COPY A PHRASE WORD-FOR-WORD FROM ONE SNIPPET ABOVE] | LOGIC [one sentence]
+RATIONALE: DRIVER [one of MACRO|GEOPOL|FLOW|SECTOR] | SIGNAL [the NUMBER of one sentence above] | LOGIC [one sentence]
 
-The SIGNAL must be COPIED EXACTLY from one of the numbered snippets - the same words, in
-the same order, at least a dozen characters long. Do not paraphrase, summarise or
-improve it. If you cannot find a phrase that supports a direction, copy one anyway and
-say so in the LOGIC; a wrong quote is checkable, an invented one is not.
+THE SIGNAL IS A NUMBER, NOT TEXT. Do not retype the sentence, do not shorten it, do not
+join two of them together. Give its number and the sentence is used exactly as printed
+above. You may give more than one number, separated by commas. A number that is not in
+the list above is refused, and so is anything in the SIGNAL field that is not a number.
 """
 
 _DATE_RE = re.compile(
@@ -252,13 +253,186 @@ def signal_grounded(signal, snippets) -> tuple:
     if len(needle) < 12:
         return False, None
     for sn in snippets or []:
-        hay = normalise(getattr(sn, "snippet", None) or (sn or {}).get("snippet", ""))
+        hay = normalise(_field(sn, "snippet"))
         if needle and needle in hay:
             return True, sn
-        title = normalise(getattr(sn, "title", None) or (sn or {}).get("title", ""))
+        title = normalise(_field(sn, "title"))
         if needle and needle in title:
             return True, sn
     return False, None
+
+
+def _field(obj, name):
+    """One accessor for both a Snippet dataclass and a plain dict.
+
+    `getattr(sn, 'published_utc') or sn.get(...)` looked harmless and was not: an
+    undated snippet has published_utc == "", which is FALSY, so the fallback fired on a
+    dataclass that has no .get and the whole run died.
+    """
+    if hasattr(obj, name):
+        return getattr(obj, name)
+    try:
+        return obj.get(name)
+    except AttributeError:
+        return None
+
+
+# ── R49 PIECE 1: THE SIGNAL IS AN INDEX, NOT A COPIED PHRASE ────────────────
+# R48 asked a 3B model to COPY a sentence word-for-word. Live, it copied one of eight
+# and failed the other seven - and the failures were NOT mostly paraphrase. Replayed:
+# one was verbatim but had "LOGIC:" spilled into the same field, three spliced two
+# separate bullets into one sentence that no document contains, two were true
+# paraphrase, one reworded a photo caption. Copying is simply the wrong task for this
+# model, and the gate was measuring copying ability rather than grounding.
+#
+# So the task changes. The snippets are split into NUMBERED sentences and the model
+# returns a NUMBER. The SIGNAL text is then the sentence at that number, which is
+# verbatim BY CONSTRUCTION - there is no copy step left to get wrong. The exact
+# substring check survives underneath as belt-and-suspenders on the reconstructed text,
+# so a segmentation bug that invented a sentence would still be caught.
+#
+# NOTHING IS LOOSENED. An out-of-range number is refused, an empty selection is refused,
+# and prose in the SIGNAL field is refused. What is removed is the requirement that the
+# model be good at transcription.
+
+# A segment must be a real sentence rather than a nav label: long enough, several
+# words, and at least one actual word in it. Deliberately blunt. Anything cleverer is
+# an editorial judgement about which facts count, which is not this module's job - the
+# junk in a page is a property of the page, and the record shows exactly what was
+# selected out of it.
+SEG_MIN_CHARS = 12
+SEG_MIN_TOKENS = 4
+
+# `[...]` is Tavily's own elision marker between extracted passages; a newline ends a
+# block. Split on those first, then on sentence ends.
+_BLOCK_SPLIT_RE = re.compile(r"\[\s*\.\.\.\s*\]|[\r\n]+")
+_SENT_SPLIT_RE = re.compile(r"(?<=[.!?])\s+(?=[\"'(“‘A-Z0-9])")
+# Markdown and page furniture, stripped from the ENDS only. Never from the middle:
+# a segment has to stay a contiguous slice of the source text or the substring check
+# underneath it becomes a lie.
+_EDGE_NOISE_RE = re.compile(r"^[\s#>*_\-•■-◿─-╿]+|[\s#>*_]+$")
+_HAS_WORD_RE = re.compile(r"[A-Za-z]{3,}")
+
+# Written as a character class rather than a bare "\d+" so a mangled escape shows up
+# as an import-time error instead of a silent no-match. dates_in() was broken that way
+# once and matched nothing at all.
+_INDEX_RE = re.compile(r"[0-9]+")
+# The only non-numeric text tolerated in a SIGNAL field. Everything else means the
+# model answered with prose, which is the contract it was told not to use.
+_INDEX_FILLER = {"segment", "segments", "sentence", "sentences", "no", "nos", "number",
+                 "numbers", "item", "items", "and", "index", "indices"}
+# Punctuation a list of numbers may legitimately carry. A MINUS IS NOT ON IT: "-1"
+# would otherwise have its sign dropped and be read as segment 1, and "1-3" would be
+# read as segments 1 and 3 rather than the range the model meant. Both are the module
+# quietly deciding what the model meant, which is the habit this whole gate exists to
+# break. Caught by a test, not by reasoning.
+_INDEX_PUNCT_RE = re.compile(r"^[0-9\s\[\](),.;:#&+/]*$")
+
+
+def segment_text(text: str) -> list:
+    """One blob of retrieved text -> its usable sentences, in order.
+
+    EVERY RETURNED SEGMENT IS A CONTIGUOUS SLICE OF `text` once whitespace is
+    collapsed. That is the invariant the whole piece rests on and it is tested: strip
+    at the edges, never in the middle, and never rewrite a character.
+    """
+    out = []
+    for block in _BLOCK_SPLIT_RE.split(str(text or "")):
+        for raw in _SENT_SPLIT_RE.split(block):
+            seg = _EDGE_NOISE_RE.sub("", " ".join(raw.split())).strip()
+            if len(seg) < SEG_MIN_CHARS:
+                continue
+            if len(seg.split()) < SEG_MIN_TOKENS:
+                continue
+            if not _HAS_WORD_RE.search(seg):
+                continue
+            out.append(seg)
+    return out
+
+
+def segment_snippets(snippets) -> list:
+    """All snippets -> one globally numbered segment table.
+
+    Numbering is 1..N over the segments that SURVIVE the filter, so every number the
+    model can see is a number it may use. Numbering the dropped ones too would put
+    holes in the list and invite an out-of-range answer that is really a formatting
+    accident.
+
+    The title is a segment like any other: it was already citable under R48.
+    """
+    table, n = [], 0
+    for s_i, sn in enumerate(snippets or []):
+        for field in ("title", "snippet"):
+            for seg in segment_text(_field(sn, field)):
+                if any(t["text"] == seg and t["source"] == s_i for t in table):
+                    continue  # a title repeated as the snippet's first line
+                n += 1
+                table.append({"index": n, "text": seg, "source": s_i, "field": field})
+    return table
+
+
+def render_evidence(snippets, segments) -> str:
+    """The numbered evidence block, grouped by source so the class is stated once."""
+    lines = []
+    for s_i, sn in enumerate(snippets or []):
+        rows = [t for t in segments if t["source"] == s_i]
+        if not rows:
+            continue
+        pub = (_field(sn, "published_utc") or "")[:10] or "UNDATED"
+        lines.append(f"\nSOURCE {chr(65 + s_i)} — {_field(sn, 'host')}, "
+                     f"class {_field(sn, 'source_class')} "
+                     f"({_field(sn, 'source_kind')}), published {pub}")
+        for t in rows:
+            lines.append(f"  [{t['index']}] {t['text']}")
+    return "\n".join(lines)
+
+
+def parse_signal_indices(signal, n_segments: int) -> tuple:
+    """(indices, None) or (None, refusal). Order preserved, duplicates dropped.
+
+    Refuses prose, refuses an empty selection, refuses out of range. An index is the
+    one thing in this contract that can be checked without trusting the model at all,
+    so it is checked strictly.
+    """
+    s = str(signal or "").strip()
+    if not s:
+        return None, ("signal_index: the SIGNAL field is empty. It must carry the "
+                      "NUMBER of a numbered sentence from the evidence block.")
+    prose = [w for w in re.split(r"[^A-Za-z]+", s) if w and w.lower() not in _INDEX_FILLER]
+    if prose:
+        return None, (f"signal_index: {s!r} is prose, not a segment number. The SIGNAL "
+                      f"is now an INDEX — the model no longer copies text, so text in "
+                      f"this field cannot be trusted to be verbatim "
+                      f"(offending words: {', '.join(prose[:4])}).")
+    stripped = " ".join(w for w in re.split(r"\s+", s)
+                        if w.strip("[](),.;:#&+/").lower() not in _INDEX_FILLER)
+    if not _INDEX_PUNCT_RE.match(stripped):
+        return None, (f"signal_index: {s!r} carries something that is neither a number "
+                      f"nor list punctuation. Give plain numbers separated by commas — "
+                      f"a range and a sign are both read by guessing, and this module "
+                      f"does not guess what the model meant.")
+    seen, idxs = set(), []
+    for m in _INDEX_RE.finditer(s):
+        i = int(m.group(0))
+        if i not in seen:
+            seen.add(i)
+            idxs.append(i)
+    if not idxs:
+        return None, (f"signal_index: {s!r} names no segment number.")
+    bad = [i for i in idxs if i < 1 or i > n_segments]
+    if bad:
+        return None, (f"signal_index: segment {bad} is out of range — the evidence "
+                      f"block offered 1..{n_segments}. A number nobody printed is an "
+                      f"invented citation with a shorter spelling.")
+    return idxs, None
+
+
+def signal_from_indices(indices, segments) -> tuple:
+    """(text, chosen rows). The text is verbatim by construction — assembled from the
+    table, never from anything the model wrote."""
+    by_index = {t["index"]: t for t in segments}
+    chosen = [by_index[i] for i in indices]
+    return " ".join(t["text"] for t in chosen), chosen
 
 
 def dates_in(text: str, year: int) -> list:
@@ -301,43 +475,75 @@ def signal_dated_after(signal, deadline: str) -> bool:
     return False
 
 
-def grounded_gate(parsed_list, sym: str, deadline: str, snippets) -> list:
-    """gate_all, plus grounding. Order matters: cheap structural refusals first, so a
-    malformed answer is not reported as an ungrounded one."""
+def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
+                  segments=None) -> list:
+    """gate_all, plus grounding BY INDEX. Order matters: cheap structural refusals
+    first, so a malformed answer is not reported as an ungrounded one.
+
+    `segments` is the numbered table the model was shown. It is derived from the
+    snippets when not supplied, so the gate and the prompt cannot silently disagree
+    about what number 4 was — but the caller should pass the same table it rendered.
+    """
     # The shape heuristic is OFF here: grounding supersedes it, and keeping both
     # would refuse a genuine quote whose date lives in the document rather than in
     # the sentence. Found by test, not by reasoning - three tests failed with
     # missing=["signal"] where they expected missing=["grounding"].
     records = gate_all(parsed_list, sym, deadline, require_signal_shape=False)
+    segments = segment_snippets(snippets) if segments is None else segments
     for rec in records:
         if rec["verdict"] != "ADMITTED":
             continue
         sig = rec["parsed"].get("signal")
-        if signal_dated_after(sig, deadline):
-            rec.update(verdict="REFUSED", missing=["signal_date"],
-                       refusal=(f"signal_date: {sig!r} names a date after the graded "
-                                f"session {deadline}. A fact that has not happened "
-                                f"cannot have driven the price."))
-            continue
-        ok, sn = signal_grounded(sig, snippets)
-        if not ok:
-            rec.update(verdict="REFUSED", missing=["grounding"],
-                       refusal=(f"grounding: {sig!r} is not an exact substring of any "
-                                f"retrieved snippet ({len(snippets or [])} available). "
-                                f"A SIGNAL must be quoted from a document that exists."))
-            continue
-        # `or sn.get(...)` was wrong: an UNDATED snippet has published_utc == "",
-        # which is falsy, so the fallback fired on a dataclass and crashed. Found by
-        # the dry run, on the one asset staged with undated evidence.
-        def _f(obj, name):
-            return getattr(obj, name) if hasattr(obj, name) else obj.get(name)
 
+        idxs, why = parse_signal_indices(sig, len(segments))
+        if why is not None:
+            rec.update(verdict="REFUSED", missing=["signal_index"], refusal=why)
+            continue
+        text, chosen = signal_from_indices(idxs, segments)
+        rec["parsed"]["signal_indices"] = idxs
+        rec["parsed"]["signal_text"] = text
+
+        if signal_dated_after(text, deadline):
+            rec.update(verdict="REFUSED", missing=["signal_date"],
+                       refusal=(f"signal_date: segment {idxs} — {text!r} — names a date "
+                                f"after the graded session {deadline}. A fact that has "
+                                f"not happened cannot have driven the price."))
+            continue
+
+        # BELT AND SUSPENDERS. The text came out of the table, so this can only fail if
+        # segmentation invented or rewrote a character. That would be a bug in this
+        # module rather than a lie by the model, and it is named as one - but it is
+        # still a refusal, because an unverifiable citation is unverifiable whoever
+        # broke it. Checked PER SEGMENT: a two-index selection is two true sentences,
+        # and their concatenation is a substring of nothing.
+        broken = [t for t in chosen if not signal_grounded(t["text"], snippets)[0]]
+        if broken:
+            rec.update(verdict="REFUSED", missing=["grounding"],
+                       refusal=(f"grounding: segment {[t['index'] for t in broken]} is "
+                                f"not an exact substring of any retrieved snippet "
+                                f"({len(snippets or [])} available). The segment table "
+                                f"and the documents disagree — this is a segmentation "
+                                f"bug, not a model error, and it still refuses."))
+            continue
+
+        sn = (snippets or [])[chosen[0]["source"]]
         rec["evidence"] = {
-            "url": _f(sn, "url"),
-            "published_utc": _f(sn, "published_utc") or None,
-            "host": _f(sn, "host"),
-            "source_class": _f(sn, "source_class") if hasattr(sn, "source_class") else None,
-            "dated": bool(_f(sn, "published_utc")),
+            "url": _field(sn, "url"),
+            "published_utc": _field(sn, "published_utc") or None,
+            "host": _field(sn, "host"),
+            "source_class": _field(sn, "source_class"),
+            "dated": bool(_field(sn, "published_utc")),
+            "segment_indices": idxs,
+            "segment_text": text,
+            "segments_available": len(segments),
+            "sources": [{"index": t["index"], "field": t["field"],
+                         "host": _field((snippets or [])[t["source"]], "host"),
+                         "url": _field((snippets or [])[t["source"]], "url")}
+                        for t in chosen],
+            # Two verbatim sentences from two DIFFERENT documents are still two true
+            # sentences, but their pairing is the model's claim rather than any
+            # publisher's. Recorded so grading can tell the two cases apart.
+            "spans_multiple_sources": len({t["source"] for t in chosen}) > 1,
         }
     return records
 
@@ -435,11 +641,23 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             print(f"\n{sym}  REFUSED_NO_EVIDENCE — {refusal}")
             continue
 
-        evidence = "\n".join(
-            f"  [{i+1}] [source: {s.host}, class: {s.source_class} {s.source_kind}"
-            f", published: {s.published_utc[:10] or 'UNDATED'}] "
-            f"{s.title}: {s.snippet}"
-            for i, s in enumerate(snippets))
+        # ONE table, rendered into the prompt AND handed to the gate. Building it twice
+        # would let the prompt's [4] and the gate's [4] drift apart, which is the one
+        # way index selection could quietly stop being verbatim.
+        segments = segment_snippets(snippets)
+        evidence = render_evidence(snippets, segments)
+        if not segments:
+            per_asset[sym] = {"indicator": INDICATORS[sym], "last_close": lc,
+                              "deadline": deadline, "sealed_direction": None,
+                              "outcome": "REFUSED_NO_EVIDENCE",
+                              "why": (f"{len(snippets)} snippet(s) but no usable "
+                                      f"sentence in any of them — there is nothing to "
+                                      f"select, so there is no bet."),
+                              "n_snippets": len(snippets), "n_segments": 0,
+                              "ungrounded_citation": False, "candidates": []}
+            print(f"\n{sym}  REFUSED_NO_EVIDENCE — {len(snippets)} snippet(s), "
+                  f"0 usable segments")
+            continue
         if dry is not None and "completions" in dry:
             comps = dry["completions"].get(sym, [])
         else:
@@ -450,12 +668,15 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
                 n=N_COMPLETIONS, temperature=TEMPERATURE)
 
         recs = grounded_gate([parse_completion(c) for c in comps], sym, deadline,
-                             snippets)
+                             snippets, segments)
         idx, reason, win = choose(recs)
         agree = disagreement(recs)
         per_asset[sym] = {
             "indicator": INDICATORS[sym], "last_close": lc, "deadline": deadline,
-            "n_snippets": len(snippets),
+            "n_snippets": len(snippets), "n_segments": len(segments),
+            # The numbered table exactly as the model saw it. Without it, "SIGNAL 4"
+            # in the record means nothing a month from now.
+            "segments": segments,
             # PIECE 5 — THE SNAPSHOT. The full retrieved text is sealed with the bet,
             # so tomorrow's grading can re-verify that the citation really was a
             # substring of what was retrieved, even if the page has since changed or
@@ -475,12 +696,14 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "candidates": [dict(r, sealed=(i == idx)) for i, r in enumerate(recs)],
         }
         flag = "  [UNGROUNDED-CITATION: no dated evidence existed]" if ungrounded else ""
-        print(f"\n{sym}  {len(snippets)} snippet(s)  last {lc['date']} "
-              f"{lc['adjclose']}{flag}")
+        print(f"\n{sym}  {len(snippets)} snippet(s), {len(segments)} numbered "
+              f"segment(s)  last {lc['date']} {lc['adjclose']}{flag}")
         for i, r in enumerate(recs):
             mark = "SEALED " if i == idx else "       "
+            pick = r["parsed"].get("signal_indices")
             print(f"  {mark}{i} {r['verdict']:9} {r['parsed']['direction'] or '-':5}"
-                  + ("" if r["verdict"] == "ADMITTED" else f"  — {r['refusal'][:80]}"))
+                  + (f"  seg {pick}" if r["verdict"] == "ADMITTED"
+                     else f"  — {r['refusal'][:80]}"))
         print(f"  -> {reason}   [{agree}]")
 
     out = Path(a.out or (LEDGER / "BET_2026-09-07_markets_grounded.json"))
@@ -495,7 +718,9 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         "temperature": TEMPERATURE, "deadline": deadline,
         "reference_close_date": baseline["last_close"]["SPY"]["date"],
         "grading_rule": "the FIRST bar strictly after reference_close_date",
-        "gate": "grounded: SIGNAL must be an exact substring of a retrieved snippet",
+        "gate": "grounded by INDEX: SIGNAL is the number of a printed segment, so the "
+                "cited text is verbatim by construction; the exact-substring check "
+                "survives underneath as belt-and-suspenders",
         "baseline_method": "20-trading-day momentum sign",
         "assets": per_asset, "baseline": baseline["baseline"],
         "outcome": "SEALED — not graded. Grading is +24 h.",
