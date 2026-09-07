@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-07T12:21:39+03:00",
+ "ts": "2026-09-07T14:49:55+03:00",
  "label": "grounded_pair_to_f41a7fd",
  "kind": "market direction, GROUNDED, PREDICTION ONLY — no trade (§VI)",
  "model": "qwen2.5:3b",
@@ -20,7 +20,7 @@
    "deadline": "2026-09-08",
    "sealed_direction": null,
    "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'SPY' — 12 result(s), 12 dropped (host not on the whitelist (12 allowed); no published date — unknown age is not recent age). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "why": "tavily: no usable evidence for 'SPY' — 9 result(s), 9 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
    "n_snippets": 0,
    "candidates": []
   },
@@ -33,7 +33,7 @@
    "deadline": "2026-09-08",
    "sealed_direction": null,
    "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'GLD' — 8 result(s), 8 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "why": "tavily: no usable evidence for 'GLD' — 8 result(s), 8 dropped (host not on the whitelist (12 allowed); published 2026-09-03T07:12:34+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
    "n_snippets": 0,
    "candidates": []
   },
@@ -46,7 +46,7 @@
    "deadline": "2026-09-08",
    "sealed_direction": null,
    "outcome": "REFUSED_NO_EVIDENCE",
-   "why": "tavily: no usable evidence for 'UUP' — 12 result(s), 12 dropped (host not on the whitelist (12 allowed)). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
+   "why": "tavily: no usable evidence for 'UUP' — 10 result(s), 10 dropped (host not on the whitelist (12 allowed); published 2026-09-02T19:29:11+00:00, older than 48h; published 2026-09-03T02:54:46+00:00, older than 48h). REFUSED: an asset with no fact gets no bet, and there is no fallback.",
    "n_snippets": 0,
    "candidates": []
   }
