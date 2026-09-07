@@ -41,6 +41,22 @@ LEDGER = REPO / "memory" / "first_bet"
 DIRECTIONS = ("UP", "DOWN")
 BUCKETS = ("MACRO", "GEOPOL", "FLOW", "SECTOR")
 
+
+class DryRunUnusable(RuntimeError):
+    """A --dry-run was asked for and cannot be honoured. RAISED, NEVER DEGRADED.
+
+    THIS EXISTS BECAUSE THE FALLBACK FIRED ON ME. The runner used to read
+    `if "completions" in dry: ... else: generate_completions(...)`, so a dry-run file
+    that was missing, malformed, or had been clobbered SILENTLY BECAME A LIVE MODEL
+    RUN. I hit it by naming a fixture r52_dry.json and its output R52_DRY.json - the
+    same file on a case-insensitive filesystem - so the sealed bet overwrote its own
+    input, and the next "dry" run called qwen2.5:3b for real.
+
+    "--dry-run" is a promise that no model is touched. A promise with a silent fallback
+    is not a promise, and this module already says exactly that about the news path:
+    REFUSE LOUD, NEVER FALL BACK.
+    """
+
 PROMPT = """You are forecasting the next-session direction of one exchange-traded fund.
 This is a PREDICTION ONLY. No trade will be placed on it.
 
@@ -266,6 +282,28 @@ US_MARKET_HOLIDAYS_2026 = frozenset({
     "2026-11-26",  # Thanksgiving
     "2026-12-25",  # Christmas
 })
+
+
+def same_file(a, b) -> bool:
+    """Do two paths name one file? CASE-INSENSITIVELY, and via the real path.
+
+    os.path.samefile is the correct answer but it raises when the target does not exist
+    yet, which is the normal case for --out. So: samefile when both exist, and a
+    normalised-case comparison of the resolved paths otherwise.
+
+    THIS IS NOT PARANOIA, IT IS A MEASURED FAILURE. 'r52_dry.json' and 'R52_DRY.json'
+    are one file on Windows. The seal overwrote the fixture it had just read.
+    """
+    import os
+
+    pa, pb = Path(a), Path(b)
+    try:
+        if pa.exists() and pb.exists():
+            return os.path.samefile(pa, pb)
+    except OSError:
+        pass
+    return (os.path.normcase(str(pa.resolve()))
+            == os.path.normcase(str(pb.resolve())))
 
 
 def next_session(after: date) -> date:
@@ -1155,6 +1193,18 @@ def sha_of(sym: str, direction: str, deadline: str) -> str:
 def _grounded_run(a, baseline, deadline: str, dry) -> int:
     """R43. Evidence first; an asset with no fact gets NO BET and there is no fallback."""
     from core.market_news import NewsUnavailable, fetch_news
+
+    # CHECKED ONCE, UP FRONT, BEFORE ANY ASSET IS TOUCHED. Checking it per-asset was
+    # too late to be a guard: every asset can refuse on evidence first, and the run
+    # then seals an empty bet with a 0 exit code and never reaches the check at all.
+    # Found by the test for this very fix.
+    if dry is not None and "completions" not in dry:
+        raise DryRunUnusable(
+            f"--dry-run file has no 'completions' key (top-level keys: "
+            f"{sorted(dry)[:8]}). REFUSED rather than generating: --dry-run promises "
+            f"no model is touched, and falling through to the model here is how a "
+            f"clobbered fixture became a live qwen2.5:3b run.")
+
     per_asset = {}
     for sym in ASSETS:
         lc = baseline["last_close"][sym]
@@ -1198,7 +1248,10 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             print(f"\n{sym}  REFUSED_NO_EVIDENCE — {len(snippets)} snippet(s), "
                   f"0 usable segments")
             continue
-        if dry is not None and "completions" in dry:
+        if dry is not None:
+            # NO FALLBACK. The `else` that used to sit here turned a clobbered fixture
+            # into a live model call without a word; the key itself was verified once
+            # at the top of this function.
             comps = dry["completions"].get(sym, [])
         else:
             comps = generate_completions(
@@ -1374,6 +1427,13 @@ def main() -> int:
     if not a.dry_run and not a.live:
         print("REFUSED: pass --dry-run <json> or --live. Nothing ran.")
         return 3
+
+    if a.dry_run and a.out and same_file(a.dry_run, a.out):
+        print(f"REFUSED: --dry-run {a.dry_run!r} and --out {a.out!r} are THE SAME FILE. "
+              f"Sealing would destroy the fixture it just read, and the next run of it "
+              f"would find no 'completions' and be refused. Give the output a "
+              f"distinctly different name.")
+        return 5
 
     import core.market_daily as md
     baseline = json.loads(
