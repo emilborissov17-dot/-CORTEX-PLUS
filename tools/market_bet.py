@@ -326,10 +326,18 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets) -> list:
                                 f"retrieved snippet ({len(snippets or [])} available). "
                                 f"A SIGNAL must be quoted from a document that exists."))
             continue
+        # `or sn.get(...)` was wrong: an UNDATED snippet has published_utc == "",
+        # which is falsy, so the fallback fired on a dataclass and crashed. Found by
+        # the dry run, on the one asset staged with undated evidence.
+        def _f(obj, name):
+            return getattr(obj, name) if hasattr(obj, name) else obj.get(name)
+
         rec["evidence"] = {
-            "url": getattr(sn, "url", None) or sn.get("url"),
-            "published_utc": getattr(sn, "published_utc", None) or sn.get("published_utc"),
-            "host": getattr(sn, "host", None) or sn.get("host"),
+            "url": _f(sn, "url"),
+            "published_utc": _f(sn, "published_utc") or None,
+            "host": _f(sn, "host"),
+            "source_class": _f(sn, "source_class") if hasattr(sn, "source_class") else None,
+            "dated": bool(_f(sn, "published_utc")),
         }
     return records
 

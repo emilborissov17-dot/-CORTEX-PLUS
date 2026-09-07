@@ -211,3 +211,25 @@ def test_matching_is_substring_only_and_not_fuzzy():
     code = ast.unparse(ast.parse(inspect.getsource(mb.signal_grounded))).lower()
     for forbidden in ("difflib", "ratio", "fuzz", "levenshtein", "stem", "token_set"):
         assert forbidden not in code
+
+
+# ── the undated-evidence crash the R48 dry run found ────────────────────────
+def test_an_undated_snippet_can_carry_the_evidence_without_crashing():
+    """`getattr(sn, 'published_utc') or sn.get(...)` looked harmless and was not: an
+    undated snippet has published_utc == "", which is FALSY, so the fallback fired on a
+    dataclass that has no .get and the whole run died. Only the asset staged with
+    undated evidence reached it."""
+    undated = Sn(published_utc="", dated=False, host="fool.com",
+                 source_class="adversarial", source_kind="advisory with positions")
+    r = grounded_gate([parse_completion(_c(signal="CPI rose 0.3% in August"))],
+                      "SPY", DEADLINE, [undated])[0]
+    assert r["verdict"] == "ADMITTED"
+    assert r["evidence"]["published_utc"] is None
+    assert r["evidence"]["dated"] is False
+    assert r["evidence"]["source_class"] == "adversarial"
+
+
+def test_a_dated_snippet_reports_dated_true():
+    r = _g(_c(signal="CPI rose 0.3% in August"))[0]
+    assert r["evidence"]["dated"] is True
+    assert r["evidence"]["published_utc"] == "2026-09-05T12:30:00+00:00"
