@@ -22,7 +22,7 @@ sys.path.insert(0, str(REPO))
 from tools.market_bet import (dates_in, disagreement, grounded_gate,  # noqa: E402
                               normalise, parse_completion, parse_signal_indices,
                               render_evidence, segment_snippets, segment_text,
-                              signal_dated_after, signal_grounded)
+                              signal_dated_after, signal_grounded, signal_polarity)
 
 DEADLINE = "2026-09-08"
 FACT = "CPI rose 0.3% in August, the Bureau of Labor Statistics said on Friday"
@@ -455,3 +455,102 @@ def test_a_dated_snippet_reports_dated_true():
     r = _g(_c(signal=FACT_SEG))[0]
     assert r["evidence"]["dated"] is True
     assert r["evidence"]["published_utc"] == "2026-09-05T12:30:00+00:00"
+
+
+# ── R49 PIECE 4: coherence is RECORDED, never enforced ─────────────────────
+def test_a_polarity_mismatch_is_flagged_and_still_admitted():
+    """THE R48 BET, EXACTLY. It sealed UP while its SIGNAL said a downturn is only a
+    matter of time. A gate here would teach the model to write a rationale that matches
+    the direction it already picked — rationalisation — so it is flagged and admitted.
+    The market grades the direction."""
+    bearish = "But the next stock market downturn is only a matter of time."
+    snippets = [Sn(snippet=bearish, title="If a crash is coming")]
+    idx = [t["index"] for t in segment_snippets(snippets) if t["text"] == bearish][0]
+    r = grounded_gate([parse_completion(_c("UP", signal=idx))], "SPY", DEADLINE,
+                      snippets)[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["coherence"]["flag"] == "DIRECTION_POLARITY_MISMATCH"
+    assert r["coherence"]["signal_polarity"] == "NEGATIVE"
+    assert r["coherence"]["direction"] == "UP"
+    assert r["coherence"]["rationale"]
+
+
+def test_a_coherent_bet_carries_the_triple_with_no_flag():
+    snippets = [Sn(snippet="The S&P 500 rose and gains climbed to a record high.",
+                   title="Stocks rally hard today")]
+    r = grounded_gate([parse_completion(_c("UP", signal=2))], "SPY", DEADLINE,
+                      snippets)[0]
+    assert r["verdict"] == "ADMITTED", r.get("refusal")
+    assert r["coherence"]["signal_polarity"] == "POSITIVE"
+    assert r["coherence"]["flag"] is None
+
+
+def test_a_neutral_signal_is_never_flagged():
+    """NEUTRAL is a real answer and the common one. Flagging it would make the flag
+    mean 'the lexicon found nothing', which is not a calibration signal.
+
+    The fixture title is NOT the neutral case — "US inflation ticks up" scores POSITIVE
+    on "up", correctly, and my first version of this test asserted otherwise."""
+    flat = [Sn(snippet="Nike leaves the S&P 100 on Friday and Dell takes its place.",
+               title="Index membership changes at the quarterly rebalance")]
+    for direction in ("UP", "DOWN"):
+        r = grounded_gate([parse_completion(_c(direction, signal=2))], "SPY",
+                          DEADLINE, flat)[0]
+        assert r["verdict"] == "ADMITTED", r.get("refusal")
+        assert r["coherence"]["signal_polarity"] == "NEUTRAL"
+        assert r["coherence"]["flag"] is None
+
+
+def test_a_balanced_span_is_neutral_rather_than_picking_a_side():
+    p = signal_polarity("the index rose then fell")
+    assert p["pos"] == 1 and p["neg"] == 1 and p["polarity"] == "NEUTRAL"
+
+
+def test_negation_flips_a_term():
+    assert signal_polarity("the index rose")["polarity"] == "POSITIVE"
+    assert signal_polarity("the index did not rise")["polarity"] == "NEGATIVE"
+    assert signal_polarity("no gains were recorded")["polarity"] == "NEGATIVE"
+    hit = [h for h in signal_polarity("did not rise")["terms"] if h["term"] == "rise"]
+    assert hit and hit[0]["negated"] is True and hit[0]["effect"] == "NEGATIVE"
+
+
+def test_the_polarity_is_scored_on_the_selected_span_not_on_what_the_model_wrote():
+    """The span came out of the segment table. A model cannot move its own polarity by
+    choosing words, because it does not choose the words."""
+    snippets = [Sn(snippet="The index fell sharply and losses deepened.",
+                   title="Selloff deepens on the day")]
+    comp = ("DIRECTION: UP\nDEADLINE: " + DEADLINE + "\nRATIONALE: DRIVER MACRO | "
+            "SIGNAL 2 | LOGIC everything is wonderful and rallies and gains are up")
+    r = grounded_gate([parse_completion(comp)], "SPY", DEADLINE, snippets)[0]
+    assert r["coherence"]["signal_polarity"] == "NEGATIVE"
+    assert r["coherence"]["flag"] == "DIRECTION_POLARITY_MISMATCH"
+
+
+def test_coherence_cannot_change_a_verdict():
+    """Structural, not by inspection: nothing in grounded_gate assigns a verdict after
+    coherence() is called."""
+    import ast
+    import inspect
+
+    import tools.market_bet as mb
+    src = inspect.getsource(mb.grounded_gate)
+    body = src.split("coherence(", 1)[1]
+    assert "verdict" not in body, "a verdict is set after coherence is computed"
+    tree = ast.parse(inspect.getsource(mb.coherence))
+    code = ast.unparse(tree).lower()
+    for forbidden in ("refused", "verdict", "missing", "refusal"):
+        assert forbidden not in code, forbidden
+
+
+def test_the_ledger_is_append_only_and_holds_the_triple(tmp_path):
+    from tools.market_bet import append_polarity_ledger
+
+    p = tmp_path / "POLARITY_LEDGER.jsonl"
+    append_polarity_ledger([{"asset": "SPY", "direction": "UP",
+                             "signal_polarity": "NEGATIVE",
+                             "flag": "DIRECTION_POLARITY_MISMATCH"}], p)
+    append_polarity_ledger([{"asset": "GLD", "direction": "DOWN",
+                             "signal_polarity": "NEGATIVE", "flag": None}], p)
+    rows = [json.loads(ln) for ln in p.read_text(encoding="utf-8").splitlines()]
+    assert [r["asset"] for r in rows] == ["SPY", "GLD"]
+    assert rows[0]["flag"] == "DIRECTION_POLARITY_MISMATCH"

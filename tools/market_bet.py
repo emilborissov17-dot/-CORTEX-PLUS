@@ -525,6 +525,106 @@ def signal_dated_after(signal, deadline: str) -> bool:
     return False
 
 
+# ── R49 PIECE 4: COHERENCE IS RECORDED, NOT ENFORCED ────────────────────────
+# The R48 bet sealed UP while its SIGNAL said a downturn is only a matter of time and
+# its LOGIC said the index has usually fallen into correction. Nothing checked that the
+# reason supported the direction, and the obvious fix is to add that check.
+#
+# THE OBVIOUS FIX IS THE WRONG ONE. A gate on "direction must match the rationale"
+# does not teach the model to reason better; it teaches the model to WRITE A RATIONALE
+# THAT MATCHES THE DIRECTION IT ALREADY PICKED. That is rationalisation, and it would
+# poison the one artefact this whole exercise exists to produce - an honest record of
+# why a bet was placed, readable later against what actually happened.
+#
+# So the triple {direction, signal_polarity, rationale} is computed, recorded on the
+# candidate, sealed with the bet and appended to a ledger. A mismatch is FLAGGED and
+# STILL ADMITTED. The market grades the direction; this is a calibration signal for
+# whoever reads fifty of these later, not a filter.
+#
+# The lexicon is small and blunt on purpose, and it is scored on the SELECTED span -
+# text this module put there, not text the model wrote - so it cannot be gamed by
+# word choice. NEUTRAL is a real answer and the common one.
+_POS_TERMS = frozenset("""
+rose rise rises rising rose gain gains gained gaining advance advances advanced
+climb climbs climbed jump jumps jumped surge surges surged rally rallies rallied
+rebound rebounds rebounded higher up upside record high highs strong strength
+beat beats outperform outperformed boom expansion growth grew recovery optimism
+""".split())
+_NEG_TERMS = frozenset("""
+fell fall falls falling drop drops dropped decline declines declined slid slide
+slipped slips slump slumps slumped plunge plunges plunged sink sinks sank tumble
+tumbles tumbled lower down downside correction crash bear selloff sell-off
+weak weakness weaker loss losses lose miss missed underperform recession
+contraction downturn slowdown fear fears risk risks headwinds
+""".split())
+# A three-token window is the standard blunt choice. Longer and "no" reaches across a
+# clause boundary and flips a term it has nothing to do with.
+_NEGATORS = frozenset("not no never none nor without n't cannot".split())
+_NEG_WINDOW = 3
+
+POLARITIES = ("POSITIVE", "NEGATIVE", "NEUTRAL")
+POLARITY_OK = {"UP": "POSITIVE", "DOWN": "NEGATIVE"}
+POLARITY_LEDGER = LEDGER / "POLARITY_LEDGER.jsonl"
+
+
+def signal_polarity(text: str) -> dict:
+    """{polarity, pos, neg, terms}. Blunt lexicon plus negation. Never a gate.
+
+    Declared weak in the same breath as it is used: it cannot tell a hedge from a
+    claim, and a headline like "fears of a slowdown fade" will score NEGATIVE on two
+    terms and one flip. That is exactly why it flags rather than refuses.
+    """
+    toks = re.findall(r"[a-z']+", normalise(text))
+    pos, neg, hits = 0, 0, []
+    for i, t in enumerate(toks):
+        base = "POSITIVE" if t in _POS_TERMS else "NEGATIVE" if t in _NEG_TERMS else None
+        if base is None:
+            continue
+        window = toks[max(0, i - _NEG_WINDOW):i]
+        flipped = any(w in _NEGATORS or w.endswith("n't") for w in window)
+        eff = base if not flipped else ("NEGATIVE" if base == "POSITIVE" else "POSITIVE")
+        hits.append({"term": t, "base": base, "negated": flipped, "effect": eff})
+        if eff == "POSITIVE":
+            pos += 1
+        else:
+            neg += 1
+    polarity = "NEUTRAL" if pos == neg else ("POSITIVE" if pos > neg else "NEGATIVE")
+    return {"polarity": polarity, "pos": pos, "neg": neg, "terms": hits}
+
+
+def coherence(direction: str, signal_text: str, rationale) -> dict:
+    """The triple, plus a flag. ADMISSION IS NOT AFFECTED — the caller records this and
+    moves on."""
+    pol = signal_polarity(signal_text)
+    expected = POLARITY_OK.get((direction or "").upper())
+    mismatch = (pol["polarity"] != "NEUTRAL" and expected is not None
+                and pol["polarity"] != expected)
+    return {
+        "direction": direction,
+        "signal_polarity": pol["polarity"],
+        "rationale": rationale,
+        "polarity_terms": pol["terms"],
+        "polarity_counts": {"positive": pol["pos"], "negative": pol["neg"]},
+        "flag": "DIRECTION_POLARITY_MISMATCH" if mismatch else None,
+        "_not_a_gate": ("Recorded, never enforced. A gate here would teach the model "
+                        "to write a rationale that matches the direction it already "
+                        "picked, which is rationalisation, and it would poison the "
+                        "record this exists to keep honest. The market grades the "
+                        "direction."),
+    }
+
+
+def append_polarity_ledger(rows, path: Path | None = None) -> str:
+    """Append-only. One line per admitted candidate, so fifty bets from now somebody
+    can ask whether mismatched bets were actually worse."""
+    p = path or POLARITY_LEDGER
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a", encoding="utf-8") as fh:
+        for row in rows:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+    return str(p)
+
+
 def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
                   segments=None) -> list:
     """gate_all, plus grounding BY INDEX. Order matters: cheap structural refusals
@@ -595,6 +695,12 @@ def grounded_gate(parsed_list, sym: str, deadline: str, snippets,
             # publisher's. Recorded so grading can tell the two cases apart.
             "spans_multiple_sources": len({t["source"] for t in chosen}) > 1,
         }
+
+        # PIECE 4. Computed AFTER the verdict is settled and never able to change it.
+        # Written here rather than in the caller so every admitted candidate carries
+        # it, including the seven that will not be sealed.
+        rec["coherence"] = coherence(rec["parsed"]["direction"], text,
+                                     rec["parsed"].get("rationale"))
     return records
 
 
@@ -737,6 +843,9 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
             "sealed_direction": win,
             "sealed_rationale": recs[idx]["parsed"]["rationale"] if idx is not None else None,
             "evidence": recs[idx].get("evidence") if idx is not None else None,
+            # PIECE 4. The triple travels with the sealed bet, flag and all. A flagged
+            # bet is a SEALED bet - the flag is for whoever reads fifty of these.
+            "coherence": recs[idx].get("coherence") if idx is not None else None,
             "chosen_reason": reason, "agreement": agree,
             "sha256": sha_of(sym, win, deadline) if win else None,
             "baseline_momentum_sign": baseline["baseline"][sym]["sign"],
@@ -751,10 +860,33 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         for i, r in enumerate(recs):
             mark = "SEALED " if i == idx else "       "
             pick = r["parsed"].get("signal_indices")
+            coh = r.get("coherence") or {}
+            note = (f"  seg {pick}  polarity {coh.get('signal_polarity')}"
+                    + ("  [FLAG direction<->polarity mismatch — ADMITTED anyway]"
+                       if coh.get("flag") else ""))
             print(f"  {mark}{i} {r['verdict']:9} {r['parsed']['direction'] or '-':5}"
-                  + (f"  seg {pick}" if r["verdict"] == "ADMITTED"
+                  + (note if r["verdict"] == "ADMITTED"
                      else f"  — {r['refusal'][:80]}"))
         print(f"  -> {reason}   [{agree}]")
+
+        # The ledger takes every ADMITTED candidate, not only the sealed one: the
+        # question it exists to answer later is whether mismatched REASONING predicts
+        # anything, and eight rows a night answers it faster than one.
+        rows = [{"ts": datetime.now().astimezone().isoformat(timespec="seconds"),
+                 "asset": sym, "deadline": deadline, "candidate": i,
+                 "sealed": (i == idx),
+                 "segment_indices": r["parsed"].get("signal_indices"),
+                 "signal_text": r["parsed"].get("signal_text"),
+                 **{k: v for k, v in (r.get("coherence") or {}).items()
+                    if k != "_not_a_gate"}}
+                for i, r in enumerate(recs) if r["verdict"] == "ADMITTED"]
+        if rows and not a.dry_run:
+            print(f"  [POLARITY] {len(rows)} row(s) -> "
+                  f"{append_polarity_ledger(rows)}")
+        elif rows:
+            n_flag = sum(1 for row in rows if row.get("flag"))
+            print(f"  [POLARITY] {len(rows)} row(s), {n_flag} flagged "
+                  f"(dry run — ledger not written)")
 
     out = Path(a.out or (LEDGER / "BET_2026-09-07_markets_grounded.json"))
     if out.exists() and not a.allow_overwrite:
