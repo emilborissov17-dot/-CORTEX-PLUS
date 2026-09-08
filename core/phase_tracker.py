@@ -252,6 +252,27 @@ def note_failure(step: str, exc) -> None:
               f"{type(e).__name__}: {e}")
 
 
+def note_refusal(step: str, gate: str, why: str) -> None:
+    """Tell the open phase report that a gate REFUSED or CAPPED this step.
+
+    THE SEAM THIS CLOSES (8 Sep 2026). note_failure() carries the steps that
+    RAISED; nothing carried the steps that were never permitted to run. Without
+    it, produces_check sees only "the promised file is old" and the phase is
+    graded PARTIAL for an artifact the notary forbade it to write - which is
+    what F_SELF reported at 01:35 on 2026-09-08 for both of its steps.
+
+    FAIL-OPEN, exactly like note_failure and for the same reason: this is called
+    from the runner's gate, and a recorder that can raise would turn a clean
+    refusal into a crash. Losing the note costs a PARTIAL, never a night.
+    """
+    try:
+        if _open_report is not None:
+            _open_report.step_refused(step, gate, why)
+    except Exception as e:  # noqa: BLE001
+        print(f"[PHASE] could not record the refusal of {step} by {gate}: "
+              f"{type(e).__name__}: {e}")
+
+
 def close_last() -> None:
     """At the end of the cycle, close whatever is still open."""
     global _open_phase, _open_report

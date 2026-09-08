@@ -1993,6 +1993,36 @@ def _refusal_event(step: str, gate: str, why: str) -> None:
               f"({gate}): {type(e).__name__}: {e}")
 
 
+def _refused(step: str, gate: str, why: str) -> bool:
+    """ONE PLACE WHERE A REFUSAL BECOMES A FACT (8 Sep 2026).
+
+    A refusal has two readers and used to reach only one. night_events.jsonl got
+    it; the phase report did not - so on 2026-09-08 the notary refused
+    self_modifier and capped execute_patches, and F_SELF was then graded PARTIAL
+    for two artifacts the gate had forbidden it to write. PARTIAL means a step
+    ran and silently produced nothing; that is a different night, and the two
+    must not print the same square.
+
+    Returns False so a caller can `return _refused(...)` - the refusal and the
+    decision are one statement, and a future branch cannot record the event and
+    then forget to stop, or stop and forget to record.
+
+    NOT called for the human_channel_check_skipped branch, and that is not an
+    oversight: that branch logs a check it could not perform and then CARRIES ON
+    to the notary. Only a return-False site is a refusal.
+    """
+    _refusal_event(step, gate, why)
+    try:
+        from core import phase_tracker
+        phase_tracker.note_refusal(step, gate, why)
+    except Exception as e:                                       # noqa: BLE001
+        # Best-effort, like the event write above: a phase report that cannot be
+        # told costs one wrong PARTIAL, and must never cost the refusal itself.
+        print(f"[FAST_CYCLE] {step} -> refusal not recorded in the phase report "
+              f"({gate}): {type(e).__name__}: {e}")
+    return False
+
+
 def _witness_or_refuse(step: str, prev_step: str) -> bool:
     """Има ли символен свидетел за тази необратима стъпка.
 
@@ -2017,8 +2047,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
                   f"({_why_human}). Снощната забрана може да не е стигнала дотук.")
             # WAS SILENT UNTIL 5 Sep 2026: this refusal printed and returned, and
             # wrote no event. The cycle log is not read; night_events.jsonl is.
-            _refusal_event(step, "human_channel", _why_human)
-            return False
+            return _refused(step, "human_channel", _why_human)
     except Exception as e:
         # WAS `except Exception: pass` UNTIL 5 Sep 2026 — the worst branch in the
         # function. An import error in approve_reader, or any exception inside
@@ -2043,8 +2072,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
             _gate_event(step, "ПРОПУСНАТА", "notary", why)
             return True
         print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
-        _refusal_event(step, "notary", why)
-        return False
+        return _refused(step, "notary", why)
     except Exception as e:
         print(f"[FAST_CYCLE] {step} -> нотариусът е недостъпен: {type(e).__name__}: {e}")
 
@@ -2058,9 +2086,9 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
         print(f"[FAST_CYCLE] {step} -> witness check failed: {type(e).__name__}: {e}")
     print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: няма символен свидетел (MeTTa не е на "
           f"линия). Необратимо действие без проверка не се прави.")
-    _refusal_event(step, "metta_witness",
-                   "няма символен свидетел (MeTTa); необратимите стъпки спират, останалите вървят")
-    return False
+    return _refused(step, "metta_witness",
+                    "няма символен свидетел (MeTTa); необратимите стъпки спират, "
+                    "останалите вървят")
 
 
 def _notify_patches_and_initiatives() -> None:

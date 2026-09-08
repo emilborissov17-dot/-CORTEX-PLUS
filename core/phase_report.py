@@ -31,6 +31,30 @@ right now and is from a cycle that died four hours ago. A promised file counts
 only if its mtime is at or after the moment the phase started. A stale file is
 reported present=true, written_during_phase=false, and the phase is PARTIAL.
 
+REFUSED IS NOT PARTIAL (8 Sep 2026)
+------------------------------------
+The asymmetric rule above has exactly one exception. On 2026-09-08 at 01:35 the
+notary refused self_modifier and capped execute_patches, so F_SELF ran no step
+that was allowed to touch the disk - and the report graded it PARTIAL for
+artifacts the gate had forbidden it to write. That is a false accusation:
+
+    PARTIAL means a step RAN and silently failed to produce.
+    REFUSED means the step was never allowed to run at all.
+
+Conflating them turns a working containment gate into a nightly red square, and
+a red square that is always red stops being read. So a promised artifact whose
+DECLARED PRODUCER (core/cycle_map.produces) was refused or capped by a gate in
+this phase is exempt from the mtime rule and reported refused_by_gate={...}.
+
+The forbidden repair is the obvious one: a refused step must NOT write a
+placeholder artifact to satisfy the check. Refusing correctly is a SUCCESS
+state, and the report is what has to learn that - not the gate.
+
+The exemption is narrow on purpose. It needs a refusal recorded for THIS phase
+(PhaseReport.step_refused, wired from the runner's gate), and it covers only the
+paths cycle_map says that particular step produces. A step that ran and wrote
+nothing is still PARTIAL; an unrelated stale artifact is still PARTIAL.
+
 LLM ATTRIBUTION
 ----------------
 llm_calls is derived from memory/llm_provenance.jsonl by timestamp window, not
@@ -46,13 +70,21 @@ import json
 import pathlib
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 PHASES_FILE = REPO / "config" / "cycle_phases.json"
 PROVENANCE = REPO / "memory" / "llm_provenance.jsonl"
 
 DONE, PARTIAL, FAILED = "DONE", "PARTIAL", "FAILED"
+
+# Not a verdict - a per-artifact state, so a reader of produces_check can
+# tell "the gate said no" apart from "nobody wrote it".
+REFUSED = "REFUSED"
+
+# How much of a gate's reason the verdict sentence carries. The notary's
+# refusals are paragraphs; the reason line has to stay readable.
+GATE_REASON_CHARS = 160
 
 # A file written in the first instants of a phase can carry an mtime a fraction
 # of a second BEFORE the phase's own start time: st_mtime and datetime.now() do
@@ -172,6 +204,9 @@ class PhaseReport:
         self.ended: datetime | None = None
         self.steps_run: list[str] = []
         self.steps_failed: list[dict] = []
+        # Steps a gate REFUSED or CAPPED in this phase. Not failures: a refusal
+        # is the containment working, and it must not read as a silent miss.
+        self.steps_refused: list[dict] = []
 
     # -- lifecycle ---------------------------------------------------------
 
@@ -203,6 +238,59 @@ class PhaseReport:
                      else str(exc),
         })
 
+    def step_refused(self, name: str, gate: str, reason: str) -> None:
+        """A gate said no to this step. NOT a failure and NOT a success of the
+        step - a success of the CONTAINMENT, which is a different thing and has
+        to be recorded as one.
+
+        Called from core.phase_tracker.note_refusal(), which the runner's
+        _witness_or_refuse() calls at each of its three refusal returns. The
+        step is left in steps_run (beat() already put it there: it was reached,
+        it just was not permitted to act) and is deliberately NOT added to
+        steps_failed, because nothing raised.
+
+        Recording the same step twice is possible - the human-channel gate and
+        the notary can both refuse in one pass - and harmless: the exemption is
+        a set of paths, so the first refusal already covers them. The second is
+        kept anyway, because a step refused by two gates is worth reading.
+        """
+        self.steps_refused.append({
+            "step": name,
+            "gate": str(gate),
+            "reason": str(reason),
+        })
+        if name not in self.steps_run:
+            self.steps_run.append(name)
+
+    def refused_artifacts(self) -> dict:
+        """{promised path -> the refusal that explains it}.
+
+        THE NARROWNESS IS THE POINT. A refusal exempts only what cycle_map says
+        THAT step produces, intersected with what THIS phase promised. It cannot
+        launder a stale artifact belonging to some other step of the same phase:
+        on 2026-09-08 F_SELF refused both its steps, so both its promises were
+        covered - but E_PROPOSE refused nothing and stays graded in full.
+
+        Fail-open on the import, and that is a real choice: if cycle_map cannot
+        be read, NOTHING is exempt and the phase grades PARTIAL as it did
+        before. A broken lookup must not be able to hand out exemptions.
+        """
+        if not self.steps_refused:
+            return {}
+        try:
+            from core.cycle_map import produces as _declared
+        except Exception as exc:  # noqa: BLE001
+            print(f"[PHASE] {self.phase}: cycle_map unreadable, no refusal "
+                  f"exemptions granted ({type(exc).__name__}: {exc})")
+            return {}
+        promised = set(self.spec["produces"])
+        out: dict = {}
+        for refusal in self.steps_refused:
+            for rel in (_declared(refusal["step"]) or []):
+                if rel in promised:
+                    out.setdefault(rel, refusal)
+        return out
+
     # -- the part that can disagree with the steps -------------------------
 
     def produces_check(self) -> list[dict]:
@@ -211,6 +299,7 @@ class PhaseReport:
         in the artifact and are very different to diagnose, so the reason string
         names the phase and both timestamps rather than guessing which it was."""
         assert self.started is not None, "produces_check before the phase started"
+        refused = self.refused_artifacts()
         rows = []
         for rel in self.spec["produces"]:
             path = self.base / rel
@@ -233,6 +322,11 @@ class PhaseReport:
                 # Every consumer must branch on `written_during_phase` first.
                 if not written:
                     age_seconds = round(gap, 1)
+            # THE EXEMPTION (8 Sep 2026). Non-null only when a gate refused the
+            # step cycle_map names as this path's producer. A written artifact
+            # is never marked refused: if the file arrived anyway, the refusal
+            # is not what explains it and the row must not claim otherwise.
+            refused_by = None if written else refused.get(rel)
             rows.append({
                 "path": rel,
                 "present": present,
@@ -241,14 +335,33 @@ class PhaseReport:
                 # null unless the file predates this phase by more than the
                 # tolerance; never negative, never zero-ish, never a guess.
                 "age_seconds": age_seconds,
+                "refused_by_gate": refused_by,
+                "state": ("WRITTEN" if written else
+                          REFUSED if refused_by else
+                          "STALE" if present else "ABSENT"),
             })
         return rows
 
     def verdict(self, checks: list[dict]) -> tuple[str, str]:
         promised = len(checks)
         fresh = [c for c in checks if c["written_during_phase"]]
-        stale = [c for c in checks if c["present"] and not c["written_during_phase"]]
-        absent = [c for c in checks if not c["present"]]
+        # REFUSED COMES OUT FIRST (8 Sep 2026), before stale and absent are cut,
+        # so an artifact the gate forbade cannot land in either bucket. Both
+        # filters below therefore mean what their names say: `stale` is a file a
+        # step was ALLOWED to write and left old, `absent` one it was ALLOWED to
+        # write and never made.
+        refused = [c for c in checks if c.get("refused_by_gate")]
+        stale = [c for c in checks if c["present"] and not c["written_during_phase"]
+                 and not c.get("refused_by_gate")]
+        absent = [c for c in checks if not c["present"]
+                  and not c.get("refused_by_gate")]
+
+        def _refusal_clause() -> str:
+            return "refused by the gate, not owed: " + "; ".join(
+                f"{c['path']} ({c['refused_by_gate']['step']} refused by "
+                f"{c['refused_by_gate']['gate']}: "
+                f"{c['refused_by_gate']['reason'][:GATE_REASON_CHARS]})"
+                for c in refused)
 
         # FAILED is reserved for a phase that BROKE: something raised and nothing
         # was produced. A phase where nothing raised is never FAILED, however
@@ -264,9 +377,21 @@ class PhaseReport:
             )
 
         if not self.steps_failed and not stale and not absent:
+            # DONE WITH A REFUSAL IS STILL DONE. The phase owed nothing it did
+            # not deliver: what it did not deliver, it was forbidden to. The
+            # sentence has to say so out loud, because a bare "all N written"
+            # over a night that wrote nothing would be the same lie in reverse.
+            if refused:
+                return DONE, (
+                    f"{len(fresh)} of {promised} promised artifact(s) written by "
+                    f"this phase; {len(refused)} " + _refusal_clause())
             return DONE, f"all {promised} promised artifact(s) written by this phase"
 
         reasons = []
+        if refused:
+            # Named even when something else went wrong, so a reader never has
+            # to guess whether a missing artifact was forbidden or forgotten.
+            reasons.append(f"{len(refused)} " + _refusal_clause())
         if self.steps_failed:
             reasons.append(
                 f"{len(self.steps_failed)} step(s) failed: "
@@ -310,6 +435,10 @@ class PhaseReport:
             "seconds": round((self.ended - self.started).total_seconds(), 1),
             "steps_run": self.steps_run,
             "steps_failed": self.steps_failed,
+            # SEPARATE FROM steps_failed ON PURPOSE. Merging them would make a
+            # night of correct containment indistinguishable from a night of
+            # crashes in every downstream reader of these files.
+            "steps_refused": self.steps_refused,
             "produces_check": checks,
             "llm_calls": _provenance_between(self.started, self.ended, self.provenance),
             "verdict": verdict,
@@ -344,17 +473,59 @@ class PhaseReport:
 def _selftest() -> int:
     import tempfile
 
+    # Run as a script, this file's directory is sys.path[0] and the repo root is
+    # nowhere on it, so `core.cycle_map` would import-fail and the selftest would
+    # report the refusal exemption INERT in a repo where it is live. Fixing the
+    # path is the honest move; reporting a false INERT is the same class of lie
+    # as reporting a false LIVE.
+    if str(REPO) not in sys.path:
+        sys.path.insert(0, str(REPO))
+
     print("core/phase_report.py --selftest")
     print(f"  config/cycle_phases.json : "
           f"{'LIVE' if PHASES_FILE.exists() else 'INERT (missing)'}")
     print(f"  memory/llm_provenance.jsonl : "
           f"{'LIVE' if PROVENANCE.exists() else 'INERT — llm_calls will be empty'}")
 
+    # The refusal exemption needs BOTH halves in this repo: the table that says
+    # which step produces what, and the runner gate that reports a refusal. If
+    # either is missing the exemption is inert and phases go back to reporting
+    # PARTIAL for artifacts a gate forbade — say so, rather than let a docstring
+    # keep claiming a feature the repo cannot perform.
+    try:
+        from core.cycle_map import produces as _p
+        print(f"  core/cycle_map.produces : LIVE "
+              f"(self_modifier -> {_p('self_modifier')})")
+    except Exception as exc:  # noqa: BLE001
+        print(f"  core/cycle_map.produces : INERT ({type(exc).__name__}: {exc}) "
+              f"— NO refusal exemptions can be granted")
+    try:
+        runner = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+        wired = runner.count("return _refused(")
+        print(f"  gate -> phase report : "
+              f"{'LIVE' if wired >= 3 else f'INERT — only {wired}/3 refusal exits wired'}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"  gate -> phase report : UNVERIFIED ({type(exc).__name__}: {exc})")
+
     phases = load_phases()
     print(f"  phases declared: {', '.join(phases)}")
 
     with tempfile.TemporaryDirectory() as tmp:
         base = pathlib.Path(tmp)
+
+        # WHAT F_SELF PROMISES IS READ, NOT RETYPED (8 Sep 2026). This selftest
+        # wrote one hardcoded artifact and had been printing "phase that wrote
+        # it -> PARTIAL (WRONG)" since 2026-08-28, when G_LEARN's misattributed
+        # files were moved and memory/development_journal.json joined F_SELF. The
+        # positive control was failing for a reason that had nothing to do with
+        # what it tests — which is exactly how a selftest stops being run.
+        promised = phases["F_SELF"]["produces"]
+
+        def _write_all():
+            for rel in promised:
+                path = base / rel
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("{}", encoding="utf-8")
 
         # a phase that raises nothing and produces nothing must NOT be DONE
         with PhaseReport("F_SELF", "selftest-cycle", base_dir=base) as rep:
@@ -364,18 +535,30 @@ def _selftest() -> int:
         print(f"  silent-but-empty phase -> {quiet['verdict']} "
               f"({'correct' if quiet['verdict'] != DONE else 'WRONG — reports success'})")
 
-        # the same phase, having actually written its artifact
-        target = base / "memory" / "improvement_proposals.json"
-        target.parent.mkdir(parents=True, exist_ok=True)
+        # the same phase, having actually written its artifacts
         with PhaseReport("F_SELF", "selftest-cycle-2", base_dir=base) as rep2:
             rep2.step_ok("self_modifier")
-            target.write_text("{}", encoding="utf-8")
+            _write_all()
             rep2.step_ok("execute_patches")
         good = json.loads(rep2.path().read_text(encoding="utf-8"))
         print(f"  phase that wrote it    -> {good['verdict']} "
               f"({'correct' if good['verdict'] == DONE else 'WRONG'})")
 
-    ok = quiet["verdict"] == PARTIAL and good["verdict"] == DONE
+        # a phase whose step the gate REFUSED must NOT be graded PARTIAL for
+        # the artifact it was never allowed to write (8 Sep 2026)
+        import os
+        old_t = (_now() - timedelta(hours=6)).timestamp()
+        for rel in promised:
+            os.utime(base / rel, (old_t, old_t))
+        with PhaseReport("F_SELF", "selftest-cycle-3", base_dir=base) as rep3:
+            rep3.step_refused("self_modifier", "notary", "capped at level_1")
+            rep3.step_refused("execute_patches", "notary", "capped at level_1")
+        gated = json.loads(rep3.path().read_text(encoding="utf-8"))
+        print(f"  gate-refused phase     -> {gated['verdict']} "
+              f"({'correct' if gated['verdict'] != PARTIAL else 'WRONG — blames the gate'})")
+
+    ok = (quiet["verdict"] == PARTIAL and good["verdict"] == DONE
+          and gated["verdict"] != PARTIAL)
     print(f"  RESULT: {'OK' if ok else 'BROKEN'}")
     return 0 if ok else 1
 
