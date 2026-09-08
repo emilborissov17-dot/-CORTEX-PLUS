@@ -25,20 +25,19 @@
       "inputs": [
         "memory/improvement_proposals.json",
         "memory/development_journal.json",
-        "memory/auto_levels.json",
-        "memory/self_awareness.json"
+        "memory/auto_levels.json"
       ],
       "_inputs_why": {
         "memory/improvement_proposals.json": "self_modifier.py:174 — the proposals it may act on. This is the substance of the step: without it there is nothing to modify.",
         "memory/development_journal.json": "self_modifier.py:175 — what has already been tried, so the same patch is not proposed twice.",
-        "memory/auto_levels.json": "self_modifier.py:176 and again at 191 — the per-axis levels that decide WHICH axis is worth a patch. Its age is the age of the judgement, which is why it is declared rather than inferred.",
-        "memory/self_awareness.json": "self_modifier.py:177 — the system's own model of itself."
+        "memory/auto_levels.json": "self_modifier.py:176 and again at 191 — the per-axis levels that decide WHICH axis is worth a patch. Its age is the age of the judgement, which is why it is declared rather than inferred."
       },
       "also_reads": [
         "memory/web_intelligence/latest.json"
       ],
       "_also_reads_why": "self_modifier.py:286, inside a conditional branch. Read when present, skipped when not — so it is NOT a required input and its age must not gate the step.",
-      "derived_from": "Read line by line out of agents/core/self_modifier.py on 21 Aug 2026. The static scanner returned [] for this step, which the notary correctly treats as UNKNOWN rather than as 'no inputs'."
+      "derived_from": "Read line by line out of agents/core/self_modifier.py on 21 Aug 2026. The static scanner returned [] for this step, which the notary correctly treats as UNKNOWN rather than as 'no inputs'.",
+      "_removed_2026_09_08": "memory/self_awareness.json was declared here and is no longer read by this step. IT HAS NO WRITER: a grep over every .py in the repo found three readers (self_modifier.py, memory/existence_model.py:33, agents/core/self_observer_backup.py:52) and nothing that produces it; memory/existence_latest.json:17 still carries the scar that records its loss. Last written 2026-03-11, 180.7 days before this edit. The value read from it went into a parameter of _build_context() that was never used (AST-checked: 0 loads). REMOVING IT RAISES THIS STEP'S age DIMENSION FROM MINIMAL(1) TO FULL(3), and that is stated plainly rather than buried: the age dimension had been held down for months by a file with no writer whose contents were discarded. This is NOT a fresh timestamp and NOT a widened threshold — it is the removal of a declaration that was false. The step still inherits the worst stamp among its remaining inputs, and execute_patches remains capped at level_1 by core/notary.MAX_LEVEL, so no patch can be APPLIED by this change. If the self-model should inform this step, the live file is memory/self_profile.json and wiring it in is a separate, deliberate decision."
     },
     "execute_patches": {
       "entry_point": "execute_patches.main() — fast_cycle_runner.py step 19, dispatched through __import__('execute_patches', fromlist=['main']).",

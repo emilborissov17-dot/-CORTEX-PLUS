@@ -2034,6 +2034,46 @@ def _flag_blind_producers(step: str) -> list:
     return blind
 
 
+def _flag_stale_inputs(step: str) -> list:
+    """NAME THE STALE INPUTS FEEDING THIS GATE. Every crossing, PASS OR REFUSE.
+
+    THE DEFECT (8 Sep 2026). core/notary._age_state() reduces the oldest declared
+    input to one number, and that number joins four others in own=min(). A single
+    dead file can therefore hold a gate shut for months while reading, from
+    outside, as ordinary caution. It did: memory/self_awareness.json, 180.7 days
+    old and with no writer anywhere in the repo, WAS the age dimension of step
+    18 — with it the step scored MINIMAL(1), without it FULL(3).
+
+    The refusal sentence does name the oldest file, but only when age ties for
+    the minimum, and only inside a string. A fact that decides whether this
+    system may modify itself has to be countable.
+
+    Written on both paths for the same reason as the blind-producer census: a
+    gate that OPENS while standing on a half-year-old input is the more dangerous
+    case, and it used to print nothing at all.
+
+    Fail-open and loud: a census that cannot run must not cost a gate crossing,
+    and its silence must never be read as a clean one.
+    """
+    try:
+        from core.stale_inputs import stale_inputs_for, describe
+        stale = stale_inputs_for(step)
+    except Exception as e:                                       # noqa: BLE001
+        print(f"[FAST_CYCLE] {step} -> stale-input census FAILED: "
+              f"{type(e).__name__}: {e}")
+        _gate_event(step, "ЦЕНЗУС_НЕУСПЕШЕН", "stale_inputs",
+                    f"the census could not run: {type(e).__name__}: {e} — "
+                    f"this is NOT evidence that no stale input feeds this gate")
+        return []
+    if stale:
+        print(f"[FAST_CYCLE] {step} -> {len(stale)} stale input(s): "
+              + ", ".join(s["artifact"] for s in stale))
+        _gate_event(step, "ОСТАРЕЛИ_ВХОДОВЕ", "stale_inputs",
+                    describe(step, stale),
+                    extra={"stale_inputs": stale, "stale_count": len(stale)})
+    return stale
+
+
 def _gate_level(why: str):
     """The notary's trust level, read out of its own refusal sentence.
 
@@ -2126,6 +2166,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
     # the notary, before anything can return: whether this gate opens or shuts,
     # the steps feeding it that cannot say what they read are named by name.
     _flag_blind_producers(step)
+    _flag_stale_inputs(step)
 
     _why_human = ""
     try:

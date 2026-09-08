@@ -255,18 +255,31 @@ def run():
     proposals_path = BASE_DIR / "memory" / "improvement_proposals.json"
     journal_path   = BASE_DIR / "memory" / "development_journal.json"
     levels_path    = BASE_DIR / "memory" / "auto_levels.json"
-    sa_path        = BASE_DIR / "memory" / "self_awareness.json"
+    # memory/self_awareness.json IS NOT READ HERE ANY MORE (8 сеп 2026).
+    # It had NO WRITER anywhere in this repo — grep over every .py found three
+    # readers and nothing that produces it — and it was last written
+    # 2026-03-11. Worse, what was read from it went into `sa`, which was passed
+    # to _build_context() and never used: AST-checked, 0 loads of the name in
+    # that function's body. A file with no writer, whose contents were
+    # discarded, was a declared notary input of this step, and its 180.7-day age
+    # WAS the whole age dimension:
+    #     with it     age = MINIMAL(1) -> own = 1 -> below IRREVERSIBLE_MIN(2)
+    #     without it  age = FULL(3)
+    # So the gate on step 18 was held shut by a dead file whose content nothing
+    # looked at. Deleting the read is what makes the declaration below it true.
+    #
+    # THE SELF-MODEL INPUT IS NOW GONE, AND THAT IS A REAL LOSS, NOT A TIDY-UP.
+    # If this step should read the system's model of itself, the live file is
+    # memory/self_profile.json (written every cycle by core/homeostasis.py:157,
+    # 0.4 days old). Wiring that in is a deliberate change to what the model
+    # sees and is NOT done here: it would be a behaviour change smuggled into a
+    # provenance fix.
 
     try:
         raw       = json.loads(proposals_path.read_text(encoding="utf-8"))
         proposals = raw.get("proposals", raw) if isinstance(raw, dict) else raw
     except Exception:
         proposals = []
-
-    try:
-        sa = json.loads(sa_path.read_text(encoding="utf-8"))
-    except Exception:
-        sa = {}
 
     try:
         levels = json.loads(levels_path.read_text(encoding="utf-8"))
@@ -318,7 +331,7 @@ def run():
             print(f"  Използвам python_code от proposal -> {target}")
             result = _write_python(target, ready_code, proposal)
         else:
-            context = _build_context(sa, levels, component, problem)
+            context = _build_context(component, problem)
             result  = _generate_solution(problem, solution, root_cause, measurable, component, context, proposal)
 
         score_after = _read_avg_score()
@@ -361,7 +374,16 @@ def run():
         print(f"  → {e['action']} | goal: {e.get('measurable_goal', '')[:50]}")
 
 
-def _build_context(sa, levels, component, problem):
+def _build_context(component, problem):
+    """The context handed to the model.
+
+    `sa` and `levels` WERE parameters here and neither was ever read — AST-
+    checked, 0 loads of either name in this body. `sa` came from
+    memory/self_awareness.json, which nothing in this repo writes; `levels` from
+    memory/auto_levels.json, which IS live and IS still read at line ~205 for
+    the score, just not here. Two parameters that looked like inputs and were
+    not, one of which was also a declared notary input holding the gate shut.
+    """
     web_intel_axes = {}
     try:
         wi_path = BASE_DIR / "memory" / "web_intelligence" / "latest.json"
