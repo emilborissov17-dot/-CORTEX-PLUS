@@ -1,0 +1,69 @@
+{
+  "_what_this_is": "The classes of self-modification that COULD earn a per-class ceiling lift, and the conditions each must clear. SCHEMA ONLY as of 2026-09-08: there is not one signed class in this file, global_cap is LOCKED, and NOTHING reads this to grant anything. core/notary.py does not import it and is not modified. See claude/reports/EARNING_PATH_PROPOSAL_8SEP.md sections 4-5, which this implements as INERT machinery for Emil to inspect before any of it is wired.",
+
+  "_it_grants_nothing": "core/earning.py is a read-only verifier: it returns (decision, reason) and appends nothing to memory/development_journal.json, writes no attestation, and is imported by no gate. Wiring it would be a separate change requiring AMENDMENT_001's cooling-off (ends 19 Oct 2026) to have passed and a human signature on a class.",
+
+  "_fail_closed": "A missing, unparseable or schema-invalid file yields NO LIFT for every class. core/earning.py returns FAIL with the reason, never a default class and never a default cap. A ruleset that cannot be read is never permission.",
+
+  "_why_a_class_and_not_a_patch": "Lifting execute_patches as a whole would return the system to the state of 2026-08-30, when a corrected input declaration silently stamped it level_3 with may_act() = True for ten days. A class is narrow, named, human-approved, and loses its lift automatically the moment its evidence stops clearing the bar.",
+
+  "policy_version": "0.1.0-inert",
+
+  "global_cap": "LOCKED",
+  "_global_cap_why": "LOCKED means no class may be granted anything at all, whatever its own fields say, and core/earning.py refuses while it holds. It is the outermost switch and is not a per-class field, so no edit to a class can reach it. Changing it is not an ordinary edit: test/test_earning_verifier.py pins it, so unlocking requires editing this file AND that test in one diff, where a human sees it.",
+
+  "_max_cap_ceiling": 2,
+  "_max_cap_ceiling_why": "REDUCED(2) — the LOWEST level at which an irreversible step may act, per config/passage_rules.json. A class may never request more: earning the minimum to act is the whole proposal, and FULL(3) is not on offer to any mechanism that grades itself. A class whose max_cap exceeds this is REFUSED, not clamped, because silently clamping an over-reaching request hides the request.",
+
+  "_always_forbidden_paths": [
+    "core/earning.py",
+    "config/earning_classes.json",
+    "config/passage_rules.json",
+    "test/test_earning_verifier.py",
+    "test/test_passage_rules.py"
+  ],
+  "_always_forbidden_why": "Enforced in code by core/earning.ALWAYS_FORBIDDEN regardless of what any class allows, and listed here so a human reads the same list the verifier applies. A patch that edits the verifier, the policy, the rules of passage, or the tests that pin them is FAIL — those are the four ways a mechanism grants itself trust without earning it. The list in code is authoritative; this copy is checked against it by test_the_two_copies_of_always_forbidden_agree.",
+
+  "_class_fields": {
+    "human_signed": "bool. False means the class earns nothing, whatever else it says. A signature covers the CLASS, once, in advance — never a patch.",
+    "signed_by": "who signed it, and when. Informational; human_signed is what is checked.",
+    "max_cap": "int 0..2. The most this class could ever be granted. Must be <= _max_cap_ceiling.",
+    "claims_axis": "the axis this class claims to move. _changed_axes(before, after) must name it, or the patch did not do what the class exists to do.",
+    "metric": "how the claim is RECOMPUTED independently of the patch. {file, op, key, tolerance}. op is one of a tiny deterministic set (len, count_keys, sum_values, value_at) evaluated by core/earning.py — never eval, never a model, and never code supplied by the patch.",
+    "allowed_paths": "repo-relative prefixes a patch of this class may touch. Empty means nothing is allowed.",
+    "forbidden_paths": "extra prefixes this class may not touch, ON TOP of ALWAYS_FORBIDDEN, never instead of it.",
+    "required_tests": "test targets that must exit 0 before this class can pass.",
+    "auto_revoke_on_failure": "bool. On FAIL the lift is recorded lost for this class without a human having to notice.",
+    "network_allowed": "must be false. A class that needs the network cannot be verified deterministically offline.",
+    "new_dependencies_allowed": "must be false. A new dependency is a change to what the system is, not a patch within a class."
+  },
+
+  "classes": {
+    "example_axis_key_fix": {
+      "_this_is_a_fixture": "UNSIGNED AND DELIBERATELY SO. It exists to give test/test_earning_verifier.py something real to grade and to show a human what a class would look like. human_signed is false, so core/earning.py refuses it even with global_cap unlocked and every other condition met. Do not sign this: a real class is chosen by a human from real patches in memory/development_journal.json, not invented to fit the mechanism.",
+      "description": "Add a missing observation key to a scorer's map so an axis stops silently defaulting.",
+      "human_signed": false,
+      "signed_by": null,
+      "max_cap": 2,
+      "claims_axis": "WATER_REVIEW",
+      "metric": {
+        "file": "memory/goal_score_history.json",
+        "op": "len",
+        "key": null,
+        "tolerance": 0
+      },
+      "allowed_paths": [
+        "data_providers/"
+      ],
+      "forbidden_paths": [
+        "data_providers/__init__.py"
+      ],
+      "required_tests": [
+        "test/test_scorer_self_check.py"
+      ],
+      "auto_revoke_on_failure": true,
+      "network_allowed": false,
+      "new_dependencies_allowed": false
+    }
+  }
+}
