@@ -1993,6 +1993,47 @@ def _refusal_event(step: str, gate: str, why: str) -> None:
               f"({gate}): {type(e).__name__}: {e}")
 
 
+def _flag_blind_producers(step: str) -> list:
+    """NAME THE BLIND PRODUCERS FEEDING THIS GATE. Every crossing, PASS OR REFUSE.
+
+    THE DEFECT (8 Sep 2026). core/notary._blindness() already names the blind
+    step — but only inside the refusal SENTENCE, and only on the nights the level
+    happened to be inherited from that particular artifact. So "hyperclaw_plan
+    cannot say what it reads, and its output gates step 18" existed once a night,
+    in a string, in a log nobody reads.
+
+    Two consequences, and the second is the dangerous one:
+      - a refusal blamed whichever dimension tied for the minimum, and
+      - a gate that OPENED while standing on unknown provenance printed nothing
+        at all.
+
+    So the flag is written on both paths, before may_act() is consulted, as its
+    own event with its own subject. A count can be taken from it; a sentence
+    inside a refusal cannot.
+
+    Fail-open and loud: a census that cannot run must not cost a gate crossing,
+    but its silence must never be mistaken for a clean one.
+    """
+    try:
+        from core.blind_producers import blind_producers_for, describe
+        blind = blind_producers_for(step)
+    except Exception as e:                                       # noqa: BLE001
+        print(f"[FAST_CYCLE] {step} -> blind-producer census FAILED: "
+              f"{type(e).__name__}: {e}")
+        _gate_event(step, "ЦЕНЗУС_НЕУСПЕШЕН", "blind_producers",
+                    f"the census could not run: {type(e).__name__}: {e} — "
+                    f"this is NOT evidence that no blind producer feeds this gate")
+        return []
+    if blind:
+        print(f"[FAST_CYCLE] {step} -> {len(blind)} blind producer(s): "
+              + ", ".join(f"{b['producer']}->{b['artifact']}" for b in blind))
+        _gate_event(step, "СЛЯПИ_ПРОИЗВОДИТЕЛИ", "blind_producers",
+                    describe(step, blind),
+                    extra={"blind_producers": blind,
+                           "blind_count": len(blind)})
+    return blind
+
+
 def _gate_level(why: str):
     """The notary's trust level, read out of its own refusal sentence.
 
@@ -2081,6 +2122,11 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
     # необратимите, не спиране на цикъла." Мъртъв канал значи, че снощната ЗАБРАНА
     # може да не е стигнала дотук — значи не се действа необратимо. Празен inbox
     # (200 OK) НЕ е отказ, и ненастроен канал НЕ е отказ.
+    # THE CENSUS RUNS FIRST, AND ON EVERY PATH. Before the human channel, before
+    # the notary, before anything can return: whether this gate opens or shuts,
+    # the steps feeding it that cannot say what they read are named by name.
+    _flag_blind_producers(step)
+
     _why_human = ""
     try:
         from experiments.needs.approve_reader import channel_alive
@@ -3095,7 +3141,20 @@ def main():
 
     # ── 15.7. HyperClaw plan → improvement proposals ──
     beat("hyperclaw_plan", "15.7")
-    _hyperclaw_to_proposals()
+    # THROUGH _run() SINCE 8 SEP 2026. This called _hyperclaw_to_proposals()
+    # directly, so the step that produces memory/improvement_proposals.json —
+    # the artifact both notary-gated steps of F_SELF read — was one of the steps
+    # named in core/blackbox.py as a known blind spot: no begin/end record, so a
+    # hard kill inside it left nothing at all, and no failure of it reached
+    # phase_tracker.note_failure().
+    #
+    # HONEST ABOUT WHAT THIS DOES AND DOES NOT DO: it does NOT change the
+    # provenance level. The stamp comes from beat() -> memory/heartbeat.py:191
+    # -> core.notary.attest(), which already ran for this step 37 times.
+    # _run()/blackbox is the crash-trace layer. What lifted this step out of
+    # level_0 is its entry in config/step_inputs.json and the produces list on
+    # hyperclaw; this line closes a different hole in the same step.
+    _run("hyperclaw_plan", _hyperclaw_to_proposals)
 
     # ── 15.8. GitHub publish — cycle synthesis + verified hypotheses ──
     beat("github_publish", "15.8")

@@ -196,7 +196,11 @@ def test_the_checkpoint_call_sits_on_the_completed_path(runner):
 # step stopped recording, and the commit that raises it has to say which step
 # and why that is acceptable. Do not "helpfully" restore slack to make a red
 # test green: the slack is what let the two defects through.
-UNCOVERED_STEP_LIMIT = 31
+# 31 -> 30 on 2026-09-08: hyperclaw_plan now goes through _run(), so it
+# records a blackbox begin/end and its failures reach the phase report.
+# The ratchet only moves down; this is the first step off the list since
+# the limit was set.
+UNCOVERED_STEP_LIMIT = 30
 
 
 def test_the_uncovered_steps_are_counted_and_not_growing():

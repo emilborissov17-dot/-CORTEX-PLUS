@@ -135,7 +135,22 @@ STEPS = [
     ("body_scan", "13", "Тялото СЛЕД тежките стъпки.",
      ["memory/body_scan_latest.json"], False),
     ("growth_planner", "14", "План за растеж според реалното тяло.", [], False),
-    ("hyperclaw", "15.6", "HyperClaw оркестратор.", [], False),
+    # PRODUCT DECLARED 8 сеп 2026. This row carried [] — "не знаем" — and an
+    # empty produces makes cycle_map.kept_promise() return "НЕ ЗНАЕМ", which the
+    # notary reads as UNKNOWN(0) for the PROMISE dimension of the NEXT step. So
+    # hyperclaw_plan was stamped level_0 partly because nobody had written down
+    # what its predecessor was supposed to leave behind.
+    #
+    # It writes plans/plan-<today>.md — agents/hyperclaw/hyperclaw_orchestrator.py
+    # line 352, the only unconditional write in main(). The directory is declared
+    # rather than the dated filename because the name moves every night;
+    # kept_promise() takes the newest file's mtime inside a directory, which is
+    # exactly the question ("did HyperClaw write a plan THIS cycle?").
+    #
+    # The snapshot at line 335 is deliberately NOT here: it is written only on
+    # the AllBackendsFailedError path, so promising it would mark a healthy night
+    # as a broken promise.
+    ("hyperclaw", "15.6", "HyperClaw оркестратор.", ["plans"], False),
     ("hyperclaw_plan", "15.7", "Планът му -> предложения за подобрение.",
      ["memory/improvement_proposals.json"], False),
     ("github_publish", "15.8", "Публикува синтеза на цикъла и проверените хипотези.", [], False),

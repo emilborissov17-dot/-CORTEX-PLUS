@@ -169,18 +169,39 @@ def test_a_blind_step_is_named_as_blind_not_scored_as_poor():
     assert repr(step) in said, said
 
 
-def test_the_blind_step_named_is_the_UPSTREAM_one_not_the_consumer():
-    """THE CASE THAT WAS INVISIBLE. self_modifier declares all four of its inputs
-    and is still refused, because hyperclaw_plan — which produces
-    memory/improvement_proposals.json — declares none. The refusal must name
-    hyperclaw_plan, not blame the artifact."""
+def test_the_blind_step_named_is_the_UPSTREAM_one_not_the_consumer(monkeypatch):
+    """THE CASE THAT WAS INVISIBLE. A step can declare every one of its own
+    inputs and still be refused, because the step that PRODUCED one of them
+    declares none. The refusal must name that upstream step, not blame the
+    artifact or the consumer.
+
+    HERMETIC SINCE 8 SEP 2026, AND THAT IS THE POINT. This test used the live
+    pair self_modifier <- hyperclaw_plan <- memory/improvement_proposals.json,
+    which was true every night until hyperclaw_plan was declared in
+    config/step_inputs.json. The assertion then pinned a fact that had stopped
+    being true and failed for a reason that had nothing to do with the mechanism
+    under test — the same defect this file's own _how_to_add_a_step warns about
+    for hardcoded copies of declared lists. The pair is now built here, so the
+    test survives every future declaration and still goes red if _blindness()
+    stops naming the upstream step.
+    """
+    from core import notary as _N
     from core.notary import _blindness
-    rec = {"inherited_from": "memory/improvement_proposals.json",
-           "inherited": 0, "own": 1}          # last night's real attestation
-    said = _blindness("self_modifier", rec)
-    assert "hyperclaw_plan" in said, said
+
+    monkeypatch.setattr(_N, "_inputs_for",
+                        lambda step: (["memory/thing.json"], "written")
+                        if step == "consumer" else ([], "scanner"))
+    monkeypatch.setattr(_N, "_producers_of",
+                        lambda art: ["upstream_blind"]
+                        if art == "memory/thing.json" else [])
+
+    rec = {"inherited_from": "memory/thing.json", "inherited": 0, "own": 1}
+    said = _blindness("consumer", rec)
+    assert "upstream_blind" in said, said
+    assert "consumer" not in said, ("the consumer is being blamed for its "
+                                    "producer's blindness: " + said)
     assert "never declared what it reads" in said, said
-    assert "memory/improvement_proposals.json" in said, said
+    assert "memory/thing.json" in said, said
 
 
 def test_no_blindness_is_claimed_when_the_producer_IS_declared():
@@ -192,14 +213,27 @@ def test_no_blindness_is_claimed_when_the_producer_IS_declared():
     assert _blindness("github_publish", rec) == ""
 
 
-def test_the_blindness_clause_survives_the_refusal_reader_truncation():
+def test_the_blindness_clause_survives_the_refusal_reader_truncation(monkeypatch):
     """tools/read_the_refusals.py prints reason[:150]. The name of the blind step
     must fall inside that, or the streak report shows the boilerplate and hides
-    the one word a human needs."""
+    the one word a human needs.
+
+    Hermetic for the same reason as the test above, and with a deliberately long
+    artifact path: if the name were placed after the path, a realistic path would
+    push it past the truncation and the report would again show only boilerplate.
+    """
+    from core import notary as _N
     from core.notary import _blindness
-    rec = {"inherited_from": "memory/improvement_proposals.json",
-           "inherited": 0, "own": 1}
-    assert "hyperclaw_plan" in _blindness("self_modifier", rec)[:150]
+
+    art = "memory/a_realistically_long_artifact_name_latest.json"
+    monkeypatch.setattr(_N, "_inputs_for",
+                        lambda step: ([art], "written")
+                        if step == "consumer" else ([], "scanner"))
+    monkeypatch.setattr(_N, "_producers_of",
+                        lambda a: ["upstream_blind"] if a == art else [])
+
+    rec = {"inherited_from": art, "inherited": 0, "own": 1}
+    assert "upstream_blind" in _blindness("consumer", rec)[:150]
 
 
 def test_the_explanation_can_never_change_the_decision():

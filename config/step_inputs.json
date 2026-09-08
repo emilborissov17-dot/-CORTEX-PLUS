@@ -84,6 +84,18 @@
       ],
       "_also_reads_why": "evaluator.py:113, read only to append to. Absence is not a failure — the first resolution creates it — so its age must not gate the step.",
       "derived_from": "Read line by line out of evaluator.py on 3 Sep 2026 while wiring its first cycle caller. The static scanner cannot see these paths: they are module-level string constants joined with os.path.join and consumed inside the function."
+    },
+    "hyperclaw_plan": {
+      "entry_point": "fast_cycle_runner._hyperclaw_to_proposals() — fast_cycle_runner.py:1740, called directly at line 3098 (NOT through _run(), so this step has no blackbox crash-trace; that is a separate defect and does not affect the stamp, which comes from beat() -> memory/heartbeat.py:191 -> core.notary.attest()).",
+      "inputs": [
+        "plans",
+        "memory/improvement_proposals.json"
+      ],
+      "_inputs_why": {
+        "plans": "_hyperclaw_to_proposals() globs plans/plan-*.md, sorts by name descending and read_text()s the newest one (fast_cycle_runner.py:1748-1752). The directory is declared because the filename is dated and moves nightly; the notary takes the newest file's mtime inside a tree, which is the right reading — the plan it actually parses is the newest one. Written by hyperclaw (step 15.6) nine seconds earlier on 2026-09-08 (plans newest mtime 01:26:47Z, this step attested 01:26:56Z).",
+        "memory/improvement_proposals.json": "_inject_proposals() read_text()s it before appending (fast_cycle_runner.py:1602) and writes it back at 1607. It is genuinely an input as well as the product, and declaring only the product would hide a read the step really performs. Self-inheritance is not a risk here: notary._stamps() only carries stamps from THIS cycle, and no earlier step lists this artifact among its products, so the lookup is empty at 15.7 and `inherited` stays FULL."
+      },
+      "derived_from": "2026-09-08. Read fast_cycle_runner._hyperclaw_to_proposals() and _inject_proposals() line by line — not the scanner's output, which returned [] for this step, and not the step name. WHY THIS ENTRY EXISTS: with no declaration, notary._age_state([]) fails closed to UNKNOWN(0) — 'an empty list does not mean the step reads nothing, it means we do not know what it reads' — so hyperclaw_plan stamped level_0 on memory/improvement_proposals.json and every irreversible step downstream inherited that 0. Measured before this entry: vector {witness:3, human:3, thought:3, age:0, promise:0}, own=0. The fix is a true declaration, never a hardcoded trust level."
     }
   }
 }
