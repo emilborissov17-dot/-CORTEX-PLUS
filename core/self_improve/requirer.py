@@ -126,6 +126,43 @@ class SpecAxisUnstable(SpecInvalid):
     code = "SPEC_AXIS_UNSTABLE"
 
 
+class SpecDomainInvalid(SpecInvalid):
+    """REFUSED_DOMAIN — the spec names no domain, or one that does not exist.
+
+    The domain is the field the whole answer-space turns on: it decides WHICH
+    SET the categories are checked against. A spec with no domain cannot be
+    checked against anything, and one with a third domain is asking to be judged
+    by a rulebook that does not exist. Neither is defaulted to "external" —
+    defaulting here would reintroduce the exact malformation the taxonomy was
+    built to end, silently and with no record that a guess was made.
+    """
+    code = "REFUSED_DOMAIN"
+
+
+class SpecCategoryNotInDomain(SpecInvalid):
+    """REFUSED_CATEGORY_NOT_IN_DOMAIN — a category from the OTHER domain.
+
+    The sharpest failure the taxonomy can catch, and the one it exists for: an
+    internal fix labelled with a world axis. It is not a near miss to be mapped
+    to a neighbour — a JSON parser is not 12% about DEEP_TIME_RISKS. It is the
+    wrong question, and the refusal says so by name so a reader of the record
+    can tell it from an invented category or a missing field without parsing
+    prose.
+    """
+    code = "REFUSED_CATEGORY_NOT_IN_DOMAIN"
+
+
+class SpecCategoriesEmpty(SpecInvalid):
+    """REFUSED_CATEGORIES_EMPTY — the list is missing, empty or not a list.
+
+    A spec about nothing in particular cannot be judged against anything in
+    particular. The forbidden fallback is accepting [] and treating the domain
+    alone as the classification: "internal" is where the problem lives, not what
+    the problem is.
+    """
+    code = "REFUSED_CATEGORIES_EMPTY"
+
+
 class SpecMetricUngrounded(SpecInvalid):
     """SPEC_METRIC_UNGROUNDED — the success_metric names no file that exists.
 
@@ -280,27 +317,37 @@ def validate(spec: dict, axes: set | None = None,
     # split exists to catch — an internal fix labelled with a world axis.
     domain = spec.get("domain")
     if domain not in DOMAINS:
-        raise SpecInvalid(
-            f"domain {domain!r} is not one of {list(DOMAINS)}. Every "
-            f"self-improvement is either INTERNAL (it improves the instrument) "
-            f"or EXTERNAL (it improves how the instrument measures the world); "
-            f"there is no third place for one to be.")
+        raise SpecDomainInvalid(
+            f"{SpecDomainInvalid.code}: domain {domain!r} is not one of "
+            f"{list(DOMAINS)}. Every self-improvement is either INTERNAL (it "
+            f"improves the instrument) or EXTERNAL (it improves how the "
+            f"instrument measures the world); there is no third place for one "
+            f"to be, and nothing is defaulted — a defaulted domain would pick "
+            f"the rulebook the categories are judged by, silently.")
 
     cats = spec.get("categories")
     if not isinstance(cats, list) or not cats:
-        raise SpecInvalid(
-            "categories must be a non-empty list. A spec that is about nothing "
-            "in particular cannot be judged against anything in particular.")
+        raise SpecCategoriesEmpty(
+            f"{SpecCategoriesEmpty.code}: categories is {cats!r}; it must be a "
+            f"non-empty list. A spec about nothing in particular cannot be "
+            f"judged against anything in particular, and the domain alone is "
+            f"where the problem lives, not what the problem is.")
 
     allowed = domain_categories(domain, known)
     wrong = [c for c in cats if c not in allowed]
     if wrong:
-        raise SpecInvalid(
-            f"categor{'y' if len(wrong) == 1 else 'ies'} {wrong} "
+        other = "internal" if domain == "external" else "external"
+        crossed = [c for c in wrong if c in domain_categories(other, known)]
+        detail = (f" {crossed} belong{'s' if len(crossed) == 1 else ''} to the "
+                  f"{other.upper()} set — that is not a near miss, it is the "
+                  f"wrong question."
+                  if crossed else " No domain declares them.")
+        raise SpecCategoryNotInDomain(
+            f"{SpecCategoryNotInDomain.code}: {wrong} "
             f"{'is' if len(wrong) == 1 else 'are'} not in the {domain} set "
-            f"{sorted(allowed)}. Refused rather than mapped to a near "
-            f"neighbour: a category from the other domain is not a near miss, "
-            f"it is the wrong question.")
+            f"{sorted(allowed)}.{detail} Refused rather than mapped to a near "
+            f"neighbour: a parser bug is not twelve per cent about "
+            f"DEEP_TIME_RISKS.")
 
     paths = spec.get("allowed_paths")
     if not isinstance(paths, list) or not paths:

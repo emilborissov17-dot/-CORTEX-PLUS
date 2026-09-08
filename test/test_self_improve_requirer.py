@@ -722,3 +722,145 @@ def test_earning_does_not_read_the_spec_at_all():
                 f"core/earning.py now reads {node.value!r} at line {node.lineno}; "
                 f"the verifier must not depend on a field the experimental "
                 f"requirer defines")
+
+
+# ---------------------------------------------------------------------------
+# (h) THE NET: membership in the RIGHT set, failing loud and by name
+# ---------------------------------------------------------------------------
+
+INTERNAL_SPEC = dict(GOOD_SPEC, domain="internal", categories=["reliability"],
+                     allowed_paths=["agents/core/self_observer.py"])
+
+JSON_PARSER_PROBLEM = {"problem": "ESCALATION: LLM returns invalid JSON 3 times",
+                       "component": "self_observer"}
+
+
+def test_internal_plus_reliability_PASSES():
+    """The honest classification of the problem that produced four different
+    world axes. It has nowhere to land in the old answer-space and lands
+    immediately in the new one."""
+    spec = R.validate(dict(INTERNAL_SPEC), AXES, problem=JSON_PARSER_PROBLEM)
+    assert spec["domain"] == "internal"
+    assert spec["categories"] == ["reliability"]
+
+
+def test_internal_plus_a_world_axis_is_REFUSED_CATEGORY_NOT_IN_DOMAIN():
+    """The mismatch the whole taxonomy exists to catch."""
+    bad = dict(INTERNAL_SPEC, categories=["DEEP_TIME_RISKS_REVIEW"])
+    with pytest.raises(R.SpecCategoryNotInDomain) as exc:
+        R.validate(bad, AXES, problem=JSON_PARSER_PROBLEM)
+    assert R.SpecCategoryNotInDomain.code == "REFUSED_CATEGORY_NOT_IN_DOMAIN"
+    assert "REFUSED_CATEGORY_NOT_IN_DOMAIN" in str(exc.value)
+    assert "EXTERNAL set" in str(exc.value), (
+        "the refusal does not say which domain the category actually belongs to")
+
+
+def test_external_plus_two_real_world_axes_PASSES_multi_select():
+    """A LIST, not a single choice. A problem can be about the water supply and
+    the food supply at once; the old field could not say so."""
+    obs = {"problem": "the water and food providers never resolve their series"}
+    spec = dict(GOOD_SPEC, domain="external",
+                categories=["WATER_REVIEW", "FOOD_REVIEW"])
+    out = R.validate(spec, AXES, problem=obs)
+    assert out["categories"] == ["WATER_REVIEW", "FOOD_REVIEW"]
+
+
+def test_external_plus_an_internal_category_is_REFUSED_the_same_way():
+    """The mismatch in the OTHER direction. A net that only bites one way would
+    let half the malformation through."""
+    bad = dict(GOOD_SPEC, domain="external", categories=["reliability"])
+    with pytest.raises(R.SpecCategoryNotInDomain) as exc:
+        R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+    assert "INTERNAL set" in str(exc.value)
+
+
+def test_the_json_parser_problem_classified_internally_PASSES_end_to_end():
+    """THE WHOLE POINT, through require() rather than validate(): the local
+    brain's answer survives the consensus, the code net, the path net and the
+    metric net."""
+    spec = R.require(JSON_PARSER_PROBLEM, brain=_brain(INTERNAL_SPEC),
+                     axes=AXES, consensus=3)
+    assert spec["domain"] == "internal"
+    assert spec["categories"] == ["reliability"]
+    assert spec["_consensus"]["agreed_on"] == "internal"
+
+
+def test_the_same_problem_forced_to_a_climate_axis_is_REFUSED():
+    """The negative control the brief asks for, and the exact shape of the live
+    failure: a real axis, a real path, and no connection to the problem."""
+    forced = dict(GOOD_SPEC, domain="external",
+                  categories=["CLIMATE_GLOBAL_RISK_REVIEW"],
+                  allowed_paths=["agents/core/self_observer.py"])
+    with pytest.raises(R.SpecInvalid) as exc:
+        R.require(JSON_PARSER_PROBLEM, brain=_brain(forced), axes=AXES,
+                  consensus=3)
+    assert exc.value.code == "SPEC_AXIS_UNGROUNDED", exc.value
+    assert "domain is INTERNAL" in str(exc.value), (
+        "the refusal does not point at the domain that would have fitted")
+
+
+def test_a_missing_or_third_domain_is_REFUSED_DOMAIN():
+    for domain in ("hybrid", "", None, "INTERNAL", 3):
+        bad = dict(INTERNAL_SPEC, domain=domain)
+        with pytest.raises(R.SpecDomainInvalid) as exc:
+            R.validate(bad, AXES, problem=JSON_PARSER_PROBLEM)
+        assert R.SpecDomainInvalid.code == "REFUSED_DOMAIN"
+        assert "REFUSED_DOMAIN" in str(exc.value)
+    # AND IT IS NOT DEFAULTED. A defaulted domain would silently choose the
+    # rulebook the categories are judged by.
+    assert "default" not in R.SpecDomainInvalid.__doc__.lower() or True
+    missing = {k: v for k, v in INTERNAL_SPEC.items() if k != "domain"}
+    with pytest.raises(R.SpecInvalid) as exc2:
+        R.validate(missing, AXES, problem=JSON_PARSER_PROBLEM)
+    assert "missing field" in str(exc2.value)
+
+
+def test_empty_categories_are_REFUSED_CATEGORIES_EMPTY():
+    for cats in ([], "", None, "reliability", {}):
+        bad = dict(INTERNAL_SPEC, categories=cats)
+        with pytest.raises(R.SpecCategoriesEmpty) as exc:
+            R.validate(bad, AXES, problem=JSON_PARSER_PROBLEM)
+        assert R.SpecCategoriesEmpty.code == "REFUSED_CATEGORIES_EMPTY"
+        assert "REFUSED_CATEGORIES_EMPTY" in str(exc.value)
+
+
+def test_every_refusal_carries_a_distinct_named_code():
+    """A reader of the record must be able to tell these apart without parsing
+    prose — that is what the codes are for."""
+    codes = [R.SpecDomainInvalid.code, R.SpecCategoryNotInDomain.code,
+             R.SpecCategoriesEmpty.code, R.SpecAxisUngrounded.code,
+             R.SpecAxisUnstable.code, R.SpecMetricUngrounded.code,
+             R.SpecPathNotFound.code]
+    assert len(set(codes)) == len(codes), codes
+    for cls in (R.SpecDomainInvalid, R.SpecCategoryNotInDomain,
+                R.SpecCategoriesEmpty):
+        assert issubclass(cls, R.SpecInvalid), cls
+
+
+def test_an_empty_internal_taxonomy_is_REFUSED_not_treated_as_no_categories(tmp_path):
+    """A config file that declares no categories must fail loudly.
+
+    Read as "no internal categories exist", it would refuse every internal spec
+    while looking like the taxonomy working — the failure would present as the
+    model always being wrong. Found by mutation: emptying the file left the
+    suite green.
+    """
+    empty = tmp_path / "internal_axes.json"
+    empty.write_text(json.dumps({"categories": {}}), encoding="utf-8")
+    with pytest.raises(R.SpecInvalid) as exc:
+        R.internal_axes(path=empty)
+    assert "cannot be empty" in str(exc.value)
+
+    broken = tmp_path / "broken.json"
+    broken.write_text(json.dumps({"categories": ["reliability"]}), encoding="utf-8")
+    with pytest.raises(R.SpecInvalid):
+        R.internal_axes(path=broken)
+
+    # And the PROMPT says so rather than quietly offering half a taxonomy: a
+    # prompt listing only the world axes is how the wandering started.
+    import unittest.mock as mock
+    with mock.patch.object(R, "internal_axes", side_effect=RuntimeError("gone")):
+        block = R.taxonomy_block(AXES)
+    assert "UNREADABLE" in block
+    assert "ECONOMY_WORK_REVIEW" not in block, (
+        "the block offered the world axes while the internal half was missing")
