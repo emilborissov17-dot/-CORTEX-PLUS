@@ -399,16 +399,18 @@ def pinned_trees() -> tuple:
     return tuple(PINNED)
 
 
-def _require_paths_in_scope(spec: dict, problem: dict | None) -> None:
-    """REFUSED_PATH_OUT_OF_SCOPE — the paths are the right KIND of thing.
+def _require_not_pinned(spec: dict) -> None:
+    """REFUSED_PATH_OUT_OF_SCOPE — a PINNED tree is out of reach, present or not.
 
-    The subset half needs the COMPONENT, because candidate_paths() is what the
-    prompt offered and it is component-specific. With no problem to read the
-    component from there is nothing to be a subset OF, so only the pinned half
-    applies — stated here rather than left as an accident, and the pinned half
-    is the half that stops production being patched.
+    RUN BEFORE THE EXISTENCE NET, and that order is the point. "You may not
+    touch this" is true of memory/ whether or not a particular file happens to
+    be sitting there, and making the pin depend on existence made it depend on
+    which untracked files a given checkout has — measured 9 Sep 2026, when three
+    tests that named a real but UNTRACKED file (memory/_sdg_resolved.json)
+    passed here and failed inside the grader's clean worktree, where untracked
+    files do not exist. A pin that varies by checkout is not a pin.
     """
-    paths = [str(p).replace("\\", "/").strip() for p in
+    paths = [str(p).replace(chr(92), "/").strip() for p in
              (spec.get("allowed_paths") or [])]
     try:
         pinned = pinned_trees()
@@ -426,12 +428,24 @@ def _require_paths_in_scope(spec: dict, problem: dict | None) -> None:
                     f"{SpecPathOutOfScope.code}: {rel!r} is under a PINNED tree "
                     f"({pin}). The verifier, the policy, the rules of passage, "
                     f"the tests that pin them and production state are out of "
-                    f"reach of every patch. It exists; that is not the same as "
-                    f"being something this spec may change, and the grader "
-                    f"refuses it too — one net is a single point of failure.")
+                    f"reach of every patch — whether or not that file exists "
+                    f"in this checkout. The grader refuses it too; one net is a "
+                    f"single point of failure.")
 
+
+def _require_paths_in_scope(spec: dict, problem: dict | None) -> None:
+    """REFUSED_PATH_OUT_OF_SCOPE — a SUBSET of the paths the prompt offered.
+
+    Needs the COMPONENT, because candidate_paths() is component-specific and is
+    exactly what the prompt lists. With no problem to read it from there is
+    nothing to be a subset OF, so this half is skipped — stated rather than left
+    as an accident. The PINNED half above never skips, and it is the half that
+    keeps production from being patched.
+    """
     if problem is None:
         return
+    paths = [str(p).replace(chr(92), "/").strip() for p in
+             (spec.get("allowed_paths") or [])]
     offered = candidate_paths(str(problem.get("component", "unknown")))
     stray = [p for p in paths if p not in offered]
     if stray:
@@ -503,6 +517,11 @@ def validate(spec: dict, axes: set | None = None,
     for p in paths:
         if not isinstance(p, str) or not p.strip():
             raise SpecInvalid(f"allowed_paths carries {p!r}")
+
+    # PINNED FIRST, BEFORE EXISTENCE. "You may not touch this" is true of
+    # memory/ whether or not a given file is sitting there, and a pin that
+    # depends on which untracked files a checkout happens to have is not a pin.
+    _require_not_pinned(spec)
 
     # ── THE NET (8 Sep 2026): REFUSED_PATH_NOT_FOUND ──────────────────────
     # The instruction says the paths must exist and the prompt now shows the

@@ -1025,10 +1025,11 @@ def test_THE_BORROWED_PATH_RUN_IS_NOW_A_REFUSAL():
     for the METRIC.
     """
     borrowed = dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"])
-    assert (REPO / "memory" / "_sdg_resolved.json").is_file(), (
-        "the file this test is about is gone; the test would pass for the "
-        "wrong reason")
-
+    # NO is_file() ASSERTION HERE, and that is the fix for a real defect: this
+    # file is UNTRACKED, so it is absent from any clean checkout — including the
+    # grader's sandbox worktree, where this test then failed while passing in
+    # the working tree. The pin does not depend on the file being there, so the
+    # test must not either.
     with pytest.raises(R.SpecPathOutOfScope) as exc:
         R.validate(borrowed, AXES, problem=SELF_OBS)
     assert R.SpecPathOutOfScope.code == "REFUSED_PATH_OUT_OF_SCOPE"
@@ -1054,16 +1055,14 @@ def test_every_pinned_tree_is_out_of_reach_and_the_list_is_the_graders_own():
     assert R.pinned_trees() == tuple(M.PINNED)
     assert R.pinned_trees(), "the pin list is empty"
 
-    # REAL FILES ONLY. A path that does not exist is refused by the EXISTENCE
-    # net first (REFUSED_PATH_NOT_FOUND), which would make this test pass
-    # without the scope net ever running — the exact "passes for the wrong
-    # reason" failure it is guarding against.
+    # TRACKED AND UNTRACKED, PRESENT AND ABSENT. The pinned half runs BEFORE
+    # the existence net precisely so it does not vary with what a checkout
+    # happens to contain.
     for rel in ("memory/goal_score_history.json",
                 "snapshots/body/body_snapshot_latest.json",
                 "cortex_memory/media_scheduler_state.json", "core/earning.py",
                 "config/passage_rules.json", "test/test_llm_json.py",
                 "output/cortex_scores_latest.json"):
-        assert (REPO / rel).is_file(), f"{rel} is gone; this test would pass blind"
         with pytest.raises(R.SpecPathOutOfScope) as exc:
             R.validate(dict(IN_SCOPE, allowed_paths=[rel]), AXES,
                        problem=SELF_OBS)
@@ -1093,11 +1092,24 @@ def test_the_pinned_half_holds_even_with_no_problem_to_read_a_component_from():
 
 def test_scope_is_checked_before_the_metric():
     """Ordering: a spec whose path is out of scope should be told THAT, not sent
-    to fix a metric on a file it may not touch anyway."""
-    bad = dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"],
-               success_metric="fewer failures")
+    to fix a metric on a file it may not touch anyway.
+
+    BOTH HALVES, because they sit on opposite sides of the existence net and a
+    test that only exercised the pinned half would leave the subset half's
+    position unpinned — which is exactly what a mutation caught."""
+    pinned = dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"],
+                  success_metric="fewer failures")
     with pytest.raises(R.SpecPathOutOfScope):
-        R.validate(bad, AXES, problem=SELF_OBS)
+        R.validate(pinned, AXES, problem=SELF_OBS)
+
+    # Real, unpinned, and never offered for this component — the subset half.
+    not_offered = dict(IN_SCOPE, allowed_paths=["agents/core/self_modifier.py"],
+                       success_metric="fewer failures")
+    with pytest.raises(R.SpecPathOutOfScope) as exc:
+        R.validate(not_offered, AXES, problem=SELF_OBS)
+    assert "never offered" in str(exc.value), (
+        "the metric net answered first, sending the model to fix a number on a "
+        "file it may not touch")
 
 
 def test_an_unreadable_pin_list_REFUSES_rather_than_assuming_safe(monkeypatch):
@@ -1216,3 +1228,32 @@ def test_rule_two_states_BOTH_standards_and_says_which_domain_each_is_for():
     assert "DO NOT borrow one from the data-file list" in rule2
     assert "WORSE than no file, because it passes" in rule2, (
         "rule 2 does not say why a real-but-unrelated file is the worse failure")
+
+
+def test_a_pinned_path_is_refused_as_PINNED_even_when_it_does_not_exist():
+    """THE PROPERTY THE ORDER BUYS, found by a real failure on 9 Sep 2026.
+
+    Three tests here named memory/_sdg_resolved.json — a real file, and an
+    UNTRACKED one. They passed in the working tree and failed inside the
+    grader's sandbox worktree, where a clean checkout has no untracked files.
+    A pin that varies with what a checkout happens to contain is not a pin, so
+    the PINNED half now runs BEFORE the existence net: "you may not touch
+    memory/" is true whether or not a particular file is sitting there.
+
+    It also gives the better message. "That is not there" invites the model to
+    pick another file in the same tree; "that tree is out of reach" does not.
+    """
+    for absent in ("memory/nothing_is_here_at_all.json",
+                   "snapshots/also_absent.json",
+                   "cortex_memory/gone.json"):
+        assert not (REPO / absent).exists(), f"{absent} exists; pick another"
+        with pytest.raises(R.SpecPathOutOfScope) as exc:
+            R.validate(dict(IN_SCOPE, allowed_paths=[absent]), AXES,
+                       problem=SELF_OBS)
+        assert "PINNED" in str(exc.value)
+        assert "whether or not that file exists" in str(exc.value)
+
+    # An UNPINNED path that does not exist is still the existence net's business.
+    with pytest.raises(R.SpecPathNotFound):
+        R.validate(dict(IN_SCOPE, allowed_paths=["agents/core/not_a_module.py"]),
+                   AXES, problem=SELF_OBS)
