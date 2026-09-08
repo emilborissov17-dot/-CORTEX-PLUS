@@ -42,6 +42,12 @@ AXIS = "ECONOMY_WORK_REVIEW"
 # is the net working, not the tests breaking.
 OBS_TEXT = "the economy work provider never resolves its series"
 
+# THE COMPONENT, carried because the scope net is component-specific: the
+# prompt offers candidate_paths(component) and allowed_paths must be a
+# subset of exactly that list. A fixture with no component was claiming
+# "unknown", for which the provider below is not offered.
+OBS = {"problem": OBS_TEXT, "component": "economy_work"}
+
 GOOD_SPEC = {
     "problem": "WATER_REVIEW scores a default because a key is missing.",
     "root_cause": "The scorer's observation map has no entry for the series.",
@@ -73,7 +79,7 @@ def _brain(payload) -> callable:
 def test_the_output_contains_no_python():
     """THE POINT. Every free-text field must be prose, checked by the same net
     the module applies — not by eye."""
-    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require(dict(OBS), brain=_brain(GOOD_SPEC), axes=AXES)
 
     for field in ("problem", "root_cause", "desired_change", "success_metric"):
         assert R._looks_like_code(spec[field]) == "", (
@@ -100,7 +106,7 @@ def test_the_output_names_a_domain_and_categories_from_it():
     An external spec's categories are the 24 world axes, read from
     config/target_config.json rather than retyped here. An internal spec's come
     from config/internal_axes.json. Neither list is a copy."""
-    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require(dict(OBS), brain=_brain(GOOD_SPEC), axes=AXES)
     assert spec["domain"] in R.DOMAINS
     assert spec["categories"], "a spec about nothing in particular"
     assert set(spec["categories"]) <= AXES
@@ -137,7 +143,7 @@ def test_the_prompt_shows_both_domains_and_says_to_choose_one():
 
 
 def test_the_spec_carries_every_declared_field():
-    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require(dict(OBS), brain=_brain(GOOD_SPEC), axes=AXES)
     for field in R.SPEC_FIELDS:
         assert field in spec, f"missing {field}"
     assert spec["allowed_paths"] == GOOD_SPEC["allowed_paths"]
@@ -154,7 +160,7 @@ def test_code_in_any_free_text_field_is_REFUSED_not_stripped(field):
     the split failed."""
     bad = dict(GOOD_SPEC, **{field: "import json\ndata = json.loads(x)"})
     with pytest.raises(R.SpecContainsCode) as exc:
-        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
+        R.require(dict(OBS), brain=_brain(bad), axes=AXES)
     assert field in str(exc.value)
     assert "refused rather than stripped" in str(exc.value)
 
@@ -209,7 +215,7 @@ def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
     # the one the evidence supports, is refused just as hard.
     wrong = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"])
     with pytest.raises(R.SpecAxisUngrounded) as exc2:
-        R.validate(wrong, AXES, problem={"problem": OBS_TEXT})
+        R.validate(wrong, AXES, problem=dict(OBS))
     assert "ECONOMY_WORK_REVIEW" in str(exc2.value)
 
 
@@ -255,7 +261,7 @@ def test_consensus_requires_a_majority_on_the_DOMAIN():
     [reliability, correctness]" are not a disagreement about what the problem
     IS. The domain is the binary the answer-space turns on."""
     stable = _brain(GOOD_SPEC)
-    spec = R.require({"problem": OBS_TEXT}, brain=stable, axes=AXES, consensus=3)
+    spec = R.require(dict(OBS), brain=stable, axes=AXES, consensus=3)
     assert spec["_consensus"]["asks"] == 3
     assert spec["_consensus"]["votes"] == 3
     assert spec["_consensus"]["agreed_on"] == GOOD_SPEC["domain"]
@@ -275,7 +281,8 @@ def test_categories_may_differ_between_asks_without_breaking_consensus():
         seen["n"] += 1
         return json.dumps(dict(GOOD_SPEC, domain="internal", categories=cats))
 
-    spec = R.require({"problem": "the parser breaks on invalid JSON"},
+    spec = R.require({"problem": "the parser breaks on invalid JSON",
+                      "component": "economy_work"},
                      brain=_vary, axes=AXES, consensus=3)
     assert spec["domain"] == "internal"
     assert spec["_consensus"]["votes"] == 3
@@ -295,7 +302,8 @@ def test_a_wandering_DOMAIN_is_REFUSED_as_unstable():
         seen["n"] += 1
         return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
 
-    obs = {"problem": "the water provider parser never resolves"}
+    obs = {"problem": "the water provider parser never resolves",
+           "component": "economy_work"}
     with pytest.raises(R.SpecAxisUnstable) as exc:
         R.require(obs, brain=_wander, axes=AXES, consensus=3)
     assert R.SpecAxisUnstable.code == "SPEC_AXIS_UNSTABLE"
@@ -323,7 +331,8 @@ def test_a_majority_is_not_enough_because_the_domain_is_a_binary():
         return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
 
     with pytest.raises(R.SpecAxisUnstable) as exc:
-        R.require({"problem": "the water provider parser never resolves"},
+        R.require({"problem": "the water provider parser never resolves",
+                   "component": "economy_work"},
                   brain=_two_of_three, axes=AXES, consensus=3)
     assert "2 vote(s)" in str(exc.value), str(exc.value)
 
@@ -335,7 +344,7 @@ def test_consensus_of_one_asks_once():
         calls["n"] += 1
         return json.dumps(GOOD_SPEC)
 
-    R.require({"problem": OBS_TEXT}, brain=_once, axes=AXES, consensus=1)
+    R.require(dict(OBS), brain=_once, axes=AXES, consensus=1)
     assert calls["n"] == 1
 
 
@@ -346,7 +355,7 @@ def test_SPEC_METRIC_UNGROUNDED_on_the_placeholder_the_live_run_copied():
     bad = dict(GOOD_SPEC,
                success_metric="броят на редовете в файлот 'memory/x.json'")
     with pytest.raises(R.SpecMetricUngrounded) as exc:
-        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
+        R.require(dict(OBS), brain=_brain(bad), axes=AXES)
 
     assert R.SpecMetricUngrounded.code == "SPEC_METRIC_UNGROUNDED"
     assert "SPEC_METRIC_UNGROUNDED" in str(exc.value)
@@ -396,7 +405,7 @@ def test_REFUSED_PATH_NOT_FOUND_on_the_exact_path_the_live_run_invented():
     without parsing prose."""
     bad = dict(GOOD_SPEC, allowed_paths=["src/ai/self_observer.py"])
     with pytest.raises(R.SpecPathNotFound) as exc:
-        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
+        R.require(dict(OBS), brain=_brain(bad), axes=AXES)
 
     assert R.SpecPathNotFound.code == "REFUSED_PATH_NOT_FOUND"
     assert "REFUSED_PATH_NOT_FOUND" in str(exc.value)
@@ -433,7 +442,7 @@ def test_a_real_path_is_accepted():
 def test_an_invented_category_is_REFUSED_not_mapped_to_a_neighbour():
     bad = dict(GOOD_SPEC, categories=["WATER"])   # plausible, and not an axis
     with pytest.raises(R.SpecInvalid) as exc:
-        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
+        R.require(dict(OBS), brain=_brain(bad), axes=AXES)
     assert "not in the external set" in str(exc.value)
     assert "near neighbour" in str(exc.value), (
         "the refusal does not say why it is not silently corrected")
@@ -443,19 +452,19 @@ def test_an_invented_category_is_REFUSED_not_mapped_to_a_neighbour():
 def test_a_missing_field_is_refused(missing):
     bad = {k: v for k, v in GOOD_SPEC.items() if k != missing}
     with pytest.raises(R.SpecInvalid):
-        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
+        R.require(dict(OBS), brain=_brain(bad), axes=AXES)
 
 
 def test_empty_allowed_paths_is_refused():
     """An empty allowlist would let the implementer write anywhere."""
     with pytest.raises(R.SpecInvalid):
-        R.require({"problem": OBS_TEXT}, brain=_brain(dict(GOOD_SPEC, allowed_paths=[])),
+        R.require(dict(OBS), brain=_brain(dict(GOOD_SPEC, allowed_paths=[])),
                   axes=AXES)
 
 
 def test_a_brain_that_returns_prose_instead_of_json_is_refused():
     with pytest.raises(R.SpecInvalid) as exc:
-        R.require({"problem": OBS_TEXT}, brain=_brain("I think the water axis is broken."),
+        R.require(dict(OBS), brain=_brain("I think the water axis is broken."),
                   axes=AXES)
     assert "no JSON object" in str(exc.value)
 
@@ -758,7 +767,8 @@ def test_internal_plus_a_world_axis_is_REFUSED_CATEGORY_NOT_IN_DOMAIN():
 def test_external_plus_two_real_world_axes_PASSES_multi_select():
     """A LIST, not a single choice. A problem can be about the water supply and
     the food supply at once; the old field could not say so."""
-    obs = {"problem": "the water and food providers never resolve their series"}
+    obs = {"problem": "the water and food providers never resolve their series",
+           "component": "economy_work"}
     spec = dict(GOOD_SPEC, domain="external",
                 categories=["WATER_REVIEW", "FOOD_REVIEW"])
     out = R.validate(spec, AXES, problem=obs)
@@ -770,7 +780,7 @@ def test_external_plus_an_internal_category_is_REFUSED_the_same_way():
     let half the malformation through."""
     bad = dict(GOOD_SPEC, domain="external", categories=["reliability"])
     with pytest.raises(R.SpecCategoryNotInDomain) as exc:
-        R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+        R.validate(bad, AXES, problem=dict(OBS))
     assert "INTERNAL set" in str(exc.value)
 
 
@@ -911,7 +921,7 @@ def test_a_present_but_EMPTY_field_is_REFUSED_FIELD_UNFILLED():
             continue
         bad = dict(GOOD_SPEC, **{field: "   "})
         with pytest.raises(R.SpecFieldUnfilled) as exc:
-            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+            R.validate(bad, AXES, problem=dict(OBS))
         assert R.SpecFieldUnfilled.code == "REFUSED_FIELD_UNFILLED"
         assert field in str(exc.value)
 
@@ -922,7 +932,7 @@ def test_a_list_of_empty_strings_is_not_a_filled_field():
     for field in ("categories", "allowed_paths"):
         bad = dict(GOOD_SPEC, **{field: [""]})
         with pytest.raises(R.SpecFieldUnfilled):
-            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+            R.validate(bad, AXES, problem=dict(OBS))
 
 
 def test_a_COPIED_PLACEHOLDER_is_REFUSED_before_quality_is_judged():
@@ -941,13 +951,13 @@ def test_a_COPIED_PLACEHOLDER_is_REFUSED_before_quality_is_judged():
     for field, value in placeholders.items():
         bad = dict(GOOD_SPEC, **{field: value})
         with pytest.raises(R.SpecFieldUnfilled) as exc:
-            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+            R.validate(bad, AXES, problem=dict(OBS))
         assert "placeholder" in str(exc.value), field
 
     # AND THE NET USES THE REAL TEMPLATE, not a retyped copy of it: every
     # placeholder above must actually appear in the prompt, or this test is
     # guarding a shape the model is never shown.
-    prompt = R.build_prompt({"problem": OBS_TEXT}, AXES)
+    prompt = R.build_prompt(dict(OBS), AXES)
     for value in placeholders.values():
         text = value[0] if isinstance(value, list) else value
         assert text in prompt, f"{text!r} is not the prompt's own placeholder"
@@ -960,7 +970,7 @@ def test_rule_zero_fires_BEFORE_the_quality_nets():
     one in sends it to fix the wrong thing."""
     bad = dict(GOOD_SPEC, root_cause="", success_metric="fewer failures")
     with pytest.raises(R.SpecFieldUnfilled) as exc:
-        R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+        R.validate(bad, AXES, problem=dict(OBS))
     assert "REFUSED_FIELD_UNFILLED" in str(exc.value)
     assert "SPEC_METRIC_UNGROUNDED" not in str(exc.value)
 
@@ -974,15 +984,133 @@ def test_an_empty_domain_or_category_is_unfilled_rather_than_invalid():
     for field in ("domain", "categories"):
         bad = dict(GOOD_SPEC, **{field: ""})
         with pytest.raises(R.SpecFieldUnfilled):
-            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+            R.validate(bad, AXES, problem=dict(OBS))
 
     with pytest.raises(R.SpecDomainInvalid):
         R.validate(dict(GOOD_SPEC, domain="hybrid"), AXES,
-                   problem={"problem": OBS_TEXT})
+                   problem=dict(OBS))
     with pytest.raises(R.SpecCategoriesEmpty):
         R.validate(dict(GOOD_SPEC, categories=[]), AXES,
-                   problem={"problem": OBS_TEXT})
+                   problem=dict(OBS))
 
     # Both remain SpecInvalid, so every existing caller still catches them.
     for cls in (R.SpecFieldUnfilled, R.SpecDomainInvalid, R.SpecCategoriesEmpty):
         assert issubclass(cls, R.SpecInvalid)
+
+
+# ---------------------------------------------------------------------------
+# (j) SCOPE — existence is not correctness
+# ---------------------------------------------------------------------------
+
+SELF_OBS = {"problem": "ESCALATION: LLM returns invalid JSON 3 times",
+            "component": "self_observer"}
+
+IN_SCOPE = dict(GOOD_SPEC, domain="internal", categories=["reliability"],
+                allowed_paths=["agents/core/self_observer.py"])
+
+
+def test_THE_BORROWED_PATH_RUN_IS_NOW_A_REFUSAL():
+    """THE LIVE FALSE PASS, 8 Sep 2026, turned into a refusal.
+
+        problem        an LLM returning invalid JSON (component self_observer)
+        allowed_paths  ["memory/_sdg_resolved.json"]   <- was ACCEPTED
+
+    A real file — an SDG resolution cache, 3.7 KB, untouched since 3 August —
+    with nothing to do with JSON parsing, sitting in production memory/. It was
+    accepted because REFUSED_PATH_NOT_FOUND asks "does this exist" and nothing
+    asked "is this the right KIND of thing". The model needed a path that
+    existed and borrowed one from the twelve data files the prompt had shown it
+    for the METRIC.
+    """
+    borrowed = dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"])
+    assert (REPO / "memory" / "_sdg_resolved.json").is_file(), (
+        "the file this test is about is gone; the test would pass for the "
+        "wrong reason")
+
+    with pytest.raises(R.SpecPathOutOfScope) as exc:
+        R.validate(borrowed, AXES, problem=SELF_OBS)
+    assert R.SpecPathOutOfScope.code == "REFUSED_PATH_OUT_OF_SCOPE"
+    assert "PINNED" in str(exc.value)
+
+
+def test_an_offered_code_path_passes():
+    """THE NEGATIVE CONTROL. A net that refused everything would also turn that
+    run into a refusal, and would be useless."""
+    spec = R.validate(dict(IN_SCOPE), AXES, problem=SELF_OBS)
+    assert spec["allowed_paths"] == ["agents/core/self_observer.py"]
+    assert "agents/core/self_observer.py" in R.candidate_paths("self_observer"), (
+        "the test asserts a path the prompt does not actually offer")
+
+
+def test_every_pinned_tree_is_out_of_reach_and_the_list_is_the_graders_own():
+    """ONE LIST, NOT TWO. The pin list is imported from merits — the same tuple
+    the grader refuses — so the two nets cannot drift apart. A copy here would
+    go stale the moment merits gained a tree, and a net that guards less than it
+    claims is worse than none."""
+    from core.self_improve import merits as M
+
+    assert R.pinned_trees() == tuple(M.PINNED)
+    assert R.pinned_trees(), "the pin list is empty"
+
+    # REAL FILES ONLY. A path that does not exist is refused by the EXISTENCE
+    # net first (REFUSED_PATH_NOT_FOUND), which would make this test pass
+    # without the scope net ever running — the exact "passes for the wrong
+    # reason" failure it is guarding against.
+    for rel in ("memory/goal_score_history.json",
+                "snapshots/body/body_snapshot_latest.json",
+                "cortex_memory/media_scheduler_state.json", "core/earning.py",
+                "config/passage_rules.json", "test/test_llm_json.py",
+                "output/cortex_scores_latest.json"):
+        assert (REPO / rel).is_file(), f"{rel} is gone; this test would pass blind"
+        with pytest.raises(R.SpecPathOutOfScope) as exc:
+            R.validate(dict(IN_SCOPE, allowed_paths=[rel]), AXES,
+                       problem=SELF_OBS)
+        assert "PINNED" in str(exc.value), rel
+
+
+def test_a_path_never_offered_for_THIS_component_is_refused():
+    """Real, unpinned, and still not this spec's to touch: the prompt offered
+    one code path for self_observer and this is not it."""
+    other = "agents/core/self_modifier.py"
+    assert (REPO / other).is_file()
+    assert other not in R.candidate_paths("self_observer")
+
+    with pytest.raises(R.SpecPathOutOfScope) as exc:
+        R.validate(dict(IN_SCOPE, allowed_paths=[other]), AXES, problem=SELF_OBS)
+    assert "never offered for component 'self_observer'" in str(exc.value)
+
+
+def test_the_pinned_half_holds_even_with_no_problem_to_read_a_component_from():
+    """The subset half needs a component; the pinned half does not, and the
+    pinned half is the one that stops production being patched. A caller with no
+    problem dict must not get a free pass into memory/."""
+    with pytest.raises(R.SpecPathOutOfScope):
+        R.validate(dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"]),
+                   AXES, problem=None)
+
+
+def test_scope_is_checked_before_the_metric():
+    """Ordering: a spec whose path is out of scope should be told THAT, not sent
+    to fix a metric on a file it may not touch anyway."""
+    bad = dict(IN_SCOPE, allowed_paths=["memory/_sdg_resolved.json"],
+               success_metric="fewer failures")
+    with pytest.raises(R.SpecPathOutOfScope):
+        R.validate(bad, AXES, problem=SELF_OBS)
+
+
+def test_an_unreadable_pin_list_REFUSES_rather_than_assuming_safe(monkeypatch):
+    """"Could not check" and "checked and fine" must never be the same answer.
+
+    If the grader's pin list cannot be read there is no way to show a path is in
+    scope, so the spec is refused. The forbidden fallback is a hardcoded copy of
+    the list here: it would go stale the moment merits gained a tree, and a net
+    that guards less than it claims is worse than none.
+    """
+    def _boom():
+        raise ImportError("merits is gone")
+
+    monkeypatch.setattr(R, "pinned_trees", _boom)
+    with pytest.raises(R.SpecPathOutOfScope) as exc:
+        R.validate(dict(IN_SCOPE), AXES, problem=SELF_OBS)
+    assert "could not be read" in str(exc.value)
+    assert "Refused rather than assumed safe" in str(exc.value)

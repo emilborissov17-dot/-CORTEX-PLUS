@@ -194,7 +194,8 @@ def test_the_pipeline_refuses_with_the_named_code(monkeypatch, tmp_path):
     monkeypatch.setattr(A, "check_applies", lambda d, **k: (False, "patch does not apply"))
 
     with pytest.raises(P.PipelineRefused) as exc:
-        P.run_once({"problem": "p"}, brain=brain, coder=coder)
+        P.run_once({"problem": "the economy work provider never resolves",
+                    "component": "economy_work"}, brain=brain, coder=coder)
     assert A.CODE in str(exc.value)
 
 

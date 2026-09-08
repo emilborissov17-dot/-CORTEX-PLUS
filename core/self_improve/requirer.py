@@ -181,6 +181,33 @@ class SpecFieldUnfilled(SpecInvalid):
     code = "REFUSED_FIELD_UNFILLED"
 
 
+class SpecPathOutOfScope(SpecInvalid):
+    """REFUSED_PATH_OUT_OF_SCOPE — a real file, and not one this spec may touch.
+
+    EXISTENCE IS NOT CORRECTNESS. REFUSED_PATH_NOT_FOUND asks "does this exist";
+    it does not ask "is this the right KIND of thing, tied to this problem", and
+    on 8 Sep 2026 a live run walked straight through that gap:
+
+        problem        an LLM returning invalid JSON (component self_observer)
+        allowed_paths  ["memory/_sdg_resolved.json"]   <- ACCEPTED
+
+    memory/_sdg_resolved.json is real: an SDG resolution cache, 3.7 KB,
+    untouched since 3 August. It is also a DATA file in production memory/,
+    nothing to do with JSON parsing, and it was accepted because it exists. The
+    model needed a path that existed, and the prompt had shown it twelve real
+    data files for the METRIC — so it borrowed one. The letter of the net
+    satisfied, the intent of it missed entirely.
+
+    Two conditions now, and both are about KIND rather than existence:
+      * never under a PINNED tree — merits.PINNED, the same list the grader
+        refuses, so the two nets fail in the same direction;
+      * a SUBSET of the candidate code paths the prompt actually offered for
+        this component. A path the model was never shown is a path it invented
+        or borrowed, whichever file happens to sit there.
+    """
+    code = "REFUSED_PATH_OUT_OF_SCOPE"
+
+
 class SpecMetricUngrounded(SpecInvalid):
     """SPEC_METRIC_UNGROUNDED — the success_metric names no file that exists.
 
@@ -356,6 +383,68 @@ def _require_filled(spec: dict) -> None:
             f"is nothing to judge.")
 
 
+def pinned_trees() -> tuple:
+    """merits.PINNED, imported late and never guessed.
+
+    LATE ON PURPOSE: core.self_improve.merits imports _METRIC_PATH from this
+    module at import time, so a module-level import here would be a cycle. By
+    the time validate() runs, both modules are loaded.
+
+    NO FALLBACK LIST. A hardcoded copy would go stale the moment merits gained a
+    tree, and a net that silently guards less than it claims is worse than none;
+    if the grader's pin list cannot be read, the spec is refused rather than
+    waved through.
+    """
+    from core.self_improve.merits import PINNED
+    return tuple(PINNED)
+
+
+def _require_paths_in_scope(spec: dict, problem: dict | None) -> None:
+    """REFUSED_PATH_OUT_OF_SCOPE — the paths are the right KIND of thing.
+
+    The subset half needs the COMPONENT, because candidate_paths() is what the
+    prompt offered and it is component-specific. With no problem to read the
+    component from there is nothing to be a subset OF, so only the pinned half
+    applies — stated here rather than left as an accident, and the pinned half
+    is the half that stops production being patched.
+    """
+    paths = [str(p).replace("\\", "/").strip() for p in
+             (spec.get("allowed_paths") or [])]
+    try:
+        pinned = pinned_trees()
+    except Exception as exc:                                     # noqa: BLE001
+        raise SpecPathOutOfScope(
+            f"{SpecPathOutOfScope.code}: the grader's pin list could not be read "
+            f"({type(exc).__name__}: {exc}), so no path can be shown to be in "
+            f"scope. Refused rather than assumed safe.") from exc
+
+    for rel in paths:
+        for pin in pinned:
+            if rel == pin.rstrip("/") or rel.startswith(pin if pin.endswith("/")
+                                                        else pin + "/"):
+                raise SpecPathOutOfScope(
+                    f"{SpecPathOutOfScope.code}: {rel!r} is under a PINNED tree "
+                    f"({pin}). The verifier, the policy, the rules of passage, "
+                    f"the tests that pin them and production state are out of "
+                    f"reach of every patch. It exists; that is not the same as "
+                    f"being something this spec may change, and the grader "
+                    f"refuses it too — one net is a single point of failure.")
+
+    if problem is None:
+        return
+    offered = candidate_paths(str(problem.get("component", "unknown")))
+    stray = [p for p in paths if p not in offered]
+    if stray:
+        raise SpecPathOutOfScope(
+            f"{SpecPathOutOfScope.code}: {stray} "
+            f"{'was' if len(stray) == 1 else 'were'} never offered for component "
+            f"{problem.get('component', 'unknown')!r}. The prompt lists the real "
+            f"code paths for this component and allowed_paths must be a subset "
+            f"of that list: {offered[:6]}{' ...' if len(offered) > 6 else ''}. A "
+            f"path the model was never shown is a path it invented or borrowed "
+            f"from another list, whichever file happens to sit there.")
+
+
 def validate(spec: dict, axes: set | None = None,
              problem: dict | None = None) -> dict:
     """Refuse anything that is not a well-formed, code-free spec."""
@@ -439,6 +528,7 @@ def validate(spec: dict, axes: set | None = None,
             f"listed.")
 
     _reject_code(spec)
+    _require_paths_in_scope(spec, problem)
     _require_grounded_metric(spec)
     _require_grounded_axis(spec, problem)
     return spec
@@ -957,7 +1047,8 @@ def _selftest() -> int:
     # a real file, and an axis the target path itself grounds. Each of those
     # was a placeholder here once ("data_providers/", "count of rows"), and
     # the selftest printed OK while the pipeline refused every real spec.
-    problem = {"problem": "the economy work provider never resolves its series"}
+    problem = {"problem": "the economy work provider never resolves its series",
+               "component": "economy_work"}
     good = {"problem": "the provider never resolves the series",
             "root_cause": "the observation map has no entry for the key",
             "desired_change": "the provider resolves the series",

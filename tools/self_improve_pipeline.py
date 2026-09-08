@@ -529,7 +529,9 @@ def _selftest() -> int:
 
     brain, coder = _fixture_models()
     try:
-        rec = run_once({"problem": "selftest"}, brain=brain, coder=coder)
+        rec = run_once({"problem": "the economy work provider never resolves its series",
+                          "component": "economy_work"},
+                         brain=brain, coder=coder)
         print(f"  merits verdict: {rec['verdict']}")
         print(f"                  {rec['reason'][:70]}")
         print(f"  production    : {rec['production_verdict']} "
