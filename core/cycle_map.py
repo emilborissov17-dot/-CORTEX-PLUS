@@ -97,8 +97,24 @@ STEPS = [
     ("energy_review", "10", "Енергиен преглед.", [], False),
     ("self_awareness", "11", "Агент за самоосъзнаване.",
      ["memory/self_profile.json", "memory/self_narrative_latest.txt"], False),
+    # PRODUCT NARROWED 8 сеп 2026, from the TREE to the FILE.
+    # This row declared "snapshots/master" — the whole directory — and
+    # kept_promise() takes the NEWEST file's mtime inside a tree. But
+    # snapshots/master/ also holds goal_score_latest.json and
+    # needs_reanalysis_latest.json, written by OTHER steps in the same cycle. So
+    # update_master could fail to write its own artifact and still read ОБНОВИ,
+    # on somebody else's file. A promise that another step can keep for you is
+    # not a promise.
+    #
+    # update_master() writes exactly one file, at fast_cycle_runner.py:1416:
+    # snapshots/master/master_snapshot_latest.json. That is what
+    # config/cycle_phases.json already promises from D_SCORE — the same
+    # disagreement between the two cards that scoring_engine had, with the phase
+    # card right again.
+    #
+    # No logic changed: only what the table says this step leaves behind.
     ("update_master", "12", "Слива всичко в master snapshot.",
-     ["snapshots/master"], True),
+     ["snapshots/master/master_snapshot_latest.json"], True),
     ("system_hypergraph", "12.3", "Строи хиперграфа на системата.", [], False),
     # PRODUCT DECLARED 8 сеп 2026. This row carried [] — which the header of
     # this file defines as "не знаем", not "нищо не произвежда" — on the step

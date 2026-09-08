@@ -2905,7 +2905,24 @@ def main():
 
     # ── 12. Update master след всички snapshots ──
     beat("update_master", "12")
-    update_master()
+    # ── A TRACE THAT IT RAN (8 Sep 2026) ───────────────────────────────────
+    # BACKBONE, and it recorded nothing: not a _run() step, so core/blackbox.py
+    # never saw it. A hard kill while merging the master snapshot left no
+    # evidence it had started.
+    #
+    # NO try/except IS ADDED, AND THAT IS DELIBERATE. Unlike scoring_engine,
+    # this call is UNGUARDED — an exception here has always killed the cycle,
+    # and that is the behaviour of a backbone step that cannot produce the
+    # master snapshot. Adding a handler would turn a fatal step fail-open, which
+    # is a logic change, not a trace. With no except to swallow it, the
+    # exception passes through __exit__ (recording 'error') and propagates on,
+    # exactly as before.
+    #
+    # _resolve_reanalysis() below keeps its own guard and stays OUTSIDE this
+    # context: it has a swallowing except, so inside the trace it would let a
+    # failure be recorded as a clean 'end'.
+    with _bb_step("update_master"):
+        update_master()
     # Гасенето на „чака преразглеждане" живее ТУК, в гръбнака (Kimi, стъпка 7, т.4):
     # ако беше на пропускаема стъпка, един пропуск оставяше флага висок завинаги.
     try:
