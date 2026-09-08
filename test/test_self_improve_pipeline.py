@@ -104,7 +104,8 @@ def test_the_pipeline_runs_end_to_end_and_reaches_a_verdict(mocked_models, tmp_p
     assert record["changed_files"] == [P.FIXTURE_FILE]
 
 
-def test_the_verdict_today_is_FAIL_because_the_policy_is_LOCKED(mocked_models, tmp_path):
+def test_the_production_ceiling_is_still_LOCKED_and_still_says_so(mocked_models,
+                                                                  tmp_path):
     """The designed state, asserted rather than assumed. A suite that only
     checked 'no exception' would pass on a judge that had been unlocked."""
     brain, coder = mocked_models
@@ -112,19 +113,51 @@ def test_the_verdict_today_is_FAIL_because_the_policy_is_LOCKED(mocked_models, t
 
     record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
     assert record["policy_locked"] is True
-    assert record["verdict"] == "FAIL"
-    assert "LOCKED" in record["reason"]
+    assert record["production_verdict"] == "FAIL"
+    assert "LOCKED" in record["production_reason"]
 
 
-def test_the_rendered_report_shows_spec_diff_and_verdict(mocked_models, tmp_path):
+def test_the_ceiling_does_not_decide_the_merits(mocked_models, tmp_path):
+    """THE SPLIT, AND THE REASON FOR IT.
+
+    Until 8 Sep 2026 one verdict answered both questions, and the answer was
+    always "global_cap is LOCKED" — correct about production, a NON-ANSWER about
+    the patch. Every run ended FAIL for a reason that had nothing to do with the
+    work, so a competent patch and a confabulated one were indistinguishable in
+    the record. A gate that returns the same verdict to every input is not
+    grading.
+
+    Now a good patch PASSES on merits while production stays locked, and this
+    test fails if those two are ever wired back together."""
+    brain, coder = mocked_models
+    P.OUT_DIR = tmp_path / "runs"
+
+    record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
+
+    assert record["policy_locked"] is True
+    assert record["production_verdict"] == "FAIL"
+    assert record["verdict"] == "PASS", (
+        f"a patch that applies, stays in scope, keeps the tests green and has a "
+        f"recomputable metric did not pass on merits: {record['reason']}")
+    assert "global_cap" not in record["reason"], (
+        "the production ceiling is leaking into the merit verdict")
+    assert [m["name"] for m in record["merits"]["merits"]] == [
+        "in_scope", "applies", "tests_pass", "before_after"]
+
+
+def test_the_rendered_report_shows_both_verdicts_and_what_each_governs(
+        mocked_models, tmp_path):
     brain, coder = mocked_models
     P.OUT_DIR = tmp_path / "runs"
     text = P.render(P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder))
 
-    assert "SPEC" in text and "DIFF" in text and "VERDICT" in text
-    assert "GRANTS NOTHING" in text, (
-        "the report does not say the verdict grants nothing")
-    assert "Nothing was applied" in text
+    for section in ("SPEC", "DIFF", "MERITS", "PRODUCTION"):
+        assert section in text, f"the report has no {section} section"
+    assert "on merits" in text
+    assert "GATES THE PATH TO MAIN ONLY" in text, (
+        "the report does not say what the production verdict governs")
+    assert "Only a human PR can move a fork commit to main" in text
+    assert "Nothing entered production" in text
 
 
 # ---------------------------------------------------------------------------
@@ -247,26 +280,64 @@ def test_the_context_is_budgeted():
 # (b) PRODUCTION IS UNTOUCHED — the assertion this file exists for
 # ---------------------------------------------------------------------------
 
-def test_a_full_run_leaves_every_production_tree_byte_identical(mocked_models,
-                                                                tmp_path):
+def test_a_full_run_makes_no_in_process_write_to_production(mocked_models,
+                                                            tmp_path):
+    """THE ASSERTION THIS FILE EXISTS FOR, made by the instrument that can
+    actually attribute a write.
+
+    This was a before/after fingerprint of every production tree, and it began
+    failing on 8 Sep 2026 — on memory/human_channel_state.json, then on
+    memory/collector_runs.log, neither of them written by this pipeline. This
+    machine runs the supervisor every 5 minutes, the collector every 4 hours and
+    the pulse continuously. The fingerprint was surviving only because a run
+    used to take under a second; grading a patch in a sandbox takes ~13, and the
+    daemons write inside that window.
+
+    conftest.py already reasoned this out and settled it (see the comment above
+    _no_live_writes): a filesystem diff CANNOT tell "a test wrote this" from
+    "another process wrote this", so it warns, while the in-process interceptor
+    fails. A hard-failing filesystem diff is a guard that cries wolf, and a
+    guard that cries wolf gets switched off — precisely when it would finally
+    have caught something real.
+
+    So the check is made by the autouse _no_live_writes fixture, which patches
+    the write primitives and FAILS this test at teardown if the run touches a
+    guarded tree from inside this process. The two assertions below are here so
+    the test cannot pass vacuously: the guard must actually be installed, and
+    the run must actually have happened.
+    """
+    import builtins
+
     brain, coder = mocked_models
     P.OUT_DIR = tmp_path / "runs"
 
-    before = _fingerprint()
-    P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
-    after = _fingerprint()
+    assert builtins.open.__name__ == "open_", (
+        "conftest's _no_live_writes is not installed, so this test would pass "
+        "on a pipeline that wrote straight into memory/")
 
-    added = sorted(set(after) - set(before))
-    removed = sorted(set(before) - set(after))
-    changed = sorted(k for k in before.keys() & after.keys()
-                     if before[k] != after[k])
+    record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
+    assert record["verdict"] in ("PASS", "FAIL"), record
 
-    assert not added, f"the pipeline CREATED production files: {added}"
-    assert not removed, f"the pipeline DELETED production files: {removed}"
-    assert not changed, (
-        f"the pipeline MODIFIED production files: {changed}. An experimental "
-        f"self-modification pipeline that writes into the record the nightly "
-        f"cycle reads is the worst possible version of this feature.")
+
+def test_the_patch_is_applied_outside_the_repository_and_nothing_survives():
+    """The subprocess half of the same question, which the in-process guard
+    cannot see: the patch is applied in a throwaway worktree under the system
+    temp directory, and no worktree is left registered afterwards."""
+    import subprocess
+
+    from core.self_improve import merits as M
+
+    seen = {}
+    with M.Sandbox() as sb:
+        seen["path"] = sb.path
+        assert sb.path.is_dir()
+        assert REPO not in sb.path.parents, (
+            f"the sandbox is INSIDE the repository: {sb.path}")
+
+    assert not seen["path"].exists(), "the sandbox worktree was left on disk"
+    listed = subprocess.run(["git", "worktree", "list"], cwd=str(REPO),
+                            capture_output=True, text=True).stdout.splitlines()
+    assert len(listed) == 1, f"a sandbox worktree survived: {listed}"
 
 
 def test_the_pipeline_refuses_to_write_outside_experiments():
@@ -294,18 +365,36 @@ def test_the_revocation_ledger_stays_in_the_experimental_tree():
         "ledger; a hand run would append to the production record")
 
 
-def test_it_applies_nothing():
-    """No git, no subprocess, no patch application. It prints a diff."""
-    tree = ast.parse((REPO / "tools" / "self_improve_pipeline.py")
-                     .read_text(encoding="utf-8"))
-    imported = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            imported.update(a.name.split(".")[0] for a in node.names)
-        elif isinstance(node, ast.ImportFrom) and node.module:
-            imported.add(node.module.split(".")[0])
-    for bad in ("subprocess", "git", "shutil"):
-        assert bad not in imported, f"the pipeline imports {bad}"
+def test_it_applies_nothing_to_the_working_tree():
+    """WHAT CHANGED, AND WHAT DID NOT (8 Sep 2026).
+
+    This used to assert the pipeline imported no subprocess at all. That is no
+    longer true and should not be: the pipeline now grades a patch by applying
+    it inside a throwaway git worktree and, with --advance, commits a PASS to a
+    per-run branch. Both need git.
+
+    What must stay true is the thing the old assertion was reaching for — the
+    patch is never applied to the tree the human is working in, and nothing the
+    pipeline runs can move a commit toward main. So the check moved from "no
+    subprocess" to the two facts that matter, one here and one in
+    test/test_fork_advances.py::test_the_advancing_code_cannot_push_merge_or_rebase.
+    """
+    src = (REPO / "tools" / "self_improve_pipeline.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+
+    # Every git argv the PIPELINE itself builds, read off the AST.
+    argvs = [n for n in ast.walk(tree)
+             if isinstance(n, ast.List) and n.elts
+             and isinstance(n.elts[0], ast.Constant) and n.elts[0].value == "git"]
+    for argv in argvs:
+        args = [e.value for e in argv.elts if isinstance(e, ast.Constant)]
+        assert args[1] in ("diff", "branch", "rev-parse", "status", "worktree"), (
+            f"the pipeline runs `git {args[1]}` directly: {args}. It reads git; "
+            f"applying and committing belong to the modules that are pinned "
+            f"against pushing and merging.")
+        assert "apply" not in args, (
+            f"the pipeline applies a patch itself: {args}. Applying happens "
+            f"inside a sandbox worktree, in merits.py, never here.")
 
     # THE DISTINCTION THAT MATTERS, and a text search cannot make it.
     # Since the content net landed, `git apply --check` runs on every patch —
@@ -334,8 +423,7 @@ def test_it_applies_nothing():
             f"else writes to the tree.")
     assert applies_cmds, "applies.py no longer runs git apply --check at all"
 
-    src = (REPO / "tools" / "self_improve_pipeline.py").read_text(encoding="utf-8")
-    for bad in ("patch -p", "os.system", "git commit", "git push"):
+    for bad in ("patch -p", "os.system", "git push", "git merge"):
         assert bad not in src, f"the pipeline reaches for {bad!r}"
 
 

@@ -3,32 +3,56 @@
 """
 tools/self_improve_pipeline.py — requirer -> implementer -> judge, BY HAND ONLY.
 
-    local brain  ->  SPEC        core/self_improve/requirer.py
-    cloud ladder ->  DIFF        core/self_improve/implementer.py
-    deterministic -> VERDICT     core/earning.verify()
+    local brain   ->  SPEC       core/self_improve/requirer.py
+    cloud ladder  ->  DIFF       core/self_improve/implementer.py
+    deterministic ->  MERITS     core/self_improve/merits.grade()     <- the work
+    deterministic ->  PRODUCTION core/earning.verify()                <- the ceiling
+    on PASS       ->  COMMIT     core/self_improve/forkadvance.py     <- in the fork
+
+THE PRINCIPLE
+--------------
+No model output passes a stage unverified; the FORK advances by STANDARD,
+production is gated by a human PR.
+
+THE GATE IS SPLIT (8 Sep 2026)
+-------------------------------
+This file used to print one verdict, and that verdict was always FAIL for one
+reason: global_cap is LOCKED. That is the right answer to "may this be granted
+capability in production" and a NON-ANSWER to "is this patch any good" — so a
+competent patch and a confabulated one ended identically, printed and thrown
+away. A gate that returns the same answer to every input is not grading.
+
+Now two questions are asked separately, and both are printed:
+
+    MERITS      applies + in scope + tests pass + before/after, graded in a
+                clean sandbox worktree. Evidence only; no ceiling is consulted.
+    PRODUCTION  core.earning.verify(), which still says LOCKED, and which now
+                gates ONE thing: the path to main.
+
+On a PASS on merits, --advance COMMITS the patch to a per-run branch off
+experimental/self-mod. The fork moves. Production does not.
 
 EXPERIMENTAL, on branch experimental/self-mod. This is NOT in the cycle:
 
   * nothing imports it — fast_cycle_runner.py does not know it exists;
   * it runs only when a human types the command below;
-  * it APPLIES NOTHING. It prints a diff. It does not write to the working tree,
-    does not stage, does not commit, does not touch any tracked file;
+  * it never touches the working tree. Patches are applied inside throwaway git
+    worktrees; the human's checkout, branch and uncommitted changes are not read
+    and not modified;
+  * it NEVER commits to main or master. --advance commits only to
+    experimental/self-mod-run-<id>, and only a human PR can move that toward
+    main;
   * it writes only under experiments/self_improve/, and only with --write;
-  * the verdict it prints GRANTS NOTHING. core/earning.py is inert by
-    construction — config/earning_classes.json is LOCKED with no signed class,
-    and core/notary.py does not import it. A PASS here is a statement about
-    evidence, and nothing consumes it.
-
-WHAT IT IS FOR
----------------
-Answering one question, end to end, on demand: if the local brain writes the
-spec and the cloud writes the patch, does the deterministic judge accept the
-result? Today the answer is always FAIL — global_cap is LOCKED — and that is the
-correct answer, printed rather than hidden.
+  * a PASS on merits GRANTS NOTHING. core/earning.py stays inert —
+    config/earning_classes.json is LOCKED with no signed class and
+    core/notary.py does not import it. A merit PASS is a statement about a
+    patch, consumed by nothing but a branch name.
 
 FORBIDDEN FALLBACKS, NAMED
-  * do NOT apply the diff, even if the verdict is PASS. Applying is a human
-    decision made somewhere else.
+  * do NOT commit anything that did not PASS on merits. "It nearly passed" is
+    not a merit, and a branch full of near-misses is worse than no branch.
+  * do NOT let the production ceiling decide a merit, or a merit decide
+    production. That collapse is exactly what this commit undid.
   * do NOT write into memory/ or snapshots/. The pipeline asserts its own output
     directory is under experiments/ before writing anything.
   * do NOT continue past a refusal to make the run "complete". A spec that
@@ -38,6 +62,7 @@ FORBIDDEN FALLBACKS, NAMED
     venv\\Scripts\\python.exe tools/self_improve_pipeline.py --selftest
     venv\\Scripts\\python.exe tools/self_improve_pipeline.py --dry-run
     venv\\Scripts\\python.exe tools/self_improve_pipeline.py            # live models
+    venv\\Scripts\\python.exe tools/self_improve_pipeline.py --advance  # + fork commit
 """
 from __future__ import annotations
 
@@ -70,6 +95,38 @@ PRODUCTION = ("memory", "snapshots", "cortex_memory", "config", "agents",
 
 class PipelineRefused(Exception):
     """A stage refused. The run ends; that refusal is the result."""
+
+
+CODE_TARGET_DIRTY = "REFUSED_TARGET_DIRTY"
+
+
+def _refuse_if_target_is_dirty(spec: dict, base: str = "experimental/self-mod") -> None:
+    """The implementer reads the WORKING TREE; the grader grades a clean checkout
+    of the fork branch. When those differ for a target file, the patch is written
+    against one tree and judged against another, and it fails with git's content
+    error — which reads like the model confabulating when in fact the human had
+    uncommitted edits.
+
+    Refusing here, by name, keeps that from being misread as a model failure.
+    The forbidden fallback is grading it anyway and blaming the diff.
+    """
+    import subprocess as _sp
+
+    paths = [str(p) for p in (spec.get("allowed_paths") or [])]
+    if not paths:
+        return
+    try:
+        out = _sp.run(["git", "diff", "--name-only", base, "--", *paths],
+                      cwd=str(REPO), capture_output=True, text=True, timeout=60).stdout
+    except Exception:                                            # noqa: BLE001
+        return
+    dirty = [l.strip() for l in out.splitlines() if l.strip()]
+    if dirty:
+        raise PipelineRefused(
+            f"{CODE_TARGET_DIRTY}: {dirty} differ between the working tree and "
+            f"{base}. The implementer would be shown one version and the grader "
+            f"would judge another, so a correct patch would fail on content. "
+            f"Commit or stash those files before running.")
 
 
 def _assert_experimental(path: Path) -> Path:
@@ -171,15 +228,18 @@ def _read_allowed_files(spec: dict, budget: int = 60000) -> str:
 
 
 def run_once(observation: dict, brain=None, coder=None, class_id: str = "example_axis_key_fix",
-             classes_path: Path | None = None) -> dict:
+             classes_path: Path | None = None, advance: bool = False,
+             run_id: str | None = None, run_tests: bool = True) -> dict:
     """One end-to-end pass. Returns the record; raises PipelineRefused on a stage
     refusal, because a refusal IS the result and must not be smoothed over."""
     from core.self_improve import requirer as R
     from core.self_improve import implementer as I
     from core import earning as E
     from core.self_improve import applies as A
+    from core.self_improve import merits as M
 
-    record = {"ts": datetime.now(timezone.utc).isoformat(),
+    run_id = run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    record = {"ts": datetime.now(timezone.utc).isoformat(), "run_id": run_id,
               "observation": str(observation.get("problem", ""))[:200]}
 
     # 1. the brain writes a spec, and never code
@@ -188,6 +248,7 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
     except (R.SpecContainsCode, R.SpecInvalid) as exc:
         raise PipelineRefused(f"requirer refused: {exc}") from exc
     record["spec"] = spec
+    _refuse_if_target_is_dirty(spec)
 
     # 2. the specialist writes a patch, inside the spec's allowlist
     #
@@ -243,8 +304,35 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
     record["diff"] = built["diff"]
     record["changed_files"] = built["changed_files"]
 
-    # 3. the deterministic judge. It grants nothing; it says whether the
-    #    evidence would have cleared the class's bar.
+    # 3. THE MERITS. Did the work meet the standard? Graded in a clean sandbox
+    #    worktree of the fork branch, on evidence alone — no ceiling, no policy,
+    #    nothing a switch can flip. This is the verdict that can differ between
+    #    a good patch and a confabulated one, which is why it is the run's
+    #    headline verdict.
+    grade = M.grade(spec, built["diff"], built["changed_files"],
+                    run_tests=run_tests)
+    record["merits"] = grade
+    record["verdict"] = grade["decision"]
+    record["reason"] = grade["reason"]
+
+    # 4. THE FORK ADVANCES. A PASS becomes a commit on its own branch off
+    #    experimental/self-mod. Never main; never the fork branch itself.
+    if advance and grade["decision"] == M.PASS:
+        from core.self_improve import forkadvance as FA
+        try:
+            record["advanced"] = FA.advance(
+                built["diff"], spec, run_id, grade,
+                changed_files=built["changed_files"])
+        except FA.AdvanceRefused as exc:
+            record["advanced"] = {"refused": str(exc)}
+    elif advance:
+        record["advanced"] = {"refused": (
+            f"{grade['decision']} on merits — nothing advances. A branch full of "
+            f"near-misses is worse than no branch.")}
+
+    # 5. THE PRODUCTION CEILING, asked separately and answered separately. It
+    #    grants nothing here either; it gates ONE thing — the path to main, which
+    #    a human walks by opening a pull request.
     policy = E.load_classes(path=classes_path)
     class_def = (policy.get("classes") or {}).get(class_id)
     decision, reason = E.verify(
@@ -257,8 +345,8 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
         # experiment must not append to the record the real verifier reads.
         revocations_path=OUT_DIR / "revocations.jsonl",
     )
-    record["verdict"] = decision
-    record["reason"] = reason
+    record["production_verdict"] = decision
+    record["production_reason"] = reason
     record["policy_locked"] = bool(policy.get("locked"))
     return record
 
@@ -277,13 +365,37 @@ def render(record: dict) -> str:
               f"DIFF  (cloud ladder — {len(record.get('changed_files') or [])} file(s))",
               "=" * 72,
               (record.get("diff") or "").rstrip(),
-              "", "=" * 72, "VERDICT  (core/earning.verify — GRANTS NOTHING)",
+              "", "=" * 72,
+              "MERITS  (core/self_improve/merits.grade — EVIDENCE, no ceiling)",
+              "=" * 72]
+    for m in (record.get("merits") or {}).get("merits") or []:
+        lines.append(f"  {'PASS' if m.get('ok') else 'FAIL'}  {m.get('name'):<13} "
+                     f"{str(m.get('why'))[:150]}")
+    lines.append(f"  ---> {record.get('verdict')} on merits")
+
+    adv = record.get("advanced")
+    if adv:
+        lines += ["", "=" * 72, "THE FORK  (a per-run branch off experimental/self-mod)",
+                  "=" * 72]
+        if adv.get("refused"):
+            lines.append(f"  did not advance: {adv['refused'][:300]}")
+        else:
+            lines += [f"  branch   {adv['branch']}",
+                      f"  commit   {adv['commit'][:12]}  (off {adv['base']} "
+                      f"@ {adv['base_commit'][:12]})",
+                      f"  files    {', '.join(adv['files'])}",
+                      f"  to main  {adv['path_to_main']}"]
+
+    lines += ["", "=" * 72,
+              "PRODUCTION  (core/earning.verify — GATES THE PATH TO MAIN ONLY)",
               "=" * 72,
-              f"  {record.get('verdict')}: {record.get('reason')}"]
+              f"  {record.get('production_verdict')}: {record.get('production_reason')}"]
     if record.get("policy_locked"):
-        lines.append("  NOTE: global_cap is LOCKED, so FAIL is the only possible "
-                     "verdict today. That is the designed state, not a defect.")
-    lines.append("  Nothing was applied. This pipeline prints; it does not patch.")
+        lines.append("  global_cap is LOCKED, so FAIL is the only production verdict "
+                     "today. That is the designed state, and it no longer decides "
+                     "whether the work was any good — the merits above do.")
+    lines.append("  Nothing entered production. Only a human PR can move a fork "
+                 "commit to main.")
     return "\n".join(lines)
 
 
@@ -323,6 +435,12 @@ def main(argv=None) -> int:
     ap.add_argument("--write", action="store_true",
                     help="save the run under experiments/self_improve/runs/")
     ap.add_argument("--limit", type=int, default=1)
+    ap.add_argument("--advance", action="store_true",
+                    help="on a PASS on merits, commit the patch to "
+                         "experimental/self-mod-run-<id>. Never main.")
+    ap.add_argument("--runs", type=int, default=1,
+                    help="repeat the SAME observation N times, for measuring "
+                         "how stable the pipeline is rather than how lucky")
     args = ap.parse_args(argv)
 
     if args.selftest:
@@ -339,23 +457,29 @@ def main(argv=None) -> int:
 
     rc = 0
     for observation in obs[:args.limit]:
-        try:
-            record = run_once(observation, brain=brain, coder=coder)
-        except PipelineRefused as exc:
-            print("=" * 72)
-            print(f"REFUSED: {exc}")
-            print("A refusal is the result of this run, not a step to continue "
-                  "past. Nothing was applied.")
-            rc = 1
-            continue
-        print(render(record))
-        if args.write:
-            _assert_experimental(OUT_DIR).mkdir(parents=True, exist_ok=True)
-            stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-            out = OUT_DIR / f"run_{stamp}.json"
-            out.write_text(json.dumps(record, ensure_ascii=False, indent=2),
-                           encoding="utf-8")
-            print(f"\n  saved -> {out.relative_to(REPO)}")
+        for n in range(1, max(1, args.runs) + 1):
+            run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + f"-{n}"
+            if args.runs > 1:
+                print("\n" + "#" * 72)
+                print(f"# RUN {n} of {args.runs}  (run_id {run_id})")
+                print("#" * 72)
+            try:
+                record = run_once(observation, brain=brain, coder=coder,
+                                  advance=args.advance, run_id=run_id)
+            except PipelineRefused as exc:
+                print("=" * 72)
+                print(f"REFUSED: {exc}")
+                print("A refusal is the result of this run, not a step to continue "
+                      "past. Nothing was applied and nothing was committed.")
+                rc = 1
+                continue
+            print(render(record))
+            if args.write:
+                _assert_experimental(OUT_DIR).mkdir(parents=True, exist_ok=True)
+                out = OUT_DIR / f"run_{run_id}.json"
+                out.write_text(json.dumps(record, ensure_ascii=False, indent=2),
+                               encoding="utf-8")
+                print(f"\n  saved -> {out.relative_to(REPO)}")
     return rc
 
 
@@ -364,6 +488,8 @@ def _selftest() -> int:
     ok = True
     for label, mod in (("requirer", "core.self_improve.requirer"),
                        ("implementer", "core.self_improve.implementer"),
+                       ("merits grader", "core.self_improve.merits"),
+                       ("fork advance", "core.self_improve.forkadvance"),
                        ("earning judge", "core.earning")):
         try:
             __import__(mod)
@@ -386,14 +512,48 @@ def _selftest() -> int:
     except PipelineRefused:
         print("  a write to memory/ : refused")
 
+    import subprocess
+
+    def _branches():
+        out = subprocess.run(["git", "branch", "--list",
+                              "experimental/self-mod-run-*"], cwd=str(REPO),
+                             capture_output=True, text=True).stdout
+        return {l.strip("* ").strip() for l in out.splitlines() if l.strip()}
+
+    def _head(ref):
+        return subprocess.run(["git", "rev-parse", ref], cwd=str(REPO),
+                              capture_output=True, text=True).stdout.strip()
+
+    before_branches, before_main = _branches(), _head("master")
+
     brain, coder = _fixture_models()
     try:
         rec = run_once({"problem": "selftest"}, brain=brain, coder=coder)
-        print(f"  end to end    : reached a verdict -> {rec['verdict']}")
+        print(f"  merits verdict: {rec['verdict']}")
         print(f"                  {rec['reason'][:70]}")
+        print(f"  production    : {rec['production_verdict']} "
+              f"({rec['production_reason'][:44]})")
+        # THE SPLIT, ASSERTED: the two verdicts answer different questions, so a
+        # locked ceiling must not be able to decide the merits. If they are
+        # always equal the split has quietly collapsed back into one gate.
+        split = not (rec["verdict"] == "FAIL" and rec["policy_locked"] and
+                     rec["production_verdict"] == "FAIL" and
+                     "global_cap" in rec["reason"])
+        print(f"  the two are separate : "
+              f"{'yes' if split else 'NO — the ceiling is deciding the merits'}")
+        ok = ok and split
     except Exception as exc:                                     # noqa: BLE001
         print(f"  end to end    : BROKEN ({type(exc).__name__}: {exc})")
         ok = False
+
+    # WITHOUT --advance, NOTHING IS COMMITTED. Measured, not asserted in prose.
+    same = _branches() == before_branches
+    print(f"  no --advance -> no branch : "
+          f"{'confirmed' if same else 'A BRANCH APPEARED — wrong'}")
+    ok = ok and same
+    print(f"  master untouched          : "
+          f"{'confirmed' if _head('master') == before_main else 'MASTER MOVED — wrong'}")
+    ok = ok and _head("master") == before_main
 
     print(f"  RESULT: {'OK' if ok else 'BROKEN'}")
     return 0 if ok else 1
