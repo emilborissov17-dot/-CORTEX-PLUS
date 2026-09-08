@@ -70,14 +70,29 @@ ATTEST_DIR = BASE / "attestation"
 ATTEST_LOG = ATTEST_DIR / "attest.jsonl"
 ATTEST_HEAD = ATTEST_DIR / "chain.head"          # последният хеш на веригата
 
-# Нивата. 3 = пълно доверие, 0 = нищо не се знае за произхода.
+# ── THE RULES COME FROM ONE FILE (8 сеп 2026) ──────────────────────────────
+# Everything below this line used to be a literal here and NOWHERE ELSE, which
+# meant the actor being judged could not read the standard it was judged by, and
+# any prose describing these rules was a second copy free to drift from them.
+# They now live in config/passage_rules.json; this module READS them to judge and
+# every gated actor is SHOWN the same file's actor_block. One object, two
+# readers, and test/test_passage_rules.py goes red if they stop matching.
+#
+# NO VALUE CHANGED in that move. It is transparency, not policy.
+#
+# FAIL CLOSED: if the file cannot be read, passage_rules.load() returns
+# irreversible_min = UNREACHABLE(99) and may_act() then refuses every
+# irreversible step. A ruleset that cannot be read is never permission.
+from core.passage_rules import RULES as _RULES
+
+# Нивата. 3 = пълно доверие, 0 = нищо не се знае за произхода. The SCALE stays a
+# literal — it is what a level IS, not a policy about what a level buys.
 FULL, REDUCED, MINIMAL, UNKNOWN = 3, 2, 1, 0
-LEVEL_NAMES = {3: "level_3 (пълно)", 2: "level_2 (намалено)",
-               1: "level_1 (минимално)", 0: "level_0 (неизвестен произход)"}
+LEVEL_NAMES = _RULES["level_names"]
 
 # Прагът, под който НЕОБРАТИМО действие не се разрешава. Некласифицираното пада
 # към най-ограниченото — както е в проекта на OpenClaw (default_unclassified).
-IRREVERSIBLE_MIN = REDUCED
+IRREVERSIBLE_MIN = _RULES["irreversible_min"]
 
 # ── EXPLICIT CEILINGS: A STATED INVARIANT, NOT AN ACCIDENT OF IGNORANCE ────
 # A step named here can never be stamped above its ceiling, however healthy
@@ -109,9 +124,12 @@ IRREVERSIBLE_MIN = REDUCED
 # may_act() refuses. That is the decision, not a side effect: the step does not
 # run. RAISING A CEILING IS AMENDMENT_001'S BUSINESS - cooling-off ends
 # 19 Oct 2026. Lowering one, or adding a step, is an ordinary change.
-MAX_LEVEL = {
-    "execute_patches": MINIMAL,
-}
+# READ FROM config/passage_rules.json since 8 сеп 2026, value unchanged
+# ({"execute_patches": 1}). Configurable is not the same as quietly editable:
+# test_the_ratified_values_have_not_moved pins every number in that file, so
+# raising this ceiling takes an edit to the config AND to that test, in one diff,
+# where a human sees it. Raising it remains AMENDMENT_001's business.
+MAX_LEVEL = _RULES["ceilings"]
 
 # ── ЯВНИ МАРКЕРИ ЗА ПРЕДШЕСТВЕНИКА ─────────────────────────────────────────
 # Извикващият ТРЯБВА да каже кое от двете е вярно. Няма стойност по подразбиране,
@@ -123,15 +141,11 @@ PREV_NONE = "__no_previous_step__"     # явно: това Е първата с
 # Само те имат право да ПРЕЧУПЯТ наследеното (Kimi: „верификациите пречупват").
 # Списъкът е нарочно къс и явен: всяко добавяне тук е разширяване на правото за
 # измиване и трябва да се вижда в diff-а.
-VERIFIERS = {
-    "global_indicators",     # ~20 живи HTTP източника
-    "sensorium_ingest",      # сензорни капки с проверка на веригата
-    "browser_scout",         # ходи по реални страници
-    "internet_intelligence",
-    "web_intelligence",
-}
+# Same five as before, now read from config/passage_rules.json so the list an
+# actor is shown and the list the gate applies cannot diverge.
+VERIFIERS = _RULES["verifiers"]
 
-_STALE_DAYS = (2, 30, 365)   # праговете за давност на входовете
+_STALE_DAYS = _RULES["stale_days"]   # праговете за давност на входовете
 
 
 def _now() -> str:

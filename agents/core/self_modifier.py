@@ -17,6 +17,30 @@ try:
 except Exception:
     _rec = lambda *a, **k: None
 
+# ── THE ACTOR IS SHOWN THE RULES IT IS JUDGED BY (8 сеп 2026) ──────────────
+# This model was refused 35 nights running on an origin level its prompt never
+# mentioned. Being marked against an unseen rubric and then asked to do better is
+# not a instruction problem the model can solve.
+#
+# Taken from config/passage_rules.json — the SAME object core/notary.py reads to
+# judge — so the stated rule and the enforced rule cannot drift.
+# test_passage_rules.py asserts this block is byte-identical to the file's
+# actor_block and that the built prompt contains it verbatim.
+#
+# SHARED BY DESIGN: passage_rules.actor_block() is the single accessor. Any
+# future gated producer imports the same function rather than paraphrasing, which
+# is how a second, slightly-wrong copy would get born.
+try:
+    from core.passage_rules import actor_block as _actor_block
+    PASSAGE_RULES_BLOCK = _actor_block()
+except Exception as _e:                                          # noqa: BLE001
+    # Fail LOUD, and say what the model is missing. Never a silent empty string:
+    # a prompt quietly missing its rules looks identical to one that has them.
+    print(f"[SELF_MODIFIER] THE RULES OF PASSAGE could not be loaded "
+          f"({type(_e).__name__}: {_e}) — the model is being asked to work "
+          f"without the standard it will be judged by")
+    PASSAGE_RULES_BLOCK = ""
+
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 
 # LIFTED OUT OF _write_python() ON 17 AUG 2026, for the reason supervisor.py already
@@ -332,6 +356,10 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
 
     prompt = (
         f"{memory_block}\n\n" if memory_block else ""
+    ) + (
+        # FIRST, before the task. A rule that arrives after the work is described
+        # is a rule the model has already stopped reading.
+        f"{PASSAGE_RULES_BLOCK}\n\n" if PASSAGE_RULES_BLOCK else ""
     ) + (
         f"Ти си CORTEX++ self-modifier. Трябва да РЕШИШ реален проблем.\n\n"
         f"ПРОБЛЕМ: {problem}\n"
