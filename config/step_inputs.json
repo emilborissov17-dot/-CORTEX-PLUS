@@ -109,6 +109,32 @@
       ],
       "_also_reads_why": "auto_level.py:201 — its OWN previous output, read inside a try/except to compare against and detect corrections. Absence is not a failure (the first run creates it), and it must NOT gate the step: a step whose age dimension depends on its own last output would be grading itself, and one missed night would then hold it down for ever. Same reasoning as resolve_hypotheses/resolved.json above.",
       "derived_from": "2026-09-08. Read memory/auto_level.py line by line on the path fast_cycle_runner.py:3008 actually calls — run() — not from the scanner (which returned []) and not from the step name. AST-checked that the module performs exactly three file operations: read_text at 197 and 201, write_text at 268. Nothing else is opened. WHY THIS ENTRY EXISTS: auto_levels produces memory/auto_levels.json, which self_modifier declares as an input, so with no declaration of its own it stamped level_0 (_age_state([]) fails closed to UNKNOWN) on that artifact and step 18 inherited the 0. Measured before this entry: core/blind_producers.py named auto_levels as one of two blind producers feeding self_modifier's gate."
+    },
+    "global_indicators": {
+      "entry_point": "core.global_indicators.fetch_all(previous=...) — fast_cycle_runner.py:2689, step 2.5. Twenty of its twenty-one sections are live HTTP; exactly one reads from disk, and the previous snapshot is read by the RUNNER at 2686 and handed in, not opened by the module.",
+      "inputs": [
+        "data/ucdp"
+      ],
+      "_inputs_why": {
+        "data/ucdp": "global_indicators.py:377-389, _resolve_ucdp_csv() -> _fetch_ucdp_local_csv(): UCDP_LOCAL_CSV.exists(), else UCDP_LOCAL_DIR.glob('*.csv') filtered on the 'ucdpprioconflict' prefix and sorted, then path.open() at 406. The UCDP/PRIO Armed Conflict Dataset is the ONLY local input this verifier has, and its age is a real provenance fact: the active-conflict count published every night is exactly as old as this CSV. Measured 2026-09-08: 56.8 days, which scores MINIMAL(1) rather than the UNKNOWN(0) it scored while undeclared — lower than anyone would like, and TRUE, which is the whole point. The directory is declared rather than the versioned filename because the resolver deliberately picks the highest-sorting v-NN_N file so next year's release needs no code change."
+      },
+      "also_reads": [
+        "snapshots/master/global_indicators_latest.json"
+      ],
+      "_also_reads_why": "fast_cycle_runner.py:2686 reads it and passes it in as `previous=` so a metric that fails tonight keeps its last good value marked and dated instead of being blanked. It is this step's OWN previous output and must not gate it: a step whose age depends on its last output grades itself.",
+      "derived_from": "2026-09-08. Read core/global_indicators.py on the path fast_cycle_runner.py actually calls. AST census of the whole module: exists at 377, glob at 384, open at 406 — three file operations, all three on data/ucdp. Everything else in _SECTIONS is an HTTP fetch."
+    },
+    "sensorium_ingest": {
+      "entry_point": "experiments.sensorium.sensorium.ingest() then verify() — fast_cycle_runner.py:2760-2761, step 2.54. Both run on this step; verify() re-derives BOTH merkle chains independently, so the files it re-hashes are as much this step's inputs as the drops ingest() routes.",
+      "inputs": [
+        "memory/sensorium",
+        "memory/penumbra"
+      ],
+      "_inputs_why": {
+        "memory/sensorium": "The verified chain. sensorium.py holds LEAVES (_merkle_leaves.jsonl), ROOT_FILE (_merkle_root.json) and CONSUMED (_consumed.json) as constants under this directory; verify() reads the leaves at 195-203 and re-hashes every drop they name via `REPO / lf['path']`, and ingest() reads LEAVES at 418-420 and CONSUMED to find what is not yet routed. The whole tree is declared because the drop paths come out of the leaf records at runtime — no static list of them exists, which is exactly why the scanner returned [].",
+        "memory/penumbra": "The shadow chain, verified INDEPENDENTLY on the same step (PENUMBRA_LEAVES, PENUMBRA_ROOT, and cold storage under cold/). It is a separate input, not a detail of the first: the module's own contract is that a corrupted shadow must never cast doubt on verified sense and a corrupted verified chain must never hide behind a healthy shadow, so a stale shadow is its own fact. Measured 2026-09-08: 14.5 days against 0.4 for the verified chain."
+      },
+      "derived_from": "2026-09-08. Read experiments/sensorium/sensorium.py — the module-level path constants and the bodies of ingest() and verify(), which are the two functions the cycle calls. The paths the module re-hashes are read out of the leaf records at runtime (`REPO / lf['path']`), so no literal-path scanner can resolve them; the containing trees are declared instead, which is what this file's _how_to_add_a_step prescribes for that case."
     }
   }
 }

@@ -57,15 +57,51 @@ sys.path.insert(0, str(REPO))
 from core.declared_inputs import for_step          # noqa: E402
 from core.notary import VERIFIERS, _age_state, _inputs_for   # noqa: E402
 
-# The debt as measured on 2026-09-05. This set is a LEDGER, not permission:
-# test_every_verifier_declares_what_it_reads still fails for every name in it.
-# Its only job is to let a NEWLY added landmine be told apart from the four
-# already known, so the second failure is not lost in the first.
+# The debt, measured 2026-09-05 and REDUCED 2026-09-08 from four names to two.
+# This set is a LEDGER, not permission: test_every_verifier_declares_what_it_reads
+# still fails for every name in it. Its only job is to let a NEWLY added landmine
+# be told apart from the ones already known, so the second failure is not lost in
+# the first.
+#
+# PAID OFF 2026-09-08, by reading each module on the path the cycle calls:
+#   global_indicators -> data/ucdp
+#       _resolve_ucdp_csv/_fetch_ucdp_local_csv (global_indicators.py:377-406).
+#       Its one local input, and its age is a real fact: the active-conflict
+#       count is exactly as old as that CSV. Now scores MINIMAL(1) — lower than
+#       anyone would like, and TRUE, where before it scored UNKNOWN(0).
+#   sensorium_ingest -> memory/sensorium, memory/penumbra
+#       ingest() and verify() re-hash both merkle chains; the drop paths come out
+#       of the leaf records at runtime, so the trees are declared. Now REDUCED(2).
+#
+# WHY THE REMAINING TWO ARE A DIFFERENT PROBLEM, AND ARE NOT DECLARED HERE.
+# Neither reads any local file whose age means anything:
+#   browser_scout          AST census of experiments/browser_scout/scout.py: one
+#                          write_text (its own output) and one read_text behind
+#                          sys.argv, which the cycle never takes. Its SOURCES
+#                          table of URLs is a literal in the module. It reads
+#                          NOTHING locally on the cycle path.
+#   internet_intelligence  agents/internet/internet_agent.py reads only its own
+#                          outputs and caches — memory/youtube_adaptive_memory.json
+#                          (896, written at 904) and memory/transcript_cache —
+#                          plus .env for a key. Declaring a step's own cache as
+#                          its input makes it grade itself; declaring a secrets
+#                          file ties the gate to a credential's mtime. Neither is
+#                          a provenance statement.
+#
+# So the honest declaration for both is EMPTY, and an empty declaration is
+# UNKNOWN by design (core/notary._age_state fails closed). Their real input is a
+# live URL, and the notary's age model has no category for that. Inventing a file
+# to declare would be faking provenance — the one thing this whole subsystem
+# exists to refuse.
+#
+# THE DECISION IS EMIL'S, and REMEDY below already states both acceptable
+# answers: give them a real local input (e.g. move the URL tables into a config
+# file that IS declared and IS aged), or take them out of VERIFIERS, since a step
+# with no local provenance cannot honestly hold the right to BREAK inherited
+# provenance. Not decided here.
 KNOWN_UNDECLARED = {
     "browser_scout",
-    "global_indicators",
     "internet_intelligence",
-    "sensorium_ingest",
 }
 
 REMEDY = (
@@ -257,3 +293,90 @@ def test_a_declared_verifier_scores_above_unknown():
     level, why = _age_state(inputs, source)
     assert inputs, "web_intelligence lost its declaration"
     assert level > 0, f"declared but still UNKNOWN: {why}"
+
+
+# ── COMMIT C: a declaration must be BOUND to what the code opens ─────────────
+# A verifier trusted to BREAK inherited provenance must declare the source it
+# checks, or it cannot itself be trusted. And a declaration nobody verifies is a
+# second copy free to drift from the code — the same defect one level up. These
+# read the modules.
+
+_DECLARED_VERIFIER_READS = {
+    # step -> (module path, the constant that must still resolve to the declared
+    #          path, the fragments that must appear in that constant)
+    "global_indicators": ("core/global_indicators.py", "UCDP_LOCAL_DIR",
+                          ("data", "ucdp")),
+}
+
+
+@pytest.mark.parametrize("step", sorted(_DECLARED_VERIFIER_READS))
+def test_a_declared_verifier_input_is_one_its_code_actually_opens(step):
+    """Binds config/step_inputs.json to the module's own path constants. If the
+    constant is renamed or repointed, the declaration is stale and the gate is
+    aging a file the step no longer reads."""
+    import ast
+
+    rel, const_name, fragments = _DECLARED_VERIFIER_READS[step]
+    tree = ast.parse((REPO / rel).read_text(encoding="utf-8"))
+    consts = {n.targets[0].id: ast.dump(n.value)
+              for n in tree.body
+              if isinstance(n, ast.Assign) and isinstance(n.targets[0], ast.Name)}
+    assert const_name in consts, (
+        f"{rel} no longer defines {const_name}; the declaration in "
+        f"config/step_inputs.json for {step} is stale")
+    for frag in fragments:
+        assert repr(frag) in consts[const_name], (
+            f"{const_name} in {rel} no longer contains {frag!r}; "
+            f"{step} now declares a path its code does not open")
+
+
+def test_sensorium_declares_both_chains_because_it_verifies_both():
+    """verify() re-derives the verified chain AND the penumbra shadow
+    independently — the module's contract is that a corrupted shadow must never
+    cast doubt on verified sense. A stale shadow is therefore its own fact and
+    must be its own declared input, not folded into the first."""
+    declared = for_step("sensorium_ingest") or []
+    assert "memory/sensorium" in declared
+    assert "memory/penumbra" in declared, (
+        "the shadow chain is verified on this step and is not declared, so its "
+        "age cannot reach the gate")
+
+    src = (REPO / "experiments" / "sensorium" / "sensorium.py").read_text(
+        encoding="utf-8")
+    for const in ("PENUMBRA_LEAVES", "PENUMBRA_ROOT", "LEAVES", "ROOT_FILE"):
+        assert const in src, f"{const} is gone; re-derive the declaration"
+
+
+def test_a_declared_verifier_no_longer_scores_unknown():
+    """The point of the commit: these two stopped being blind. Their levels are
+    LOW and that is honest — data/ucdp really is 57 days old — but low is a
+    measurement and UNKNOWN is the absence of one."""
+    for step in ("global_indicators", "sensorium_ingest"):
+        inputs, source = _inputs_for(step)
+        assert inputs, f"{step} lost its declaration"
+        level, why = _age_state(inputs, source)
+        assert level > 0, f"{step} still scores UNKNOWN: {why}"
+        assert "no declared inputs" not in why
+
+
+def test_no_verifier_declares_its_own_output_as_an_input():
+    """A step whose age dimension depends on its own last output grades itself,
+    and one missed night would hold it down for ever. This is the trap the two
+    remaining undeclared verifiers would fall into if somebody declared their
+    caches to make the ledger shrink."""
+    import json as _json
+
+    doc = _json.loads((REPO / "config" / "step_inputs.json").read_text(
+        encoding="utf-8"))
+    own_output = {
+        "global_indicators": "snapshots/master/global_indicators_latest.json",
+        "sensorium_ingest": None,
+    }
+    for step, product in own_output.items():
+        if not product:
+            continue
+        entry = doc["steps"][step]
+        assert product not in entry["inputs"], (
+            f"{step} gates on its own output {product}")
+        assert product in entry.get("also_reads", []), (
+            f"{product} is read by {step} and is declared nowhere")
