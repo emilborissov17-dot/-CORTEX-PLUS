@@ -12,10 +12,67 @@ from alignment.civilization_guard import evaluate_proposal_alignment
 from safety.ast_gate import check_code
 from safety.quarantine import quarantine
 
+def _telemetry_unavailable(why: str):
+    """The recorder to use when the real one could not be imported.
+
+    THE DEFECT THIS REPLACES (8 сеп 2026). This was:
+
+        except Exception:
+            _rec = lambda *a, **k: None
+
+    A no-op lambda. If memory.runtime_telemetry failed to import — a missing
+    psutil, a syntax error, a circular import — every call to _rec() succeeded,
+    returned None, and wrote nothing. self_modifier would report SUCCESS and
+    FAILED for patch after patch and memory/runtime_experiences.json would stay
+    frozen, with NOTHING anywhere saying why. The file's staleness would be
+    blamed on the notary refusals, which is the story that was already true, so
+    the second cause would hide perfectly behind the first.
+
+    A degraded component is allowed. A degraded component that looks identical to
+    a healthy one is not.
+
+    So the replacement is loud in three places and still non-fatal:
+      - it prints, naming the import error and the event that was lost;
+      - it writes a durable, named line to memory/blackbox.jsonl, which survives
+        a hard kill and is read after the fact;
+      - it returns None as before, so no caller changes behaviour.
+
+    FORBIDDEN: returning a silent None, and equally forbidden is raising. Losing
+    telemetry must not cost the patch run — it must only stop being invisible.
+    """
+    def _rec_unavailable(event_type, data=None, **_kw):
+        print(f"[SELF_MODIFIER] TELEMETRY LOST — memory.runtime_telemetry could "
+              f"not be imported ({why}); the {event_type} experience was NOT "
+              f"recorded and memory/runtime_experiences.json will not move")
+        try:
+            from core import blackbox
+            blackbox.record("self_modifier", phase="telemetry_unavailable",
+                            import_error=why, lost_event=str(event_type),
+                            lost_data=str(data)[:200])
+        except Exception as exc:                                 # noqa: BLE001
+            # The last resort still speaks. A recorder whose own failure is
+            # silent is the same defect one level down.
+            print(f"[SELF_MODIFIER] and the blackbox could not record that "
+                  f"either: {type(exc).__name__}: {exc}")
+        return None
+    return _rec_unavailable
+
+
 try:
     from memory.runtime_telemetry import record_experience as _rec
-except Exception:
-    _rec = lambda *a, **k: None
+    TELEMETRY_IMPORT_ERROR = None
+except Exception as _exc:                                        # noqa: BLE001
+    TELEMETRY_IMPORT_ERROR = f"{type(_exc).__name__}: {_exc}"
+    print(f"[SELF_MODIFIER] memory.runtime_telemetry UNAVAILABLE: "
+          f"{TELEMETRY_IMPORT_ERROR}")
+    try:
+        from core import blackbox as _bb_boot
+        _bb_boot.record("self_modifier", phase="telemetry_import_failed",
+                        import_error=TELEMETRY_IMPORT_ERROR)
+    except Exception:                                            # noqa: BLE001
+        print("[SELF_MODIFIER] and the blackbox could not record the import "
+              "failure either")
+    _rec = _telemetry_unavailable(TELEMETRY_IMPORT_ERROR)
 
 # ── THE ACTOR IS SHOWN THE RULES IT IS JUDGED BY (8 сеп 2026) ──────────────
 # This model was refused 35 nights running on an origin level its prompt never
