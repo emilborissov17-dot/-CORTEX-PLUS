@@ -62,14 +62,23 @@ NEVER_TOUCH = (
 )
 
 _DIFF_PATHS = re.compile(r"^(?:\+\+\+|---)\s+(?:[ab]/)?(\S+)", re.M)
-# ^@@ WITHOUT THE TRAILING SPACE (8 Sep 2026). This was r"^@@ ", which
-# requires line-number ranges after the marker. On 2026-09-08 Groq returned
-# a well-formed patch using BARE `@@` hunk markers — 4 of them, 0 with a
-# trailing space — and this regex refused it as "not a diff". The model was
-# right and the check was wrong, and the refusal said so in a way that
-# blamed the model. A gate that refuses for a false reason is worse than
-# one that does not refuse: it teaches the wrong lesson.
-_HUNK = re.compile(r"^@@", re.M)
+# A HUNK HEADER NEEDS ITS LINE RANGES (corrected 8 Sep 2026).
+#
+# This was r"^@@ ", I relaxed it to r"^@@" in ceca31f believing it had
+# falsely refused a good patch, and that was a MISDIAGNOSIS. Measured with
+# git itself:
+#
+#   a bare   @@               -> error: No valid patches in input
+#   a ranged @@ -1,1 +1,1 @@  -> error: patch does not apply
+#
+# The first cannot be PARSED; the second parses and fails later on content.
+# So a bare `@@` really is not a unified diff, the original check was right
+# in outcome, and relaxing it made this module accept patches git cannot
+# read. Restored — but the REASON string was the part that was actually
+# wrong, and it is fixed below: it used to say "no unified-diff hunk (@@)"
+# about output that plainly contained four of them, which sent me chasing
+# the wrong defect for a full commit.
+_HUNK = re.compile(r"^@@ ", re.M)
 
 
 class PatchOutOfScope(Exception):
@@ -114,8 +123,11 @@ def enforce_scope(diff: str, allowed_paths) -> list:
     """
     if not _HUNK.search(diff or ""):
         raise PatchUnusable(
-            "the model returned no unified-diff hunk (@@). A patch that cannot "
-            "be read as a diff is not a patch.")
+            "no hunk header with line ranges. A unified diff needs "
+            "'@@ -old,count +new,count @@'; a bare '@@' is not parseable — git "
+            "answers 'No valid patches in input'. If the output DOES contain "
+            "'@@' markers, they are missing their ranges: that is the model's "
+            "format, not the absence of a patch.")
 
     touched = changed_files(diff)
     if not touched:

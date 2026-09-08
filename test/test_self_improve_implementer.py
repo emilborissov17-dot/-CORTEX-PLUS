@@ -135,18 +135,31 @@ def test_something_that_is_not_a_diff_is_refused(junk):
         I.implement(SPEC, model=_model(junk))
 
 
-def test_a_bare_at_at_hunk_is_accepted():
-    """THE FALSE REFUSAL, FIXED. _HUNK was r"^@@ " — requiring line-number ranges
-    after the marker. On 2026-09-08 Groq returned a well-formed patch using BARE
-    `@@` markers (4 of them, 0 with a trailing space) and this refused it as "not
-    a diff". The model was right and the check was wrong, and the refusal blamed
-    the model. A gate that refuses for a false reason teaches the wrong lesson.
+def test_a_bare_at_at_hunk_is_REFUSED_because_git_cannot_parse_it():
+    """CORRECTED 8 Sep 2026, and the correction is the point.
+
+    I relaxed _HUNK to r"^@@" in ceca31f believing the old r"^@@ " had falsely
+    refused a good patch from Groq. It had not. Measured with git itself, on a
+    bare marker versus a ranged one:
+
+        bare    @@              -> error: No valid patches in input
+        ranged  @@ -1,1 +1,1 @@ -> error: patch does not apply
+
+    The first cannot be PARSED at all; the second parses and fails later on
+    content. So a bare `@@` is not a unified diff and refusing it is correct.
+    What WAS wrong is the reason string — it said "no unified-diff hunk (@@)"
+    about output containing four of them, which is what sent me chasing the
+    wrong defect for a whole commit.
     """
     bare = ("--- a/agents/core/self_observer.py\n"
             "+++ b/agents/core/self_observer.py\n"
             "@@\n-old\n+new\n")
-    assert I.enforce_scope(bare, ["agents/core/self_observer.py"]) == [
-        "agents/core/self_observer.py"]
+    with pytest.raises(I.PatchUnusable) as exc:
+        I.enforce_scope(bare, ["agents/core/self_observer.py"])
+    assert "line ranges" in str(exc.value)
+    assert "No valid patches in input" in str(exc.value), (
+        "the refusal does not say what git actually answers, which is the "
+        "evidence a reader needs to trust it")
 
 
 def test_a_ranged_hunk_still_works():
@@ -162,9 +175,11 @@ def test_a_diff_against_a_file_that_does_not_exist_is_REFUSED():
     SPEC and nothing else, so when both were invented they AGREED and a patch to
     src/ai/self_observer.py cleared the scope gate. Matching an invented
     allowlist is not scope."""
+    # Ranged hunks: a bare @@ is refused EARLIER, by _HUNK, so it would never
+    # reach the existence check this test is about.
     ghost = ("--- a/src/ai/self_observer.py\n"
              "+++ b/src/ai/self_observer.py\n"
-             "@@\n-x\n+y\n")
+             "@@ -1,1 +1,1 @@\n-x\n+y\n")
     with pytest.raises(I.PatchOutOfScope) as exc:
         I.enforce_scope(ghost, ["src/ai/self_observer.py"])
     assert "does not exist in this repo" in str(exc.value)
@@ -175,7 +190,7 @@ def test_a_NEW_file_in_a_real_directory_is_allowed():
     error, so a path passes when its parent directory is real."""
     newf = ("--- /dev/null\n"
             "+++ b/agents/core/brand_new_thing.py\n"
-            "@@\n+line\n")
+            "@@ -0,0 +1,1 @@\n+line\n")
     assert I.enforce_scope(newf, ["agents/core/"]) == [
         "agents/core/brand_new_thing.py"]
 
