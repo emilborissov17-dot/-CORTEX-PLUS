@@ -388,7 +388,9 @@ def test_the_refusal_happens_before_the_implementer():
 def test_the_prompt_shows_real_files_to_measure_and_says_not_to_copy_examples():
     prompt = R.build_prompt({"problem": "p", "component": "self_observer"}, AXES)
     assert "REAL DATA FILES YOU MAY MEASURE" in prompt
-    assert "DO NOT COPY AN EXAMPLE PATH" in prompt
+    # The wording moved into rule 2's two branches when success_metric became
+    # domain-aware: one "DO NOT COPY AN EXAMPLE" now covers a file OR a test.
+    assert "DO NOT COPY AN EXAMPLE" in prompt
     for cand in R.metric_candidates()[:2]:
         assert cand in prompt
 
@@ -1114,3 +1116,103 @@ def test_an_unreadable_pin_list_REFUSES_rather_than_assuming_safe(monkeypatch):
         R.validate(dict(IN_SCOPE), AXES, problem=SELF_OBS)
     assert "could not be read" in str(exc.value)
     assert "Refused rather than assumed safe" in str(exc.value)
+
+
+# ---------------------------------------------------------------------------
+# (k) THE PROMPT SHOWS THE RIGHT STANDARD PER DOMAIN
+# ---------------------------------------------------------------------------
+
+def test_the_prompt_offers_REAL_TESTS_the_way_it_offers_real_paths():
+    """THE MISSING HALF, and the direct cause of the 8 Sep false pass: the
+    prompt showed twelve real DATA files and NO tests, so an internal spec had
+    nothing real to name and borrowed a data file."""
+    prompt = R.build_prompt(SELF_OBS, AXES)
+    assert "REAL TESTS YOU MAY NAME" in prompt
+    assert "REAL DATA FILES YOU MAY MEASURE" in prompt
+
+    offered = R.candidate_tests("self_observer", SELF_OBS)
+    assert offered, "no test candidates were found for a real component"
+    for nid in offered:
+        assert nid in prompt, f"{nid} is offered but not shown"
+        path, _sep, name = nid.partition("::")
+        assert (REPO / path).is_file(), f"{nid} names a file that is not there"
+        assert name.startswith("test_") or "::" in name
+
+
+def test_every_offered_node_id_names_a_test_that_really_exists():
+    """Parsed out of the file by AST, never guessed — a model copying an id
+    exactly must not be able to name a test that does not exist. Checked
+    against pytest's own collection, which is the thing that will run it."""
+    offered = R.candidate_tests("self_observer", SELF_OBS, limit=4)
+    assert offered
+
+    import subprocess
+    import sys as _sys
+    for nid in offered:
+        path, _sep, name = nid.partition("::")
+        tree = ast.parse((REPO / path).read_text(encoding="utf-8"))
+        names = {n.name for n in ast.walk(tree)
+                 if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+        assert name.split("::")[-1] in names, nid
+
+    collected = subprocess.run(
+        [_sys.executable, "-m", "pytest", *offered, "--collect-only", "-q",
+         "-p", "no:randomly"], cwd=str(REPO), capture_output=True, text=True)
+    assert collected.returncode == 0, (
+        f"pytest cannot collect the ids the prompt offers:\n{collected.stdout[-600:]}")
+
+
+def test_the_ranking_surfaces_the_relevant_suite_not_the_alphabetical_one():
+    """MEASURED WHILE WRITING THIS. Ranking by category alone let the first file
+    alphabetically fill all twelve slots, and test_llm_json.py — the suite for
+    the very module that parses LLM JSON — never appeared. A candidate block
+    that does not surface the right candidate teaches the model to improvise,
+    which is the behaviour the block exists to stop."""
+    offered = R.candidate_tests("self_observer", SELF_OBS)
+    files = {n.partition("::")[0] for n in offered}
+    assert offered[0].startswith("test/test_llm_json.py::"), (
+        f"the suite for the module that parses LLM JSON is not the first "
+        f"candidate for a problem about parsing LLM JSON: {offered[:3]}")
+    assert len(files) >= 3, f"one file monopolised the list: {sorted(files)}"
+
+
+def test_the_measurable_goal_is_read_rather_than_thrown_away():
+    """self_observer writes measurable_goal on every proposal; build_prompt read
+    problem, root_cause and component and dropped it. It is the observer's own
+    statement of what success looks like — which is exactly what success_metric
+    is being asked for."""
+    obs = dict(SELF_OBS, measurable_goal="the parser recovers from malformed json")
+    prompt = R.build_prompt(obs, AXES)
+    assert "MEASURABLE GOAL (observed):" in prompt
+    assert "the parser recovers from malformed json" in prompt
+
+    # It is not merely printed: it RANKS the candidate tests.
+    with_goal = R.candidate_tests("self_observer", obs)
+    without = R.candidate_tests("self_observer", {"problem": "", "component": "self_observer"})
+    assert with_goal != without or with_goal, "measurable_goal changes nothing"
+
+    # And the intake shape is unchanged — a real observation already carries it.
+    fields = set(R.observations(limit=1)[0])
+    assert "measurable_goal" in fields, sorted(fields)
+
+
+def test_rule_two_states_BOTH_standards_and_says_which_domain_each_is_for():
+    """The model cannot comply predictably with a standard it is not shown, and
+    stating only the data-file standard is what forced an internal spec to
+    invent one."""
+    prompt = R.build_prompt(SELF_OBS, AXES)
+    rule2 = prompt[prompt.index("  2. success_metric"):prompt.index("  3. FIRST choose")]
+
+    assert "DEPENDS ON THE DOMAIN YOU CHOOSE" in rule2, (
+        "rule 2 no longer says the standard depends on the domain, so a model "
+        "reading it top to bottom has no reason to look at rule 3 first")
+    assert "EXTERNAL" in rule2 and "INTERNAL" in rule2
+    assert "must be about the thing you are changing" in rule2, (
+        "the external branch no longer requires the file to be about the "
+        "change — any real file would satisfy it, which is the false pass")
+    assert "REAL DATA FILE" in rule2
+    assert "NAMED TEST" in rule2
+    assert "FAILS" in rule2 and "PASSES after your change" in rule2
+    assert "DO NOT borrow one from the data-file list" in rule2
+    assert "WORSE than no file, because it passes" in rule2, (
+        "rule 2 does not say why a real-but-unrelated file is the worse failure")

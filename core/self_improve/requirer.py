@@ -707,6 +707,110 @@ def candidate_paths(component: str, limit: int = 25) -> list:
     return hits
 
 
+# Words that carry no signal about which test is relevant.
+_TEST_STOP = {"the", "a", "an", "is", "not", "and", "or", "of", "in", "to",
+              "for", "with", "that", "this", "it", "its", "on", "at", "by",
+              "from", "test", "tests", "returns", "never", "does", "must"}
+
+
+def _keywords(text: str, limit: int = 8) -> list:
+    """The words worth searching a test suite for, longest first."""
+    words = {w.lower() for w in re.findall(r"[A-Za-z_][A-Za-z_0-9]{3,}", str(text or ""))}
+    return sorted((w for w in words if w not in _TEST_STOP), key=len, reverse=True)[:limit]
+
+
+def test_node_ids(path: Path) -> list:
+    """Every `test_*` function in a file, as a pytest node id.
+
+    READ BY AST, NOT BY RUNNING PYTEST. Collecting 285 test files would import
+    every one of them — and importing this repo's test modules starts the very
+    machinery the pipeline is supposed to leave alone. Parsing is also the only
+    way to be sure the id names a function that is really there rather than one
+    a model would like to exist.
+    """
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8", errors="replace"))
+    except Exception:                                            # noqa: BLE001
+        return []
+    rel = path.resolve().relative_to(REPO).as_posix()
+    out = []
+    for node in tree.body:
+        ok = isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        if ok and node.name.startswith("test_"):
+            out.append(f"{rel}::{node.name}")
+        elif isinstance(node, ast.ClassDef) and node.name.startswith("Test"):
+            for sub in node.body:
+                sub_ok = isinstance(sub, (ast.FunctionDef, ast.AsyncFunctionDef))
+                if sub_ok and sub.name.startswith("test_"):
+                    out.append(f"{rel}::{node.name}::{sub.name}")
+    return out
+
+
+def candidate_tests(component: str, problem: dict | None = None,
+                    limit: int = 12) -> list:
+    """REAL pytest node ids an INTERNAL success_metric may name.
+
+    The mirror of candidate_paths() and metric_candidates(), and it exists for
+    the same measured reason: told to name a thing without being shown any real
+    ones, the model invents a plausible one. Shown twelve real data files and no
+    tests, it put a data file in allowed_paths — that is the 8 Sep false pass.
+
+    RANKED, because relevance is the whole point of showing a list at all:
+      1. the file whose NAME carries the component;
+      2. files whose CONTENT names the component;
+      3. files matching keywords from the problem and from measurable_goal —
+         the field the intake has always carried and the prompt threw away.
+
+    Every id returned is parsed out of a real file, so a model copying one
+    exactly cannot name a test that does not exist.
+    """
+    tdir = REPO / "test"
+    if not tdir.is_dir():
+        return []
+    comp = str(component or "").lower().strip()
+    words = _keywords(f"{(problem or {}).get('problem', '')} "
+                      f"{(problem or {}).get('measurable_goal', '')} "
+                      f"{(problem or {}).get('root_cause', '')}")
+
+    scored = []
+    for f in sorted(tdir.glob("test_*.py")):
+        try:
+            body = f.read_text(encoding="utf-8", errors="replace")
+        except Exception:                                        # noqa: BLE001
+            continue
+        low = body.lower()
+        # OCCURRENCES, not distinct words: a suite that says "json" forty
+        # times is more about json than one that says it once.
+        hits = sum(len(re.findall(r"\b" + re.escape(w) + r"\b", low))
+                   for w in words)
+        in_name = [w for w in words if w in f.name.lower()]
+        if comp and comp in f.name.lower():
+            rank = 0                      # named for the component
+        elif in_name:
+            rank = 1                      # named for what the problem is about
+        elif comp and re.search(r"\b" + re.escape(comp) + r"\b", low):
+            rank = 2                      # mentions the component
+        elif hits:
+            rank = 3                      # mentions what the problem is about
+        else:
+            continue
+        # RANK, THEN OCCURRENCES. Ranking by category alone let the first file
+        # alphabetically fill every slot, and test_llm_json.py — the suite for
+        # the very module that parses LLM JSON — never appeared for a problem
+        # about parsing LLM JSON. A candidate block that does not surface the
+        # right candidate teaches the model to improvise, which is the
+        # behaviour the block exists to stop.
+        scored.append((rank, -hits, f.name, f))
+
+    out, per_file = [], max(1, limit // 5)
+    for _rank, _neg, _name, f in sorted(scored):
+        for nid in test_node_ids(f)[:per_file]:
+            out.append(nid)
+            if len(out) >= limit:
+                return out
+    return out
+
+
 def metric_candidates(limit: int = 12) -> list:
     """REAL data files a success_metric could be recomputed from.
 
@@ -803,9 +907,19 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
     if grounded:
         metrics = metric_candidates()
         if metrics:
-            ground += ("REAL DATA FILES YOU MAY MEASURE — success_metric MUST "
-                       "name one of these, copied exactly:\n"
+            ground += ("REAL DATA FILES YOU MAY MEASURE — an EXTERNAL "
+                       "success_metric MUST name one of these, copied exactly:\n"
                        + "".join(f"  {m}\n" for m in metrics) + "\n")
+        # THE MISSING HALF, added 8 Sep 2026. The prompt showed twelve real data
+        # files and NO tests, so an internal spec had nothing real to name and
+        # borrowed a data file — that is the false pass this block exists to
+        # end. Every id is parsed out of a real file, so an exact copy cannot
+        # name a test that does not exist.
+        tests = candidate_tests(component, problem)
+        if tests:
+            ground += ("REAL TESTS YOU MAY NAME — an INTERNAL success_metric "
+                       "MUST name one of these node ids, copied exactly:\n"
+                       + "".join(f"  {t}\n" for t in tests) + "\n")
 
     return (
         (f"{standard}\n\n" if standard else "")
@@ -822,11 +936,22 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         "path that does not exist is a FAILURE, not an approximation. Do not "
         "invent a plausible-looking path; do not guess a conventional layout. "
         "If you are unsure which file, say the one you were shown.\n"
-        "  2. success_metric MUST name a REAL FILE from the list below and be "
-        "computable from it — e.g. \"the number of rows in "
-        "memory/goal_score_history.json\", not \"fewer failures\". DO NOT COPY "
-        "AN EXAMPLE PATH: a spec naming a file that does not exist is REFUSED as "
-        "SPEC_METRIC_UNGROUNDED before any code is written.\n"
+        "  2. success_metric DEPENDS ON THE DOMAIN YOU CHOOSE IN RULE 3. The "
+        "two standards are different because the two kinds of improvement are "
+        "measured by different things:\n"
+        "     * EXTERNAL — a number recomputable from ONE REAL DATA FILE listed "
+        "above, and that file must be about the thing you are changing. "
+        "\"The number of rows in memory/goal_score_history.json\" measures "
+        "something; \"fewer failures\" measures nothing; a real file about "
+        "something else is WORSE than no file, because it passes.\n"
+        "     * INTERNAL — a NAMED TEST from the REAL TESTS list above, copied "
+        "exactly (path::test_name), stated as: it FAILS on the code as it is "
+        "now and PASSES after your change. DO NOT invent a data file and DO NOT "
+        "borrow one from the data-file list — an internal fix is not measured "
+        "by a world-data number, and a test that already passes proves nothing "
+        "because it never reproduced the fault.\n"
+        "     DO NOT COPY AN EXAMPLE: a spec naming a file or a test that does "
+        "not exist is REFUSED before any code is written.\n"
         "  3. FIRST choose the DOMAIN this problem belongs to, THEN one or more "
         "CATEGORIES FROM THAT DOMAIN. A category from the other domain is "
         "REFUSED — it is not a near miss, it is the wrong question. If the "
@@ -838,7 +963,17 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         "must change is your job; HOW is someone else's.\n\n"
         f"OBSERVED PROBLEM: {str(problem.get('problem',''))[:400]}\n"
         f"ROOT CAUSE (observed): {str(problem.get('root_cause',''))[:300]}\n"
-        f"COMPONENT: {problem.get('component','unknown')}\n\n"
+        f"COMPONENT: {problem.get('component','unknown')}\n"
+        # THE FIELD THE INTAKE ALWAYS CARRIED AND THIS PROMPT THREW AWAY.
+        # self_observer writes measurable_goal on every proposal; build_prompt
+        # read problem, root_cause and component and dropped it. It is the
+        # observer's own statement of what success would look like, which is
+        # exactly what success_metric is being asked for — and it is what ranks
+        # the candidate tests above.
+        + (f"MEASURABLE GOAL (observed): "
+           f"{str(problem.get('measurable_goal',''))[:300]}\n"
+           if problem.get("measurable_goal") else "")
+        + "\n"
         "Return ONLY this JSON, no prose around it:\n"
         "{\n"
         '  "problem": "<one sentence>",\n'
