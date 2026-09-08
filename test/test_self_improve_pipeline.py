@@ -99,7 +99,7 @@ def test_the_pipeline_runs_end_to_end_and_reaches_a_verdict(mocked_models, tmp_p
     # every stage left its trace
     assert record["spec"]["goal_axis"], "no spec"
     assert "@@" in record["diff"], "no diff"
-    assert record["changed_files"] == ["data_providers/water_provider.py"]
+    assert record["changed_files"] == [P.FIXTURE_FILE]
 
 
 def test_the_verdict_today_is_FAIL_because_the_policy_is_LOCKED(mocked_models, tmp_path):
@@ -123,6 +123,59 @@ def test_the_rendered_report_shows_spec_diff_and_verdict(mocked_models, tmp_path
     assert "GRANTS NOTHING" in text, (
         "the report does not say the verdict grants nothing")
     assert "Nothing was applied" in text
+
+
+# ---------------------------------------------------------------------------
+# (a2) THE CONTEXT REACHES THE IMPLEMENTER
+# ---------------------------------------------------------------------------
+
+def test_the_implementer_is_given_the_real_file_content(mocked_models, tmp_path,
+                                                        monkeypatch):
+    """THE ROOT CAUSE OF THE 2026-09-08 HALLUCINATION. run_once called
+    implement(spec, model=...) and nothing else, so the cloud model was handed a
+    specification and asked to patch a repository it had never seen. It wrote a
+    competent patch to src/ai/self_observer.py — a file, a class and a module
+    that exist nowhere in this repo."""
+    brain, coder = mocked_models
+    P.OUT_DIR = tmp_path / "runs"
+
+    seen = {}
+    from core.self_improve import implementer as I
+    real_implement = I.implement
+
+    def _spy(spec, model=None, context=""):
+        seen["context"] = context
+        return real_implement(spec, model=model, context=context)
+
+    monkeypatch.setattr(I, "implement", _spy)
+    record = P.run_once({"problem": "p"}, brain=brain, coder=coder)
+
+    assert "context" in seen, "implement() was never called"
+    assert seen["context"], (
+        "the implementer was handed an EMPTY context — it is patching a file "
+        "it has not been shown")
+    assert record["context_chars"] == len(seen["context"])
+
+
+def test_the_context_is_the_real_file_and_only_real_files(tmp_path):
+    """Only files that EXIST are read. A spec naming a path that does not
+    resolve contributes nothing rather than a fabricated placeholder."""
+    real = "agents/core/self_observer.py"
+    ctx = P._read_allowed_files({"allowed_paths": [real, "src/ai/nope.py"]})
+
+    assert f"--- {real} ---" in ctx
+    assert "src/ai/nope.py" not in ctx, (
+        "a path that does not exist appeared in the context")
+    head = (REPO / real).read_text(encoding="utf-8")[:100]
+    assert head in ctx
+
+
+def test_the_context_is_budgeted():
+    """A whole repo in one prompt is a different failure. The budget is a cap,
+    not a suggestion."""
+    ctx = P._read_allowed_files({"allowed_paths": ["agents/core/self_observer.py"]},
+                                budget=500)
+    assert len(ctx) <= 500 + 80, len(ctx)      # + the "--- path ---" header
 
 
 # ---------------------------------------------------------------------------

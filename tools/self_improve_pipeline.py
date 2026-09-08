@@ -53,6 +53,10 @@ if str(REPO) not in sys.path:
 
 OUT_DIR = REPO / "experiments" / "self_improve" / "runs"
 
+# The fixture patches a REAL file, so --dry-run and the tests exercise the
+# same context path a live run takes.
+FIXTURE_FILE = "data_providers/civilization/economy_work_provider.py"
+
 # Anything the pipeline must never write into, asserted before it writes at all.
 PRODUCTION = ("memory", "snapshots", "cortex_memory", "config", "agents",
               "core", "output", "news", "data")
@@ -75,6 +79,31 @@ def _assert_experimental(path: Path) -> Path:
     return path
 
 
+def _read_allowed_files(spec: dict, budget: int = 6000) -> str:
+    """The REAL content of the files the spec allows, for the implementer.
+
+    Only files that EXIST are read; a spec naming a path that does not resolve
+    contributes nothing rather than a fabricated placeholder. Since COMMIT 3
+    refuses such a spec outright this should be unreachable, and it stays
+    defensive anyway: the two guards fail in the same direction.
+    """
+    out, spent = [], 0
+    for rel in (spec.get("allowed_paths") or []):
+        path = REPO / rel
+        if not path.is_file():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+        chunk = text[: max(0, budget - spent)]
+        if not chunk:
+            break
+        out.append(f"--- {rel} ---\n{chunk}")
+        spent += len(chunk)
+    return "\n\n".join(out)
+
+
 def run_once(observation: dict, brain=None, coder=None, class_id: str = "example_axis_key_fix",
              classes_path: Path | None = None) -> dict:
     """One end-to-end pass. Returns the record; raises PipelineRefused on a stage
@@ -94,8 +123,17 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
     record["spec"] = spec
 
     # 2. the specialist writes a patch, inside the spec's allowlist
+    #
+    # THE CONTEXT IS PASSED (8 Sep 2026). This called implement(spec, model=...)
+    # and nothing else, so the cloud model was handed a specification and asked
+    # to patch a repository it had never seen. On 2026-09-08 it wrote a
+    # competent patch to src/ai/self_observer.py — a file, a class and a module
+    # that do not exist anywhere in this repo. A model with no code in front of
+    # it will invent code that fits the words.
+    context = _read_allowed_files(spec)
+    record["context_chars"] = len(context)
     try:
-        built = I.implement(spec, model=coder)
+        built = I.implement(spec, model=coder, context=context)
     except (I.PatchOutOfScope, I.PatchUnusable) as exc:
         raise PipelineRefused(f"implementer refused: {exc}") from exc
     record["diff"] = built["diff"]
@@ -157,10 +195,15 @@ def _fixture_models():
         "desired_change": "The provider resolves the series instead of defaulting.",
         "success_metric": "count of axes scoring from real data",
         "goal_axis": axis,
-        "allowed_paths": ["data_providers/"],
+        # A REAL, EXISTING file (8 Sep 2026). This said "data_providers/" — a
+        # directory prefix — so _read_allowed_files() found nothing to read and
+        # the fixture exercised an EMPTY context, which is exactly the state the
+        # grounding commit exists to end. A fixture that cannot reach the code
+        # path it is meant to cover proves nothing.
+        "allowed_paths": [FIXTURE_FILE],
     }
-    diff = ("--- a/data_providers/water_provider.py\n"
-            "+++ b/data_providers/water_provider.py\n"
+    diff = (f"--- a/{FIXTURE_FILE}\n"
+            f"+++ b/{FIXTURE_FILE}\n"
             "@@ -1,3 +1,4 @@\n context\n+    OBS['water_withdrawal'] = 'wb_ER.H2O.FWTL.ZS'\n")
     return (lambda prompt, max_tokens=700: json.dumps(spec),
             lambda prompt, max_tokens=1400: diff)

@@ -200,6 +200,60 @@ def _local_brain(prompt: str, max_tokens: int = 700) -> str:
     return content
 
 
+def candidate_paths(component: str, limit: int = 25) -> list:
+    """REAL, EXISTING repo-relative paths the spec may choose from.
+
+    The three locations are the SAME ones agents/core/self_modifier._build_context
+    resolves for a component, so the requirer offers exactly the files the
+    production self-modifier would have found. Every path returned is checked
+    with .exists() — this list is the ground truth the model is told to choose
+    from, so a single stale entry in it would re-open the hole it closes.
+
+    Falls back to a listing of agents/core/ and core/ when the component matches
+    nothing, so the model always has real options rather than an empty list and
+    an invitation to improvise.
+    """
+    hits = []
+    for rel in (f"data_providers/civilization/{component.lower()}_provider.py",
+                f"data_providers/planet/{component.lower()}_provider.py",
+                f"agents/core/{component.lower()}.py",
+                f"core/{component.lower()}.py"):
+        if (REPO / rel).exists():
+            hits.append(rel)
+    if hits:
+        return hits
+    for d in ("agents/core", "core"):
+        for p in sorted((REPO / d).glob("*.py")):
+            if p.name.startswith("_"):
+                continue
+            hits.append(p.relative_to(REPO).as_posix())
+            if len(hits) >= limit:
+                return hits
+    return hits
+
+
+def real_code_context(component: str, problem: str) -> str:
+    """The production self-modifier's own context builder, reused not copied.
+
+    agents/core/self_modifier._build_context already reads the real file for a
+    component and the live web-intelligence for the axis. Calling it means the
+    requirer sees exactly what the production step sees; a second implementation
+    would drift from it the first time either changed.
+
+    Fail-open with a NAMED empty result: grounding that silently vanishes would
+    put the model straight back to imagining a codebase, which is the defect
+    this commit exists to close, so it prints.
+    """
+    try:
+        from agents.core.self_modifier import _build_context
+        return _build_context(component, problem) or ""
+    except Exception as exc:                                     # noqa: BLE001
+        print(f"[REQUIRER] real repo context UNAVAILABLE "
+              f"({type(exc).__name__}: {exc}) — the model is being asked to "
+              f"specify against a repo it cannot see")
+        return ""
+
+
 def passage_standard() -> str:
     """The rules of passage, verbatim, from config/passage_rules.json.
 
@@ -221,7 +275,7 @@ def passage_standard() -> str:
         return ""
 
 
-def build_prompt(problem: dict, axes: set) -> str:
+def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
     """Short and sharp: a small model reads the first lines and stops.
 
     THE RULES ARE STATED, NOT IMPLIED (8 Sep 2026). A live run on 2026-09-08
@@ -235,8 +289,27 @@ def build_prompt(problem: dict, axes: set) -> str:
     instruction AND a check behind it, neither standing in for the other.
     """
     standard = passage_standard()
+    component = str(problem.get("component", "unknown"))
+
+    # ── THE GROUNDING (8 Sep 2026) ─────────────────────────────────────────
+    # The root cause of every invented path: the model was never shown the repo.
+    # It is shown it now — real paths, checked with .exists(), and the real file
+    # the production self-modifier would have read.
+    paths, code = [], ""
+    if grounded:
+        paths = candidate_paths(component)
+        code = real_code_context(component, str(problem.get("problem", "")))
+    ground = ""
+    if paths:
+        ground += ("REAL PATHS IN THIS REPO — allowed_paths MUST be one of "
+                   "these, copied exactly:\n"
+                   + "".join(f"  {p}\n" for p in paths) + "\n")
+    if code:
+        ground += f"THE REAL CODE YOU ARE SPECIFYING AGAINST:\n{code[:1800]}\n\n"
+
     return (
         (f"{standard}\n\n" if standard else "")
+        + ground
         + "You are the CORTEX++ requirer. You produce a SPECIFICATION. "
         "You never write code.\n\n"
         "THE RULES YOU ARE JUDGED BY — read these before writing anything:\n"

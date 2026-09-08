@@ -225,6 +225,78 @@ def test_the_standard_failing_to_load_is_loud_not_silent(monkeypatch, capsys):
     assert "RULES OF PASSAGE" in out and "could not be loaded" in out
 
 
+# ---------------------------------------------------------------------------
+# (c2) THE GROUNDING — the model is SHOWN the repo, not asked to imagine it
+# ---------------------------------------------------------------------------
+
+def test_candidate_paths_are_all_real():
+    """This list is the ground truth the model is told to copy from. One stale
+    entry re-opens the exact hole it closes."""
+    for component in ("self_observer", "self_modifier", "nonexistent_widget"):
+        paths = R.candidate_paths(component)
+        assert paths, f"no real candidates offered for {component}"
+        for rel in paths:
+            assert (REPO / rel).exists(), f"{rel} does not exist"
+            assert not rel.startswith("/") and ":" not in rel, rel
+
+
+def test_the_prompt_shows_real_paths_and_says_to_copy_them():
+    prompt = R.build_prompt({"problem": "invalid JSON",
+                             "component": "self_observer"}, AXES)
+    assert "agents/core/self_observer.py" in prompt, (
+        "the real file is not offered; the model has nothing to copy and will "
+        "invent a path, which is what it did on 2026-09-08")
+    assert "REAL PATHS IN THIS REPO" in prompt
+    assert "copied exactly" in prompt
+
+
+def test_the_prompt_shows_the_real_code():
+    """Reusing agents/core/self_modifier._build_context, so the requirer sees
+    exactly what the production self-modifier sees."""
+    prompt = R.build_prompt({"problem": "invalid JSON",
+                             "component": "self_observer"}, AXES)
+    head = (REPO / "agents" / "core" / "self_observer.py").read_text(
+        encoding="utf-8")[:120]
+    assert head in prompt, "the real file content does not reach the prompt"
+
+
+def test_the_grounding_is_the_production_builder_not_a_copy():
+    """A second implementation would drift from the one the cycle runs."""
+    import ast
+
+    tree = ast.parse((REPO / "core" / "self_improve" / "requirer.py")
+                     .read_text(encoding="utf-8"))
+    fn = next(n for n in ast.walk(tree)
+              if isinstance(n, ast.FunctionDef) and n.name == "real_code_context")
+    imported = {a.name for n in ast.walk(fn)
+                if isinstance(n, ast.ImportFrom)
+                and n.module == "agents.core.self_modifier" for a in n.names}
+    assert "_build_context" in imported, (
+        "real_code_context no longer reuses the production context builder")
+
+
+def test_grounding_that_fails_is_loud_not_silent(monkeypatch, capsys):
+    """Grounding that silently vanishes puts the model straight back to
+    imagining a codebase."""
+    import agents.core.self_modifier as SM
+
+    monkeypatch.setattr(SM, "_build_context",
+                        lambda c, p: (_ for _ in ()).throw(RuntimeError("gone")))
+    assert R.real_code_context("self_observer", "x") == ""
+    out = capsys.readouterr().out
+    assert "repo context UNAVAILABLE" in out
+
+
+def test_ungrounded_is_possible_but_must_be_asked_for():
+    """The default is grounded. A caller that wants the bare prompt has to say
+    so, so grounding cannot be lost by omission."""
+    bare = R.build_prompt({"problem": "p", "component": "self_observer"},
+                          AXES, grounded=False)
+    full = R.build_prompt({"problem": "p", "component": "self_observer"}, AXES)
+    assert "REAL PATHS IN THIS REPO" not in bare
+    assert len(full) > len(bare)
+
+
 def test_the_prompt_forbids_code_in_as_many_words():
     """The instruction and the net are both required — the norm asks for a sharp
     instruction AND a mechanical net, not one standing in for the other."""
