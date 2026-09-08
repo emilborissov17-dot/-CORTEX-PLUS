@@ -63,6 +63,13 @@ DARK_STEPS = {
         "marker": "MerkleMemory",
         "guarded": True,
     },
+    # produces was ALREADY correct for this one — the only dark step of the four
+    # whose declaration needed nothing. Its commit is trace-only.
+    "brain_debrief": {
+        "produces": ["memory/brain_journal.jsonl"],
+        "marker": "debrief",
+        "guarded": True,
+    },
 }
 
 PARAMS = sorted(DARK_STEPS)

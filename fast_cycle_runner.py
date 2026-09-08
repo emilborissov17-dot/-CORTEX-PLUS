@@ -3709,14 +3709,29 @@ def main():
 
     beat("brain_debrief", "25.5")
     try:
-        from core.brain import debrief_cycle as _debrief
-        _rev = _debrief()
-        if _rev:
-            print(f"[FAST_CYCLE] brain review -> success={_rev.get('success')} "
-                  f"| {str(_rev.get('verdict'))[:120]}")
-            print(f"[FAST_CYCLE] brain blind spot -> {str(_rev.get('blind_spot'))[:120]}")
-        else:
-            print("[FAST_CYCLE] brain review -> no plan to judge / brain silent")
+        # ── A TRACE THAT IT RAN (8 Sep 2026) ───────────────────────────────
+        # BACKBONE, and it recorded nothing: an inline try/except, not a
+        # _run() step, so core/blackbox.py never saw it. A hard kill inside it
+        # left no evidence it had started.
+        #
+        # The `with` is INSIDE the try, deliberately. Outside it, the existing
+        # except would swallow the exception before __exit__ saw it and the
+        # blackbox would record a clean 'end' for a step that FAILED. Inside,
+        # the exception passes through __exit__ first — recording 'error' —
+        # and is then caught exactly as before. Fail-open is unchanged.
+        # produces was ALREADY correct here — memory/brain_journal.jsonl, written by
+        # core/brain.py:388 (_append_json(JOURNAL,...)) on the think() path that
+        # debrief_cycle() takes. This commit is trace-only; nothing was declared
+        # that was not already true.
+        with _bb_step("brain_debrief"):
+            from core.brain import debrief_cycle as _debrief
+            _rev = _debrief()
+            if _rev:
+                print(f"[FAST_CYCLE] brain review -> success={_rev.get('success')} "
+                      f"| {str(_rev.get('verdict'))[:120]}")
+                print(f"[FAST_CYCLE] brain blind spot -> {str(_rev.get('blind_spot'))[:120]}")
+            else:
+                print("[FAST_CYCLE] brain review -> no plan to judge / brain silent")
     except Exception as e:
         print(f"[FAST_CYCLE] brain review -> FAILED: {type(e).__name__}: {e}")
 
