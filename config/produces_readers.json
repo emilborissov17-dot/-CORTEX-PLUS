@@ -242,13 +242,15 @@
   },
   "memory/runtime_experiences.json": {
    "phases": [
-    "E_PROPOSE"
+    "F_SELF"
    ],
    "readers": [
     "memory/body_scan.py",
-    "memory/existence_model.py"
+    "memory/existence_model.py",
+    "core/phase_evidence.py"
    ],
-   "status": "UNVERIFIED"
+   "status": "named",
+   "_verified": "2026-09-08. Phase moved E_PROPOSE -> F_SELF with the rest of the attribution: self_observer (step 17) has never written this file. Readers confirmed by reading them, not by a scan: memory/body_scan.py:162 counts data['experiences']; memory/existence_model.py:72 reads data['summary']['error_count'] into pain_score; core/phase_evidence.py:470 counts the same list for the F_SELF menu. The third was missing from this entry. Status raised from UNVERIFIED to named in the same commit, and the count in test/test_produces_has_a_reader.py lowered from 21 to 20 alongside it."
   },
   "memory/self_experiments.json": {
    "phases": [

@@ -141,10 +141,25 @@ STEPS = [
     ("github_publish", "15.8", "Публикува синтеза на цикъла и проверените хипотези.", [], False),
     ("action_recommendations", "16", "Разсъждение -> препоръка, записана в семантичната памет.",
      ["memory/causal_log.json"], False),
+    # ATTRIBUTION CORRECTED 8 сеп 2026. This row promised
+    # memory/runtime_experiences.json, and self_observer has never written it:
+    # agents/core/self_observer.py writes memory/development_journal.json (542)
+    # and memory/improvement_proposals.json (665), and nothing else. The only
+    # writer of runtime_experiences.json is memory/runtime_telemetry._append,
+    # reached through record_experience(), whose only caller is
+    # agents/core/self_modifier.py — step 18, one phase later. The promise sat
+    # on the wrong step, so the staleness was blamed every night on a step that
+    # was never supposed to produce it.
     ("self_observer", "17", "Наблюдава собственото си поведение.",
-     ["memory/runtime_experiences.json"], False),
+     ["memory/development_journal.json"], False),
+    # runtime_experiences.json is HERE because the REFUSAL is here. The gate
+    # (_witness_or_refuse -> _refused) writes the refusal record before run()
+    # would have been reached, so the artifact is produced whether the step acts
+    # OR is refused. That is what stops this move from hiding the gap behind the
+    # REFUSED exemption of commit 0ae4bb4: a night with no record is now a real
+    # red, not an excused one.
     ("self_modifier", "18", "Пише пачове за самия себе си.",
-     ["memory/improvement_proposals.json"], False),
+     ["memory/improvement_proposals.json", "memory/runtime_experiences.json"], False),
     ("execute_patches", "19", "Изпълнява пачове през AST портата; мери before/after и качеството на измерването.",
      ["memory/development_journal.json"], False),
     ("feedback_loop", "20", "Обратна връзка по ос от реално измерени стойности.",

@@ -1993,7 +1993,24 @@ def _refusal_event(step: str, gate: str, why: str) -> None:
               f"({gate}): {type(e).__name__}: {e}")
 
 
-def _refused(step: str, gate: str, why: str) -> bool:
+def _gate_level(why: str):
+    """The notary's trust level, read out of its own refusal sentence.
+
+    NOT a second measurement, and deliberately not one. core.notary.attest()
+    APPENDS to the attestation chain, so calling it again here to ask "what
+    level was that?" would forge a second attestation for a step that was
+    stamped once. The reason string already carries `level_N` verbatim from
+    rec['level_name']; parsing it copies a fact instead of inventing one.
+    Gates that report no level (human_channel, metta_witness) yield None, and
+    the record labels it not_reported_by_this_gate rather than guessing 0.
+    """
+    import re as _re
+    m = _re.search(r"level_(\d)", str(why or ""))
+    return int(m.group(1)) if m else None
+
+
+def _refused(step: str, gate: str, why: str,
+             prev_step: str | None = None) -> bool:
     """ONE PLACE WHERE A REFUSAL BECOMES A FACT (8 Sep 2026).
 
     A refusal has two readers and used to reach only one. night_events.jsonl got
@@ -2020,6 +2037,32 @@ def _refused(step: str, gate: str, why: str) -> bool:
         # told costs one wrong PARTIAL, and must never cost the refusal itself.
         print(f"[FAST_CYCLE] {step} -> refusal not recorded in the phase report "
               f"({gate}): {type(e).__name__}: {e}")
+
+    # ── THE EXPERIENCE (8 Sep 2026) ────────────────────────────────────────
+    # THE THIRD READER OF A REFUSAL, and the one that was missing entirely.
+    # night_events.jsonl is the log, the phase report is tonight's grading, and
+    # memory/runtime_experiences.json is what the system remembers about itself
+    # — read by memory/body_scan.py, memory/existence_model.py and
+    # core/phase_evidence.py. Until now its only writer sat INSIDE
+    # self_modifier.run(), which a refusal prevents from ever starting, so 35
+    # refusals out of 35 since 17 August left no trace there at all and the
+    # newest record stayed 2026-06-21.
+    #
+    # Written HERE, at the gate, precisely because run() does not happen. The
+    # record carries the real cause — step, gate, level, reason, timestamp.
+    #
+    # FORBIDDEN: making this file fresh with a placeholder or a synthetic
+    # "still alive" entry. If no refusal occurred, nothing is written and the
+    # file stays old, which is then a TRUE reading of a different problem.
+    try:
+        from memory.runtime_telemetry import record_refusal
+        record_refusal(step, gate, why, level=_gate_level(why),
+                       prev_step=prev_step)
+    except Exception as e:                                       # noqa: BLE001
+        # Loud, never silent: this record is the only lasting evidence the
+        # refusal happened, so losing it has to be visible in the night log.
+        print(f"[FAST_CYCLE] {step} -> refusal NOT written to "
+              f"runtime_experiences.json ({gate}): {type(e).__name__}: {e}")
     return False
 
 
@@ -2072,7 +2115,7 @@ def _witness_or_refuse(step: str, prev_step: str) -> bool:
             _gate_event(step, "ПРОПУСНАТА", "notary", why)
             return True
         print(f"[FAST_CYCLE] {step} -> ОТКАЗАНА: {why}")
-        return _refused(step, "notary", why)
+        return _refused(step, "notary", why, prev_step=prev_step)
     except Exception as e:
         print(f"[FAST_CYCLE] {step} -> нотариусът е недостъпен: {type(e).__name__}: {e}")
 

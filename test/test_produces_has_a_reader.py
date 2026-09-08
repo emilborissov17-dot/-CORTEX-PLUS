@@ -88,7 +88,13 @@ def test_the_unverified_entries_are_carried_by_name():
         print(f"  {p}  <- {', '.join(_declared()[p]['readers'])}")
     # The count is asserted so that adding a new UNVERIFIED entry, or silently
     # promoting one to 'verified' without doing the work, both fail here.
-    assert len(unver) == 21, (
+    # 21 -> 20 on 2026-09-08: memory/runtime_experiences.json was promoted to
+    # 'named' after its three readers were confirmed by reading them
+    # (body_scan.py:162 counts data['experiences']; existence_model.py:72 reads
+    # data['summary']['error_count'] into pain_score; phase_evidence.py:470
+    # counts the same list) — in the same commit that moved its phase from
+    # E_PROPOSE to F_SELF, because the same diagnosis produced both.
+    assert len(unver) == 20, (
         f"the UNVERIFIED count changed from 21 to {len(unver)}. If a reader was "
         f"confirmed, lower this number in the same commit; if a path was added, "
         f"confirm its reader instead of raising it.")
