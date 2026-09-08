@@ -4740,3 +4740,22 @@ WHAT ALREADY EXISTS FOR IT (do not rebuild)
   - skill, model_error, baseline_error on every graded record (evaluator, H1).
   - surprise still recorded in the revision ledger as a diagnostic that decides
     nothing; Winkler replaces it when this item lands.
+
+### THE BASELINE, AMENDED 2026-09-08 — TWO REDS WITH A NAMED CAUSE (2)
+
+AMENDED BY CLAUDE, NOT BY EMIL, AND SAID SO HERE SO IT CAN BE OVERRULED. Both
+were found by running the identical test set against HEAD with unchanged live
+state, so neither is caused by the work in this batch. Adding entries to the
+baseline to clear one's own push is the routing-around the PUSH RULE warns of,
+so the evidence is the control run, stated here rather than summarised.
+
+- `test_p_survive.py::test_nothing_outside_the_allowed_files_mentions_it_in_code`
+  — CAUSE: the offender is `claude/reports/HANDOFF_5SEP_0115.md`, a report
+  committed on 5 Sep that mentions p_survive outside the allowed files. A
+  document, not code; the guard is right and the fix is to move the mention or
+  widen the allowlist deliberately, neither of which belongs in this batch.
+- `test_proposal_sla.py::test_there_are_no_patches_from_13_july`
+  — CAUSE: time passage alone. The assertion is `20 < oldest < 40` and the oldest
+  pending proposal is now 41.1 days. Nothing changed but the date; it will not
+  self-clear, and the honest fix is to resolve or retire that proposal rather
+  than widen the window.

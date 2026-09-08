@@ -265,4 +265,22 @@ check("...and consuming it leaves nothing behind",
 
 shutil.rmtree(TMP, ignore_errors=True)
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED: {FAILS}"))
-sys.exit(1 if FAILS else 0)
+
+# ── THE EXIT IS GUARDED (8 Sep 2026) ───────────────────────────────────────
+# This was a bare module-level sys.exit(). pytest EXECUTES a module in order to
+# collect it, so the call fired during COLLECTION and pytest died with
+#     INTERNALERROR> SystemExit: 0
+# taking the whole suite with it, before a single test in any other file ran,
+# and reporting no failure of its own. One file could silently abort every other
+# file's result — the same class of defect this repo keeps finding elsewhere: a
+# component that fails without leaving a trace anyone reads.
+#
+# Run as a script it behaves exactly as before. Imported by pytest, the body
+# above has already executed every check, so the verdict is surfaced as a real
+# test rather than as an exit code the collector cannot survive.
+if __name__ == "__main__":
+    sys.exit(1 if FAILS else 0)
+else:
+    def test_the_watchdog_chain_holds():
+        """The verdict of the script body above, carried into pytest."""
+        assert not FAILS, FAILS
