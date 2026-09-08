@@ -100,7 +100,26 @@ STEPS = [
     ("update_master", "12", "Слива всичко в master snapshot.",
      ["snapshots/master"], True),
     ("system_hypergraph", "12.3", "Строи хиперграфа на системата.", [], False),
-    ("scoring_engine", "12.4", "Оценява всички снимки по осите.", [], True),
+    # PRODUCT DECLARED 8 сеп 2026. This row carried [] — which the header of
+    # this file defines as "не знаем", not "нищо не произвежда" — on the step
+    # that produces THE NUMBER everything downstream rests on, and which is
+    # BACKBONE (never skipped by opinion).
+    #
+    # config/cycle_phases.json already promised output/cortex_scores_latest.json
+    # from D_SCORE, so the phase card knew and the STEP card did not: the two
+    # maps disagreed about the most load-bearing artifact in the cycle.
+    #
+    # Written by fast_cycle_runner.py:2933 on the cycle path (the runner
+    # persists what score_all_snapshots() returns). cortex_scoring_engine.
+    # save_scores():1592 writes the same path, but only from that module's
+    # __main__ block, which the cycle never takes.
+    #
+    # kept_promise() can now answer for this step at all: until now it returned
+    # "НЕ ЗНАЕМ" -> UNKNOWN(0), which became the promise dimension of the NEXT
+    # step. No score, threshold or scorer changed here — only what the table
+    # says this step leaves behind.
+    ("scoring_engine", "12.4", "Оценява всички снимки по осите.",
+     ["output/cortex_scores_latest.json"], True),
     # ── ОСЕМТЕ, КОИТО РАБОТЕХА БЕЗ ДА СЪЩЕСТВУВАТ В ТАБЛИЦАТА (23 авг 2026) ──
     # Всяка от тях има собствен beat() и собствен _run() в fast_cycle_runner.py,
     # значи е пълноправна стъпка — и въпреки това я нямаше тук. Последствието

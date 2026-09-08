@@ -2925,44 +2925,58 @@ def main():
     # ── 12.4. Scoring engine — освежи cortex_scores_latest.json ──
     beat("scoring_engine", "12.4")
     try:
-        from cortex_scoring_engine import score_all_snapshots as _score_all, AXIS_SCORERS as _AXIS_SCORERS
-        import datetime as _dt
-        _scores = _score_all()
-        _out = BASE / "output" / "cortex_scores_latest.json"
-        _out.parent.mkdir(parents=True, exist_ok=True)
-        _out.write_text(
-            json.dumps(
-                {
-                    "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
-                    "scorer_version": "1.1",
-                    # THE SCALE, SAID OUT LOUD. This file holds 0..1 and
-                    # memory/axis_history.json holds 0..100 for the same axis on
-                    # the same day — verified 28/28 exact x100 on 2026-08-28 —
-                    # and neither carried a tag. One producer, two units, nothing
-                    # on disk saying which is which. memory/trend_tracker.py
-                    # already writes "score_scale" into trends_latest.json; this
-                    # is the same key, in the two files that were missing it.
-                    # Additive only: no reader is asked to change.
-                    "score_scale": "0-1",
-                    "total_axes": len(_scores),
-                    "scores": {
-                        ax: {
-                            "score": r.score,
-                            "level": r.level,
-                            "signals": r.signals,
-                            "metrics_used": r.metrics_used,
-                            "verification": r.verification,
-                        }
-                        for ax, r in _scores.items()
+        # ── A TRACE THAT IT RAN (8 Sep 2026) ───────────────────────────────
+        # This step is BACKBONE and produces the number everything downstream
+        # rests on, and it recorded NOTHING: it is an inline try/except, not a
+        # _run() step, so core/blackbox.py never saw it. A hard kill inside the
+        # scorer left no evidence it had started, and core/blackbox.py's own
+        # docstring names the steps that bypass _run() as a known blind spot.
+        #
+        # The `with` is INSIDE the try, deliberately. Outside it, the existing
+        # except would swallow the exception before __exit__ saw it and the
+        # blackbox would record a clean 'end' for a step that FAILED. Inside,
+        # the exception passes through __exit__ first — recording 'error' with
+        # its type — and is then caught exactly as before. Fail-open is
+        # unchanged: the cycle still continues past a scoring failure.
+        with _bb_step("scoring_engine"):
+            from cortex_scoring_engine import score_all_snapshots as _score_all, AXIS_SCORERS as _AXIS_SCORERS
+            import datetime as _dt
+            _scores = _score_all()
+            _out = BASE / "output" / "cortex_scores_latest.json"
+            _out.parent.mkdir(parents=True, exist_ok=True)
+            _out.write_text(
+                json.dumps(
+                    {
+                        "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+                        "scorer_version": "1.1",
+                        # THE SCALE, SAID OUT LOUD. This file holds 0..1 and
+                        # memory/axis_history.json holds 0..100 for the same axis on
+                        # the same day — verified 28/28 exact x100 on 2026-08-28 —
+                        # and neither carried a tag. One producer, two units, nothing
+                        # on disk saying which is which. memory/trend_tracker.py
+                        # already writes "score_scale" into trends_latest.json; this
+                        # is the same key, in the two files that were missing it.
+                        # Additive only: no reader is asked to change.
+                        "score_scale": "0-1",
+                        "total_axes": len(_scores),
+                        "scores": {
+                            ax: {
+                                "score": r.score,
+                                "level": r.level,
+                                "signals": r.signals,
+                                "metrics_used": r.metrics_used,
+                                "verification": r.verification,
+                            }
+                            for ax, r in _scores.items()
+                        },
                     },
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
-        _real = sum(1 for ax in _scores if ax in _AXIS_SCORERS)
-        print(f"[FAST_CYCLE] scoring_engine -> {len(_scores)} axes | {_real} real scorers | output/cortex_scores_latest.json")
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            _real = sum(1 for ax in _scores if ax in _AXIS_SCORERS)
+            print(f"[FAST_CYCLE] scoring_engine -> {len(_scores)} axes | {_real} real scorers | output/cortex_scores_latest.json")
     except Exception as e:
         print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
 
