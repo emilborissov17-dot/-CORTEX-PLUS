@@ -183,7 +183,8 @@ def build_prompt(spec: dict, context: str = "", feedback: str = "") -> str:
         f"ROOT CAUSE: {spec.get('root_cause','')}\n"
         f"DESIRED CHANGE: {spec.get('desired_change','')}\n"
         f"SUCCESS METRIC: {spec.get('success_metric','')}\n"
-        f"GOAL AXIS: {spec.get('goal_axis','')}\n\n"
+        f"DOMAIN: {spec.get('domain','')}  "
+        f"CATEGORIES: {', '.join(spec.get('categories') or [])}\n\n"
         f"YOU MAY ONLY TOUCH: {allowed}\n"
         "A diff touching anything else is REFUSED WHOLE before it leaves this "
         "step — not trimmed, not partially applied. Staying in scope is part of "
@@ -265,7 +266,8 @@ def _selftest() -> int:
         return 1
 
     spec = {"problem": "p", "root_cause": "r", "desired_change": "d",
-            "success_metric": "m", "goal_axis": "WATER_REVIEW",
+            "success_metric": "m", "domain": "external",
+            "categories": ["WATER_REVIEW"],
             "allowed_paths": ["data_providers/"]}
 
     in_scope = ("--- a/data_providers/water_provider.py\n"

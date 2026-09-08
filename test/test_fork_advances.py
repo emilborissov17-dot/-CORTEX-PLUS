@@ -105,7 +105,8 @@ SPEC = {"problem": "the provider defaults",
         "root_cause": "no entry for the key",
         "desired_change": "the provider resolves the series",
         "success_metric": "the number of rows in memory/goal_score_history.json",
-        "goal_axis": "ECONOMY_WORK_REVIEW",
+        "domain": "external",
+        "categories": ["ECONOMY_WORK_REVIEW"],
         "allowed_paths": ["data_providers/thing_provider.py"]}
 
 PASSING = {"decision": "PASS", "reason": "all four merits hold",

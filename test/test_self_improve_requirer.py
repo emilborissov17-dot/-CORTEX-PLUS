@@ -49,7 +49,11 @@ GOOD_SPEC = {
     # NAMES A REAL FILE. It said "read from the scores file" — no path, so
     # nothing could recompute it, and SPEC_METRIC_UNGROUNDED now refuses that.
     "success_metric": "the number of rows in memory/goal_score_history.json",
-    "goal_axis": "ECONOMY_WORK_REVIEW",
+    # THE TAXONOMY (8 Sep 2026). This was a single goal_axis, which asked a
+    # malformed question of every internal problem. A domain, then
+    # categories from that domain.
+    "domain": "external",
+    "categories": ["ECONOMY_WORK_REVIEW"],
     # A REAL, EXISTING FILE. This was "data_providers/" — a directory, which
     # passes exists() and is still the bug: only files are read as context, so
     # a directory allowlist hands the implementer nothing.
@@ -90,13 +94,46 @@ def test_the_output_contains_no_python():
                        for n in ast.walk(tree)), f"{field} is a program"
 
 
-def test_the_output_names_a_real_goal_axis():
-    """One of the 24 in config/target_config.json, read from the file rather
-    than retyped here."""
+def test_the_output_names_a_domain_and_categories_from_it():
+    """The ANSWER-SPACE MUST MATCH THE QUESTION-SPACE.
+
+    An external spec's categories are the 24 world axes, read from
+    config/target_config.json rather than retyped here. An internal spec's come
+    from config/internal_axes.json. Neither list is a copy."""
     spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
-    assert spec["goal_axis"] in AXES
+    assert spec["domain"] in R.DOMAINS
+    assert spec["categories"], "a spec about nothing in particular"
+    assert set(spec["categories"]) <= AXES
     assert len(AXES) == 24, f"the axis list moved: {len(AXES)}"
-    assert spec["goal_axis"].endswith(("_REVIEW", "_LEVEL")), spec["goal_axis"]
+    for c in spec["categories"]:
+        assert c.endswith(("_REVIEW", "_LEVEL")), c
+
+
+def test_the_internal_half_of_the_taxonomy_is_read_from_its_own_file():
+    internal = R.internal_axes()
+    assert set(internal) == {"reliability", "instrumentation", "correctness",
+                             "safety", "performance"}, sorted(internal)
+    for name, meaning in internal.items():
+        assert len(meaning) > 20, f"{name} has no stated meaning"
+    # The two sets are DISJOINT. If a name were in both, "which domain is this
+    # category from" would have no answer and the split would buy nothing.
+    assert not (set(internal) & AXES)
+
+
+def test_the_prompt_shows_both_domains_and_says_to_choose_one():
+    """The model cannot choose a domain it has never been shown. Before the
+    taxonomy block existed the prompt offered the 24 world axes and nothing
+    else, so "internal" was not a wrong answer the model gave — it was an
+    answer the question did not have."""
+    prompt = R.build_prompt({"problem": OBS_TEXT, "component": "self_observer"},
+                            AXES)
+    assert "internal" in prompt and "external" in prompt
+    for cat, meaning in R.internal_axes().items():
+        assert cat in prompt, f"the prompt never mentions {cat}"
+        assert meaning[:30] in prompt, f"{cat} is listed with no meaning"
+    assert "ECONOMY_WORK_REVIEW" in prompt, "the world axes are not offered"
+    assert '"domain"' in prompt and '"categories"' in prompt
+    assert "goal_axis" not in prompt, "the prompt still asks the old question"
 
 
 def test_the_spec_carries_every_declared_field():
@@ -161,7 +198,7 @@ def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
 
     # A spec whose own allowed_paths ground nothing either — the file is real,
     # so it clears REFUSED_PATH_NOT_FOUND, and no axis is named by its domain.
-    bad = dict(GOOD_SPEC, goal_axis="TECHNOLOGY_AI_REVIEW",
+    bad = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"],
                allowed_paths=["agents/core/self_observer.py"])
     with pytest.raises(R.SpecAxisUngrounded) as exc:
         R.validate(bad, AXES, problem=llm_problem)
@@ -170,7 +207,7 @@ def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
 
     # And the OTHER branch: an axis that IS real and IS available, but is not
     # the one the evidence supports, is refused just as hard.
-    wrong = dict(GOOD_SPEC, goal_axis="TECHNOLOGY_AI_REVIEW")
+    wrong = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"])
     with pytest.raises(R.SpecAxisUngrounded) as exc2:
         R.validate(wrong, AXES, problem={"problem": OBS_TEXT})
     assert "ECONOMY_WORK_REVIEW" in str(exc2.value)
@@ -207,31 +244,88 @@ def test_the_observations_own_critical_axes_are_NOT_used_as_the_allowlist():
         "20 of the 24 axes")
 
 
-def test_consensus_requires_a_majority_on_the_axis():
+def test_consensus_requires_a_majority_on_the_DOMAIN():
     """Determinism without touching production. The local temperature is 0.4 and
     hardcoded in core.groq_backend._call_local_as, which this experiment must not
-    change — so agreement is bought by asking three times."""
+    change — so agreement is bought by asking three times.
+
+    THE VOTE MOVED TO THE DOMAIN (8 Sep 2026). Categories are a multi-select, so
+    a strict majority on the exact set would refuse two answers that agree about
+    everything that matters — "internal: [reliability]" and "internal:
+    [reliability, correctness]" are not a disagreement about what the problem
+    IS. The domain is the binary the answer-space turns on."""
     stable = _brain(GOOD_SPEC)
     spec = R.require({"problem": OBS_TEXT}, brain=stable, axes=AXES, consensus=3)
     assert spec["_consensus"]["asks"] == 3
     assert spec["_consensus"]["votes"] == 3
-    assert spec["_consensus"]["agreed_on"] == GOOD_SPEC["goal_axis"]
+    assert spec["_consensus"]["agreed_on"] == GOOD_SPEC["domain"]
+    assert spec["_consensus"]["all_domains"] == ["external"]
+    assert spec["_consensus"]["categories_seen"] == ["ECONOMY_WORK_REVIEW"]
 
 
-def test_a_wandering_axis_is_REFUSED_as_unstable():
+def test_categories_may_differ_between_asks_without_breaking_consensus():
+    """The multi-select, and the reason the vote is on the domain. Three asks
+    that all say INTERNAL and disagree only about how many categories to name
+    agree about the thing that decides where the answer lives."""
+    sets = [["reliability"], ["reliability", "correctness"], ["correctness"]]
     seen = {"n": 0}
-    axes_cycle = ["ECONOMY_WORK_REVIEW", "WATER_REVIEW", "FOOD_REVIEW"]
+
+    def _vary(prompt, max_tokens=700):
+        cats = sets[seen["n"] % 3]
+        seen["n"] += 1
+        return json.dumps(dict(GOOD_SPEC, domain="internal", categories=cats))
+
+    spec = R.require({"problem": "the parser breaks on invalid JSON"},
+                     brain=_vary, axes=AXES, consensus=3)
+    assert spec["domain"] == "internal"
+    assert spec["_consensus"]["votes"] == 3
+    assert spec["_consensus"]["categories_seen"] == ["correctness", "reliability"]
+
+
+def test_a_wandering_DOMAIN_is_REFUSED_as_unstable():
+    """A model that cannot decide whether a problem is about the instrument or
+    about the world does not know what the problem is."""
+    seen = {"n": 0}
+    answers = [("internal", ["reliability"]),
+               ("external", ["WATER_REVIEW"]),
+               ("internal", ["correctness"])]
 
     def _wander(prompt, max_tokens=700):
-        a = axes_cycle[seen["n"] % 3]
+        d, c = answers[seen["n"] % 3]
         seen["n"] += 1
-        return json.dumps(dict(GOOD_SPEC, goal_axis=a))
+        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
 
-    obs = {"problem": "the economy work water food provider never resolves"}
+    obs = {"problem": "the water provider parser never resolves"}
     with pytest.raises(R.SpecAxisUnstable) as exc:
         R.require(obs, brain=_wander, axes=AXES, consensus=3)
     assert R.SpecAxisUnstable.code == "SPEC_AXIS_UNSTABLE"
-    assert "no majority" in str(exc.value)
+    assert "not unanimous" in str(exc.value)
+    assert "instrument or" in str(exc.value)
+
+
+def test_a_majority_is_not_enough_because_the_domain_is_a_binary():
+    """MEASURED WHILE WRITING THIS SUITE. The first version of the wandering
+    test asserted "no majority" and did not fire: internal / external /
+    internal is a 2-1 majority. With only two options an odd number of asks
+    ALWAYS produces a majority, so majority-on-the-domain would have passed
+    whatever the model did — a net that always passes is not a net.
+
+    Two of three is also, plainly, a model that changed its mind about what
+    kind of problem it was looking at."""
+    answers = [("internal", ["reliability"]),
+               ("external", ["WATER_REVIEW"]),
+               ("internal", ["correctness"])]
+    seen = {"n": 0}
+
+    def _two_of_three(prompt, max_tokens=700):
+        d, c = answers[seen["n"] % 3]
+        seen["n"] += 1
+        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
+
+    with pytest.raises(R.SpecAxisUnstable) as exc:
+        R.require({"problem": "the water provider parser never resolves"},
+                  brain=_two_of_three, axes=AXES, consensus=3)
+    assert "2 vote(s)" in str(exc.value), str(exc.value)
 
 
 def test_consensus_of_one_asks_once():
@@ -336,11 +430,11 @@ def test_a_real_path_is_accepted():
     assert R.validate(ok, AXES) is ok
 
 
-def test_an_invented_axis_is_REFUSED_not_mapped_to_a_neighbour():
-    bad = dict(GOOD_SPEC, goal_axis="WATER")     # plausible, and not an axis
+def test_an_invented_category_is_REFUSED_not_mapped_to_a_neighbour():
+    bad = dict(GOOD_SPEC, categories=["WATER"])   # plausible, and not an axis
     with pytest.raises(R.SpecInvalid) as exc:
         R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
-    assert "not one of" in str(exc.value)
+    assert "not in the external set" in str(exc.value)
     assert "near neighbour" in str(exc.value), (
         "the refusal does not say why it is not silently corrected")
 
@@ -522,7 +616,7 @@ def test_the_prompt_forbids_code_in_as_many_words():
 def test_the_spec_is_written_outside_production_memory(tmp_path):
     out = R.write_spec(dict(GOOD_SPEC), out_dir=tmp_path / "specs")
     assert out.exists()
-    assert json.loads(out.read_text(encoding="utf-8"))["goal_axis"] == AXIS
+    assert json.loads(out.read_text(encoding="utf-8"))["categories"] == [AXIS]
 
     assert "experiments" in str(R.SPEC_DIR), (
         f"the default spec directory is {R.SPEC_DIR}, which is not under the "
@@ -559,3 +653,72 @@ def test_only_write_spec_writes_at_all():
 
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-v"]))
+
+
+# ---------------------------------------------------------------------------
+# (g) THE OLD QUESTION IS GONE — nothing still reads a single goal_axis
+# ---------------------------------------------------------------------------
+
+def test_no_module_still_reads_a_single_goal_axis_field():
+    """STRUCTURAL, ON THE CODE, NOT ON THE PROSE.
+
+    A half-migrated field is worse than either version: a reader still asking
+    spec["goal_axis"] gets None from every new spec and carries it silently into
+    a prompt, a commit message or a report. So this walks the AST of every module
+    in the pipeline and fails on any subscript, .get(), keyword or dict key that
+    names goal_axis.
+
+    Docstrings and comments are NOT searched — the modules explain at length why
+    the field was replaced, and a grep would fire on the explanation. That is how
+    a structural test quietly becomes a spell-checker.
+    """
+    modules = ("core/self_improve/requirer.py",
+               "core/self_improve/implementer.py",
+               "core/self_improve/merits.py",
+               "core/self_improve/forkadvance.py",
+               "core/self_improve/applies.py",
+               "tools/self_improve_pipeline.py")
+
+    offenders = []
+    for rel in modules:
+        tree = ast.parse((REPO / rel).read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            hit = None
+            if isinstance(node, ast.Constant) and node.value == "goal_axis":
+                hit = "a string constant"
+            elif isinstance(node, ast.Attribute) and node.attr == "goal_axis":
+                hit = "an attribute"
+            elif isinstance(node, ast.Name) and node.id == "goal_axis":
+                hit = "a name"
+            elif isinstance(node, ast.keyword) and node.arg == "goal_axis":
+                hit = "a keyword argument"
+            if hit:
+                offenders.append(f"{rel}:{getattr(node, 'lineno', '?')} ({hit})")
+
+    assert not offenders, (
+        "these still read the old single-axis field, which every new spec "
+        "leaves unset: " + ", ".join(offenders))
+
+
+def test_earning_does_not_read_the_spec_at_all():
+    """THE ONE READER THAT WAS NOT MIGRATED, AND WHY.
+
+    core/earning.py looked like a reader of goal_axis and is not one. Its axis
+    comes from class_def["claims_axis"] out of config/earning_classes.json — a
+    human-signed production policy — compared against _changed_axes(). Nothing
+    in it ever consults the spec, so there was nothing to migrate, and editing
+    that policy file to introduce a domain would mean changing a production
+    ceiling this experiment is not allowed to touch.
+
+    Pinned here so a future reader does not "finish the migration" by reaching
+    into production.
+    """
+    tree = ast.parse((REPO / "core" / "earning.py").read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and node.value in ("goal_axis",
+                                                             "categories",
+                                                             "domain"):
+            raise AssertionError(
+                f"core/earning.py now reads {node.value!r} at line {node.lineno}; "
+                f"the verifier must not depend on a field the experimental "
+                f"requirer defines")

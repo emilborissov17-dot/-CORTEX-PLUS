@@ -43,9 +43,11 @@ snippet would hide that the split failed.
 FORBIDDEN FALLBACKS, NAMED
   * do NOT strip code out and keep the spec — refusing loudly is the success
     state here;
-  * do NOT invent a goal_axis. It must be one of the 24 in
-    config/target_config.json, and a spec naming anything else is refused rather
-    than mapped to a near neighbour;
+  * do NOT invent a category, and do NOT reach across the domains. An
+    internal spec's categories come from config/internal_axes.json and an
+    external spec's from config/target_config.json; a category from the other
+    domain is refused rather than mapped to a near neighbour, because it is not
+    a near miss but the wrong question;
   * do NOT fall back to the cloud ladder when the local brain is down. The
     requirer's whole point is WHICH model does this job; a silent upgrade would
     erase the experiment.
@@ -70,8 +72,24 @@ PROPOSALS = REPO / "memory" / "improvement_proposals.json"
 # record the nightly cycle reads.
 SPEC_DIR = REPO / "experiments" / "self_improve" / "specs"
 
+INTERNAL_AXES = REPO / "config" / "internal_axes.json"
+
+# THE ANSWER-SPACE MUST MATCH THE QUESTION-SPACE (ratified 8 Sep 2026).
+#
+# This was ("...", "goal_axis", "allowed_paths") — ONE field, single-select over
+# the 24 world axes. That question is malformed for half the problems the feed
+# carries. A self-improvement is either INTERNAL (it improves the instrument) or
+# EXTERNAL (it improves how the instrument measures the world), and an internal
+# fix — a JSON parser that breaks on a model's output — maps to NO world axis.
+# Asked to name one anyway, the model wanders: five live runs on that exact
+# problem produced FOUR different world axes, every one real, every one a guess.
+#
+# So the field is replaced, not patched: a DOMAIN, and one or MORE categories
+# drawn from that domain's own set.
 SPEC_FIELDS = ("problem", "root_cause", "desired_change", "success_metric",
-               "goal_axis", "allowed_paths")
+               "domain", "categories", "allowed_paths")
+
+DOMAINS = ("internal", "external")
 _FREE_TEXT = ("problem", "root_cause", "desired_change", "success_metric")
 
 
@@ -165,6 +183,36 @@ def real_axes(path: Path | None = None) -> set:
     return axes
 
 
+def internal_axes(path: Path | None = None) -> dict:
+    """{category: one-line meaning} out of config/internal_axes.json.
+
+    The INTERNAL half of the taxonomy: what an improvement to the INSTRUMENT can
+    be about, as against the 24 axes that describe the WORLD it measures. Read
+    from the file for the same reason real_axes() is — a copy of a declared list
+    goes stale silently, and this one is shown to the model verbatim.
+    """
+    doc = json.loads((path or INTERNAL_AXES).read_text(encoding="utf-8"))
+    cats = doc.get("categories")
+    if not isinstance(cats, dict) or not cats:
+        raise SpecInvalid(
+            f"{(path or INTERNAL_AXES).name} declares no categories. The "
+            f"internal half of the taxonomy cannot be empty: a spec would have "
+            f"nowhere valid to land and every internal problem would be refused.")
+    return {str(k): str(v) for k, v in cats.items()}
+
+
+def domain_categories(domain: str, axes: set | None = None) -> set:
+    """The set a category must belong to, for THIS domain. The whole point of
+    the split: membership is checked against the right set, not against a union
+    of both, because a union would accept exactly the mismatch that is malformed.
+    """
+    if domain == "external":
+        return set(axes if axes is not None else real_axes())
+    if domain == "internal":
+        return set(internal_axes())
+    return set()
+
+
 # ---------------------------------------------------------------------------
 # the net: no code, at all
 # ---------------------------------------------------------------------------
@@ -226,12 +274,33 @@ def validate(spec: dict, axes: set | None = None,
         raise SpecInvalid(f"missing field(s): {', '.join(missing)}")
 
     known = axes if axes is not None else real_axes()
-    if spec["goal_axis"] not in known:
+
+    # THE TAXONOMY. A domain first, then categories from THAT domain's set.
+    # Checking against a union of both sets would accept the exact mismatch the
+    # split exists to catch — an internal fix labelled with a world axis.
+    domain = spec.get("domain")
+    if domain not in DOMAINS:
         raise SpecInvalid(
-            f"goal_axis {spec['goal_axis']!r} is not one of the "
-            f"{len(known)} axes in config/target_config.json. It is refused "
-            f"rather than mapped to a near neighbour: a spec aimed at an axis "
-            f"that does not exist cannot be measured against anything.")
+            f"domain {domain!r} is not one of {list(DOMAINS)}. Every "
+            f"self-improvement is either INTERNAL (it improves the instrument) "
+            f"or EXTERNAL (it improves how the instrument measures the world); "
+            f"there is no third place for one to be.")
+
+    cats = spec.get("categories")
+    if not isinstance(cats, list) or not cats:
+        raise SpecInvalid(
+            "categories must be a non-empty list. A spec that is about nothing "
+            "in particular cannot be judged against anything in particular.")
+
+    allowed = domain_categories(domain, known)
+    wrong = [c for c in cats if c not in allowed]
+    if wrong:
+        raise SpecInvalid(
+            f"categor{'y' if len(wrong) == 1 else 'ies'} {wrong} "
+            f"{'is' if len(wrong) == 1 else 'are'} not in the {domain} set "
+            f"{sorted(allowed)}. Refused rather than mapped to a near "
+            f"neighbour: a category from the other domain is not a near miss, "
+            f"it is the wrong question.")
 
     paths = spec.get("allowed_paths")
     if not isinstance(paths, list) or not paths:
@@ -318,30 +387,40 @@ def plausible_axes(problem: dict, axes: set | None = None) -> set:
 
 
 def _require_grounded_axis(spec: dict, problem: dict | None) -> None:
-    """SPEC_AXIS_UNGROUNDED unless the axis is tied to the problem by evidence.
+    """SPEC_AXIS_UNGROUNDED unless an EXTERNAL category is tied to the problem.
 
-    Refuses rather than guesses when NOTHING is plausible — the brief's rule,
-    and the honest one: an LLM returning invalid JSON is an engineering fault,
-    and none of the twenty-four civilization axes is about it. Forcing a choice
-    there produces the wandering this net exists to stop.
+    EXTERNAL ONLY, and that restriction is the taxonomy earning its keep. This
+    net was written to stop a model wandering across four world axes for one
+    problem, and it worked — but applied to every spec it also refused the
+    honest answer, because an internal fix has no world axis to be grounded in.
+    Refusing a correct classification is the same failure as accepting a guess,
+    pointed the other way.
+
+    An internal category needs no token overlap with the problem text: it is
+    grounded by the domain itself, and its membership is checked against
+    config/internal_axes.json in validate().
     """
-    if problem is None:
+    if problem is None or spec.get("domain") != "external":
         return
     candidates = plausible_axes({**problem, **{"allowed_paths":
                                                spec.get("allowed_paths")}})
-    axis = spec.get("goal_axis")
+    cats = list(spec.get("categories") or [])
+    axis = cats[0] if len(cats) == 1 else cats
     if not candidates:
         raise SpecAxisUngrounded(
-            f"{SpecAxisUngrounded.code}: no axis is plausibly tied to this "
-            f"problem, so {axis!r} is a guess. Nothing in the problem text "
-            f"names an axis and no allowed_path resolves to one. REFUSING is "
-            f"the answer: some problems are engineering faults that no "
-            f"civilization axis is about, and picking one anyway is how five "
-            f"runs produced four different axes for the same problem.")
-    if axis not in candidates:
+            f"{SpecAxisUngrounded.code}: no world axis is plausibly tied to this "
+            f"problem, so {axis!r} is a guess. Nothing in the problem text names "
+            f"an axis and no allowed_path resolves to one. If this problem is a "
+            f"fault in the system rather than a gap in how it measures the "
+            f"world, the domain is INTERNAL and no world axis applies to it at "
+            f"all — say that instead of picking one, which is how five runs "
+            f"produced four different axes for the same problem.")
+    ungrounded = [c for c in cats if c not in candidates]
+    if ungrounded:
         raise SpecAxisUngrounded(
-            f"{SpecAxisUngrounded.code}: {axis!r} is a real axis but is not "
-            f"tied to this problem. The evidence supports "
+            f"{SpecAxisUngrounded.code}: {ungrounded} "
+            f"{'is a real axis' if len(ungrounded) == 1 else 'are real axes'} "
+            f"but not tied to this problem. The evidence supports "
             f"{sorted(candidates)}. Being in the list of 24 is not the same as "
             f"being about this.")
 
@@ -535,6 +614,7 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
     return (
         (f"{standard}\n\n" if standard else "")
         + ground
+        + taxonomy_block(axes)
         + "You are the CORTEX++ requirer. You produce a SPECIFICATION. "
         "You never write code.\n\n"
         "THE RULES YOU ARE JUDGED BY — read these before writing anything:\n"
@@ -547,8 +627,12 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         "memory/goal_score_history.json\", not \"fewer failures\". DO NOT COPY "
         "AN EXAMPLE PATH: a spec naming a file that does not exist is REFUSED as "
         "SPEC_METRIC_UNGROUNDED before any code is written.\n"
-        "  3. goal_axis MUST be exactly one of the axes listed below. Anything "
-        "else is REFUSED, never mapped to a near neighbour.\n"
+        "  3. FIRST choose the DOMAIN this problem belongs to, THEN one or more "
+        "CATEGORIES FROM THAT DOMAIN. A category from the other domain is "
+        "REFUSED — it is not a near miss, it is the wrong question. If the "
+        "problem is a fault in this system (a parser, a retry, a log, a guard), "
+        "the domain is \"internal\" and the world axes do not apply to it at "
+        "all; do not reach for one.\n"
         "  4. No Python, no snippet, no fenced block, no import or def. A spec "
         "containing code is REFUSED WHOLE — not cleaned up. Describing WHAT "
         "must change is your job; HOW is someone else's.\n\n"
@@ -561,10 +645,36 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         '  "root_cause": "<one sentence>",\n'
         '  "desired_change": "<what must be true after, in words>",\n'
         '  "success_metric": "<a number recomputable from a named file>",\n'
-        f'  "goal_axis": "<EXACTLY one of: {", ".join(sorted(axes))}>",\n'
+        '  "domain": "<internal OR external>",\n'
+        '  "categories": ["<one or more, ALL from the domain you chose>"],\n'
         '  "allowed_paths": ["<a repo-relative path that EXISTS>"]\n'
         "}\n"
     )
+
+
+def taxonomy_block(axes: set) -> str:
+    """BOTH sets, shown in full, with the internal ones explained.
+
+    The model cannot choose a domain it has never been shown. Before this block
+    existed the prompt offered the 24 world axes and nothing else, so "internal"
+    was not a wrong answer the model gave — it was an answer the question did
+    not have. The meanings come from config/internal_axes.json rather than being
+    retyped here, so the file the net reads is the file the model is shown.
+    """
+    try:
+        internal = internal_axes()
+    except Exception as exc:                                     # noqa: BLE001
+        # Loud and unusable rather than quietly half a taxonomy: a prompt
+        # offering only the world axes is how the wandering started.
+        return (f"THE TAXONOMY IS UNREADABLE ({exc}). Do not answer; say the "
+                f"categories cannot be listed.\n\n")
+    return (
+        "THE TWO DOMAINS — choose ONE, then one or more categories FROM IT:\n\n"
+        "  internal = you are improving THIS SYSTEM (the instrument itself).\n"
+        + "".join(f"      {k:<16} {v}\n" for k, v in sorted(internal.items()))
+        + "\n  external = you are improving how the system measures THE WORLD.\n"
+        + "".join(f"      {a}\n" for a in sorted(axes))
+        + "\n")
 
 
 def observations(limit: int = 5, journal: Path | None = None,
@@ -653,28 +763,49 @@ def require(problem: dict, brain=None, axes: set | None = None,
         # catches SpecAxisUngrounded must still see it.
         raise errors[0]
 
+    # THE VOTE IS ON THE DOMAIN, not on the categories. Categories are a
+    # multi-select, so a strict majority on the exact set would refuse two
+    # answers that agree about everything that matters — "internal:
+    # [reliability]" and "internal: [reliability, correctness]" are not a
+    # disagreement about what the problem IS. The domain is the binary the
+    # answer-space turns on, and it is the thing that must hold still.
     tally = {}
     for sp in specs:
-        tally.setdefault(sp["goal_axis"], []).append(sp)
+        tally.setdefault(sp["domain"], []).append(sp)
     axis, winners = max(tally.items(), key=lambda kv: len(kv[1]))
 
-    if len(winners) < 2:
-        # The message reports asks, VALID asks and votes separately, because
-        # they fail differently: three asks that disagree is a wandering model,
-        # while three asks of which two were REFUSED is a model that mostly
-        # could not produce a spec at all. Collapsing them into "no majority"
-        # sent me looking for the wrong problem the first time this fired.
+    # UNANIMOUS, NOT MERELY A MAJORITY — and the difference is the whole net.
+    # The domain is a BINARY. With an odd number of asks a majority is free: a
+    # model flipping a coin produces one every single time, so "majority on the
+    # domain" would pass whatever the model did, and a net that always passes is
+    # not a net. Measured while writing this: internal/external/internal is a
+    # 2-1 "majority" and is also a model that changed its mind about what kind
+    # of problem it was looking at.
+    #
+    # The message reports asks, VALID asks and votes separately, because they
+    # fail differently: asks that disagree is a wandering model, while three
+    # asks of which two were REFUSED is a model that mostly could not produce a
+    # spec at all. Collapsing them into "no majority" sent me looking for the
+    # wrong problem the first time this fired.
+    if len(winners) < 2 or len(winners) != len(specs):
         raise SpecAxisUnstable(
             f"{SpecAxisUnstable.code}: {consensus} ask(s), {len(specs)} valid, "
-            f"best axis {axis!r} with {len(winners)} vote(s) — no majority "
-            f"(2 needed). Axes seen: {', '.join(sorted(tally))}. The model does "
-            f"not know which axis this problem is about; saying so is the "
-            f"honest output.")
+            f"best domain {axis!r} with {len(winners)} vote(s) — not unanimous "
+            f"(a binary needs every valid ask to agree; a majority on a coin "
+            f"flip is free). Domains seen: {', '.join(sorted(tally))}. The model "
+            f"cannot decide whether this problem is about the instrument or "
+            f"about the world; saying so is the honest output.")
 
     chosen = winners[0]
-    chosen["_consensus"] = {"asks": consensus, "valid": len(specs),
-                            "agreed_on": axis, "votes": len(winners),
-                            "all_axes": sorted(tally)}
+    chosen["_consensus"] = {
+        "asks": consensus, "valid": len(specs), "agreed_on": axis,
+        "votes": len(winners), "all_domains": sorted(tally),
+        # Every category any ask offered, kept because the domain vote
+        # deliberately ignores them: a reader deciding whether the categories
+        # were stable needs to see them rather than take the domain's word.
+        "categories_seen": sorted({c for sp in specs
+                                   for c in (sp.get("categories") or [])}),
+    }
     return chosen
 
 
@@ -721,7 +852,8 @@ def _selftest() -> int:
             "root_cause": "the observation map has no entry for the key",
             "desired_change": "the provider resolves the series",
             "success_metric": "the number of rows in memory/goal_score_history.json",
-            "goal_axis": "ECONOMY_WORK_REVIEW",
+            "domain": "external",
+            "categories": ["ECONOMY_WORK_REVIEW"],
             "allowed_paths": ["data_providers/civilization/economy_work_provider.py"]}
     try:
         validate(dict(good), axes, problem)
@@ -738,7 +870,11 @@ def _selftest() -> int:
              dict(good, desired_change="def f():\n    return 1"), problem),
             ("fenced block",
              dict(good, problem="```python\nx=1\n```"), problem),
-            ("invented axis", dict(good, goal_axis="NOT_AN_AXIS"), problem),
+            ("invented category", dict(good, categories=["NOT_AN_AXIS"]), problem),
+            ("an internal category on an external spec",
+             dict(good, categories=["reliability"]), problem),
+            ("no domain at all", dict(good, domain="whatever"), problem),
+            ("empty categories", dict(good, categories=[]), problem),
             ("metric names no file",
              dict(good, success_metric="count of rows"), problem),
             ("axis nothing supports",

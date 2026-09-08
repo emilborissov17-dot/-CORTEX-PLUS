@@ -1,0 +1,12 @@
+{
+  "_comment": "INTERNAL categories: what a self-improvement to the INSTRUMENT can be about. The 24 axes in config/target_config.json describe the WORLD the system measures; these describe the system itself. A spec must choose a domain first (internal or external) and then one or more categories FROM THAT DOMAIN. Forcing an internal fix -- a JSON parser that breaks on a model's output -- onto a world axis is malformed, and a model asked to do it wanders: five live runs on one such problem produced four different world axes (TECHNOLOGY_AI, TECHNOLOGY_INFRA, DEEP_TIME_RISKS, GOAL_PROGRESS), every one of them real and every one of them a guess.",
+  "_source": "ratified 2026-09-08; read by core/self_improve/requirer.internal_axes()",
+  "_rule": "one line of meaning per category, so the prompt can show the model what each one is without a second file to look up",
+  "categories": {
+    "reliability": "the system keeps working when an input, a model or a service misbehaves -- retries, fallbacks, timeouts, malformed responses",
+    "instrumentation": "the system can see what it did -- logs, traces, provenance stamps, records that let a human reconstruct a run",
+    "correctness": "the system computes the right answer -- parsing, arithmetic, control flow, a result that matches what the code claims",
+    "safety": "the system cannot do harm it was not authorised to do -- guards, ceilings, refusals, limits on what a change may touch",
+    "performance": "the system does the same work with less time, memory or budget, without changing the answer"
+  }
+}

@@ -40,7 +40,8 @@ SPEC = {
     "root_cause": "The observation key is absent from the map.",
     "desired_change": "The provider resolves the series instead of defaulting.",
     "success_metric": "count of axes scoring from real data",
-    "goal_axis": "WATER_REVIEW",
+    "domain": "external",
+    "categories": ["WATER_REVIEW"],
     "allowed_paths": ["data_providers/"],
 }
 

@@ -359,7 +359,7 @@ def render(record: dict) -> str:
         "=" * 72,
     ]
     for field in ("problem", "root_cause", "desired_change", "success_metric",
-                  "goal_axis", "allowed_paths"):
+                  "domain", "categories", "allowed_paths"):
         lines.append(f"  {field:<16} {spec.get(field)}")
     lines += ["", "=" * 72,
               f"DIFF  (cloud ladder — {len(record.get('changed_files') or [])} file(s))",
@@ -413,7 +413,8 @@ def _fixture_models():
         # target filename (economy_work_provider.py -> ECONOMY_WORK_REVIEW),
         # so this fixture passes the axis net for a real reason rather than
         # because the net is off.
-        "goal_axis": "ECONOMY_WORK_REVIEW",
+        "domain": "external",
+        "categories": ["ECONOMY_WORK_REVIEW"],
         # A REAL, EXISTING file (8 Sep 2026). This said "data_providers/" — a
         # directory prefix — so _read_allowed_files() found nothing to read and
         # the fixture exercised an EMPTY context, which is exactly the state the

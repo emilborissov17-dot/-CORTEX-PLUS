@@ -99,7 +99,8 @@ def test_the_pipeline_runs_end_to_end_and_reaches_a_verdict(mocked_models, tmp_p
     assert record["reason"], "a verdict with no reason is not a verdict"
 
     # every stage left its trace
-    assert record["spec"]["goal_axis"], "no spec"
+    assert record["spec"]["domain"] in ("internal", "external"), "no spec"
+    assert record["spec"]["categories"], "no categories"
     assert "@@" in record["diff"], "no diff"
     assert record["changed_files"] == [P.FIXTURE_FILE]
 
@@ -488,7 +489,8 @@ def test_a_spec_carrying_code_ends_the_run(tmp_path):
     P.OUT_DIR = tmp_path / "runs"
     bad_spec = {"problem": "def f():\n    x = 1", "root_cause": "r",
                 "desired_change": "d", "success_metric": "m",
-                "goal_axis": "WATER_REVIEW", "allowed_paths": ["data_providers/"]}
+                "domain": "external", "categories": ["WATER_REVIEW"],
+                "allowed_paths": ["data_providers/"]}
     with pytest.raises(P.PipelineRefused) as exc:
         P.run_once({"problem": OBS_TEXT},
                    brain=lambda p, max_tokens=700: json.dumps(bad_spec),
