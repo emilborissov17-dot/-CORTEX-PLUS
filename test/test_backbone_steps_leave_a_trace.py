@@ -70,6 +70,17 @@ DARK_STEPS = {
         "marker": "debrief",
         "guarded": True,
     },
+    # produces was ALREADY correct here too, and the DIRECTORY is the right unit:
+    # CYCLE_REPORT_<date>.md is a dated name. dated_output=True is what lets it
+    # past test_a_declared_file_is_not_a_directory_another_step_also_writes, and
+    # it is only honest because nothing else writes into output/reports —
+    # unlike snapshots/master, which three steps share.
+    "cycle_report": {
+        "produces": ["output/reports"],
+        "marker": "cycle_report",
+        "guarded": True,
+        "dated_output": True,
+    },
 }
 
 PARAMS = sorted(DARK_STEPS)

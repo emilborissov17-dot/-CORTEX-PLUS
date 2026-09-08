@@ -3741,21 +3741,38 @@ def main():
     # Уводът и заключението са негови думи, не мои. FAIL-OPEN.
     beat("cycle_report", "25.6")
     try:
-        from core.cycle_report import build as _rep_build, to_markdown as _rep_md, \
-            telegram_text as _rep_tg
-        from pathlib import Path as _P
-        _rep = _rep_build()
-        _dir = BASE / "output" / "reports"
-        _dir.mkdir(parents=True, exist_ok=True)
-        _day = str(_rep.get("ts", ""))[:10]
-        (_dir / f"CYCLE_REPORT_{_day}.md").write_text(_rep_md(_rep), encoding="utf-8")
-        print(f"[FAST_CYCLE] cycle_report -> output/reports/CYCLE_REPORT_{_day}.md "
-              f"(кухи: {len(_rep.get('broken', []))}, паднали: {len(_rep.get('failed', []))})")
-        try:                    # кратката версия отива на телефона
-            from experiments.needs.needs_report import _notify as _tg_notify
-            _tg_notify(_rep_tg(_rep))
-        except Exception:
-            pass
+        # ── A TRACE THAT IT RAN (8 Sep 2026) ───────────────────────────────
+        # BACKBONE, and it recorded nothing: an inline try/except, not a
+        # _run() step, so core/blackbox.py never saw it. A hard kill inside it
+        # left no evidence it had started.
+        #
+        # The `with` is INSIDE the try, deliberately. Outside it, the existing
+        # except would swallow the exception before __exit__ saw it and the
+        # blackbox would record a clean 'end' for a step that FAILED. Inside,
+        # the exception passes through __exit__ first — recording 'error' —
+        # and is then caught exactly as before. Fail-open is unchanged.
+        # produces was ALREADY correct here, and the DIRECTORY is the right unit:
+        # CYCLE_REPORT_<date>.md is a dated name, and cycle_map's own rule keeps
+        # dated outputs out of produces because their names move. kept_promise()
+        # takes the newest file inside a tree, which answers exactly the question
+        # 'did cycle_report write a report this cycle?'. Unlike update_master's
+        # snapshots/master, nothing else writes into output/reports — verified.
+        with _bb_step("cycle_report"):
+            from core.cycle_report import build as _rep_build, to_markdown as _rep_md, \
+                telegram_text as _rep_tg
+            from pathlib import Path as _P
+            _rep = _rep_build()
+            _dir = BASE / "output" / "reports"
+            _dir.mkdir(parents=True, exist_ok=True)
+            _day = str(_rep.get("ts", ""))[:10]
+            (_dir / f"CYCLE_REPORT_{_day}.md").write_text(_rep_md(_rep), encoding="utf-8")
+            print(f"[FAST_CYCLE] cycle_report -> output/reports/CYCLE_REPORT_{_day}.md "
+                  f"(кухи: {len(_rep.get('broken', []))}, паднали: {len(_rep.get('failed', []))})")
+            try:                    # кратката версия отива на телефона
+                from experiments.needs.needs_report import _notify as _tg_notify
+                _tg_notify(_rep_tg(_rep))
+            except Exception:
+                pass
     except Exception as e:
         print(f"[FAST_CYCLE] cycle_report -> FAILED: {type(e).__name__}: {e}")
 
