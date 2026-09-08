@@ -83,6 +83,21 @@ class SpecInvalid(Exception):
     """The spec is missing a field, or names an axis that does not exist."""
 
 
+class SpecPathNotFound(SpecInvalid):
+    """REFUSED_PATH_NOT_FOUND — allowed_paths names something that is not there.
+
+    A NAMED refusal, raised BEFORE the implementer is ever called. On 2026-09-08
+    a live run produced allowed_paths ["src/ai/self_observer.py"] and the cloud
+    model then wrote a competent patch to it. The scope check passed, because it
+    compared the diff against the SPEC and the two hallucinations agreed with
+    each other. Only the ceiling stood between that and a "clean" run.
+
+    The refusal carries its own name so a reader of the record can tell THIS
+    failure from a missing field or a bad axis without parsing prose.
+    """
+    code = "REFUSED_PATH_NOT_FOUND"
+
+
 # ---------------------------------------------------------------------------
 # the real axes
 # ---------------------------------------------------------------------------
@@ -178,6 +193,29 @@ def validate(spec: dict, axes: set | None = None) -> dict:
     for p in paths:
         if not isinstance(p, str) or not p.strip():
             raise SpecInvalid(f"allowed_paths carries {p!r}")
+
+    # ── THE NET (8 Sep 2026): REFUSED_PATH_NOT_FOUND ──────────────────────
+    # The instruction says the paths must exist and the prompt now shows the
+    # real ones. Neither can stop a model that writes a plausible path anyway,
+    # and on 2026-09-08 three runs out of three did exactly that. So the spec is
+    # REFUSED here, by name, before the implementer is ever called — because a
+    # patch written against a file that does not exist cannot be judged, only
+    # believed.
+    # is_file(), NOT exists(): a DIRECTORY passes exists() and is still the
+    # bug. _read_allowed_files() only reads files, so a directory allowlist
+    # hands the implementer an EMPTY context and puts it straight back to
+    # inventing code that fits the words. Requiring a file is what makes the
+    # grounding guaranteed rather than likely — "data_providers/" was the
+    # fixture that quietly did exactly this until 5b0bcd5.
+    missing = [p for p in paths if not (REPO / p).is_file()]
+    if missing:
+        raise SpecPathNotFound(
+            f"{SpecPathNotFound.code}: allowed_paths names "
+            f"{', '.join(repr(m) for m in missing)}, which do not exist in this "
+            f"repo. The spec is refused WHOLE and the implementer is never "
+            f"called: a patch written against a file that is not there cannot be "
+            f"judged, only believed. Choose from the real paths the prompt "
+            f"listed.")
 
     _reject_code(spec)
     return spec

@@ -42,7 +42,10 @@ GOOD_SPEC = {
     "desired_change": "The scorer resolves the series instead of defaulting.",
     "success_metric": "count of axes scoring from real data, read from the scores file",
     "goal_axis": AXIS,
-    "allowed_paths": ["data_providers/"],
+    # A REAL, EXISTING FILE. This was "data_providers/" — a directory, which
+    # passes exists() and is still the bug: only files are read as context, so
+    # a directory allowlist hands the implementer nothing.
+    "allowed_paths": ["agents/core/self_observer.py"],
 }
 
 
@@ -92,7 +95,7 @@ def test_the_spec_carries_every_declared_field():
     spec = R.require({"problem": "p"}, brain=_brain(GOOD_SPEC), axes=AXES)
     for field in R.SPEC_FIELDS:
         assert field in spec, f"missing {field}"
-    assert spec["allowed_paths"] == ["data_providers/"]
+    assert spec["allowed_paths"] == ["agents/core/self_observer.py"]
 
 
 # ---------------------------------------------------------------------------
@@ -132,6 +135,47 @@ def test_ordinary_prose_is_not_mistaken_for_code():
         "The value should equal the number of rows in the history file.",
     ):
         assert R._looks_like_code(prose) == "", f"false positive: {prose!r}"
+
+
+def test_REFUSED_PATH_NOT_FOUND_on_the_exact_path_the_live_run_invented():
+    """THE NET, against the real 2026-09-08 output. The live run produced
+    allowed_paths ["src/ai/self_observer.py"]; this repo has no src/ tree. The
+    refusal is NAMED so a reader can tell it from a missing field or a bad axis
+    without parsing prose."""
+    bad = dict(GOOD_SPEC, allowed_paths=["src/ai/self_observer.py"])
+    with pytest.raises(R.SpecPathNotFound) as exc:
+        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+
+    assert R.SpecPathNotFound.code == "REFUSED_PATH_NOT_FOUND"
+    assert "REFUSED_PATH_NOT_FOUND" in str(exc.value)
+    assert "src/ai/self_observer.py" in str(exc.value)
+    assert "refused WHOLE" in str(exc.value)
+
+
+def test_the_path_refusal_happens_before_the_implementer_is_called():
+    """It is a subclass of SpecInvalid, so the pipeline's existing
+    `except (SpecContainsCode, SpecInvalid)` catches it and ends the run at the
+    requirer — the implementer is never reached with a spec it cannot satisfy."""
+    assert issubclass(R.SpecPathNotFound, R.SpecInvalid)
+
+
+@pytest.mark.parametrize("path", [
+    "src/ai/self_observer.py",       # what the live run actually produced
+    "self_observer",                 # and on another attempt
+    "core/self_observer.py",         # and on a third
+    "data_providers/",               # a directory prefix, not a file
+])
+def test_every_path_the_live_runs_invented_is_now_refused(path):
+    bad = dict(GOOD_SPEC, allowed_paths=[path])
+    with pytest.raises(R.SpecPathNotFound):
+        R.validate(bad, AXES)
+
+
+def test_a_real_path_is_accepted():
+    """THE NEGATIVE CONTROL. A net that refuses everything would stop the
+    pipeline dead and the failure would look like caution."""
+    ok = dict(GOOD_SPEC, allowed_paths=["agents/core/self_observer.py"])
+    assert R.validate(ok, AXES) is ok
 
 
 def test_an_invented_axis_is_REFUSED_not_mapped_to_a_neighbour():

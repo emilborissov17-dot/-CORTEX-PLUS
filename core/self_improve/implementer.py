@@ -62,7 +62,14 @@ NEVER_TOUCH = (
 )
 
 _DIFF_PATHS = re.compile(r"^(?:\+\+\+|---)\s+(?:[ab]/)?(\S+)", re.M)
-_HUNK = re.compile(r"^@@ ", re.M)
+# ^@@ WITHOUT THE TRAILING SPACE (8 Sep 2026). This was r"^@@ ", which
+# requires line-number ranges after the marker. On 2026-09-08 Groq returned
+# a well-formed patch using BARE `@@` hunk markers — 4 of them, 0 with a
+# trailing space — and this regex refused it as "not a diff". The model was
+# right and the check was wrong, and the refusal said so in a way that
+# blamed the model. A gate that refuses for a false reason is worse than
+# one that does not refuse: it teaches the wrong lesson.
+_HUNK = re.compile(r"^@@", re.M)
 
 
 class PatchOutOfScope(Exception):
@@ -126,6 +133,24 @@ def enforce_scope(diff: str, allowed_paths) -> list:
     allowed = list(allowed_paths or [])
     if not allowed:
         raise PatchOutOfScope("the spec allows no path at all")
+
+    # ── THE PATH MUST BE REAL, NOT MERELY ALLOWED (8 Sep 2026) ────────────
+    # This checked the diff against the SPEC and nothing else. When both were
+    # hallucinated they AGREED, and a patch to src/ai/self_observer.py — a file
+    # that does not exist — passed the scope gate cleanly. Matching an invented
+    # allowlist is not scope; it is two errors cancelling.
+    #
+    # A diff may CREATE a file (its --- side is /dev/null, already dropped by
+    # changed_files), so a path is acceptable if it exists OR if its parent
+    # directory does. Both are checked against the real repo.
+    for path in touched:
+        target = REPO / path
+        if not target.exists() and not target.parent.is_dir():
+            raise PatchOutOfScope(
+                f"{path} does not exist in this repo, and neither does its "
+                f"parent directory. A patch against a file that is not there "
+                f"cannot be applied or judged — matching the spec's allowlist "
+                f"proves only that the spec was wrong in the same way.")
 
     for path in touched:
         if not any(_under(path, a) for a in allowed):

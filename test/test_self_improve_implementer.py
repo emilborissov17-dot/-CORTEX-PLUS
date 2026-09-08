@@ -135,6 +135,51 @@ def test_something_that_is_not_a_diff_is_refused(junk):
         I.implement(SPEC, model=_model(junk))
 
 
+def test_a_bare_at_at_hunk_is_accepted():
+    """THE FALSE REFUSAL, FIXED. _HUNK was r"^@@ " — requiring line-number ranges
+    after the marker. On 2026-09-08 Groq returned a well-formed patch using BARE
+    `@@` markers (4 of them, 0 with a trailing space) and this refused it as "not
+    a diff". The model was right and the check was wrong, and the refusal blamed
+    the model. A gate that refuses for a false reason teaches the wrong lesson.
+    """
+    bare = ("--- a/agents/core/self_observer.py\n"
+            "+++ b/agents/core/self_observer.py\n"
+            "@@\n-old\n+new\n")
+    assert I.enforce_scope(bare, ["agents/core/self_observer.py"]) == [
+        "agents/core/self_observer.py"]
+
+
+def test_a_ranged_hunk_still_works():
+    """The ordinary form must not have been broken by relaxing the marker."""
+    ranged = ("--- a/agents/core/self_observer.py\n"
+              "+++ b/agents/core/self_observer.py\n"
+              "@@ -1,2 +1,3 @@\n c\n+added\n")
+    assert I.enforce_scope(ranged, ["agents/core/self_observer.py"])
+
+
+def test_a_diff_against_a_file_that_does_not_exist_is_REFUSED():
+    """TWO HALLUCINATIONS CANCELLING. enforce_scope compared the diff against the
+    SPEC and nothing else, so when both were invented they AGREED and a patch to
+    src/ai/self_observer.py cleared the scope gate. Matching an invented
+    allowlist is not scope."""
+    ghost = ("--- a/src/ai/self_observer.py\n"
+             "+++ b/src/ai/self_observer.py\n"
+             "@@\n-x\n+y\n")
+    with pytest.raises(I.PatchOutOfScope) as exc:
+        I.enforce_scope(ghost, ["src/ai/self_observer.py"])
+    assert "does not exist in this repo" in str(exc.value)
+
+
+def test_a_NEW_file_in_a_real_directory_is_allowed():
+    """A patch may CREATE a file. Refusing every new file would be the opposite
+    error, so a path passes when its parent directory is real."""
+    newf = ("--- /dev/null\n"
+            "+++ b/agents/core/brand_new_thing.py\n"
+            "@@\n+line\n")
+    assert I.enforce_scope(newf, ["agents/core/"]) == [
+        "agents/core/brand_new_thing.py"]
+
+
 def test_dev_null_is_not_treated_as_a_path():
     """A new file's diff spells the absent side /dev/null. That is not a path
     anyone can touch, and reading it as one would refuse every file creation."""
