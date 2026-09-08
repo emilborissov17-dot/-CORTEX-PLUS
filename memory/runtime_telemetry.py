@@ -128,6 +128,15 @@ def record_refusal(step, gate, reason, level=None, prev_step=None):
                 an independent measurement.
       reason    the gate's verbatim explanation
       prev_step the step whose provenance was inherited, when the caller knows it
+      rule_cited  WHICH RULE WAS APPLIED, resolved against the one ruleset in
+                config/passage_rules.json. Added 8 сеп 2026, once c4a0d30 gave
+                that ruleset a stable identity to cite. Before it, a refusal
+                said what level it scored and never what STANDARD produced that
+                level, so reading the record told you the verdict and not the
+                law - and the actor could not look the rule up, because there
+                was no one place it lived. Carries the ruleset version, so a
+                record written under one version of the rules cannot be
+                misread under a later one.
 
     The effect is the absence that follows: the step did not run, so what it
     produces was not produced. That is the whole point of the record - it is the
@@ -140,7 +149,50 @@ def record_refusal(step, gate, reason, level=None, prev_step=None):
     data["level"] = level
     data["level_source"] = ("parsed_from_gate_reason" if level is not None
                             else "not_reported_by_this_gate")
+    data["rule_cited"] = _cite_rule(level)
     return _append(REFUSAL, data)
+
+
+def _cite_rule(level):
+    """The rule this refusal applied, resolved against config/passage_rules.json.
+
+    ONE FIELD, and it points at the one ruleset rather than restating it: a
+    refusal that carried its own copy of the rules would be exactly the second
+    copy core/passage_rules.py exists to prevent. What is stored is a citation -
+    version, the scale entry, what that level earns, and the threshold it failed
+    - so a record can be read years later against the rules that were actually
+    in force when it was written.
+
+    NEVER RAISES, and never returns None silently. If the ruleset cannot be read
+    the citation says so, because "no rule cited" and "the rule could not be
+    looked up" are different facts and the second must not be recorded as the
+    first.
+    """
+    try:
+        from core.passage_rules import RULES
+        if RULES.get("unreadable"):
+            return {"source": "config/passage_rules.json",
+                    "version": RULES.get("version"),
+                    "cited": None,
+                    "note": f"ruleset unreadable: {RULES['unreadable']}"}
+        if level is None:
+            return {"source": "config/passage_rules.json",
+                    "version": RULES.get("version"),
+                    "cited": None,
+                    "note": "this gate reports no level, so no scale entry applies",
+                    "irreversible_min": RULES.get("irreversible_min")}
+        return {
+            "source": "config/passage_rules.json",
+            "version": RULES.get("version"),
+            "cited": f"scale.{level}",
+            "level_name": RULES.get("level_names", {}).get(level),
+            "earns": RULES.get("level_earns", {}).get(level),
+            "irreversible_min": RULES.get("irreversible_min"),
+        }
+    except Exception as e:                                       # noqa: BLE001
+        return {"source": "config/passage_rules.json", "version": None,
+                "cited": None,
+                "note": f"rule lookup failed: {type(e).__name__}: {e}"}
 
 def _build_summary(experiences):
     """Синтезира усещането от преживяванията.
