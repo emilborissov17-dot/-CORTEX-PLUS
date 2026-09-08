@@ -58,6 +58,11 @@ DARK_STEPS = {
         "marker": "update_master",
         "guarded": False,
     },
+    "merklememory_commit": {
+        "produces": ["cortex_memory/archive/merkle_root.txt"],
+        "marker": "MerkleMemory",
+        "guarded": True,
+    },
 }
 
 PARAMS = sorted(DARK_STEPS)

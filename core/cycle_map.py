@@ -263,8 +263,20 @@ STEPS = [
      ["memory/discovered_data_sources.json"], False),
     ("continuous_learning", "23", "Учи от цикъла.",
      ["memory/knowledge_base.json"], False),
+    # PRODUCT DECLARED 8 сеп 2026. This row carried [] — "не знаем" per this
+    # file's own header — on the step that SEALS the audit chain. So
+    # kept_promise() could not answer for the artifact the whole chain rests on.
+    #
+    # merkle_memory.MerkleMemory.commit() writes essence.md (:190), the numbered
+    # archive dir (:217/:255) and MERKLE_ROOT (:204). The root is declared and
+    # the others are not, per this file's rule that produces names the
+    # LOAD-BEARING artifact per step: MERKLE_ROOT.write_text() is the LAST write
+    # in commit(), so its freshness is evidence the whole commit COMPLETED
+    # rather than merely started. config/cycle_phases.json already promised it
+    # from G_LEARN — the same two-card disagreement as scoring_engine and
+    # update_master, with the phase card right again.
     ("merklememory_commit", "24", "Merkle ангажимент на паметта — одитната верига.",
-     [], True),
+     ["cortex_memory/archive/merkle_root.txt"], True),
     # ДОБАВЕНА 3 сеп 2026. verify_cycle() съществуваше от началото на архива и
     # единственият ѝ викащ беше __main__ блокът на самия merkle_memory.py: всяка
     # нощ системата пишеше хаш и нито веднъж не провери, че хашът описва цикъла.
