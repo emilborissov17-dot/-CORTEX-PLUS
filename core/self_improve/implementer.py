@@ -214,7 +214,15 @@ def _strip_fences(text: str) -> str:
     dropped."""
     t = (text or "").strip()
     m = re.search(r"```(?:diff|patch)?\s*\n(.*?)```", t, re.S)
-    return m.group(1).strip() if m else t
+    out = m.group(1).strip() if m else t
+    # A UNIFIED DIFF MUST END WITH A NEWLINE, and .strip() had just eaten it.
+    # git's answer to a patch whose last line is unterminated is
+    #     error: corrupt patch at line N
+    # which reads like the model produced garbage. It had not: this function
+    # broke a valid patch on its way through. Found on 2026-09-08 by the
+    # git-apply net refusing a fixture diff that applied perfectly when tested
+    # directly — the net caught a defect in the code that feeds it.
+    return (out + "\n") if out and not out.endswith("\n") else out
 
 
 def implement(spec: dict, model=None, context: str = "") -> dict:

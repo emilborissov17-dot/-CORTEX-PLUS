@@ -242,8 +242,35 @@ def test_it_applies_nothing():
     for bad in ("subprocess", "git", "shutil"):
         assert bad not in imported, f"the pipeline imports {bad}"
 
+    # THE DISTINCTION THAT MATTERS, and a text search cannot make it.
+    # Since the content net landed, `git apply --check` runs on every patch —
+    # and --check provably writes nothing (test_patch_must_apply asserts the
+    # working tree is byte-identical before and after). A WRITING apply is a
+    # different command, and that is what must never appear.
+    #
+    # So this reads the argv list core/self_improve/applies.py builds, on the
+    # AST, rather than grepping the pipeline for the string "git apply" — which
+    # now matches a comment explaining that only --check is used.
+    tree2 = ast.parse((REPO / "core" / "self_improve" / "applies.py")
+                      .read_text(encoding="utf-8"))
+    argvs = [n for n in ast.walk(tree2)
+             if isinstance(n, ast.List)
+             and n.elts and isinstance(n.elts[0], ast.Constant)
+             and n.elts[0].value == "git"]
+    assert argvs, "applies.py no longer builds a git command"
+    applies_cmds = []
+    for argv in argvs:
+        args = [e.value for e in argv.elts if isinstance(e, ast.Constant)]
+        if "apply" not in args:
+            continue          # `git status --porcelain`, used by the selftest
+        applies_cmds.append(args)
+        assert "--check" in args, (
+            f"a git apply WITHOUT --check: {args}. --check verifies; anything "
+            f"else writes to the tree.")
+    assert applies_cmds, "applies.py no longer runs git apply --check at all"
+
     src = (REPO / "tools" / "self_improve_pipeline.py").read_text(encoding="utf-8")
-    for bad in ("git apply", "patch -p", "os.system"):
+    for bad in ("patch -p", "os.system", "git commit", "git push"):
         assert bad not in src, f"the pipeline reaches for {bad!r}"
 
 

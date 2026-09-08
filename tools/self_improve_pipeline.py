@@ -79,6 +79,31 @@ def _assert_experimental(path: Path) -> Path:
     return path
 
 
+def append_diff(rel: str, added_line: str, context: int = 3) -> str:
+    """A unified diff that appends one line to a REAL file, and really applies.
+
+    Built from the file's own last lines, so it is true by construction and stays
+    true when the file changes. The fixture used to be hand-written against a
+    made-up context line; the git-apply net refused it, correctly — a fixture the
+    content net rejects was fiction, and every test standing on it exercised a
+    patch that could never have applied.
+
+    The line arithmetic is the part that bites: splitlines() drops the trailing
+    empty element that split("\\n") leaves, so the last content line is src[-1]
+    and the hunk starts at len(src) - context + 1. Getting that wrong by one is
+    what made three earlier attempts fail while git's own diff passed.
+    """
+    src = (REPO / rel).read_text(encoding="utf-8").splitlines()
+    ctx = src[-context:]
+    start = len(src) - len(ctx) + 1
+    nl = chr(10)
+    body = "".join(" " + c + nl for c in ctx)
+    return (f"--- a/{rel}{nl}"
+            f"+++ b/{rel}{nl}"
+            f"@@ -{start},{len(ctx)} +{start},{len(ctx) + 1} @@{nl}"
+            f"{body}+{added_line}{nl}")
+
+
 def _read_allowed_files(spec: dict, budget: int = 6000) -> str:
     """The REAL content of the files the spec allows, for the implementer.
 
@@ -111,6 +136,7 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
     from core.self_improve import requirer as R
     from core.self_improve import implementer as I
     from core import earning as E
+    from core.self_improve import applies as A
 
     record = {"ts": datetime.now(timezone.utc).isoformat(),
               "observation": str(observation.get("problem", ""))[:200]}
@@ -138,6 +164,19 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
         raise PipelineRefused(f"implementer refused: {exc}") from exc
     record["diff"] = built["diff"]
     record["changed_files"] = built["changed_files"]
+
+    # 2b. THE UNIVERSAL CONTENT NET. Every check before this one asks a SHAPE
+    # question: is there a hunk header, do the paths exist, are they inside the
+    # allowlist. A patch passes all of them and still describes a file that does
+    # not look like that — on 2026-09-08 the model correctly targeted
+    # agents/core/self_observer.py and proposed removing a `class SelfObserver`
+    # and a `def self_observe` that are not in it. Only something that reads the
+    # real bytes can tell, and git is that something.
+    ok, why = A.check_applies(built["diff"])
+    record["applies"] = ok
+    if not ok:
+        record["apply_error"] = why
+        raise PipelineRefused(A.refusal(why))
 
     # 3. the deterministic judge. It grants nothing; it says whether the
     #    evidence would have cleared the class's bar.
@@ -202,9 +241,8 @@ def _fixture_models():
         # path it is meant to cover proves nothing.
         "allowed_paths": [FIXTURE_FILE],
     }
-    diff = (f"--- a/{FIXTURE_FILE}\n"
-            f"+++ b/{FIXTURE_FILE}\n"
-            "@@ -1,3 +1,4 @@\n context\n+    OBS['water_withdrawal'] = 'wb_ER.H2O.FWTL.ZS'\n")
+    diff = append_diff(FIXTURE_FILE,
+                       "# fixture line added by the self-improve pipeline dry run")
     return (lambda prompt, max_tokens=700: json.dumps(spec),
             lambda prompt, max_tokens=1400: diff)
 
