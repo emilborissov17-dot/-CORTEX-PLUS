@@ -165,8 +165,20 @@ STEPS = [
     # agents/core/self_modifier.py — step 18, one phase later. The promise sat
     # on the wrong step, so the staleness was blamed every night on a step that
     # was never supposed to produce it.
+    # PRODUCES CORRECTED AGAIN 8 сеп 2026, AND THE CONDITIONALITY IS THE POINT.
+    # This row named only development_journal.json. AST guard-walk of run():
+    # EVERY write in this step is conditional — save_proposals at :276 behind
+    # `if dep_proposals:`, save_proposals at :409 behind `if history and not
+    # escalated:`, and _save_assessment at :339/:356/:385 behind deeper guards.
+    # There is no artifact this step writes on every run.
+    #
+    # Both are declared because both are really written, and kept_promise() then
+    # reads the truth rather than half of it: ОБНОВИ when the night produced
+    # both, ЧАСТИЧНО (REDUCED 2, which still clears IRREVERSIBLE_MIN) when it
+    # produced one, and НЕ ПИПНА only when the step genuinely left nothing —
+    # which is a real fact about the night, not a fault of the declaration.
     ("self_observer", "17", "Наблюдава собственото си поведение.",
-     ["memory/development_journal.json"], False),
+     ["memory/improvement_proposals.json", "memory/development_journal.json"], False),
     # runtime_experiences.json is HERE because the REFUSAL is here. The gate
     # (_witness_or_refuse -> _refused) writes the refusal record before run()
     # would have been reached, so the artifact is produced whether the step acts
