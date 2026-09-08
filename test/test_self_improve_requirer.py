@@ -185,14 +185,58 @@ def test_the_requirer_never_reaches_for_the_cloud_ladder():
     assert "call_groq" not in called and "call_groq_meta" not in called
 
 
+def test_the_prompt_states_the_rules_it_will_be_judged_by():
+    """THE CLEAR INSTRUCTION. A live run on 2026-09-08 produced three specs in
+    three attempts, every one naming a real axis and a path that does NOT exist:
+    "self_observer", "core/self_observer.py", "src/ai/self_observer.py". This
+    repo has no src/ tree. The model was never told the paths had to be real."""
+    prompt = R.build_prompt({"problem": "p"}, AXES)
+    low = prompt.lower()
+
+    assert "already exist" in low, "the path rule is not stated"
+    assert "does not exist is a failure" in low, (
+        "the prompt does not say what an invented path COSTS")
+    assert "do not invent" in low
+    assert "computable from a named file" in low, (
+        "the success_metric rule is not stated")
+    assert "judged by" in low, "the model is not told these are the rules"
+
+
+def test_the_prompt_shows_the_passage_standard_verbatim():
+    """The actor is shown the measure it is judged by — the SAME object
+    core/notary.py reads, byte for byte, not a paraphrase. A second copy would
+    drift, which is what core/passage_rules.py exists to prevent."""
+    from core.passage_rules import actor_block
+
+    prompt = R.build_prompt({"problem": "p"}, AXES)
+    assert actor_block() in prompt, (
+        "the passage standard is not carried verbatim into the requirer prompt")
+    assert R.passage_standard() == actor_block()
+
+
+def test_the_standard_failing_to_load_is_loud_not_silent(monkeypatch, capsys):
+    """A prompt quietly missing its rules looks exactly like one that has them."""
+    import core.passage_rules as PR
+
+    monkeypatch.setattr(PR, "actor_block",
+                        lambda: (_ for _ in ()).throw(RuntimeError("gone")))
+    assert R.passage_standard() == ""
+    out = capsys.readouterr().out
+    assert "RULES OF PASSAGE" in out and "could not be loaded" in out
+
+
 def test_the_prompt_forbids_code_in_as_many_words():
     """The instruction and the net are both required — the norm asks for a sharp
     instruction AND a mechanical net, not one standing in for the other."""
     prompt = R.build_prompt({"problem": "p"}, AXES)
     low = prompt.lower()
     assert "never write code" in low
-    assert "forbidden" in low
-    assert "refused" in low
+    # The SUBSTANCE, not one word: the ban was spelled "FORBIDDEN:" until the
+    # rules were numbered on 2026-09-08 and it became rule 4. Asserting the word
+    # would have failed on a prompt that says the same thing more sharply.
+    assert "no python" in low and "no snippet" in low
+    assert "refused whole" in low
+    assert "not cleaned up" in low
     for axis in sorted(AXES)[:3]:
         assert axis in prompt, "the model is not shown the real axis list"
 

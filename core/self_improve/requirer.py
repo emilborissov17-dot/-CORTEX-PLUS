@@ -200,14 +200,59 @@ def _local_brain(prompt: str, max_tokens: int = 700) -> str:
     return content
 
 
+def passage_standard() -> str:
+    """The rules of passage, verbatim, from config/passage_rules.json.
+
+    The actor is SHOWN the measure it is judged by — the same object
+    core/notary.py reads, not a paraphrase. self_modifier already does this
+    (agents/core/self_modifier.PASSAGE_RULES_BLOCK); the requirer was writing
+    specs against a standard it had never been told.
+
+    Fail LOUD if it cannot be read: a prompt quietly missing its rules looks
+    exactly like one that has them.
+    """
+    try:
+        from core.passage_rules import actor_block
+        return actor_block()
+    except Exception as exc:                                     # noqa: BLE001
+        print(f"[REQUIRER] THE RULES OF PASSAGE could not be loaded "
+              f"({type(exc).__name__}: {exc}) — the model is being asked to "
+              f"work without the standard it will be judged by")
+        return ""
+
+
 def build_prompt(problem: dict, axes: set) -> str:
-    """Short and sharp: a small model reads the first lines and stops."""
+    """Short and sharp: a small model reads the first lines and stops.
+
+    THE RULES ARE STATED, NOT IMPLIED (8 Sep 2026). A live run on 2026-09-08
+    produced three specs in three attempts, every one naming an axis that
+    exists and a path that does NOT: "self_observer", "core/self_observer.py",
+    "src/ai/self_observer.py". This repo has no src/ tree at all. The model was
+    never told that allowed_paths must be real, so it wrote a plausible one.
+
+    An instruction alone will not fix that — COMMIT 3 adds the mechanical net
+    that REFUSES a spec whose paths do not resolve. Both, per the norm: a sharp
+    instruction AND a check behind it, neither standing in for the other.
+    """
+    standard = passage_standard()
     return (
-        "You are the CORTEX++ requirer. You produce a SPECIFICATION. "
+        (f"{standard}\n\n" if standard else "")
+        + "You are the CORTEX++ requirer. You produce a SPECIFICATION. "
         "You never write code.\n\n"
-        "FORBIDDEN: any Python, any snippet, any fenced block, any import or "
-        "def. A spec containing code is REFUSED whole — not cleaned up. "
-        "Describing WHAT must change is your job; HOW is someone else's.\n\n"
+        "THE RULES YOU ARE JUDGED BY — read these before writing anything:\n"
+        "  1. allowed_paths MUST be files that ALREADY EXIST in this repo. A "
+        "path that does not exist is a FAILURE, not an approximation. Do not "
+        "invent a plausible-looking path; do not guess a conventional layout. "
+        "If you are unsure which file, say the one you were shown.\n"
+        "  2. success_metric MUST be a value COMPUTABLE FROM A NAMED FILE — "
+        "\"the number of rows in memory/x.json\", not \"fewer failures\". A "
+        "metric nobody can recompute cannot be checked, and an unchecked claim "
+        "is worth nothing.\n"
+        "  3. goal_axis MUST be exactly one of the axes listed below. Anything "
+        "else is REFUSED, never mapped to a near neighbour.\n"
+        "  4. No Python, no snippet, no fenced block, no import or def. A spec "
+        "containing code is REFUSED WHOLE — not cleaned up. Describing WHAT "
+        "must change is your job; HOW is someone else's.\n\n"
         f"OBSERVED PROBLEM: {str(problem.get('problem',''))[:400]}\n"
         f"ROOT CAUSE (observed): {str(problem.get('root_cause',''))[:300]}\n"
         f"COMPONENT: {problem.get('component','unknown')}\n\n"
@@ -216,9 +261,9 @@ def build_prompt(problem: dict, axes: set) -> str:
         '  "problem": "<one sentence>",\n'
         '  "root_cause": "<one sentence>",\n'
         '  "desired_change": "<what must be true after, in words>",\n'
-        '  "success_metric": "<a number that can be recomputed from a file>",\n'
+        '  "success_metric": "<a number recomputable from a named file>",\n'
         f'  "goal_axis": "<EXACTLY one of: {", ".join(sorted(axes))}>",\n'
-        '  "allowed_paths": ["<repo-relative prefix the change may touch>"]\n'
+        '  "allowed_paths": ["<a repo-relative path that EXISTS>"]\n'
         "}\n"
     )
 
