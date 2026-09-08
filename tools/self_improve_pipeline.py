@@ -290,9 +290,6 @@ def render(record: dict) -> str:
 def _fixture_models():
     """A spec and a diff good enough to reach a verdict, for --dry-run and the
     selftest. No model is called."""
-    from core.self_improve.requirer import real_axes
-
-    axis = "WATER_REVIEW" if "WATER_REVIEW" in real_axes() else sorted(real_axes())[0]
     spec = {
         "problem": "The provider never resolves the series, so the axis defaults.",
         "root_cause": "The observation map has no entry for the series key.",
@@ -300,7 +297,11 @@ def _fixture_models():
         # NAMES A REAL FILE — SPEC_METRIC_UNGROUNDED refuses anything else, and
         # a fixture the nets reject is a fixture that was fiction.
         "success_metric": "the number of rows in memory/goal_score_history.json",
-        "goal_axis": axis,
+        # GROUNDED BY THE PATH. plausible_axes() derives the axis from the
+        # target filename (economy_work_provider.py -> ECONOMY_WORK_REVIEW),
+        # so this fixture passes the axis net for a real reason rather than
+        # because the net is off.
+        "goal_axis": "ECONOMY_WORK_REVIEW",
         # A REAL, EXISTING file (8 Sep 2026). This said "data_providers/" — a
         # directory prefix — so _read_allowed_files() found nothing to read and
         # the fixture exercised an EMPTY context, which is exactly the state the

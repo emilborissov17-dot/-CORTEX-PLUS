@@ -34,7 +34,13 @@ from core.self_improve import requirer as R
 REPO = pathlib.Path(__file__).resolve().parents[1]
 
 AXES = R.real_axes()
-AXIS = sorted(AXES)[0]
+AXIS = "ECONOMY_WORK_REVIEW"
+
+# An observation whose TEXT grounds the axis, so require() passes the
+# SPEC_AXIS_UNGROUNDED net for a real reason. "p" grounded nothing and
+# every test using it began failing the moment that net landed — which
+# is the net working, not the tests breaking.
+OBS_TEXT = "the economy work provider never resolves its series"
 
 GOOD_SPEC = {
     "problem": "WATER_REVIEW scores a default because a key is missing.",
@@ -43,11 +49,11 @@ GOOD_SPEC = {
     # NAMES A REAL FILE. It said "read from the scores file" — no path, so
     # nothing could recompute it, and SPEC_METRIC_UNGROUNDED now refuses that.
     "success_metric": "the number of rows in memory/goal_score_history.json",
-    "goal_axis": AXIS,
+    "goal_axis": "ECONOMY_WORK_REVIEW",
     # A REAL, EXISTING FILE. This was "data_providers/" — a directory, which
     # passes exists() and is still the bug: only files are read as context, so
     # a directory allowlist hands the implementer nothing.
-    "allowed_paths": ["agents/core/self_observer.py"],
+    "allowed_paths": ["data_providers/civilization/economy_work_provider.py"],
 }
 
 
@@ -63,7 +69,7 @@ def _brain(payload) -> callable:
 def test_the_output_contains_no_python():
     """THE POINT. Every free-text field must be prose, checked by the same net
     the module applies — not by eye."""
-    spec = R.require({"problem": "p"}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
 
     for field in ("problem", "root_cause", "desired_change", "success_metric"):
         assert R._looks_like_code(spec[field]) == "", (
@@ -87,17 +93,17 @@ def test_the_output_contains_no_python():
 def test_the_output_names_a_real_goal_axis():
     """One of the 24 in config/target_config.json, read from the file rather
     than retyped here."""
-    spec = R.require({"problem": "p"}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
     assert spec["goal_axis"] in AXES
     assert len(AXES) == 24, f"the axis list moved: {len(AXES)}"
     assert spec["goal_axis"].endswith(("_REVIEW", "_LEVEL")), spec["goal_axis"]
 
 
 def test_the_spec_carries_every_declared_field():
-    spec = R.require({"problem": "p"}, brain=_brain(GOOD_SPEC), axes=AXES)
+    spec = R.require({"problem": OBS_TEXT}, brain=_brain(GOOD_SPEC), axes=AXES)
     for field in R.SPEC_FIELDS:
         assert field in spec, f"missing {field}"
-    assert spec["allowed_paths"] == ["agents/core/self_observer.py"]
+    assert spec["allowed_paths"] == GOOD_SPEC["allowed_paths"]
 
 
 # ---------------------------------------------------------------------------
@@ -111,7 +117,7 @@ def test_code_in_any_free_text_field_is_REFUSED_not_stripped(field):
     the split failed."""
     bad = dict(GOOD_SPEC, **{field: "import json\ndata = json.loads(x)"})
     with pytest.raises(R.SpecContainsCode) as exc:
-        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
     assert field in str(exc.value)
     assert "refused rather than stripped" in str(exc.value)
 
@@ -139,6 +145,106 @@ def test_ordinary_prose_is_not_mistaken_for_code():
         assert R._looks_like_code(prose) == "", f"false positive: {prose!r}"
 
 
+def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
+    """THE WANDERING, MEASURED. Five live runs on ONE problem produced four
+    different axes — TECHNOLOGY_AI, TECHNOLOGY_INFRA, DEEP_TIME_RISKS,
+    GOAL_PROGRESS. All four are real axes and all four validated, because "is it
+    in the list of 24" was the only question asked.
+
+    The honest answer for that problem is that NO axis fits: an LLM returning
+    invalid JSON is an engineering fault, and none of the 24 civilization axes
+    is about it. Refusing beats guessing."""
+    llm_problem = {"problem": "ESCALATION: LLM returns invalid JSON 3 times",
+                   "component": "self_observer"}
+    assert R.plausible_axes(llm_problem) == set(), (
+        "an axis was derived for a problem no axis is about")
+
+    # A spec whose own allowed_paths ground nothing either — the file is real,
+    # so it clears REFUSED_PATH_NOT_FOUND, and no axis is named by its domain.
+    bad = dict(GOOD_SPEC, goal_axis="TECHNOLOGY_AI_REVIEW",
+               allowed_paths=["agents/core/self_observer.py"])
+    with pytest.raises(R.SpecAxisUngrounded) as exc:
+        R.validate(bad, AXES, problem=llm_problem)
+    assert R.SpecAxisUngrounded.code == "SPEC_AXIS_UNGROUNDED"
+    assert "is a guess" in str(exc.value)
+
+    # And the OTHER branch: an axis that IS real and IS available, but is not
+    # the one the evidence supports, is refused just as hard.
+    wrong = dict(GOOD_SPEC, goal_axis="TECHNOLOGY_AI_REVIEW")
+    with pytest.raises(R.SpecAxisUngrounded) as exc2:
+        R.validate(wrong, AXES, problem={"problem": OBS_TEXT})
+    assert "ECONOMY_WORK_REVIEW" in str(exc2.value)
+
+
+def test_a_grounded_axis_is_accepted_from_the_problem_text():
+    """THE NEGATIVE CONTROL, twice over: by text and by target path."""
+    by_text = {"problem": "the water supply series is never resolved"}
+    assert "WATER_REVIEW" in R.plausible_axes(by_text)
+
+    by_path = {"problem": "a provider defaults",
+               "allowed_paths": ["data_providers/civilization/economy_work_provider.py"]}
+    assert "ECONOMY_WORK_REVIEW" in R.plausible_axes(by_path)
+
+
+def test_the_derivation_uses_word_boundaries_not_substrings():
+    """A bare `in` matched DEEP_TIME_RISKS_REVIEW against "3 times in a row",
+    because "times" contains "time". A net that fires on a coincidence is worse
+    than none: it launders a guess into evidence."""
+    assert "DEEP_TIME_RISKS_REVIEW" not in R.plausible_axes(
+        {"problem": "it failed 3 times in a row"})
+    assert "DEEP_TIME_RISKS_REVIEW" in R.plausible_axes(
+        {"problem": "a deep risks assessment over long time horizons"})
+
+
+def test_the_observations_own_critical_axes_are_NOT_used_as_the_allowlist():
+    """Measured on the 2026-09-06 journal record: critical_axes holds TWENTY of
+    the twenty-four axes. As an allowlist that accepts almost anything — a net
+    that does not bite. A near-universal list is not evidence of relevance."""
+    with_criticals = {"problem": "an unrelated engineering fault",
+                      "critical_axes": sorted(AXES)}
+    assert R.plausible_axes(with_criticals) == set(), (
+        "critical_axes is being used as an allowlist; it would wave through "
+        "20 of the 24 axes")
+
+
+def test_consensus_requires_a_majority_on_the_axis():
+    """Determinism without touching production. The local temperature is 0.4 and
+    hardcoded in core.groq_backend._call_local_as, which this experiment must not
+    change — so agreement is bought by asking three times."""
+    stable = _brain(GOOD_SPEC)
+    spec = R.require({"problem": OBS_TEXT}, brain=stable, axes=AXES, consensus=3)
+    assert spec["_consensus"]["asks"] == 3
+    assert spec["_consensus"]["votes"] == 3
+    assert spec["_consensus"]["agreed_on"] == GOOD_SPEC["goal_axis"]
+
+
+def test_a_wandering_axis_is_REFUSED_as_unstable():
+    seen = {"n": 0}
+    axes_cycle = ["ECONOMY_WORK_REVIEW", "WATER_REVIEW", "FOOD_REVIEW"]
+
+    def _wander(prompt, max_tokens=700):
+        a = axes_cycle[seen["n"] % 3]
+        seen["n"] += 1
+        return json.dumps(dict(GOOD_SPEC, goal_axis=a))
+
+    obs = {"problem": "the economy work water food provider never resolves"}
+    with pytest.raises(R.SpecAxisUnstable) as exc:
+        R.require(obs, brain=_wander, axes=AXES, consensus=3)
+    assert R.SpecAxisUnstable.code == "SPEC_AXIS_UNSTABLE"
+    assert "no majority" in str(exc.value)
+
+
+def test_consensus_of_one_asks_once():
+    calls = {"n": 0}
+
+    def _once(prompt, max_tokens=700):
+        calls["n"] += 1
+        return json.dumps(GOOD_SPEC)
+
+    R.require({"problem": OBS_TEXT}, brain=_once, axes=AXES, consensus=1)
+    assert calls["n"] == 1
+
+
 def test_SPEC_METRIC_UNGROUNDED_on_the_placeholder_the_live_run_copied():
     """THE SHARPEST FAILURE OF THE LIVE RUN. Told to name a file, the model
     named the PROMPT'S OWN EXAMPLE — 'memory/x.json', which does not exist. An
@@ -146,7 +252,7 @@ def test_SPEC_METRIC_UNGROUNDED_on_the_placeholder_the_live_run_copied():
     bad = dict(GOOD_SPEC,
                success_metric="броят на редовете в файлот 'memory/x.json'")
     with pytest.raises(R.SpecMetricUngrounded) as exc:
-        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
 
     assert R.SpecMetricUngrounded.code == "SPEC_METRIC_UNGROUNDED"
     assert "SPEC_METRIC_UNGROUNDED" in str(exc.value)
@@ -196,7 +302,7 @@ def test_REFUSED_PATH_NOT_FOUND_on_the_exact_path_the_live_run_invented():
     without parsing prose."""
     bad = dict(GOOD_SPEC, allowed_paths=["src/ai/self_observer.py"])
     with pytest.raises(R.SpecPathNotFound) as exc:
-        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
 
     assert R.SpecPathNotFound.code == "REFUSED_PATH_NOT_FOUND"
     assert "REFUSED_PATH_NOT_FOUND" in str(exc.value)
@@ -233,7 +339,7 @@ def test_a_real_path_is_accepted():
 def test_an_invented_axis_is_REFUSED_not_mapped_to_a_neighbour():
     bad = dict(GOOD_SPEC, goal_axis="WATER")     # plausible, and not an axis
     with pytest.raises(R.SpecInvalid) as exc:
-        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
     assert "not one of" in str(exc.value)
     assert "near neighbour" in str(exc.value), (
         "the refusal does not say why it is not silently corrected")
@@ -243,19 +349,19 @@ def test_an_invented_axis_is_REFUSED_not_mapped_to_a_neighbour():
 def test_a_missing_field_is_refused(missing):
     bad = {k: v for k, v in GOOD_SPEC.items() if k != missing}
     with pytest.raises(R.SpecInvalid):
-        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+        R.require({"problem": OBS_TEXT}, brain=_brain(bad), axes=AXES)
 
 
 def test_empty_allowed_paths_is_refused():
     """An empty allowlist would let the implementer write anywhere."""
     with pytest.raises(R.SpecInvalid):
-        R.require({"problem": "p"}, brain=_brain(dict(GOOD_SPEC, allowed_paths=[])),
+        R.require({"problem": OBS_TEXT}, brain=_brain(dict(GOOD_SPEC, allowed_paths=[])),
                   axes=AXES)
 
 
 def test_a_brain_that_returns_prose_instead_of_json_is_refused():
     with pytest.raises(R.SpecInvalid) as exc:
-        R.require({"problem": "p"}, brain=_brain("I think the water axis is broken."),
+        R.require({"problem": OBS_TEXT}, brain=_brain("I think the water axis is broken."),
                   axes=AXES)
     assert "no JSON object" in str(exc.value)
 

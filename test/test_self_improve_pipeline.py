@@ -49,6 +49,8 @@ _spec.loader.exec_module(P)
 
 
 # The trees a nightly cycle reads and writes. Nothing here may move.
+OBS_TEXT = "the economy work provider never resolves its series"
+
 PRODUCTION_TREES = ("memory", "snapshots", "cortex_memory", "output", "news",
                     "config", "agents", "core", "data")
 
@@ -90,7 +92,7 @@ def test_the_pipeline_runs_end_to_end_and_reaches_a_verdict(mocked_models, tmp_p
     brain, coder = mocked_models
     P.OUT_DIR = tmp_path / "runs"          # keep even the ledger out of the repo
 
-    record = P.run_once({"problem": "the water axis defaults"},
+    record = P.run_once({"problem": OBS_TEXT},
                         brain=brain, coder=coder)
 
     assert record["verdict"] in ("PASS", "FAIL"), record
@@ -108,7 +110,7 @@ def test_the_verdict_today_is_FAIL_because_the_policy_is_LOCKED(mocked_models, t
     brain, coder = mocked_models
     P.OUT_DIR = tmp_path / "runs"
 
-    record = P.run_once({"problem": "p"}, brain=brain, coder=coder)
+    record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
     assert record["policy_locked"] is True
     assert record["verdict"] == "FAIL"
     assert "LOCKED" in record["reason"]
@@ -117,7 +119,7 @@ def test_the_verdict_today_is_FAIL_because_the_policy_is_LOCKED(mocked_models, t
 def test_the_rendered_report_shows_spec_diff_and_verdict(mocked_models, tmp_path):
     brain, coder = mocked_models
     P.OUT_DIR = tmp_path / "runs"
-    text = P.render(P.run_once({"problem": "p"}, brain=brain, coder=coder))
+    text = P.render(P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder))
 
     assert "SPEC" in text and "DIFF" in text and "VERDICT" in text
     assert "GRANTS NOTHING" in text, (
@@ -149,7 +151,7 @@ def test_the_implementer_is_given_the_real_file_content(mocked_models, tmp_path,
                               feedback=feedback)
 
     monkeypatch.setattr(I, "implement", _spy)
-    record = P.run_once({"problem": "p"}, brain=brain, coder=coder)
+    record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
 
     assert "context" in seen, "implement() was never called"
     assert seen["context"], (
@@ -194,7 +196,7 @@ def test_the_retry_loop_feeds_gits_real_error_back_and_succeeds(tmp_path):
             seen_feedback.append(prompt)
         return bad if calls["n"] < 3 else good(prompt)
 
-    record = P.run_once({"problem": "p"}, brain=brain, coder=_coder)
+    record = P.run_once({"problem": OBS_TEXT}, brain=brain, coder=_coder)
 
     assert record["applies"] is True
     assert record["attempts_used"] == 3, record["attempts"]
@@ -220,7 +222,7 @@ def test_the_retry_loop_gives_up_and_refuses_by_name(tmp_path):
         return bad
 
     with pytest.raises(P.PipelineRefused) as exc:
-        P.run_once({"problem": "p"}, brain=brain, coder=_coder)
+        P.run_once({"problem": OBS_TEXT}, brain=brain, coder=_coder)
 
     assert "REFUSED_PATCH_DOES_NOT_APPLY" in str(exc.value)
     assert calls["n"] == P.MAX_PATCH_ATTEMPTS == 3, calls
@@ -251,7 +253,7 @@ def test_a_full_run_leaves_every_production_tree_byte_identical(mocked_models,
     P.OUT_DIR = tmp_path / "runs"
 
     before = _fingerprint()
-    P.run_once({"problem": "p"}, brain=brain, coder=coder)
+    P.run_once({"problem": OBS_TEXT}, brain=brain, coder=coder)
     after = _fingerprint()
 
     added = sorted(set(after) - set(before))
@@ -400,7 +402,7 @@ def test_a_spec_carrying_code_ends_the_run(tmp_path):
                 "desired_change": "d", "success_metric": "m",
                 "goal_axis": "WATER_REVIEW", "allowed_paths": ["data_providers/"]}
     with pytest.raises(P.PipelineRefused) as exc:
-        P.run_once({"problem": "p"},
+        P.run_once({"problem": OBS_TEXT},
                    brain=lambda p, max_tokens=700: json.dumps(bad_spec),
                    coder=lambda p, max_tokens=1400: "")
     assert "requirer refused" in str(exc.value)
@@ -412,7 +414,7 @@ def test_a_diff_out_of_scope_ends_the_run(mocked_models, tmp_path):
     out_of_scope = ("--- a/core/notary.py\n+++ b/core/notary.py\n"
                     "@@ -1,2 +1,3 @@\n c\n+added\n")
     with pytest.raises(P.PipelineRefused) as exc:
-        P.run_once({"problem": "p"}, brain=brain,
+        P.run_once({"problem": OBS_TEXT}, brain=brain,
                    coder=lambda p, max_tokens=1400: out_of_scope)
     assert "implementer refused" in str(exc.value)
 

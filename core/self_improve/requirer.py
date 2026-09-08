@@ -83,6 +83,31 @@ class SpecInvalid(Exception):
     """The spec is missing a field, or names an axis that does not exist."""
 
 
+class SpecAxisUngrounded(SpecInvalid):
+    """SPEC_AXIS_UNGROUNDED — the axis is not plausibly tied to the problem.
+
+    Live on 2026-09-08, five runs on ONE problem produced four different axes:
+    TECHNOLOGY_AI_REVIEW, TECHNOLOGY_INFRA_REVIEW, DEEP_TIME_RISKS_REVIEW,
+    GOAL_PROGRESS_REVIEW. Every one is a real axis and the field passed
+    validation, because "is it in the list" was the only question being asked.
+    Wandering across four answers for one problem is the signature of a model
+    guessing, and a guess that validates is worse than a refusal.
+    """
+    code = "SPEC_AXIS_UNGROUNDED"
+
+
+class SpecAxisUnstable(SpecInvalid):
+    """SPEC_AXIS_UNSTABLE — repeated asks did not agree on an axis.
+
+    The local model's temperature is 0.4 and fixed in production
+    (groq_backend._call_local_as), which this experiment must not change. So
+    determinism is bought with CONSENSUS instead: ask N times and require a
+    majority. No majority means the model does not know, and saying so is the
+    honest output.
+    """
+    code = "SPEC_AXIS_UNSTABLE"
+
+
 class SpecMetricUngrounded(SpecInvalid):
     """SPEC_METRIC_UNGROUNDED — the success_metric names no file that exists.
 
@@ -191,7 +216,8 @@ def _reject_code(spec: dict) -> None:
                 f"that the split failed.")
 
 
-def validate(spec: dict, axes: set | None = None) -> dict:
+def validate(spec: dict, axes: set | None = None,
+             problem: dict | None = None) -> dict:
     """Refuse anything that is not a well-formed, code-free spec."""
     if not isinstance(spec, dict):
         raise SpecInvalid(f"spec is {type(spec).__name__}, not an object")
@@ -239,7 +265,85 @@ def validate(spec: dict, axes: set | None = None) -> dict:
 
     _reject_code(spec)
     _require_grounded_metric(spec)
+    _require_grounded_axis(spec, problem)
     return spec
+
+
+# Words that appear in an axis name and carry no meaning about a problem.
+_AXIS_STOP = {"review", "at", "human", "level", "and", "the", "of"}
+
+
+def plausible_axes(problem: dict, axes: set | None = None) -> set:
+    """The axes a problem is PLAUSIBLY about, derived from evidence.
+
+    Two signals, both grounded in something real:
+
+      1. TOKEN OVERLAP with the problem text — an axis named WATER_REVIEW is
+         plausible for a problem that says "water".
+      2. THE TARGET FILE'S DOMAIN — data_providers/<domain>/<axis>_provider.py
+         and snapshots/<domain>/ name their axis directly, so a spec whose
+         allowed_paths points at one is about that axis.
+
+    DELIBERATELY NOT USED: the observation's own `critical_axes`. Measured on
+    the 2026-09-06 journal record, that list holds TWENTY of the twenty-four
+    axes — as an allowlist it would accept almost anything, which is a net that
+    does not bite. A near-universal list is not evidence of relevance.
+
+    An EMPTY result is a real answer, not a failure of the function: some
+    problems are engineering faults that no civilization axis is about.
+    """
+    known = axes if axes is not None else real_axes()
+    text = " ".join(str(problem.get(k, "")) for k in
+                    ("problem", "root_cause", "component", "desired_change")).lower()
+    out = set()
+
+    # WORD BOUNDARIES, not substrings. A bare `in` matched DEEP_TIME_RISKS_REVIEW
+    # against "returns invalid JSON 3 times in a row" — because "times" contains
+    # "time" — and produced exactly the kind of spurious tie this net exists to
+    # refuse. A net that fires on a coincidence is worse than none: it launders
+    # a guess into evidence.
+    for axis in known:
+        toks = [t.lower() for t in axis.split("_")
+                if t.lower() not in _AXIS_STOP and len(t) >= 4]
+        if any(re.search(r"\b" + re.escape(t) + r"\b", text) for t in toks):
+            out.add(axis)
+
+    for rel in (problem.get("allowed_paths") or []):
+        stem = str(rel).replace("\\", "/").split("/")[-1]
+        for axis in known:
+            head = axis.replace("_REVIEW", "").lower()
+            if head and (head in stem.lower() or head in str(rel).lower()):
+                out.add(axis)
+    return out
+
+
+def _require_grounded_axis(spec: dict, problem: dict | None) -> None:
+    """SPEC_AXIS_UNGROUNDED unless the axis is tied to the problem by evidence.
+
+    Refuses rather than guesses when NOTHING is plausible — the brief's rule,
+    and the honest one: an LLM returning invalid JSON is an engineering fault,
+    and none of the twenty-four civilization axes is about it. Forcing a choice
+    there produces the wandering this net exists to stop.
+    """
+    if problem is None:
+        return
+    candidates = plausible_axes({**problem, **{"allowed_paths":
+                                               spec.get("allowed_paths")}})
+    axis = spec.get("goal_axis")
+    if not candidates:
+        raise SpecAxisUngrounded(
+            f"{SpecAxisUngrounded.code}: no axis is plausibly tied to this "
+            f"problem, so {axis!r} is a guess. Nothing in the problem text "
+            f"names an axis and no allowed_path resolves to one. REFUSING is "
+            f"the answer: some problems are engineering faults that no "
+            f"civilization axis is about, and picking one anyway is how five "
+            f"runs produced four different axes for the same problem.")
+    if axis not in candidates:
+        raise SpecAxisUngrounded(
+            f"{SpecAxisUngrounded.code}: {axis!r} is a real axis but is not "
+            f"tied to this problem. The evidence supports "
+            f"{sorted(candidates)}. Being in the list of 24 is not the same as "
+            f"being about this.")
 
 
 # Anything that looks like a repo-relative data file. Deliberately narrow: the
@@ -496,11 +600,9 @@ def observations(limit: int = 5, journal: Path | None = None,
     return out[:limit]
 
 
-def require(problem: dict, brain=None, axes: set | None = None) -> dict:
-    """One observation -> one validated SPEC. Raises rather than degrading."""
-    known = axes if axes is not None else real_axes()
+def _ask_once(problem: dict, brain, known: set) -> dict:
+    """One ask, validated. Raises the named refusal the answer earned."""
     raw = (brain or _local_brain)(build_prompt(problem, known))
-
     text = str(raw or "").strip()
     m = re.search(r"\{.*\}", text, re.S)
     if not m:
@@ -510,10 +612,70 @@ def require(problem: dict, brain=None, axes: set | None = None) -> dict:
     except Exception as exc:
         raise SpecInvalid(f"the brain's JSON did not parse: {exc}") from exc
 
-    validate(spec, known)
+    validate(spec, known, problem)
     spec["_source"] = "requirer/local_brain"
     spec["_observed_problem"] = str(problem.get("problem", ""))[:200]
     return spec
+
+
+def require(problem: dict, brain=None, axes: set | None = None,
+            consensus: int = 3) -> dict:
+    """One observation -> one validated SPEC. Raises rather than degrading.
+
+    RETRY-TO-CONSENSUS, and why it is consensus rather than a temperature knob:
+    the local model runs at temperature 0.4, hardcoded in
+    core.groq_backend._call_local_as, which is PRODUCTION and not this
+    experiment's to change. So determinism is bought by asking N times and
+    requiring a majority on goal_axis — the field that wandered across four
+    different answers in five live runs on one problem.
+
+    No majority means the model does not know, and SPEC_AXIS_UNSTABLE says so.
+    A guess that validates is worse than a refusal, because it looks like an
+    answer.
+
+    consensus=1 asks once and skips the vote — for tests, and for a caller who
+    has decided the variance does not matter.
+    """
+    known = axes if axes is not None else real_axes()
+    if consensus <= 1:
+        return _ask_once(problem, brain, known)
+
+    specs, errors = [], []
+    for _ in range(consensus):
+        try:
+            specs.append(_ask_once(problem, brain, known))
+        except SpecInvalid as exc:
+            errors.append(exc)
+
+    if not specs:
+        # Every ask was refused. Re-raise the FIRST refusal rather than a
+        # summary: its code names what actually went wrong, and a caller that
+        # catches SpecAxisUngrounded must still see it.
+        raise errors[0]
+
+    tally = {}
+    for sp in specs:
+        tally.setdefault(sp["goal_axis"], []).append(sp)
+    axis, winners = max(tally.items(), key=lambda kv: len(kv[1]))
+
+    if len(winners) < 2:
+        # The message reports asks, VALID asks and votes separately, because
+        # they fail differently: three asks that disagree is a wandering model,
+        # while three asks of which two were REFUSED is a model that mostly
+        # could not produce a spec at all. Collapsing them into "no majority"
+        # sent me looking for the wrong problem the first time this fired.
+        raise SpecAxisUnstable(
+            f"{SpecAxisUnstable.code}: {consensus} ask(s), {len(specs)} valid, "
+            f"best axis {axis!r} with {len(winners)} vote(s) — no majority "
+            f"(2 needed). Axes seen: {', '.join(sorted(tally))}. The model does "
+            f"not know which axis this problem is about; saying so is the "
+            f"honest output.")
+
+    chosen = winners[0]
+    chosen["_consensus"] = {"asks": consensus, "valid": len(specs),
+                            "agreed_on": axis, "votes": len(winners),
+                            "all_axes": sorted(tally)}
+    return chosen
 
 
 def write_spec(spec: dict, out_dir: Path | None = None) -> Path:
@@ -550,21 +712,40 @@ def _selftest() -> int:
         print(f"  local brain entry         : INERT ({type(exc).__name__}: {exc})")
 
     ok = True
-    good = {"problem": "p", "root_cause": "r", "desired_change": "d",
-            "success_metric": "count of rows", "goal_axis": sorted(axes)[0],
-            "allowed_paths": ["data_providers/"]}
+    # A fixture the live nets ACCEPT: a real target file, a metric that names
+    # a real file, and an axis the target path itself grounds. Each of those
+    # was a placeholder here once ("data_providers/", "count of rows"), and
+    # the selftest printed OK while the pipeline refused every real spec.
+    problem = {"problem": "the economy work provider never resolves its series"}
+    good = {"problem": "the provider never resolves the series",
+            "root_cause": "the observation map has no entry for the key",
+            "desired_change": "the provider resolves the series",
+            "success_metric": "the number of rows in memory/goal_score_history.json",
+            "goal_axis": "ECONOMY_WORK_REVIEW",
+            "allowed_paths": ["data_providers/civilization/economy_work_provider.py"]}
     try:
-        validate(dict(good), axes)
+        validate(dict(good), axes, problem)
         print("  a clean spec              : accepted")
     except Exception as exc:                                     # noqa: BLE001
         print(f"  a clean spec              : WRONGLY REFUSED ({exc})")
         ok = False
 
-    for label, bad in (("code in a field", dict(good, desired_change="def f():\n    return 1")),
-                       ("fenced block", dict(good, problem="```python\nx=1\n```")),
-                       ("invented axis", dict(good, goal_axis="NOT_AN_AXIS"))):
+    # An engineering fault no civilization axis is about — the live problem
+    # that made five runs produce four different axes.
+    ungrounded = {"problem": "ESCALATION: LLM returns invalid JSON 3 times"}
+    for label, bad, prob in (
+            ("code in a field",
+             dict(good, desired_change="def f():\n    return 1"), problem),
+            ("fenced block",
+             dict(good, problem="```python\nx=1\n```"), problem),
+            ("invented axis", dict(good, goal_axis="NOT_AN_AXIS"), problem),
+            ("metric names no file",
+             dict(good, success_metric="count of rows"), problem),
+            ("axis nothing supports",
+             dict(good, allowed_paths=["agents/core/self_observer.py"]),
+             ungrounded)):
         try:
-            validate(dict(bad), axes)
+            validate(dict(bad), axes, prob)
             print(f"  {label:<24} : NOT REFUSED — the net is open")
             ok = False
         except (SpecContainsCode, SpecInvalid):
