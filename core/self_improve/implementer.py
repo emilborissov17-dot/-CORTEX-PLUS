@@ -174,7 +174,7 @@ def enforce_scope(diff: str, allowed_paths) -> list:
     return touched
 
 
-def build_prompt(spec: dict, context: str = "") -> str:
+def build_prompt(spec: dict, context: str = "", feedback: str = "") -> str:
     allowed = ", ".join(spec.get("allowed_paths") or [])
     return (
         "You are the CORTEX++ implementer. You are handed a SPECIFICATION you "
@@ -190,8 +190,14 @@ def build_prompt(spec: dict, context: str = "") -> str:
         "the work, not a formality.\n\n"
         f"NEVER TOUCH, whatever the spec says: {', '.join(NEVER_TOUCH)}\n\n"
         + (f"CONTEXT:\n{context[:2000]}\n\n" if context else "")
-        + "Return ONLY a unified diff with --- / +++ headers and @@ hunks. "
-          "No prose, no markdown fences, no explanation."
+        + "Return ONLY a unified diff with --- / +++ headers and @@ hunks "
+          "CARRYING LINE RANGES (@@ -old,count +new,count @@). A bare '@@' is "
+          "not parseable and git rejects the whole patch. No prose, no markdown "
+          "fences, no explanation.\n"
+        + (f"\nYOUR PREVIOUS ATTEMPT WAS REJECTED. This is git's own answer — "
+           f"the lines it quotes are what the file REALLY contains at that "
+           f"point, so match them exactly:\n{feedback[:1500]}\n"
+           if feedback else "")
     )
 
 
@@ -225,7 +231,8 @@ def _strip_fences(text: str) -> str:
     return (out + "\n") if out and not out.endswith("\n") else out
 
 
-def implement(spec: dict, model=None, context: str = "") -> dict:
+def implement(spec: dict, model=None, context: str = "",
+              feedback: str = "") -> dict:
     """SPEC -> {diff, changed_files, spec}. Raises rather than degrading.
 
     Applies nothing. The returned diff is text; whether it is ever applied is a
@@ -237,7 +244,7 @@ def implement(spec: dict, model=None, context: str = "") -> dict:
         if not spec.get(field):
             raise PatchUnusable(f"the spec has no {field}")
 
-    raw = (model or _ladder)(build_prompt(spec, context))
+    raw = (model or _ladder)(build_prompt(spec, context, feedback))
     diff = _strip_fences(raw)
     touched = enforce_scope(diff, spec.get("allowed_paths"))
 

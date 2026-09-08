@@ -57,6 +57,12 @@ OUT_DIR = REPO / "experiments" / "self_improve" / "runs"
 # same context path a live run takes.
 FIXTURE_FILE = "data_providers/civilization/economy_work_provider.py"
 
+# How many times the implementer may rewrite a patch against git's own
+# error before the run is refused. Three is the brief's number and it is
+# a ceiling, not a target: a loop that never gives up burns the ladder's
+# budget on a model that cannot do the job.
+MAX_PATCH_ATTEMPTS = 3
+
 # Anything the pipeline must never write into, asserted before it writes at all.
 PRODUCTION = ("memory", "snapshots", "cortex_memory", "config", "agents",
               "core", "output", "news", "data")
@@ -104,27 +110,62 @@ def append_diff(rel: str, added_line: str, context: int = 3) -> str:
             f"{body}+{added_line}{nl}")
 
 
-def _read_allowed_files(spec: dict, budget: int = 6000) -> str:
+def read_for_patch(rel: str, budget: int = 60000) -> str:
+    """The WHOLE real file, or an explicitly-marked map of it. Never a blind cut.
+
+    It used to hand over the first 6000 characters. agents/core/self_observer.py
+    is 29016 characters, so the model saw the docstring and the imports and had
+    to invent the other 80% — which is exactly what it did on 2026-09-08,
+    proposing to remove a `class SelfObserver` and a `def self_observe` that are
+    nowhere in the file. A patch cannot describe a file the writer has not seen.
+
+    Every file this pipeline is likely to touch fits: the largest module in
+    agents/core/ is 29k. Above the budget the file is NOT silently cut — the
+    model gets a line-numbered index of every def/class, the head and the tail in
+    full, and a loud marker naming exactly how many lines were withheld, so it
+    knows it is working blind on that region and can say so rather than guess.
+    """
+    path = REPO / rel
+    text = path.read_text(encoding="utf-8", errors="replace")
+    if len(text) <= budget:
+        return f"--- {rel} (COMPLETE, {len(text)} chars) ---\n{text}"
+
+    lines = text.splitlines()
+    index = [f"{i:>5}: {ln}" for i, ln in enumerate(lines, 1)
+             if ln.lstrip().startswith(("def ", "class ", "async def "))]
+    head, tail = lines[:120], lines[-120:]
+    omitted = len(lines) - len(head) - len(tail)
+    nl = chr(10)
+    return (
+        f"--- {rel} (TOO LARGE: {len(text)} chars, {len(lines)} lines — "
+        f"SHOWN IN PART) ---{nl}"
+        f"DEFINITIONS IN THIS FILE (line: signature):{nl}"
+        + nl.join(index) + nl * 2
+        + f"FIRST {len(head)} LINES:{nl}" + nl.join(head) + nl * 2
+        + f"[... {omitted} LINES WITHHELD — you have NOT seen them. Do not write "
+          f"a hunk against this region; say so instead. ...]{nl}{nl}"
+        + f"LAST {len(tail)} LINES:{nl}" + nl.join(tail) + nl)
+
+
+def _read_allowed_files(spec: dict, budget: int = 60000) -> str:
     """The REAL content of the files the spec allows, for the implementer.
 
     Only files that EXIST are read; a spec naming a path that does not resolve
-    contributes nothing rather than a fabricated placeholder. Since COMMIT 3
-    refuses such a spec outright this should be unreachable, and it stays
-    defensive anyway: the two guards fail in the same direction.
+    contributes nothing rather than a fabricated placeholder. The requirer
+    refuses such a spec outright, so this should be unreachable — the two guards
+    fail in the same direction.
     """
     out, spent = [], 0
     for rel in (spec.get("allowed_paths") or []):
-        path = REPO / rel
-        if not path.is_file():
+        if not (REPO / rel).is_file():
             continue
         try:
-            text = path.read_text(encoding="utf-8", errors="replace")
+            chunk = read_for_patch(rel, budget=max(0, budget - spent))
         except Exception:
             continue
-        chunk = text[: max(0, budget - spent)]
         if not chunk:
             break
-        out.append(f"--- {rel} ---\n{chunk}")
+        out.append(chunk)
         spent += len(chunk)
     return "\n\n".join(out)
 
@@ -158,25 +199,49 @@ def run_once(observation: dict, brain=None, coder=None, class_id: str = "example
     # it will invent code that fits the words.
     context = _read_allowed_files(spec)
     record["context_chars"] = len(context)
-    try:
-        built = I.implement(spec, model=coder, context=context)
-    except (I.PatchOutOfScope, I.PatchUnusable) as exc:
-        raise PipelineRefused(f"implementer refused: {exc}") from exc
+
+    # ── THE RETRY LOOP: A CODING AGENT VERIFIES ITS OWN WORK ───────────────
+    # One shot at a patch, judged by a regex, is not a coding agent. This one
+    # writes, asks git whether the diff applies to the real file, and if git
+    # says no it is handed git's ACTUAL error — "while searching for: <the lines
+    # it expected>" — and tries again. That error is the single most useful
+    # thing a patch writer can be told, because it quotes what the file really
+    # contains at the point the model got it wrong.
+    #
+    # Refuse only after MAX_PATCH_ATTEMPTS. A loop that never gives up is a loop
+    # that burns the ladder's budget on a model that cannot do the job.
+    built, feedback, attempts = None, "", []
+    for attempt in range(1, MAX_PATCH_ATTEMPTS + 1):
+        try:
+            built = I.implement(spec, model=coder, context=context,
+                                feedback=feedback)
+        except (I.PatchOutOfScope, I.PatchUnusable) as exc:
+            attempts.append({"attempt": attempt, "stage": "implementer",
+                             "error": str(exc)[:400]})
+            if attempt == MAX_PATCH_ATTEMPTS:
+                record["attempts"] = attempts
+                raise PipelineRefused(
+                    f"implementer refused after {attempt} attempt(s): {exc}") from exc
+            feedback = str(exc)
+            continue
+
+        ok, why = A.check_applies(built["diff"])
+        attempts.append({"attempt": attempt, "stage": "git apply --check",
+                         "ok": ok, "error": why[:400] if not ok else ""})
+        if ok:
+            break
+        if attempt == MAX_PATCH_ATTEMPTS:
+            record["attempts"] = attempts
+            record["applies"] = False
+            record["apply_error"] = why
+            raise PipelineRefused(A.refusal(why))
+        feedback = why
+
+    record["attempts"] = attempts
+    record["attempts_used"] = len(attempts)
+    record["applies"] = True
     record["diff"] = built["diff"]
     record["changed_files"] = built["changed_files"]
-
-    # 2b. THE UNIVERSAL CONTENT NET. Every check before this one asks a SHAPE
-    # question: is there a hunk header, do the paths exist, are they inside the
-    # allowlist. A patch passes all of them and still describes a file that does
-    # not look like that — on 2026-09-08 the model correctly targeted
-    # agents/core/self_observer.py and proposed removing a `class SelfObserver`
-    # and a `def self_observe` that are not in it. Only something that reads the
-    # real bytes can tell, and git is that something.
-    ok, why = A.check_applies(built["diff"])
-    record["applies"] = ok
-    if not ok:
-        record["apply_error"] = why
-        raise PipelineRefused(A.refusal(why))
 
     # 3. the deterministic judge. It grants nothing; it says whether the
     #    evidence would have cleared the class's bar.

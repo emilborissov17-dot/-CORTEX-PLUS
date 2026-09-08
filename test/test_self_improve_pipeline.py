@@ -143,9 +143,10 @@ def test_the_implementer_is_given_the_real_file_content(mocked_models, tmp_path,
     from core.self_improve import implementer as I
     real_implement = I.implement
 
-    def _spy(spec, model=None, context=""):
+    def _spy(spec, model=None, context="", feedback=""):
         seen["context"] = context
-        return real_implement(spec, model=model, context=context)
+        return real_implement(spec, model=model, context=context,
+                              feedback=feedback)
 
     monkeypatch.setattr(I, "implement", _spy)
     record = P.run_once({"problem": "p"}, brain=brain, coder=coder)
@@ -163,19 +164,81 @@ def test_the_context_is_the_real_file_and_only_real_files(tmp_path):
     real = "agents/core/self_observer.py"
     ctx = P._read_allowed_files({"allowed_paths": [real, "src/ai/nope.py"]})
 
-    assert f"--- {real} ---" in ctx
+    # The header now states COMPLETE and the size, so a reader of the prompt can
+    # tell a whole file from a partial one without counting characters.
+    assert f"--- {real} (COMPLETE" in ctx
     assert "src/ai/nope.py" not in ctx, (
         "a path that does not exist appeared in the context")
-    head = (REPO / real).read_text(encoding="utf-8")[:100]
-    assert head in ctx
+
+    whole = (REPO / real).read_text(encoding="utf-8")
+    assert whole in ctx, (
+        "the WHOLE file is not in the context. It used to be the first 6000 "
+        "characters of a 29016-character file, so the model saw the docstring "
+        "and invented the other 80% — which is what it did on 2026-09-08.")
+
+
+def test_the_retry_loop_feeds_gits_real_error_back_and_succeeds(tmp_path):
+    """THE CODING AGENT. One shot judged by a regex is not one. This writes,
+    asks git whether the diff applies to the real file, and on a no is handed
+    git's ACTUAL error — the lines it expected — and tries again."""
+    P.OUT_DIR = tmp_path / "runs"
+    brain, good = P._fixture_models()
+
+    seen_feedback, calls = [], {"n": 0}
+    bad = ("--- a/" + P.FIXTURE_FILE + "\n+++ b/" + P.FIXTURE_FILE +
+           "\n@@ -1,1 +1,1 @@\n-this line is not in the file\n+nor is this\n")
+
+    def _coder(prompt, max_tokens=1400):
+        calls["n"] += 1
+        if "PREVIOUS ATTEMPT WAS REJECTED" in prompt:
+            seen_feedback.append(prompt)
+        return bad if calls["n"] < 3 else good(prompt)
+
+    record = P.run_once({"problem": "p"}, brain=brain, coder=_coder)
+
+    assert record["applies"] is True
+    assert record["attempts_used"] == 3, record["attempts"]
+    assert calls["n"] == 3
+    assert seen_feedback, "git's error was never fed back to the model"
+    assert "while searching for" in seen_feedback[0], (
+        "the feedback does not quote what the file really contains, which is "
+        "the only part a model can act on")
+
+
+def test_the_retry_loop_gives_up_and_refuses_by_name(tmp_path):
+    """A loop that never gives up burns the ladder's budget on a model that
+    cannot do the job."""
+    P.OUT_DIR = tmp_path / "runs"
+    brain, _ = P._fixture_models()
+    bad = ("--- a/" + P.FIXTURE_FILE + "\n+++ b/" + P.FIXTURE_FILE +
+           "\n@@ -1,1 +1,2 @@\n-not in the file\n+nope\n")
+
+    calls = {"n": 0}
+
+    def _coder(prompt, max_tokens=1400):
+        calls["n"] += 1
+        return bad
+
+    with pytest.raises(P.PipelineRefused) as exc:
+        P.run_once({"problem": "p"}, brain=brain, coder=_coder)
+
+    assert "REFUSED_PATCH_DOES_NOT_APPLY" in str(exc.value)
+    assert calls["n"] == P.MAX_PATCH_ATTEMPTS == 3, calls
 
 
 def test_the_context_is_budgeted():
     """A whole repo in one prompt is a different failure. The budget is a cap,
     not a suggestion."""
-    ctx = P._read_allowed_files({"allowed_paths": ["agents/core/self_observer.py"]},
-                                budget=500)
-    assert len(ctx) <= 500 + 80, len(ctx)      # + the "--- path ---" header
+    ctx = P.read_for_patch("agents/core/self_observer.py", budget=500)
+
+    # NOT a blind cut. Over budget the model gets a line-numbered index of every
+    # def/class, the head, the tail, and a loud marker naming how many lines it
+    # has NOT seen — so it knows where it is working blind instead of guessing.
+    assert "SHOWN IN PART" in ctx
+    assert "LINES WITHHELD" in ctx
+    assert "you have NOT seen them" in ctx
+    assert "DEFINITIONS IN THIS FILE" in ctx
+    assert "def run" in ctx, "the definition index does not list the real functions"
 
 
 # ---------------------------------------------------------------------------
