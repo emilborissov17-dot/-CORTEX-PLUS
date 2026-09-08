@@ -163,6 +163,24 @@ class SpecCategoriesEmpty(SpecInvalid):
     code = "REFUSED_CATEGORIES_EMPTY"
 
 
+class SpecFieldUnfilled(SpecInvalid):
+    """REFUSED_FIELD_UNFILLED — a field is present, empty, or still a placeholder.
+
+    RULE 0 IN THE PROMPT SAYS ALL SEVEN FIELDS MUST BE FILLED IN, and an
+    instruction the net does not keep is worse than no instruction: it teaches a
+    reader that something is checked when it is not. The presence check was
+    `field not in spec`, so "" and "   " sailed through, and so did the
+    template's own angle-bracket placeholders — the model has already been
+    caught copying an example verbatim once, which is why
+    SPEC_METRIC_UNGROUNDED exists.
+
+    Refused BEFORE quality is judged, exactly as the rule promises: there is no
+    point asking whether a root_cause is well grounded when it is the empty
+    string.
+    """
+    code = "REFUSED_FIELD_UNFILLED"
+
+
 class SpecMetricUngrounded(SpecInvalid):
     """SPEC_METRIC_UNGROUNDED — the success_metric names no file that exists.
 
@@ -301,6 +319,43 @@ def _reject_code(spec: dict) -> None:
                 f"that the split failed.")
 
 
+# The template's own placeholders. A field still wearing one was never
+# answered — the model echoed the question back.
+_PLACEHOLDER = re.compile(r"^\s*<.*>\s*$", re.S)
+
+
+def _require_filled(spec: dict) -> None:
+    """REFUSED_FIELD_UNFILLED — every declared field carries an actual answer.
+
+    Lists (categories, allowed_paths) are checked element by element: a list of
+    one empty string is not a filled field, and it would otherwise reach the
+    membership checks as a category named "".
+    """
+    empty, placeheld = [], []
+    for field in SPEC_FIELDS:
+        value = spec.get(field)
+        items = value if isinstance(value, list) else [value]
+        for item in items:
+            if isinstance(item, str):
+                if not item.strip():
+                    empty.append(field)
+                elif _PLACEHOLDER.match(item):
+                    placeheld.append(f"{field}={item.strip()[:40]!r}")
+    if empty or placeheld:
+        parts = []
+        if empty:
+            parts.append(f"empty: {sorted(set(empty))}")
+        if placeheld:
+            parts.append(f"still the template placeholder: {placeheld}")
+        raise SpecFieldUnfilled(
+            f"{SpecFieldUnfilled.code}: {'; '.join(parts)}. Rule 0 says all "
+            f"seven fields are required and must be FILLED IN, and this is that "
+            f"rule's net: a field that is present but blank, or that still "
+            f"carries the angle-bracket example from the prompt, was never "
+            f"answered. It is refused before quality is judged, because there "
+            f"is nothing to judge.")
+
+
 def validate(spec: dict, axes: set | None = None,
              problem: dict | None = None) -> dict:
     """Refuse anything that is not a well-formed, code-free spec."""
@@ -309,6 +364,10 @@ def validate(spec: dict, axes: set | None = None,
     missing = [f for f in SPEC_FIELDS if f not in spec]
     if missing:
         raise SpecInvalid(f"missing field(s): {', '.join(missing)}")
+
+    # RULE 0'S NET. Present is not the same as filled: "" and "   " passed the
+    # check above, and so did the prompt's own "<one sentence>" placeholders.
+    _require_filled(spec)
 
     known = axes if axes is not None else real_axes()
 
@@ -665,6 +724,10 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         + "You are the CORTEX++ requirer. You produce a SPECIFICATION. "
         "You never write code.\n\n"
         "THE RULES YOU ARE JUDGED BY — read these before writing anything:\n"
+        "  0. ALL SEVEN fields below are REQUIRED and must be FILLED "
+        "IN. A missing field, an empty string, or a copied placeholder "
+        "is REFUSED before quality is ever judged. If you must infer "
+        "root_cause from the problem, infer it — do not omit it.\n"
         "  1. allowed_paths MUST be files that ALREADY EXIST in this repo. A "
         "path that does not exist is a FAILURE, not an approximation. Do not "
         "invent a plausible-looking path; do not guess a conventional layout. "

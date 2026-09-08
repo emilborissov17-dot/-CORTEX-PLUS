@@ -800,7 +800,12 @@ def test_the_same_problem_forced_to_a_climate_axis_is_REFUSED():
 
 
 def test_a_missing_or_third_domain_is_REFUSED_DOMAIN():
-    for domain in ("hybrid", "", None, "INTERNAL", 3):
+    # "" IS DELIBERATELY NOT IN THIS LIST. Since rule 0 landed, an empty string
+    # is REFUSED_FIELD_UNFILLED — the earlier, more precise refusal, and the
+    # right one: a blank domain was never answered, as against a domain that was
+    # answered wrongly. Both are SpecInvalid, so a caller catching that sees
+    # either. The empty case is pinned in the rule 0 tests below.
+    for domain in ("hybrid", None, "INTERNAL", 3):
         bad = dict(INTERNAL_SPEC, domain=domain)
         with pytest.raises(R.SpecDomainInvalid) as exc:
             R.validate(bad, AXES, problem=JSON_PARSER_PROBLEM)
@@ -816,7 +821,10 @@ def test_a_missing_or_third_domain_is_REFUSED_DOMAIN():
 
 
 def test_empty_categories_are_REFUSED_CATEGORIES_EMPTY():
-    for cats in ([], "", None, "reliability", {}):
+    # "" is REFUSED_FIELD_UNFILLED, not REFUSED_CATEGORIES_EMPTY — see the note
+    # on the domain test above. [] and None reach this net, because an absent
+    # list is not a blank string.
+    for cats in ([], None, "reliability", {}):
         bad = dict(INTERNAL_SPEC, categories=cats)
         with pytest.raises(R.SpecCategoriesEmpty) as exc:
             R.validate(bad, AXES, problem=JSON_PARSER_PROBLEM)
@@ -864,3 +872,117 @@ def test_an_empty_internal_taxonomy_is_REFUSED_not_treated_as_no_categories(tmp_
     assert "UNREADABLE" in block
     assert "ECONOMY_WORK_REVIEW" not in block, (
         "the block offered the world axes while the internal half was missing")
+
+
+# ---------------------------------------------------------------------------
+# (i) RULE 0 — every field filled, and the net that keeps the promise
+# ---------------------------------------------------------------------------
+
+def test_rule_zero_is_the_first_rule_the_model_reads():
+    """NUMBERED 0 ON PURPOSE. Measured 8 Sep 2026: one batch of five live
+    answers omitted allowed_paths in 5 of 5, and the spec was refused for a
+    missing field before its quality was ever looked at. The model was not
+    disagreeing about the field — it stopped emitting before it got there."""
+    prompt = R.build_prompt({"problem": OBS_TEXT, "component": "self_observer"},
+                            AXES)
+    rules = prompt.index("THE RULES YOU ARE JUDGED BY")
+    zero = prompt.index("  0. ALL SEVEN fields")
+
+    assert zero > rules, "rule 0 is not inside the rules block"
+    for n in ("  1. ", "  2. ", "  3. ", "  4. "):
+        assert prompt.index(n) > zero, f"rule {n.strip()} comes before rule 0"
+    assert zero < prompt.index("Return ONLY this JSON"), (
+        "rule 0 comes after the JSON template it is about")
+
+    for phrase in ("ALL SEVEN fields", "REQUIRED", "FILLED",
+                   "REFUSED before quality is ever judged",
+                   "infer it — do not omit it"):
+        assert phrase in prompt, f"rule 0 lost {phrase!r}"
+
+    # SEVEN is not a decoration: it must match the fields actually declared.
+    assert len(R.SPEC_FIELDS) == 7, R.SPEC_FIELDS
+
+
+def test_a_present_but_EMPTY_field_is_REFUSED_FIELD_UNFILLED():
+    """The gap rule 0 promised was closed. The presence check was
+    `field not in spec`, so "" and "   " sailed straight through it."""
+    for field in R.SPEC_FIELDS:
+        if field in ("categories", "allowed_paths"):
+            continue
+        bad = dict(GOOD_SPEC, **{field: "   "})
+        with pytest.raises(R.SpecFieldUnfilled) as exc:
+            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+        assert R.SpecFieldUnfilled.code == "REFUSED_FIELD_UNFILLED"
+        assert field in str(exc.value)
+
+
+def test_a_list_of_empty_strings_is_not_a_filled_field():
+    """Otherwise a category named "" reaches the membership check, where it
+    fails for the wrong reason and reports the wrong thing."""
+    for field in ("categories", "allowed_paths"):
+        bad = dict(GOOD_SPEC, **{field: [""]})
+        with pytest.raises(R.SpecFieldUnfilled):
+            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+
+
+def test_a_COPIED_PLACEHOLDER_is_REFUSED_before_quality_is_judged():
+    """The model has been caught copying an example verbatim before — that is
+    why SPEC_METRIC_UNGROUNDED exists. A field still wearing the template's
+    angle brackets was never answered; the question was echoed back."""
+    placeholders = {
+        "problem": "<one sentence>",
+        "root_cause": "<one sentence>",
+        "desired_change": "<what must be true after, in words>",
+        "success_metric": "<a number recomputable from a named file>",
+        "domain": "<internal OR external>",
+        "categories": ["<one or more, ALL from the domain you chose>"],
+        "allowed_paths": ["<a repo-relative path that EXISTS>"],
+    }
+    for field, value in placeholders.items():
+        bad = dict(GOOD_SPEC, **{field: value})
+        with pytest.raises(R.SpecFieldUnfilled) as exc:
+            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+        assert "placeholder" in str(exc.value), field
+
+    # AND THE NET USES THE REAL TEMPLATE, not a retyped copy of it: every
+    # placeholder above must actually appear in the prompt, or this test is
+    # guarding a shape the model is never shown.
+    prompt = R.build_prompt({"problem": OBS_TEXT}, AXES)
+    for value in placeholders.values():
+        text = value[0] if isinstance(value, list) else value
+        assert text in prompt, f"{text!r} is not the prompt's own placeholder"
+
+
+def test_rule_zero_fires_BEFORE_the_quality_nets():
+    """"REFUSED before quality is ever judged" is an ordering claim, and this is
+    the ordering. A spec that is blank AND has an ungrounded metric must report
+    the blank field: telling the model its metric is wrong when it never filled
+    one in sends it to fix the wrong thing."""
+    bad = dict(GOOD_SPEC, root_cause="", success_metric="fewer failures")
+    with pytest.raises(R.SpecFieldUnfilled) as exc:
+        R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+    assert "REFUSED_FIELD_UNFILLED" in str(exc.value)
+    assert "SPEC_METRIC_UNGROUNDED" not in str(exc.value)
+
+
+def test_an_empty_domain_or_category_is_unfilled_rather_than_invalid():
+    """THE ORDERING BETWEEN THE TWO NETS, pinned so neither swallows the other.
+
+    "" was never answered; "hybrid" was answered wrongly. Reporting the second
+    message for the first case would send the model looking for a domain it
+    never wrote."""
+    for field in ("domain", "categories"):
+        bad = dict(GOOD_SPEC, **{field: ""})
+        with pytest.raises(R.SpecFieldUnfilled):
+            R.validate(bad, AXES, problem={"problem": OBS_TEXT})
+
+    with pytest.raises(R.SpecDomainInvalid):
+        R.validate(dict(GOOD_SPEC, domain="hybrid"), AXES,
+                   problem={"problem": OBS_TEXT})
+    with pytest.raises(R.SpecCategoriesEmpty):
+        R.validate(dict(GOOD_SPEC, categories=[]), AXES,
+                   problem={"problem": OBS_TEXT})
+
+    # Both remain SpecInvalid, so every existing caller still catches them.
+    for cls in (R.SpecFieldUnfilled, R.SpecDomainInvalid, R.SpecCategoriesEmpty):
+        assert issubclass(cls, R.SpecInvalid)

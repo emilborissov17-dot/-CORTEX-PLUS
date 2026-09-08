@@ -90,3 +90,81 @@ knowing before reading any single batch as the model's settled behaviour.
 | COMMIT 1 — the taxonomy | `66e027a` |
 | COMMIT 2 — the net | `fe45488` |
 | COMMIT 3 — this measurement | see git log for this file |
+
+---
+
+# Addendum — rule 0, and the second N=5
+
+`build_prompt` gained a rule, numbered **0** so it is the first thing the model
+reads:
+
+> 0. ALL SEVEN fields below are REQUIRED and must be FILLED IN. A missing field,
+> an empty string, or a copied placeholder is REFUSED before quality is ever
+> judged. If you must infer root_cause from the problem, infer it — do not omit it.
+
+The rule promised three things the validator did not do: the presence check was
+`field not in spec`, so `""` and `"   "` passed, and so did the template's own
+`<angle bracket>` placeholders. An instruction the net does not keep is worse
+than no instruction — it teaches a reader that something is checked when it is
+not. `REFUSED_FIELD_UNFILLED` now keeps it, and it fires **before** the quality
+nets, exactly as the rule says: telling a model its metric is ungrounded when it
+never wrote one sends it to fix the wrong thing.
+
+## Second N=5, same problem, same model
+
+| run | domain | categories | spec verdict |
+|---|---|---|---|
+| 1 | internal | instrumentation, performance | REFUSED `REFUSED_PATH_NOT_FOUND` |
+| 2 | internal | instrumentation, reliability | REFUSED `REFUSED_PATH_NOT_FOUND` |
+| 3 | internal | instrumentation, reliability | REFUSED `REFUSED_PATH_NOT_FOUND` |
+| 4 | internal | reliability, instrumentation | **ACCEPTED** |
+| 5 | internal | reliability, instrumentation | REFUSED `REFUSED_PATH_NOT_FOUND` |
+
+**The taxonomy holds again: internal 5/5, no world axis, reliability present.**
+That is now two independent batches of five, ten runs, ten internal.
+
+**Rule 0 moved a real number.** `SPEC_METRIC_UNGROUNDED` went from 4 of 5 to
+**0 of 5**, and no run omitted a field. The metric is now filled in and names a
+real file every time.
+
+## Run 4 is a FALSE PASS, and that is the finding
+
+It was accepted, and it should not have been:
+
+```
+success_metric : "Count the number of valid JSON outputs in
+                  memory/_sdg_resolved.json within a specified time window"
+allowed_paths  : ["memory/_sdg_resolved.json"]
+```
+
+`memory/_sdg_resolved.json` is real — an SDG resolution cache, 3.7 KB, last
+written 3 August. It has nothing whatever to do with an LLM returning invalid
+JSON, and it is a **data file in production `memory/`**, not code to patch.
+
+The mechanism is visible in the prompt. For `self_observer` it offers exactly
+**one** candidate code path and **twelve** real data files "you may measure". The
+model needed a path that exists, took one it had been shown, and both nets waved
+it through: `REFUSED_PATH_NOT_FOUND` only asks "does this exist",
+`SPEC_METRIC_UNGROUNDED` only asks "does the metric name a real file". Neither
+asks whether the file is the kind of thing being described.
+
+That is the least-resistance bias with a name on it: the letter of both nets
+satisfied, the intent of neither. Rule 0 did not cause it — it made it visible by
+getting far enough down the spec to reach it.
+
+**Contained downstream, not by luck.** `merits.PINNED` refuses anything under
+`memory/`, so this spec could never have been graded, let alone committed to a
+fork branch. Two nets failing in the same direction is the design working. But
+the requirer should not be handing the implementer a production data file and
+calling it a pass.
+
+## The two next fixes, in order
+
+1. **`allowed_paths` must be CODE the spec could plausibly change** — inside the
+   candidate paths the prompt actually offered, and never under a PINNED tree.
+   One check, and run 4 becomes a refusal instead of a false pass.
+2. **Internal problems still have no honest metric** (unchanged from above). The
+   model now names a real file every time because it is shown twelve of them; not
+   one of them records whether an LLM reply parsed. A metric that is grounded in
+   the wrong file is not more honest than one grounded in nothing — it is less,
+   because it passes.
