@@ -95,6 +95,20 @@
         "memory/improvement_proposals.json": "_inject_proposals() read_text()s it before appending (fast_cycle_runner.py:1602) and writes it back at 1607. It is genuinely an input as well as the product, and declaring only the product would hide a read the step really performs. Self-inheritance is not a risk here: notary._stamps() only carries stamps from THIS cycle, and no earlier step lists this artifact among its products, so the lookup is empty at 15.7 and `inherited` stays FULL."
       },
       "derived_from": "2026-09-08. Read fast_cycle_runner._hyperclaw_to_proposals() and _inject_proposals() line by line — not the scanner's output, which returned [] for this step, and not the step name. WHY THIS ENTRY EXISTS: with no declaration, notary._age_state([]) fails closed to UNKNOWN(0) — 'an empty list does not mean the step reads nothing, it means we do not know what it reads' — so hyperclaw_plan stamped level_0 on memory/improvement_proposals.json and every irreversible step downstream inherited that 0. Measured before this entry: vector {witness:3, human:3, thought:3, age:0, promise:0}, own=0. The fix is a true declaration, never a hardcoded trust level."
+    },
+    "auto_levels": {
+      "entry_point": "memory.auto_level.run() — fast_cycle_runner.py:3008, step 12.5. The module holds both paths as module-level constants (MASTER_PATH line 12, LEVELS_PATH line 13) and consumes them inside run(), which is why the static scanner returns [] for this step. execute_patches calls the same run() a second and third time for its before/after measurement.",
+      "inputs": [
+        "snapshots/master/master_snapshot_latest.json"
+      ],
+      "_inputs_why": {
+        "snapshots/master/master_snapshot_latest.json": "auto_level.py:197 — `master = json.loads(MASTER_PATH.read_text(...))`, then master['snapshots'] is the axis-by-axis source every level is computed from. This is the whole substance of the step: a stale master snapshot means every level is a word about yesterday, and its age IS the age of the judgement. Unguarded — if it cannot be read the step raises, which is the correct behaviour and confirms it is the real input."
+      },
+      "also_reads": [
+        "memory/auto_levels.json"
+      ],
+      "_also_reads_why": "auto_level.py:201 — its OWN previous output, read inside a try/except to compare against and detect corrections. Absence is not a failure (the first run creates it), and it must NOT gate the step: a step whose age dimension depends on its own last output would be grading itself, and one missed night would then hold it down for ever. Same reasoning as resolve_hypotheses/resolved.json above.",
+      "derived_from": "2026-09-08. Read memory/auto_level.py line by line on the path fast_cycle_runner.py:3008 actually calls — run() — not from the scanner (which returned []) and not from the step name. AST-checked that the module performs exactly three file operations: read_text at 197 and 201, write_text at 268. Nothing else is opened. WHY THIS ENTRY EXISTS: auto_levels produces memory/auto_levels.json, which self_modifier declares as an input, so with no declaration of its own it stamped level_0 (_age_state([]) fails closed to UNKNOWN) on that artifact and step 18 inherited the 0. Measured before this entry: core/blind_producers.py named auto_levels as one of two blind producers feeding self_modifier's gate."
     }
   }
 }
