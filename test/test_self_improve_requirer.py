@@ -40,7 +40,9 @@ GOOD_SPEC = {
     "problem": "WATER_REVIEW scores a default because a key is missing.",
     "root_cause": "The scorer's observation map has no entry for the series.",
     "desired_change": "The scorer resolves the series instead of defaulting.",
-    "success_metric": "count of axes scoring from real data, read from the scores file",
+    # NAMES A REAL FILE. It said "read from the scores file" — no path, so
+    # nothing could recompute it, and SPEC_METRIC_UNGROUNDED now refuses that.
+    "success_metric": "the number of rows in memory/goal_score_history.json",
     "goal_axis": AXIS,
     # A REAL, EXISTING FILE. This was "data_providers/" — a directory, which
     # passes exists() and is still the bug: only files are read as context, so
@@ -135,6 +137,56 @@ def test_ordinary_prose_is_not_mistaken_for_code():
         "The value should equal the number of rows in the history file.",
     ):
         assert R._looks_like_code(prose) == "", f"false positive: {prose!r}"
+
+
+def test_SPEC_METRIC_UNGROUNDED_on_the_placeholder_the_live_run_copied():
+    """THE SHARPEST FAILURE OF THE LIVE RUN. Told to name a file, the model
+    named the PROMPT'S OWN EXAMPLE — 'memory/x.json', which does not exist. An
+    example in a prompt is an invitation to copy it."""
+    bad = dict(GOOD_SPEC,
+               success_metric="броят на редовете в файлот 'memory/x.json'")
+    with pytest.raises(R.SpecMetricUngrounded) as exc:
+        R.require({"problem": "p"}, brain=_brain(bad), axes=AXES)
+
+    assert R.SpecMetricUngrounded.code == "SPEC_METRIC_UNGROUNDED"
+    assert "SPEC_METRIC_UNGROUNDED" in str(exc.value)
+    assert "memory/x.json" in str(exc.value)
+    assert "does not exist" in str(exc.value)
+
+
+def test_a_metric_naming_no_file_at_all_is_refused():
+    """The other live shape: prose with no path in it."""
+    bad = dict(GOOD_SPEC,
+               success_metric="Количество поредни невалиден JSON от LLM")
+    with pytest.raises(R.SpecMetricUngrounded) as exc:
+        R.validate(bad, AXES)
+    assert "names no file at all" in str(exc.value)
+
+
+def test_a_metric_naming_a_real_file_passes():
+    """THE NEGATIVE CONTROL. A net that refuses every metric stops the pipeline
+    dead and the failure looks like caution."""
+    ok = dict(GOOD_SPEC,
+              success_metric="the number of rows in memory/goal_score_history.json")
+    assert R.validate(ok, AXES) is ok
+    assert R.metric_files(ok["success_metric"]) == ["memory/goal_score_history.json"]
+
+
+def test_the_refusal_happens_before_the_implementer():
+    assert issubclass(R.SpecMetricUngrounded, R.SpecInvalid)
+
+
+def test_the_prompt_shows_real_files_to_measure_and_says_not_to_copy_examples():
+    prompt = R.build_prompt({"problem": "p", "component": "self_observer"}, AXES)
+    assert "REAL DATA FILES YOU MAY MEASURE" in prompt
+    assert "DO NOT COPY AN EXAMPLE PATH" in prompt
+    for cand in R.metric_candidates()[:2]:
+        assert cand in prompt
+
+
+def test_every_metric_candidate_offered_is_real():
+    for rel in R.metric_candidates():
+        assert (REPO / rel).is_file(), f"{rel} is offered and does not exist"
 
 
 def test_REFUSED_PATH_NOT_FOUND_on_the_exact_path_the_live_run_invented():

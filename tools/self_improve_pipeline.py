@@ -297,7 +297,9 @@ def _fixture_models():
         "problem": "The provider never resolves the series, so the axis defaults.",
         "root_cause": "The observation map has no entry for the series key.",
         "desired_change": "The provider resolves the series instead of defaulting.",
-        "success_metric": "count of axes scoring from real data",
+        # NAMES A REAL FILE — SPEC_METRIC_UNGROUNDED refuses anything else, and
+        # a fixture the nets reject is a fixture that was fiction.
+        "success_metric": "the number of rows in memory/goal_score_history.json",
         "goal_axis": axis,
         # A REAL, EXISTING file (8 Sep 2026). This said "data_providers/" — a
         # directory prefix — so _read_allowed_files() found nothing to read and

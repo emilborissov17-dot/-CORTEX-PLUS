@@ -83,6 +83,26 @@ class SpecInvalid(Exception):
     """The spec is missing a field, or names an axis that does not exist."""
 
 
+class SpecMetricUngrounded(SpecInvalid):
+    """SPEC_METRIC_UNGROUNDED — the success_metric names no file that exists.
+
+    Measured live on 2026-09-08, after the path net landed and the paths came
+    back real. The metric did not:
+
+        "Количество поредни невалиден JSON от LLM"     — names no file at all
+        "броят на редовете в файлот 'memory/x.json'"   — copied the PROMPT'S OWN
+                                                         placeholder verbatim;
+                                                         memory/x.json does not
+                                                         exist
+
+The second is the sharper failure: told to name a file, the model named the
+    example. A metric nobody can recompute cannot be checked, and an unchecked
+    claim is the FABRICATED verdict execute_patches already learned to refuse —
+    "a number that came from no file is not a measurement, it is a decoration".
+    """
+    code = "SPEC_METRIC_UNGROUNDED"
+
+
 class SpecPathNotFound(SpecInvalid):
     """REFUSED_PATH_NOT_FOUND — allowed_paths names something that is not there.
 
@@ -218,7 +238,45 @@ def validate(spec: dict, axes: set | None = None) -> dict:
             f"listed.")
 
     _reject_code(spec)
+    _require_grounded_metric(spec)
     return spec
+
+
+# Anything that looks like a repo-relative data file. Deliberately narrow: the
+# point is to find a file the metric can be RECOMPUTED from, and core/earning.py
+# recomputes from JSON only.
+_METRIC_PATH = re.compile(r"[\w./\\-]+\.(?:json|jsonl|csv|txt|md)")
+
+
+def metric_files(metric: str) -> list:
+    """Every path-like token in the metric text that IS a real file."""
+    out = []
+    for cand in _METRIC_PATH.findall(str(metric or "")):
+        rel = cand.replace("\\", "/").strip("'\"` ")
+        if (REPO / rel).is_file() and rel not in out:
+            out.append(rel)
+    return out
+
+
+def _require_grounded_metric(spec: dict) -> None:
+    """SPEC_METRIC_UNGROUNDED unless the metric names a real, readable file.
+
+    Raised BEFORE the implementer, like the path net: a run whose success can
+    never be measured is not worth a cloud call.
+    """
+    metric = str(spec.get("success_metric", ""))
+    if metric_files(metric):
+        return
+    named = _METRIC_PATH.findall(metric)
+    detail = (f"it names {', '.join(repr(n) for n in named)}, which "
+              f"{'does' if len(named) == 1 else 'do'} not exist"
+              if named else "it names no file at all")
+    raise SpecMetricUngrounded(
+        f"{SpecMetricUngrounded.code}: success_metric {metric!r} cannot be "
+        f"recomputed — {detail}. Name a real file the number can be read from, "
+        f"e.g. 'the number of rows in memory/goal_score_history.json'. A metric "
+        f"nobody can recompute cannot be checked, and an unchecked claim is the "
+        f"FABRICATED verdict execute_patches already refuses.")
 
 
 # ---------------------------------------------------------------------------
@@ -268,6 +326,25 @@ def candidate_paths(component: str, limit: int = 25) -> list:
             if len(hits) >= limit:
                 return hits
     return hits
+
+
+def metric_candidates(limit: int = 12) -> list:
+    """REAL data files a success_metric could be recomputed from.
+
+    Shown to the model for the same reason candidate_paths is: told to name a
+    file without being shown any, it named the prompt's own placeholder
+    ('memory/x.json'). An example in a prompt is an invitation to copy it.
+    """
+    out = []
+    for d in ("memory", "output"):
+        root = REPO / d
+        if not root.is_dir():
+            continue
+        for p in sorted(root.glob("*.json")):
+            out.append(p.relative_to(REPO).as_posix())
+            if len(out) >= limit:
+                return out
+    return out
 
 
 def real_code_context(component: str, problem: str) -> str:
@@ -344,6 +421,12 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
                    + "".join(f"  {p}\n" for p in paths) + "\n")
     if code:
         ground += f"THE REAL CODE YOU ARE SPECIFYING AGAINST:\n{code[:1800]}\n\n"
+    if grounded:
+        metrics = metric_candidates()
+        if metrics:
+            ground += ("REAL DATA FILES YOU MAY MEASURE — success_metric MUST "
+                       "name one of these, copied exactly:\n"
+                       + "".join(f"  {m}\n" for m in metrics) + "\n")
 
     return (
         (f"{standard}\n\n" if standard else "")
@@ -355,10 +438,11 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
         "path that does not exist is a FAILURE, not an approximation. Do not "
         "invent a plausible-looking path; do not guess a conventional layout. "
         "If you are unsure which file, say the one you were shown.\n"
-        "  2. success_metric MUST be a value COMPUTABLE FROM A NAMED FILE — "
-        "\"the number of rows in memory/x.json\", not \"fewer failures\". A "
-        "metric nobody can recompute cannot be checked, and an unchecked claim "
-        "is worth nothing.\n"
+        "  2. success_metric MUST name a REAL FILE from the list below and be "
+        "computable from it — e.g. \"the number of rows in "
+        "memory/goal_score_history.json\", not \"fewer failures\". DO NOT COPY "
+        "AN EXAMPLE PATH: a spec naming a file that does not exist is REFUSED as "
+        "SPEC_METRIC_UNGROUNDED before any code is written.\n"
         "  3. goal_axis MUST be exactly one of the axes listed below. Anything "
         "else is REFUSED, never mapped to a near neighbour.\n"
         "  4. No Python, no snippet, no fenced block, no import or def. A spec "
