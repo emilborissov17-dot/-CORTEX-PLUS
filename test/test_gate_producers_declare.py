@@ -49,14 +49,18 @@ REPO = pathlib.Path(__file__).resolve().parents[1]
 # noticing.
 GATED = ("self_modifier", "execute_patches", "github_publish")
 
-# STILL BLIND, AND NAMED. Shrink this in the commit that declares the step.
-#   self_observer -> memory/development_journal.json -> self_modifier,
-#                                                       execute_patches
-# It writes that file at agents/core/self_observer.py:542 and has no entry in
-# config/step_inputs.json. It is the last remaining blind producer at either
-# F_SELF gate; hyperclaw_plan came off this list on 2026-09-08 (b8c1c07) and
-# auto_levels immediately after.
-KNOWN_BLIND = {"self_observer"}
+# EMPTY SINCE 2026-09-08. Every producer feeding a notary-gated step can now say
+# what it reads, and this ledger has nothing left to carry:
+#   hyperclaw_plan  came off in b8c1c07
+#   auto_levels     came off in 8836a57
+#   self_observer   came off in 9758bdd
+#
+# It is kept rather than deleted BECAUSE it is empty. An empty ledger and a
+# deleted one behave identically today and differently the moment somebody adds
+# a blind producer: with the ledger present, test_no_new_blind_producer names
+# them and this test refuses a name added to excuse it. Deleting it would leave
+# only the first check, and the first excuse would have nowhere to be refused.
+KNOWN_BLIND: set = set()
 
 
 def _blind_producers() -> dict:
