@@ -290,10 +290,69 @@ def run(dry: bool = False) -> dict:
     return {"scored": scored, "proposed": proposed}
 
 
+def standing_record(now: datetime = None) -> dict:
+    """The LIFETIME tally, and when the open one is due.
+
+    STEP 6e (10 Sep 2026). `score_matured` counts only what THIS RUN scored: a
+    prediction already carrying an OUTCOME is in `already` and skipped. That is
+    correct, and it made the nightly line read "0 hit / 0 miss / 0 unresolvable
+    / 1 waiting" every night for weeks — which any reader takes for a loop that
+    has never scored anything, and which is what put this defect in the
+    handover as a suspected scorer bug.
+
+    It is not a scorer bug. Measured on the real ledger: the prophecy sealed
+    24 Aug (horizon 7 Sep) was scored `hit` on 8 Sep, one sealed earlier was
+    scored `miss` on 24 Aug, and the "1 waiting" is a real open prediction with
+    a horizon of 22 Sep. Nothing has matured since, so 0/0 tonight is the
+    truth — it was simply the wrong number to show on its own.
+    """
+    now = now or _now()
+    recs = pl.read_all()
+    hit = miss = unres = 0
+    for r in recs:
+        if r.get("event") != pl.OUTCOME or r.get("target_kind") != KIND:
+            continue
+        v = r.get("verdict")
+        if v == "hit":
+            hit += 1
+        elif v == "miss":
+            miss += 1
+        else:
+            unres += 1
+    scored_hashes = {r.get("ref_hash") for r in recs if r.get("event") == pl.OUTCOME}
+    due = []
+    for p in recs:
+        if p.get("event") != pl.PREDICTION or p.get("target_kind") != KIND:
+            continue
+        if p.get("hash") in scored_hashes:
+            continue
+        h = _parse_ts(p.get("horizon_utc"))
+        if h is not None:
+            due.append((h, p.get("target_id")))
+    due.sort()
+    return {"hit": hit, "miss": miss, "unresolvable": unres,
+            "open": len(due),
+            "next_due": due[0][0].isoformat()[:10] if due else None,
+            "next_due_in_days": (due[0][0] - now).days if due else None,
+            "next_target": due[0][1] if due else None}
+
+
 def summary_line(res: dict) -> str:
     s, p = res["scored"], res["proposed"]
-    return (f"calendar prophecies: {s['hit']} hit / {s['miss']} miss / "
-            f"{s['unresolvable']} unresolvable / {s['waiting']} waiting; "
+    # THIS RUN first, then the standing record — because "0 hit / 0 miss" alone
+    # is indistinguishable from a dead loop (STEP 6e).
+    try:
+        rec = standing_record()
+        standing = (f"; standing record {rec['hit']} hit / {rec['miss']} miss"
+                    + (f" / {rec['unresolvable']} unresolvable" if rec["unresolvable"] else "")
+                    + (f", {rec['open']} open, next due {rec['next_due']} "
+                       f"(in {rec['next_due_in_days']}d)" if rec["next_due"] else ", none open"))
+    except Exception as e:
+        # Fail-open: the per-run line is the contract, the standing record is a
+        # courtesy. Never let the tally break the cycle's own log line.
+        standing = f"; standing record unavailable ({type(e).__name__})"
+    return (f"calendar prophecies: this run {s['hit']} hit / {s['miss']} miss / "
+            f"{s['unresolvable']} unresolvable / {s['waiting']} waiting{standing}; "
             f"propose -> {p.get('action')}"
             + (f" ({p.get('target_id')} band {p.get('band')})" if p.get("action") == "sealed"
                else f" ({p.get('need_more')} more points needed)"

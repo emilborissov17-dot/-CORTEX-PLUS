@@ -271,3 +271,82 @@ def test_summary_line_is_one_line(isolated):
     _write_series(isolated, "A_REVIEW", "s1", [100.0, 101.0])
     line = sp.summary_line(sp.run(dry=True))
     assert "\n" not in line and len(line) < 200
+
+
+# ── STEP 6e: the standing record, so "0 hit / 0 miss" is not read as a dead loop ──
+
+def test_the_standing_record_survives_a_run_that_scores_nothing(isolated):
+    """THE 6e DEFECT. score_matured() reports only what THIS RUN scored, and a
+    prediction already carrying an OUTCOME is skipped — correctly. The result
+    was "0 hit / 0 miss / 1 waiting" every night for weeks, which reads exactly
+    like a scorer that has never worked, and was filed as a suspected scorer
+    bug. The per-run counters are right; they were the wrong number alone."""
+    _write_series(isolated, "A_REVIEW", "s1", [100.0, 101.0], start=T0)
+    _seal([99.0, 103.0], T0)
+    first = sp.score_matured(now=T0 + timedelta(days=1))
+    assert first["hit"] == 1
+
+    # the very next run: nothing new to score
+    again = sp.score_matured(now=T0 + timedelta(days=2))
+    assert again["hit"] == 0 and again["miss"] == 0, (
+        "an already-scored prophecy must not be scored twice")
+
+    rec = sp.standing_record(now=T0 + timedelta(days=2))
+    assert rec["hit"] == 1, "the hit must still be visible after the run that found it"
+    assert rec["miss"] == 0
+
+
+def test_the_standing_record_counts_hits_and_misses_separately(isolated):
+    _write_series(isolated, "A_REVIEW", "s1", [100.0], start=T0)
+    _seal([99.0, 103.0], T0)
+    _write_series(isolated, "B_REVIEW", "s2", [500.0], start=T0)
+    _seal([99.0, 103.0], T0, axis="B_REVIEW", sid="s2")
+    sp.score_matured(now=T0 + timedelta(days=1))
+    rec = sp.standing_record(now=T0 + timedelta(days=1))
+    assert rec["hit"] == 1 and rec["miss"] == 1
+
+
+def test_an_open_prophecy_reports_its_due_date_not_just_that_it_waits(isolated):
+    """"1 waiting" says nothing a human can act on. The date is what tells them
+    whether to expect a verdict tomorrow or in a fortnight."""
+    horizon = T0 + timedelta(days=14)
+    _write_series(isolated, "A_REVIEW", "s1", [100.0], start=T0)
+    _seal([99.0, 103.0], horizon)
+    rec = sp.standing_record(now=T0)
+    assert rec["open"] == 1
+    assert rec["next_due"] == horizon.isoformat()[:10]
+    assert rec["next_due_in_days"] == 14
+    assert rec["next_target"] == "A_REVIEW::s1"
+
+
+def test_no_prophecies_at_all_says_none_open(isolated):
+    """NEGATIVE CONTROL: an empty ledger must not invent a due date."""
+    rec = sp.standing_record(now=T0)
+    assert rec == {"hit": 0, "miss": 0, "unresolvable": 0, "open": 0,
+                   "next_due": None, "next_due_in_days": None, "next_target": None}
+
+
+def test_the_summary_line_shows_both_the_run_and_the_record(isolated):
+    """MUTATION NET. Drop the standing record from the line and this fails —
+    which is the state the log was in for weeks."""
+    _write_series(isolated, "A_REVIEW", "s1", [100.0, 101.0], start=T0)
+    _seal([99.0, 103.0], T0)
+    sp.score_matured(now=T0 + timedelta(days=1))
+    line = sp.summary_line({"scored": sp.score_matured(now=T0 + timedelta(days=2)),
+                            "proposed": {"action": "skipped"}})
+    assert "this run 0 hit" in line, "the per-run count must still be there"
+    assert "standing record 1 hit" in line, (
+        "the lifetime record is missing — '0 hit / 0 miss' alone is what caused 6e")
+
+
+def test_the_summary_line_never_breaks_the_cycle_over_the_tally(isolated, monkeypatch):
+    """FAIL-OPEN. The per-run line is the contract; the standing record is a
+    courtesy and must never be the reason a cycle step raises."""
+    def boom(now=None):
+        raise RuntimeError("ledger unreadable")
+    monkeypatch.setattr(sp, "standing_record", boom)
+    line = sp.summary_line({"scored": {"hit": 0, "miss": 0, "unresolvable": 0,
+                                       "waiting": 1},
+                            "proposed": {"action": "skipped"}})
+    assert "this run 0 hit" in line
+    assert "standing record unavailable" in line
