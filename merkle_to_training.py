@@ -203,7 +203,17 @@ def build_pair(cycle_dir: Path) -> Optional[dict]:
         if entry is None or isinstance(entry, Refuse):
             refused += 1
             continue
-        _prompt_key, target_key = entry
+        # ATTRIBUTES, NOT UNPACKING (fixed 10 Sep 2026). This line read
+        # `_prompt_key, target_key = entry` and was correct when it was written:
+        # at c8ab870 (4 Sep 19:58) CONTRACT's values were 2-tuples
+        # (_PROBLEM_SOLUTION = ("problem", "solution")). Thirteen minutes later
+        # 3ac2f1f (20:12) added record_kind and replaced every value with a
+        # Mapping object carrying __slots__ — not iterable. corpus_from_merkle.py
+        # was updated to entry.prompt_key/entry.target_key in the same commit;
+        # this caller was not, and every night since said "cannot unpack
+        # non-iterable Mapping object". Reading the named attributes cannot drift
+        # the same way if a fourth field is ever added to the contract.
+        target_key = entry.target_key
         text = d[target_key]
         if isinstance(text, str) and text.strip():
             parts.append(text.strip())

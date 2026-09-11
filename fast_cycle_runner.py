@@ -3559,14 +3559,31 @@ def main():
     # ── 25. Training data accumulation ──
     beat("training_data_accumulation", "25")
     # Runs AFTER MerkleMemory commit (step 24) so the archive entry exists.
-    try:
-        from merkle_to_training import append_latest_cycle as _append_training
-        if _append_training():
-            print("[FAST_CYCLE] merkle_to_training -> appended latest cycle")
-        else:
-            print("[FAST_CYCLE] merkle_to_training -> already processed or no archive")
-    except Exception as e:
-        print(f"[FAST_CYCLE] merkle_to_training -> FAILED: {e}")
+    #
+    # merkle_to_training RETIRED FROM THE NIGHT — 10 Sep 2026, HANDOVER STEP 3.
+    # It said "FAILED: cannot unpack non-iterable Mapping object" on 9 and 10 Sep
+    # and on every night since 4 Sep 20:12. Two independent reasons to remove it
+    # rather than repair it in place:
+    #
+    #   1. IT FED A CORPUS NOBODY MAY TRAIN ON. Archive-LoRA was declared DEAD on
+    #      6 Sep by a PRE-REGISTERED rule — delta <= 0 -> DEAD, STOP; measured
+    #      delta -0.0056 (claude/reports/A3_ONE_NUMBER_6SEP.md). The 10 Sep
+    #      consult independently answered (b): no new LoRA on the archive, the
+    #      problem is calibration not policy. Nothing reads training_data.jsonl
+    #      except its own two producers, and the file is not even on disk.
+    #   2. A STEP THAT FAILS NIGHTLY TEACHES THE LOG TO BE IGNORED. It had failed
+    #      for six nights and was still printing into a log nobody reads to the end.
+    #
+    # STEP 25 ITSELF IS NOT RETIRED, and the maps keep its entry: the other half,
+    # core.training_log.harvest, is a DIFFERENT corpus (numbers for supervised
+    # targets, with provenance, MEASURED-only) and still runs below. So step count
+    # and phase coverage are unchanged — test_checkpoint_wiring and
+    # test_cycle_phases_cover_every_step stay green, which is the check the
+    # handover asked for.
+    #
+    # To revive it, call merkle_to_training.append_latest_cycle() deliberately; the
+    # tuple/Mapping incompatibility behind the TypeError is fixed, so it works. It
+    # is not called here because no permitted consumer wants its output.
 
     # ── ЗАЗЕМЕНИТЕ ЦЕЛИ (21 авг 2026) ──────────────────────────────────────
     # Част от стъпка 25, не отделна стъпка: няма собствен beat(), затова и няма
