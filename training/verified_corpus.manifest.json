@@ -1,0 +1,16 @@
+{
+  "built_utc": "2026-09-10T16:02:30.132170+00:00",
+  "rows": 186,
+  "by_task": {
+    "sensor_card": 4,
+    "predict:self_failure": 53,
+    "predict:axis_next": 127,
+    "predict:composer_series": 2
+  },
+  "sha256": "912a0c0ddf3bec712c8496a3bf30737667a42f2e26f5944d51b09a03de94dd95",
+  "sources": {
+    "verified_observations": "memory\\verified_observations.jsonl",
+    "prophecy_ledger": "experiments\\prophecy\\prophecy_ledger.jsonl"
+  },
+  "rule": "only gate-ACCEPTED/NULL_WITH_REASON cards and SCORED non-degenerate predictions; nothing asserted by a model"
+}
