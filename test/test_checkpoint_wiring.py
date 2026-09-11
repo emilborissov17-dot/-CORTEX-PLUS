@@ -255,3 +255,66 @@ def test_resume_is_still_off_so_the_gap_cannot_skip_work_tonight():
     assert not d.resume and d.start_index == 0, (
         "resume defaults to ON. With only a third of steps checkpointed that "
         "would skip work that never ran")
+
+
+def test_every_beat_has_a_row_in_the_map():
+    """THE OTHER DIRECTION, and it is the one that was missing (11 Sep 2026).
+
+    The test above asks whether every MAPPED step records a checkpoint. It cannot
+    see a step that is beaten and run but that the map has never heard of — and
+    `axis_history` was exactly that for as long as it has existed: beat() at
+    index 12.56, through _run() on the next line, and no row in cycle_map.STEPS.
+    Its checkpoint fell on the floor and `unmapped` counted it as an unknown
+    step; test_small_truths named it out loud ("unmapped should now mean
+    genuinely unknown: ['axis_history']") without anything saying why.
+
+    The map of the system did not know about a step of the system. That is the
+    class of defect cycle_map's own header is about, which is why its `produces`
+    column is only filled where it has been VERIFIED against the live code.
+
+    An unmapped beat is not cosmetic: kept_promise(), the phase report and the
+    checkpoint/resume path all look a step up BY NAME, and a name they cannot
+    find answers "НЕ ЗНАЕМ" instead of the truth.
+    """
+    from core import cycle_map as cm
+    beats = re.findall(r'beat\(\s*"([^"]+)"\s*,\s*"([^"]+)"', RUNNER_SRC)
+    assert len(beats) > 60, f"the beat scanner found only {len(beats)} — did the syntax change?"
+
+    mapped = {s[0] for s in cm.STEPS}
+    subs = set(getattr(cm, "SUBSTEPS", {}))
+    for v in getattr(cm, "SUBSTEPS", {}).values():
+        for x in (v if isinstance(v, (list, tuple)) else []):
+            subs.add(x if isinstance(x, str) else
+                     (x.get("name") if isinstance(x, dict) else None))
+    subs.discard(None)
+
+    missing = sorted({n for n, _ in beats} - mapped - subs)
+    assert not missing, (
+        "THESE STEPS ARE BEATEN EVERY NIGHT AND THE MAP DOES NOT KNOW THEM:\n  "
+        + "\n  ".join(f"{n}  (index {i})" for n, i in beats if n in missing)
+        + "\nAdd a row to core/cycle_map.STEPS: (name, index, what it is for, "
+          "what it PRODUCES — verified against the code, not guessed — backbone?)."
+    )
+
+
+def test_the_map_has_no_row_nothing_beats():
+    """The mirror: a row for a step no night runs is dead weight, and it makes
+    the map claim a promise that is never kept."""
+    from core import cycle_map as cm
+    beat_names = set(re.findall(r'beat\(\s*"([^"]+)"', RUNNER_SRC))
+    orphans = sorted(s[0] for s in cm.STEPS if s[0] not in beat_names)
+    assert not orphans, (
+        "the map carries rows for steps the runner never beats: " + ", ".join(orphans))
+
+
+def test_body_scan_is_the_only_step_beaten_twice():
+    """Pinned because it is a real exception, not an oversight: body_scan runs at
+    index 0 (is this machine healthy enough to start?) and again at 13, one row
+    for both. config/cycle_phases.json says the same in its
+    _identity_is_the_index_not_the_name note. A SECOND name showing up here is a
+    copy-paste, not a decision."""
+    import collections
+    counts = collections.Counter(
+        n for n, _ in re.findall(r'beat\(\s*"([^"]+)"\s*,\s*"([^"]+)"', RUNNER_SRC))
+    twice = {k: v for k, v in counts.items() if v > 1}
+    assert twice == {"body_scan": 2}, f"unexpected repeated beats: {twice}"

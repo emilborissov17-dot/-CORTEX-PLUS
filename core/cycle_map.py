@@ -121,6 +121,22 @@ STEPS = [
     ("level_reconcile", "12.55", "Където думата (auto_levels) и числото (goal_score) "
      "спорят и значението е заковано — числото печели. _RISK_ осите само се отбелязват.",
      [], False),
+    # ДОБАВЕНА 11 септ. 2026. Runner-ът я бие и я пуска през _run() на 3062-3063
+    # всяка нощ, а картата не я познаваше — тоест чекпойнтът ѝ падаше на пода и
+    # `unmapped` я броеше за непозната стъпка (test_small_truths я назоваваше по
+    # име: „unmapped should now mean genuinely unknown: ['axis_history']").
+    # Картата на системата не знаеше за стъпка на системата — точно класът дефект,
+    # заради който колоната `produces` се пълни само където е ПРОВЕРЕНА (ред 21).
+    #
+    # ЕДИН АРТЕФАКТ, НЕ ДВА. Предложеният ред носеше и memory/axis_history.json;
+    # проверено в кода: _axis_history_step() -> core.axis_history.record() пише
+    # САМО memory/axis_observations.jsonl (PATH, ред 36). axis_history.json се
+    # пише от прегледите по оси другаде и тук само се ЧЕТЕ (cockpit/server.py,
+    # core/constancy.py). Да го обявя тук би било същата лъжа в обратна посока.
+    ("axis_history", "12.56", "Историята на показателите по ос — времевата ос на "
+     "световния модел; храни world_forecast. По един ред на градируем индикатор "
+     "на цикъл, append-only, за да има judge() истински диапазон след седмица.",
+     ["memory/axis_observations.jsonl"], False),
     ("goal_score_calculator", "12.6", "Композитният резултат спрямо целта (ражда `composite`).",
      ["memory/goal_score_history.json"], True),
     ("deduction", "12.65", "Дедуктивният слой R1-R7 с предпоставки за всеки извод.",
