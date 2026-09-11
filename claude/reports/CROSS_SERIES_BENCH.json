@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-11T13:16:01Z",
+ "ts": "2026-09-11T17:23:29Z",
  "series": 60,
  "usable": [
   "markets.gld_adjclose",
@@ -12,222 +12,310 @@
  "targets": {
   "markets.gld_adjclose": {
    "target": "markets.gld_adjclose",
-   "n": 32,
-   "first": "2026-07-23",
-   "last": "2026-09-10",
+   "n": 473,
+   "first": "2024-10-21",
+   "last": "2026-09-11",
    "mae": {
-    "persistence": 5.394691,
-    "ewma": 5.479247,
-    "ridge_own": 5.281192,
-    "ridge_all": 6.251798
+    "persistence": 4.108732,
+    "ewma": 4.124925,
+    "ridge_own": 4.21708,
+    "ridge_all": 4.343639,
+    "ridge_concept": 4.209964
    },
    "closer_than_persistence": {
-    "ewma": 17,
-    "ridge_own": 19,
-    "ridge_all": 11
+    "ewma": 249,
+    "ridge_own": 218,
+    "ridge_all": 207,
+    "ridge_concept": 224
+   },
+   "conformal": {
+    "ridge_all": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.695,
+     "mean_width": 10.212267
+    },
+    "persistence": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.683,
+     "mean_width": 9.166994
+    }
+   },
+   "concept": {
+    "members": {
+     "markets.uup_adjclose": -1
+    },
+    "name": "concept(markets.gld_adjclose)={-markets.uup_adjclose}",
+    "survives": true
    }
   },
   "markets.spy_adjclose": {
    "target": "markets.spy_adjclose",
-   "n": 32,
-   "first": "2026-07-23",
-   "last": "2026-09-10",
+   "n": 473,
+   "first": "2024-10-21",
+   "last": "2026-09-11",
    "mae": {
-    "persistence": 4.377495,
-    "ewma": 4.369189,
-    "ridge_own": 4.914008,
-    "ridge_all": 5.701715
+    "persistence": 4.358262,
+    "ewma": 4.376952,
+    "ridge_own": 4.483162,
+    "ridge_all": 4.83259,
+    "ridge_concept": 4.483162
    },
    "closer_than_persistence": {
-    "ewma": 16,
-    "ridge_own": 11,
-    "ridge_all": 10
+    "ewma": 222,
+    "ridge_own": 221,
+    "ridge_all": 188,
+    "ridge_concept": 221
+   },
+   "conformal": {
+    "ridge_all": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.795,
+     "mean_width": 15.145263
+    },
+    "persistence": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.786,
+     "mean_width": 13.127198
+    }
+   },
+   "concept": {
+    "members": {},
+    "name": null,
+    "survives": false
    }
   },
   "markets.uup_adjclose": {
    "target": "markets.uup_adjclose",
-   "n": 32,
-   "first": "2026-07-23",
-   "last": "2026-09-10",
+   "n": 473,
+   "first": "2024-10-21",
+   "last": "2026-09-11",
    "mae": {
-    "persistence": 0.070312,
-    "ewma": 0.067074,
-    "ridge_own": 0.078261,
-    "ridge_all": 0.093576
+    "persistence": 0.090578,
+    "ewma": 0.090644,
+    "ridge_own": 0.092061,
+    "ridge_all": 0.096517,
+    "ridge_concept": 0.092186
    },
    "closer_than_persistence": {
-    "ewma": 20,
-    "ridge_own": 10,
-    "ridge_all": 11
+    "ewma": 242,
+    "ridge_own": 210,
+    "ridge_all": 208,
+    "ridge_concept": 208
+   },
+   "conformal": {
+    "ridge_all": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.862,
+     "mean_width": 0.344588
+    },
+    "persistence": {
+     "level": 0.8,
+     "n": 463,
+     "coverage": 0.849,
+     "mean_width": 0.313356
+    }
+   },
+   "concept": {
+    "members": {
+     "markets.gld_adjclose": -1
+    },
+    "name": "concept(markets.uup_adjclose)={-markets.gld_adjclose}",
+    "survives": false
    }
   },
   "quakes.quake_m45_count": {
    "target": "quakes.quake_m45_count",
-   "n": 61,
-   "first": "2026-07-11",
+   "n": 701,
+   "first": "2024-10-09",
    "last": "2026-09-10",
    "mae": {
-    "persistence": 7.983607,
-    "ewma": 7.203151,
-    "ridge_own": 7.682474,
-    "ridge_all": 8.421585
+    "persistence": 8.479315,
+    "ewma": 7.240664,
+    "ridge_own": 8.144364,
+    "ridge_all": 8.577727,
+    "ridge_concept": 8.144364
    },
    "closer_than_persistence": {
-    "ewma": 32,
-    "ridge_own": 30,
-    "ridge_all": 29
+    "ewma": 398,
+    "ridge_own": 407,
+    "ridge_all": 382,
+    "ridge_concept": 407
+   },
+   "conformal": {
+    "ridge_all": {
+     "level": 0.8,
+     "n": 691,
+     "coverage": 0.795,
+     "mean_width": 20.3546
+    },
+    "persistence": {
+     "level": 0.8,
+     "n": 691,
+     "coverage": 0.829,
+     "mean_width": 22.992764
+    }
+   },
+   "concept": {
+    "members": {},
+    "name": null,
+    "survives": false
    }
   }
  },
  "learning_curve": {
   "markets.gld_adjclose": {
    "10": {
-    "ridge_all": 7.449919,
-    "persistence": 5.394691,
+    "ridge_all": 6.838403,
+    "persistence": 4.108732,
     "beats": false
    },
    "20": {
-    "ridge_all": 6.763107,
-    "persistence": 5.394691,
+    "ridge_all": 5.968294,
+    "persistence": 4.108732,
     "beats": false
    },
    "40": {
-    "ridge_all": 6.454663,
-    "persistence": 5.394691,
+    "ridge_all": 5.235387,
+    "persistence": 4.108732,
     "beats": false
    },
    "80": {
-    "ridge_all": 6.251798,
-    "persistence": 5.394691,
+    "ridge_all": 4.917018,
+    "persistence": 4.108732,
     "beats": false
    }
   },
   "markets.spy_adjclose": {
    "10": {
-    "ridge_all": 6.071751,
-    "persistence": 4.377495,
+    "ridge_all": 7.490338,
+    "persistence": 4.358262,
     "beats": false
    },
    "20": {
-    "ridge_all": 5.617104,
-    "persistence": 4.377495,
+    "ridge_all": 6.509196,
+    "persistence": 4.358262,
     "beats": false
    },
    "40": {
-    "ridge_all": 5.81215,
-    "persistence": 4.377495,
+    "ridge_all": 5.571585,
+    "persistence": 4.358262,
     "beats": false
    },
    "80": {
-    "ridge_all": 5.701715,
-    "persistence": 4.377495,
+    "ridge_all": 5.304876,
+    "persistence": 4.358262,
     "beats": false
    }
   },
   "markets.uup_adjclose": {
    "10": {
-    "ridge_all": 0.123924,
-    "persistence": 0.070312,
+    "ridge_all": 0.155254,
+    "persistence": 0.090578,
     "beats": false
    },
    "20": {
-    "ridge_all": 0.115941,
-    "persistence": 0.070312,
+    "ridge_all": 0.134126,
+    "persistence": 0.090578,
     "beats": false
    },
    "40": {
-    "ridge_all": 0.095364,
-    "persistence": 0.070312,
+    "ridge_all": 0.112751,
+    "persistence": 0.090578,
     "beats": false
    },
    "80": {
-    "ridge_all": 0.093576,
-    "persistence": 0.070312,
+    "ridge_all": 0.10644,
+    "persistence": 0.090578,
     "beats": false
    }
   },
   "quakes.quake_m45_count": {
    "10": {
-    "ridge_all": 11.268954,
-    "persistence": 7.983607,
+    "ridge_all": 13.886826,
+    "persistence": 8.479315,
     "beats": false
    },
    "20": {
-    "ridge_all": 10.391029,
-    "persistence": 7.983607,
+    "ridge_all": 13.74983,
+    "persistence": 8.479315,
     "beats": false
    },
    "40": {
-    "ridge_all": 9.022144,
-    "persistence": 7.983607,
+    "ridge_all": 11.837104,
+    "persistence": 8.479315,
     "beats": false
    },
    "80": {
-    "ridge_all": 8.427115,
-    "persistence": 7.983607,
+    "ridge_all": 10.601092,
+    "persistence": 8.479315,
     "beats": false
    }
   }
  },
  "transfer": {
   "markets.gld_adjclose -> markets.spy_adjclose": {
-   "transfer_mae": 4.073007,
-   "persistence_mae": 4.377495,
-   "beats": true
+   "transfer_mae": 4.45555,
+   "persistence_mae": 4.358262,
+   "beats": false
   },
   "markets.gld_adjclose -> markets.uup_adjclose": {
-   "transfer_mae": 0.078329,
-   "persistence_mae": 0.070312,
+   "transfer_mae": 0.092587,
+   "persistence_mae": 0.090578,
    "beats": false
   },
   "markets.gld_adjclose -> quakes.quake_m45_count": {
-   "transfer_mae": 8.483335,
-   "persistence_mae": 7.983607,
+   "transfer_mae": 8.838805,
+   "persistence_mae": 8.479315,
    "beats": false
   },
   "markets.spy_adjclose -> markets.gld_adjclose": {
-   "transfer_mae": 5.749725,
-   "persistence_mae": 5.394691,
+   "transfer_mae": 4.186174,
+   "persistence_mae": 4.108732,
    "beats": false
   },
   "markets.spy_adjclose -> markets.uup_adjclose": {
-   "transfer_mae": 0.084556,
-   "persistence_mae": 0.070312,
+   "transfer_mae": 0.091835,
+   "persistence_mae": 0.090578,
    "beats": false
   },
   "markets.spy_adjclose -> quakes.quake_m45_count": {
-   "transfer_mae": 8.597055,
-   "persistence_mae": 7.983607,
+   "transfer_mae": 9.030784,
+   "persistence_mae": 8.479315,
    "beats": false
   },
   "markets.uup_adjclose -> markets.gld_adjclose": {
-   "transfer_mae": 6.091762,
-   "persistence_mae": 5.394691,
+   "transfer_mae": 4.209878,
+   "persistence_mae": 4.108732,
    "beats": false
   },
   "markets.uup_adjclose -> markets.spy_adjclose": {
-   "transfer_mae": 5.124548,
-   "persistence_mae": 4.377495,
+   "transfer_mae": 4.460601,
+   "persistence_mae": 4.358262,
    "beats": false
   },
   "markets.uup_adjclose -> quakes.quake_m45_count": {
-   "transfer_mae": 9.724666,
-   "persistence_mae": 7.983607,
+   "transfer_mae": 9.245259,
+   "persistence_mae": 8.479315,
    "beats": false
   },
   "quakes.quake_m45_count -> markets.gld_adjclose": {
-   "transfer_mae": 5.647773,
-   "persistence_mae": 5.394691,
+   "transfer_mae": 4.465626,
+   "persistence_mae": 4.108732,
    "beats": false
   },
   "quakes.quake_m45_count -> markets.spy_adjclose": {
-   "transfer_mae": 5.017339,
-   "persistence_mae": 4.377495,
+   "transfer_mae": 5.132676,
+   "persistence_mae": 4.358262,
    "beats": false
   },
   "quakes.quake_m45_count -> markets.uup_adjclose": {
-   "transfer_mae": 0.093416,
-   "persistence_mae": 0.070312,
+   "transfer_mae": 0.105383,
+   "persistence_mae": 0.090578,
    "beats": false
   }
  },
@@ -235,14 +323,18 @@
   "targets": 4,
   "ridge_all_beats_persistence": 0,
   "ridge_all_beats_ridge_own": 0,
-  "ewma_beats_persistence": 3,
+  "ewma_beats_persistence": 1,
   "transfer_pairs": 12,
-  "transfer_beats_persistence": 1,
+  "transfer_beats_persistence": 0,
   "few_examples": {
    "10": 0,
    "20": 0,
    "40": 0,
    "80": 0
-  }
+  },
+  "concepts_found": 2,
+  "concepts_survive": 1,
+  "conformal_coverage": 0.787,
+  "conformal_level": 0.8
  }
 }

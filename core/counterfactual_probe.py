@@ -49,6 +49,7 @@ TARGETS = BASE / "config" / "target_config.json"
 
 OVER, UNDER = "OVER", "UNDER"
 TRACKS, INSENSITIVE, NOISE_DRIVEN, WRONG, SILENT = "TRACKS", "INSENSITIVE", "NOISE_DRIVEN", "WRONG", "SILENT"
+RATE_LIMITED = "RATE_LIMITED"   # the host refused the call; the mind never saw the question
 SCHEMA = {"verdict": "exactly one word: OVER if the value is on the bad side of the line, UNDER if it is not",
           "reason": "one sentence, from the material"}
 
@@ -197,6 +198,14 @@ def variants(c: dict) -> dict:
             "noise": {"material": material(c, v, _shift_date(c["date"] or "2026-01-02")), "truth": truth(v, line, d), "value": v}}
 
 
+def unavailable(answer) -> str | None:
+    """The host's reason for not answering, or None. Kept separate from a verdict
+    so a rate limit can be counted apart from a mind that stayed quiet."""
+    if isinstance(answer, dict) and answer.get("_unavailable"):
+        return str(answer["_unavailable"])
+    return None
+
+
 def normalise(answer) -> str | None:
     if not isinstance(answer, dict):
         return None
@@ -208,7 +217,10 @@ def normalise(answer) -> str | None:
     return None
 
 
-def outcome(base: str | None, flipped: str | None, noise: str | None, vs: dict) -> str:
+def outcome(base: str | None, flipped: str | None, noise: str | None, vs: dict,
+            refusals: list | None = None) -> str:
+    if refusals:
+        return RATE_LIMITED          # the host said no; nothing was asked of the mind
     if None in (base, flipped, noise):
         return SILENT
     if base == flipped:
@@ -296,7 +308,15 @@ def nvidia_kimi_ask(question: str, evidence: str, schema: dict):
                       json={"model": model, "temperature": 0, "max_tokens": 300,
                             "messages": [{"role": "user", "content": prompt}]})
     if r.status_code != 200:
-        return None
+        # A REFUSAL BY THE HOST IS NOT A SILENCE BY THE MIND (11 Sep 2026).
+        # This returned a bare None, identical to an unparseable reply, so the
+        # probe counted SILENT and the [PROBE] line read
+        #   nvidia-kimi n=9 answered=1 tracks_rate=1.0 ... SILENT 8
+        # which looks like a mind that would not speak. The real cause, caught by
+        # replaying the same call by hand: HTTP 429 {"title":"Too Many Requests"}.
+        # A 1.0 rate over ONE answered case is not a measurement, and blaming the
+        # model for the rate limiter is the wrong story to leave on disk.
+        return {"_unavailable": f"HTTP {r.status_code}"}
     d = r.json()
     txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
     txt = txt.split("</think>")[-1].strip()
@@ -363,23 +383,30 @@ def run(ask=None, case_list=None, log=None, latest=None, now=None) -> dict:
             skipped.append(c["case"])          # no counterfactual exists inside the unit's domain
             continue
         got, models, reasons = {}, set(), {}
+        refusals = []            # the host said no — kept apart from a quiet mind
         for name in ("base", "flipped", "noise"):
             try:
                 ans = ask(QUESTION, vs[name]["material"], SCHEMA)
                 got[name] = normalise(ans)
+                why = unavailable(ans)
+                if why:
+                    refusals.append(f"{name}: {why}")
                 if isinstance(ans, dict):
                     if ans.get("_model"):
                         models.add(str(ans["_model"]))
                     reasons[name] = str(ans.get("reason") or "")[:160]
             except Exception:
                 got[name] = None
-        o = outcome(got["base"], got["flipped"], got["noise"], vs)
+        o = outcome(got["base"], got["flipped"], got["noise"], vs, refusals)
+        if refusals:
+            reasons["_unavailable"] = "; ".join(sorted(set(refusals)))
         rows.append({"ts": ts, "case": c["case"], "source": c["source"], "value": c["value"], "line": c["line"],
                      "direction": c["direction"], "flipped_value": vs["flipped"]["value"],
                      "truth": {k: vs[k]["truth"] for k in vs}, "verdict": got, "reason": reasons,
                      "model": sorted(models), "outcome": o})
-    counts = {k: sum(1 for r in rows if r["outcome"] == k) for k in (TRACKS, INSENSITIVE, NOISE_DRIVEN, WRONG, SILENT)}
-    answered = len(rows) - counts[SILENT]
+    counts = {k: sum(1 for r in rows if r["outcome"] == k)
+              for k in (TRACKS, INSENSITIVE, NOISE_DRIVEN, WRONG, SILENT, RATE_LIMITED)}
+    answered = len(rows) - counts[SILENT] - counts[RATE_LIMITED]
     summary = {"ts": ts, "n": len(rows), "answered": answered, "counts": counts, "skipped_no_counterfactual": skipped,
                "tracks_rate": round(counts[TRACKS] / answered, 3) if answered else None,
                "reading": ("the verdict follows the number and only the number" if answered and counts[TRACKS] == answered

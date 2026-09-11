@@ -1,40 +1,58 @@
 # CROSS-SERIES BENCH — does knowing the others help? (E1, points 1 and 3 on the moving world)
 
-_2026-09-11T13:16:01Z · 60 daily series, 4 usable (>= 40 points) · lags 3 · ridge λ=1.0_
+_2026-09-11T17:23:29Z · 60 daily series, 4 usable (>= 40 points) · lags 3 · ridge λ=1.0_
 
 | target | n | persistence | EWMA | ridge own lags | ridge ALL lags | all closer than persistence |
 |---|---:|---:|---:|---:|---:|---:|
-| markets.gld_adjclose | 32 | 5.394691 | 5.479247 | 5.281192 | 6.251798 | 11/32 |
-| markets.spy_adjclose | 32 | 4.377495 | 4.369189 | 4.914008 | 5.701715 | 10/32 |
-| markets.uup_adjclose | 32 | 0.070312 | 0.067074 | 0.078261 | 0.093576 | 11/32 |
-| quakes.quake_m45_count | 61 | 7.983607 | 7.203151 | 7.682474 | 8.421585 | 29/61 |
+| markets.gld_adjclose | 473 | 4.108732 | 4.124925 | 4.21708 | 4.343639 | 207/473 |
+| markets.spy_adjclose | 473 | 4.358262 | 4.376952 | 4.483162 | 4.83259 | 188/473 |
+| markets.uup_adjclose | 473 | 0.090578 | 0.090644 | 0.092061 | 0.096517 | 208/473 |
+| quakes.quake_m45_count | 701 | 8.479315 | 7.240664 | 8.144364 | 8.577727 | 382/701 |
 
 ## Few examples — rows the model may see (MAE ridge ALL vs persistence)
 
 | target | k=10 | k=20 | k=40 | k=80 |
 |---|---:|---:|---:|---:|
-| markets.gld_adjclose | 7.449919 ✗ | 6.763107 ✗ | 6.454663 ✗ | 6.251798 ✗ |
-| markets.spy_adjclose | 6.071751 ✗ | 5.617104 ✗ | 5.81215 ✗ | 5.701715 ✗ |
-| markets.uup_adjclose | 0.123924 ✗ | 0.115941 ✗ | 0.095364 ✗ | 0.093576 ✗ |
-| quakes.quake_m45_count | 11.268954 ✗ | 10.391029 ✗ | 9.022144 ✗ | 8.427115 ✗ |
+| markets.gld_adjclose | 6.838403 ✗ | 5.968294 ✗ | 5.235387 ✗ | 4.917018 ✗ |
+| markets.spy_adjclose | 7.490338 ✗ | 6.509196 ✗ | 5.571585 ✗ | 5.304876 ✗ |
+| markets.uup_adjclose | 0.155254 ✗ | 0.134126 ✗ | 0.112751 ✗ | 0.10644 ✗ |
+| quakes.quake_m45_count | 13.886826 ✗ | 13.74983 ✗ | 11.837104 ✗ | 10.601092 ✗ |
 
 ## Transfer — weights fitted on A, judged on B against persistence
 
 | A -> B | transfer MAE | persistence MAE | beats |
 |---|---:|---:|---|
-| markets.gld_adjclose -> markets.spy_adjclose | 4.073007 | 4.377495 | YES |
-| markets.gld_adjclose -> markets.uup_adjclose | 0.078329 | 0.070312 | no |
-| markets.gld_adjclose -> quakes.quake_m45_count | 8.483335 | 7.983607 | no |
-| markets.spy_adjclose -> markets.gld_adjclose | 5.749725 | 5.394691 | no |
-| markets.spy_adjclose -> markets.uup_adjclose | 0.084556 | 0.070312 | no |
-| markets.spy_adjclose -> quakes.quake_m45_count | 8.597055 | 7.983607 | no |
-| markets.uup_adjclose -> markets.gld_adjclose | 6.091762 | 5.394691 | no |
-| markets.uup_adjclose -> markets.spy_adjclose | 5.124548 | 4.377495 | no |
-| markets.uup_adjclose -> quakes.quake_m45_count | 9.724666 | 7.983607 | no |
-| quakes.quake_m45_count -> markets.gld_adjclose | 5.647773 | 5.394691 | no |
-| quakes.quake_m45_count -> markets.spy_adjclose | 5.017339 | 4.377495 | no |
-| quakes.quake_m45_count -> markets.uup_adjclose | 0.093416 | 0.070312 | no |
+| markets.gld_adjclose -> markets.spy_adjclose | 4.45555 | 4.358262 | no |
+| markets.gld_adjclose -> markets.uup_adjclose | 0.092587 | 0.090578 | no |
+| markets.gld_adjclose -> quakes.quake_m45_count | 8.838805 | 8.479315 | no |
+| markets.spy_adjclose -> markets.gld_adjclose | 4.186174 | 4.108732 | no |
+| markets.spy_adjclose -> markets.uup_adjclose | 0.091835 | 0.090578 | no |
+| markets.spy_adjclose -> quakes.quake_m45_count | 9.030784 | 8.479315 | no |
+| markets.uup_adjclose -> markets.gld_adjclose | 4.209878 | 4.108732 | no |
+| markets.uup_adjclose -> markets.spy_adjclose | 4.460601 | 4.358262 | no |
+| markets.uup_adjclose -> quakes.quake_m45_count | 9.245259 | 8.479315 | no |
+| quakes.quake_m45_count -> markets.gld_adjclose | 4.465626 | 4.108732 | no |
+| quakes.quake_m45_count -> markets.spy_adjclose | 5.132676 | 4.358262 | no |
+| quakes.quake_m45_count -> markets.uup_adjclose | 0.105383 | 0.090578 | no |
 
-**Verdict:** ridge on ALL lags beats persistence on 0/4 targets and beats its own-lags twin on 0/4; EWMA beats persistence on 3/4; transfer beats persistence on 1/12 pairs; few-examples wins: k=10: 0/4, k=20: 0/4, k=40: 0/4, k=80: 0/4.
+## E2 — concepts: series that move together, used as one feature (point 4)
+
+| target | concept (found on the training window, named by its members) | own-lags MAE | concept MAE | survives |
+|---|---|---:|---:|---|
+| markets.gld_adjclose | concept(markets.gld_adjclose)={-markets.uup_adjclose} | 4.21708 | 4.209964 | YES |
+| markets.spy_adjclose | — no series moves with it | 4.483162 | 4.483162 | no |
+| markets.uup_adjclose | concept(markets.uup_adjclose)={-markets.gld_adjclose} | 0.092061 | 0.092186 | no |
+| quakes.quake_m45_count | — no series moves with it | 8.144364 | 8.144364 | no |
+
+## E4 — calibrated uncertainty: 80% intervals, judged against what happened (point 7)
+
+| target | ridge ALL coverage | width | persistence coverage | width |
+|---|---:|---:|---:|---:|
+| markets.gld_adjclose | 0.695 (n=463) | 10.212267 | 0.683 | 9.166994 |
+| markets.spy_adjclose | 0.795 (n=463) | 15.145263 | 0.786 | 13.127198 |
+| markets.uup_adjclose | 0.862 (n=463) | 0.344588 | 0.849 | 0.313356 |
+| quakes.quake_m45_count | 0.795 (n=691) | 20.3546 | 0.829 | 22.992764 |
+
+**Verdict:** ridge on ALL lags beats persistence on 0/4 targets and beats its own-lags twin on 0/4; EWMA beats persistence on 1/4; transfer beats persistence on 0/12 pairs; few-examples wins: k=10: 0/4, k=20: 0/4, k=40: 0/4, k=80: 0/4; concepts found 2, surviving out of sample 1; 80% intervals covered 0.787 of outcomes.
 
 Reading: on daily market closes persistence is a hard baseline (a random walk has no better one-step predictor); a win here must hold for weeks, not one run. USGS counts are not a random walk and are where a lag model should win first. Nothing here is a trade.

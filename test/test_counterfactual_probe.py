@@ -151,3 +151,55 @@ def test_a_groq_model_outside_the_free_list_is_refused_before_any_call():
     with pytest.raises(ValueError, match="unknown asker"):
         CP.askers(["gpt-anything"])
 
+
+
+import tempfile as _tf
+_TMP = Path(_tf.mkdtemp(prefix="probe_rl_"))
+
+
+# ── a rate limit is not a silence (11 Sep 2026) ──────────────────────────────
+
+def test_a_host_refusal_is_rate_limited_not_silent():
+    """THE MISREADING, from the first cloud comparison. The [PROBE] line said
+
+        nvidia-kimi n=9 answered=1 tracks_rate=1.0 ... SILENT 8
+
+    which reads as a mind that would not speak, and a 1.0 rate over ONE answered
+    case reads as perfect understanding. Replaying the same call by hand gave
+    HTTP 429 {"title":"Too Many Requests"} — the host refused, the model never saw
+    the question. Blaming the mind for the rate limiter is the wrong story to
+    leave on disk, and `answered` must not count those cases either."""
+    vs = {"base": {"truth": CP.OVER}, "flipped": {"truth": CP.UNDER}}
+    assert CP.outcome(None, None, None, vs, refusals=["base: HTTP 429"]) == CP.RATE_LIMITED
+    assert CP.outcome(None, None, None, vs, refusals=[]) == CP.SILENT
+    assert CP.outcome(None, None, None, vs) == CP.SILENT
+
+
+def test_a_refused_case_is_not_counted_as_answered():
+    """The denominator matters more than the label: tracks_rate over a single
+    answered case is not a measurement."""
+    def refuse(question, evidence, schema):
+        return {"_unavailable": "HTTP 429"}
+    s = CP.run(ask=refuse, case_list=CP.cases()[:2],
+               log=_TMP / "l.jsonl", latest=_TMP / "s.json")
+    assert s["counts"][CP.RATE_LIMITED] == 2
+    assert s["counts"][CP.SILENT] == 0
+    assert s["answered"] == 0, "a refused call must not inflate `answered`"
+
+
+def test_an_unparseable_reply_is_still_silent():
+    """NEGATIVE CONTROL. The fix must not relabel every failure as a rate limit —
+    a model that answers with prose really did stay silent on the question."""
+    def prose(question, evidence, schema):
+        return {"verdict": "it depends on the context"}
+    s = CP.run(ask=prose, case_list=CP.cases()[:2],
+               log=_TMP / "l2.jsonl", latest=_TMP / "s2.json")
+    assert s["counts"][CP.SILENT] == 2
+    assert s["counts"][CP.RATE_LIMITED] == 0
+
+
+def test_unavailable_only_fires_on_the_named_field():
+    """A normal answer must never be read as a host refusal."""
+    assert CP.unavailable({"verdict": "OVER"}) is None
+    assert CP.unavailable(None) is None
+    assert CP.unavailable({"_unavailable": "HTTP 503"}) == "HTTP 503"

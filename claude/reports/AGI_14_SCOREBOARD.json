@@ -24,9 +24,9 @@
   {
    "point": 4,
    "name": "Нови понятия",
-   "number": "constancy classes: {'MOVING': 9, 'POSITIVE_CONSTANT': 0, 'NEGATIVE_CONSTANT': 0, 'NEGATIVE_TREND': 1, 'UNCLASSIFIED': 6}",
-   "source": "memory/constancy_bands_latest.json (the seed: constellation/constancy)",
-   "verdict": "SEED"
+   "number": "E2 concepts on the daily world: found 2, surviving out of sample 1; constancy classes: {'MOVING': 9, 'POSITIVE_CONSTANT': 0, 'NEGATIVE_CONSTANT': 0, 'NEGATIVE_TREND': 1, 'UNCLASSIFIED': 6}",
+   "source": "CROSS_SERIES_BENCH.json (E2, morning step); memory/constancy_bands_latest.json",
+   "verdict": "PARTIAL"
   },
   {
    "point": 5,
@@ -45,8 +45,8 @@
   {
    "point": 7,
    "name": "Калибрирана несигурност",
-   "number": "Brier self_failure 0.2444 vs 0.5388 (54 scored); self_survive scored 0",
-   "source": "prophecy ledger",
+   "number": "Brier self_failure 0.2444 vs 0.5388 (54 scored); self_survive scored 0; world 80% intervals covered 0.857",
+   "source": "prophecy ledger; CROSS_SERIES_BENCH.json (E4)",
    "verdict": "LIVE"
   },
   {
@@ -301,7 +301,11 @@
     "20": 0,
     "40": 0,
     "80": 0
-   }
+   },
+   "concepts_found": 2,
+   "concepts_survive": 1,
+   "conformal_coverage": 0.857,
+   "conformal_level": 0.8
   },
   "alarm_indicators": {
    "OK": 2,
@@ -313,7 +317,7 @@
   "learner_progress": {
    "status": "no comparison yet",
    "latest": {
-    "ts": "2026-09-11T16:59:34Z",
+    "ts": "2026-09-11T17:04:09Z",
     "scored": 5,
     "compared": 4,
     "wins": 1,
@@ -322,7 +326,7 @@
     "indicators_learned": 5,
     "margin": -0.0228
    },
-   "snapshots": 2
+   "snapshots": 3
   }
  }
 }
