@@ -1055,8 +1055,21 @@ def _llm_synthesize(axis, sources):
     # before giving up. A person does not accept half a sentence; they ask again.
     # (It also strips 'done thinking.' and <think> blocks itself — core.llm_json
     # .strip_reasoning — so the hand-rolled stripping that stood here is gone.)
+    # 400 -> 800 (STEP 6c, 10 Sep 2026). The retry above is not free: it is a
+    # SECOND full call, and it fired ~5 times a night, every night, across 31
+    # different axis labels (FOOD_REVIEW 6, WATER_REVIEW 5, ... — counted over
+    # memory/cycle_logs/*.log). Every one of those retries then SUCCEEDED at
+    # double, which says the first budget was simply too small rather than the
+    # model being unable to answer.
+    #
+    # The number is the one the retry proved sufficient, not a guess:
+    # _reasoning_budget(400) is already 1500 on Groq because of GROQ_BUDGET_FLOOR
+    # (so the "400" in the old log line was never the real budget), and it still
+    # truncated; the retry at 800 gives 2400 and lands. max_tokens is a CEILING,
+    # not a spend — a short answer costs the same at 800 as at 400 — so raising
+    # it removes a duplicated call and adds nothing to the bill.
     try:
-        return call_llm_json(prompt, max_tokens=400, expect=dict, label=axis)
+        return call_llm_json(prompt, max_tokens=800, expect=dict, label=axis)
     except Exception as e:
         # NOT ASSESSED IS NOT "NOTHING URGENT". urgency=UNKNOWN, never LOW: LOW is
         # a judgement and no judgement was made. summary stays EMPTY and says why —

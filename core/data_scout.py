@@ -158,9 +158,17 @@ def _suggest_sources(axis: str, already_known: list[str],
         from core.llm_json import call_llm_json
         # call_llm_json прави самото извикване + parse, и при отрязан отговор
         # ретрайва веднъж с двоен token budget (600 е тесен за 3 URL-а).
+        #
+        # 600 -> 1200 (STEP 6c, 10 септември 2026). „Тесен" беше познато, но не
+        # преброено: SCOUT/* реда е отрязван по няколко пъти на нощ (по
+        # memory/cycle_logs/*.log: GOVERNANCE_INSTITUTIONS 4, COGNITION_LEARNING
+        # 2, CULTURE_MEDIA 2, ...), и ВСЕКИ ретрай след това е успявал на двойния
+        # бюджет. Затова първият опит вече е този, който се е доказал: 1200 ->
+        # _reasoning_budget 3600 вместо 1800. Таван, не разход — кратък отговор
+        # не струва повече при 1200, а един цял втори разговор изчезва.
         data = call_llm_json(
             prompt,
-            max_tokens=600,
+            max_tokens=1200,
             expect=dict,
             label=f"SCOUT/{axis}",
         )
