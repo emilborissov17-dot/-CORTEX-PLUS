@@ -1,0 +1,364 @@
+{
+ "seeds": 5,
+ "n_obs": 400,
+ "n_int": 100,
+ "summary": {
+  "t8": {
+   "naive_correlation": {
+    "direction_acc": 0.7766,
+    "mae_sd_units": 0.3531,
+    "false_move_nondesc": 0.8073
+   },
+   "adjusted_regression": {
+    "direction_acc": 0.6834,
+    "mae_sd_units": 0.2932,
+    "false_move_nondesc": 0.5962
+   },
+   "anm_causal": {
+    "direction_acc": 0.6863,
+    "mae_sd_units": 0.2348,
+    "false_move_nondesc": 0.3834
+   },
+   "persistence": {
+    "direction_acc": 0.0,
+    "mae_sd_units": 0.1973,
+    "false_move_nondesc": 0.0
+   }
+  },
+  "t6": {
+   "naive_correlation": 0.44,
+   "adjusted_regression": 0.34,
+   "anm_causal": 0.44,
+   "random": 0.1
+  },
+  "t6_after": 0.66,
+  "t12_interventions": 20,
+  "t12_curve": [
+   0.2296,
+   0.1749,
+   0.1538,
+   0.1372,
+   0.1365,
+   0.1351
+  ],
+  "t12_recall": [
+   0.305,
+   0.432,
+   0.483,
+   0.556,
+   0.575,
+   0.615
+  ],
+  "graph_recall": 0.3052,
+  "graph_precision": 0.4806,
+  "verdict": {
+   "T8": "FAIL",
+   "T6": "FAIL",
+   "T12": "PASS",
+   "T6A": "PASS",
+   "rule": "pre-registered in bench.py docstring, 10 Sep 2026, before the first run"
+  }
+ },
+ "per_seed": [
+  {
+   "seed": 1000,
+   "t8": {
+    "naive_correlation": {
+     "direction_acc": 0.821,
+     "mae_sd_units": 0.425,
+     "false_move_nondesc": 0.8685,
+     "n_pairs": 900
+    },
+    "adjusted_regression": {
+     "direction_acc": 0.7415,
+     "mae_sd_units": 0.3623,
+     "false_move_nondesc": 0.7301,
+     "n_pairs": 900
+    },
+    "anm_causal": {
+     "direction_acc": 0.6761,
+     "mae_sd_units": 0.2544,
+     "false_move_nondesc": 0.3391,
+     "n_pairs": 900
+    },
+    "persistence": {
+     "direction_acc": 0.0,
+     "mae_sd_units": 0.2226,
+     "false_move_nondesc": 0.0,
+     "n_pairs": 900
+    }
+   },
+   "t6": {
+    "naive_correlation": 0.15,
+    "adjusted_regression": 0.0,
+    "anm_causal": 0.2,
+    "random": 0.1
+   },
+   "t6_after": 0.6,
+   "t12_curve": [
+    0.2637,
+    0.1828,
+    0.1196,
+    0.1059,
+    0.1029,
+    0.0993
+   ],
+   "t12_recall": [
+    0.227,
+    0.5,
+    0.591,
+    0.682,
+    0.682,
+    0.682
+   ],
+   "t12_interventions": 20,
+   "graph_recall": 0.227,
+   "graph_precision": 0.357,
+   "spent": {
+    "observe": 1,
+    "intervene": 350,
+    "samples": 100400
+   }
+  },
+  {
+   "seed": 1001,
+   "t8": {
+    "naive_correlation": {
+     "direction_acc": 0.7453,
+     "mae_sd_units": 0.2847,
+     "false_move_nondesc": 0.7314,
+     "n_pairs": 900
+    },
+    "adjusted_regression": {
+     "direction_acc": 0.6829,
+     "mae_sd_units": 0.2751,
+     "false_move_nondesc": 0.6588,
+     "n_pairs": 900
+    },
+    "anm_causal": {
+     "direction_acc": 0.6667,
+     "mae_sd_units": 0.1577,
+     "false_move_nondesc": 0.2922,
+     "n_pairs": 900
+    },
+    "persistence": {
+     "direction_acc": 0.0,
+     "mae_sd_units": 0.1911,
+     "false_move_nondesc": 0.0,
+     "n_pairs": 900
+    }
+   },
+   "t6": {
+    "naive_correlation": 0.5,
+    "adjusted_regression": 0.45,
+    "anm_causal": 0.45,
+    "random": 0.1
+   },
+   "t6_after": 0.65,
+   "t12_curve": [
+    0.1415,
+    0.1451,
+    0.1451,
+    0.1506,
+    0.1438,
+    0.1497
+   ],
+   "t12_recall": [
+    0.435,
+    0.348,
+    0.348,
+    0.348,
+    0.391,
+    0.478
+   ],
+   "t12_interventions": 20,
+   "graph_recall": 0.435,
+   "graph_precision": 0.714,
+   "spent": {
+    "observe": 1,
+    "intervene": 350,
+    "samples": 100400
+   }
+  },
+  {
+   "seed": 1002,
+   "t8": {
+    "naive_correlation": {
+     "direction_acc": 0.8151,
+     "mae_sd_units": 0.403,
+     "false_move_nondesc": 0.7881,
+     "n_pairs": 900
+    },
+    "adjusted_regression": {
+     "direction_acc": 0.7547,
+     "mae_sd_units": 0.2969,
+     "false_move_nondesc": 0.4785,
+     "n_pairs": 900
+    },
+    "anm_causal": {
+     "direction_acc": 0.6453,
+     "mae_sd_units": 0.3378,
+     "false_move_nondesc": 0.3526,
+     "n_pairs": 900
+    },
+    "persistence": {
+     "direction_acc": 0.0,
+     "mae_sd_units": 0.2255,
+     "false_move_nondesc": 0.0,
+     "n_pairs": 900
+    }
+   },
+   "t6": {
+    "naive_correlation": 0.7,
+    "adjusted_regression": 0.65,
+    "anm_causal": 0.35,
+    "random": 0.2
+   },
+   "t6_after": 0.7,
+   "t12_curve": [
+    0.3179,
+    0.226,
+    0.1694,
+    0.118,
+    0.1272,
+    0.1294
+   ],
+   "t12_recall": [
+    0.211,
+    0.421,
+    0.526,
+    0.632,
+    0.684,
+    0.684
+   ],
+   "t12_interventions": 20,
+   "graph_recall": 0.211,
+   "graph_precision": 0.308,
+   "spent": {
+    "observe": 1,
+    "intervene": 350,
+    "samples": 100400
+   }
+  },
+  {
+   "seed": 1003,
+   "t8": {
+    "naive_correlation": {
+     "direction_acc": 0.7718,
+     "mae_sd_units": 0.2708,
+     "false_move_nondesc": 0.7889,
+     "n_pairs": 900
+    },
+    "adjusted_regression": {
+     "direction_acc": 0.6262,
+     "mae_sd_units": 0.2819,
+     "false_move_nondesc": 0.6453,
+     "n_pairs": 900
+    },
+    "anm_causal": {
+     "direction_acc": 0.7136,
+     "mae_sd_units": 0.196,
+     "false_move_nondesc": 0.3818,
+     "n_pairs": 900
+    },
+    "persistence": {
+     "direction_acc": 0.0,
+     "mae_sd_units": 0.2069,
+     "false_move_nondesc": 0.0,
+     "n_pairs": 900
+    }
+   },
+   "t6": {
+    "naive_correlation": 0.2,
+    "adjusted_regression": 0.2,
+    "anm_causal": 0.75,
+    "random": 0.05
+   },
+   "t6_after": 0.6,
+   "t12_curve": [
+    0.1874,
+    0.1752,
+    0.1923,
+    0.1848,
+    0.1843,
+    0.1866
+   ],
+   "t12_recall": [
+    0.375,
+    0.5,
+    0.562,
+    0.562,
+    0.562,
+    0.562
+   ],
+   "t12_interventions": 20,
+   "graph_recall": 0.375,
+   "graph_precision": 0.667,
+   "spent": {
+    "observe": 1,
+    "intervene": 350,
+    "samples": 100400
+   }
+  },
+  {
+   "seed": 1004,
+   "t8": {
+    "naive_correlation": {
+     "direction_acc": 0.73,
+     "mae_sd_units": 0.3818,
+     "false_move_nondesc": 0.8597,
+     "n_pairs": 900
+    },
+    "adjusted_regression": {
+     "direction_acc": 0.6118,
+     "mae_sd_units": 0.25,
+     "false_move_nondesc": 0.4684,
+     "n_pairs": 900
+    },
+    "anm_causal": {
+     "direction_acc": 0.73,
+     "mae_sd_units": 0.228,
+     "false_move_nondesc": 0.5512,
+     "n_pairs": 900
+    },
+    "persistence": {
+     "direction_acc": 0.0,
+     "mae_sd_units": 0.1402,
+     "false_move_nondesc": 0.0,
+     "n_pairs": 900
+    }
+   },
+   "t6": {
+    "naive_correlation": 0.65,
+    "adjusted_regression": 0.4,
+    "anm_causal": 0.45,
+    "random": 0.05
+   },
+   "t6_after": 0.75,
+   "t12_curve": [
+    0.2375,
+    0.1453,
+    0.1426,
+    0.1266,
+    0.1241,
+    0.1106
+   ],
+   "t12_recall": [
+    0.278,
+    0.389,
+    0.389,
+    0.556,
+    0.556,
+    0.667
+   ],
+   "t12_interventions": 20,
+   "graph_recall": 0.278,
+   "graph_precision": 0.357,
+   "spent": {
+    "observe": 1,
+    "intervene": 350,
+    "samples": 100400
+   }
+  }
+ ]
+}
