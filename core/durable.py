@@ -70,6 +70,38 @@ _stats = {"immediate": 0, "deferred": 0, "barriers": 0, "synced": 0,
           "errors": 0}
 
 
+def _scrub(line: str) -> str:
+    """Strip credential-shaped strings before anything reaches the disk.
+
+    HERE, AND NOT AT THE CALL SITES (11 Sep 2026). A push to the PUBLIC repo was
+    stopped because a live-shaped Google API key sat in nine log lines across
+    memory/night_events.jsonl, memory/llm_provenance.jsonl and
+    memory/diagnosis_history.jsonl. Nobody logged a key: a Gemini error echoed
+    the request URL, the URL carries ?key=..., and the error text was stored
+    verbatim. Provider text is untrusted input and a log line is a thing that
+    gets committed.
+
+    This module is the one place every JSONL append passes through, so the net
+    goes here rather than as an instruction repeated at 143 writers.
+
+    THE CALL IS INSIDE THE try, NOT JUST THE IMPORT. The first version of this
+    function guarded only the import, so a fault inside the scrubber propagated
+    out of append_durable — before its own try block — and the record was lost:
+    a guard that can destroy what it protects. test_a_scrubber_fault_never_costs
+    _the_record caught it, which is the point of writing the failure path first.
+    Fail-open is the rule here, because a lost record is the defect this whole
+    file exists to stop.
+    """
+    try:
+        try:
+            from core.redact import scrub_line  # noqa: PLC0415
+        except ImportError:
+            from redact import scrub_line       # noqa: PLC0415
+        return scrub_line(line)
+    except Exception:
+        return line
+
+
 def append_durable(path, line: str) -> bool:
     """Append one line and fsync it before returning. Never raises.
 
@@ -77,6 +109,7 @@ def append_durable(path, line: str) -> bool:
     failed OR the fsync did — and the caller is told, because "I wrote it" and
     "I think I wrote it" are different claims.
     """
+    line = _scrub(line)
     p = pathlib.Path(path)
     try:
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -100,6 +133,7 @@ def append_batched(path, line: str) -> bool:
     For writers called many times per step, where the tail of one step is an
     acceptable loss and the per-call fsync is not.
     """
+    line = _scrub(line)          # both paths, or the batched one is the leak
     p = pathlib.Path(path)
     try:
         p.parent.mkdir(parents=True, exist_ok=True)
