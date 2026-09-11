@@ -3,7 +3,8 @@
  "exam": 480,
  "seed_train": 1211,
  "seed_exam": 9121,
- "wrapper": "REAL brain.think blocks (memory/l1_real_prompt_blocks.json)",
+ "wrapper": "REAL brain.think blocks, frozen: training/l1b_wrapper_blocks.json",
+ "reproduce": "seed + training/l1b_wrapper_blocks.json (both committed); memory/ is not needed",
  "train_layouts": {
   "L_bg": 488,
   "L_bg_line_first": 544,

@@ -46,7 +46,8 @@ REPO = Path(__file__).resolve().parents[1]
 OUT_TRAIN = REPO / "training" / "l1b_train.jsonl"
 OUT_EXAM = REPO / "training" / "l1b_exam.jsonl"
 MANIFEST = REPO / "training" / "l1b_manifest.json"
-REAL_BLOCKS = REPO / "memory" / "l1_real_prompt_blocks.json"
+REAL_BLOCKS = REPO / "memory" / "l1_real_prompt_blocks.json"       # live: read off this machine at dump time
+FROZEN_BLOCKS = REPO / "training" / "l1b_wrapper_blocks.json"      # the copy the corpus was actually built from
 
 sys.path.insert(0, str(REPO / "training"))
 from lora_l1_numbers import REAL_CASE_NAMES, STEMS, UNITS, truth  # noqa: E402
@@ -147,12 +148,23 @@ LANGUAGE_PIN_STANDIN = ("All reasoning, stance, debrief, quote and explanation t
                         "in English. Do not use any other language. This is not conditional.")
 
 
-def _real_blocks() -> dict | None:
-    try:
-        b = json.loads(REAL_BLOCKS.read_text(encoding="utf-8"))
-        return b if b.get("self_state") and b.get("spirit") else None
-    except Exception:
-        return None
+def _real_blocks() -> tuple[dict | None, str]:
+    """The wrapper the lessons are built in, and where it came from.
+
+    PROVENANCE (12 Sep 2026). The long wrapper embeds this machine's live BODY and
+    self-state rows, so "seed 1211" alone does not reproduce the corpus: a later
+    --dump-prompt writes different numbers. The first build therefore FREEZES the
+    blocks into training/l1b_wrapper_blocks.json and every later build prefers that
+    frozen copy, so the pair (seed, frozen blocks) is the whole input and both halves
+    are files that can be committed. memory/ stays untracked runtime state."""
+    for path, where in ((FROZEN_BLOCKS, "frozen"), (REAL_BLOCKS, "live")):
+        try:
+            b = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if b.get("self_state") and b.get("spirit"):
+            return b, where
+    return None, "stand-in"
 
 
 def _jitter_numbers(text: str, rng: random.Random) -> str:
@@ -304,7 +316,11 @@ def build(n: int, seed: int, exam: bool, blocks) -> list:
 
 
 def write(n: int = 4000, n_exam: int = 480) -> dict:
-    blocks = _real_blocks()
+    blocks, where = _real_blocks()
+    if blocks and where == "live":                 # freeze on first use, so the corpus stays derivable
+        FROZEN_BLOCKS.parent.mkdir(parents=True, exist_ok=True)
+        FROZEN_BLOCKS.write_text(json.dumps(blocks, ensure_ascii=False, indent=1), encoding="utf-8")
+        where = "frozen (copied from memory on this run)"
     train, ex = build(n, 1211, False, blocks), build(n_exam, 9121, True, blocks)
     for path, rows in ((OUT_TRAIN, train), (OUT_EXAM, ex)):
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -313,8 +329,9 @@ def write(n: int = 4000, n_exam: int = 480) -> dict:
                 fh.write(json.dumps(r, ensure_ascii=False) + "\n")
     count = lambda rows, key: {k: sum(1 for r in rows if r["meta"][key] == k) for k in sorted({r["meta"][key] for r in rows})}
     man = {"train": len(train), "exam": len(ex), "seed_train": 1211, "seed_exam": 9121,
-           "wrapper": "REAL brain.think blocks (memory/l1_real_prompt_blocks.json)" if blocks else
-                      "STAND-IN wrapper — run l1_ollama_holdout.py --dump-prompt first for the real one",
+           "wrapper": (f"REAL brain.think blocks, {where}: training/l1b_wrapper_blocks.json" if blocks else
+                       "STAND-IN wrapper — run l1_ollama_holdout.py --dump-prompt first for the real one"),
+           "reproduce": "seed + training/l1b_wrapper_blocks.json (both committed); memory/ is not needed",
            "train_layouts": count(train, "layout"), "train_wraps": count(train, "wrap"), "train_groups": count(train, "group"),
            "exam_groups": count(ex, "group"), "exam_layouts": count(ex, "layout"),
            "exam_only_layouts": [f.__name__ for f in LAYOUT_EXAM], "exam_only_questions": Q_EXAM,
