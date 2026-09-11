@@ -453,7 +453,7 @@ def _smaller(current: str) -> str | None:
 def think(role: str, question: str, evidence: str = "", schema: dict | None = None,
           require_quote: bool = False, kind: str = "thought",
           remember_it: bool = True, temperature: float = 0.2,
-          fast: bool = False, model_override: str | None = None) -> dict | None:
+          fast: bool = False, model_override: str | None = None, lean: bool = False) -> dict | None:
     """Питай мозъка. Той отговаря със свои думи и свои категории.
 
     role      — коя роля носи в този момент ("дежурен инженер", "стратег", ...)
@@ -531,6 +531,20 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         # thing read. Neither is redundant with the other.
         + "\n\n" + LANGUAGE_PIN
     )
+
+    # ── LEAN PROMPT FOR A JUDGEMENT THAT IS ARITHMETIC (12 Sep 2026) ──────────
+    # The wrapper above is the system carrying itself into every thought, and for a
+    # long judgement that is the point. For "is 39 past the line of 38" it is noise:
+    # measured on 11 Sep the wrapper is 4400 characters of which SPIRIT alone is 74%,
+    # and the two numbers that decide the answer arrive after all of it. The probe of
+    # 11-12 Sep: qwen2.5:3b INSENSITIVE 9/9, its L1 fine-tune 1/9 TRACKS. lean=True
+    # sends the role, the language pin, the question, the material and the schema —
+    # nothing else — so the caller can ask the same mind the same question with and
+    # without the self, and the difference is a measurement, not an opinion.
+    if lean:
+        prompt = (f"ROLE NOW: {role}\n\n{LANGUAGE_PIN}\n\nQUESTION: {question}\n"
+                  + (f"\nMATERIAL:\n{str(evidence)[-5000:]}\n" if evidence else "")
+                  + fields + "\n\n" + LANGUAGE_PIN)
 
     t0 = time.time()
     body = {"model": model, "stream": False, "keep_alive": KEEP_ALIVE,
