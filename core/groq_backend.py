@@ -627,6 +627,16 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                     "model": _model_for(backend_label),
                     "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
                     "prompt_head": prompt_text[:80],
+                    # HOW BIG IT WAS (STEP 6b, 10 Sep 2026). Groq answered 413
+                    # Payload Too Large five times between 2 and 10 Sep, on
+                    # three different callers, and not one of those rows can say
+                    # how large the payload was: sha1 identifies a prompt,
+                    # prompt_head shows its first 80 chars, and the LENGTH — the
+                    # one number a 413 is about — was never written down. Two
+                    # numbers, because the limit is bytes and the caller's cap
+                    # is chars, and for Cyrillic prose they differ by ~12%.
+                    "prompt_chars": len(prompt_text or ""),
+                    "prompt_bytes": len((prompt_text or "").encode("utf-8", "ignore")),
                     "reply_chars": len(content_text or ""),
                 }
             # WHY THE ANSWER WAS THAT SHORT, not just how short it was. Where

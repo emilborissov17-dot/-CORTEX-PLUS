@@ -19,26 +19,82 @@ from datetime import datetime, timezone
 BASE = pathlib.Path(__file__).resolve().parent.parent.parent
 MODEL = "qwen3:1.7b"
 
+PROMPT_CHAR_CAP = 60000
+
+
 def _groq(prompt: str) -> dict:
-    """Fallback chain: Groq -> OpenRouter -> Gemini -> local_3b."""
-    import sys, re as _re
+    """Fallback chain: Groq -> OpenRouter -> Gemini -> local_3b.
+
+    ── WHAT THE 10 SEP LOG ACTUALLY SAYS (STEP 6b), AND IT IS NOT WHAT IT SAID ──
+    The night of 10 Sep printed, in this order:
+
+        [LLM] Groq failed (413 Client Error: Payload Too Large) -- next...
+        [STRATEGIST] JSON parse failed: Expecting value: line 1 column 1 (char 0)
+        [STRATEGIST] raw LLM output: "We need to analyze the system and output
+                                      JSON with required fields."
+        [STRATEGIST] LLM error: All LLM backends failed
+
+    The last line was FALSE and it sent the diagnosis down the wrong road. The
+    413 was handled correctly — the chain moved on, and memory/llm_provenance
+    .jsonl records OpenRouter (nvidia/nemotron-3-super-120b) answering `ok` 36
+    seconds later. A backend ANSWERED. What failed was this function's own
+    parser: nemotron is a reasoning model, it thought out loud before the JSON,
+    and the hand-rolled fence-split here saw prose at char 0 and gave up. Then
+    `None` was reported as "All LLM backends failed" — a parsing defect wearing
+    an infrastructure defect's name.
+
+    Two fixes, neither of them new code:
+
+    1. core/llm_json.py already exists and already handles this exact family —
+       reasoning preambles ("We need to produce JSON ..."), <think> blocks,
+       fences, decoy braces in the prose, truncation. It was written to replace
+       four hand-rolled parsers; this was the fifth and it was not migrated.
+    2. The two outcomes are now told apart. "No backend answered" and "a backend
+       answered and its reply did not parse" are different facts and must never
+       again share one sentence.
+    """
+    import sys
     sys.path.insert(0, str(BASE))
+    from core.llm_json import call_llm_json, LLMJSONError
+    from core.groq_backend import AllBackendsFailedError
     try:
-        from core.groq_backend import call_groq
-        text = call_groq(prompt, max_tokens=1500)
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].split("```")[0].strip()
-        try:
-            return json.loads(text)
-        except json.JSONDecodeError as je:
-            print(f"[STRATEGIST] JSON parse failed: {je}")
-            print(f"[STRATEGIST] raw LLM output (first 400 chars): {text[:400]}")
-            return None
+        return call_llm_json(prompt, max_tokens=1500, expect=dict,
+                             label="STRATEGIST")
+    except AllBackendsFailedError as e:
+        print(f"[STRATEGIST] no backend answered: {e}")
+        return {"error": f"no backend answered: {e}"}
+    except LLMJSONError as e:
+        # A model DID answer. Say so, and say what came back.
+        print(f"[STRATEGIST] a backend answered but the reply did not parse: {e}")
+        return {"error": f"reply did not parse as JSON: {e}"}
     except Exception as e:
-        print(f"[STRATEGIST] LLM chain exhausted: {e}")
-        return None
+        print(f"[STRATEGIST] LLM chain raised {type(e).__name__}: {e}")
+        return {"error": f"{type(e).__name__}: {e}"}
+
+
+def _cap(prompt: str, cap: int = PROMPT_CHAR_CAP) -> str:
+    """Cap the prompt with a NAMED marker, never silently.
+
+    Groq answered 413 five times between 2 and 10 Sep, on three different
+    callers (the 25-axis planet analyser, HYPERCLAW_ORCHESTRATOR and this
+    agent), and the size that triggered it is UNRECOVERABLE: llm_provenance
+    rows carry prompt_sha1 and prompt_head, never a length. Measured here on
+    10 Sep this prompt is 22,354 chars / 25,129 bytes / ~6.4k tokens, which
+    would not 413 — so something larger went out on those nights and the log
+    cannot say what. The cap is therefore a ceiling with a visible marker, not
+    a fix for a diagnosed size: if it ever fires, the line says so and names
+    how much was dropped, so a truncated brief can never be read as a complete
+    one.
+    """
+    if len(prompt) <= cap:
+        return prompt
+    dropped = len(prompt) - cap
+    print(f"[STRATEGIST] prompt {len(prompt)} chars exceeds the {cap} cap — "
+          f"dropping {dropped} chars from the evidence block")
+    return (prompt[:cap] +
+            f"\n\n[[TRUNCATED BY cortex_strategist_agent._cap: {dropped} chars "
+            f"of evidence removed to stay under {cap}. This brief is INCOMPLETE "
+            f"— say so in strategist_self_assessment.]]\n")
 EXCLUDE_DIRS = {"venv", "__pycache__", ".git", "OLD", "LEGACY", ".npm-global"}
 
 def _utc_now():
@@ -287,11 +343,15 @@ Return ONLY this JSON:
 
 Be specific. Reference actual filenames. Return ONLY valid JSON."""
 
-    result = _groq(prompt)
+    result = _groq(_cap(prompt))
     if result and "error" not in result:
         print("[STRATEGIST] LLM: OK")
         return result
-    return {"error": "All LLM backends failed"}
+    # The reason travels. Replacing it with a generic sentence here is what put
+    # "All LLM backends failed" in the 10 Sep log over a parse error (STEP 6b).
+    return result if isinstance(result, dict) and result.get("error") else {
+        "error": "no result and no reason — _groq returned "
+                 f"{result!r}, which is itself the defect"}
 
 def save(result):
     out_dir = BASE / "snapshots" / "cortex_strategist"
