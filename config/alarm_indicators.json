@@ -1,0 +1,47 @@
+{
+  "_what_this_is": "Red lines on INDICATORS, not on axes. config/target_config.json carries one band per axis on the axis's primary metric (CO2 level, forest %, ...). The three lines below are on faster, sensor-fed indicators that the OpenClaw task cards measure (core/card_intake.py -> memory/verified_observations.jsonl). They are swept by core/alarm_bands.py sweep_indicators() right after the axis sweep, and a crossing sends immediately, past quiet hours, exactly like an axis band.",
+  "_who_signed": "Emil Borissov, 2026-09-10 (v0). Proposed by the cloud session the same day; Emil answered 'ДА'. Nothing here was chosen by the system.",
+  "_the_rule": "A value reaches a band ONLY from memory/verified_observations.jsonl with verdict ACCEPTED — i.e. a number whose quote the gate found on the live page. Nothing an agent merely said can trip a red line. A band with no accepted observation reports NO_VALUE, never OK.",
+  "_the_principle": "Emil, 2026-09-10: a threshold is the p95 of the indicator's OWN history once it has >= 60 accepted observations; until then it is a human-fixed number or a relative rule, and it says which. Every alarm carries its baseline (the fixed line, or the median and window it was measured against), so a reader can see what 'too much' was measured against.",
+  "_rule_types": {
+    "fixed": "alarm when the accepted value is on the bad side of `threshold` (direction as in target_config).",
+    "relative_median": "alarm when the latest accepted value > `multiplier` x median of the trailing `window_days` of accepted values; RECORD_ONLY (never alarms, only logs) until at least `min_history_days` of history exist."
+  },
+  "indicators": {
+    "co2_annual_increase_ppm": {
+      "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+      "rule": "fixed",
+      "threshold": 3.0,
+      "direction": "lower_better",
+      "unit": "ppm per year",
+      "source": "NOAA GML Mauna Loa annual mean growth rate — https://gml.noaa.gov/ccgg/trends/gr.html",
+      "why": "The RATE, not the level. The level (427 ppm) is already past every safe line and would ring every day; the rate is what changes. > 3.0 ppm/yr is a record-class year (the 2010s averaged ~2.4).",
+      "signed_by": "Emil Borissov",
+      "signed_on": "2026-09-10"
+    },
+    "usgs_m5plus_7d_count": {
+      "axis": "DEEP_TIME_RISKS_REVIEW",
+      "rule": "fixed",
+      "threshold": 50,
+      "direction": "lower_better",
+      "unit": "events per 7 days",
+      "source": "USGS FDSN event count, minmagnitude=5, trailing 7 days — card 5 of 2026-09-10 read 38",
+      "why": "~30/week is the long-run rate (USGS: about 1,500 M5+ per year); 50 in a week is what an aftershock sequence or a swarm looks like, not a normal week. Where 50 sits in the distribution is for the 52-week climatology card to say; the line is replaced by p95 of own history at >= 60 weekly observations.",
+      "signed_by": "Emil Borissov",
+      "signed_on": "2026-09-10"
+    },
+    "gdacs_wildfire_orange_red_7d_count": {
+      "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+      "rule": "relative_median",
+      "multiplier": 2.0,
+      "window_days": 56,
+      "min_history_days": 56,
+      "direction": "lower_better",
+      "unit": "events per 7 days",
+      "source": "GDACS event list, eventlist=WF, alertlevel Orange;Red — COUNT of events in the list over the trailing 7 days (card 4 of 2026-09-10 measured burned area of ONE event; the next card must count the list)",
+      "why": "Wildfire counts are seasonal, so a fixed number is wrong half the year. 2x the trailing 8-week median is 'twice what this season has been doing'. Record-only until 8 weeks of accepted counts exist — an alarm with no baseline is a guess.",
+      "signed_by": "Emil Borissov",
+      "signed_on": "2026-09-10"
+    }
+  }
+}

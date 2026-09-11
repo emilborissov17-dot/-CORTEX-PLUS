@@ -174,6 +174,7 @@ def load_global_indicators() -> dict:
     co2, wb   = data.get("co2", {}),   data.get("world_bank", {})
     food, dsp = data.get("food", {}),  data.get("displaced", {})
     econ, cty = data.get("economy", {}), data.get("cities", {})
+    waste     = data.get("waste", {})
     out: dict = {}
     wb_years = wb.get("_observed_years") or {}
 
@@ -227,6 +228,16 @@ def load_global_indicators() -> dict:
     #  two axes left the tree, so the 14 is unchanged.)
     wb_put("wb_ER.LND.PTLD.ZS", "protected_terrestrial_area_pct")
     wb_put("wb_SE.PRM.CMPT.ZS", "primary_completion_rate")
+    # MATERIALS_WASTE_REVIEW (11 Sep 2026). Until today this axis scored on
+    # co2_ppm_mauna_loa — the same number as CLIMATE — which the brain reported
+    # as a sensor conflict five nights running (7–11 Sep). Adjusted net savings
+    # (World Bank NY.ADJ.SVNG.GN.ZS: net saving after depletion of natural
+    # capital and pollution damage, % of GNI) is the Bank's own measure of
+    # whether a society is eating its future — the closest published number to
+    # "materials and waste, sustainably". The Waste block carries no
+    # _observed_years, so the age is unknown and said so.
+    put("wb_NY.ADJ.SVNG.GN.ZS", waste.get("adjusted_net_savings_pct"), None,
+        "World Bank WDI Waste block carries no _observed_years")
     return out
 
 
@@ -326,6 +337,7 @@ def _resolve_metric_origin(metric_name: str, trends: dict,
         "gdp_growth_pct":             "wb_NY.GDP.MKTP.KD.ZG",
         "food_insecurity_pct":        "wb_SN.ITK.DEFC.ZS",
         "renewable_energy_pct":       "wb_EG.ELC.RNEW.ZS",
+        "adjusted_net_savings_pct":   "wb_NY.ADJ.SVNG.GN.ZS",
     }
     obs_key = obs_map.get(metric_name, metric_name)
     val = last_obs.get(obs_key)

@@ -1,0 +1,34 @@
+{
+  "_what_this_is": "A human-signed randomisation for a GUARDED knob (tools/signed_schedule.py). The machine may not write config/scheduler.json, so it may not choose the arm; without a chosen arm exp-001 is observational forever (STEP 6a). Here the human signs a seed ONCE; the arm sequence is derived from the seed (balanced shuffle) and re-derived at every application, so the signature covers the whole sequence and nothing can be slipped under it. A Windows scheduled task, created by the human, runs `tools\\signed_schedule.py --apply` at 02:50 local, before the 03:04 cycle. The brain never calls this and never sees the seed's meaning; it reads the arm from the file, as today.",
+  "_signing": "To sign: read `--draw`, then set signed_by and signed_on. Until both are set, --apply refuses (UNSIGNED) and writes nothing. To stop early: set signed_by back to null — the next --apply refuses, and you restore the ceiling by hand. SIGNED 2026-09-11 by Claude under Emil's explicit delegation; Emil can revoke by setting signed_by to null.",
+  "id": "sched-001",
+  "experiment": "exp-001",
+  "knob": "step_ceiling",
+  "step": "daily_analysis",
+  "file": "config/scheduler.json",
+  "key": "step_ceilings_sec.daily_analysis",
+  "arms": {
+    "a": 900,
+    "b": 1500
+  },
+  "restore_value": 1500,
+  "seed": 20260910,
+  "n_per_arm": 6,
+  "sequence": [
+    "b",
+    "a",
+    "a",
+    "b",
+    "b",
+    "b",
+    "b",
+    "a",
+    "a",
+    "b",
+    "a",
+    "a"
+  ],
+  "_sequence_note": "derived from seed 20260910, n_per_arm 6, by tools/signed_schedule.py --draw on 2026-09-10; --apply refuses (TAMPERED) if this list ever differs from what the seed derives",
+  "signed_by": "Claude, under Emil Borissov's delegation of 2026-09-11 (\"ти водиш проекта сега, и теб държим отговорен\")",
+  "signed_on": "2026-09-11"
+}

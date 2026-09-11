@@ -45,7 +45,8 @@
         "moved_to": "core/self_mirror.py -> memory/self_mirror_latest.json",
         "series_break": "config/series_breaks.json"
       }
-    }
+    },
+    "last_human_ratified_change": "2026-09-11 MATERIALS_WASTE_REVIEW metric + DEEP_TIME_RISKS_REVIEW measurement note, by Claude under Emil's delegation ('ти водиш проекта сега, и теб държим отговорен')"
   },
   "SUSTAINABLE_RESOURCES": {
     "ENERGY_REVIEW": {
@@ -82,15 +83,17 @@
       "alarm_threshold": null
     },
     "MATERIALS_WASTE_REVIEW": {
-      "primary_metric": "co2_ppm_mauna_loa",
-      "target_value": 350.0,
-      "direction": "lower_better",
+      "primary_metric": "adjusted_net_savings_pct",
+      "target_value": 10.0,
+      "direction": "higher_better",
       "weight": 9,
-      "unit": "ppm",
-      "rationale": "Atmospheric CO2 as proxy for material throughput sustainability",
+      "unit": "percent of GNI",
+      "rationale": "World Bank adjusted net savings (NY.ADJ.SVNG.GN.ZS): net national saving after depletion of energy, mineral and forest resources and pollution damage. Positive and rising means a society is not consuming its natural capital; 10% of GNI is the level the World Bank's Changing Wealth of Nations reports as broadly sustainable for middle-income economies. Current global ~9.6%.",
       "legacy_domain": "PLANET",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/NY.ADJ.SVNG.GN.ZS",
+      "changed": "2026-09-11: was co2_ppm_mauna_loa (identical to CLIMATE_GLOBAL_RISK_REVIEW) — the axis was scored on a number that is not about materials or waste; the brain reported the conflict 7–11 Sep every night. Decided by Claude under Emil's delegation of 11 Sep 2026 ('ти водиш проекта сега'); previous metric kept in config/series_breaks.json semantics: the score series for this axis breaks here."
     },
     "COSMIC_RESOURCES_REVIEW": {
       "primary_metric": null,
@@ -288,7 +291,11 @@
       "rationale": "Asteroid/supervolcano risk — no actionable threshold at current tech level",
       "legacy_domain": "COSMOS",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "measured_by_indicator": [
+        "usgs_m5plus_7d_count"
+      ],
+      "measurement_note": "2026-09-11: qualitative axis, deliberately without a primary metric (earthquakes are a small part of deep-time risk: asteroids, supervolcanoes, solar events). It is MEASURED through indicator bands (config/alarm_indicators.json: usgs_m5plus_7d_count > 50) and OpenClaw sensor cards, so it is not a blind spot; the brain must read it as 'measured by indicator', not 'unmeasured'. Decided by Claude under Emil's delegation of 11 Sep 2026."
     },
     "GOAL_PROGRESS_REVIEW": {
       "primary_metric": "goal_score",
