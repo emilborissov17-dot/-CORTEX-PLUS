@@ -272,6 +272,103 @@ def cmd_score(series: Optional[dict] = None) -> int:
     return n
 
 
+# ── what the learner has learned, for the brain (Emil, 11 Sep 2026) ──────────
+# Until now learner_state.json was written every morning and read by nobody but
+# cmd_predict. The brain planned every night without knowing which indicators it
+# can predict, which it cannot, and what parameter works — the two halves of the
+# system did not see each other. This is the bridge: one dict, one text block.
+
+def learner_report(records: Optional[list] = None, state: Optional[dict] = None) -> dict:
+    """Per indicator: alpha, obs fitted on, and the ledger's own count of world_next
+    outcomes — compared, learner wins, mean learner/baseline error. Never raises."""
+    try:
+        records = pl.read_all() if records is None else records
+    except Exception:
+        records = []
+    state = _state() if state is None else state
+    sealed = {r.get("hash"): r for r in records if r.get("event") == pl.PREDICTION and r.get("target_kind") == KIND}
+    rows: dict = {}
+    for name, st in (state or {}).items():
+        if isinstance(st, dict):
+            rows[name] = {"alpha": st.get("alpha"), "fitted_on": st.get("fitted_on"),
+                          "compared": 0, "wins": 0, "learner_err": 0.0, "baseline_err": 0.0}
+    for o in records:
+        if o.get("event") != pl.OUTCOME:
+            continue
+        s = sealed.get(o.get("ref_hash"))
+        if not s:
+            continue
+        name = o.get("indicator") or s.get("indicator")
+        if not name or o.get("learner_err") is None or o.get("baseline_err") is None:
+            continue
+        if s.get("degenerate") is True or s.get("learner") == s.get("baseline"):
+            continue
+        r = rows.setdefault(name, {"alpha": None, "fitted_on": None, "compared": 0, "wins": 0,
+                                   "learner_err": 0.0, "baseline_err": 0.0})
+        r["compared"] += 1
+        r["wins"] += 1 if o.get("learner_wins") else 0
+        r["learner_err"] += float(o["learner_err"])
+        r["baseline_err"] += float(o["baseline_err"])
+    for name, r in rows.items():
+        c = r["compared"]
+        r["learner_mean_err"] = round(r.pop("learner_err") / c, 4) if c else None
+        r["baseline_mean_err"] = round(r.pop("baseline_err") / c, 4) if c else None
+        r["beats_persistence"] = bool(c and r["learner_mean_err"] < r["baseline_mean_err"] and r["wins"] / c > 0.5)
+    return rows
+
+
+def learner_briefing(rows: Optional[dict] = None, limit: int = 20) -> str:
+    """The text the brain reads: what is predictable, what is not, with what parameter."""
+    rows = learner_report() if rows is None else rows
+    if not rows:
+        return ""
+    # A TIE IS NOT A LOSS, AND AT ZERO ERROR IT IS NOT EVEN A PROBLEM.
+    # 11 Sep 2026, first live briefing: three CO2 indicators read
+    #   learner_err=0.0 persistence_err=0.0 -> LOSES
+    # because beats_persistence needs a STRICT `<`. Both predicted exactly, and
+    # the brain was then told "the learner cannot predict better than yesterday's
+    # value: that is where a new feature, a new source, or a different model is
+    # worth proposing" — a work order to improve three series that are already
+    # perfect. These are the degenerate ones the scoreboard counts apart
+    # (axis_next degenerate 620/748): co2_ppm barely moves day to day, so
+    # persistence and EWMA agree at zero.
+    #
+    # beats_persistence is left alone: a tie is genuinely not a win, and the win
+    # counts elsewhere depend on it. What changes is what the brain is TOLD.
+    def _verdict(r) -> str:
+        if not r["compared"]:
+            return "unscored"
+        if r["beats_persistence"]:
+            return "BEATS"
+        le, pe = r["learner_mean_err"], r["baseline_mean_err"]
+        if le is not None and pe is not None and le == pe:
+            return "TIED (both exact)" if le == 0 else "TIED"
+        return "LOSES"
+
+    won = [n for n, r in rows.items() if r["beats_persistence"]]
+    tied = [n for n, r in rows.items() if _verdict(r).startswith("TIED")]
+    lost = [n for n, r in rows.items() if _verdict(r) == "LOSES"]
+    unjudged = [n for n, r in rows.items() if not r["compared"]]
+    head = (f"learner: {len(rows)} indicators with a fitted parameter; beats persistence on "
+            f"{len(won)}, loses on {len(lost)}")
+    if tied:
+        head += f", ties on {len(tied)}"
+    head += f", {len(unjudged)} not yet scored"
+    L = [head]
+    for n in sorted(rows, key=lambda k: -(rows[k]["compared"] or 0))[:limit]:
+        r = rows[n]
+        L.append(f"  {n}: alpha={r['alpha']} fitted_on={r['fitted_on']} compared={r['compared']} wins={r['wins']} "
+                 f"learner_err={r['learner_mean_err']} persistence_err={r['baseline_mean_err']} "
+                 f"-> {_verdict(r)}")
+    L.append("A LOSES indicator is one the learner cannot yet predict better than yesterday's value: "
+             "that is where a new feature, a new source, or a different model is worth proposing.")
+    if tied:
+        L.append("A TIED indicator is not one of those. Tied at zero means the series barely moves "
+                 "and both predictors are exact — there is nothing there to improve, and proposing "
+                 "a model for it would be work aimed at a solved case.")
+    return "\n".join(L)
+
+
 def _selftest() -> int:
     ok = True
     s = load_series()

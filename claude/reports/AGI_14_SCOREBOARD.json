@@ -1,0 +1,328 @@
+{
+ "rows": [
+  {
+   "point": 1,
+   "name": "Генералност и трансфер",
+   "number": "static world: v2x_rule from energy, kNN MAE 0.1392 vs mean 0.2797 (61/79 closer); moving world: weights learned on A beat persistence on B in 1/12 pairs; all-lags ridge beats own-lags on 0/4 targets",
+   "source": "COUNTRY_BENCH.md (by hand); CROSS_SERIES_BENCH.json (morning step, E1)",
+   "verdict": "SEED"
+  },
+  {
+   "point": 2,
+   "name": "Учи от опит — в параметрите",
+   "number": "world_next scored 5, learner err 0.0522 vs baseline 0.075; 5 fitted parameter(s) in learner_state",
+   "source": "prophecy ledger + memory/learner_state.json",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 3,
+   "name": "Учи от малко примери",
+   "number": "learning curve (ridge on all lags vs persistence): k=10: 0/4, k=20: 0/4, k=40: 0/4, k=80: 0/4",
+   "source": "CROSS_SERIES_BENCH.json few_examples (morning step, E1)",
+   "verdict": "SEED"
+  },
+  {
+   "point": 4,
+   "name": "Нови понятия",
+   "number": "constancy classes: {'MOVING': 9, 'POSITIVE_CONSTANT': 0, 'NEGATIVE_CONSTANT': 0, 'NEGATIVE_TREND': 1, 'UNCLASSIFIED': 6}",
+   "source": "memory/constancy_bands_latest.json (the seed: constellation/constancy)",
+   "verdict": "SEED"
+  },
+  {
+   "point": 5,
+   "name": "Активно търси информация",
+   "number": "verified sensor cards accepted 6, refused 2; daily tier 60 indicators",
+   "source": "memory/verified_observations.jsonl, card_refusals.jsonl, daily_tier.jsonl",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 6,
+   "name": "Планиране + заслуга",
+   "number": "cycle reviews on file 0, failed streak 0; sandbox T6 FAIL / T6A PASS",
+   "source": "memory/brain_cycle_reviews.jsonl; SANDBOX_BENCH.json",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 7,
+   "name": "Калибрирана несигурност",
+   "number": "Brier self_failure 0.2444 vs 0.5388 (54 scored); self_survive scored 0",
+   "source": "prophecy ledger",
+   "verdict": "LIVE"
+  },
+  {
+   "point": 8,
+   "name": "Световен модел",
+   "number": "daily tier 60 indicators, 4 moving; axis_next degenerate 620/748",
+   "source": "memory/daily_tier.jsonl; prophecy ledger",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 9,
+   "name": "Тренировъчен контур",
+   "number": "5 indicators with a fitted parameter; weekly comparison: no comparison yet; corpus 199 rows (no LLM training run)",
+   "source": "memory/learner_progress.jsonl (snapshot each morning), learner_state.json, verified_corpus.manifest.json",
+   "verdict": "SEED"
+  },
+  {
+   "point": 10,
+   "name": "Самомодел",
+   "number": "self_failure 54 scored, learner beats control=True; reviews 0; canon invariants 1",
+   "source": "prophecy ledger; brain_cycle_reviews.jsonl; canon_invariants.json",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 11,
+   "name": "Цели — държи, разлага, ревизира",
+   "number": "targets grounded 0.0 / ungrounded 17.0; signed indicator bands: {'OK': 2, 'ALARM': 0, 'RECORD_ONLY': 1, 'NO_VALUE': 0, 'CONFIG_ERROR': 0}; initiatives active 25 (in progress 0)",
+   "source": "TARGET_GROUNDING.md; alarm_bands_latest.json; data/initiatives",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 12,
+   "name": "Действие → последствие",
+   "number": "sandbox T12 PASS; cards accepted 6; self_survive scored 0",
+   "source": "SANDBOX_BENCH.json; verified_observations.jsonl; ledger",
+   "verdict": "PARTIAL"
+  },
+  {
+   "point": 13,
+   "name": "Разбиране срещу симулация",
+   "number": "counterfactual probe 2026-09-11: 9 cases, TRACKS 9, INSENSITIVE 0, NOISE_DRIVEN 0, WRONG 0, SILENT 0; tracks_rate 1.0",
+   "source": "memory/counterfactual_probe_latest.json (core/counterfactual_probe.py, morning step)",
+   "verdict": "SEED"
+  },
+  {
+   "point": 14,
+   "name": "Съзнание",
+   "number": "—",
+   "source": "open; no test",
+   "verdict": "—"
+  }
+ ],
+ "gathered": {
+  "ledger": {
+   "chain_valid": true,
+   "by_kind": {
+    "self_failure": {
+     "scored": 54,
+     "degenerate": 0,
+     "learner_wins": 42,
+     "compared": 54,
+     "learner_mean_err": 0.2444,
+     "baseline_mean_err": 0.5388,
+     "learner_beats_control": true
+    },
+    "axis_next": {
+     "scored": 748,
+     "degenerate": 620,
+     "learner_wins": 12,
+     "compared": 128,
+     "learner_mean_err": 18.5941,
+     "baseline_mean_err": 8.4399,
+     "learner_beats_control": false
+    },
+    "composer_series": {
+     "scored": 2,
+     "degenerate": 2,
+     "learner_wins": 0,
+     "compared": 0,
+     "learner_mean_err": null,
+     "baseline_mean_err": null,
+     "learner_beats_control": false
+    },
+    "world_next": {
+     "scored": 5,
+     "degenerate": 1,
+     "learner_wins": 1,
+     "compared": 4,
+     "learner_mean_err": 0.0522,
+     "baseline_mean_err": 0.075,
+     "learner_beats_control": false
+    },
+    "self_duration": {
+     "scored": 1,
+     "degenerate": 0,
+     "learner_wins": 1,
+     "compared": 1,
+     "learner_mean_err": 194.6,
+     "baseline_mean_err": 1316.2,
+     "learner_beats_control": true
+    },
+    "self_degraded": {
+     "scored": 1,
+     "degenerate": 0,
+     "learner_wins": 1,
+     "compared": 1,
+     "learner_mean_err": 0.1975,
+     "baseline_mean_err": 0.5562,
+     "learner_beats_control": true
+    },
+    "self_step_fail": {
+     "scored": 1,
+     "degenerate": 0,
+     "learner_wins": 0,
+     "compared": 1,
+     "learner_mean_err": 0.605,
+     "baseline_mean_err": 0.2178,
+     "learner_beats_control": false
+    }
+   }
+  },
+  "learner_state": {
+   "CLIMATE_GLOBAL_RISK_REVIEW::forecast_max_temp_7d": {
+    "alpha": 0.7,
+    "fitted_on": 48,
+    "updated": "2026-09-11T06:57:53.269135+00:00"
+   },
+   "CLIMATE_GLOBAL_RISK_REVIEW::co2_annual_increase": {
+    "alpha": 0.9,
+    "fitted_on": 94,
+    "updated": "2026-09-11T06:57:53.271458+00:00"
+   },
+   "CLIMATE_GLOBAL_RISK_REVIEW::co2_ppm_year_ago": {
+    "alpha": 0.9,
+    "fitted_on": 94,
+    "updated": "2026-09-11T06:57:53.273588+00:00"
+   },
+   "CLIMATE_GLOBAL_RISK_REVIEW::climate_risk_score": {
+    "alpha": 0.9,
+    "fitted_on": 48,
+    "updated": "2026-09-11T06:57:53.274299+00:00"
+   },
+   "CLIMATE_GLOBAL_RISK_REVIEW::co2_ppm_current": {
+    "alpha": 0.9,
+    "fitted_on": 94,
+    "updated": "2026-09-11T06:57:53.276379+00:00"
+   }
+  },
+  "corpus": {
+   "built_utc": "2026-09-11T09:00:04.673353+00:00",
+   "rows": 199,
+   "by_task": {
+    "sensor_card": 7,
+    "predict:self_failure": 54,
+    "predict:axis_next": 128,
+    "predict:composer_series": 2,
+    "predict:world_next": 5,
+    "predict:self_duration": 1,
+    "predict:self_degraded": 1,
+    "predict:self_step_fail": 1
+   },
+   "sha256": "ad0e302f77c1ebe58ee3b5426fb67c489f609d8217dbae10eed20065c24d01cc",
+   "sources": {
+    "verified_observations": "memory\\verified_observations.jsonl",
+    "prophecy_ledger": "experiments\\prophecy\\prophecy_ledger.jsonl"
+   },
+   "rule": "only gate-ACCEPTED/NULL_WITH_REASON cards and SCORED non-degenerate predictions; nothing asserted by a model"
+  },
+  "canon_invariants": 1,
+  "initiatives": {
+   "active": 25,
+   "in_progress": 0
+  },
+  "daily_tier": {
+   "indicators": 60,
+   "moving": 4
+  },
+  "constancy": {
+   "MOVING": 9,
+   "POSITIVE_CONSTANT": 0,
+   "NEGATIVE_CONSTANT": 0,
+   "NEGATIVE_TREND": 1,
+   "UNCLASSIFIED": 6
+  },
+  "verified": {
+   "accepted": 6,
+   "refused": 2
+  },
+  "grounding": {
+   "ungrounded": 17.0,
+   "grounded": 0.0
+  },
+  "sandbox": {
+   "T8": "FAIL",
+   "T6": "FAIL",
+   "T12": "PASS",
+   "T6A": "PASS",
+   "rule": "pre-registered in bench.py docstring, 10 Sep 2026, before the first run"
+  },
+  "country_bench": {
+   "v2x_rule": {
+    "baseline": 0.2797,
+    "knn": 0.1392,
+    "knn_closer": 61,
+    "n": 79
+   },
+   "v2x_corr_inv": {
+    "baseline": 0.2739,
+    "knn": 0.1339,
+    "knn_closer": 60,
+    "n": 79
+   },
+   "v2x_freexp_altinf": {
+    "baseline": 0.2676,
+    "knn": 0.1838,
+    "knn_closer": 53,
+    "n": 79
+   }
+  },
+  "probe": {
+   "ts": "2026-09-11T13:37:53+00:00",
+   "n": 9,
+   "answered": 9,
+   "counts": {
+    "TRACKS": 9,
+    "INSENSITIVE": 0,
+    "NOISE_DRIVEN": 0,
+    "WRONG": 0,
+    "SILENT": 0
+   },
+   "skipped_no_counterfactual": [
+    "target:WATER_REVIEW",
+    "target:INEQUALITY_POVERTY_REVIEW",
+    "target:GOVERNANCE_INSTITUTIONS_REVIEW",
+    "target:GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+    "target:EDUCATION_CULTURE_REVIEW",
+    "target:COGNITION_LEARNING_REVIEW"
+   ],
+   "tracks_rate": 1.0,
+   "reading": "the verdict follows the number and only the number"
+  },
+  "probe_by_model": {},
+  "cross": {
+   "targets": 4,
+   "ridge_all_beats_persistence": 0,
+   "ridge_all_beats_ridge_own": 0,
+   "ewma_beats_persistence": 3,
+   "transfer_pairs": 12,
+   "transfer_beats_persistence": 1,
+   "few_examples": {
+    "10": 0,
+    "20": 0,
+    "40": 0,
+    "80": 0
+   }
+  },
+  "alarm_indicators": {
+   "OK": 2,
+   "ALARM": 0,
+   "RECORD_ONLY": 1,
+   "NO_VALUE": 0,
+   "CONFIG_ERROR": 0
+  },
+  "learner_progress": {
+   "status": "no comparison yet",
+   "latest": {
+    "ts": "2026-09-11T16:59:34Z",
+    "scored": 5,
+    "compared": 4,
+    "wins": 1,
+    "learner_mean_err": 0.0522,
+    "baseline_mean_err": 0.075,
+    "indicators_learned": 5,
+    "margin": -0.0228
+   },
+   "snapshots": 2
+  }
+ }
+}

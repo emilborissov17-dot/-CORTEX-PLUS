@@ -151,6 +151,42 @@ OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, вери�
 
 GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
 
+# KIMI, BACK IN THE CHAIN, AND ON A ROAD THAT IS OPEN (11 Sep 2026, Emil: "why is Kimi
+# not part of the system?"). Checked before writing, not assumed: Groq SHUT DOWN
+# moonshotai/kimi-k2-instruct-0905 on 15 Apr 2026 (console.groq.com/docs/deprecations,
+# replacement named: openai/gpt-oss-120b — the model already first here), and free Kimi
+# left OpenRouter earlier. NVIDIA's NIM API serves the Kimi K2 line on its free developer
+# tier, OpenAI-compatible, at integrate.api.nvidia.com. The key is the human's to create
+# (NVIDIA_API_KEY in .env, "nvapi-..."); until it exists this leg is NOT in the chain at
+# all — no failure rows, no cooldowns, nothing pretending. The model id is not hard-coded:
+# NIM renames (k2-instruct -> k2.5 -> k2.6), so the first call lists /v1/models and takes
+# the newest Kimi it serves, and provenance records exactly which one answered.
+NVIDIA_API_URL    = "https://integrate.api.nvidia.com/v1/chat/completions"
+NVIDIA_MODELS_URL = "https://integrate.api.nvidia.com/v1/models"
+#   k3 FIRST, AND IT WAS MISSING (11 Sep 2026). This tuple opened at "kimi-k2.6"
+#   and had no k3 entry at all, so _nvidia_model returned kimi-k2.6 while its own
+#   docstring promised "the newest Kimi the NIM account serves". Measured against
+#   the live /v1/models on this key: the account serves BOTH
+#       ['moonshotai/kimi-k2.6', 'moonshotai/kimi-k3']
+#   and the preference list picked the older one. The generic fallback below
+#   (sorted(kimis)[-1]) would have chosen k3 correctly, but it is never reached
+#   while an earlier pref matches — a list meant to express "newest first" that
+#   silently pinned the system to last month's model.
+#   The rule for the next rename: add the new id at the FRONT, or delete the list
+#   and let the sorted fallback decide.
+NVIDIA_KIMI_PREFS = ("kimi-k3", "kimi-k3-instruct", "kimi-k2.6", "kimi-k2-6",
+                     "kimi-k2.5", "kimi-k2-5", "kimi-k2-thinking", "kimi-k2-instruct")
+_NVIDIA_MODEL: str | None = None
+
+# THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads
+# memory/llm_provenance.jsonl (success, truncation, 429s, latency) and the counterfactual
+# probe's per-model verdict, and writes memory/backend_order_measured.json. This file
+# only READS it, only accepts known keys, and falls back to the default below if the file
+# is absent, stale, or malformed. The default is the pre-11-Sep order with Kimi second.
+DEFAULT_ORDER = ("groq", "nvidia", "openrouter", "gemini")
+MEASURED_ORDER = Path(__file__).resolve().parents[1] / "memory" / "backend_order_measured.json"
+ORDER_MAX_AGE_DAYS = 8
+
 # Ollama константите и _call_ollama/_get_ollama_model са премахнати (2026-07-13).
 # Ollama излезе от веригата на 2026-07-04 (виж docstring-а горе) — оттогава кодът
 # беше мъртъв: нищо не го викаше, но URL-ите стояха и подвеждаха, че локален
@@ -360,6 +396,73 @@ def _call_openrouter(prompt: str, max_tokens: int):
     return content, {"finish_reason": choice.get("finish_reason")}
 
 
+def _nvidia_model(key: str) -> str:
+    """The newest Kimi the NIM account serves, resolved once per process."""
+    global _NVIDIA_MODEL
+    if _NVIDIA_MODEL:
+        return _NVIDIA_MODEL
+    r = requests.get(NVIDIA_MODELS_URL, headers={"Authorization": f"Bearer {key}"}, timeout=(10, 30))
+    r.raise_for_status()
+    ids = [str(m.get("id") or "") for m in (r.json().get("data") or [])]
+    for pref in NVIDIA_KIMI_PREFS:
+        hit = [i for i in ids if i.lower().endswith(pref) or f"/{pref}" in i.lower()]
+        if hit:
+            _NVIDIA_MODEL = sorted(hit)[-1]
+            return _NVIDIA_MODEL
+    kimis = sorted(i for i in ids if "kimi" in i.lower())
+    if not kimis:
+        raise ValueError(f"NVIDIA NIM lists no Kimi model ({len(ids)} models listed)")
+    _NVIDIA_MODEL = kimis[-1]
+    return _NVIDIA_MODEL
+
+
+def _call_nvidia_kimi(prompt: str, max_tokens: int):
+    key = _load_key("NVIDIA_API_KEY")
+    if not key:
+        raise ValueError("NVIDIA_API_KEY не е намерен")
+    model = _nvidia_model(key)
+    print(f"  [LLM] NVIDIA {model}...")
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": _system_msg()},
+            {"role": "user",   "content": prompt},
+        ],
+        "max_tokens": max_tokens,
+        "temperature": 0.3,
+    }
+    r = requests.post(NVIDIA_API_URL, json=payload, timeout=(10, 120),
+                      headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                               "Accept": "application/json"})
+    if r.status_code == 429:
+        _set_cooldown("nvidia")
+        raise RuntimeError("NVIDIA NIM rate limit")
+    r.raise_for_status()
+    d = r.json()
+    choice = (d.get("choices") or [{}])[0]
+    content = ((choice.get("message") or {}).get("content") or "")
+    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
+    usage = d.get("usage") or {}
+    return content, {"finish_reason": choice.get("finish_reason"),
+                     "prompt_tokens": usage.get("prompt_tokens"), "total_tokens": usage.get("total_tokens")}
+
+
+def ordered_backend_keys(path: Path | None = None, now: datetime | None = None) -> list[str]:
+    """The chain order: measured if a fresh, well-formed league file exists, else DEFAULT_ORDER.
+    Every known key appears exactly once; unknown keys are ignored. Never raises."""
+    order = list(DEFAULT_ORDER)
+    try:
+        d = json.loads((path or MEASURED_ORDER).read_text(encoding="utf-8"))
+        ts = datetime.fromisoformat(str(d.get("ts", "")).replace("Z", "+00:00"))
+        age = ((now or datetime.now(timezone.utc)) - ts).days
+        got = [k for k in (d.get("order") or []) if k in DEFAULT_ORDER]
+        if age <= ORDER_MAX_AGE_DAYS and got:
+            order = got + [k for k in DEFAULT_ORDER if k not in got]
+    except Exception:
+        pass
+    return order
+
+
 def _call_gemini(prompt: str, max_tokens: int):
     key = _load_key("GEMINI_API_KEY")
     if not key:
@@ -532,11 +635,15 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     При изчерпване на всички → вдига AllBackendsFailedError (subclass на
     RuntimeError, съвместима с всички съществуващи except-клаузи).
     """
-    backends = [
-        ("Groq",       "groq",       _call_groq),
-        ("OpenRouter", "openrouter", _call_openrouter),
-        ("Gemini",     "gemini",     _call_gemini),
-    ]
+    _by_key = {
+        "groq":       ("Groq",        "groq",       _call_groq),
+        "nvidia":     ("NVIDIA-Kimi", "nvidia",     _call_nvidia_kimi),
+        "openrouter": ("OpenRouter",  "openrouter", _call_openrouter),
+        "gemini":     ("Gemini",      "gemini",     _call_gemini),
+    }
+    # A leg without its key is not in the chain (no failure rows for a door never opened).
+    _has_nvidia = bool(_load_key("NVIDIA_API_KEY"))
+    backends = [_by_key[k] for k in ordered_backend_keys() if k in _by_key and (k != "nvidia" or _has_nvidia)]
 
     def _model_for(backend_label: str) -> str:
         """Which model actually answered — for provenance.
@@ -554,6 +661,8 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             return GROQ_MODEL
         if backend_label == "OpenRouter":
             return OPENROUTER_MODEL
+        if backend_label == "NVIDIA-Kimi":
+            return _NVIDIA_MODEL or "nvidia:kimi (unresolved)"
         if backend_label == "Gemini":
             try:
                 return GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
@@ -647,7 +756,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             # — an absent key is honest, a zero would not be.
             _row["outcome"] = "ok"
             if meta:
-                for _k in ("finish_reason", "thoughts_tokens", "answer_tokens",
+                for _k in ("finish_reason", "latency_s", "thoughts_tokens", "answer_tokens",
                            "prompt_tokens", "total_tokens", "budget",
                            "used_reasoning_fallback",
                            # the failure half (see _log_failure)
@@ -707,10 +816,12 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                 print(f"  [LLM] {label} in cooldown -- skipping")
                 continue
             try:
+                _t0 = time.monotonic()
                 result, meta = fn(prompt, max_tokens)
                 if result and result.strip():
                     _clear_cooldown(key)  # healthy again → reset its escalation
                     meta = dict(meta or {})
+                    meta["latency_s"] = round(time.monotonic() - _t0, 2)
                     meta["backend"] = label
                     meta["model"] = _model_for(label)
                     if meta.get("finish_reason") == "length":
@@ -814,7 +925,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
     print(f"  [LLM] DEGRADED: {res.reason}")
 
     raise AllBackendsFailedError(
-        f"All LLM backends failed (Groq/OpenRouter/Gemini + local). "
+        f"All LLM backends failed ({'/'.join(b[0] for b in backends) or 'cloud skipped'} + local). "
         f"Last error: {last_error}"
     )
 
@@ -844,4 +955,4 @@ class GroqBackend:
         return call_groq(str(input_data))
 
     def call(self, prompt, max_tokens=1024):
-        return call_groq(prompt, max_tokens)
+        return call_groq(prompt, max_tokens)

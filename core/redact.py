@@ -92,6 +92,14 @@ PATTERNS: tuple[tuple[str, re.Pattern], ...] = (
     # alphanumerics, so the openai_key rule matched and would have rewritten news
     # text. A real key is a standalone token — preceded by whitespace, a quote, an
     # `=` or the start of the string — never by a letter of a longer word.
+    # NVIDIA NIM — ADDED 11 Sep 2026, and the gap is the lesson. This module was
+    # written because a Gemini error echoed ?key=... into three tracked logs. On
+    # 11 Sep the chain gained an NVIDIA leg (NVIDIA_API_KEY, "nvapi-..."), and a
+    # check of the pending diff showed a real-shaped nvapi- key passing straight
+    # through redact() untouched: the net knew every provider the system used
+    # YESTERDAY. A scrubber is only as current as its list, so adding a backend
+    # now means adding its key shape in the same breath.
+    ("nvidia_api_key", re.compile(r"(?<![0-9A-Za-z_])nvapi-[0-9A-Za-z_\-]{20,}")),
     ("groq_key", re.compile(r"(?<![0-9A-Za-z_])gsk_[0-9A-Za-z]{20,}")),
     ("openrouter_key", re.compile(r"(?<![0-9A-Za-z_])sk-or-v1-[0-9A-Za-z]{20,}")),
     ("anthropic_key", re.compile(r"(?<![0-9A-Za-z_])sk-ant-[0-9A-Za-z_\-]{20,}")),

@@ -655,6 +655,16 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
 
 # ─────────────────── МОЗЪКЪТ РЪКОВОДИ ЦИКЪЛА (закон, т.3) ────────────────────
 
+def _learner_briefing() -> str:
+    """experiments/prophecy/world_forecast.learner_briefing(), loaded by path (the
+    experiments tree is not on the brain's import path). Empty string if unavailable."""
+    import importlib.util as _ilu
+    spec = _ilu.spec_from_file_location("world_forecast", BASE / "experiments" / "prophecy" / "world_forecast.py")
+    mod = _ilu.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.learner_briefing() or ""
+
+
 def _state_for_briefing() -> str:
     """Каквото системата знае за себе си в момента — суровo, без мое резюме."""
     bits = []
@@ -677,6 +687,34 @@ def _state_for_briefing() -> str:
                      f"in `changed_because` what you will do DIFFERENTLY tonight and why that "
                      f"will make the success test come true this time.")
         bits.append(head)
+    # #59 (Emil, 11 Sep 2026): a negative constant is non-progress. The axes that
+    # stand far from the goal and do not move are named to the brain every night,
+    # before the state files, as the first place to look for a solution.
+    try:
+        from core.alarm_bands import stagnant_axes as _stag, CONSTANCY_LOG as _clog
+        st = _stag()
+        if st:
+            bits.append("--- STAGNATION: non-progress, search for a solution here first ---\n" +
+                        "\n".join(f"{r['axis']}: {r.get('why')}" for r in st[:12]))
+        # the base and the trend of every axis, from the years behind it (Emil, 11 Sep 2026)
+        rows = (json.loads(_clog.read_text(encoding="utf-8")).get("rows") or [])
+        lines = []
+        for r in rows:
+            tr = r.get("trend") or {}
+            if tr.get("verdict") and tr.get("first") and tr.get("last"):
+                lines.append(f"{r['axis']}: {tr['first'][0]} {tr['first'][1]:g} -> {tr['last'][0]} {tr['last'][1]:g}, "
+                             f"{tr['verdict']} {tr.get('slope_per_year', 0):+g}/yr, class {r.get('class')}")
+        if lines:
+            bits.append("--- AXIS BASE AND TREND (annual series, oldest -> last) ---\n" + "\n".join(lines[:24]))
+    except Exception:
+        pass
+    # what the LEARNER has learned (Emil, 11 Sep 2026): the two halves see each other
+    try:
+        lb = _learner_briefing()
+        if lb:
+            bits.append("--- WHAT THE LEARNER HAS LEARNED (memory/learner_state.json + ledger world_next) ---\n" + lb)
+    except Exception:
+        pass
     # 15 авг 2026, стъпка 4. Kimi защити преместването на плана след одобренията с
     # довода „human_approvals преди плана е КОНСТРЕЙНТ, не опция". Проверих дали
     # това е вярно в кода, вместо да го приема: НЕ беше. Планът четеше

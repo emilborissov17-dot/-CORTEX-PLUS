@@ -235,3 +235,57 @@ def test_the_selftest_passes_and_exits_zero():
                        cwd=str(BASE), capture_output=True, text=True, timeout=300)
     assert r.returncode == 0, f"exit {r.returncode}:\n{r.stdout}\n{r.stderr}"
     assert "RESULT: OK" in r.stdout
+
+
+# ── a new backend means a new key shape (11 Sep 2026) ────────────────────────
+
+NVIDIA = "nvapi-" + "k" * 64
+
+
+def test_an_nvidia_nim_key_is_removed():
+    """THE GAP, found by checking a pending diff rather than by thinking about it.
+    The chain gained an NVIDIA leg on 11 Sep and redact() had no pattern for it, so
+    a real-shaped nvapi- key passed through untouched. This module exists because a
+    provider error echoed a key into three tracked logs; it is only as current as
+    its list."""
+    clean, hits = R.redact(f"NIM error for {NVIDIA} on integrate.api.nvidia.com")
+    assert NVIDIA not in clean
+    assert hits.get("nvidia_api_key") == 1
+    assert "integrate.api.nvidia.com" in clean, "the endpoint must survive"
+
+
+def test_the_nvidia_prefix_alone_is_not_a_key():
+    """NEGATIVE CONTROL, and it is the live case: core/groq_backend.py carries the
+    comment `(NVIDIA_API_KEY in .env, "nvapi-...")`. Redacting documentation that
+    merely names the prefix would rewrite source comments."""
+    doc = '# (NVIDIA_API_KEY in .env, "nvapi-...")'
+    assert R.redact(doc)[0] == doc
+
+
+def test_every_backend_the_chain_calls_has_a_pattern():
+    """THE NET BEHIND THE INSTRUCTION. Adding a backend without adding its key
+    shape is what happened on 11 Sep. This fails when a *_API_KEY that
+    groq_backend loads has no corresponding rule here, so the next provider
+    cannot be added silently."""
+    import pathlib
+    import re as _re
+    src = (BASE / "core" / "groq_backend.py").read_text(encoding="utf-8", errors="replace")
+    loaded = set(_re.findall(r'_load_key\(\s*["\']([A-Z0-9_]+)["\']', src))
+    # env var -> the pattern name that covers it
+    covered = {
+        "GROQ_API_KEY": "groq_key",
+        "OPENROUTER_API_KEY": "openrouter_key",
+        "GEMINI_API_KEY": "google_api_key",
+        "GOOGLE_API_KEY": "google_api_key",
+        "NVIDIA_API_KEY": "nvidia_api_key",
+        "CEREBRAS_API_KEY": "cerebras_key",
+        "ANTHROPIC_API_KEY": "anthropic_key",
+        "OPENAI_API_KEY": "openai_key",
+    }
+    names = {n for n, _ in R.PATTERNS}
+    missing = sorted(k for k in loaded
+                     if covered.get(k) is None or covered[k] not in names)
+    assert not missing, (
+        f"core/groq_backend.py loads {missing} and core/redact.py has no pattern "
+        f"for them. A backend added without its key shape is a key that reaches a "
+        f"log: add the rule in the same commit as the backend.")

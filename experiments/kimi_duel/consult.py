@@ -154,11 +154,55 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 
+# 11 SEPT. 2026 — THE GROQ ROAD ABOVE IS CLOSED, AND I SAID IT WAS OPEN. Groq shut down
+# moonshotai/kimi-k2-instruct-0905 on 15 Apr 2026 (console.groq.com/docs/deprecations),
+# five months before it was added here as "the first opponent". The tests stubbed the HTTP
+# call, so nothing ever proved the model was alive; every real consult since 10 Sep reached
+# Kimi's slot, got an error, and fell to a non-Kimi opponent (labelled NOT KIMI — the label
+# held; the claim in the comment did not). The open road: NVIDIA NIM, free developer tier,
+# the Kimi K2 line, same key as the cycle's NVIDIA-Kimi leg (core/groq_backend.py). It is
+# asked FIRST when NVIDIA_API_KEY exists; the Groq path stays only so its failure is
+# recorded in `tried` rather than silently removed.
+def _ask_nvidia_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
+    import requests
+    import core.groq_backend as gb
+    key = gb._load_key("NVIDIA_API_KEY")
+    if not key:
+        tried.append("nvidia: NVIDIA_API_KEY missing")
+        return None
+    t0 = time.monotonic()
+    try:
+        model = gb._nvidia_model(key)
+        r = requests.post(gb.NVIDIA_API_URL, timeout=300,
+                          headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                          json={"model": model, "max_tokens": max_tokens,
+                                "messages": [{"role": "system", "content": SYSTEM},
+                                             {"role": "user", "content": brief}]})
+    except Exception as e:  # noqa: BLE001
+        tried.append(f"nvidia: {type(e).__name__}: {str(e)[:120]}")
+        return None
+    if r.status_code != 200:
+        tried.append(f"nvidia:{model}: HTTP {r.status_code} {r.text[:120]}")
+        return None
+    d = r.json()
+    txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
+    if not txt:
+        tried.append(f"nvidia:{model}: празен отговор")
+        return None
+    served = str(d.get("model") or model)
+    return {"ok": True, "text": txt, "backend": f"nvidia:{served}", "latency_s": round(time.monotonic() - t0, 1),
+            "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried,
+            "is_kimi": "kimi" in served.lower()}
+
+
 def ask_kimi(brief: str, max_tokens: int = 4000) -> dict:
     """Безплатният Kimi. Пробва слъговете по ред; 429 значи 'зает', не 'счупен'."""
     import requests
     import core.groq_backend as gb
     tried = []
+    via_nvidia = _ask_nvidia_kimi(brief, max_tokens, tried)
+    if via_nvidia:
+        return via_nvidia
     via_groq = _ask_groq_kimi(brief, max_tokens, tried)
     if via_groq:
         return via_groq

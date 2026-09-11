@@ -38,6 +38,25 @@ def _oracle(question, evidence, schema):
 def test_mirror_crosses_the_line_and_never_sits_on_it():
     assert CP.mirror(2.23, 3.0) == 3.77 and CP.mirror(3.77, 3.0) == 2.23
     assert CP.mirror(3.0, 3.0) != 3.0
+
+
+def test_mirror_stays_inside_the_unit_domain():
+    assert CP.mirror(8.5, 2.5, "percent of population") == 1.25          # not -3.5 %
+    assert CP.mirror(10.4, 0.0, "percent of population") is None         # nothing below 0 %
+    assert CP.mirror(73.7, 100.0, "percent of population") is None       # nothing above 100 %
+    assert CP.mirror(27.8, 80.0, "percent of total energy") == 90.0      # 132 % clipped to (80+100)/2
+    assert CP.mirror(38.0, 50.0, "events per 7 days") == 62.0
+    assert CP.mirror(0.44, 1.0, "index 0-1") is None                     # an index of 1.0: nothing above it
+    assert CP.mirror(0.44, 0.8, "") == 0.9                               # unitless, line <= 1: (0.8+1)/2
+    assert CP.mirror(29429000.0, 1000000.0, "people") == 500000.0        # not -27 million refugees
+    assert CP.mirror(-2.0, 1.0, "anomaly") == 4.0                        # signed quantities stay unbounded
+    assert CP.variants(dict(CASE, value=10.4, line=0.0, unit="percent")) == {}
+
+
+def test_cases_without_a_counterfactual_are_skipped_and_named(tmp_path):
+    s = CP.run(ask=_oracle, case_list=[CASE, dict(CASE, case="target:P", value=10.4, line=0.0, unit="percent")],
+               log=tmp_path / "l.jsonl", latest=tmp_path / "s.json")
+    assert s["n"] == 1 and s["skipped_no_counterfactual"] == ["target:P"]
     assert CP.truth(2.23, 3.0, "lower_better") == CP.UNDER and CP.truth(3.77, 3.0, "lower_better") == CP.OVER
     assert CP.truth(40.0, 80.0, "higher_better") == CP.OVER
 
@@ -95,6 +114,18 @@ def test_cases_need_a_value(tmp_path):
                              "Y": {"target_value": 5.0, "direction": "lower_better"}}), encoding="utf-8")
     tc = CP.target_cases(targets_path=t, values={"X": 40.0})
     assert [c["case"] for c in tc] == ["target:X"]
+    # the real file is nested by group (the first live run produced 0 target cases because of this)
+    t.write_text(json.dumps({"_meta": {}, "SAFETY": {"Z": {"target_value": 1.0, "direction": "higher_better"},
+                                                     "W": {"target_value": 1.0, "direction": "stable_better"}}}), encoding="utf-8")
+    tc = CP.target_cases(targets_path=t, values={"Z": 0.4, "W": 0.4})
+    assert [c["case"] for c in tc] == ["target:Z"]
+
+
+def test_the_model_that_answered_is_recorded(tmp_path):
+    ask = lambda q, e, sc: dict(_oracle(q, e, sc), _model="qwen3:8b")  # noqa: E731
+    CP.run(ask=ask, case_list=[CASE], log=tmp_path / "l.jsonl", latest=tmp_path / "s.json")
+    row = json.loads((tmp_path / "l.jsonl").read_text(encoding="utf-8").splitlines()[0])
+    assert row["model"] == ["qwen3:8b"] and row["reason"]["base"] == "read"
 
 
 def test_log_and_summary_are_written(tmp_path):
@@ -103,3 +134,20 @@ def test_log_and_summary_are_written(tmp_path):
     rows = [json.loads(l) for l in log.read_text(encoding="utf-8").splitlines()]
     assert rows[0]["outcome"] == CP.TRACKS and rows[0]["flipped_value"] == 3.77 and rows[0]["verdict"]["flipped"] == "OVER"
     assert json.loads(latest.read_text(encoding="utf-8"))["n"] == 1
+
+
+def test_compare_runs_the_same_cases_through_several_minds(tmp_path, monkeypatch):
+    monkeypatch.setattr(CP, "askers", lambda names: {"reader": _oracle, "parrot": lambda q, e, sc: {"verdict": "UNDER"}})
+    r = CP.compare(["reader", "parrot"], case_list=[CASE, HIGH], out_path=tmp_path / "by_model.json", now="t")
+    assert r["by_model"]["reader"]["tracks_rate"] == 1.0 and r["by_model"]["parrot"]["counts"]["INSENSITIVE"] == 2
+    assert r["by_model"]["reader"]["per_case"] == {"indicator:x": "TRACKS", "target:y": "TRACKS"}
+    assert json.loads((tmp_path / "by_model.json").read_text(encoding="utf-8"))["cases"] == 2
+
+
+def test_a_groq_model_outside_the_free_list_is_refused_before_any_call():
+    import pytest
+    with pytest.raises(ValueError, match="GROQ_FREE_MODELS"):
+        CP.groq_asker("some/paid-model")
+    with pytest.raises(ValueError, match="unknown asker"):
+        CP.askers(["gpt-anything"])
+

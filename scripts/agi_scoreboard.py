@@ -35,6 +35,8 @@ for p in (REPO, REPO / "experiments" / "prophecy"):
 
 REPORT = REPO / "claude" / "reports" / "AGI_14_SCOREBOARD.md"
 REPORT_JSON = REPO / "claude" / "reports" / "AGI_14_SCOREBOARD.json"
+PROGRESS = REPO / "memory" / "learner_progress.jsonl"     # one row per morning: the learner's margin over persistence
+WEEK = 7
 
 POINTS = {
     1: "Генералност и трансфер", 2: "Учи от опит — в параметрите", 3: "Учи от малко примери",
@@ -133,8 +135,58 @@ def gather() -> dict:
     g["sandbox"] = (sbx.get("summary") or {}).get("verdict", {})
     g["country_bench"] = country_bench(REPO / "claude" / "reports" / "COUNTRY_BENCH.md")
     g["probe"] = _json(REPO / "memory" / "counterfactual_probe_latest.json", {}) or {}
+    g["probe_by_model"] = (_json(REPO / "memory" / "counterfactual_probe_by_model.json", {}) or {}).get("by_model") or {}
+    g["cross"] = (_json(REPO / "claude" / "reports" / "CROSS_SERIES_BENCH.json", {}) or {}).get("verdict") or {}
     g["alarm_indicators"] = (_json(REPO / "memory" / "alarm_bands_latest.json", {}) or {}).get("indicators", {}).get("counts", {})
     return g
+
+
+def snapshot_learner(g: dict, path=None, now=None) -> dict:
+    """Append today's world_next margin (learner_mean_err - baseline_mean_err) so point 9 can
+    say whether the learner IMPROVED since a week ago, not just that a file exists."""
+    wn = _kind(g, "world_next")
+    row = {"ts": now or datetime.now(timezone.utc).isoformat()[:19] + "Z",
+           "scored": wn.get("scored", 0), "compared": wn.get("compared", 0), "wins": wn.get("learner_wins", 0),
+           "learner_mean_err": wn.get("learner_mean_err"), "baseline_mean_err": wn.get("baseline_mean_err"),
+           "indicators_learned": len(g.get("learner_state") or {})}
+    le, be = row["learner_mean_err"], row["baseline_mean_err"]
+    row["margin"] = round(le - be, 4) if le is not None and be is not None else None
+    try:
+        p = path or PROGRESS
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with p.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row) + "\n")
+    except OSError:
+        pass
+    return row
+
+
+def learner_progress(path=None, now=None, week=WEEK) -> dict:
+    """Latest snapshot vs the newest one at least `week` days older. Negative margin = learner
+    better than persistence; a margin that FELL is improvement."""
+    rows = _jsonl(path or PROGRESS)
+    if not rows:
+        return {"status": "no snapshots yet"}
+    latest = rows[-1]
+    try:
+        t_latest = datetime.fromisoformat(latest["ts"].replace("Z", "+00:00"))
+    except Exception:
+        return {"status": "unreadable snapshot"}
+    older = None
+    for r in rows[:-1]:
+        try:
+            t = datetime.fromisoformat(r["ts"].replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if (t_latest - t).days >= week:
+            older = r
+    if older is None or latest.get("margin") is None or older.get("margin") is None:
+        return {"status": "no comparison yet", "latest": latest, "snapshots": len(rows)}
+    delta = round(latest["margin"] - older["margin"], 4)
+    return {"status": "IMPROVED" if delta < 0 else ("WORSENED" if delta > 0 else "UNCHANGED"),
+            "delta_margin": delta, "margin_now": latest["margin"], "margin_then": older["margin"],
+            "then": older["ts"][:10], "now": latest["ts"][:10], "compared_now": latest.get("compared"),
+            "compared_then": older.get("compared")}
 
 
 def _kind(g, k):
@@ -150,17 +202,27 @@ def rows(g: dict) -> list[dict]:
 
     cb = g["country_bench"]; rule = cb.get("v2x_rule") or {}
     beats = bool(rule) and rule["knn"] < rule["baseline"] and (rule.get("knn_closer") or 0) > (rule.get("n") or 0) / 2
-    add(1, f"V-Dem rule of law from energy, {len(cb)} targets; v2x_rule kNN MAE {rule.get('knn')} vs mean {rule.get('baseline')} "
-           f"({rule.get('knn_closer')}/{rule.get('n')} closer)" if rule else NONE,
-        "claude/reports/COUNTRY_BENCH.md (leave-one-country-out; run by hand, not a step)",
-        SEED if beats else (PARTIAL if rule else NONE))
+    cx = g["cross"]
+    static = (f"static world: v2x_rule from energy, kNN MAE {rule.get('knn')} vs mean {rule.get('baseline')} "
+              f"({rule.get('knn_closer')}/{rule.get('n')} closer)") if rule else "static world: no bench"
+    moving = (f"moving world: weights learned on A beat persistence on B in {cx.get('transfer_beats_persistence')}/{cx.get('transfer_pairs')} pairs; "
+              f"all-lags ridge beats own-lags on {cx.get('ridge_all_beats_ridge_own')}/{cx.get('targets')} targets") if cx else "moving world: bench not run yet"
+    tp, tb = cx.get("transfer_pairs") or 0, cx.get("transfer_beats_persistence") or 0
+    add(1, f"{static}; {moving}" if (rule or cx) else NONE,
+        "COUNTRY_BENCH.md (by hand); CROSS_SERIES_BENCH.json (morning step, E1)",
+        PARTIAL if tp >= 6 and tb > tp / 2 else (SEED if (beats or cx) else NONE))
     wn = _kind(g, "world_next"); ls = g["learner_state"]
     n_alpha = len(ls.get("alpha", ls)) if isinstance(ls, dict) else 0
     add(2, f"world_next scored {wn.get('scored', 0)}, learner err {wn.get('learner_mean_err')} vs baseline {wn.get('baseline_mean_err')}; "
            f"{n_alpha} fitted parameter(s) in learner_state" if wn or n_alpha else NONE,
         "prophecy ledger + memory/learner_state.json",
         LIVE if wn.get("learner_beats_control") and wn.get("compared", 0) >= 30 else (PARTIAL if wn.get("scored") else NONE))
-    add(3, NONE, "no step, no bench", NONE)
+    fe = cx.get("few_examples") or {}
+    n_t = cx.get("targets") or 0
+    add(3, f"learning curve (ridge on all lags vs persistence): " + ", ".join(f"k={k}: {fe.get(k)}/{n_t}" for k in ("10", "20", "40", "80"))
+        if fe else NONE,
+        "CROSS_SERIES_BENCH.json few_examples (morning step, E1)",
+        PARTIAL if n_t and (fe.get("20") or 0) > n_t / 2 else (SEED if fe else NONE))
     cc = g["constancy"]
     add(4, f"constancy classes: {cc}" if cc else NONE, "memory/constancy_bands_latest.json (the seed: constellation/constancy)", SEED if cc else NONE)
     dt = g["daily_tier"]
@@ -184,9 +246,19 @@ def rows(g: dict) -> list[dict]:
         "prophecy ledger", LIVE if sf.get("learner_beats_control") else (PARTIAL if sf else NONE))
     add(8, f"daily tier {dt['indicators']} indicators, {dt['moving']} moving; axis_next degenerate {_kind(g, 'axis_next').get('degenerate')}/{_kind(g, 'axis_next').get('scored')}",
         "memory/daily_tier.jsonl; prophecy ledger", PARTIAL if dt["indicators"] else NONE)
-    cp = g["corpus"]
-    add(9, f"verified corpus {cp.get('rows', 0)} rows {cp.get('by_task')}" if cp else NONE,
-        "training/verified_corpus.manifest.json (no training run yet)", SEED if cp.get("rows") else NONE)
+    cp = g["corpus"]; lp = g.get("learner_progress") or {}
+    n_learned = len(ls) if isinstance(ls, dict) else 0
+    if lp.get("status") in ("IMPROVED", "WORSENED", "UNCHANGED"):
+        txt9 = (f"learner margin over persistence {lp['margin_then']} ({lp['then']}) -> {lp['margin_now']} ({lp['now']}): "
+                f"{lp['status']} ({lp['delta_margin']:+g}); {n_learned} indicators learned; corpus {cp.get('rows', 0)} rows")
+        v9 = PARTIAL if lp["status"] == "IMPROVED" and (lp.get("compared_now") or 0) >= 30 else SEED
+    elif n_learned or cp.get("rows"):
+        txt9 = (f"{n_learned} indicators with a fitted parameter; weekly comparison: {lp.get('status')}; "
+                f"corpus {cp.get('rows', 0)} rows (no LLM training run)")
+        v9 = SEED
+    else:
+        txt9, v9 = NONE, NONE
+    add(9, txt9, "memory/learner_progress.jsonl (snapshot each morning), learner_state.json, verified_corpus.manifest.json", v9)
     add(10, f"self_failure {sf.get('scored', 0)} scored, learner beats control={sf.get('learner_beats_control')}; "
             f"reviews {len(rv)}; canon invariants {g['canon_invariants']}",
         "prophecy ledger; brain_cycle_reviews.jsonl; canon_invariants.json",
@@ -199,9 +271,11 @@ def rows(g: dict) -> list[dict]:
         "SANDBOX_BENCH.json; verified_observations.jsonl; ledger",
         PARTIAL if sx.get("T12") == "PASS" or g["verified"]["accepted"] else NONE)
     pr = g["probe"]; pc = pr.get("counts") or {}
+    bm = g.get("probe_by_model") or {}
+    by_model = "; by model: " + ", ".join(f"{k} {v.get('tracks_rate')}" for k, v in bm.items()) if bm else ""
     add(13, f"counterfactual probe {pr.get('ts', '')[:10]}: {pr.get('n')} cases, TRACKS {pc.get('TRACKS')}, "
             f"INSENSITIVE {pc.get('INSENSITIVE')}, NOISE_DRIVEN {pc.get('NOISE_DRIVEN')}, WRONG {pc.get('WRONG')}, "
-            f"SILENT {pc.get('SILENT')}; tracks_rate {pr.get('tracks_rate')}" if pr.get("n") else NONE,
+            f"SILENT {pc.get('SILENT')}; tracks_rate {pr.get('tracks_rate')}{by_model}" if pr.get("n") else NONE,
         "memory/counterfactual_probe_latest.json (core/counterfactual_probe.py, morning step)",
         (PARTIAL if (pr.get("answered") or 0) >= 10 and (pr.get("tracks_rate") or 0) >= 0.8 else SEED) if pr.get("n") else NONE)
     add(14, NONE, "open; no test", NONE)
@@ -223,6 +297,9 @@ def markdown(r: list[dict], g: dict) -> str:
 
 if __name__ == "__main__":
     g = gather()
+    if "--write" in sys.argv:
+        snapshot_learner(g)
+    g["learner_progress"] = learner_progress()
     r = rows(g)
     md = markdown(r, g)
     if "--write" in sys.argv:

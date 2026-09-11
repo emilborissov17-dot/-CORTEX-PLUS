@@ -75,11 +75,35 @@ def truth(value: float, line: float, direction: str) -> str:
     raise ValueError(f"unusable direction {direction!r}")
 
 
-def mirror(value: float, line: float) -> float:
-    """The same distance from the line, on the other side (never exactly on it)."""
+def bounds(unit: str, value: float | None = None, line: float | None = None) -> tuple[float | None, float | None]:
+    """The domain a counterfactual must stay inside: percentages 0..100; indices and
+    scores 0..1 when the line itself is <= 1; any quantity observed non-negative with a
+    non-negative line stays >= 0 (counts, ppm, people, rates). A flipped value outside
+    the domain would test the brain on a number that cannot exist (-3.5 % undernourished,
+    -27 million refugees)."""
+    u = (unit or "").lower()
+    if "percent" in u or "%" in u:
+        return 0.0, 100.0
+    lo = 0.0 if (value is None or value >= 0) and (line is None or line >= 0) else None
+    if any(w in u for w in ("index", "score")) or (line is not None and 0 < line <= 1.0 and value is not None and 0 <= value <= 1.0):
+        return lo, 1.0
+    return lo, None
+
+
+def mirror(value: float, line: float, unit: str = "") -> float | None:
+    """The same distance from the line, on the other side (never exactly on it), kept
+    inside the unit's domain; None when no value on the other side exists there
+    (e.g. a higher_better line of 100 %: nothing above it)."""
+    lo, hi = bounds(unit, value, line)
     m = line + (line - value)
     if m == line:
         m = line + (abs(line) * 0.1 or 1.0)
+    if lo is not None and m < lo:
+        m = (lo + line) / 2 if line > lo else None
+    if m is not None and hi is not None and m > hi:
+        m = (line + hi) / 2 if line < hi else None
+    if m is None or m == line:
+        return None
     return round(m, 4)
 
 
@@ -113,10 +137,21 @@ def target_cases(targets_path=None, values=None) -> list[dict]:
     except Exception:
         return []
     values = ab.values() if values is None else values
-    out = []
-    for axis, spec in cfg.items():
-        if axis.startswith("_") or not isinstance(spec, dict):
+    # target_config is nested: {group: {axis: spec}}. The first live run (11 Sep) iterated the
+    # groups, found no target_value, and produced 0 target cases; alarm_bands.axes() flattens
+    # it the same way this does.
+    flat = {}
+    for key, spec in cfg.items():
+        if key.startswith("_") or not isinstance(spec, dict):
             continue
+        if "target_value" in spec or "primary_metric" in spec:
+            flat[key] = spec
+        else:
+            for axis, sub in spec.items():
+                if isinstance(sub, dict) and not axis.startswith("_"):
+                    flat[axis] = sub
+    out = []
+    for axis, spec in flat.items():
         line, direction = _num(spec.get("target_value")), spec.get("direction")
         value = _num(values.get(axis))
         if line is None or value is None or direction not in ("lower_better", "higher_better"):
@@ -154,7 +189,9 @@ def _shift_date(date: str, days: int = 1) -> str:
 def variants(c: dict) -> dict:
     """base / flipped / noise: material + truth for each."""
     v, line, d = c["value"], c["line"], c["direction"]
-    flipped = mirror(v, line)
+    flipped = mirror(v, line, c.get("unit", ""))
+    if flipped is None:
+        return {}
     return {"base": {"material": material(c, v, c["date"]), "truth": truth(v, line, d), "value": v},
             "flipped": {"material": material(c, flipped, c["date"]), "truth": truth(flipped, line, d), "value": flipped},
             "noise": {"material": material(c, v, _shift_date(c["date"] or "2026-01-02")), "truth": truth(v, line, d), "value": v}}
@@ -186,10 +223,131 @@ def outcome(base: str | None, flipped: str | None, noise: str | None, vs: dict) 
 # ── asking ───────────────────────────────────────────────────────────────────
 
 def brain_ask(question: str, evidence: str, schema: dict):
-    """Default asker: the brain, fast model, nothing remembered (a probe is not a verdict)."""
+    """Default asker: the brain's MAIN model (the one that judges the cycle — the fast 3B
+    model is known to fail numeric barriers, and a probe of it would test the wrong brain),
+    nothing remembered (a probe is not a verdict). The answer carries `_model`."""
+    from core import brain
+    return brain.think("probe: read two numbers", question, evidence=evidence, schema=schema,
+                       kind="counterfactual_probe", remember_it=False, fast=False, temperature=0.0)
+
+
+def brain_fast_ask(question: str, evidence: str, schema: dict):
+    """The brain's FAST model — the one used for per-indicator judgements dozens of times a night."""
     from core import brain
     return brain.think("probe: read two numbers", question, evidence=evidence, schema=schema,
                        kind="counterfactual_probe", remember_it=False, fast=True, temperature=0.0)
+
+
+def groq_asker(model: str):
+    """An asker on GroqCloud's free plan. Only models in consult.GROQ_FREE_MODELS are allowed
+    (Law of the brain, point 4: free or local only) — anything else raises before a call."""
+    import importlib.util as _ilu
+    spec = _ilu.spec_from_file_location("consult", BASE / "experiments" / "kimi_duel" / "consult.py")
+    consult = _ilu.module_from_spec(spec)
+    spec.loader.exec_module(consult)
+    free = set(getattr(consult, "GROQ_FREE_MODELS", set()))
+    try:                      # the cycle's own workhorse runs on the same free key every night
+        import core.groq_backend as _gb
+        free.add(_gb.GROQ_MODEL)
+    except Exception:
+        pass
+    if model not in free:
+        raise ValueError(f"{model!r} is not in GROQ_FREE_MODELS {sorted(free)} — refused, nothing called")
+
+    def ask(question: str, evidence: str, schema: dict):
+        import requests
+        import core.groq_backend as gb
+        key = gb._load_key("GROQ_API_KEY")
+        if not key:
+            return None
+        fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
+        prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
+        r = requests.post(consult.GROQ_URL, timeout=60,
+                          headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                          json={"model": model, "temperature": 0, "max_tokens": 200,
+                                "response_format": {"type": "json_object"},
+                                "messages": [{"role": "user", "content": prompt}]})
+        if r.status_code != 200:
+            return None
+        d = r.json()
+        txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
+        try:
+            out = json.loads(txt)
+        except ValueError:
+            return None
+        if isinstance(out, dict):
+            out["_model"] = f"groq:{d.get('model') or model}"
+        return out
+    return ask
+
+
+def nvidia_kimi_ask(question: str, evidence: str, schema: dict):
+    """Kimi K2 on NVIDIA NIM's free developer tier (the Groq road closed 15 Apr 2026)."""
+    import requests
+    import core.groq_backend as gb
+    key = gb._load_key("NVIDIA_API_KEY")
+    if not key:
+        return None
+    model = gb._nvidia_model(key)
+    fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
+    prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
+    r = requests.post(gb.NVIDIA_API_URL, timeout=120,
+                      headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                      json={"model": model, "temperature": 0, "max_tokens": 300,
+                            "messages": [{"role": "user", "content": prompt}]})
+    if r.status_code != 200:
+        return None
+    d = r.json()
+    txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
+    txt = txt.split("</think>")[-1].strip()
+    if txt.startswith("```"):
+        txt = txt.strip("`").split("\n", 1)[-1]
+    try:
+        out = json.loads(txt[txt.find("{"): txt.rfind("}") + 1])
+    except ValueError:
+        return None
+    if isinstance(out, dict):
+        out["_model"] = f"nvidia:{d.get('model') or model}"
+    return out
+
+
+def askers(names: list[str]) -> dict:
+    """name -> ask function. 'brain' (main local model), 'brain-fast', 'nvidia-kimi', 'groq:<model>'."""
+    out = {}
+    for n in names:
+        if n == "brain":
+            out[n] = brain_ask
+        elif n == "brain-fast":
+            out[n] = brain_fast_ask
+        elif n == "nvidia-kimi":
+            out[n] = nvidia_kimi_ask
+        elif n.startswith("groq:"):
+            out[n] = groq_asker(n.split(":", 1)[1])
+        else:
+            raise ValueError(f"unknown asker {n!r}")
+    return out
+
+
+def compare(names: list[str], case_list=None, out_path=None, now=None) -> dict:
+    """The same cases, several minds. Does reading the number scale with the model?
+    Writes memory/counterfactual_probe_by_model.json; the nightly summary (LATEST) is not touched."""
+    import tempfile
+    case_list = cases() if case_list is None else case_list
+    res = {"ts": now or _now(), "cases": len(case_list), "by_model": {}}
+    for name, ask in askers(names).items():
+        with tempfile.TemporaryDirectory() as d:
+            s = run(ask=ask, case_list=case_list, log=Path(d) / "l.jsonl", latest=Path(d) / "s.json", now=res["ts"])
+            rows = [json.loads(l) for l in (Path(d) / "l.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+        res["by_model"][name] = {k: s[k] for k in ("n", "answered", "counts", "tracks_rate")}
+        res["by_model"][name]["models_seen"] = sorted({m for r in rows for m in r.get("model", [])})
+        res["by_model"][name]["per_case"] = {r["case"]: r["outcome"] for r in rows}
+    try:
+        p = out_path or (BASE / "memory" / "counterfactual_probe_by_model.json")
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    except OSError as exc:
+        res["write_error"] = f"{type(exc).__name__}: {exc}"
+    return res
 
 
 def run(ask=None, case_list=None, log=None, latest=None, now=None) -> dict:
@@ -198,21 +356,31 @@ def run(ask=None, case_list=None, log=None, latest=None, now=None) -> dict:
     log, latest = log or LOG, latest or LATEST
     ts = now or _now()
     rows = []
+    skipped = []
     for c in case_list:
         vs = variants(c)
-        got = {}
+        if not vs:
+            skipped.append(c["case"])          # no counterfactual exists inside the unit's domain
+            continue
+        got, models, reasons = {}, set(), {}
         for name in ("base", "flipped", "noise"):
             try:
-                got[name] = normalise(ask(QUESTION, vs[name]["material"], SCHEMA))
+                ans = ask(QUESTION, vs[name]["material"], SCHEMA)
+                got[name] = normalise(ans)
+                if isinstance(ans, dict):
+                    if ans.get("_model"):
+                        models.add(str(ans["_model"]))
+                    reasons[name] = str(ans.get("reason") or "")[:160]
             except Exception:
                 got[name] = None
         o = outcome(got["base"], got["flipped"], got["noise"], vs)
         rows.append({"ts": ts, "case": c["case"], "source": c["source"], "value": c["value"], "line": c["line"],
                      "direction": c["direction"], "flipped_value": vs["flipped"]["value"],
-                     "truth": {k: vs[k]["truth"] for k in vs}, "verdict": got, "outcome": o})
+                     "truth": {k: vs[k]["truth"] for k in vs}, "verdict": got, "reason": reasons,
+                     "model": sorted(models), "outcome": o})
     counts = {k: sum(1 for r in rows if r["outcome"] == k) for k in (TRACKS, INSENSITIVE, NOISE_DRIVEN, WRONG, SILENT)}
     answered = len(rows) - counts[SILENT]
-    summary = {"ts": ts, "n": len(rows), "answered": answered, "counts": counts,
+    summary = {"ts": ts, "n": len(rows), "answered": answered, "counts": counts, "skipped_no_counterfactual": skipped,
                "tracks_rate": round(counts[TRACKS] / answered, 3) if answered else None,
                "reading": ("the verdict follows the number and only the number" if answered and counts[TRACKS] == answered
                            else "no case answered" if not answered
@@ -233,9 +401,19 @@ if __name__ == "__main__":
     if "--dry" in sys.argv:
         for c in cases():
             vs = variants(c)
+            if not vs:
+                print(f"{c['case']}: {c['value']} vs {c['line']} ({c['direction']}) — no counterfactual inside the domain, skipped")
+                continue
             print(f"{c['case']}: {c['value']} vs {c['line']} ({c['direction']}) truth {vs['base']['truth']}, "
                   f"flipped {vs['flipped']['value']} -> {vs['flipped']['truth']}")
         sys.exit(0)
+    if "--compare" in sys.argv:
+        # e.g.  --compare brain brain-fast groq:openai/gpt-oss-120b nvidia-kimi
+        names = [a for a in sys.argv[sys.argv.index("--compare") + 1:] if not a.startswith("--")] or ["brain", "brain-fast"]
+        r = compare(names)
+        for n, m in r["by_model"].items():
+            print(f"[PROBE] {n:45s} n={m['n']} answered={m['answered']} tracks_rate={m['tracks_rate']} {m['counts']} models={m['models_seen']}")
+        sys.exit(0 if r["cases"] else 2)
     s = run()
     print(json.dumps(s, ensure_ascii=False, indent=1))
     sys.exit(0 if s["n"] else 2)
