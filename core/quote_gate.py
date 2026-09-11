@@ -31,6 +31,20 @@ VERDICTS
   FETCH_FAILED       could not fetch (network, 4xx/5xx) — NOT an acceptance,
                      NOT a refusal of the agent: left open, retry later
   MALFORMED          missing fields / value not a number / quote empty
+  RECOUNT_MISMATCH   aggregate card: the gate recounted the page and got a
+                     different number
+
+TWO THINGS THE FIRST VERSION GOT WRONG (11 Sep 2026, cards A/B/C)
+  * A number token inside a timestamp counted as a number: value 0 was
+    ACCEPTED because "2026-08-14T00:00:00" contains "00". Numbers are now
+    STANDALONE tokens — not glued to '-', ':', 'T', '/', letters or digits.
+  * A COUNT of items in a list (card B: GDACS Orange/Red wildfires in the
+    last 7 days) is never printed on any page, so no quote can carry it.
+    For such an AGGREGATE card the record names its window (`window_utc`)
+    and the gate RECOUNTS the page itself: every JSON object carrying a
+    `fromdate` inside the window. The quote must still be on the page; the
+    value must equal the gate's own count. An agent that cannot be checked
+    by substring is checked by recomputation, never by trust.
 
 The gate never modifies the record and never guesses a value. It is pure:
 `judge(record, page_text)` takes the text; `check(record)` fetches then judges.
@@ -44,12 +58,40 @@ import sys
 from typing import Callable, Optional
 
 REQUIRED = ("axis", "key", "value", "unit", "url", "quote")
-_NUM = re.compile(r"-?\d+(?:[.,]\d+)?")
+# standalone numbers only: "2.23" in "2025 2.23 0.11" yes; "00" in "T00:00:00" no
+_NUM = re.compile(r"(?<![\w:./\-])-?\d+(?:[.,]\d+)?(?![\w:./\-])")
 _WS = re.compile(r"\s+")
+_DATE_KEYS = ("fromdate", "from_date", "date", "time", "starttime")
 
 
 def _norm(s: str) -> str:
     return _WS.sub(" ", s).strip()
+
+
+def _walk(node):
+    if isinstance(node, dict):
+        yield node
+        for v in node.values():
+            yield from _walk(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _walk(v)
+
+
+def recount(page_text: str, window_utc: str, date_key: str = "fromdate") -> int | None:
+    """Count JSON objects whose `date_key` falls inside "start/end" (ISO, UTC).
+    None if the page is not JSON or the window is unreadable."""
+    try:
+        data = json.loads(page_text)
+        start, end = [x.strip().replace("Z", "") for x in str(window_utc).split("/", 1)]
+    except (ValueError, TypeError):
+        return None
+    n = 0
+    for obj in _walk(data):
+        d = obj.get(date_key)
+        if isinstance(d, str) and start <= d.replace("Z", "")[:len(start)] <= end:
+            n += 1
+    return n
 
 
 def judge(record: dict, page_text: Optional[str]) -> dict:
@@ -73,6 +115,16 @@ def judge(record: dict, page_text: Optional[str]) -> dict:
     # agent quotes '"count": 38' and the server serves '"count":38' (card 5, 10 Sep)
     if quote not in page and _WS.sub("", quote) not in _WS.sub("", page):
         return {"verdict": "QUOTE_NOT_ON_PAGE", "quote": quote, "url": record["url"]}
+    if record.get("window_utc"):
+        # AGGREGATE: the value is a count over the page, not a number on it
+        n = recount(page_text, record["window_utc"], record.get("date_key", "fromdate"))
+        if n is None:
+            return {"verdict": "MALFORMED", "missing": ["window_utc:page-not-json-or-window-unreadable"]}
+        if n != int(value):
+            return {"verdict": "RECOUNT_MISMATCH", "value": value, "gate_count": n,
+                    "window_utc": record["window_utc"]}
+        return {"verdict": "ACCEPTED", "value": value, "gate_count": n, "aggregate": True,
+                "quote": quote, "url": record["url"]}
     nums = [float(n.replace(",", ".")) for n in _NUM.findall(quote)]
     if not any(abs(n - value) < 1e-9 for n in nums):
         return {"verdict": "VALUE_MISMATCH", "value": value, "numbers_in_quote": nums}
@@ -87,20 +139,15 @@ def _fetch(url: str, timeout: int = 30) -> Optional[str]:
             return None
         text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", r.text, flags=re.S | re.I)
         text = re.sub(r"<[^>]+>", " ", text)
-        # ENTITIES ARE DECODED, AND THE GATE'S FIRST LIVE RUN IS WHY (10 Sep 2026).
-        # Card 1 — the NOAA CO2 reading this module's docstring was written about —
-        # was REFUSED as QUOTE_NOT_ON_PAGE on the first real run. It was on the
-        # page. monthly.html serves:
-        #     September 09:&nbsp;&nbsp; 426.62 ppm
-        # and the agent, reading the rendered page, quoted "September 09:   426.62
-        # ppm". Stripping tags leaves the literal text "&nbsp;", so neither the
-        # whitespace-collapsed nor the whitespace-free comparison could ever match,
-        # and a TRUE reading would have been filed against the sensor's invention
-        # rate — poisoning the one number this module exists to produce, and
-        # starving the corpus of a row the world had confirmed.
-        # This is precisely the failure the docstring names: a gate that invents
-        # refusals is worse than no gate. html.unescape turns &nbsp; into U+00A0,
-        # which _norm's \s+ then collapses like any other space.
+        # ENTITIES ARE DECODED — RESTORED 11 Sep 2026 after this line was lost.
+        # The 10 Sep live run refused a TRUE reading: monthly.html serves
+        # "September 09:&nbsp;&nbsp; 426.62 ppm" and the agent, reading the
+        # RENDERED page, quoted spaces. Tag-stripping leaves the literal
+        # "&nbsp;", so no whitespace normalisation could ever match, and a
+        # correct observation would have been filed against the sensor's
+        # invention rate. The uploaded version of this file dropped the fix and
+        # its three tests with it; both are back, and the tests are what make
+        # dropping it again visible.
         return html.unescape(text)
     except Exception:  # noqa: BLE001 — a failed fetch is a named verdict, never an exception
         return None

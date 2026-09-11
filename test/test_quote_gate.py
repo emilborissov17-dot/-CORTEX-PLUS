@@ -19,8 +19,16 @@ GOOD = {"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value
         "url": "https://gml.noaa.gov/ccgg/trends/monthly.html", "quote": "September 08:   426.57 ppm"}
 
 
-def test_the_real_case_from_10_sep_is_refused_by_name():
-    """The sensor's actual answer: a plausible next-day row that was not on the page."""
+def test_a_quote_absent_from_THIS_page_is_refused_by_name():
+    """The refusal path, on a fixture where the row genuinely is absent.
+
+    RENAMED 11 Sep. This was called "the real case from 10 Sep" and described the
+    sensor's answer as "a plausible next-day row that was not on the page". On the
+    REAL page the row WAS there — Emil opened it, and the live fetch below proves
+    it: monthly.html serves `September 09:&nbsp;&nbsp; 426.62 ppm`. The test is
+    good (PAGE above deliberately stops at September 08, so refusing is correct);
+    only its story was wrong, and a wrong story in a test name outlives the run
+    that produced it."""
     rec = dict(GOOD, value=426.62, quote="September 09:   426.62 ppm", observed_date="2026-09-09")
     v = qg.judge(rec, TEXT)
     assert v["verdict"] == "QUOTE_NOT_ON_PAGE"
@@ -58,6 +66,45 @@ def test_mutation_the_substring_check_is_load_bearing(monkeypatch):
 def test_happy_path_whitespace_insensitive():
     assert qg.judge(GOOD, TEXT)["verdict"] == "ACCEPTED"
     assert qg.check(GOOD, fetch=lambda u: TEXT)["verdict"] == "ACCEPTED"
+
+
+# ── 11 Sep 2026: cards A/B/C exposed two holes ────────────────────────────
+
+GDACS_PAGE = ('{"features":[{"properties":{"country":"Belgium","fromdate":"2026-08-14T00:00:00","todate":"2026-08-17T00:00:00"}},'
+              '{"properties":{"country":"X","fromdate":"2026-09-05T00:00:00","todate":"2026-09-06T00:00:00"}}]}')
+CARD_B = {"axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW", "key": "gdacs_wildfire_orange_red_7d_count", "value": 0, "unit": "events per 7 days",
+          "url": "u", "quote": '"Belgium","fromdate":"2026-08-14T00:00:00","todate":"2026-08-17T00:00:00"',
+          "window_utc": "2026-09-04T06:56:00Z/2026-09-11T06:56:00Z"}
+
+
+def test_a_zero_inside_a_timestamp_is_not_the_number_zero():
+    """The hole: value 0 was ACCEPTED because "T00:00:00" contains "00"."""
+    rec = dict(CARD_B); rec.pop("window_utc")
+    v = qg.judge(rec, GDACS_PAGE)
+    assert v["verdict"] == "VALUE_MISMATCH" and v["numbers_in_quote"] == []
+
+
+def test_standalone_numbers_still_parse_from_tables_and_json():
+    assert qg._NUM.findall("2025 2.23 0.11") == ["2025", "2.23", "0.11"]
+    assert qg._NUM.findall('"count": 2026') == ["2026"]
+    assert qg._NUM.findall("2026-08-14T00:00:00") == []
+
+
+def test_an_aggregate_card_is_recounted_by_the_gate_not_trusted():
+    assert qg.judge(CARD_B, GDACS_PAGE)["verdict"] == "RECOUNT_MISMATCH"          # page has 1 in window, agent said 0
+    assert qg.judge(dict(CARD_B, value=1), GDACS_PAGE)["verdict"] == "ACCEPTED"
+    only_old = GDACS_PAGE.replace(',{"properties":{"country":"X","fromdate":"2026-09-05T00:00:00","todate":"2026-09-06T00:00:00"}}', "")
+    assert qg.judge(CARD_B, only_old)["verdict"] == "ACCEPTED"
+
+
+def test_an_aggregate_card_on_a_non_json_page_is_malformed_not_accepted():
+    html = "<pre>" + CARD_B["quote"] + "</pre> not json"        # quote present, page not parseable -> nothing to recount
+    assert qg.judge(CARD_B, html)["verdict"] == "MALFORMED"
+
+
+def test_mutation_the_recount_is_load_bearing(monkeypatch):
+    monkeypatch.setattr(qg, "recount", lambda page, window, date_key="fromdate": int(CARD_B["value"]))
+    assert qg.judge(CARD_B, GDACS_PAGE)["verdict"] == "ACCEPTED"     # neutered recount lets the wrong count through
 
 
 # ── the gate's own first live run, and the false refusal it produced ──────────
