@@ -259,4 +259,13 @@ memory/steps/
 memory/phase_debriefs/
 !memory/existence_ledger.jsonl
 !memory/first_bet/
+# The gate's audit trail. Emil, 11 Sep: it stays tracked, and the condition was
+# a scrubber check first — run, and it is clean (4 rows, 3,027 chars, no
+# credential pattern, byte-identical after redact()). Kept for the same reason as
+# the ledgers: every row is a verdict core/quote_gate.py reached against a live
+# page, it is what training/verified_corpus.py builds from, and a claim about the
+# sensor's invention rate has to be checkable later. Its other half,
+# memory/card_refusals.jsonl, is NOT tracked — say so and it can be, on the same
+# condition.
+!memory/verified_observations.jsonl
 snapshots/master/*_latest.json
