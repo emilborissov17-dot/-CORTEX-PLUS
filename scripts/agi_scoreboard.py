@@ -224,7 +224,12 @@ def rows(g: dict) -> list[dict]:
         "CROSS_SERIES_BENCH.json few_examples (morning step, E1)",
         PARTIAL if n_t and (fe.get("20") or 0) > n_t / 2 else (SEED if fe else NONE))
     cc = g["constancy"]
-    add(4, f"constancy classes: {cc}" if cc else NONE, "memory/constancy_bands_latest.json (the seed: constellation/constancy)", SEED if cc else NONE)
+    cfound, csurv = cx.get("concepts_found"), cx.get("concepts_survive")
+    txt4 = "; ".join(x for x in (
+        f"E2 concepts on the daily world: found {cfound}, surviving out of sample {csurv}" if cfound is not None else "",
+        f"constancy classes: {cc}" if cc else "") if x) or NONE
+    add(4, txt4, "CROSS_SERIES_BENCH.json (E2, morning step); memory/constancy_bands_latest.json",
+        PARTIAL if (csurv or 0) >= 1 else (SEED if (cfound or cc) else NONE))
     dt = g["daily_tier"]
     add(5, f"verified sensor cards accepted {g['verified']['accepted']}, refused {g['verified']['refused']}; daily tier {dt['indicators']} indicators",
         "memory/verified_observations.jsonl, card_refusals.jsonl, daily_tier.jsonl",
@@ -242,10 +247,16 @@ def rows(g: dict) -> list[dict]:
         PARTIAL if rv or sx else NONE)
     sf = _kind(g, "self_failure"); sv = _kind(g, "self_survive")
     add(7, f"Brier self_failure {sf.get('learner_mean_err')} vs {sf.get('baseline_mean_err')} ({sf.get('scored', 0)} scored); "
-           f"self_survive scored {sv.get('scored', 0)}",
-        "prophecy ledger", LIVE if sf.get("learner_beats_control") else (PARTIAL if sf else NONE))
-    add(8, f"daily tier {dt['indicators']} indicators, {dt['moving']} moving; axis_next degenerate {_kind(g, 'axis_next').get('degenerate')}/{_kind(g, 'axis_next').get('scored')}",
-        "memory/daily_tier.jsonl; prophecy ledger", PARTIAL if dt["indicators"] else NONE)
+           f"self_survive scored {sv.get('scored', 0)}"
+           + (f"; world {int((cx.get('conformal_level') or 0.8) * 100)}% intervals covered {cx.get('conformal_coverage')}"
+              if cx.get("conformal_coverage") is not None else ""),
+        "prophecy ledger; CROSS_SERIES_BENCH.json (E4)", LIVE if sf.get("learner_beats_control") else (PARTIAL if sf else NONE))
+    dw = cx.get("direction_wins")
+    add(8, f"daily tier {dt['indicators']} indicators, {dt['moving']} moving; axis_next degenerate {_kind(g, 'axis_next').get('degenerate')}/{_kind(g, 'axis_next').get('scored')}"
+           + (f"; direction learned (beats honest baselines by 2 SE) in {len(dw)}/{cx.get('direction_cells')} target×horizon cells"
+              + (f": {', '.join(dw)}" if dw else "") if dw is not None else ""),
+        "memory/daily_tier.jsonl; prophecy ledger; CROSS_SERIES_BENCH.json (stage 1: direction)",
+        (LIVE if len(dw or []) >= 2 else PARTIAL) if dt["indicators"] else NONE)
     cp = g["corpus"]; lp = g.get("learner_progress") or {}
     n_learned = len(ls) if isinstance(ls, dict) else 0
     if lp.get("status") in ("IMPROVED", "WORSENED", "UNCHANGED"):

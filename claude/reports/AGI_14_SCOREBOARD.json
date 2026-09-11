@@ -3,7 +3,7 @@
   {
    "point": 1,
    "name": "Генералност и трансфер",
-   "number": "static world: v2x_rule from energy, kNN MAE 0.1392 vs mean 0.2797 (61/79 closer); moving world: weights learned on A beat persistence on B in 1/12 pairs; all-lags ridge beats own-lags on 0/4 targets",
+   "number": "static world: v2x_rule from energy, kNN MAE 0.1392 vs mean 0.2797 (61/79 closer); moving world: weights learned on A beat persistence on B in 0/12 pairs; all-lags ridge beats own-lags on 0/4 targets",
    "source": "COUNTRY_BENCH.md (by hand); CROSS_SERIES_BENCH.json (morning step, E1)",
    "verdict": "SEED"
   },
@@ -45,16 +45,16 @@
   {
    "point": 7,
    "name": "Калибрирана несигурност",
-   "number": "Brier self_failure 0.2444 vs 0.5388 (54 scored); self_survive scored 0; world 80% intervals covered 0.857",
+   "number": "Brier self_failure 0.2444 vs 0.5388 (54 scored); self_survive scored 0; world 80% intervals covered 0.787",
    "source": "prophecy ledger; CROSS_SERIES_BENCH.json (E4)",
    "verdict": "LIVE"
   },
   {
    "point": 8,
    "name": "Световен модел",
-   "number": "daily tier 60 indicators, 4 moving; axis_next degenerate 620/748",
-   "source": "memory/daily_tier.jsonl; prophecy ledger",
-   "verdict": "PARTIAL"
+   "number": "daily tier 60 indicators, 4 moving; axis_next degenerate 620/748; direction learned (beats honest baselines by 2 SE) in 3/12 target×horizon cells: quakes.quake_m45_count@1d, quakes.quake_m45_count@20d, quakes.quake_m45_count@5d",
+   "source": "memory/daily_tier.jsonl; prophecy ledger; CROSS_SERIES_BENCH.json (stage 1: direction)",
+   "verdict": "LIVE"
   },
   {
    "point": 9,
@@ -87,7 +87,7 @@
   {
    "point": 13,
    "name": "Разбиране срещу симулация",
-   "number": "counterfactual probe 2026-09-11: 9 cases, TRACKS 9, INSENSITIVE 0, NOISE_DRIVEN 0, WRONG 0, SILENT 0; tracks_rate 1.0",
+   "number": "counterfactual probe 2026-09-11: 9 cases, TRACKS 9, INSENSITIVE 0, NOISE_DRIVEN 0, WRONG 0, SILENT 0; tracks_rate 1.0; by model: brain 1.0, brain-fast 0.0, groq:openai/gpt-oss-120b 1.0, nvidia-kimi None",
    "source": "memory/counterfactual_probe_latest.json (core/counterfactual_probe.py, morning step)",
    "verdict": "SEED"
   },
@@ -288,14 +288,117 @@
    "tracks_rate": 1.0,
    "reading": "the verdict follows the number and only the number"
   },
-  "probe_by_model": {},
+  "probe_by_model": {
+   "brain": {
+    "n": 9,
+    "answered": 9,
+    "counts": {
+     "TRACKS": 9,
+     "INSENSITIVE": 0,
+     "NOISE_DRIVEN": 0,
+     "WRONG": 0,
+     "SILENT": 0
+    },
+    "tracks_rate": 1.0,
+    "models_seen": [
+     "local:qwen3:8b"
+    ],
+    "per_case": {
+     "indicator:co2_annual_increase_ppm": "TRACKS",
+     "indicator:usgs_m5plus_7d_count": "TRACKS",
+     "target:ENERGY_REVIEW": "TRACKS",
+     "target:FOOD_REVIEW": "TRACKS",
+     "target:CLIMATE_GLOBAL_RISK_REVIEW": "TRACKS",
+     "target:ECOSYSTEMS_BIODIVERSITY_REVIEW": "TRACKS",
+     "target:PLANETARY_POTENTIAL_REVIEW": "TRACKS",
+     "target:HUMAN_WELL_BEING_REVIEW": "TRACKS",
+     "target:SOCIAL_RELATIONS_REVIEW": "TRACKS"
+    }
+   },
+   "brain-fast": {
+    "n": 9,
+    "answered": 9,
+    "counts": {
+     "TRACKS": 0,
+     "INSENSITIVE": 9,
+     "NOISE_DRIVEN": 0,
+     "WRONG": 0,
+     "SILENT": 0
+    },
+    "tracks_rate": 0.0,
+    "models_seen": [
+     "local:qwen2.5:3b"
+    ],
+    "per_case": {
+     "indicator:co2_annual_increase_ppm": "INSENSITIVE",
+     "indicator:usgs_m5plus_7d_count": "INSENSITIVE",
+     "target:ENERGY_REVIEW": "INSENSITIVE",
+     "target:FOOD_REVIEW": "INSENSITIVE",
+     "target:CLIMATE_GLOBAL_RISK_REVIEW": "INSENSITIVE",
+     "target:ECOSYSTEMS_BIODIVERSITY_REVIEW": "INSENSITIVE",
+     "target:PLANETARY_POTENTIAL_REVIEW": "INSENSITIVE",
+     "target:HUMAN_WELL_BEING_REVIEW": "INSENSITIVE",
+     "target:SOCIAL_RELATIONS_REVIEW": "INSENSITIVE"
+    }
+   },
+   "groq:openai/gpt-oss-120b": {
+    "n": 9,
+    "answered": 1,
+    "counts": {
+     "TRACKS": 1,
+     "INSENSITIVE": 0,
+     "NOISE_DRIVEN": 0,
+     "WRONG": 0,
+     "SILENT": 8
+    },
+    "tracks_rate": 1.0,
+    "models_seen": [
+     "groq:openai/gpt-oss-120b"
+    ],
+    "per_case": {
+     "indicator:co2_annual_increase_ppm": "TRACKS",
+     "indicator:usgs_m5plus_7d_count": "SILENT",
+     "target:ENERGY_REVIEW": "SILENT",
+     "target:FOOD_REVIEW": "SILENT",
+     "target:CLIMATE_GLOBAL_RISK_REVIEW": "SILENT",
+     "target:ECOSYSTEMS_BIODIVERSITY_REVIEW": "SILENT",
+     "target:PLANETARY_POTENTIAL_REVIEW": "SILENT",
+     "target:HUMAN_WELL_BEING_REVIEW": "SILENT",
+     "target:SOCIAL_RELATIONS_REVIEW": "SILENT"
+    }
+   },
+   "nvidia-kimi": {
+    "n": 9,
+    "answered": 0,
+    "counts": {
+     "TRACKS": 0,
+     "INSENSITIVE": 0,
+     "NOISE_DRIVEN": 0,
+     "WRONG": 0,
+     "SILENT": 9
+    },
+    "tracks_rate": null,
+    "models_seen": [],
+    "per_case": {
+     "indicator:co2_annual_increase_ppm": "SILENT",
+     "indicator:usgs_m5plus_7d_count": "SILENT",
+     "target:ENERGY_REVIEW": "SILENT",
+     "target:FOOD_REVIEW": "SILENT",
+     "target:CLIMATE_GLOBAL_RISK_REVIEW": "SILENT",
+     "target:ECOSYSTEMS_BIODIVERSITY_REVIEW": "SILENT",
+     "target:PLANETARY_POTENTIAL_REVIEW": "SILENT",
+     "target:HUMAN_WELL_BEING_REVIEW": "SILENT",
+     "target:SOCIAL_RELATIONS_REVIEW": "SILENT"
+    }
+   }
+  },
   "cross": {
    "targets": 4,
    "ridge_all_beats_persistence": 0,
    "ridge_all_beats_ridge_own": 0,
-   "ewma_beats_persistence": 3,
+   "ewma_beats_persistence": 1,
    "transfer_pairs": 12,
-   "transfer_beats_persistence": 1,
+   "transfer_beats_persistence": 0,
    "few_examples": {
     "10": 0,
     "20": 0,
@@ -304,8 +407,15 @@
    },
    "concepts_found": 2,
    "concepts_survive": 1,
-   "conformal_coverage": 0.857,
-   "conformal_level": 0.8
+   "conformal_coverage": 0.787,
+   "conformal_level": 0.8,
+   "direction_cells": 12,
+   "direction_wins": [
+    "quakes.quake_m45_count@1d",
+    "quakes.quake_m45_count@20d",
+    "quakes.quake_m45_count@5d"
+   ],
+   "stage": "2 — direction learned somewhere; the size of the step in % is now the headline"
   },
   "alarm_indicators": {
    "OK": 2,
@@ -317,7 +427,7 @@
   "learner_progress": {
    "status": "no comparison yet",
    "latest": {
-    "ts": "2026-09-11T17:04:09Z",
+    "ts": "2026-09-11T18:06:05Z",
     "scored": 5,
     "compared": 4,
     "wins": 1,
@@ -326,7 +436,7 @@
     "indicators_learned": 5,
     "margin": -0.0228
    },
-   "snapshots": 3
+   "snapshots": 4
   }
  }
 }
