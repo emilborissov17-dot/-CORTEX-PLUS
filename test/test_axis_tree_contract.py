@@ -331,3 +331,101 @@ def test_a_retired_axis_does_not_linger_in_the_spec():
     assert not still_there, (
         f"{still_there} is retired from the tree but still defined in "
         "agi_axes_spec.txt")
+
+
+# ── PROGRESS 1.3: the weights, frozen as v0 on 10 September 2026 ─────────────
+#
+# THE DECISION, so it is not re-litigated from memory. Per-axis weights are
+# accepted exactly as they stand and frozen as v0; no weight was changed. The
+# BRANCH shares below are recorded as a KNOWN DEFECT rather than a property:
+# the composite is a weighted mean over AXES (goal_score_calculator:
+# weighted_sum / measured_weight) and knows nothing about branches, so a branch's
+# share of the goal follows how many axes it happens to hold. Adding one axis to
+# CIVILIZATIONAL_STABILITY raises that branch's share without anyone deciding to.
+#
+# Emil's ruling of 10 Sep, confirmed and not inferred: NO gate refuses the nightly
+# cycle over this. That is why the freeze lives in a test — a change is caught in
+# review, where it can be judged, instead of taking the night down over a
+# reporting cosmetic. The default is reversible: change the numbers here, in the
+# same commit as the weights, and say why.
+WEIGHTS_V0 = {
+    "SUSTAINABLE_RESOURCES":    {"weight_sum": 38.0, "n_axes": 5, "share_pct": 22.8},
+    "HEALTHY_ENVIRONMENTS":     {"weight_sum": 25.0, "n_axes": 3, "share_pct": 15.0},
+    "CIVILIZATIONAL_STABILITY": {"weight_sum": 60.0, "n_axes": 9, "share_pct": 35.9},
+    "KNOWLEDGE_UNDERSTANDING":  {"weight_sum": 14.0, "n_axes": 2, "share_pct": 8.4},
+    "SAFETY":                   {"weight_sum": 30.0, "n_axes": 5, "share_pct": 18.0},
+}
+WEIGHTS_V0_TOTAL = 167.0
+
+
+def _shares():
+    import sys
+    sys.path.insert(0, str(BASE))
+    import goal_score_calculator as gsc
+    return gsc.branch_shares(_cfg())
+
+
+def test_the_v0_weights_are_frozen():
+    """Any change to a per-axis weight, or any axis added to or removed from a
+    branch, moves one of these numbers and must be a deliberate edit here."""
+    got = _shares()
+    assert got["weights_version"] == "v0"
+    assert got["total_weight"] == WEIGHTS_V0_TOTAL, (
+        f"total weight moved {WEIGHTS_V0_TOTAL} -> {got['total_weight']}; if that "
+        f"is intended, update WEIGHTS_V0 in this file in the same commit")
+    assert got["branches"] == WEIGHTS_V0, (
+        "the frozen v0 branch weights moved:\n"
+        f"  expected {WEIGHTS_V0}\n  got      {got['branches']}")
+
+
+def test_adding_an_axis_silently_changes_a_branch_share():
+    """THE DEFECT ITSELF, demonstrated rather than described — this is what
+    "branch shares are an artefact of axis count" MEANS, and why it is recorded
+    as a defect. One new axis in CIVILIZATIONAL_STABILITY, nobody's decision
+    about priorities, and the branch gains 2.4 points of the goal."""
+    import copy
+    cfg = copy.deepcopy(_cfg())
+    cfg["CIVILIZATIONAL_STABILITY"]["A_BRAND_NEW_AXIS"] = {"weight": 7}
+    import sys
+    sys.path.insert(0, str(BASE))
+    import goal_score_calculator as gsc
+    after = gsc.branch_shares(cfg)
+    before_pct = WEIGHTS_V0["CIVILIZATIONAL_STABILITY"]["share_pct"]
+    after_pct = after["branches"]["CIVILIZATIONAL_STABILITY"]["share_pct"]
+    assert after_pct > before_pct, (
+        "adding an axis must be shown to raise its branch's share — if this ever "
+        "stops being true the composite has become branch-aware and the note in "
+        "goal_score_calculator.branch_shares is out of date")
+    # and every OTHER branch is diluted without being touched
+    for b in ("SAFETY", "SUSTAINABLE_RESOURCES"):
+        assert after["branches"][b]["share_pct"] < WEIGHTS_V0[b]["share_pct"]
+
+
+def test_the_normalisation_is_reporting_only_and_says_so():
+    """MECHANICAL NET on the one thing this must not become. share_pct is a
+    courtesy for readers; it must never feed the composite. If branch_shares is
+    ever wired into the score, the note stops being true and this fails."""
+    import sys
+    sys.path.insert(0, str(BASE))
+    import goal_score_calculator as gsc
+    note = _shares()["note"]
+    assert "reporting-only" in note
+    assert "do NOT sum to 100" in note
+    src = (BASE / "goal_score_calculator.py").read_text(encoding="utf-8")
+    import ast
+    tree = ast.parse(src)
+    fn = next(n for n in ast.walk(tree)
+              if isinstance(n, ast.FunctionDef) and n.name == "compute_goal_score")
+    called = {n.func.id for n in ast.walk(fn)
+              if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
+    assert "branch_shares" not in called, (
+        "branch_shares is called from compute_goal_score — the normalisation has "
+        "stopped being reporting-only and is now inside the number")
+
+
+def test_the_shares_really_do_sum_to_a_hundred():
+    """Negative control on the arithmetic: if the normalisation is worth having,
+    it has to actually normalise."""
+    got = _shares()
+    assert abs(sum(b["share_pct"] for b in got["branches"].values()) - 100.0) < 0.2
+    assert sum(b["weight_sum"] for b in got["branches"].values()) == WEIGHTS_V0_TOTAL

@@ -106,10 +106,51 @@ def load_governance_globals() -> dict:
         )
         return {}
 
+    # The two governance globals are DERIVED, not fetched: wellbeing_globe computes
+    # them from WGI+VDEM. The honest observation date is when that computation ran —
+    # 57 days before this line was written — not tonight's cycle timestamp.
+    when = str(ts_str)[:10] if ts_str else None
+    why = (f"wellbeing_globe governance_computed_at = {when} (derived from "
+           f"WGI+VDEM, both annual); the value has not been recomputed since"
+           if when else "output/wellbeing_globe.json carries no governance_computed_at")
+    for k in ("governance_rights_score_global", "governance_institutions_score_global"):
+        _OBS_DATES[k] = when
+        _OBS_DATE_WHY[k] = why
     return {
         "governance_rights_score_global":       data.get("governance_rights_score"),
         "governance_institutions_score_global": data.get("governance_institutions_score"),
     }
+
+
+# ── WHEN THE WORLD WAS OBSERVED (4 Sep 2026, ITEM B) ─────────────────────────
+# axis_observations carried observed_value, observation_key, source_id — and
+# nothing at all about WHEN the world was looked at. That is why the staleness was
+# invisible: K1 could not tell a reading taken yesterday from one taken in 2021,
+# because the field did not exist. Measured that day: 95 of the 105 "measured"
+# weight had not changed once in 30 cycles; ENERGY was publishing a 2021 number
+# nightly.
+#
+# NEVER A GUESS. A source that gives no date gets None and a reason. A bare year
+# is resolved to 31 December of that year, which is the MOST GENEROUS reading and
+# therefore a LOWER BOUND on the age — stated in the reason so nobody mistakes it
+# for a day-precise observation.
+_OBS_DATES: dict = {}
+_OBS_DATE_WHY: dict = {}
+
+
+def _year_to_date(year) -> str | None:
+    """"2024" -> "2024-12-31". The generous end of the year: an annual figure is
+    for the whole year, so the latest moment it could describe is its last day."""
+    try:
+        y = int(str(year).strip()[:4])
+    except (TypeError, ValueError):
+        return None
+    return f"{y:04d}-12-31" if 1900 <= y <= 2999 else None
+
+
+def observation_dates() -> tuple:
+    """(dates, reasons) for the keys load_global_indicators() last produced."""
+    return dict(_OBS_DATES), dict(_OBS_DATE_WHY)
 
 
 def load_global_indicators() -> dict:
@@ -134,20 +175,49 @@ def load_global_indicators() -> dict:
     food, dsp = data.get("food", {}),  data.get("displaced", {})
     econ, cty = data.get("economy", {}), data.get("cities", {})
     out: dict = {}
-    def put(k, v):
-        if v is not None: out[k] = v
-    put("noaa_co2_ppm",         co2.get("co2_ppm"))
-    put("wb_AG.LND.FRST.ZS",    wb.get("forest_area_pct"))
-    put("wb_EG.ELC.RNEW.ZS",    wb.get("renewable_elec_pct"))
-    put("wb_SH.H2O.SMDW.ZS",    wb.get("safe_water_access_pct"))
+    wb_years = wb.get("_observed_years") or {}
+
+    def put(k, v, when=None, why=None):
+        """Record the value AND when the world was observed for it.
+
+        `when` is an ISO date or None. `why` says where the date came from, or why
+        there is none - a null with a reason is a fact; a null on its own is the
+        gap that hid five-year-old numbers behind a nightly timestamp.
+        """
+        if v is None:
+            return
+        out[k] = v
+        _OBS_DATES[k] = when
+        _OBS_DATE_WHY[k] = why or (
+            "the source publishes no observation date for this indicator")
+
+    def wb_put(k, field):
+        """A World Bank indicator, dated from _observed_years (a bare year)."""
+        yr = wb_years.get(field)
+        put(k, wb.get(field), _year_to_date(yr),
+            (f"World Bank _observed_years[{field}] = {yr}; a bare year is read as "
+             f"31 Dec, so the age is a LOWER BOUND" if yr else
+             f"World Bank returned no year for {field}"))
+    put("noaa_co2_ppm", co2.get("co2_ppm"), co2.get("co2_date"),
+        f"NOAA Mauna Loa co2_date = {co2.get('co2_date')}")
+    wb_put("wb_AG.LND.FRST.ZS", "forest_area_pct")
+    wb_put("wb_EG.ELC.RNEW.ZS", "renewable_elec_pct")
+    wb_put("wb_SH.H2O.SMDW.ZS", "safe_water_access_pct")
     put("wb_SH.DYN.MORT",       wb.get("infant_mortality_per1k"))     # APPROX: infant vs under-5
-    put("wb_SI.POV.DDAY",       wb.get("poverty_190_pct"))
+    wb_put("wb_SI.POV.DDAY", "poverty_190_pct")
     put("wb_SE.ADT.1524.LT.ZS", wb.get("literacy_rate_adult_pct"))    # APPROX: adult vs youth
-    put("wb_SN.ITK.DEFC.ZS",    food.get("undernourishment_pct"))
+    put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None,
+        "World Bank WDI Food block carries no _observed_years; the source publishes annually but the fetch does not keep the year")
     r = dsp.get("refugees_millions")
-    put("unhcr_refugees",       r * 1_000_000 if r is not None else None)
-    put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"))
-    put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"))
+    _uy = dsp.get("unhcr_year")
+    put("unhcr_refugees", r * 1_000_000 if r is not None else None,
+        _year_to_date(_uy),
+        (f"UNHCR unhcr_year = {_uy}; a bare year is read as 31 Dec, so the age is "
+         f"a LOWER BOUND" if _uy else "UNHCR returned no year"))
+    put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"), None,
+        "World Bank WDI Economy block carries no _observed_years")
+    put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"), None,
+        "World Bank WDI Cities block carries no _observed_years")
     # THE LAST TWO UNRESOLVED METRICS. _resolve_metric has mapped
     # protected_terrestrial_area_pct -> wb_ER.LND.PTLD.ZS and
     # primary_completion_rate -> wb_SE.PRM.CMPT.ZS since it was written; nothing
@@ -155,8 +225,8 @@ def load_global_indicators() -> dict:
     # every cycle. 14 of the then-173 goal weight, waiting on two lines.
     # (167 across 24 axes since commit 8052397, 2026-08-21 — neither of these
     #  two axes left the tree, so the 14 is unchanged.)
-    put("wb_ER.LND.PTLD.ZS",    wb.get("protected_terrestrial_area_pct"))
-    put("wb_SE.PRM.CMPT.ZS",    wb.get("primary_completion_rate"))
+    wb_put("wb_ER.LND.PTLD.ZS", "protected_terrestrial_area_pct")
+    wb_put("wb_SE.PRM.CMPT.ZS", "primary_completion_rate")
     return out
 
 
@@ -377,6 +447,64 @@ def _time_to_threshold(
 SEMANTIC_ASSESSMENTS = BASE / "memory" / "browse_sources"
 
 
+WEIGHTS_VERSION = "v0"
+WEIGHTS_V0_TOTAL = 167          # frozen 2026-09-10; see branch_shares.__doc__
+
+
+def branch_shares(targets: dict) -> dict:
+    """REPORTING ONLY. Per-branch weight sums, and those sums as percentages.
+
+    ── PROGRESS 1.3, DECIDED 10 September 2026 ──
+    The per-axis weights are FROZEN AS v0 exactly as they stand (untouched since
+    21 Aug): climate 10, water 9, food 9 — the stated principle holds per axis,
+    and no weight is changed by this decision.
+
+    What this function exists to stop is a habit of quoting. The weights are on
+    a declared 1-10 scale and sum to 167, and 167 was being read as if it were
+    a percentage total. Normalised, the branches stand at:
+
+        SUSTAINABLE_RESOURCES     38/167 = 22.8 %   (5 axes)
+        HEALTHY_ENVIRONMENTS      25/167 = 15.0 %   (3 axes)
+        CIVILIZATIONAL_STABILITY  60/167 = 35.9 %   (9 axes)
+        KNOWLEDGE_UNDERSTANDING   14/167 =  8.4 %   (2 axes)
+        SAFETY                    30/167 = 18.0 %   (5 axes)
+
+    THE KNOWN DEFECT, NAMED RATHER THAN DEFENDED. Those shares are an artefact
+    of how many axes a branch happens to contain, because the composite is a
+    weighted mean over AXES (weighted_sum / measured_weight) and knows nothing
+    about branches. So adding any axis to CIVILIZATIONAL_STABILITY raises that
+    branch's share of the goal without anyone deciding to raise it — unowned
+    drift of exactly the kind this project exists to catch. It is recorded as a
+    defect, not as a property.
+
+    WHAT WAS DELIBERATELY NOT DONE, and it is Emil's ruling of 10 Sep, confirmed
+    rather than inferred: no gate refuses the nightly cycle until a human
+    renormalises the weights. Taking the night down over a reporting cosmetic
+    would cost more than the cosmetic. This function changes NO number that
+    reaches composite_score — it is called by reporting and by
+    test_axis_tree_contract, and the reversible default is that the weights stay
+    exactly as they are until a human decides otherwise.
+    """
+    out = {}
+    total = 0.0
+    for branch, axes in sorted((targets or {}).items()):
+        if str(branch).startswith("_"):
+            continue
+        s = sum(float(cfg.get("weight", 0) or 0)
+                for cfg in axes.values() if isinstance(cfg, dict))
+        out[branch] = {"weight_sum": round(s, 1), "n_axes": len(axes)}
+        total += s
+    for branch in out:
+        out[branch]["share_pct"] = (round(100.0 * out[branch]["weight_sum"] / total, 1)
+                                    if total else 0.0)
+    return {"weights_version": WEIGHTS_VERSION, "total_weight": round(total, 1),
+            "branches": out,
+            "note": ("weights are on a 1-10 per-axis scale and do NOT sum to 100; "
+                     "share_pct is a reporting-only normalisation. Branch shares "
+                     "follow axis COUNT and are a known defect, not a decision — "
+                     "the composite is a weighted mean over axes, not over branches.")}
+
+
 def config_fingerprint(targets: dict) -> str:
     """Отпечатък на ТОВА, КОЕТО МЕРИМ — не на това, което днес сме успели.
 
@@ -493,6 +621,12 @@ def compute_goal_score(
     if trends is None:
         trends = load_trends()
     if last_obs is None:
+        # ONE CLEAR PER ASSEMBLY. load_governance_globals() runs before
+        # load_global_indicators() in this merge, so a clear inside either loader
+        # wipes the other's dates — which is exactly what silently happened to the
+        # two governance axes on the first attempt.
+        _OBS_DATES.clear()
+        _OBS_DATE_WHY.clear()
         last_obs = {**load_last_obs(), **load_governance_globals(),
                     **load_global_indicators(), **load_probed_signals()}
     if targets is None:
@@ -508,6 +642,11 @@ def compute_goal_score(
     # sum, so a collision there is a wrong number, not a cosmetic loss. This
     # block is keyed by axis and cannot collide.
     axis_observations: dict = {}
+    # The date register is filled by the loaders above (load_global_indicators and
+    # load_governance_globals). Read once here so a caller that supplied its own
+    # last_obs — a test — still gets a well-formed, empty register rather than a
+    # crash or, worse, dates belonging to a different run.
+    _obs_dates, _obs_why = observation_dates()
 
     total_weight    = 0.0
     weighted_sum    = 0.0
@@ -618,6 +757,14 @@ def compute_goal_score(
                     "observation_where": origin["where"],
                     "source_id":         origin["source_id"],
                     "observed_value":    current_val,
+                    # WHEN THE WORLD WAS OBSERVED (ITEM B, 4 Sep 2026). Without
+                    # this field K1 cannot tell a reading taken yesterday from one
+                    # taken in 2021, and on 4 Sep it could not: 95 of 105
+                    # "measured" weight had not moved in 30 cycles. None is a fact
+                    # here, not an omission — observed_at_why says which.
+                    "observed_at":       _obs_dates.get(origin["key"]),
+                    "observed_at_why":   _obs_why.get(
+                        origin["key"], "no date register entry for this key"),
                     "weight":            weight,
                     # The metric resolving and the axis getting a score are two
                     # different events: a metric with no target_value resolves
