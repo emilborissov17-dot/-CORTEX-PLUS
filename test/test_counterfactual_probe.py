@@ -203,3 +203,95 @@ def test_unavailable_only_fires_on_the_named_field():
     assert CP.unavailable({"verdict": "OVER"}) is None
     assert CP.unavailable(None) is None
     assert CP.unavailable({"_unavailable": "HTTP 503"}) == "HTTP 503"
+
+
+def test_a_local_model_is_asked_through_the_brains_door(monkeypatch):
+    """The asker's CONTRACT WITH brain.think: the named model, no fast path, nothing
+    remembered, temperature pinned. The fallback guard has its own test below.
+
+    RETARGETED 12 Sep 2026, and both of its old faults are worth naming.
+    (1) It stubbed `_model` as "cortex-l1-3b" — a shape brain.think never returns;
+        core/brain.py:636 writes `local:{model}`. A stub that is not faithful to the
+        real return shape tests the stub, and this one went green while the live
+        probe was crediting the LoRA with qwen3:8b's answers 16 of 16.
+    (2) It did not stub brain.models(), so a unit test reached live Ollama on
+        localhost:11434 — green on this machine, red on any machine without the
+        model installed, for a reason that has nothing to do with the code.
+    """
+    from core import brain
+    seen = {}
+    # bare name installed bare: resolve() has nothing to fix, so the override is verbatim
+    monkeypatch.setattr(brain, "models", lambda: ["cortex-l1-3b"])
+    monkeypatch.setattr(brain, "think",
+                        lambda *a, **k: seen.update(k) or {"verdict": "UNDER",
+                                                           "_model": f"local:{k['model_override']}"})
+    ask = CP.askers(["local:cortex-l1-3b"])["local:cortex-l1-3b"]
+    out = ask("q", "e", {})
+    assert out["verdict"] == "UNDER", "a matching model's answer must pass straight through"
+    assert CP.unavailable(out) is None, "an answer from the asked mind is not a refusal"
+    assert seen["model_override"] == "cortex-l1-3b"
+    assert seen["fast"] is False and seen["remember_it"] is False
+    assert seen["temperature"] == 0.0
+
+
+
+def test_a_latest_tag_is_resolved_and_a_fallback_is_never_the_asked_minds_answer(monkeypatch):
+    """12 Sep: "cortex-l1-3b" was listed as "cortex-l1-3b:latest"; brain.think fell back to
+    qwen3:8b and the fine-tune was credited with the 8B's answers 16 of 16."""
+    from core import brain
+    seen = {}
+    monkeypatch.setattr(brain, "models", lambda: ["qwen3:8b", "qwen2.5:3b", "cortex-l1-3b:latest"])
+    monkeypatch.setattr(brain, "think", lambda *a, **k: seen.update(k) or {"verdict": "OVER", "_model": f"local:{k['model_override']}"})
+    ask = CP.askers(["local:cortex-l1-3b"])["local:cortex-l1-3b"]
+    assert ask("q", "e", {})["verdict"] == "OVER" and seen["model_override"] == "cortex-l1-3b:latest"
+    monkeypatch.setattr(brain, "think", lambda *a, **k: {"verdict": "OVER", "_model": "local:qwen3:8b"})
+    out = ask("q", "e", {})
+    assert CP.unavailable(out) and "qwen3:8b" in CP.unavailable(out) and CP.normalise(out) is None
+
+
+def test_a_lean_asker_asks_the_same_mind_without_the_self_wrapper(monkeypatch):
+    """12 Sep: the wrapper is 4400 chars, 74% of it SPIRIT, and the two numbers arrive
+    after all of it. "<asker>+lean" asks the same model with only role, pin, question,
+    material and schema, so the cost of the self can be measured, not argued."""
+    from core import brain
+    seen = []
+    monkeypatch.setattr(brain, "models", lambda: ["qwen2.5:3b", "cortex-l1-3b:latest"])
+    monkeypatch.setattr(brain, "think", lambda *a, **k: seen.append(k) or {"verdict": "OVER", "_model": f"local:{k.get('model_override') or 'qwen2.5:3b'}"})
+    a = CP.askers(["brain-fast", "brain-fast+lean", "local:cortex-l1-3b+lean"])
+    a["brain-fast"]("q", "e", {})
+    a["brain-fast+lean"]("q", "e", {})
+    a["local:cortex-l1-3b+lean"]("q", "e", {})
+    assert [k.get("lean") for k in seen] == [False, True, True]
+    assert seen[2]["model_override"] == "cortex-l1-3b:latest"
+
+
+def test_the_lean_prompt_drops_the_self_blocks_and_keeps_the_numbers(monkeypatch):
+    from core import brain
+    sent = {}
+
+    class _R:
+        status_code = 200
+
+        @staticmethod
+        def raise_for_status():
+            return None
+
+        @staticmethod
+        def json():
+            return {"message": {"content": '{"verdict": "OVER", "reason": "x"}'}}
+
+    class _RQ:
+        @staticmethod
+        def post(url, timeout=None, json=None):
+            sent.update(json)
+            return _R()
+
+    monkeypatch.setitem(sys.modules, "requests", _RQ)
+    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen2.5:3b", "http://x"))
+    monkeypatch.setattr(brain, "remember", lambda *a, **k: None)
+    brain.think("probe", "Is 39 past 38?", evidence="value: 39\nline: 38", schema=CP.SCHEMA,
+                kind="counterfactual_probe", remember_it=False, lean=True)
+    p = sent["messages"][0]["content"]
+    assert "value: 39" in p and "QUESTION: Is 39 past 38?" in p
+    assert "SPIRIT" not in p and "HOW YOU ARE DOING" not in p and "BODY (" not in p
+    assert len(p) < 1200

@@ -1,0 +1,26 @@
+{
+ "train": 2400,
+ "holdout": 400,
+ "over_share_train": 0.5,
+ "seed_train": 11,
+ "seed_holdout": 911,
+ "excluded_real_cases": [
+  "CLIMATE_GLOBAL_RISK_REVIEW",
+  "COGNITION_LEARNING_REVIEW",
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "EDUCATION_CULTURE_REVIEW",
+  "ENERGY_REVIEW",
+  "FOOD_REVIEW",
+  "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "HUMAN_WELL_BEING_REVIEW",
+  "INEQUALITY_POVERTY_REVIEW",
+  "PLANETARY_POTENTIAL_REVIEW",
+  "SOCIAL_RELATIONS_REVIEW",
+  "WATER_REVIEW",
+  "co2_annual_increase_ppm",
+  "gdacs_wildfire_orange_red_7d_count",
+  "usgs_m5plus_7d_count"
+ ],
+ "purpose": "L1 LoRA: teach qwen2.5:3b to read the number (probe 11 Sep: 0/9 vs qwen3:8b 9/9)"
+}

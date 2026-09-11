@@ -215,6 +215,15 @@ memory/embed_index/
 # Never committed: ffmpeg.exe is ~100 MB and deno.exe ~40 MB.
 /bin/
 venv_train/
+# models/ stays ignored WHOLESALE — it holds multi-GB weights (11 Sep 2026:
+# models/cortex-l1/qwen2.5-3b-instruct.Q4_K_M.gguf is 1.79 GB) and this is a
+# PUBLIC repo. Deliberately NOT loosened to `models/*` with negations: that
+# requires un-ignoring the parent, and one careless `git add` away from a 2 GB
+# blob in a history that cannot forget it. The two small files that DO belong in
+# git — models/cortex-l1/Modelfile and models/cortex-l1/L1_RESULT.json — were
+# force-added once (`git add -f`) and stay tracked from then on, so the rule
+# below never has to make an exception for them.
+
 models/
 memory/blackbox.jsonl
 
@@ -269,3 +278,32 @@ memory/phase_debriefs/
 # condition.
 !memory/verified_observations.jsonl
 snapshots/master/*_latest.json
+
+# ── L1 / L1b LESSON CORPORA (12 Sep 2026) — THE GENERATOR IS COMMITTED, ITS OUTPUT IS NOT.
+# 15.7 MB + 2.1 MB of generated lessons:
+#   training/lora_l1_numbers.py   -> l1_numbers_train.jsonl, l1_numbers_holdout.jsonl
+#   training/lora_l1b_numbers.py  -> l1b_train.jsonl, l1b_exam.jsonl
+# The MANIFESTS are committed and carry the seeds (l1b: seed_train 1211, seed_exam 9121)
+# and the layout/group counts, so a regenerated corpus can be checked against the
+# manifest it claims to be. Same convention as memory/: the code is committed, the data
+# it generates is not.
+#
+# BUT THE SEED IS NOT THE WHOLE INPUT, and saying otherwise would be a false promise.
+# L1b's long wrapper is built from memory/l1_real_prompt_blocks.json, whose `body` and
+# `self_state` blocks are read off THIS MACHINE at dump time ("RAM 98.2% used",
+# "OPEN_PROPOSALS: 25 (20 overdue)") and then jittered deterministically from the seed.
+# So l1b_train.jsonl is byte-for-byte reproducible from (seed + that blocks file), and
+# NOT from the seed alone: a later --dump-prompt writes different numbers. The blocks
+# file is untracked runtime state under memory/ (ITEM 81/84), so today the manifest's
+# "wrapper: REAL brain.think blocks" is a claim about a file git does not hold. If that
+# corpus ever needs to be re-derivable by someone else, the blocks file has to be
+# committed alongside the manifest — it is 4.7 KB and scans clean.
+#
+# EXPLICITLY LISTED, NO PATTERN. `training/*.jsonl` would also cover
+# training/verified_corpus.jsonl, which IS tracked — and a rule that silently
+# disagrees with the state of git is worse than a missing rule (see the two blocks
+# above that learned this the same way).
+training/l1_numbers_train.jsonl
+training/l1_numbers_holdout.jsonl
+training/l1b_train.jsonl
+training/l1b_exam.jsonl

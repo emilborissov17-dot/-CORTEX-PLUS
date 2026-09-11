@@ -1,0 +1,68 @@
+# cortex-l1-3b: Qwen2.5-3B-Instruct + L1 LoRA (numbers). 11 Sep 2026.
+# Unsloth set temperature 1.5 / min_p 0.1 here; removed so the probe compares it with qwen2.5:3b on the same sampling.
+# THE FILE THIS LINE NAMES IS NOT IN GIT, AND THAT IS DELIBERATE.
+# qwen2.5-3b-instruct.Q4_K_M.gguf is 1.79 GB; models/ is ignored wholesale
+# (.gitignore) because this is a public repo. So a fresh clone gets this recipe
+# and not its ingredient, and `ollama create` here will fail with "no such file".
+# Same convention as data/ucdp/: the CODE and the INSTRUCTIONS are committed, the
+# bulk artifact is not — and the instructions must not vanish with the data.
+#
+# To rebuild the ingredient: the L1 LoRA (r=16, alpha=16, 1 epoch, 2400 rows,
+# 150 steps) is trained on unsloth/Qwen2.5-3B-Instruct in the Kaggle notebook and
+# exported merged to Q4_K_M; L1_RESULT.json next to this file holds the numbers
+# that run reported. Drop the .gguf in this directory, then from here:
+#   ollama create cortex-l1-3b -f Modelfile
+FROM qwen2.5-3b-instruct.Q4_K_M.gguf
+TEMPLATE """{{- if .Messages }}
+{{- if or .System .Tools }}<|im_start|>system
+{{- if .System }}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{{- range .Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end }}<|im_end|>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<|im_end|>
+{{ end }}
+{{- else if eq .Role "tool" }}<|im_start|>user
+<tool_response>
+{{ .Content }}
+</tool_response><|im_end|>
+{{ end }}
+{{- if and (ne .Role "assistant") $last }}<|im_start|>assistant
+{{ end }}
+{{- end }}
+{{- else }}
+{{- if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ end }}{{ .Response }}{{ if .Response }}<|im_end|>{{ end }}"""
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"
+SYSTEM """You are Qwen, created by Alibaba Cloud. You are a helpful assistant."""

@@ -1,0 +1,77 @@
+{
+ "train": 4000,
+ "exam": 480,
+ "seed_train": 1211,
+ "seed_exam": 9121,
+ "wrapper": "REAL brain.think blocks (memory/l1_real_prompt_blocks.json)",
+ "train_layouts": {
+  "L_bg": 488,
+  "L_bg_line_first": 544,
+  "L_list": 476,
+  "L_probe": 990,
+  "L_probe_line_first": 514,
+  "L_sentence": 505,
+  "L_table": 483
+ },
+ "train_wraps": {
+  "long": 2445,
+  "short": 1555
+ },
+ "train_groups": {
+  "base": 1265,
+  "date_twin": 205,
+  "number_twin": 1265,
+  "paraphrase_twin": 1265
+ },
+ "exam_groups": {
+  "probe_long": 108,
+  "seen_long": 118,
+  "unseen_long": 120,
+  "unseen_short": 134
+ },
+ "exam_layouts": {
+  "L_bg": 24,
+  "L_bg_line_first": 24,
+  "L_list": 26,
+  "L_probe": 108,
+  "L_probe_line_first": 16,
+  "L_sentence": 10,
+  "L_table": 18,
+  "X_bg_prose": 46,
+  "X_hand": 58,
+  "X_json": 48,
+  "X_kv": 46,
+  "X_prose": 56
+ },
+ "exam_only_layouts": [
+  "X_prose",
+  "X_kv",
+  "X_json",
+  "X_hand",
+  "X_bg_prose"
+ ],
+ "exam_only_questions": [
+  "Is the measured figure in the red zone relative to its limit? Reply OVER (in the red zone) or UNDER.",
+  "Стойността в лошата зона ли е спрямо прага? OVER ако да, UNDER ако не. Отговори на английски."
+ ],
+ "over_share_train": 0.502,
+ "excluded_real_cases": [
+  "CLIMATE_GLOBAL_RISK_REVIEW",
+  "COGNITION_LEARNING_REVIEW",
+  "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+  "EDUCATION_CULTURE_REVIEW",
+  "ENERGY_REVIEW",
+  "FOOD_REVIEW",
+  "GOVERNANCE_INSTITUTIONS_REVIEW",
+  "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+  "HUMAN_WELL_BEING_REVIEW",
+  "INEQUALITY_POVERTY_REVIEW",
+  "PLANETARY_POTENTIAL_REVIEW",
+  "SOCIAL_RELATIONS_REVIEW",
+  "WATER_REVIEW",
+  "co2_annual_increase_ppm",
+  "gdacs_wildfire_orange_red_7d_count",
+  "usgs_m5plus_7d_count"
+ ],
+ "purpose": "L1b: the skill, not the form (L1 passed its own-form exam 0.985 and failed a reworded hand test)"
+}

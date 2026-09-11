@@ -234,20 +234,23 @@ def outcome(base: str | None, flipped: str | None, noise: str | None, vs: dict,
 
 # ── asking ───────────────────────────────────────────────────────────────────
 
-def brain_ask(question: str, evidence: str, schema: dict):
+LEAN = "+lean"      # asker suffix: the same mind, the same question, without the self-wrapper
+
+
+def brain_ask(question: str, evidence: str, schema: dict, lean: bool = False):
     """Default asker: the brain's MAIN model (the one that judges the cycle — the fast 3B
     model is known to fail numeric barriers, and a probe of it would test the wrong brain),
     nothing remembered (a probe is not a verdict). The answer carries `_model`."""
     from core import brain
     return brain.think("probe: read two numbers", question, evidence=evidence, schema=schema,
-                       kind="counterfactual_probe", remember_it=False, fast=False, temperature=0.0)
+                       kind="counterfactual_probe", remember_it=False, fast=False, temperature=0.0, lean=lean)
 
 
-def brain_fast_ask(question: str, evidence: str, schema: dict):
+def brain_fast_ask(question: str, evidence: str, schema: dict, lean: bool = False):
     """The brain's FAST model — the one used for per-indicator judgements dozens of times a night."""
     from core import brain
     return brain.think("probe: read two numbers", question, evidence=evidence, schema=schema,
-                       kind="counterfactual_probe", remember_it=False, fast=True, temperature=0.0)
+                       kind="counterfactual_probe", remember_it=False, fast=True, temperature=0.0, lean=lean)
 
 
 def groq_asker(model: str):
@@ -331,18 +334,59 @@ def nvidia_kimi_ask(question: str, evidence: str, schema: dict):
     return out
 
 
+def local_asker(model: str, lean: bool = False):
+    """A named local Ollama model through the brain's own door (e.g. local:cortex-l1-3b, the
+    L1 LoRA of qwen2.5:3b). If the model is not installed, brain.think says so and falls back —
+    and the `model` field of every row shows which model really answered, so a fallback can
+    never be mistaken for the fine-tuned mind."""
+    # ── A FALLBACK IS NOT AN ANSWER FROM THE ASKED MIND (12 Sep 2026) ──────────
+    # The first probe of cortex-l1-3b asked for "cortex-l1-3b"; Ollama lists it as
+    # "cortex-l1-3b:latest", brain.think found no exact match, fell back to qwen3:8b,
+    # and every "cortex-l1-3b" answer on file came from the 8B (llm_provenance:
+    # requested=cortex-l1-3b, model=qwen3:8b, 16 of 16). The score would have credited
+    # the fine-tune with the big brain's reading. Two guards: resolve the ":latest"
+    # tag before asking, and if another model answered anyway, return it as
+    # unavailable — never as the asked mind's verdict.
+    def resolve() -> str:
+        from core import brain
+        have = brain.models()
+        if model in have:
+            return model
+        if f"{model}:latest" in have:
+            return f"{model}:latest"
+        return model
+
+    def ask(question: str, evidence: str, schema: dict):
+        from core import brain
+        name = resolve()
+        out = brain.think("probe: read two numbers", question, evidence=evidence, schema=schema,
+                          kind="counterfactual_probe", remember_it=False, fast=False, temperature=0.0,
+                          model_override=name, lean=lean)
+        answered = str((out or {}).get("_model") or "") if isinstance(out, dict) else ""
+        if answered and answered.split("local:", 1)[-1] != name:
+            return {"_unavailable": f"asked {name}, answered {answered} (fallback)"}
+        return out
+    return ask
+
+
 def askers(names: list[str]) -> dict:
     """name -> ask function. 'brain' (main local model), 'brain-fast', 'nvidia-kimi', 'groq:<model>'."""
     out = {}
     for n in names:
-        if n == "brain":
-            out[n] = brain_ask
-        elif n == "brain-fast":
-            out[n] = brain_fast_ask
-        elif n == "nvidia-kimi":
+        # "<asker>+lean": the same mind asked without the self-wrapper (BODY, the five
+        # self-state rows, SPIRIT, MEMORY). Asking both is how "the long prompt drowns
+        # the numbers" stops being a hypothesis and becomes two rows in the same table.
+        base, lean = (n[:-len(LEAN)], True) if n.endswith(LEAN) else (n, False)
+        if base == "brain":
+            out[n] = (lambda q, e, sc, _l=lean: brain_ask(q, e, sc, lean=_l))
+        elif base == "brain-fast":
+            out[n] = (lambda q, e, sc, _l=lean: brain_fast_ask(q, e, sc, lean=_l))
+        elif base.startswith("local:"):
+            out[n] = local_asker(base.split(":", 1)[1], lean=lean)
+        elif base == "nvidia-kimi":
             out[n] = nvidia_kimi_ask
-        elif n.startswith("groq:"):
-            out[n] = groq_asker(n.split(":", 1)[1])
+        elif base.startswith("groq:"):
+            out[n] = groq_asker(base.split(":", 1)[1])
         else:
             raise ValueError(f"unknown asker {n!r}")
     return out

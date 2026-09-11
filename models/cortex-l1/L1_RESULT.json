@@ -1,0 +1,11 @@
+{
+ "base": "unsloth/Qwen2.5-3B-Instruct",
+ "lora": "r=16, alpha=16, 1 epoch, 2400 rows, 150 steps, loss on answer tokens only",
+ "trainable_params": 29933568,
+ "before": {"n": 200, "answered": 200, "accuracy": 0.48, "twins": 50, "twins_where_verdict_flipped_with_the_number": 0},
+ "after":  {"n": 200, "answered": 200, "accuracy": 0.985, "twins": 50, "twins_where_verdict_flipped_with_the_number": 47},
+ "train_loss": {"step10": 0.797, "step20": 0.0448, "step140": 0.000689},
+ "exam_note": "holdout is synthetic (same generator, seed 911); the real verdict is the counterfactual probe on the nine real cases",
+ "gguf": "qwen2.5-3b-instruct.Q4_K_M.gguf, 1,884,671 KB",
+ "source": "transcribed from the Kaggle notebook output, 11 Sep 2026"
+}
