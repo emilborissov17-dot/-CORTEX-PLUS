@@ -217,3 +217,46 @@ memory/embed_index/
 venv_train/
 models/
 memory/blackbox.jsonl
+
+# ─── ITEM 81 — RUNTIME STATE IS NOT CODE (11 September 2026) ────────────────
+#
+# WHY THIS BLOCK EXISTS, and it is not tidiness. Until today the machine's own
+# memory was tracked in git and rewritten every night. Three things followed
+# from that, all measured rather than feared:
+#
+#  1. A CREDENTIAL REACHED A COMMIT. A push of 21 commits to the PUBLIC repo was
+#     stopped on 11 Sep because a live-shaped Google API key sat in nine log
+#     lines under memory/ — a Gemini error had echoed the request URL, which
+#     carries ?key=... . core/redact.py now scrubs the write path, but the
+#     reason the leak could reach a public diff at all is this: nightly logs
+#     were tracked. A log is not source.
+#  2. BRANCHES BECAME UNSWITCHABLE. Measured for ITEM 77: 85 files were
+#     simultaneously uncommitted-modified AND different between the two
+#     branches — cortex_memory/state.json, archive/merkle_root.txt, 77
+#     data/initiatives/*.json, the snapshots. A checkout would have rolled back
+#     a night of accumulated state, so "which branch runs the night" could not
+#     be a cheap decision.
+#  3. A RESET ALREADY DESTROYED SOME. docs/QUEUE.md RESET_DAMAGE: the 28 Aug
+#     `git reset --hard` replaced snapshots/master/global_indicators_latest.json
+#     with an older committed copy, and two tests still fail because of it.
+#
+# WHAT STAYS TRACKED, deliberately: every .py and .md under memory/ (they are
+# code and documentation, not state), memory/existence_ledger.jsonl and
+# memory/first_bet/ (dated, append-only audit records, both verified free of
+# credential-shaped strings before this line was written), and everything under
+# config/, which is a decision a human made rather than a number a night
+# produced.
+#
+# The rule to apply when adding to this list: if a cycle rewrites it, it is
+# state; if a human edits it, it is code.
+memory/*.json
+memory/*.jsonl
+memory/*.npz
+memory/web_intelligence/
+memory/body_sensorium/
+memory/composer_state/
+memory/steps/
+memory/phase_debriefs/
+!memory/existence_ledger.jsonl
+!memory/first_bet/
+snapshots/master/*_latest.json
