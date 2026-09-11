@@ -28,6 +28,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Optional
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
@@ -38,6 +39,12 @@ import prophecy_ledger as pl  # noqa: E402
 
 LEDGER_JSONL = REPO / "memory" / "existence_ledger.jsonl"
 RECENT_WINDOW = 5   # how many recent cycles count as "recent self-state"
+
+
+class Refused(Exception):
+    """A prediction that cannot honestly be sealed. Raised, never returned, and
+    never downgraded to a seal 'with a note'. __main__ exits 2 on it, which
+    tools/prophecy_morning.bat reports as an announced non-failure."""
 
 
 def _cycle_outcomes(ledger_path: Path = LEDGER_JSONL) -> list[dict]:
@@ -67,15 +74,37 @@ def _rate(seq: list[int], default: float = 0.9) -> float:
     return round(sum(seq) / len(seq), 4) if seq else default
 
 
-def cmd_predict() -> dict:
-    outcomes = _cycle_outcomes()
+def cmd_predict(ledger_path: Optional[Path] = None) -> dict:
+    # The path is a PARAMETER, resolved at call time. _cycle_outcomes' default
+    # binds LEDGER_JSONL at definition time, so a test that monkeypatched the
+    # module constant still read the REAL existence ledger — which is how the
+    # first run of test_prophecy_one_per_night.py reported on_history=114.
+    outcomes = _cycle_outcomes(ledger_path or LEDGER_JSONL)
     hist = [o["outcome"] for o in outcomes]
     baseline_p = _rate(hist)                       # static prior — no current self-knowledge
     learner_p = _rate(hist[-RECENT_WINDOW:])       # attends to recent self-state
     anchor = outcomes[-1]["ts"] if outcomes else "genesis"
+    tid = f"next_cycle_after::{anchor}"
+    # ONE FORECAST PER NIGHT (added 10 Sep 2026 after this defect was REALISED,
+    # not merely spotted: two scheduler runs 64 seconds apart on 10 Sep sealed two
+    # identical self_failure forecasts, 5b23984 and 95d22eb, for anchor
+    # 2026-09-10T01:49:35. The anchor is the last terminal cycle event, so every
+    # --predict between two cycles describes the SAME night. cmd_score() dedupes on
+    # ref_hash, not on target, so both copies would score against that one night
+    # and one observation would count twice in the Brier mean.
+    already = [r for r in pl.read_all()
+               if r.get("event") == pl.PREDICTION
+               and r.get("target_kind") == "self_failure"
+               and r.get("target_id") == tid]
+    if already:
+        why = Refused(f"{len(already)} self_failure forecast(s) already sealed for anchor "
+                      f"{anchor} — one forecast per night; nothing to seal until a cycle "
+                      f"ends and the anchor moves")
+        print(json.dumps({"REFUSED": str(why), "sealed": 0}, ensure_ascii=False, indent=2))
+        raise why
     rec = pl.seal_prediction(
         target_kind="self_failure",
-        target_id=f"next_cycle_after::{anchor}",
+        target_id=tid,
         horizon_utc="next_terminal_cycle_event",
         learner_value=learner_p,       # P(next cycle finishes)
         baseline_value=baseline_p,
@@ -88,16 +117,43 @@ def cmd_predict() -> dict:
     return rec
 
 
-def cmd_score() -> None:
-    outcomes = _cycle_outcomes()
+def cmd_score(ledger_path: Optional[Path] = None) -> None:
+    outcomes = _cycle_outcomes(ledger_path or LEDGER_JSONL)
     records = pl.read_all()
     scored_refs = {r.get("ref_hash") for r in records if r.get("event") == pl.OUTCOME}
     open_preds = [r for r in records
                   if r.get("event") == pl.PREDICTION
                   and r.get("target_kind") == "self_failure"
                   and r.get("hash") not in scored_refs]
+    # THE DUPLICATE ALREADY IN THE CHAIN. The guard in cmd_predict stops new ones,
+    # but the ledger is an append-only hash chain with no void event: 95d22eb is in
+    # it for good and cannot be deleted without breaking every hash after it. So
+    # the containment lives here. Where several OPEN self_failure predictions share
+    # one target_id, they are one forecast of one night; only the earliest is
+    # scored, and the rest are recorded PENDING with the reason, so the duplicate
+    # stays visible in the ledger and still never becomes a second observation.
+    # Scoped to self_failure on purpose: axis_next's target_id is
+    # '<AXIS>::next_cycle_score', which is NOT anchor-scoped and repeats legitimately
+    # every night, so the same rule there would discard real predictions.
+    # A superseded duplicate is never scored, so it stays OPEN forever. Noting it
+    # on every --score would append one PENDING record per morning without end, so
+    # the note is written once and the record of having written it is the guard.
+    noted = {r.get("superseded_hash") for r in records if r.get("event") == pl.PENDING}
+    seen_targets: set = set()
+    deduped = []
+    for p in sorted(open_preds, key=lambda r: str(r.get("ts") or "")):
+        tid = p.get("target_id")
+        if tid in seen_targets:
+            if p.get("hash") not in noted:
+                pl.note_pending(tid, "duplicate seal for this anchor — an earlier sealed "
+                                     "prediction already covers this night; superseded, "
+                                     "never scored, so one night counts once",
+                                superseded_hash=p.get("hash"))
+            continue
+        seen_targets.add(tid)
+        deduped.append(p)
     n = 0
-    for p in open_preds:
+    for p in deduped:
         # the actual = the first terminal cycle outcome that happened AFTER the seal
         later = [o for o in outcomes if o["ts"] and o["ts"] > p["ts"]]
         if not later:
@@ -146,16 +202,45 @@ def _live_axes() -> set:
     return {r["axis"] for r in run_from_snapshots()["axes"] if r["verdict"] == LIVE}
 
 
-def _learner_baseline(scores: list[float]) -> tuple[float, float, float]:
+def _learner_baseline(scores: list[float], alpha: Optional[float] = None) -> tuple[float, float, float]:
     """baseline = persistence (last score, no self-knowledge of trend).
-    learner  = recent-trend self-model (extrapolate the last step), clamped."""
+    learner  = EWMA over the axis's own history, alpha chosen by past error.
+
+    UNTIL 2026-09-10 the learner was last-step extrapolation
+    (cur + (cur - prev)). Measured on the six indicators that move
+    (claude/reports/WORLD_FORECAST_BENCH.md) it lost to persistence 0/6,
+    at roughly twice the error, and on the 127 non-degenerate axis_next
+    outcomes in this ledger it won 12. A learner that is worse than doing
+    nothing is retired; the replacement must EARN its place on the scoreboard
+    (experiments/prophecy/scoreboard.py, kinds axis_next / world_next) or it
+    goes the same way.
+    """
     cur = scores[-1]
     baseline = cur
     if len(scores) >= 2:
-        learner = max(0.0, min(100.0, cur + (scores[-1] - scores[-2])))
+        a = alpha if alpha is not None else _fit_alpha(scores)
+        s = scores[0]
+        for v in scores[1:]:
+            s = a * v + (1 - a) * s
+        learner = max(0.0, min(100.0, s))
     else:
-        learner = cur  # degenerate — no trend to attend to yet
+        learner = cur  # degenerate — no history to attend to yet
     return round(learner, 4), round(baseline, 4), round(cur, 4)
+
+
+def _fit_alpha(scores: list[float]) -> float:
+    """The EWMA alpha with the lowest rolling one-step error on THIS history —
+    the same rule world_forecast.fit_alpha uses. Duplicated in a few lines rather
+    than imported so this file keeps its single sibling import (prophecy_ledger)."""
+    def mae(a: float) -> float:
+        errs = []
+        for t in range(3, len(scores)):
+            s = scores[0]
+            for v in scores[1:t]:
+                s = a * v + (1 - a) * s
+            errs.append(abs(s - scores[t]))
+        return sum(errs) / len(errs) if errs else float("inf")
+    return min((0.1, 0.2, 0.3, 0.5, 0.7, 0.9), key=mae)
 
 
 def seal_axis_prediction(axis: str, learner: float, baseline: float,
@@ -192,7 +277,7 @@ def cmd_predict_axes(one_axis: str | None = None) -> list:
         learner, baseline, cur = _learner_baseline(scores)
         rec = seal_axis_prediction(
             ax, learner, baseline, cur,
-            basis="learner=last-step trend extrapolation; baseline=persistence; scale=axis_history 0-100",
+            basis="learner=EWMA(alpha fitted on this axis's history); baseline=persistence; scale=axis_history 0-100",
             seen=len(scores), degenerate=(learner == baseline),
         )
         sealed.append(rec)
@@ -220,16 +305,23 @@ def cmd_score_axes() -> None:
 
 
 if __name__ == "__main__":
-    if "--predict-axes" in sys.argv:
-        _axis = None
-        if "--axis" in sys.argv:
-            _axis = sys.argv[sys.argv.index("--axis") + 1]
-        cmd_predict_axes(_axis)
-    elif "--score-axes" in sys.argv:
-        cmd_score_axes()
-    elif "--predict" in sys.argv:
-        cmd_predict()
-    elif "--score" in sys.argv:
-        cmd_score()
-    else:
-        cmd_status()
+    try:
+        if "--predict-axes" in sys.argv:
+            _axis = None
+            if "--axis" in sys.argv:
+                _axis = sys.argv[sys.argv.index("--axis") + 1]
+            cmd_predict_axes(_axis)
+        elif "--score-axes" in sys.argv:
+            cmd_score_axes()
+        elif "--predict" in sys.argv:
+            cmd_predict()
+        elif "--score" in sys.argv:
+            cmd_score()
+        else:
+            cmd_status()
+    except Refused:
+        # A refusal is an outcome, not a crash. Exit 2 is the house convention
+        # (self_forecast.py uses it too) and tools/prophecy_morning.bat reports it
+        # as announced-and-not-a-failure rather than cancelling the rest of the
+        # morning, which `&&` chaining used to do.
+        sys.exit(2)
