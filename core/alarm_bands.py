@@ -377,6 +377,124 @@ def sweep_indicators(bands_path=None, verified_path=None) -> dict:
             "rows": rows}
 
 
+# ── CONSTANCY AS A SIGNAL (11 Sep 2026, Emil) ─────────────────────────────────
+# "A number that does not move is still observed and recorded. A constant good
+# state is a POSITIVE constant — held, not abandoned. A constant bad state —
+# mortality, disease, conflict, poverty, discrimination — is NON-PROGRESS and
+# must raise an alarm and a search for a solution. Attention does not go only
+# to the axes that move most." Movement is judged against the axis's own
+# cadence (config/indicator_cadence.json): an annual series that has not
+# changed in 100 nights is not stagnant, it is annual; the same series without
+# improvement across its last observations is.
+CONSTANCY_LOG = BASE / "memory" / "constancy_bands_latest.json"
+AXIS_HISTORY = BASE / "memory" / "axis_history.json"
+CADENCE = BASE / "config" / "indicator_cadence.json"
+MOVING, POSITIVE_CONSTANT, NEGATIVE_CONSTANT, UNCLASSIFIED = (
+    "MOVING", "POSITIVE_CONSTANT", "NEGATIVE_CONSTANT", "UNCLASSIFIED")
+STAGNATION = "STAGNATION"
+NEAR_TARGET = 0.8          # score at/above this while still: held — a positive constant
+FAR_FROM_TARGET = 0.6      # score below this while still: non-progress
+WINDOW_DAYS = {"daily": 30, "weekly": 60, "monthly": 120, "quarterly": 270, "annual": 400}
+
+
+def _cadence_days(axis: str, cadence_path=None) -> int:
+    try:
+        cad = json.loads((cadence_path or CADENCE).read_text(encoding="utf-8"))
+        c = ((cad.get("indicators") or {}).get(axis) or {}).get("cadence")
+        return WINDOW_DAYS.get(c, 400)
+    except Exception:
+        return 400
+
+
+def last_change_days(axis: str, history_path=None, now=None) -> tuple:
+    """(days since ANY numeric metric of the axis last changed, span_days observed) or (None, 0)."""
+    try:
+        h = json.loads((history_path or AXIS_HISTORY).read_text(encoding="utf-8"))
+        ser = h.get(axis)
+    except Exception:
+        return None, 0
+    if not isinstance(ser, list):
+        return None, 0
+    now = now or datetime.now(timezone.utc).date()
+    pts = []
+    for e in ser:
+        if isinstance(e, dict) and e.get("date"):
+            m = {k: v for k, v in (e.get("metrics") or {}).items() if isinstance(v, (int, float)) and not isinstance(v, bool)}
+            pts.append((str(e["date"])[:10], m))
+    pts.sort()
+    if len(pts) < 2:
+        return None, 0
+    last_change = None
+    prev = pts[0][1]
+    for d, m in pts[1:]:
+        if any(m.get(k) != prev.get(k) for k in set(m) | set(prev)):
+            last_change = d
+        prev = m
+    try:
+        first = datetime.fromisoformat(pts[0][0]).date()
+        span = (now - first).days
+        days = (now - datetime.fromisoformat(last_change).date()).days if last_change else span
+    except ValueError:
+        return None, 0
+    return days, span
+
+
+def constancy(goal_path=None, history_path=None, cadence_path=None, now=None) -> dict:
+    """One row per measured axis: MOVING / POSITIVE_CONSTANT / NEGATIVE_CONSTANT.
+    NEGATIVE_CONSTANT rows are STAGNATION signals. Never raises."""
+    try:
+        goal = json.loads((goal_path or GOAL_SCORE).read_text(encoding="utf-8"))
+    except Exception:
+        goal = {}
+    rows = []
+    for detail in (goal.get("metric_details") or {}).values():
+        axis, score = detail.get("axis"), _num(detail.get("score"))
+        if not axis:
+            continue
+        days, span = last_change_days(axis, history_path, now)
+        window = _cadence_days(axis, cadence_path)
+        if days is None or score is None:
+            cls, why = UNCLASSIFIED, "no history or no score"
+        elif span < window:
+            cls, why = UNCLASSIFIED, f"only {span} days of history against a {window}-day window"
+        elif days <= window:
+            cls, why = MOVING, f"changed {days} days ago (window {window})"
+        elif score >= NEAR_TARGET:
+            cls, why = POSITIVE_CONSTANT, f"held: unchanged {days} days at score {score}"
+        elif score < FAR_FROM_TARGET:
+            cls, why = NEGATIVE_CONSTANT, f"NON-PROGRESS: unchanged {days} days at score {score} (target {detail.get('target')})"
+        else:
+            cls, why = UNCLASSIFIED, f"still {days} days at score {score} — neither near nor far"
+        rows.append({"axis": axis, "class": cls, "score": score, "current": detail.get("current"),
+                     "target": detail.get("target"), "direction": detail.get("direction"),
+                     "days_since_change": days, "history_days": span, "window_days": window, "why": why})
+    counts = {c: sum(1 for r in rows if r["class"] == c) for c in (MOVING, POSITIVE_CONSTANT, NEGATIVE_CONSTANT, UNCLASSIFIED)}
+    return {"ts": _now(), "axes": len(rows), "counts": counts,
+            "stagnation": [r for r in rows if r["class"] == NEGATIVE_CONSTANT], "rows": rows}
+
+
+def send_stagnation(result: dict, sender=None, now=None) -> int:
+    """Once a week per stagnant axis — a standing condition is a weekly reminder, not a nightly siren."""
+    sent = 0
+    week = (now or datetime.now(timezone.utc)).strftime("%G-W%V")
+    for row in result.get("stagnation", []):
+        text = (f"⏸ CORTEX++ · ЗАСТОЙ · {row['axis']}\n"
+                f"{row['why']}\n"
+                f"Ненапредък: показателят стои далеч от целта и не се движи. Търси се решение.")
+        try:
+            if sender is not None:
+                sender(row["axis"], text)
+            else:
+                import supervisor
+                supervisor.alarm_human(f"застой {row['axis']}", text,
+                                       dedup_key=f"stagnation:{row['axis']}:{week}",
+                                       trigger="MANUAL", level=supervisor.ALARM)
+            sent += 1
+        except Exception:
+            pass
+    return sent
+
+
 def send(result: dict, sender=None) -> int:
     """One message per alarm, immediately, past quiet hours."""
     sent = 0
@@ -438,6 +556,18 @@ def run() -> dict:
         print(f"[ALARM] CROSSED {row['axis']}: {row['why']}")
     for row in result["config_errors"]:
         print(f"[ALARM] CONFIG_ERROR {row['axis']}: {row['why']}")
+    # constancy: the axes that do not move, told apart by which side of the goal they sit on
+    try:
+        result["constancy"] = constancy()
+        CONSTANCY_LOG.write_text(json.dumps(result["constancy"], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        sent_st = send_stagnation(result["constancy"])
+        cc = result["constancy"]["counts"]
+        print(f"[ALARM] constancy: MOVING {cc[MOVING]} | POSITIVE_CONSTANT {cc[POSITIVE_CONSTANT]} | "
+              f"NEGATIVE_CONSTANT {cc[NEGATIVE_CONSTANT]} ({sent_st} stagnation notices) | unclassified {cc[UNCLASSIFIED]}")
+        for row in result["constancy"]["stagnation"]:
+            print(f"[ALARM] {STAGNATION} {row['axis']}: {row['why']}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[ALARM] constancy sweep failed: {type(exc).__name__}: {exc}")
     ind, ic = result["indicators"], result["indicators"]["counts"]
     print(f"[ALARM] {ind['bands']} signed indicator bands | ALARM {ic[ALARM]} ({sent_ind} sent) | "
           f"OK {ic[OK]} | RECORD_ONLY {ic[RECORD_ONLY]} | no value {ic[NO_VALUE]} | "

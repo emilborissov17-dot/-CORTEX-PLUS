@@ -48,6 +48,20 @@ _TIME_RULES: list[tuple[re.Pattern, object]] = [
 _DEFAULT_MONTHS = 6
 _PRIORITY_ORDER = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
 
+# ── A-3 (11 септември 2026): ГРОБИЩЕТО ─────────────────────────────────────
+# Измерено по логовете 7–11 септ.: 117 → 133 PROPOSED, 0 IN_PROGRESS, +3–6 на
+# нощ, двайсет инициативи за „Safe water access (%)", три Groq извиквания на
+# нощ за action_plan-ове, които никой не може да придвижи (advance_status няма
+# извикващ извън този файл). Предложение без път до решение е шум, който
+# закрива редките истински. Правилата, ратифицирани от Емил (default a+b+c+d):
+#   (a) ЕДНА активна инициатива на (показател, посока); втора е дубликат и се
+#       затваря с причина „duplicate of <id>";
+#   (b) таван MAX_ACTIVE активни; отгоре — CANCELLED с причина „cap";
+#   (c) action_plan се генерира само когато ЧОВЕК приеме (→ IN_PROGRESS), не
+#       при създаване — нула LLM извиквания за предложения, които никой не чете;
+#   (d) известието казва „N чакат ТВОЕ решение" с id-та (awaiting_decision()).
+MAX_ACTIVE = 25
+
 # Valid manual transitions (from → set of allowed to)
 _ALLOWED_TRANSITIONS: dict[str, set[str]] = {
     "PROPOSED":    {"IN_PROGRESS", "CANCELLED"},
@@ -426,6 +440,11 @@ def advance_status(init_id: str, new_status: str) -> bool:
     rec["updated_at"] = datetime.now(timezone.utc).isoformat()
     if new_status == "IN_PROGRESS" and not rec.get("started_at"):
         rec["started_at"] = rec["updated_at"]
+        # A-3 (c): the plan is earned by a human decision, and written once
+        if not rec.get("action_plan"):
+            rec["action_plan"] = _generate_action_plan(problem=rec.get("problem", ""),
+                                                       solution=rec.get("solution", ""),
+                                                       target_date=rec.get("target_date", ""))
     elif new_status == "DONE":
         rec["completed_at"] = rec["updated_at"]
     elif new_status == "CANCELLED":
@@ -434,6 +453,55 @@ def advance_status(init_id: str, new_status: str) -> bool:
     init_path.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[INITIATIVE_TRACKER] ✓ {init_id}: {current} → {new_status}")
     return True
+
+
+def _dedup_key(milestone: str, problem: str = "", solution: str = "") -> str:
+    """(показател, посока) когато милестоунът съвпада с _METRIC_MAP; иначе първите
+    8 думи на милестоуна, нормализирани. Две инициативи с еднакъв ключ са една."""
+    m = _match_metric(f"{milestone} {problem} {solution}")
+    if m:
+        return f"metric:{m[0]}:{m[1]}"
+    words = re.findall(r"[\w%]+", str(milestone or "").lower())
+    return "text:" + " ".join(words[:8])
+
+
+def _cancel(rec: dict, reason: str, path) -> None:
+    rec["status"] = "CANCELLED"
+    rec["cancel_reason"] = reason
+    rec["cancelled_at"] = datetime.now(timezone.utc).isoformat()
+    path.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def dedupe_active(max_active: int = MAX_ACTIVE) -> dict:
+    """Едно почистване: по един активен запис на ключ (най-старият остава — той е
+    по-близо до първото предложение), после таванът по приоритет/дата.
+    Връща броячи; идемпотентно."""
+    counts = {"duplicates_cancelled": 0, "cap_cancelled": 0, "active": 0}
+    active = load_active()
+    active.sort(key=lambda r: r.get("created_at", ""))
+    keep: dict = {}
+    for rec in active:
+        k = _dedup_key(rec.get("milestone", ""), rec.get("problem", ""), rec.get("solution", ""))
+        if rec.get("status") == "IN_PROGRESS" or k not in keep:
+            keep.setdefault(k, rec)
+            continue
+        _cancel(rec, f"duplicate of {keep[k]['id']}", INITIATIVES_DIR / f"{rec['id']}.json")
+        counts["duplicates_cancelled"] += 1
+    survivors = sorted(keep.values(), key=lambda r: (0 if r.get("status") == "IN_PROGRESS" else 1,
+                                                    _PRIORITY_ORDER.get(r.get("priority", "LOW"), 9),
+                                                    r.get("target_date", "")))
+    for rec in survivors[max_active:]:
+        _cancel(rec, f"cap {max_active} active initiatives reached", INITIATIVES_DIR / f"{rec['id']}.json")
+        counts["cap_cancelled"] += 1
+    counts["active"] = min(len(survivors), max_active)
+    return counts
+
+
+def awaiting_decision(limit: int = 10) -> list[dict]:
+    """Какво чака ЧОВЕКА: PROPOSED/OVERDUE, най-приоритетните първи — за известието."""
+    return [{"id": r["id"], "milestone": r.get("milestone", "")[:80], "priority": r.get("priority"),
+             "status": r.get("status"), "target_date": r.get("target_date")}
+            for r in load_active() if r.get("status") in ("PROPOSED", "OVERDUE")][:limit]
 
 
 def run() -> list[dict]:
@@ -457,7 +525,10 @@ def run() -> list[dict]:
         return []
 
     now     = datetime.now(timezone.utc)
-    created = updated = skipped = 0
+    created = updated = skipped = duplicates = capped = 0
+    # A-3: ключовете на вече активните — нова инициатива за същия показател е дубликат
+    active_keys = {_dedup_key(r.get("milestone", ""), r.get("problem", ""), r.get("solution", "")): r["id"]
+                   for r in load_active()}
 
     for proposal in proposals:
         if _is_code_action(proposal):
@@ -470,6 +541,16 @@ def run() -> list[dict]:
         existing_created_at = now.isoformat()
 
         is_new = not init_path.exists()
+        if is_new:
+            _ms = (proposal.get("measurable_goal") or proposal.get("solution", ""))[:120]
+            _k = _dedup_key(_ms, proposal.get("problem", ""), proposal.get("solution", ""))
+            if _k in active_keys:
+                duplicates += 1
+                continue                      # not written at all: a duplicate is not a record
+            if len(active_keys) >= MAX_ACTIVE:
+                capped += 1
+                continue
+            active_keys[_k] = init_id
         if not is_new:
             try:
                 existing = json.loads(init_path.read_text(encoding="utf-8"))
@@ -490,20 +571,10 @@ def run() -> list[dict]:
         target_date = (now + timedelta(days=months * 30.44)).strftime("%Y-%m-%d")
         milestone   = (proposal.get("measurable_goal") or proposal.get("solution", ""))[:120]
 
-        # Generate action_plan only for brand-new initiatives (avoid re-generating on each update)
-        if is_new:
-            print(f"[INITIATIVE_TRACKER] Генерирам action_plan за {init_id}…")
-            action_plan = _generate_action_plan(
-                problem=proposal.get("problem", ""),
-                solution=proposal.get("solution", ""),
-                target_date=target_date,
-            )
-            if action_plan:
-                print(f"[INITIATIVE_TRACKER]   → {len(action_plan)} стъпки генерирани ✓")
-            else:
-                print(f"[INITIATIVE_TRACKER]   → action_plan празен (LLM грешка или недостъпен)")
-        else:
-            action_plan = existing_action_plan
+        # A-3 (c): NO action_plan at creation. It is generated once, in advance_status(),
+        # the moment a human moves the initiative to IN_PROGRESS. Until then a plan
+        # is three Groq calls a night for a record nobody reads.
+        action_plan = existing_action_plan
 
         record: dict = {
             "id":                 init_id,
@@ -524,7 +595,12 @@ def run() -> list[dict]:
 
         init_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"[INITIATIVE_TRACKER] created={created} updated={updated} skipped_code={skipped}")
+    print(f"[INITIATIVE_TRACKER] created={created} updated={updated} skipped_code={skipped} "
+          f"duplicates_refused={duplicates} cap_refused={capped}")
+    _sw = dedupe_active()
+    if _sw["duplicates_cancelled"] or _sw["cap_cancelled"]:
+        print(f"[INITIATIVE_TRACKER] sweep: {_sw['duplicates_cancelled']} duplicate(s) cancelled, "
+              f"{_sw['cap_cancelled']} over the cap cancelled, {_sw['active']} active")
 
     # Measure progress for all active initiatives against global_indicators
     indicators = _load_indicators()

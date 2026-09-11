@@ -225,3 +225,63 @@ def test_full_round_trip_seals_three_kinds_and_scores_them(ledger, tmp_path):
     assert by["self_step_fail"]["all_time"]["n"] == 1
     md = sb.to_markdown(board)
     assert "self_step_fail" in md and "| brier |" in md
+
+
+# ── self_survive: p_survive sealed at boot, scored in the morning (11 Sep 2026) ─
+
+def test_p_survive_is_sealed_as_a_prediction_and_note_pending_when_unmeasurable(ledger):
+    ev = _history(5)
+    r = sf.seal_survival("cyc-x", 0.05, "low", horizon_seconds=7200, events=ev)
+    assert r["event"] == pl.PREDICTION and r["target_kind"] == sf.SURVIVE_KIND
+    assert r["learner"] == 0.05 and 0 < r["baseline"] <= 1 and r["target_id"] == "cycle::cyc-x"
+    r2 = sf.seal_survival("cyc-y", None, "none", events=ev)
+    assert r2["event"] != pl.PREDICTION                    # no number -> no coin
+    assert sum(1 for x in pl.read_all() if x.get("event") == pl.PREDICTION) == 1
+
+
+def test_self_survive_is_scored_against_its_own_cycles_terminal_event(ledger):
+    ev = _history(5)
+    cid_ok, cid_dead = "cyc-ok", "cyc-dead"
+    sf.seal_survival(cid_ok, 0.05, "low", events=ev)        # said 5% — it will finish
+    sf.seal_survival(cid_dead, 0.9, "low", events=ev)       # said 90% — it will die
+    sf.seal_survival("cyc-open", 0.5, "low", events=ev)     # no terminal event yet
+    assert sf.cmd_score(events=ev) == 0                     # nothing has ended
+    ev2 = ev + [_ev("CYCLE_STARTED", "2026-09-20T00:04:00+00:00", cid_ok),
+                _ev("CYCLE_FINISHED", "2026-09-20T02:00:00+00:00", cid_ok, duration_sec=7000, degraded_steps=0),
+                _ev("CYCLE_STARTED", "2026-09-21T00:04:00+00:00", cid_dead),
+                _ev("CYCLE_KILLED", "2026-09-21T01:00:00+00:00", cid_dead)]
+    assert sf.cmd_score(events=ev2) == 2
+    outs = {r["scored_cycle"]: r for r in pl.read_all() if r.get("event") == pl.OUTCOME}
+    assert outs[cid_ok]["actual"] == 1 and outs[cid_dead]["actual"] == 0
+    assert outs[cid_ok]["learner_err"] == pytest.approx((0.05 - 1) ** 2)       # 0.9025: the 5% was badly wrong
+    assert outs[cid_dead]["learner_err"] == pytest.approx(0.81)
+    assert "cyc-open" not in outs
+
+
+def test_predict_never_seals_self_survive(ledger, tmp_path):
+    """The 09:00 run must not guess a number that is computed at 03:04."""
+    ev = _history(5)
+    _logs(tmp_path, range(1, 6))
+    sf.cmd_predict(events=ev, logs_dir=tmp_path / "cycle_logs")
+    kinds = {r.get("target_kind") for r in pl.read_all() if r.get("event") == pl.PREDICTION}
+    assert sf.SURVIVE_KIND not in kinds and kinds
+
+
+def test_survival_baseline_is_laplace_over_terminal_events():
+    ev = _history(3) + [_ev("CYCLE_STARTED", "2026-09-09T00:00:00+00:00", "d"),
+                        _ev("CYCLE_DIED", "2026-09-09T01:00:00+00:00", "d")]
+    b = sf.survival_baseline(ev)
+    assert 0.5 < b < 1.0                                    # 3 of 4 finished, smoothed
+
+
+def test_survival_gate_seals_after_recording_and_the_decision_ignores_it(monkeypatch, tmp_path):
+    """Structural: the seal happens inside _record_p_survive, after record(), and
+    guard()'s decision is taken before it — deleting the seal changes no verdict."""
+    import pathlib as _pl
+    from core import survival_gate as sg
+    src = _pl.Path(sg.__file__).read_text(encoding="utf-8")
+    body = src[src.index("def _record_p_survive"):src.index("def guard")]
+    assert body.index("p_survive.record(") < body.index("seal_survival(")
+    assert "decision[\"p_survive\"] = _record_p_survive" in src
+    gsrc = src[src.index("def guard"):]
+    assert gsrc.index("decision = check(") < gsrc.index("_record_p_survive(")   # verdict first, metric after

@@ -92,6 +92,11 @@ CYCLE_LOGS_DIR = REPO / "memory" / "cycle_logs"
 RECENT_WINDOW = 7          # nights that count as "recent self-state"
 MIN_HISTORY = 3            # fewer finished cycles than this -> note_pending, not a coin
 KINDS = ("self_duration", "self_degraded", "self_step_fail")
+# self_survive is SEALED AT BOOT by core/survival_gate.py (the number exists only
+# then) and SCORED here in the morning. It is not in KINDS because --predict must
+# not seal it: a 09:00 seal would be a guess about a p that is computed at 03:04.
+SURVIVE_KIND = "self_survive"
+SCORED_KINDS = KINDS + (SURVIVE_KIND,)
 TERMINAL = ("CYCLE_FINISHED", "CYCLE_DIED", "CYCLE_KILLED")
 
 # The one line a failed step leaves in the cycle log, e.g.
@@ -338,15 +343,67 @@ def _brier(p, actual) -> float:
     return round((float(p) - float(actual)) ** 2, 6)
 
 
+# ── self_survive: p_survive, finally scored (11 Sep 2026, phase-A review) ──────
+# core/p_survive.py has computed "the chance the next cycle reaches its end" at
+# every boot since 23 Aug and nothing ever checked it: 7 Sep 0.04, 8 Sep 0.0009,
+# 11 Sep 0.05 — and all three nights finished. A probability nobody scores is a
+# formula. self_forecast already scores the same question (self_failure, Brier
+# 0.17 vs 0.33); two self-models for one question is one too many, and the
+# ledger decides which one lives. The hard constraint of p_survive.py stands:
+# the number never enters a prompt — the ledger is a record, not a prompt.
+
+def survival_baseline(events: list[dict], n: int = 20) -> float:
+    """Climatology: Laplace rate of CYCLE_FINISHED among the last n terminal events."""
+    term = [e for e in events if e.get("event") in TERMINAL][-n:]
+    return _laplace([1 if e.get("event") == "CYCLE_FINISHED" else 0 for e in term])
+
+
+def seal_survival(cycle_id: str, p, confidence, horizon_seconds=None,
+                  events: Optional[list[dict]] = None) -> dict:
+    """Seal p_survive for THIS cycle, at boot, before the outcome. Called by
+    core/survival_gate._record_p_survive; fail-open there. p None -> note_pending."""
+    events = read_existence() if events is None else events
+    tid = f"cycle::{cycle_id}"
+    if not isinstance(p, (int, float)):
+        return pl.note_pending(tid, f"p_survive not measurable at boot (confidence {confidence})",
+                               kind=SURVIVE_KIND)
+    from datetime import datetime, timedelta, timezone
+    hz = float(horizon_seconds or 6 * 3600)
+    horizon = (datetime.now(timezone.utc) + timedelta(seconds=hz)).isoformat()
+    return pl.seal_prediction(SURVIVE_KIND, tid, horizon, float(p), survival_baseline(events),
+                              basis="p_survive: product of time-to-threshold ratios over defended variables "
+                                    "(core/p_survive.py); baseline: Laplace rate of finished nights",
+                              cycle_id=cycle_id, confidence=confidence, rule="brier")
+
+
+def _terminal_for(cycle_id: str, events: list[dict]) -> Optional[str]:
+    for e in reversed(events):
+        if e.get("cycle_id") == cycle_id and e.get("event") in TERMINAL:
+            return e.get("event")
+    return None
+
+
 def cmd_score(events: Optional[list[dict]] = None, logs_dir: Path = CYCLE_LOGS_DIR) -> int:
     events = read_existence() if events is None else events
     fin = finished_cycles(events)
     records = pl.read_all()
     already = {r.get("ref_hash") for r in records if r.get("event") == pl.OUTCOME}
     open_preds = [r for r in records if r.get("event") == pl.PREDICTION
-                  and r.get("target_kind") in KINDS and r.get("hash") not in already]
+                  and r.get("target_kind") in SCORED_KINDS and r.get("hash") not in already]
     n = 0
     for p in open_preds:
+        if p["target_kind"] == SURVIVE_KIND:
+            # the cycle it was sealed for, by id — its own terminal event decides
+            cid = str(p.get("target_id", "")).split("::", 1)[-1]
+            term = _terminal_for(cid, events)
+            if term is None:
+                continue                  # that cycle has not ended — stays open
+            actual = 1 if term == "CYCLE_FINISHED" else 0
+            pl.score_prediction(p["hash"], actual, scored_cycle=cid, terminal=term,
+                                learner_err=_brier(p["learner"], actual),
+                                baseline_err=_brier(p["baseline"], actual), rule="brier")
+            n += 1
+            continue
         # The night being predicted is the first CYCLE_FINISHED after the ANCHOR
         # (the terminal event the seal was made after), not after the seal's own
         # wall-clock — so a replayed or back-dated ledger scores the same way.
@@ -386,7 +443,7 @@ def cmd_status() -> dict:
     board, every kind, is experiments/prophecy/scoreboard.py)."""
     records = pl.read_all()
     out = {}
-    for kind in KINDS:
+    for kind in SCORED_KINDS:
         sc = [r for r in records if r.get("event") == pl.OUTCOME and r.get("target_kind") == kind
               and r.get("learner_err") is not None and r.get("baseline_err") is not None]
         n = len(sc)

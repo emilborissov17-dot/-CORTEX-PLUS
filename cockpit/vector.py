@@ -115,7 +115,16 @@ def append(vector: dict, store_path: pathlib.Path) -> pathlib.Path:
 
 
 def load(store_path: pathlib.Path, limit: int = 5000) -> list:
-    """Stored vectors, oldest first. `store_path` is REQUIRED."""
+    """Stored VECTORS, oldest first. `store_path` is REQUIRED.
+
+    Only rows that carry a list under "vector" are vectors. The store also holds
+    marker rows — on 27 Aug 2026 a {"schema_change": true, ...} line was appended
+    to record the flow_score -> integrity_ratio change — and from the night the
+    lexicon went warm (>= MIN_CYCLES rows) `usable_matrix` did r["vector"] on that
+    marker and every phase of every cycle printed "no expression line (producer
+    RAISED: KeyError: 'vector')". Found 11 Sep 2026, phase-by-phase review.
+    Markers are kept in the file (they are the record of the schema) and skipped
+    here (they are not points in the space)."""
     try:
         lines = pathlib.Path(store_path).read_text(encoding="utf-8").splitlines()
     except OSError:
@@ -123,9 +132,11 @@ def load(store_path: pathlib.Path, limit: int = 5000) -> list:
     out = []
     for line in lines[-limit:]:
         try:
-            out.append(json.loads(line))
+            row = json.loads(line)
         except ValueError:
             continue
+        if isinstance(row, dict) and isinstance(row.get("vector"), list):
+            out.append(row)
     return out
 
 
@@ -158,6 +169,7 @@ def usable_matrix(rows: list) -> tuple:
     become a cluster centre, and the glyph named after it would mean "the sensor
     we could not read", which is not a state of the world.
     """
+    rows = [r for r in rows if isinstance(r, dict) and isinstance(r.get("vector"), list)]
     if not rows:
         return [], []
     dims = len(rows[0]["vector"])

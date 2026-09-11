@@ -257,6 +257,26 @@ def _record_p_survive(cycle_id, decision: dict):
             print("[{}] {} = {} (confidence {}) — recorded, not consulted"
                   .format(NAME, p_survive.NAME, rec["value"],
                           rec["confidence"]))
+        # ── SEALED, SO IT CAN BE WRONG (11 Sep 2026) ────────────────────────
+        # Still not consulted, still never in a prompt. But from tonight the
+        # number is also a PREDICTION in the prophecy ledger (kind self_survive),
+        # scored by experiments/prophecy/self_forecast.py --score against this
+        # cycle's own terminal event. 7 Sep 0.04, 8 Sep 0.0009, 11 Sep 0.05 —
+        # three finished nights — went unscored for three weeks. Fail-open: a
+        # ledger that cannot be written costs one unsealed night, not the gate.
+        try:
+            import importlib.util as _ilu
+            _sp = _ilu.spec_from_file_location(
+                "self_forecast", BASE / "experiments" / "prophecy" / "self_forecast.py")
+            _sf = _ilu.module_from_spec(_sp)
+            _sp.loader.exec_module(_sf)
+            _sealed = _sf.seal_survival(str(cycle_id), rec.get("value"), rec.get("confidence"),
+                                        horizon_seconds=rec.get("horizon_seconds"))
+            print("[{}] {} sealed in the prophecy ledger as {} ({})".format(
+                NAME, p_survive.NAME, _sf.SURVIVE_KIND, _sealed.get("event")))
+        except Exception as _exc:  # noqa: BLE001
+            print("[{}] {} NOT sealed: {}: {}".format(NAME, p_survive.NAME,
+                                                     type(_exc).__name__, _exc))
         return {"value": rec.get("value"), "confidence": rec.get("confidence")}
     except Exception as exc:
         print("[{}] p_survive not recorded: {}: {}".format(
