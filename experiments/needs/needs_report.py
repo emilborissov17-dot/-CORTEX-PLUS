@@ -461,6 +461,103 @@ def _penumbra_items():
 
 # ── BODY: compute / rate-limits / survival (homeostasis) ─────────────────────
 
+def _repeated_failure_items():
+    """ITEM 70 — A STEP THAT SAYS FAILED TWO NIGHTS RUNNING MUST ALERT.
+
+    Kimi, 3 Sep: "Трябва да спре моделът 'логнал съм FAILED, значи съм си свършил
+    работата'." merkle_to_training failed on six consecutive nights and the only
+    record was a line in a log nobody reads to the end. sensorium_ingest did the
+    same thing and was found 17 days late.
+
+    MEASURED FROM memory/cycle_logs/, never from memory or a status file, because
+    the thing being detected is precisely a subsystem whose own report of itself is
+    wrong. The parser is self_forecast's — one reader of the '-> FAILED' line
+    format, not a second copy that could disagree about what FAILED means.
+
+    WHAT NO OUTPUT MEANS, so it is not read as a broken detector: {} is the normal
+    and desirable answer. Fewer than two logs on disk, or no step failing in BOTH
+    of the last two, both produce no need. ONE bad night produces NOTHING — a
+    single failure is not a pattern, and paging on it is how a channel gets muted.
+    The forbidden fallback is a need raised on a single night, or a need raised
+    without the exception text, which would page a human who then has to go and
+    grep the log anyway."""
+    try:
+        sys.path.insert(0, str(REPO / "experiments" / "prophecy"))
+        import self_forecast as _sf
+        repeated = _sf.repeated_step_failures(nights=2)
+    except Exception:
+        # FAIL-OPEN, like every other item builder here: the needs report must
+        # still be produced if this one source cannot be read. A missing alert is
+        # visible as an absent need; a crashed report silences all three hungers.
+        return []
+    out = []
+    for step, messages in repeated.items():
+        last = messages[-1] or "no message on the FAILED line"
+        same = len(set(m for m in messages if m)) <= 1
+        out.append(_item(
+            "BODY", "high", f"step '{step}' FAILED on both of the last two nights",
+            f"{'the same error each night' if same else 'a different error each night'}: "
+            f"{last} — read from memory/cycle_logs/, not from any status file. A step "
+            f"that fails nightly and only prints into the log teaches the log to be "
+            f"ignored; merkle_to_training did this for six nights.",
+            f"PROPOSE: fix or retire '{step}'. A step with no permitted consumer should "
+            f"leave the night with a named reason rather than keep failing in it.",
+            "auto->human"))
+    return out
+
+
+def _missing_media_dep_items():
+    """STEP 6d — A DEPENDENCY THE MACHINE MAY NOT INSTALL ITSELF MUST BE ASKED FOR.
+
+    `deno` has been MISSING since the media leg was built. Without it yt-dlp
+    cannot run the JS that resolves YouTube signatures, so the Whisper leg has
+    never produced text — and the only record of that was one
+    `[DEP_CHECK] MISSING deno` line, printed nightly into a log, at a point where
+    a human has long stopped reading. The same shape of defect as ITEM 70 above:
+    a subsystem that reports its own breakage into a place nobody looks is
+    indistinguishable from one that works.
+
+    IT IS ASKED FOR, NOT INSTALLED. tools/install_media_deps.ps1 is a human's to
+    run; the cycle does not modify the machine it runs on, and this builder must
+    never grow an install path. That is why it is a need with `auto->human` and
+    not an action.
+
+    WHAT NO OUTPUT MEANS: [] is the desired steady state and arrives the moment
+    the binary is on PATH — the need self-clears, no one has to remember to
+    retract it. Severity is MEDIUM, not HIGH: the leg is optional, the rest of
+    the cycle is unaffected, and a HIGH that cannot be cleared tonight is how a
+    channel gets muted (the ITEM 70 lesson, applied to its own neighbour)."""
+    try:
+        sys.path.insert(0, str(REPO))
+        from core import media_tools as _mt
+        status = _mt.status()
+    except Exception:
+        # FAIL-OPEN, as everywhere in this file: an unreadable source is an
+        # absent need, never a crashed report.
+        return []
+    out = []
+    for name, why in (
+        ("deno", "yt-dlp cannot run the JS that resolves YouTube signatures, so "
+                 "the Whisper leg has never produced text"),
+        ("ffmpeg", "yt-dlp -x cannot extract audio, so the Whisper leg has no input"),
+    ):
+        if status.get(f"{name}_ok"):
+            continue
+        found = status.get(name)
+        detail = (f"{name} was found at {found} but `--version` did not run — a dead "
+                  f"runtime is not passed to yt-dlp, so it counts as absent"
+                  if found else f"{name} is not on PATH")
+        out.append(_item(
+            "BODY", "medium", f"{name} is missing and only the cycle log said so",
+            f"{detail}; {why}. Printed nightly as '[DEP_CHECK] MISSING {name}' and "
+            f"nowhere a human looks. The cycle does not install software on this "
+            f"machine, so this can only ever be a request.",
+            f"PROPOSE: run tools\\install_media_deps.ps1 to put {name} on PATH. This "
+            f"need clears itself on the next report once it is there.",
+            "auto->human"))
+    return out
+
+
 def _body_items():
     homeo = _load(HOMEOSTASIS, {})
     prof = _load(SELF_PROFILE, {})
@@ -612,7 +709,8 @@ def _deduction_items():
 
 
 def build() -> dict:
-    items = _mind_items() + _deduction_items() + _body_items() + _spirit_items()
+    items = (_mind_items() + _deduction_items() + _repeated_failure_items()
+             + _missing_media_dep_items() + _body_items() + _spirit_items())
     order = {"high": 0, "medium": 1, "low": 2, "info": 3}
     items.sort(key=lambda x: order.get(x["severity"], 9))
 
