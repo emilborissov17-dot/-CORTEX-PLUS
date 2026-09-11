@@ -90,4 +90,73 @@ def test_missing_files_never_raise(tmp_path):
 
 def test_the_live_repo_classifies_without_error():
     r = ab.constancy()
-    assert r["axes"] >= 1 and set(r["counts"]) == {"MOVING", "POSITIVE_CONSTANT", "NEGATIVE_CONSTANT", "UNCLASSIFIED"}
+    assert r["axes"] >= 1 and set(r["counts"]) == {"MOVING", "POSITIVE_CONSTANT", "NEGATIVE_CONSTANT", "NEGATIVE_TREND", "UNCLASSIFIED"}
+
+
+# ── the quoted window must be the FITTED window (11 Sep 2026) ────────────────
+
+def _food_series():
+    """The real FOOD_REVIEW annual base: a long fall, then a post-2014 rise."""
+    return [(2001, 12.8), (2002, 12.9), (2003, 12.5), (2004, 12.0), (2005, 11.4),
+            (2006, 10.9), (2007, 10.4), (2008, 10.1), (2009, 9.7), (2010, 9.2),
+            (2011, 8.9), (2012, 8.6), (2013, 8.2),
+            (2014, 7.7), (2015, 7.6), (2016, 7.5), (2017, 7.4), (2018, 7.3),
+            (2019, 7.8), (2020, 8.2), (2021, 8.6), (2022, 8.6), (2023, 8.5)]
+
+
+def test_the_slope_is_fitted_on_the_last_ten_not_the_whole_series():
+    t = ab.trend(_food_series(), "lower_better")
+    assert t["years"] == 23 and t["fit_years"] == 10
+    assert t["fit_first"] == (2014, 7.7) and t["fit_last"] == (2023, 8.5)
+    assert t["first"] == (2001, 12.8), "the full series is still reported"
+    assert t["verdict"] == ab.WORSENING, (
+        "2014 -> 2023 rises under lower_better, so WORSENING is the right verdict")
+
+
+def test_the_notice_quotes_the_fitted_window_not_the_full_series(tmp_path):
+    """THE DEFECT, 11 Sep 2026, first live run. The notice read
+
+        WORSENING over 10 years (2001: 12.8 -> 2023: 8.5, +0.13697/yr)
+
+    Every part is true alone: the slope is fitted on the last 10 points, which
+    genuinely rise, and first/last are the 23-year series, which falls. Printed
+    together they read as a contradiction — a 4.3-point improvement labelled
+    WORSENING — and a correct alarm that reads as a broken one gets the NEXT true
+    one dismissed as well.
+    """
+    t = ab.trend(_food_series(), "lower_better")
+    ff, fl = t["fit_first"], t["fit_last"]
+    span = f"{ff[0]}: {ff[1]} -> {fl[0]}: {fl[1]}"
+    assert span == "2014: 7.7 -> 2023: 8.5"
+    # the forbidden pairing: the fitted years with the full series' endpoints
+    bad = f"over {t['fit_years']} years ({t['first'][0]}: {t['first'][1]} -> {t['last'][0]}: {t['last'][1]}"
+    assert "2001: 12.8 -> 2023: 8.5" in bad, "this is the sentence that must not be built"
+
+
+def test_a_reversal_is_named_because_it_is_worse_than_a_flat_line():
+    """When the long run went the GOOD way and the fitted window goes the bad way,
+    that is the most important thing in the notice — an improvement being undone,
+    not a softening of the alarm."""
+    t = ab.trend(_food_series(), "lower_better")
+    long_good = t["first"][1] > t["fit_last"][1]      # 12.8 > 8.5 under lower_better
+    assert long_good, "the fixture must contain a long improvement to reverse"
+    assert t["first"][0] < t["fit_first"][0], "the long run must predate the fit window"
+
+
+def test_a_series_that_only_ever_worsened_names_no_reversal():
+    """NEGATIVE CONTROL. A reversal sentence on a series that never improved would
+    be an invented consolation."""
+    only_worse = [(2010 + i, 5.0 + 0.4 * i) for i in range(14)]
+    t = ab.trend(only_worse, "lower_better")
+    assert t["verdict"] == ab.WORSENING
+    long_good = t["first"][1] > t["fit_last"][1]
+    assert not long_good, "nothing improved here, so no reversal may be claimed"
+
+
+def test_higher_better_reads_the_reversal_the_other_way():
+    """The same shape with the polarity flipped: a long rise, then a fall."""
+    ser = [(2001 + i, 40.0 + i) for i in range(13)] + [(2014 + i, 52.0 - 0.5 * i) for i in range(10)]
+    t = ab.trend(ser, "higher_better")
+    assert t["verdict"] == ab.WORSENING, "falling under higher_better is worsening"
+    long_good = t["first"][1] < t["fit_last"][1]
+    assert long_good, "40.0 -> 47.5 is still a long improvement under higher_better"

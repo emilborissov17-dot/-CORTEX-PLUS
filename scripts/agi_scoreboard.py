@@ -132,7 +132,7 @@ def gather() -> dict:
     sbx = _json(REPO / "claude" / "reports" / "SANDBOX_BENCH.json", {}) or {}
     g["sandbox"] = (sbx.get("summary") or {}).get("verdict", {})
     g["country_bench"] = country_bench(REPO / "claude" / "reports" / "COUNTRY_BENCH.md")
-    g["probe"] = _jsonl(REPO / "memory" / "counterfactual_probe.jsonl")
+    g["probe"] = _json(REPO / "memory" / "counterfactual_probe_latest.json", {}) or {}
     g["alarm_indicators"] = (_json(REPO / "memory" / "alarm_bands_latest.json", {}) or {}).get("indicators", {}).get("counts", {})
     return g
 
@@ -198,10 +198,12 @@ def rows(g: dict) -> list[dict]:
     add(12, f"sandbox T12 {sx.get('T12')}; cards accepted {g['verified']['accepted']}; self_survive scored {sv.get('scored', 0)}",
         "SANDBOX_BENCH.json; verified_observations.jsonl; ledger",
         PARTIAL if sx.get("T12") == "PASS" or g["verified"]["accepted"] else NONE)
-    pr = g["probe"]
-    ins = sum(1 for r in pr if r.get("outcome") == "INSENSITIVE")
-    add(13, f"counterfactual probes {len(pr)}, insensitive {ins}" if pr else NONE,
-        "memory/counterfactual_probe.jsonl (not built yet)", SEED if pr else NONE)
+    pr = g["probe"]; pc = pr.get("counts") or {}
+    add(13, f"counterfactual probe {pr.get('ts', '')[:10]}: {pr.get('n')} cases, TRACKS {pc.get('TRACKS')}, "
+            f"INSENSITIVE {pc.get('INSENSITIVE')}, NOISE_DRIVEN {pc.get('NOISE_DRIVEN')}, WRONG {pc.get('WRONG')}, "
+            f"SILENT {pc.get('SILENT')}; tracks_rate {pr.get('tracks_rate')}" if pr.get("n") else NONE,
+        "memory/counterfactual_probe_latest.json (core/counterfactual_probe.py, morning step)",
+        (PARTIAL if (pr.get("answered") or 0) >= 10 and (pr.get("tracks_rate") or 0) >= 0.8 else SEED) if pr.get("n") else NONE)
     add(14, NONE, "open; no test", NONE)
     return out
 

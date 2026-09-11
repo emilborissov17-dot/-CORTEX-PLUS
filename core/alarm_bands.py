@@ -392,8 +392,45 @@ CADENCE = BASE / "config" / "indicator_cadence.json"
 MOVING, POSITIVE_CONSTANT, NEGATIVE_CONSTANT, UNCLASSIFIED = (
     "MOVING", "POSITIVE_CONSTANT", "NEGATIVE_CONSTANT", "UNCLASSIFIED")
 STAGNATION = "STAGNATION"
+NEGATIVE_TREND = "NEGATIVE_TREND"      # moves year to year, but far from the goal and not toward it
 NEAR_TARGET = 0.8          # score at/above this while still: held — a positive constant
 FAR_FROM_TARGET = 0.6      # score below this while still: non-progress
+IMPROVING, WORSENING, FLAT = "IMPROVING", "WORSENING", "FLAT"
+TREND_YEARS = 10           # the slope is fitted on the last TREND_YEARS of the annual base
+TREND_MIN_YEARS = 5        # fewer years than this: no trend verdict
+FLAT_PER_YEAR = 0.001      # |slope| below 0.1 % of the last value per year is FLAT
+
+
+def trend(series: list[tuple[int, float]], direction: str | None, years: int = TREND_YEARS) -> dict:
+    """Base and trend from the annual series (Emil, 11 Sep 2026: from the oldest date to
+    the last). Least-squares slope over the last `years` points; direction judged against
+    the axis's good direction. Pure; never raises."""
+    pts = sorted((int(y), float(v)) for y, v in series)
+    if len(pts) < TREND_MIN_YEARS:
+        return {"years": len(pts), "verdict": None,
+                "first": pts[0] if pts else None, "last": pts[-1] if pts else None}
+    fit = pts[-years:]
+    n = len(fit)
+    mx = sum(y for y, _ in fit) / n
+    my = sum(v for _, v in fit) / n
+    den = sum((y - mx) ** 2 for y, _ in fit)
+    slope = sum((y - mx) * (v - my) for y, v in fit) / den if den else 0.0
+    last = pts[-1][1]
+    if abs(slope) < FLAT_PER_YEAR * max(abs(last), 1e-9):
+        verdict = FLAT
+    elif direction == "lower_better":
+        verdict = IMPROVING if slope < 0 else WORSENING
+    elif direction == "higher_better":
+        verdict = IMPROVING if slope > 0 else WORSENING
+    else:
+        verdict = None
+    # fit_first/fit_last — THE WINDOW THE SLOPE WAS ACTUALLY FITTED ON. Without
+    # them the caller has only the whole series' endpoints, and pairing those with
+    # a 10-year slope produces a sentence that reads as a contradiction; see the
+    # comment on the NEGATIVE_TREND notice in constancy().
+    return {"years": len(pts), "first": pts[0], "last": pts[-1], "fit_years": n,
+            "fit_first": fit[0], "fit_last": fit[-1],
+            "slope_per_year": round(slope, 6), "verdict": verdict}
 WINDOW_DAYS = {"daily": 30, "weekly": 60, "monthly": 120, "quarterly": 270, "annual": 400}
 
 
@@ -439,9 +476,11 @@ def last_change_days(axis: str, history_path=None, now=None) -> tuple:
     return days, span
 
 
-def constancy(goal_path=None, history_path=None, cadence_path=None, now=None) -> dict:
-    """One row per measured axis: MOVING / POSITIVE_CONSTANT / NEGATIVE_CONSTANT.
-    NEGATIVE_CONSTANT rows are STAGNATION signals. Never raises."""
+def constancy(goal_path=None, history_path=None, cadence_path=None, now=None, annual_path=None) -> dict:
+    """One row per measured axis: MOVING / POSITIVE_CONSTANT / NEGATIVE_CONSTANT / NEGATIVE_TREND.
+    NEGATIVE_CONSTANT and NEGATIVE_TREND rows are STAGNATION signals: far from the goal and
+    not moving toward it — the first because nothing changes, the second because the years
+    (memory/axis_history_annual.json) show FLAT or WORSENING. Never raises."""
     try:
         goal = json.loads((goal_path or GOAL_SCORE).read_text(encoding="utf-8"))
     except Exception:
@@ -453,12 +492,60 @@ def constancy(goal_path=None, history_path=None, cadence_path=None, now=None) ->
             continue
         days, span = last_change_days(axis, history_path, now)
         window = _cadence_days(axis, cadence_path)
+        # the annual base: every year the source has, oldest to last (core/axis_backfill.py)
+        try:
+            from core.axis_backfill import series_for
+            annual = series_for(axis, annual_path)
+        except Exception:
+            annual = []
+        tr = trend(annual, detail.get("direction"))
+        if annual:
+            # with a base, "history" is the base: days since the last annual value changed
+            try:
+                last_y = tr["last"][0]
+                first_y = tr["first"][0]
+                today = now or datetime.now(timezone.utc).date()
+                days_annual = (today - datetime(last_y, 12, 31).date()).days
+                span = max(span, (today - datetime(first_y, 12, 31).date()).days)
+                days = days_annual if days is None else min(days, days_annual)
+            except Exception:
+                pass
         if days is None or score is None:
             cls, why = UNCLASSIFIED, "no history or no score"
         elif span < window:
             cls, why = UNCLASSIFIED, f"only {span} days of history against a {window}-day window"
+        elif days <= window and score < FAR_FROM_TARGET and tr.get("verdict") in (FLAT, WORSENING):
+            # THE WINDOW THAT IS QUOTED MUST BE THE WINDOW THAT WAS FITTED.
+            # 11 Sep 2026, first live run: FOOD_REVIEW read
+            #   "WORSENING over 10 years (2001: 12.8 -> 2023: 8.5, +0.13697/yr)"
+            # and every part of that is true separately. The slope is fitted on the
+            # last 10 points (2014: 7.7 -> 2023: 8.5, genuinely rising — the real
+            # post-2014 reversal in global undernourishment), while first/last are
+            # the whole 23-year series, which FELL. Printed together they read as a
+            # contradiction: a 4.3-point improvement labelled WORSENING. A correct
+            # alarm that reads as a broken one is worse than none, because the next
+            # true one gets dismissed too — the same defect as "All LLM backends
+            # failed" over a parse error.
+            _ff, _fl = tr.get("fit_first"), tr.get("fit_last")
+            _span = (f"{_ff[0]}: {_ff[1]} -> {_fl[0]}: {_fl[1]}" if _ff and _fl
+                     else f"{tr['first'][0]}: {tr['first'][1]} -> {tr['last'][0]}: {tr['last'][1]}")
+            # And when the long run went the GOOD way while the fitted window goes
+            # the bad way, that reversal is the most important thing a human reads
+            # here — it is a worse fact than a flat line, not a softening of it.
+            _rev = ""
+            if _ff and tr.get("first") and tr["first"][0] < _ff[0]:
+                _dir = detail.get("direction")
+                _long_good = ((tr["first"][1] > _fl[1]) if _dir == "lower_better"
+                              else (tr["first"][1] < _fl[1]) if _dir == "higher_better" else None)
+                if _long_good:
+                    _rev = (f"; REVERSING a longer improvement from {tr['first'][0]}: "
+                            f"{tr['first'][1]}")
+            cls, why = NEGATIVE_TREND, (f"NON-PROGRESS: {tr['verdict']} over {tr['fit_years']} years "
+                                        f"({_span}, {tr['slope_per_year']:+g}/yr){_rev} "
+                                        f"at score {score} (target {detail.get('target')})")
         elif days <= window:
-            cls, why = MOVING, f"changed {days} days ago (window {window})"
+            cls, why = MOVING, (f"changed {days} days ago (window {window})"
+                                + (f"; {tr['verdict']} {tr['slope_per_year']:+g}/yr over {tr['fit_years']} years" if tr.get("verdict") else ""))
         elif score >= NEAR_TARGET:
             cls, why = POSITIVE_CONSTANT, f"held: unchanged {days} days at score {score}"
         elif score < FAR_FROM_TARGET:
@@ -467,10 +554,24 @@ def constancy(goal_path=None, history_path=None, cadence_path=None, now=None) ->
             cls, why = UNCLASSIFIED, f"still {days} days at score {score} — neither near nor far"
         rows.append({"axis": axis, "class": cls, "score": score, "current": detail.get("current"),
                      "target": detail.get("target"), "direction": detail.get("direction"),
-                     "days_since_change": days, "history_days": span, "window_days": window, "why": why})
-    counts = {c: sum(1 for r in rows if r["class"] == c) for c in (MOVING, POSITIVE_CONSTANT, NEGATIVE_CONSTANT, UNCLASSIFIED)}
+                     "days_since_change": days, "history_days": span, "window_days": window,
+                     "trend": tr, "why": why})
+    classes = (MOVING, POSITIVE_CONSTANT, NEGATIVE_CONSTANT, NEGATIVE_TREND, UNCLASSIFIED)
+    counts = {c: sum(1 for r in rows if r["class"] == c) for c in classes}
     return {"ts": _now(), "axes": len(rows), "counts": counts,
-            "stagnation": [r for r in rows if r["class"] == NEGATIVE_CONSTANT], "rows": rows}
+            "stagnation": [r for r in rows if r["class"] in (NEGATIVE_CONSTANT, NEGATIVE_TREND)], "rows": rows}
+
+
+def stagnant_axes(path=None) -> list[dict]:
+    """The NEGATIVE_CONSTANT rows of the last constancy sweep — what stands far from
+    the goal and does not move. Read by the brain's briefing, initiative_tracker
+    (search priority) and cycle_report (#59, Emil 11 Sep 2026: a negative constant
+    is non-progress and must trigger a search for a solution). Never raises."""
+    try:
+        data = json.loads((path or CONSTANCY_LOG).read_text(encoding="utf-8"))
+        return [r for r in data.get("stagnation") or [] if isinstance(r, dict) and r.get("axis")]
+    except Exception:
+        return []
 
 
 def send_stagnation(result: dict, sender=None, now=None) -> int:
@@ -528,11 +629,13 @@ def for_cycle_report() -> dict:
     try:
         result = sweep()
         ind = sweep_indicators()
+        st = stagnant_axes()
         return {"awaiting_human_values": result["AWAITING_HUMAN_VALUES"],
                 "axes": result["axes"], "alarms": len(result["alarms"]),
                 "config_errors": len(result["config_errors"]),
                 "indicator_bands": ind["bands"], "indicator_counts": ind["counts"],
-                "indicator_alarms": len(ind["alarms"])}
+                "indicator_alarms": len(ind["alarms"]),
+                "stagnation": len(st), "stagnant_axes": [r["axis"] for r in st]}
     except Exception:
         return {}
 
@@ -563,7 +666,8 @@ def run() -> dict:
         sent_st = send_stagnation(result["constancy"])
         cc = result["constancy"]["counts"]
         print(f"[ALARM] constancy: MOVING {cc[MOVING]} | POSITIVE_CONSTANT {cc[POSITIVE_CONSTANT]} | "
-              f"NEGATIVE_CONSTANT {cc[NEGATIVE_CONSTANT]} ({sent_st} stagnation notices) | unclassified {cc[UNCLASSIFIED]}")
+              f"NEGATIVE_CONSTANT {cc[NEGATIVE_CONSTANT]} | NEGATIVE_TREND {cc[NEGATIVE_TREND]} "
+              f"({sent_st} stagnation notices) | unclassified {cc[UNCLASSIFIED]}")
         for row in result["constancy"]["stagnation"]:
             print(f"[ALARM] {STAGNATION} {row['axis']}: {row['why']}")
     except Exception as exc:  # noqa: BLE001
