@@ -1,14 +1,17 @@
 {
-  "built_utc": "2026-09-11T07:08:53.300785+00:00",
-  "rows": 195,
+  "built_utc": "2026-09-11T09:00:04.673353+00:00",
+  "rows": 199,
   "by_task": {
     "sensor_card": 7,
-    "predict:self_failure": 53,
+    "predict:self_failure": 54,
     "predict:axis_next": 128,
     "predict:composer_series": 2,
-    "predict:world_next": 5
+    "predict:world_next": 5,
+    "predict:self_duration": 1,
+    "predict:self_degraded": 1,
+    "predict:self_step_fail": 1
   },
-  "sha256": "5671fa2303984f8c5ca124a865493c95ef4b117c60273066584c786eec61605b",
+  "sha256": "ad0e302f77c1ebe58ee3b5426fb67c489f609d8217dbae10eed20065c24d01cc",
   "sources": {
     "verified_observations": "memory\\verified_observations.jsonl",
     "prophecy_ledger": "experiments\\prophecy\\prophecy_ledger.jsonl"
