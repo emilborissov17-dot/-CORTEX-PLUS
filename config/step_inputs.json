@@ -155,6 +155,14 @@
       ],
       "_also_reads_why": "Two kinds, neither of which may gate the step. (1) ITS OWN OUTPUTS, read to append to: improvement_proposals.json (self_observer.py:601, written at 665) and development_journal.json (531, written at 542). A step whose age dimension depends on its own last output grades itself, and one missed night would hold it down for ever — the same reasoning as auto_levels/auto_levels.json and resolve_hypotheses/resolved.json. (2) THE LLM TOOL SURFACE: get_tools() (self_observer.py:164-180) hands the model twelve lambdas, and auto_levels.json, causal_log.json and knowledge_base.json are read ONLY if the model chooses to call them. A file that may or may not be read on any given night cannot carry the step's age honestly: declaring it as an input would make the gate depend on what a model decided to look at.",
       "derived_from": "2026-09-08. AST census of agents/core/self_observer.py plus a guard-walk of run()'s body to separate the unconditional reads from the conditional ones. Every file operation in the module: exists/read_text at 61/65 (web_intelligence), 134/136 (_safe_read, the tool surface), 177 (causal_log, behind a tool), 224/227 (dependency_check), 420 and 601 (improvement_proposals), 531 (development_journal); write_text at 542 and 665. WHY THIS ENTRY EXISTS: self_observer had NO declaration and the scanner returns [] for it, so _age_state([]) failed closed to UNKNOWN(0) and it stamped level_0 on memory/development_journal.json, which both self_modifier and execute_patches declare as an input. It was the last blind producer feeding either F_SELF gate — core/blind_producers.py named it at both."
+    },
+    "daily_tier": {
+      "entry_point": "core.daily_tier.record() — fast_cycle_runner.py step 2.52, immediately after global_indicators 2.5. record() ONLY: backfill() reaches USGS and Yahoo ~90 times and is a human command (--backfill 90), never the night.",
+      "inputs": [
+        "snapshots/master/global_indicators_latest.json",
+        "memory/daily_tier.jsonl"
+      ],
+      "derived_from": "read core/daily_tier.py on 11 Sep 2026: SNAPSHOT at line 65 is the only thing record() opens for input; TIER at line 66 is read first (_read) to skip (indicator, date) pairs already on file, then appended to. No network on this path."
     }
   }
 }

@@ -71,6 +71,10 @@
           "index": "2.5"
         },
         {
+          "name": "daily_tier",
+          "index": "2.52"
+        },
+        {
           "name": "sensorium_ingest",
           "index": "2.54"
         },
@@ -115,7 +119,8 @@
         "memory/trends_latest.json",
         "snapshots/cortex_strategist/cortex_strategist_snapshot_latest.json",
         "news/news_latest.json",
-        "memory/axis_history.json"
+        "memory/axis_history.json",
+        "memory/daily_tier.jsonl"
       ]
     },
     "C_SNAPSHOT": {

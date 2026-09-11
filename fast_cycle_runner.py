@@ -2749,6 +2749,33 @@ def main():
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
         _tb.print_exc()
 
+    # ── 2.52. Daily tier — the SAME fetch, kept per day instead of overwritten.
+    #    global_indicators above rewrites snapshots/master/global_indicators_latest.json
+    #    every night, so a value that moved yesterday leaves no trace of having moved.
+    #    This step appends one row per (indicator, date) to memory/daily_tier.jsonl and
+    #    nothing else: it costs no network call, because the numbers are already on disk
+    #    from 2.5. It is step 5 of the 14, and steps 7 and 12 wait on it — without a
+    #    daily series there is no causality and no credit.
+    #
+    #    record() ONLY. backfill() reaches USGS and Yahoo ~90 times and is a human's
+    #    command (`--backfill 90`), not a thing the night does on its own; a cycle that
+    #    silently made 93 network calls would be a different step than the one declared.
+    #    A carried value is not an observation and record() drops it — that is the
+    #    distinction the whole tier rests on.
+    #    THROUGH _run(), NOT A BARE try/except, and a test insisted. The first
+    #    version wrapped record() in its own try/except; that costs the step its
+    #    CHECKPOINT, because a step records one only by going through _run(), and
+    #    test_checkpoint_wiring counted the uncovered steps going 30 -> 31. Its
+    #    message said what to do rather than what broke: "route it through _run()
+    #    instead of raising this limit." So the resume gate, the brain's skip
+    #    decision, the model window and the budget ladder all apply here as they
+    #    do to every other step — which is the point of having one door.
+    beat("daily_tier", "2.52")
+    _run("daily_tier", lambda: print(
+        "[FAST_CYCLE] daily_tier -> " + ", ".join(
+            f"{k}={v}" for k, v in __import__(
+                "core.daily_tier", fromlist=["record"]).record().items())))
+
     # ── 2.54. Sensorium ingest — the LIGHT half of the sensing/thinking split. The
     #    independent per-axis collectors (browser agents) deposit verified, Merkle-committed
     #    drops out-of-band; here the cycle only routes the newest ready drop per axis to the
