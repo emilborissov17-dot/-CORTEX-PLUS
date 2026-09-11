@@ -286,7 +286,8 @@ RESOLVERS = {"watchdog_kills+step_seconds": resolve_watchdog_and_seconds}
 
 def value_in_force(knob_name: str, step: str | None = None,
                    cycle_end: str | None = None,
-                   evidence: dict | None = None) -> tuple:
+                   evidence: dict | None = None,
+                   cycle_start: str | None = None) -> tuple:
     """(value, basis) — какво е било в сила ПО ВРЕМЕ НА наблюдавания цикъл.
 
     ── ДЕФЕКТ, РОДЕН ОТ СОБСТВЕНАТА МИ ПОПРАВКА (21 август 2026, същия ден) ──
@@ -315,6 +316,25 @@ def value_in_force(knob_name: str, step: str | None = None,
     declared = ALLOWED_KNOBS.get(knob_name)
     if declared is None:
         return None, f"unknown knob {knob_name!r}"
+
+    # ── СВИДЕТЕЛСТВО 2: ПОДПИСАНИЯТ ГРАФИК (10 септември 2026) ──────────────
+    # tools/signed_schedule.py пише пазеното копче ОТ ИМЕТО НА ЧОВЕШКИ ПОДПИС,
+    # всяка нощ в 02:50, и записва кога и какво. Тогава mtime-проверката долу
+    # би казвала „пипан след края на цикъла" за ВСЯКА нощ и опитът пак не би
+    # броил нищо. Логът на графика е по-силно свидетелство от mtime: казва
+    # точно коя стойност е стояла във файла между началото и края на цикъла.
+    if cycle_start and cycle_end and declared.get("guarded"):
+        try:
+            import importlib.util as _ilu
+            _spec = _ilu.spec_from_file_location(
+                "signed_schedule", BASE / "tools" / "signed_schedule.py")
+            _ss = _ilu.module_from_spec(_spec)
+            _spec.loader.exec_module(_ss)
+            v, basis = _ss.value_in_force_from_log(step, str(cycle_start), str(cycle_end))
+            if basis is not None:
+                return v, basis
+        except Exception:  # noqa: BLE001 — no schedule, no log: fall through to the file
+            pass
 
     if cycle_end:
         try:
@@ -406,8 +426,24 @@ def save(blob: dict) -> None:
 
 
 def arm_for_cycle(ordinal: int) -> str:
-    """Детерминирано редуване. Чет -> a, нечет -> b."""
+    """Детерминирано редуване. Чет -> a, нечет -> b.
+
+    Важи САМО за непазено копче. За пазено рамото се чете с `arm_of_value` —
+    виж `observe`."""
     return "a" if int(ordinal) % 2 == 0 else "b"
+
+
+def arm_of_value(knob: dict, value) -> str | None:
+    """Кое рамо носи тази стойност — или None, ако никое.
+
+    Вратата, през която ПАЗЕНО копче получава рамо: от файла, не от намерение.
+    """
+    if value is None:
+        return None
+    for label in ("a", "b"):
+        if knob.get(label) == value:
+            return label
+    return None
 
 
 def register(spec: dict, store: pathlib.Path | None = None) -> dict:
@@ -507,7 +543,30 @@ def observe(exp_id: str, cycle_id: str, ordinal: int, since: str, until: str,
     """Едно наблюдение. Рамото се ОБЯВЯВА по поредния номер и се ПРОВЕРЯВА срещу
     това, което файлът наистина е носел. Разминат ли се — наблюдението се
     записва, но НЕ СЕ БРОИ. Опит, който вярва на намерението си вместо на
-    файла, мери разказ."""
+    файла, мери разказ.
+
+    ── ДЕФЕКТ, ИЗМЕРЕН НА 10 СЕПТЕМВРИ 2026 (STEP 6a) ──
+    За ПАЗЕНО копче горното изгаряше половината нощи. `step_ceiling` живее в
+    config/scheduler.json, който машината НЕ МОЖЕ да пише — `overlay_set`
+    хвърля PermissionError, `knob()` не го сервира, и `register()` вече обявява
+    `arms_observable_now`: наблюдаемо е само рамото, което ЧОВЕКЪТ е сложил.
+    А `arm_for_cycle(ordinal)` редуваше сляпо, все едно изборът е на машината.
+    Резултатът, преброен от memory/self_experiments.json: 30 наблюдения, 13
+    преброени (a=1, b=12), 17 не — и 14 от тях с реда „the knob read 1500, the
+    alternation asked for 900 — arm not applied", който се чете като счупен
+    запис, а описва изпълнена забрана.
+
+    Поправката НЕ Е да се пише тавана. Тя е собствената доктрина на модула,
+    вече написана в `live_value`: „Рамото не се обявява — то се ПРОЧИТА."
+    За пазено копче рамото СЛЕДВА стойността в сила. Тогава всяка нощ с
+    четим файл се брои, към рамото, което човекът наистина е държал.
+
+    ЦЕНАТА, КАЗАНА НА ГЛАС: при пазено копче разпределението НЕ Е случайно —
+    то е човешки избор във времето, тоест наблюдение, а не интервенция. Затова
+    присъдата на такъв опит носи `randomised: False` и никога не се цитира като
+    контролиран резултат. (Точно това мери T8 в experiments/sandbox: от
+    наблюдение сам-самичко посоката не се възстановява.)
+    """
     blob = _read_json(store or STORE, {"experiments": []})
     exps = blob.get("experiments", [])
     exp = next((e for e in exps if e.get("id") == exp_id), None)
@@ -516,24 +575,42 @@ def observe(exp_id: str, cycle_id: str, ordinal: int, since: str, until: str,
     if not exp.get("accepted"):
         return {"error": f"{exp_id} was rejected: {exp.get('rejected_because')}"}
 
-    arm = arm_for_cycle(ordinal)
-    expected = exp["knob"][arm]
     step = (exp.get("metric") or {}).get("step")
     in_force, basis = value_in_force(exp["knob"]["name"], step=step,
-                                     cycle_end=until, evidence=evidence)
-    counts = (in_force is not None and in_force == expected)
+                                     cycle_end=until, evidence=evidence,
+                                     cycle_start=since)
+    guarded = bool(exp.get("knob_is_guarded"))
+    if guarded:
+        # Рамото се ПРОЧИТА от стойността в сила, не се редува.
+        arm = arm_of_value(exp["knob"], in_force)
+        expected = in_force if arm else None
+        arm_source = "read from the guarded file — a human sets this arm"
+    else:
+        arm = arm_for_cycle(ordinal)
+        expected = exp["knob"][arm]
+        arm_source = "alternation by cycle ordinal"
+    counts = (in_force is not None and arm is not None and in_force == expected)
 
     resolver = RESOLVERS[exp["metric"]["resolver"]]
     metric = resolver(exp, since, until, **paths)
 
+    if counts:
+        why_not = None
+    elif in_force is None:
+        why_not = basis
+    elif guarded:
+        why_not = (f"the guarded file reads {in_force!r}, which is neither arm "
+                   f"({exp['knob']['a']!r}/{exp['knob']['b']!r}) — nothing to observe")
+    else:
+        why_not = (f"the knob read {in_force!r}, the alternation asked for "
+                   f"{expected!r} — arm not applied")
+
     row = {
         "ts": _now(), "cycle_id": cycle_id, "cycle_ordinal": ordinal,
         "arm_expected": arm, "value_expected": expected,
+        "arm_source": arm_source,
         "value_in_force": in_force, "in_force_basis": basis, "counts": counts,
-        "why_not": None if counts else (
-            basis if in_force is None else
-            f"the knob read {in_force!r}, the alternation asked for "
-            f"{expected!r} — arm not applied"),
+        "why_not": why_not,
         "window": [since, until],
         "metric": metric,
     }
@@ -563,6 +640,10 @@ def verdict(exp: dict) -> dict:
     a, b = _arm_rows(exp, "a"), _arm_rows(exp, "b")
     out = {
         "n_a": len(a), "n_b": len(b), "n_per_arm": n,
+        # Пазено копче => рамото го избира ЧОВЕК във времето, не жребий. Такава
+        # присъда е наблюдателна и се обявява за такава, за да не бъде цитирана
+        # като контролиран опит (STEP 6a, 10 септември 2026).
+        "randomised": not bool(exp.get("knob_is_guarded")),
         "kills_a": _mean([r["metric"].get("watchdog_kills") for r in a]),
         "kills_b": _mean([r["metric"].get("watchdog_kills") for r in b]),
         "seconds_a": _mean([r["metric"].get("step_seconds") for r in a]),
@@ -574,15 +655,16 @@ def verdict(exp: dict) -> dict:
                       f"b={len(b)}/{n}")
         return out
 
+    obs = "" if out["randomised"] else " [OBSERVATIONAL, not randomised: a human chose the arm]"
     ka, kb = out["kills_a"], out["kills_b"]
     if ka is not None and kb is not None and ka != kb:
         out.update(decided=True, winner=("a" if ka < kb else "b"),
-                   why=f"watchdog kills {ka} vs {kb} (lower wins)")
+                   why=f"watchdog kills {ka} vs {kb} (lower wins){obs}")
         return out
     sa, sb = out["seconds_a"], out["seconds_b"]
     if sa is not None and sb is not None and sa != sb:
         out.update(decided=True, winner=("a" if sa < sb else "b"),
-                   why=f"kills tied at {ka}; step seconds {sa} vs {sb} (lower wins)")
+                   why=f"kills tied at {ka}; step seconds {sa} vs {sb} (lower wins){obs}")
         return out
     out["why"] = "both metrics tied — no winner; the knob did not matter"
     out["decided"] = True

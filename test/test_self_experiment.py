@@ -166,24 +166,44 @@ def test_alternation_is_deterministic_by_cycle_ordinal():
     assert [sx.arm_for_cycle(i) for i in range(8)] == list("abababab")
 
 
-def test_an_observation_whose_arm_was_not_in_force_does_not_count(tmp_path):
+def test_an_observation_whose_arm_was_not_in_force_does_not_count(tmp_path, monkeypatch):
     """The heart of the honesty here: the experiment reads what the file
-    ACTUALLY said, and refuses to count a cycle that ran the other setting."""
-    store = tmp_path / "exp.json"
-    sx.register(sx.FIRST, store=store)
-    live = sx.live_value("step_ceiling", step="daily_analysis")
-    matching = 0 if live == 900 else 1        # ordinal parity that draws it
-    other = 1 - matching
-    future = "2099-01-01T00:00:00+00:00"      # nothing edited after this
+    ACTUALLY said, and refuses to count a cycle that ran the other setting.
 
-    row = sx.observe(sx.FIRST["id"], "cyc-1", other,
+    RETARGETED 10 Sep 2026 (STEP 6a), and the reason matters. This test used to
+    make its point on exp-001, a GUARDED knob, by picking the ordinal parity
+    whose alternation disagreed with the file. That is no longer a miss but the
+    normal case: for a guarded knob the arm is READ from the file, because the
+    machine cannot write it and a human decides — the old expectation counted an
+    enforced prohibition as a failed write, 14 times in exp-001's 30 nights.
+
+    The property under test is unchanged and still needs a test, so it moves to
+    the knob where an unapplied arm is a genuine miss: an UNGUARDED one, which
+    the machine does choose and therefore can get wrong. The guarded refusal
+    (a file holding neither arm) is pinned in section (g)."""
+    store = tmp_path / "exp.json"
+    rec = {"id": "exp-u", "accepted": True, "state": sx.REGISTERED,
+           "knob": {"name": "debrief_model",
+                    "file": "memory/self_experiment_overlay.json",
+                    "a": "qwen2.5:3b", "b": "qwen3:8b"},
+           "knob_is_guarded": False, "n_per_arm": 4,
+           "metric": {"step": "daily_analysis", "direction": sx.LOWER_BETTER,
+                      "resolver": "watchdog_kills+step_seconds"},
+           "observations": []}
+    store.write_text(json.dumps({"experiments": [rec]}), encoding="utf-8")
+    live = "qwen3:8b"                          # what the overlay holds = arm b
+    monkeypatch.setattr(sx, "live_value", lambda name, step=None: live)
+    matching, other = 1, 0                     # ordinal 1 -> b, ordinal 0 -> a
+    future = "2099-01-01T00:00:00+00:00"       # nothing edited after this
+
+    row = sx.observe("exp-u", "cyc-1", other,
                      "2026-08-01T00:00:00+00:00", future, store=store)
     assert row["value_in_force"] == live
     assert row["value_expected"] != live
     assert row["counts"] is False
     assert "not applied" in row["why_not"]
 
-    row = sx.observe(sx.FIRST["id"], "cyc-2", matching,
+    row = sx.observe("exp-u", "cyc-2", matching,
                      "2026-08-01T00:00:00+00:00", future, store=store)
     assert row["counts"] is True
     assert row["metric"]["watchdog_kills"] >= 0
@@ -513,3 +533,121 @@ def test_an_unestablished_value_never_counts(tmp_path):
     assert row["value_in_force"] is None
     assert row["counts"] is False
     assert "cannot be established" in row["why_not"]
+
+
+# --------------------------------------------------------------------------- #
+# (g) STEP 6a — a GUARDED arm is read from the file, never alternated for
+# --------------------------------------------------------------------------- #
+
+def _guarded_store(tmp_path, ceiling: int):
+    """A registered exp-001 plus a scheduler.json reading `ceiling`."""
+    store = tmp_path / "exp.json"
+    sched = tmp_path / "scheduler.json"
+    sched.write_text(json.dumps({"step_ceilings_sec": {"daily_analysis": ceiling}}),
+                     encoding="utf-8")
+    rec = {"id": "exp-001", "accepted": True, "state": sx.REGISTERED,
+           "knob": {"name": "step_ceiling", "file": "config/scheduler.json",
+                    "step": "daily_analysis", "a": 900, "b": 1500},
+           "knob_is_guarded": True, "n_per_arm": 4,
+           "metric": {"step": "daily_analysis", "direction": sx.LOWER_BETTER,
+                      "resolver": "watchdog_kills+step_seconds"},
+           "observations": []}
+    store.write_text(json.dumps({"experiments": [rec]}), encoding="utf-8")
+    return store, sched
+
+
+def _observe_with_file(tmp_path, ceiling, ordinal, monkeypatch):
+    store, sched = _guarded_store(tmp_path, ceiling)
+    monkeypatch.setattr(sx, "live_value",
+                        lambda name, step=None: ceiling if name == "step_ceiling" else None)
+    return sx.observe("exp-001", f"cyc-{ordinal}", ordinal,
+                      "2026-09-01T00:00:00+00:00", "2026-09-02T00:00:00+00:00",
+                      store=store), sched
+
+
+def test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees(tmp_path, monkeypatch):
+    """THE STEP 6a DEFECT. The file reads 1500 (arm b). Ordinal 0 alternates to
+    arm a. Before the fix that row was recorded 'NOT counted: arm not applied' —
+    14 of exp-001's 30 nights burned that way, describing an ENFORCED
+    PROHIBITION as a failed write. The arm must be read from the file."""
+    row, _ = _observe_with_file(tmp_path, 1500, 0, monkeypatch)
+    assert sx.arm_for_cycle(0) == "a", "ordinal 0 does alternate to a"
+    assert row["arm_expected"] == "b", "but the guarded arm is whatever the file holds"
+    assert row["counts"] is True, "a readable guarded file is an observation, not a miss"
+    assert row["why_not"] is None
+    assert "human" in row["arm_source"]
+
+
+def test_the_other_ordinal_reads_the_same_guarded_arm(tmp_path, monkeypatch):
+    """Negative control on the alternation: the ordinal must not matter at all
+    for a guarded knob. Ordinal 1 alternates to b and would have 'counted' by
+    accident — the point is that the SOURCE changed, not that b got lucky."""
+    row, _ = _observe_with_file(tmp_path, 1500, 1, monkeypatch)
+    assert row["arm_expected"] == "b" and row["counts"] is True
+    row900, _ = _observe_with_file(tmp_path, 900, 1, monkeypatch)
+    assert sx.arm_for_cycle(1) == "b"
+    assert row900["arm_expected"] == "a", "the file said 900; that is arm a whatever the ordinal says"
+    assert row900["counts"] is True
+
+
+def test_a_guarded_file_holding_neither_arm_still_refuses(tmp_path, monkeypatch):
+    """The fix must not turn into 'everything counts'. A ceiling that is neither
+    900 nor 1500 belongs to no arm and must NOT be counted."""
+    row, _ = _observe_with_file(tmp_path, 1200, 0, monkeypatch)
+    assert row["arm_expected"] is None
+    assert row["counts"] is False
+    assert "neither arm" in row["why_not"]
+
+
+def test_observing_a_guarded_knob_never_writes_the_guarded_file(tmp_path, monkeypatch):
+    """MECHANICAL NET. The forbidden fix for STEP 6a was to make the arm land by
+    WRITING config/scheduler.json — that is the ceiling the watchdog kills by,
+    and a system that sets its own ceiling has none. Observing must leave the
+    file byte-identical, and overlay_set must still refuse it outright."""
+    store, sched = _guarded_store(tmp_path, 1500)
+    before = sched.read_bytes()
+    monkeypatch.setattr(sx, "live_value", lambda name, step=None: 1500)
+    sx.observe("exp-001", "cyc-0", 0, "2026-09-01T00:00:00+00:00",
+               "2026-09-02T00:00:00+00:00", store=store)
+    assert sched.read_bytes() == before, "observing wrote the guarded ceiling"
+    with pytest.raises(PermissionError):
+        sx.overlay_set("step_ceiling", 900)
+    assert sx.knob("step_ceiling", default=777) == 777, "guarded knob has no overlay lane"
+
+
+def test_an_unguarded_knob_still_alternates_by_ordinal(tmp_path, monkeypatch):
+    """NEGATIVE CONTROL. The read-from-the-file rule is for GUARDED knobs only.
+    An unguarded knob is the machine's own choice, so it must still alternate —
+    otherwise the fix would delete randomisation everywhere."""
+    store = tmp_path / "exp.json"
+    rec = {"id": "exp-u", "accepted": True, "state": sx.REGISTERED,
+           "knob": {"name": "debrief_model", "file": "memory/self_experiment_overlay.json",
+                    "a": "qwen2.5:3b", "b": "qwen3:8b"},
+           "knob_is_guarded": False, "n_per_arm": 4,
+           "metric": {"step": "daily_analysis", "direction": sx.LOWER_BETTER,
+                      "resolver": "watchdog_kills+step_seconds"},
+           "observations": []}
+    store.write_text(json.dumps({"experiments": [rec]}), encoding="utf-8")
+    monkeypatch.setattr(sx, "live_value", lambda name, step=None: "qwen3:8b")
+    r0 = sx.observe("exp-u", "c0", 0, "2026-09-01T00:00:00+00:00",
+                    "2026-09-02T00:00:00+00:00", store=store)
+    assert r0["arm_expected"] == "a", "unguarded knobs alternate by ordinal"
+    assert r0["counts"] is False, "the overlay held b, the alternation asked a"
+    assert "arm not applied" in r0["why_not"]
+    assert r0["arm_source"] == "alternation by cycle ordinal"
+
+
+def test_a_guarded_verdict_is_labelled_observational():
+    """A guarded arm is chosen by a human over time, not by a coin. The verdict
+    must say so, so it is never quoted as a controlled result."""
+    rows = [_obs("a", 1, 800, i=0), _obs("a", 1, 820, i=1),
+            _obs("b", 0, 900, i=2), _obs("b", 0, 910, i=3)]
+    guarded = _exp(rows)
+    guarded["knob_is_guarded"] = True
+    v = sx.verdict(guarded)
+    assert v["randomised"] is False
+    assert v["decided"] and "OBSERVATIONAL" in v["why"]
+    free = _exp(rows)
+    free["knob_is_guarded"] = False
+    v2 = sx.verdict(free)
+    assert v2["randomised"] is True and "OBSERVATIONAL" not in v2["why"]
