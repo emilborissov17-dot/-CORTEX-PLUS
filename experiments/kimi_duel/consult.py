@@ -72,6 +72,26 @@ OPPONENTS = KIMI_FREE + FREE_INDEPENDENT
 GROQ_KIMI = "moonshotai/kimi-k2-instruct-0905"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
+# ── 11 СЕПТ. 2026: СВОБОДАТА СЕ ДЕКЛАРИРА, НЕ СЕ ПРЕДПОЛАГА ──────────────────
+# Пътят през Groq беше добавен вечерта на 10 септ. и минаваше ПРЕДИ роустъра, а
+# връщаше ok=True и cost_usd=0.0 за КАКВОТО И ДА Е, което Groq обслужи — защото
+# Groq наистина не слага ':free' в слъга. Но тогава единственият пазач изчезва:
+# проверката `if ":free" not in served` важи само за OpenRouter пътя след него.
+#
+# Това не е теория. test_a_paid_model_serving_the_request_is_not_an_answer —
+# мутационният тест, който СТЪПКА 0 написа точно срещу това — падна на 11 септ.:
+# подставен платен `moonshotai/kimi-k2.6` мина през Groq пътя и беше приет със
+# cost_usd 0.0. Пазачът не беше махнат; беше ЗАОБИКОЛЕН, а резултатът е същият, и
+# собственият коментар на пазача казва защо е недопустим: „по-добре никакъв
+# консулт, отколкото консулт, за който Емил плаща без да е казал."
+#
+# Затова тук няма предположение за плана на ключа. Има СПИСЪК: точно моделите,
+# които са обявени за безплатни на тази сметка. Ако Groq пренасочи заявката към
+# нещо друго — по-нов слъг, платен вариант, каквото и да е — отговорът се отказва
+# с име, и роустърът поема. Списъкът расте само с човешко решение, както
+# ALLOWED_KNOBS.
+GROQ_FREE_MODELS = {GROQ_KIMI}
+
 
 def _ask_groq_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
     import requests
@@ -100,6 +120,14 @@ def _ask_groq_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
         tried.append(f"groq:{GROQ_KIMI}: празен отговор")
         return None
     served = str(d.get("model") or GROQ_KIMI)
+    # Същият критерий като на OpenRouter пътя, само че по декларация вместо по
+    # слъг: обслужилият модел трябва да е в GROQ_FREE_MODELS. Текстът съдържа
+    # „НЕ е безплатният", защото това е изречението, по което тестът и човекът
+    # разпознават този отказ, независимо през кой път е дошъл.
+    if served not in GROQ_FREE_MODELS:
+        tried.append(f"groq:{GROQ_KIMI}: обслужен от {served} — НЕ е безплатният "
+                     f"по декларация (GROQ_FREE_MODELS), отказваме")
+        return None
     return {"ok": True, "text": txt, "backend": f"groq:{served}", "latency_s": round(time.monotonic() - t0, 1),
             "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried,
             "is_kimi": "kimi" in served.lower()}

@@ -86,8 +86,18 @@ class PaidSubstitutionIsRefused(unittest.TestCase):
         self.assertEqual(res["backend"], "none")
         self.assertTrue(any("НЕ е безплатният" in t for t in res["tried"]),
                         f"причината не е записана: {res['tried']}")
-        self.assertEqual(len(calls), len(consult.OPPONENTS),
-                         "не всички безплатни варианти са пробвани")
+        # +1 ЗА GROQ ПЪТЯ, и този +1 е история, не аритметика. Пътят през Groq
+        # беше добавен на 10 септ. ПРЕДИ роустъра и връщаше ok=True за каквото и
+        # да е обслужено, защото Groq не слага ':free' в слъга — така този тест
+        # падна на 11 септ. с „отговор от платен модел беше приет". Пазачът не
+        # беше махнат, беше заобиколен. Сега Groq пътят също отказва, по
+        # GROQ_FREE_MODELS, затова заявките са: 1 към Groq + всички слъгове.
+        self.assertEqual(len(calls), len(consult.OPPONENTS) + 1,
+                         "не всички безплатни варианти са пробвани (Groq + роустъра)")
+        self.assertEqual(calls[0], consult.GROQ_KIMI,
+                         "Groq-Kimi трябва да е ПЪРВИЯТ опит")
+        self.assertTrue(any("GROQ_FREE_MODELS" in t for t in res["tried"]),
+                        f"Groq пътят не е отказал по декларация: {res['tried']}")
 
     def test_a_free_model_serving_the_request_is_an_answer(self):
         # Негативен контрол: пазачът не трябва да блокира ЛЕГИТИМЕН безплатен
