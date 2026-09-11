@@ -1,7 +1,8 @@
 ## STATUS
-last_updated_utc: 2026-09-03T08:00:00Z
-last_item_done: ITEM 62-64 (3 Sep, written from the cloud session, UNVERIFIED on the machine - see each item): sensorium ingest stops dying on audit leaves (18 nights); ffmpeg/deno resolved by path + subtitle-429 parking; the World Bank water candidate re-pointed at a real indicator.
-current_item: ITEM 65 - PROVE ITEMS 62-64 ON THE MACHINE (tests + one scheduled cycle), then run the three Kimi briefs (tools/run_kimi_briefs_2026-09-03.bat) and fold the rulings back into 62-64 before anything below is touched.
+last_updated_utc: 2026-09-10T16:00:00Z
+READ FIRST: docs/HANDOVER_2026-09-10.md — Ivan's order of 10 Sep ("fix every defect, after consulting Kimi"), seven steps, Kimi first. STEPS 0-3 and 5-6 are DONE with their evidence pasted under each step in that file. STEP 4 is BLOCKED ON EMIL and the reason is measured, not cautious — see ITEM 77 and EVIDENCE - STEP 4.
+last_item_done: STEPS 0-3, 5, 6a-6e of the 10 Sep handover (2026-09-10, all run and quoted against THIS repo): the consult is free AND independent again after the free Kimi disappeared; the self-forecast is LIVE on the 09:00 task and its own proof runs found + fixed a double-seal; merkle_to_training retired after six nights with ITEM 70 as the general alarm; PROGRESS 1.3 closed with the weights frozen as v0 and branch shares recorded as a defect; and five smaller defects, three of which turned out to be reported wrongly rather than broken (see 6b, 6c, 6e).
+current_item: BLOCKED ON EMIL, two things, and NOTHING IS PUSHED until the first is answered. (1) ROTATE THE GOOGLE/GEMINI KEY. A live-shaped key was found in 9 tracked log lines on 11 Sep, one push away from the PUBLIC repo; it never reached origin (verified: 0 occurrences in origin's blobs), ITEM 84 closed the path, and the 21 commits were rebuilt clean - but the key sat on this disk in committed local history, so rotation is the cheap move that makes every stale copy inert. The push waits on Emil confirming it is rotated. (2) ITEM 77 - which branch runs the night; the handover's default would remove this whole batch from the production tree and buy a seventh merkle_to_training failure, so the lossless route is a merge in a separate worktree. After those: ITEM 65, ITEM 79/80, ITEM 81 (the agent's workspace IS the repo root and can see .env - the other half of the 11 Sep exposure).
 current_state: READY
 gate_closed_reason: - (GATE:NOCYCLE open at 2026-09-03T05:01 local: the 03:04 cycle sealed at 05:01 and nothing is running.)
 next_action_needed_from_claude: ITEM 65 first. STATUS NOTE ON 44.1: the 2026-08-30 commits "ladder: a 180-second rate limit stops becoming a two-hour exclusion" and "policy: the number that decides how much of a night runs on a 3B moves into config" ARE 44.1 items 1-4 and item 5; this block said "current: 44.1" for four days after they landed. The 1-3 Sep cycle logs show the re-probe firing ("cloud re-probe SUCCEEDED; demotion cleared") - 44.1 is DONE and proven live. Then the TODO table in order: 36, 35, 13, 15-20, 25 (re-derive orphans FIRST), 26, 27, 38 Part 2, 45 step 2 (held for Kimi), 46, 47, then 52 -> 53 -> 50 in that order and never together. DO NOT RUN A CYCLE BY HAND - schtasks /Run /TN CORTEX_Supervisor if one is needed (ITEM 57).
@@ -79,9 +80,18 @@ Keep the state column current — it is the only place a human should have to lo
 | 67 | R5_BLIND_SPOT: GOAL_PROGRESS_REVIEW declared, no level, no metric (new since 2 Sep); DEEP_TIME stays "deliberately undecided" per ITEM 21(b) | TODO | NOCYCLE |
 | 68 | language purity 95.0-95.6% against a 98% floor, two alarms in four days; phase_debrief is the leak (11/15, 5/7 clean) | TODO | NOCYCLE |
 | 69 | proposal SLA ids RENUMBER between reports (EXTRA_CALLS_BREACH = imp:21 -> 22 -> 13 -> 33): "OK imp:22" cannot land on a stable target | TODO | NOCYCLE |
-| 70 | Kimi (ITEM 62): a critical step that says FAILED two nights running must ALERT, and ingest needs a health signal that is not a grep | TODO | NOCYCLE |
+| 70 | Kimi (ITEM 62): a critical step that says FAILED two nights running must ALERT, and ingest needs a health signal that is not a grep | DONE 2026-09-10 (3a8eba5) - repeated_step_failures() lives in self_forecast, the ONE reader of the '-> FAILED' line (no second parser), and becomes a HIGH BODY need in needs_report; it found merkle_to_training unprompted on the real logs; 15 tests, 6 of them cases that must produce NOTHING; both guards mutation-proven | NOCYCLE |
 | 72 | Kimi (ITEM 64): a hand edit of a memory/ file by an assistant needs a human_override.log with before/after hashes - memory/ is a black box otherwise | TODO | NOCYCLE |
 | 71 | Kimi (ITEM 63): the 429 threshold is a guess - build the histogram of 429 intervals from the breaker's counts, then A/B N=3 vs N=10; and ask why subtitles are fetched live at all | TODO | NOCYCLE |
+| 76 | SELF-FORECAST + CORTEX SCOREBOARD: self_forecast.py seals self_duration / self_degraded / self_step_fail into the prophecy ledger; scoreboard.py scores every kind separately (Brier for probabilities) | DONE 2026-09-10 (ce6681f, bc89740, ded4a87) - 10/10 on the machine, and LIVE via \CORTEX_Prophecy through tools/prophecy_morning.bat, which judges exit codes PER STEP because exit 2 is a designed REFUSAL for self_forecast and ChainBroken for scoreboard; 3 kinds sealed on the 09:45 scheduler run. The wiring exposed a real defect it then fixed: prophecy.py had no one-per-night guard and double-sealed a night, so both would have scored against one outcome - prevention (refuse) AND containment (the duplicate is named superseded and never scored, because an append-only chain cannot lose a line). LAST CLAUSE UNVERIFIED BY CONSTRUCTION: n>=7 needs seven scored nights and the first is tonight; closes with `scoreboard.py --write` any morning from 17 Sep | NOCYCLE |
+| 77 | THE NIGHT RUNS ON experimental/self-mod: HEAD moved there 8 Sep 15:00; production and experiment are the same working tree | BLOCKED ON EMIL 2026-09-10 - the handover's default would BREAK tonight, measured not feared. The branches DIVERGED (7 left / 35 right; lidaction-guard is NOT an ancestor of HEAD), so the checkout REMOVES this entire batch from the tree the scheduler runs from, and `git show feature/lidaction-guard:merkle_to_training.py` still carries the exact unfixed `_prompt_key, target_key = entry` at line 206 - a SEVENTH night of the failure STEP 3 just ended. 85 files are both dirty AND different between the branches, every one of them live runtime state (cortex_memory/state.json, archive/merkle_root.txt, 77 data/initiatives/*), the class the 28 Aug reset already destroyed once. B.1 and B.3 stand; only the ROUTE is wrong. Lossless route: merge self-mod INTO lidaction-guard in a separate worktree, verify the suite there, then move the production tree. Three options costed in docs/HANDOVER_2026-09-10.md under EVIDENCE - STEP 4 | NOCYCLE |
+| 78 | PROGRESS 1.3 (weights): branch shares 22.8/15.0/35.9/8.4/18.0 come from axis COUNT per branch, not per-axis weight | DONE 2026-09-10 (65218d4), Emil's ruling in four parts: per-axis weights frozen as v0 with NO weight changed (so no series break and config_fingerprint unmoved); branch shares recorded as a KNOWN DEFECT and demonstrated by test_adding_an_axis_silently_changes_a_branch_share rather than described; goal_score_calculator.branch_shares() is a REPORTING-ONLY normalisation, netted against ever being called from compute_goal_score; and NO cycle-blocking gate - the opponent's third step is dropped outright, the freeze lives in WEIGHTS_V0 in test_axis_tree_contract.py so a change is caught in review where it can be judged. Axis counts corrected: 5/3/9/2/5, not the 5/3/8/3/5 the handover gave. PROGRESS/ is gitignored (.gitignore:54) so the tick is local; the decision is durable in the two tracked files | READONLY |
+| 79 | Kimi/opponent 10 Sep: no drift detection on the learner's inputs — if a branch changes an axis's normalisation, persistence breaks silently | TODO | NOCYCLE |
+| 80 | Kimi/opponent 10 Sep: R43 (signal = verbatim quote + URL) must be enforced at INGEST (bridge/openclaw_queue reader), not only in a spec | TODO | NOCYCLE |
+| 84 | LIVE RUNTIME STATE WAS TRACKED IN GIT, so every branch operation fought the system's own memory. Found while measuring ITEM 77 on 10 Sep: 85 files simultaneously uncommitted-modified AND different between the two branches - cortex_memory/state.json, archive/merkle_root.txt, data/cortex_hypergraph.json, 77 data/initiatives/*.json, the snapshots; the same class the 15:09Z reset destroyed on 28 Aug (RESET_DAMAGE below). Then on 11 Sep it cost something worse than a hard checkout: a live-shaped GOOGLE API KEY reached 9 tracked log lines (memory/night_events.jsonl /detail x2, memory/llm_provenance.jsonl /error x3, memory/diagnosis_history.jsonl /evidence[] x4) and was one `git push` away from a PUBLIC repo. Nobody logged a key - a Gemini error echoed the request URL, which carries ?key=... - but a nightly log was a committable file, and that is what made a provider's error text publishable | DONE 2026-09-11, Emil's plan, and the key never reached origin. (1) core/redact.py scrubs the write path at core/durable.py, the one chokepoint every JSONL append passes through, both append_durable AND append_batched; 14 tests, and the negative control matters more than the positive one - the first `sk-` rule ate "risk-HighRewardOpportunityInTheMarket" and the first url rule ate 9-char Drupal download tokens scraped from resourcepanel.org, both now pinned in PROSE_CORPUS. (2) 377 files left the index and stayed on disk, the list DERIVED from the new ignore rules (`git ls-files -i -c --exclude-standard`) so .gitignore and the index cannot disagree; zero .py or .md among them, after a blanket `git rm -r --cached memory` wrongly caught 23 source modules and was reverted before committing. (3) The 21 local commits were REBUILT as a new series by section rather than filter-repo'd, from `git reset --soft origin/experimental/self-mod` behind tag backup/pre-scrub-2026-09-11 (verified to point at the old HEAD before anything moved). memory/existence_ledger.jsonl and memory/first_bet/ stay tracked - dated append-only audit records, both verified free of credential-shaped strings first, which was the condition. The rule is written in .gitignore where it will be read: if a cycle rewrites it, it is state; if a human edits it, it is code. RELATED: ITEM 81 (the agent's workspace IS the repo root, so it can see .env) is the other half of this exposure and is still TODO | NOCYCLE |
+| 81 | OpenClaw DMZ: planetary-agent workspace IS the repo root (openclaw.json), so the agent sees .env and canon; 4 unfilled OpenClaw templates (SOUL/IDENTITY/USER/AGENTS.md) sit in the repo root and root AGENTS.md contradicts docs/AGENTS.md. Move workspace out, fill the sensor identity, remove templates | TODO - after the handover | NOCYCLE |
+| 82 | THE WORLD LOOP (docs/WORLD_LOOP_2026-09-10.md): only 6 of 104 world indicators move; last_step (today's axis_next learner) loses to persistence 0/6; EWMA transfer 2/6. experiments/prophecy/world_forecast.py + 6 tests, proven in the cloud, INERT. Order: (1) retire last_step in prophecy.py, (2) daily tier into axis_history at daily cadence, (3) OpenClaw Job 1 resolver, (4) Jobs 2-3 | TODO - (1) is one commit, do it in this handover | NOCYCLE |
+| 83 | STATIC-WORLD TRANSFER (Emil, 10 Sep: learn from a world that does not move): experiments/prophecy/country_bench.py, leave-one-country-out, V-Dem index from OWID energy features — kNN halves the error vs mean on 79 unseen countries (rule of law MAE 0.139 vs 0.280). FIRST PASSED point-1 test. 4 tests incl. noise negative control. Next: full V-Dem panel + UCDP as targets/features; wire the residual into OpenClaw Job 2 | TODO - verify on machine; extend | NOCYCLE |
 
 # QUEUE — Claude Code works this file top to bottom
 
@@ -3938,6 +3948,117 @@ Preferred: schtasks /Run /TN CORTEX_Supervisor — the native path, owned by the
 Windows scheduler, identical to what runs at 03:00, and it exercises the real
 entry point instead of a hand-rolled one. A Start-Process detached run is second
 best: it survives, but it tests a launcher nothing else uses.
+
+## ITEM 76 — SELF-FORECAST: THE SYSTEM PREDICTS ITS NIGHT IN MORE THAN ONE BIT
+
+Written 2026-09-10 from Ivan's cloud session. Ivan: "Brier скорборд има, но той
+мери Claude, не CORTEX — да се направи и за CORTEX" and "направи каквото трябва
+да предсказва пълноценно".
+
+WHAT WAS FOUND FIRST (read-only, before writing anything):
+- CORTEX already predicts itself: experiments/prophecy/prophecy.py seals
+  self_failure daily at 09:00 UTC; 52 scored. Recomputed as BRIER from the
+  sealed values: learner 0.171, baseline 0.331, climatology 0.205, learner
+  wins 40/52. That is a real, small self-model signal — it beats the constant.
+- axis_next is the opposite: 609/736 degenerate (learner==baseline==50.0),
+  and on the 127 that differ the trend-extrapolation learner is WORSE than
+  persistence (MAE 18.7 vs 8.5, wins 12/127). prophecy_ledger.scoreboard()
+  pools both into one MAE, which is why it reports learner_beats_control:false
+  and says nothing useful.
+
+WHAT WAS BUILT (new files only; nothing existing touched):
+- experiments/prophecy/self_forecast.py — three new target kinds in the SAME
+  ledger via the SAME seal/score API: self_duration (MAE), self_degraded
+  (Brier), self_step_fail per step seen '-> FAILED' in recent cycle logs
+  (Brier). Refuses while a cycle runs; refuses under MIN_HISTORY; never
+  scores twice; an unknowable step outcome is note_pending, not a 0.
+- experiments/prophecy/scoreboard.py — per-kind board, chain verified first,
+  degenerate counted not compared, last-30 window, --write to
+  claude/reports/PROPHECY_SCOREBOARD.md.
+- test/test_self_forecast.py — 10 tests, failure paths first, two mutation
+  nets (running-guard removed -> seal goes through; Brier replaced by |p-a|
+  -> exact value changes).
+
+PROVEN: 10/10 in the cloud sandbox against a COPY of the real
+prophecy_ledger.jsonl + existence_ledger.jsonl (+ the 9/10 Sep cycle logs).
+UNVERIFIED on the machine. INERT in production until scheduled.
+
+DONE WHEN: tools\run_2026-09-10_cloud_session.bat passes on the machine, the
+scheduled task that runs prophecy.py --predict/--score also runs
+self_forecast.py --predict/--score, and PROPHECY_SCOREBOARD.md shows the
+three kinds with n >= 7.
+
+## ITEM 79 — NOTHING WATCHES THE LEARNER'S INPUTS FOR DRIFT
+
+Opened 2026-09-10 by Emil, on the one question the 10 Sep consult said nobody had
+asked. The opponent was NOT Kimi (the free Kimi no longer exists — see
+experiments/kimi_duel/consults/2026-09-10_next_learning_hypothesis.md and the
+roster fix in experiments/kimi_duel/consult.py); it was
+nvidia/nemotron-3-ultra-550b-a55b:free, free and independent, $0.00.
+
+ITS POINT: "Какво е input distribution shift на axis_next между клоновете? Ако
+experimental/self-mod променя осите/нормализацията, persistence baseline се чупи.
+Нямате drift detection на входните сигнали на learner-а."
+
+WHY IT MATTERS HERE AND NOT IN THE ABSTRACT. Every learner this system scores is a
+function of axis scores, and axis scores come from scorers that have changed
+silently before — the axis facade audit found only 11 of 27 axes computing from
+real data, the rest defaulting on a key mismatch. A persistence baseline is a
+baseline only while the quantity it persists means the same thing from one night to
+the next. If a scorer changes normalisation, BOTH learner and baseline move, the
+Brier/MAE comparison stays internally consistent, and the board keeps reporting a
+clean number computed across a seam. Making that seam visible is this item.
+
+THE REFUSAL THIS MUST SUPPORT, stated before the happy path: when the input
+distribution for an axis has shifted, the correct output is NOT an adjusted score
+and NOT a silently continued series — it is a named break on that axis, and any
+window spanning it reports INCOMPARABLE_ACROSS_BREAK. A learner that keeps
+reporting a skill number across a seam is the forbidden fallback.
+
+WHAT IT IS NOT: not a new model, not a new weight, not a new scorer. A watcher over
+inputs that already exist.
+
+BLOCKED ON NOTHING. Not started. Not part of the 10 Sep handover batch.
+
+## ITEM 80 — R43 IS A SPEC, NOT AN INGESTION RULE
+
+Opened 2026-09-10 by Emil, from the same consult's unsolicited closing point, which
+it called the weakest place in the whole architecture:
+
+"Нямате signal provenance. [merkle_to_training FAILED], [corpus = LLM
+hallucinations], [R43 not enforced] — всички сочат към едно: нямате гаранция, че
+input signal = extracted fact. Докато не наложите signal = verbatim_quote(span) на
+ниво ingestion (не на ниво spec), всичко останало — тегла, learner-и, LoRA,
+prophecy — е построено на quicksand."
+
+THE MEASURED EVIDENCE ALREADY ON RECORD, not the argument:
+- 7 Sep, first market bet: 24 of 24 samples said UP and EVERY cited fact was
+  invented. R43 (a signal must be a verbatim quote from a retrieved document) was
+  written as a specification and has never been shown to run.
+- K1B's corpus of 1077 pairs had LLM-generated "decisions" as its targets
+  (component "unknown", problem "To enable full system functionality"). The adapter
+  learned nothing measurable: delta -0.0056, DEAD by the pre-registered rule.
+- 46 of 46 records in training_data.jsonl were empty for eight weeks because a
+  .get() defaulted instead of raising (claude/reports/CORPUS_K1B_4SEP.md).
+
+Three different subsystems, one missing guarantee. The shape is always the same: an
+absent or unverifiable provenance produced a plausible-looking artefact instead of a
+refusal.
+
+WHAT "ENFORCED AT INGEST" HAS TO MEAN, and the forbidden fallback: a signal whose
+span cannot be located verbatim in a retrieved document is REFUSED — not stored with
+a confidence penalty, not stored with provenance "unknown", not paraphrased into
+something quotable. Zero signals accepted is a valid and reportable outcome of an
+ingest run. Any path that turns a failed provenance check into a stored record is
+the defect itself.
+
+THE MECHANICAL NET BEHIND THE INSTRUCTION: the check belongs in the write path,
+raising rather than returning, so a caller that ignores a return value cannot
+persist an unprovenanced signal — plus a mutation test that FAILS if the check is
+removed.
+
+BLOCKED ON NOTHING, but it is large and touches ingestion for every source. Not
+started. Not part of the 10 Sep handover batch.
 
 ## HOLDING
 
