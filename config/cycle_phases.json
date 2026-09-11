@@ -402,6 +402,10 @@
           "index": "25.37"
         },
         {
+          "name": "learn_world",
+          "index": "25.43"
+        },
+        {
           "name": "self_experiment",
           "index": "25.44"
         },
@@ -448,7 +452,9 @@
         "memory/merkle_verify_latest.json",
         "memory/self_mirror_latest.json",
         "memory/self_mirror_log.jsonl",
-        "memory/self_experiments.json"
+        "memory/self_experiments.json",
+        "memory/learn_world_latest.json",
+        "memory/backend_order_measured.json"
       ]
     }
   },

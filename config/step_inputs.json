@@ -163,6 +163,17 @@
         "memory/daily_tier.jsonl"
       ],
       "derived_from": "read core/daily_tier.py on 11 Sep 2026: SNAPSHOT at line 65 is the only thing record() opens for input; TIER at line 66 is read first (_read) to skip (indicator, date) pairs already on file, then appended to. No network on this path."
+    },
+    "learn_world": {
+      "entry_point": "core.learn_world.run() — fast_cycle_runner.py step 25.43, inside G_LEARN after the nightly draw and before the mirror, the debrief and the report, so all three see what was learned tonight. Every part is fail-open.",
+      "inputs": [
+        "memory/daily_tier.jsonl",
+        "experiments/prophecy/prophecy_ledger.jsonl",
+        "memory/learner_state.json",
+        "memory/llm_provenance.jsonl",
+        "memory/counterfactual_probe_by_model.json"
+      ],
+      "derived_from": "read core/learn_world.py on 11 Sep 2026: run() loads four siblings by path (_load) and calls their own readers — daily_tier for the tier, world_forecast for scoring and the alpha refit (which reads the prophecy ledger and learner_state), and backend_league.league(_rows(PROVENANCE), _reads(PROBE)) for the order of the cloud minds. It WRITES memory/learn_world_latest.json and memory/backend_order_measured.json."
     }
   }
 }
