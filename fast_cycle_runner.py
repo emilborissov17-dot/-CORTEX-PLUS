@@ -2241,15 +2241,34 @@ def _notify_patches_and_initiatives() -> None:
     except Exception as e:
         print(f"[NOTIFY] initiative_tracker FAILED: {e}")
 
-    if active_initiatives:
-        prop  = sum(1 for i in active_initiatives if i.get("status") == "PROPOSED")
-        prog  = sum(1 for i in active_initiatives if i.get("status") == "IN_PROGRESS")
-        print(f"[NOTIFY] initiatives — PROPOSED={prop} IN_PROGRESS={prog}")
-        for init in active_initiatives[:3]:
-            print(f"[NOTIFY]   [{init['status']:11s}] {init['milestone'][:60]}  → {init['target_date']}")
+    # 2a. WHAT IS WAITING ON A HUMAN — asked of initiative_tracker, not counted here.
+    #     Until 11 Sep 2026 this function did its own arithmetic over the tracker's
+    #     return value, and it got the question wrong in both directions: it counted
+    #     IN_PROGRESS, which waits on nobody, and it never counted OVERDUE at all —
+    #     an initiative whose target date has passed is the one case most likely to
+    #     need a person, and it was the one case the notification could not mention.
+    #     awaiting_decision() is the tracker's own answer to "what needs a decision":
+    #     PROPOSED + OVERDUE, highest priority first. One definition, in the module
+    #     that owns the statuses, instead of a second one drifting here.
+    waiting: list[dict] = []
+    try:
+        from initiative_tracker import awaiting_decision as _it_waiting
+        waiting = _it_waiting()
+    except Exception as e:
+        print(f"[NOTIFY] awaiting_decision FAILED: {e}")
 
-    # 3. Build combined notification
-    if not pending_patches and not active_initiatives:
+    if active_initiatives:
+        prog = sum(1 for i in active_initiatives if i.get("status") == "IN_PROGRESS")
+        print(f"[NOTIFY] initiatives — {len(waiting)} awaiting a decision, "
+              f"{prog} IN_PROGRESS (not waiting on anyone)")
+        for init in waiting[:3]:
+            print(f"[NOTIFY]   [{str(init.get('status')):11s}] "
+                  f"{str(init.get('milestone'))[:60]}  → {init.get('target_date')}")
+
+    # 3. Build combined notification. A cycle with initiatives that are all
+    #    IN_PROGRESS has nothing to ask a human, so it does not ring: the silence
+    #    is the correct answer, and it is what keeps the channel worth reading.
+    if not pending_patches and not waiting:
         return
 
     body_parts: list[str] = []
@@ -2260,24 +2279,26 @@ def _notify_patches_and_initiatives() -> None:
             patch_list += f" +{len(pending_patches)-5}"
         body_parts.append(f"Patches({len(pending_patches)}): {patch_list}")
 
-    if active_initiatives:
-        prop  = sum(1 for i in active_initiatives if i.get("status") == "PROPOSED")
-        prog  = sum(1 for i in active_initiatives if i.get("status") == "IN_PROGRESS")
+    if waiting:
+        # The statuses are named, not summed into one word: PROPOSED needs a yes or
+        # no, OVERDUE needs an explanation of why the date passed. Collapsing them
+        # into "N initiatives" is what made the notification unactionable.
+        prop = sum(1 for i in waiting if i.get("status") == "PROPOSED")
+        over = sum(1 for i in waiting if i.get("status") == "OVERDUE")
         counts = []
         if prop: counts.append(f"{prop} PROPOSED")
-        if prog: counts.append(f"{prog} IN_PROGRESS")
-        # append first initiative milestone for context
-        first = active_initiatives[0]
+        if over: counts.append(f"{over} OVERDUE")
+        first = waiting[0]           # highest priority first, per awaiting_decision()
         body_parts.append(
-            f"Initiatives({', '.join(counts)}): {first['milestone'][:50]}"
+            f"Чакат решение({', '.join(counts)}): {str(first.get('milestone'))[:50]}"
         )
 
-    if pending_patches and active_initiatives:
-        title = f"CORTEX++ — {len(pending_patches)} patch(es) + {len(active_initiatives)} initiatives"
+    if pending_patches and waiting:
+        title = f"CORTEX++ — {len(pending_patches)} patch(es) + {len(waiting)} чакат решение"
     elif pending_patches:
         title = f"CORTEX++ — {len(pending_patches)} patch(es) чакат одобрение"
     else:
-        title = f"CORTEX++ — {len(active_initiatives)} active initiatives"
+        title = f"CORTEX++ — {len(waiting)} инициативи чакат решение"
 
     body = " | ".join(body_parts)
     print(f"[NOTIFY] {title}")
