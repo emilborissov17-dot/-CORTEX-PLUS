@@ -45,6 +45,14 @@ JOURNAL = BASE / "memory" / "brain_journal.jsonl"
 # not exist. The second one is what actually happened.
 PROVENANCE = BASE / "memory" / "llm_provenance.jsonl"
 PLAN = BASE / "memory" / "brain_cycle_plan.json"
+# ── ПРИСЪДИТЕ СЕ ПАЗЯТ (A-1, 11 септември 2026) ─────────────────────────────
+# Пет нощи подред (7–11 септ.) планът беше „Resolve sensor conflicts", присъдата
+# — success=False по същата причина, сляпото петно — същото. И нищо от това не
+# стигаше до следващата сутрин: debrief_cycle() връщаше речник, runner-ът го
+# печаташе, никой не го записваше, _state_for_briefing() не го четеше. Законът,
+# т. 3: „планът и присъдата са негови и СЕ ПОМНЯТ". Помнеха се само в лога.
+REVIEWS = BASE / "memory" / "brain_cycle_reviews.jsonl"
+REPEAT_LIMIT = 3            # същият фокус, провален толкова нощи → или сменен, или „какво ще е различно"
 PROPOSALS = BASE / "memory" / "repair_proposals.json"
 LAW_FILE = BASE / "LAW_OF_THE_BRAIN.md"
 
@@ -650,6 +658,25 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
 def _state_for_briefing() -> str:
     """Каквото системата знае за себе си в момента — суровo, без мое резюме."""
     bits = []
+    # A-1 (11 септ. 2026): ПЪРВО собствените присъди — какво обеща, какво стана,
+    # какво реши да помни. Преди всичко друго, защото всичко друго е състояние, а
+    # това е единственото, което е и намерение, и резултат.
+    rev = recent_reviews(REPEAT_LIMIT)
+    if rev:
+        lines = []
+        for r in rev:
+            lines.append(f"[{str(r.get('ts',''))[:10]}] focus={r.get('focus')!r} "
+                         f"success={r.get('success')} verdict={str(r.get('verdict',''))[:200]!r} "
+                         f"blind_spot={str(r.get('blind_spot',''))[:160]!r} "
+                         f"carry_forward={str(r.get('carry_forward',''))[:200]!r}")
+        streak = repeated_failure(rev)
+        head = ("--- YOUR OWN LAST REVIEWS (newest last) ---\n" + "\n".join(lines))
+        if streak:
+            head += (f"\n!!! The focus {streak['focus']!r} has FAILED {streak['n']} nights in a row. "
+                     f"Repeating it unchanged is not a plan. Either change the focus, or state "
+                     f"in `changed_because` what you will do DIFFERENTLY tonight and why that "
+                     f"will make the success test come true this time.")
+        bits.append(head)
     # 15 авг 2026, стъпка 4. Kimi защити преместването на плана след одобренията с
     # довода „human_approvals преди плана е КОНСТРЕЙНТ, не опция". Проверих дали
     # това е вярно в кода, вместо да го приема: НЕ беше. Планът четеше
@@ -672,6 +699,35 @@ def _state_for_briefing() -> str:
     return "\n".join(bits)
 
 
+def recent_reviews(n: int = 3) -> list:
+    """Последните n присъди от memory/brain_cycle_reviews.jsonl, стари→нови."""
+    try:
+        rows = []
+        for line in REVIEWS.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line:
+                try:
+                    rows.append(json.loads(line))
+                except Exception:
+                    continue
+        return rows[-n:]
+    except Exception:
+        return []
+
+
+def repeated_failure(reviews: list, limit: int = REPEAT_LIMIT) -> dict | None:
+    """{focus, n} ако последните `limit` присъди са за ЕДИН И СЪЩ фокус и всичките
+    са провал; иначе None. Чист: не чете нищо."""
+    if len(reviews) < limit:
+        return None
+    tail = reviews[-limit:]
+    foci = {str(r.get("focus") or "").strip().lower() for r in tail}
+    failed = all(str(r.get("success")).strip().lower() in ("false", "0", "no", "не") for r in tail)
+    if len(foci) == 1 and failed and next(iter(foci)):
+        return {"focus": tail[-1].get("focus"), "n": limit}
+    return None
+
+
 def brief_cycle() -> dict | None:
     """ПРЕДИ цикъла: мозъкът чете себе си и определя какво иска от този цикъл.
     Планът е негов — не му се дава списък със стъпки за подреждане. Пише се в
@@ -689,10 +745,23 @@ def brief_cycle() -> dict | None:
             "watch": "a list of 1-3 things you want to watch this cycle",
             "suspicion": "what you suspect is wrong in yourself (or empty)",
             "success_test": "how you will know at the end that the cycle succeeded",
+            "changed_because": ("ONLY if your last reviews show the same focus failing "
+                                "repeatedly: what you will do differently tonight and why. "
+                                "Otherwise an empty string."),
         },
         kind="cycle_plan")
     if not d:
         return None
+    # A-1: повторен провал без промяна не е план. Не се отхвърля (мозъкът решава),
+    # но се ОТБЕЛЯЗВА в самия план, за да го види дебрифът и човекът.
+    streak = repeated_failure(recent_reviews(REPEAT_LIMIT))
+    if streak:
+        same = str(d.get("focus") or "").strip().lower() == str(streak["focus"] or "").strip().lower()
+        d["_repeat_of_failed_focus"] = bool(same)
+        d["_repeat_nights"] = streak["n"]
+        if same and not str(d.get("changed_because") or "").strip():
+            d["_warning"] = (f"the same focus failed {streak['n']} nights and the plan says nothing "
+                             f"about what will be different — repetition, not a plan")
     # cycle_id се записва В плана, за да може current_plan() да различи днешния
     # от вчерашния (стъпка 2, консенсус с Kimi, 15 авг).
     _cid = None
@@ -754,7 +823,74 @@ def debrief_cycle(cycle_log_tail: str = "") -> dict | None:
             "carry_forward": "what to remember for the next cycle",
         },
         kind="cycle_review")
+    if d:
+        record_review(plan, d)
+        # A-2: канонът учи. Записаната присъда вече е на диска, значи тази вечер
+        # участва в проверката за повторение — иначе един и същ урок би чакал
+        # още една нощ, за да бъде видян.
+        promote_repeated_lesson(recent_reviews(REPEAT_LIMIT))
     return d
+
+
+def record_review(plan: dict, review: dict) -> dict | None:
+    """Присъдата се ЗАПИСВА — един ред, append-only, с плана, който съди.
+    Fail-open: неуспешен запис не спира дебрифа. Това е паметта, която
+    _state_for_briefing() чете първа на следващата сутрин."""
+    row = {"ts": _now(), "cycle_id": plan.get("cycle_id"),
+           "focus": plan.get("focus"), "success_test": plan.get("success_test"),
+           "changed_because": plan.get("changed_because"),
+           "success": review.get("success"), "verdict": review.get("verdict"),
+           "blind_spot": review.get("blind_spot"), "carry_forward": review.get("carry_forward"),
+           "_model": review.get("_model")}
+    try:
+        REVIEWS.parent.mkdir(parents=True, exist_ok=True)
+        with REVIEWS.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        return row
+    except Exception:
+        return None
+
+
+def promote_repeated_lesson(reviews: list, limit: int = REPEAT_LIMIT) -> dict | None:
+    """A-2: КАНОНЪТ УЧИ. Един и същ урок, изнесен от `limit` последователни
+    присъди, става инвариант в always-loaded рамката (core.canon).
+
+    ЗАЩО ПРАГ, А НЕ ВСЕКИ УРОК. `carry_forward` е мнение на модел за една нощ.
+    Повторен три нощи подред, той е вече наблюдение за системата, а не настроение
+    — същият праг, с който repeated_failure() съди фокуса. Канонът се чете на
+    ВСЯКА стъпка; нещо, което влиза там по един случай, би тежало колкото
+    границите.
+
+    СРАВНЕНИЕТО Е НОРМАЛИЗИРАНО, записът — не съвсем: сравнява се strip+lower,
+    защото „Keep the anchor", „Keep the anchor " и „keep the anchor" са един урок,
+    а моделът не е стабилен в главните букви. Записва се нормализираният текст, за
+    да не влязат три варианта на едно и също.
+
+    КАКВО ЗНАЧИ None — и това е нормалният отговор през повечето нощи: по-малко от
+    `limit` присъди, различен урок между тях, или празен урок. В нито един от тези
+    случаи не се пише НИЩО: канонът не се пипа, докато повторението не е налице.
+    Забраненият изход е „почти същият урок" да мине за същия.
+
+    Fail-open: ако канонът не може да се запише, дебрифът продължава.
+    """
+    if len(reviews) < limit:
+        return None
+    tail = reviews[-limit:]
+    lessons = {str(r.get("carry_forward") or "").strip().lower() for r in tail}
+    if len(lessons) != 1:
+        return None
+    lesson = next(iter(lessons))
+    if not lesson:
+        return None
+    try:
+        from core import canon as _canon  # noqa: PLC0415
+        return _canon.consolidate_invariant(
+            lesson,
+            evidence=f"carried forward by {limit} consecutive cycle reviews "
+                     f"({tail[0].get('cycle_id')}..{tail[-1].get('cycle_id')})",
+            source=f"cycle_review×{limit}")
+    except Exception:
+        return None
 
 
 # ───────────── МОЗЪКЪТ Е НА ВСЯКА СТЪПКА (закон, т.1) ────────────────────────
