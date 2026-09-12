@@ -56,6 +56,7 @@ from __future__ import annotations
 import ast
 import json
 import re
+import statistics
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -596,6 +597,812 @@ def _selftest() -> int:
     return 0
 
 
+# ── 6. паспорт на стъпката ───────────────────────────────────────────────────
+#
+# Механичен ред за всяка стъпка. НИКАКВА ПРЕЦЕНКА: паспортът описва, не съди.
+# Присъдата, изречението какво прави стъпката и кои от 14-те точки обслужва
+# стоят в docs/STEP_LEDGER.md и се пишат на ръка, с дата. Тук ледгерът се чете
+# само ОБРАТНО — за да се отбележи кой ред още го няма.
+#
+# ПРАЗНОТО НЕ Е НУЛА. Колона, която не може да се сметне, връща UNKNOWN и
+# причината. Нула чете като „няма нито едно"; тире чете като „не знам", и
+# разликата е цялата стойност на този файл.
+#
+# КОЕ Е КОД И КОЕ Е СЪСТОЯНИЕ. Фаза, модули, таван, декларирани изходи, деца,
+# вътрешни предели и повикване на модел се четат от кода и конфигурацията: два
+# пуска над непроменено хранилище съвпадат. История, скорошни времена, убийства
+# и „пипнато" четат ЗАПИСА — базата, логовете на циклите, дневника на часовоя —
+# и се менят всяка нощ. Всеки ред носи state_derived със списъка им, за да не се
+# чете като свойство на кода нещо, което е свойство на седмицата.
+
+UNKNOWN = "—"
+
+PASSPORT_MD = REPO / "claude" / "reports" / "STEP_PASSPORT.md"
+PASSPORT_JSON = REPO / "claude" / "reports" / "STEP_PASSPORT.json"
+BASELINE_FILE = REPO / "memory" / "step_contract_baseline.json"
+SUPERVISOR_LOG = REPO / "logs" / "supervisor.log"
+CYCLE_LOG_DIR = REPO / "memory" / "cycle_logs"
+EXISTENCE_LEDGER = REPO / "memory" / "existence_ledger.jsonl"
+PHASES_FILE = REPO / "config" / "cycle_phases.json"
+
+STATE_COLUMNS = ["history", "recent_times", "kills", "outputs.touched_only"]
+
+_SPAWN_CALLS = {"subprocess.run", "subprocess.Popen", "subprocess.call",
+                "subprocess.check_call", "subprocess.check_output",
+                "os.system", "os.popen", "os.spawnl", "os.spawnv",
+                "Popen", "__import__"}
+_SCRIPT_EXT = (".bat", ".ps1", ".cmd", ".exe")
+
+# Имена, чието ПОВИКВАНЕ или ВНАСЯНЕ значи модел. Търсят се идентификатори през
+# AST, не подниз в текста: докстринговете тук споменават ollama и groq, докато
+# обещават да НЕ ги викат, и подниз не отличава обещание от повикване.
+_MODEL_CALLS = {"think", "_llm", "call_groq", "call_groq_meta", "ask_groq",
+                "ask_model", "chat", "generate"}
+_MODEL_MODULES = {"groq_backend", "ollama_backend", "brain", "model_window",
+                  "backend_policy", "cortex_reasoner", "ollama", "openai",
+                  "groq", "anthropic"}
+
+_CAP_NAME = re.compile(r"^(MAX|MIN)_|_(MAX|LIMIT|CAP|QUOTA)$|_PER_")
+_TIME_NAME = re.compile(r"_(SEC|SECS|SECONDS|TIMEOUT|DEADLINE|BUDGET|MINUTES)$"
+                        r"|^(TIMEOUT|DEADLINE|BUDGET)")
+_RETRY_NAME = re.compile(r"retry|retries|attempt|attempts|backoff", re.I)
+_RUN_LABEL = re.compile(r'_run\(\s*"([^"]+)"')
+_SEC_IN_LINE = re.compile(r"\((\d+(?:\.\d+)?)s\)")
+_KILL_LINE = re.compile(
+    r"KILL POLICY: step='([^']+)' age=(\d+(?:\.\d+)?)s ceiling=(\d+(?:\.\d+)?)s "
+    r"cpu=(\S+) io_idle=(\S+) degraded=(\S+) -> ([A-Z]+) \(([^)]*)\)")
+
+
+def _ast_of(text: str):
+    """AST или None. Никога не хвърля: един неразбираем файл не бива да отнеме
+    паспорта на другите 73 стъпки."""
+    try:
+        return ast.parse(text)
+    except Exception:
+        return None
+
+
+def _dotted(node) -> str:
+    """Точковото име на извикваното, колкото се чете статично."""
+    parts = []
+    while isinstance(node, ast.Attribute):
+        parts.append(node.attr)
+        node = node.value
+    if isinstance(node, ast.Name):
+        parts.append(node.id)
+    return ".".join(reversed(parts))
+
+
+def _trees_for(code: str, modules: list) -> list:
+    """Дървото на блока плюс дърветата на модулите, които той вика."""
+    out = []
+    t = _ast_of(code)
+    if t is not None:
+        out.append(("block", t))
+    for m in modules:
+        try:
+            src = (REPO / m).read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        t = _ast_of(src)
+        if t is not None:
+            out.append((m, t))
+    return out
+
+
+def _phase_of(name: str, index: str) -> dict:
+    """Фазата по (име, индекс) от config/cycle_phases.json.
+
+    По ДВОЙКАТА, не по името: body_scan върви два пъти, в две различни фази, и
+    карта по име не може да представи това — файлът сам го казва в ключа
+    _identity_is_the_index_not_the_name.
+    """
+    try:
+        blob = json.loads(PHASES_FILE.read_text(encoding="utf-8"))
+    except Exception as e:
+        return {"value": UNKNOWN,
+                "why": f"{PHASES_FILE.name} unreadable ({type(e).__name__})"}
+    for phase, body in (blob.get("phases") or {}).items():
+        for s in body.get("steps") or []:
+            if s.get("name") == name and str(s.get("index")) == str(index):
+                return {"value": phase, "why": None}
+    return {"value": UNKNOWN,
+            "why": f"({name}, {index}) is in the runner but not in {PHASES_FILE.name}"}
+
+
+def _canonical(name: str) -> str:
+    """Каноничното име — псевдонимите и подстъпките се разрешават през
+    core.cycle_map, не през втора таблица тук."""
+    try:
+        from core.cycle_map import _canon
+        return _canon(name) or name
+    except Exception:
+        return name
+
+
+def _ceiling_of(step: str) -> dict:
+    """core.step_budget.effective_ceiling — единственият източник, делегиран.
+
+    config/scheduler.json сам забранява втора таблица с времена, затова тук няма
+    резервен прочит на конфигурацията. Ако функцията не се зареди, редът казва
+    UNKNOWN, вместо да отговори с второ мнение.
+    """
+    try:
+        from core.step_budget import effective_ceiling
+        return {"value": int(effective_ceiling(step)), "why": None}
+    except Exception as e:
+        return {"value": UNKNOWN,
+                "why": f"core.step_budget.effective_ceiling unavailable "
+                       f"({type(e).__name__}: {e})"}
+
+
+def _contract_labels(code: str) -> list:
+    """Етикетите на _run() в блока — точно тези, за които се пише договор.
+
+    StepContract се отваря в fast_cycle_runner._run(). beat() пише пулс, не
+    договор. Блок без нито един _run() никога не получава ред в базата — не
+    защото стъпката е млада, а защото никой не пише за нея.
+    """
+    return sorted(set(_RUN_LABEL.findall(code)))
+
+
+def _load_baseline() -> dict:
+    try:
+        return json.loads(BASELINE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _warmup_cycles() -> int:
+    try:
+        from core.step_contract import WARMUP_CYCLES
+        return int(WARMUP_CYCLES)
+    except Exception:
+        return 3
+
+
+def _p95(values: list):
+    """Правилото на хранилището, взето назаем, не преписано."""
+    try:
+        from core.step_contract import p95 as _repo_p95
+        return _repo_p95(list(values))
+    except Exception:
+        vals = sorted(values)
+        if len(vals) < 2:
+            return None
+        return float(vals[max(0, min(len(vals) - 1,
+                                     int(round(0.95 * (len(vals) - 1)))))])
+
+
+def _history(name: str, labels: list, baseline: dict) -> dict:
+    """Редовете в step_contract_baseline.json за тази стъпка — и ако няма, защо."""
+    writer = ("core/step_contract.py, opened by fast_cycle_runner._run(); "
+              "beat() writes a heartbeat, not a contract")
+    keys = []
+    for k in list(labels) + [name, _canonical(name)]:
+        if k in baseline and k not in keys:
+            keys.append(k)
+    if not keys:
+        why = ((f"no _run() call inside the block, so no StepContract is ever "
+                f"opened for it — nobody writes rows. Writer: {writer}")
+               if not labels else
+               (f"the block calls _run({', '.join(labels)}) but no such key exists "
+                f"in {BASELINE_FILE.name}. Writer: {writer}"))
+        return {"has_history": False, "n": UNKNOWN, "median": UNKNOWN,
+                "p95": UNKNOWN, "keys": labels, "touched": [], "why": why}
+    secs, touched = [], set()
+    for k in keys:
+        for r in (baseline[k].get("runs") or []):
+            if isinstance(r.get("seconds"), (int, float)):
+                secs.append(float(r["seconds"]))
+            for t in (r.get("touched") or []):
+                touched.add(str(t).replace("\\", "/"))
+    if not secs:
+        return {"has_history": False, "n": 0, "median": UNKNOWN, "p95": UNKNOWN,
+                "keys": keys, "touched": sorted(touched),
+                "why": f"key(s) {keys} exist in {BASELINE_FILE.name} with no runs"}
+    warm = _warmup_cycles()
+    q = _p95(secs)
+    return {"has_history": True, "n": len(secs),
+            "median": round(statistics.median(secs), 1),
+            "p95": (round(q, 1) if q is not None else UNKNOWN),
+            "keys": keys, "touched": sorted(touched),
+            "why": (None if len(secs) >= warm else
+                    f"{len(secs)} of {warm} WARMUP_CYCLES — the contract's verdict "
+                    f"stays UNKNOWN until the third run")}
+
+
+def _recent_times(name: str, cycle_logs: list) -> dict:
+    """Секунди, отпечатани ВЪТРЕ в блока на стъпката, в последните 10 цикъла.
+
+    За стъпка без база това е единственото механично време, което съществува:
+    редовете в memory/cycle_logs нямат собствен часовник, така че разлика между
+    два реда не може да се вземе. Чете се само число, което самата стъпка е
+    отпечатала в скоби, и се пази РЕДЪТ, за да може да се провери.
+    """
+    found = []
+    for path, text in cycle_logs:
+        lines = text.splitlines()
+        start = next((i for i, l in enumerate(lines)
+                      if l.startswith("[STEP] ") and l[7:].strip() == name), None)
+        if start is None:
+            continue
+        end = next((j for j in range(start + 1, len(lines))
+                    if lines[j].startswith("[STEP] ")), len(lines))
+        best, best_line = None, None
+        for l in lines[start:end]:
+            for m in _SEC_IN_LINE.finditer(l):
+                v = float(m.group(1))
+                if best is None or v > best:
+                    best, best_line = v, l.strip()[:120]
+        if best is not None:
+            found.append({"log": path.name, "seconds": best, "line": best_line})
+    if not found:
+        return {"value": UNKNOWN, "runs": [],
+                "why": "the block prints no '(Ns)' of its own, and cycle-log lines "
+                       "carry no timestamps, so no duration can be derived"}
+    return {"value": round(statistics.median(f["seconds"] for f in found), 1),
+            "runs": found, "why": None}
+
+
+def _kill_index() -> dict:
+    """Убийствата. АВТОРИТЕТЪТ Е ДНЕВНИКЪТ, не текстовият лог.
+
+    memory/existence_ledger.jsonl носи CYCLE_KILLED с reason.wedged_step и е
+    веригата, която само истински цикъл пише — 13 записа, daily_analysis 6,
+    internet_intelligence 6, constancy_and_constellation 1. Това е колона 6.
+
+    logs/supervisor.log остава ВТОРОСТЕПЕННО потвърждение и нищо повече, защото
+    е ОТРОВЕН: измерено, 720+ от редовете KILL POLICY са синтетични — 144 за
+    web_intelligence, 144 за trend_tracker и 432 за step='x', което дори не е
+    стъпка. Всеки може да пише в текстов файл, и тестовете пишат.
+
+    Затова тук се брои и колко РАЗЛИЧНИ наблюдения стоят зад редовете: фикстура
+    се разпознава по това, че се повтаря дословно, така че 144 реда с едно
+    различно наблюдение са едно наблюдение, повторено 144 пъти. Числото се
+    показва; преценка не се прави.
+    """
+    by_step, text = {}, ""
+    try:
+        text = SUPERVISOR_LOG.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        pass
+    for m in _KILL_LINE.finditer(text):
+        step, age, ceil, cpu, io, degraded, verdict, cause = m.groups()
+        d = by_step.setdefault(step, {"lines": 0, "by_rule": {},
+                                      "_distinct": set(), "ages": set()})
+        d["lines"] += 1
+        rule = f"{verdict}({cause})"
+        d["by_rule"][rule] = d["by_rule"].get(rule, 0) + 1
+        d["_distinct"].add((age, ceil, cpu, io, degraded, verdict, cause))
+        d["ages"].add(float(age))
+    for d in by_step.values():
+        d["distinct_observations"] = len(d.pop("_distinct"))
+        d["ages"] = sorted(d["ages"])
+
+    ledger = {}
+    try:
+        for line in EXISTENCE_LEDGER.read_text(encoding="utf-8",
+                                               errors="ignore").splitlines():
+            try:
+                rec = json.loads(line)
+            except Exception:
+                continue
+            if rec.get("event") != "CYCLE_KILLED":
+                continue
+            reason = rec.get("reason") or {}
+            e = ledger.setdefault(str(reason.get("wedged_step")),
+                                  {"count": 0, "ages": []})
+            e["count"] += 1
+            if isinstance(reason.get("heartbeat_age_sec"), (int, float)):
+                e["ages"].append(round(float(reason["heartbeat_age_sec"]), 1))
+    except Exception:
+        pass
+    ledger_read = EXISTENCE_LEDGER.is_file()
+    return {"log": by_step, "ledger": ledger, "log_available": bool(text),
+            "ledger_available": ledger_read}
+
+
+def _kills_for(name: str, index: dict) -> dict:
+    """Колона 6. Първо дневникът; логът само отдолу, с бележката какъв е."""
+    led = index["ledger"].get(name) or {}
+    if not index["ledger_available"]:
+        row = {"kills": UNKNOWN, "ages_sec": [],
+               "why": f"{EXISTENCE_LEDGER.name} unreadable — the authoritative "
+                      f"record of a kill could not be read, so this is NOT zero"}
+    else:
+        row = {"kills": led.get("count", 0),
+               "ages_sec": led.get("ages", []),
+               "source": f"{EXISTENCE_LEDGER.name} CYCLE_KILLED.reason.wedged_step",
+               "why": None}
+    log = index["log"].get(name) or {}
+    row["corroboration"] = (
+        {"log_lines": UNKNOWN,
+         "note": f"{SUPERVISOR_LOG.name} unreadable or absent"}
+        if not index["log_available"] else
+        {"log_lines": log.get("lines", 0),
+         "log_by_rule": log.get("by_rule", {}),
+         "log_distinct_observations": log.get("distinct_observations", 0),
+         "log_ages_sec": log.get("ages", []),
+         "note": "SECONDARY ONLY. logs/supervisor.log is plain text that tests "
+                 "write to as well as the watchdog; 720+ of its KILL POLICY lines "
+                 "are known fixtures (step='x' is not a step). distinct_observations "
+                 "counts how many of these lines carry a different "
+                 "(age, ceiling, cpu, io, degraded, verdict) tuple — a fixture "
+                 "repeats verbatim, so 144 lines / 1 distinct is one observation."})
+    return row
+
+
+BLACKBOX = REPO / "memory" / "blackbox.jsonl"
+_TERMINAL = {"CYCLE_FINISHED", "CYCLE_DIED", "CYCLE_KILLED",
+             "CYCLE_REFUSED_SURVIVAL_GATE"}
+
+
+def _cycle_context() -> dict:
+    """Колона 14. Паметта, която ЦИКЪЛЪТ е имал — не стъпката.
+
+    ЗАЩО Е В ПАСПОРТА НА СТЪПКАТА, ЕДНАКВА ЗА ВСИЧКИ РЕДОВЕ. Без нея „умря в
+    composers" се чете като вина на composers. Цикълът от 12 сеп 20:04 тръгна с
+    2063 MB свободни, при измерен апетит 1.9 GB типично и 2.7 GB в най-лошата от
+    осем нощи — тоест нощта беше обречена, преди composers да съществува в нея.
+    Стойността е свойство на вечерта, не на стъпката, и затова стои еднаква във
+    всеки ред: това е контекстът, срещу който се чете всяко друго число.
+
+    Сдвоява се по pid ВЪТРЕ в blackbox.jsonl, а изходът се взима от дневника по
+    ВРЕМЕ: дневникът записва pid-а на venv launcher-а, blackbox — на истинския
+    интерпретатор, и по pid двата файла не се съединяват.
+
+    Убит цикъл не пише exit ред (coverage/blackbox пишат при излизане), така че
+    „exit: —" НЕ е нула похарчена памет, а липсващо измерване — и е самият
+    подпис на смъртта.
+    """
+    def _load(p):
+        out = []
+        try:
+            for line in p.read_text(encoding="utf-8", errors="ignore").splitlines():
+                try:
+                    out.append(json.loads(line))
+                except Exception:
+                    pass
+        except OSError:
+            pass
+        return out
+
+    def _t(s):
+        return datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+
+    bb = [r for r in _load(BLACKBOX) if r.get("step") == "cycle"]
+    if not bb:
+        return {"value": UNKNOWN, "cycles": [],
+                "why": f"{BLACKBOX.name} has no step=='cycle' rows — "
+                       f"core/blackbox.py never wrote one"}
+    led = _load(EXISTENCE_LEDGER)
+    starts = [(_t(r["ts"]), r.get("cycle_id")) for r in led
+              if r.get("event") == "CYCLE_STARTED" and r.get("ts")]
+    term = {r["cycle_id"]: r["event"] for r in led
+            if r.get("event") in _TERMINAL and r.get("cycle_id")}
+
+    opened, pairs = {}, []
+    for r in bb:
+        if r.get("phase") == "start":
+            opened[r.get("pid")] = r
+        elif r.get("phase") == "exit" and r.get("pid") in opened:
+            pairs.append((opened.pop(r["pid"]), r))
+    for s in opened.values():
+        pairs.append((s, None))
+    pairs.sort(key=lambda p: _t(p[0]["utc"]))
+
+    def _cid(row):
+        best = None
+        t = _t(row["utc"])
+        for st, cid in starts:
+            d = abs((st - t).total_seconds())
+            if d <= 180 and (best is None or d < best[0]):
+                best = (d, cid)
+        return best[1] if best else None
+
+    def _row(s, e):
+        cid = _cid(s)
+        return {
+            "cycle_id": cid or f"(unmatched) {s['utc']}",
+            "start_avail_mb": s.get("avail_mb"),
+            "exit_avail_mb": (e.get("avail_mb") if e else UNKNOWN),
+            "consumed_mb": (round(s["avail_mb"] - e["avail_mb"])
+                            if e and s.get("avail_mb") is not None else UNKNOWN),
+            "outcome": term.get(cid) or ("no exit row — killed, or still running"
+                                         if e is None else "no ledger verdict"),
+        }
+
+    out = [_row(s, e) for s, e in pairs[-10:]]
+    # ПРОЗОРЕЦЪТ НА АПЕТИТА Е ПО-ШИРОК ОТ ТАБЛИЦАТА, НАРОЧНО. Таблицата показва
+    # последните десет пуска, защото това е контекстът на тазвечершната стъпка.
+    # Апетитът обаче се брои по ВСИЧКИ завършили цикли във файла: една вечер с
+    # четири прекъснати опита изтласква завършилите нощи от прозореца и оставя
+    # n=2 — извадка, която казва повече за днешния ден, отколкото за цикъла.
+    everything = [_row(s, e) for s, e in pairs]
+    finished = [c for c in everything if c["outcome"] == "CYCLE_FINISHED"]
+    used = [c["consumed_mb"] for c in finished if isinstance(c["consumed_mb"], int)]
+    shown_finished = sum(1 for c in out if c["outcome"] == "CYCLE_FINISHED")
+    return {
+        "value": (f"{round(statistics.median(c['start_avail_mb'] for c in out))}MB "
+                  f"median at start, {shown_finished}/{len(out)} finished"),
+        "cycles": out,
+        "finished_in_window": shown_finished,
+        "appetite_window": "every paired cycle in the file, not only the last 10",
+        "appetite_mb": {"n": len(used),
+                        "median": (round(statistics.median(used)) if used else UNKNOWN),
+                        "max": (max(used) if used else UNKNOWN),
+                        "why": (None if used else
+                                "no finished cycle in the window wrote both rows")},
+        "why": None,
+    }
+
+
+def _declared_vs_touched(modules: list, touched: list, has_history: bool) -> dict:
+    """Декларирано (константи на ниво модул) срещу пипнато (от историята)."""
+    declared = set()
+    for m in modules:
+        for rel in declared_outputs(m):
+            declared.add(rel.replace("\\", "/"))
+    t = {x.replace("\\", "/") for x in touched}
+    if not modules:
+        return {"declared_only": [], "touched_only": [], "both": [],
+                "why": "the block names no module, so there are no constants to "
+                       "read a declaration from"}
+    if not has_history:
+        return {"declared_only": sorted(declared), "touched_only": [], "both": [],
+                "why": "no history, so nothing is known to have been touched — "
+                       "declared_only here is NOT evidence of a dead output"}
+    return {"declared_only": sorted(declared - t),
+            "touched_only": sorted(t - declared),
+            "both": sorted(declared & t), "why": None}
+
+
+def _spawns(code: str, modules: list) -> dict:
+    """subprocess / Popen / os.system / __import__, и низове с .bat/.ps1/.cmd/.exe.
+
+    Повикванията се четат от AST, разширенията — от низови КОНСТАНТИ. Така
+    коментар, който споменава tools/install_media_deps.ps1, не се брои за
+    раждане на процес.
+    """
+    hits = []
+    for where, tree in _trees_for(code, modules):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                n = _dotted(node.func)
+                if n in _SPAWN_CALLS:
+                    hits.append({"where": where, "what": n,
+                                 "line": getattr(node, "lineno", None)})
+            elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+                if node.value.lower().endswith(_SCRIPT_EXT):
+                    hits.append({"where": where, "what": node.value[-40:],
+                                 "line": getattr(node, "lineno", None)})
+    return {"spawns": bool(hits), "n": len(hits), "hits": hits[:12]}
+
+
+def _internal_limits(code: str, modules: list) -> dict:
+    """Какво ограничава стъпката ОТВЪТРЕ, независимо от тавана на часовоя."""
+    timeouts, caps, times, retries, sleeps = [], {}, {}, set(), set()
+    for where, tree in _trees_for(code, modules):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                called = _dotted(node.func)
+                for kw in (node.keywords or []):
+                    if kw.arg == "timeout":
+                        v = (kw.value.value if isinstance(kw.value, ast.Constant)
+                             else (_dotted(kw.value) or "<expr>"))
+                        timeouts.append({"where": where, "call": called,
+                                         "timeout": v,
+                                         "line": getattr(node, "lineno", None)})
+                if called == "time.sleep" and node.args:
+                    a = node.args[0]
+                    sleeps.add(str(a.value) if isinstance(a, ast.Constant)
+                               else (_dotted(a) or "<expr>"))
+            elif isinstance(node, ast.Name) and _RETRY_NAME.search(node.id):
+                retries.add(node.id)
+        for node in getattr(tree, "body", []):
+            if not isinstance(node, (ast.Assign, ast.AnnAssign)) or node.value is None:
+                continue
+            names = [t.id for t in getattr(node, "targets", [])
+                     if isinstance(t, ast.Name)]
+            if isinstance(getattr(node, "target", None), ast.Name):
+                names.append(node.target.id)
+            lit = node.value.value if isinstance(node.value, ast.Constant) else None
+            for nm in names:
+                if _TIME_NAME.search(nm) and isinstance(lit, (int, float)) \
+                        and not isinstance(lit, bool):
+                    times[f"{where}:{nm}"] = lit
+                elif _CAP_NAME.search(nm) and isinstance(lit, int) \
+                        and not isinstance(lit, bool):
+                    caps[f"{where}:{nm}"] = lit
+    subprocess_deadline = [t for t in timeouts
+                           if t["call"].startswith(("subprocess.", "Popen"))
+                           and t["timeout"] not in (None, "None")]
+    return {
+        "request_timeouts": {"n": len(timeouts), "sample": timeouts[:6]},
+        "count_caps": caps or UNKNOWN,
+        "count_caps_why": (None if caps else
+                           "no module-level int constant named MAX_*/*_LIMIT/"
+                           "*_CAP/*_QUOTA/*_PER_*; a cap inside a function body is "
+                           "invisible to a constant scan"),
+        "internal_time_cap": bool(times or subprocess_deadline),
+        "internal_time_constants": times or UNKNOWN,
+        "subprocess_deadlines": subprocess_deadline[:4],
+        "retry_identifiers": sorted(retries)[:8] or UNKNOWN,
+        "sleep_values": sorted(sleeps)[:8] or UNKNOWN,
+    }
+
+
+def _model_calls(code: str, modules: list) -> dict:
+    """Вика ли модел, и с кои ключови думи.
+
+    През идентификатори — извикано име, внесен модул — не през текст. Иначе този
+    файл би обявил за викащ модел всеки модул, чийто докстринг ОБЕЩАВА, че не
+    вика, което е точно обратното на истината.
+    """
+    calls, mods, kwargs = set(), set(), {}
+    for _where, tree in _trees_for(code, modules):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                dotted = _dotted(node.func)
+                if not dotted:
+                    continue
+                tail = dotted.split(".")[-1]
+                head = dotted.split(".")[0]
+                if tail in _MODEL_CALLS or head in _MODEL_MODULES:
+                    calls.add(dotted)
+                    for kw in (node.keywords or []):
+                        if kw.arg in ("fast", "lean") and \
+                                isinstance(kw.value, ast.Constant):
+                            key = f"{kw.arg}={kw.value.value}"
+                            kwargs[key] = kwargs.get(key, 0) + 1
+            elif isinstance(node, ast.Import):
+                for a in node.names:
+                    if a.name.split(".")[-1] in _MODEL_MODULES:
+                        mods.add(a.name)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                if node.module.split(".")[-1] in _MODEL_MODULES:
+                    mods.add(node.module)
+    return {"calls_model": bool(calls or mods), "calls": sorted(calls)[:8],
+            "modules": sorted(mods)[:8], "kwargs": kwargs or UNKNOWN}
+
+
+def passport(rec: dict) -> dict:
+    """Един механичен ред за всяка стъпка, от вече изчисления одит."""
+    baseline = _load_baseline()
+    kill_index = _kill_index()
+    ctx = _cycle_context()
+    logs = []
+    try:
+        for p in sorted(CYCLE_LOG_DIR.glob("cycle_*.log"),
+                        key=lambda f: f.stat().st_mtime)[-10:]:
+            logs.append((p, p.read_text(encoding="utf-8", errors="ignore")))
+    except Exception:
+        logs = []
+    src = RUNNER.read_text(encoding="utf-8", errors="ignore").splitlines()
+
+    rows = []
+    for r in rec["rows"]:
+        code = "\n".join(src[r["line"] - 1: r["line"] - 1 + r["block_lines"]])
+        labels = _contract_labels(code)
+        hist = _history(r["name"], labels, baseline)
+        rows.append({
+            "index": r["index"],
+            "name": r["name"],
+            "canonical": _canonical(r["name"]),
+            "phase": _phase_of(r["name"], r["index"]),
+            "modules": r["modules"],
+            "block_lines": r["block_lines"],
+            "runner_line": r["line"],
+            # Колона 13. Договор се отваря в _run(); beat() пише само пулс. Един
+            # булев отговаря на „защо няма история" за всичките 31 стъпки без
+            # редове, без нито едно предположение — включително composers и
+            # web_intelligence, които минават само през beat().
+            "through_run": {"value": bool(labels), "labels": labels,
+                            "why": (None if labels else
+                                    "the block calls beat() but never _run(), so "
+                                    "StepContract is never opened and no row is "
+                                    "ever written for it")},
+            "ceiling_sec": _ceiling_of(_canonical(r["name"])),
+            "history": hist,
+            "recent_times": _recent_times(r["name"], logs),
+            "kills": _kills_for(r["name"], kill_index),
+            "outputs": _declared_vs_touched(r["modules"], hist["touched"],
+                                            hist["has_history"]),
+            "child_processes": _spawns(code, r["modules"]),
+            "internal_limits": _internal_limits(code, r["modules"]),
+            "model": _model_calls(code, r["modules"]),
+            "audit_flags": [f for f in r["flags"] if f != "UNREVIEWED"],
+            "review": (r["review"] or {"verdict": "UNREVIEWED", "date": None}),
+            # Колона 14. Еднаква във всеки ред НАРОЧНО: тя описва вечерта, не
+            # стъпката. Подробностите са в cycle_context на горното ниво.
+            "cycle_context": {"value": ctx["value"], "why": ctx["why"]},
+            "state_derived": STATE_COLUMNS,
+        })
+
+    no_time_cap = [r["name"] for r in rows
+                   if not r["internal_limits"]["internal_time_cap"]]
+    touched_undeclared = [r["name"] for r in rows if r["outputs"]["touched_only"]]
+    declared_untouched = [r["name"] for r in rows
+                          if r["outputs"]["declared_only"] and not r["outputs"]["why"]]
+    spawners = [r["name"] for r in rows if r["child_processes"]["spawns"]]
+
+    no_history, by_reason = [r for r in rows if not r["history"]["has_history"]], {}
+    for r in no_history:
+        why = r["history"]["why"] or ""
+        key = ("no _run() in the block — nobody ever writes a row for it"
+               if "no _run() call" in why else
+               "the _run() label is absent from the baseline file"
+               if "no such key" in why else
+               "key present, zero runs recorded" if "with no runs" in why else
+               "other")
+        by_reason.setdefault(key, []).append(r["name"])
+
+    # Подредено по ДНЕВНИКА. Логът е само придружаваща бележка: подредба по него
+    # би сложила най-често ТЕСТВАНАТА стъпка на върха на списъка с най-често
+    # УБИВАНИТЕ, което е точно грешката, която колоната вече не прави.
+    killed = [{"step": r["name"],
+               "kills": r["kills"].get("kills"),
+               "ages_sec": r["kills"].get("ages_sec", []),
+               "corroboration": r["kills"].get("corroboration", {})}
+              for r in rows if isinstance(r["kills"].get("kills"), int)
+              and r["kills"]["kills"]]
+    killed.sort(key=lambda d: d["kills"], reverse=True)
+
+    no_run = [r["name"] for r in rows if not r["through_run"]["value"]]
+
+    return {"ts": _now(), "steps": len(rows),
+            "cycle_context": ctx,
+            "summary": {
+                "no_internal_time_cap": {"n": len(no_time_cap), "steps": no_time_cap},
+                "touched_undeclared": {"n": len(touched_undeclared),
+                                       "steps": touched_undeclared},
+                "declared_untouched": {"n": len(declared_untouched),
+                                       "steps": declared_untouched},
+                "spawn_child": {"n": len(spawners), "steps": spawners},
+                "no_history": {"n": len(no_history),
+                               "by_reason": {k: {"n": len(v), "steps": v}
+                                             for k, v in by_reason.items()}},
+                "never_through_run": {"n": len(no_run), "steps": no_run},
+                "most_killed": killed[:10]},
+            "rows": rows}
+
+
+def _cell(v) -> str:
+    if v is None:
+        return UNKNOWN
+    if isinstance(v, bool):
+        return "yes" if v else "no"
+    if isinstance(v, dict) and "value" in v:
+        return str(v["value"])
+    if isinstance(v, (list, tuple)):
+        return ", ".join(str(x) for x in v) if v else UNKNOWN
+    return str(v)
+
+
+def passport_md(p: dict) -> str:
+    L = ["# STEP PASSPORT", "",
+         f"Generated {p['ts']} by `tools/step_audit.py`. {p['steps']} steps.", "",
+         "One mechanical row per step. **No judgement lives here.** What the step is "
+         "for, which of the 14 points it serves, and the verdict are written by hand "
+         "in `docs/STEP_LEDGER.md` with a date; this file reads that back only to "
+         "mark what is still unreviewed.", "",
+         f"`{UNKNOWN}` means NOT KNOWN, and the reason is listed at the bottom. It is "
+         "never a zero: zero reads as \"none of them\", a dash reads as \"the question "
+         "could not be answered\", and the difference is the point.", "",
+         "**Code or state.** Phase, modules, ceiling, declared outputs, child "
+         "processes, internal limits and model calls come from the code and the "
+         "config, so two runs over an unchanged repo agree. History, recent times, "
+         "kills and *touched* read the record — the baseline, the cycle logs, the "
+         "supervisor log — and move every night. Every row carries `state_derived` "
+         "naming them, so a property of this week is not read as a property of the "
+         "code.", "",
+         "**The kill column is the ledger, and only the ledger.** `kills` counts "
+         "`CYCLE_KILLED` in `memory/existence_ledger.jsonl`, read off "
+         "`reason.wedged_step` — the hash-chained record that only a real cycle "
+         "writes. `logs/supervisor.log` appears in the JSON under `corroboration` "
+         "and nowhere in this table, because it is poisoned: 720+ of its "
+         "`KILL POLICY:` lines are fixtures, including 432 for `step='x'`, which is "
+         "not a step. A fixture repeats verbatim, so `distinct_observations` there "
+         "says how many real observations hide behind N identical lines.", ""]
+    s = p["summary"]
+    L += ["## Summary", "",
+          f"- no internal time cap: **{s['no_internal_time_cap']['n']}** of {p['steps']}",
+          f"- touch files they do not declare: **{s['touched_undeclared']['n']}**",
+          f"- declare files never seen touched: **{s['declared_untouched']['n']}**",
+          f"- spawn a child process: **{s['spawn_child']['n']}**",
+          f"- never go through `_run()`, so no row is ever written for them: "
+          f"**{s['never_through_run']['n']}**",
+          f"- no history in the baseline: **{s['no_history']['n']}**"]
+    for reason, d in sorted(s["no_history"]["by_reason"].items()):
+        L.append(f"    - {d['n']}: {reason}")
+
+    ctx = p.get("cycle_context") or {}
+    L += ["", "## The memory the cycle had (column 14)", "",
+          "A property of the NIGHT, not of any step, which is exactly why it is "
+          "here: without it, \"died in composers\" reads as composers' fault. The "
+          "cycle of 12 Sep 20:04 started with 2063 MB free against a measured "
+          "appetite of ~1.9 GB typical and 2.7 GB at worst — the night was lost "
+          "before composers had a turn.", ""]
+    if ctx.get("why"):
+        L += [f"{UNKNOWN} — {ctx['why']}", ""]
+    else:
+        ap = ctx.get("appetite_mb") or {}
+        L += [f"Appetite over the finished cycles in this window: n={ap.get('n')}, "
+              f"median {ap.get('median')} MB, max {ap.get('max')} MB. An exit row is "
+              "written on the way out, so a killed cycle contributes none — "
+              f"`{UNKNOWN}` in the exit column is a missing measurement, not zero "
+              "memory spent, and is itself the signature of the death.", "",
+              "| cycle | avail at start | avail at exit | consumed | outcome |",
+              "|---|--:|--:|--:|---|"]
+        for c in ctx.get("cycles", []):
+            L.append(f"| {str(c['cycle_id'])[:30]} | {_cell(c['start_avail_mb'])} "
+                     f"| {_cell(c['exit_avail_mb'])} | {_cell(c['consumed_mb'])} "
+                     f"| {c['outcome']} |")
+        L.append("")
+    L += ["", "## Steps", "",
+          "| # | step | phase | _run | modules | blk | ceil | n | med | p95 | recent "
+          "| kills | decl-only | touch-only | both | child | req timeout | count cap "
+          "| int time cap | retries | model | night | flags | reviewed |",
+          "|---|---|---|---|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|---|--:|---|---|---|---|---|---|---|"]
+    for r in p["rows"]:
+        k, o, il, m, h = (r["kills"], r["outputs"], r["internal_limits"],
+                          r["model"], r["history"])
+        caps = il["count_caps"]
+        L.append("| {i} | {nm} | {ph} | {ru} | {mo} | {bl} | {ce} | {n} | {md} | {q} "
+                 "| {rc} | {kl} | {do} | {to} | {bo} | {ch} | {rt} | {cc} | {tc} "
+                 "| {rr} | {ml} | {ni} | {fl} | {rv} |".format(
+                     i=r["index"], nm=r["name"], ph=_cell(r["phase"]),
+                     ru=("yes: " + ", ".join(r["through_run"]["labels"][:2])
+                         if r["through_run"]["value"] else "**no**"),
+                     mo=(", ".join(r["modules"]) if r["modules"]
+                         else f"{UNKNOWN} inline"),
+                     bl=r["block_lines"], ce=_cell(r["ceiling_sec"]),
+                     n=_cell(h["n"]), md=_cell(h["median"]), q=_cell(h["p95"]),
+                     rc=_cell(r["recent_times"]["value"]),
+                     kl=_cell(k.get("kills")),
+                     do=(len(o["declared_only"]) if not o["why"] else UNKNOWN),
+                     to=(len(o["touched_only"]) if not o["why"] else UNKNOWN),
+                     bo=(len(o["both"]) if not o["why"] else UNKNOWN),
+                     ch=(f"yes ({r['child_processes']['n']})"
+                         if r["child_processes"]["spawns"] else "no"),
+                     rt=(il["request_timeouts"]["n"] or UNKNOWN),
+                     cc=(", ".join(f"{a.split(':')[-1]}={b}"
+                                   for a, b in list(caps.items())[:2])
+                         if isinstance(caps, dict) else UNKNOWN),
+                     tc=("yes" if il["internal_time_cap"] else "no"),
+                     rr=(", ".join(il["retry_identifiers"][:2])
+                         if isinstance(il["retry_identifiers"], list) else UNKNOWN),
+                     ml=("yes: " + ", ".join((m["calls"] or m["modules"])[:2])
+                         if m["calls_model"] else "no"),
+                     ni=_cell(r["cycle_context"]),
+                     fl=", ".join(r["audit_flags"]) or "-",
+                     rv=(r["review"].get("date") or "UNREVIEWED")))
+    L += ["", "## Why a cell is empty", ""]
+    for r in p["rows"]:
+        whys = [f"{lab}: {why}" for lab, why in (
+            ("phase", r["phase"].get("why")),
+            ("ceiling", r["ceiling_sec"].get("why")),
+            ("history", r["history"].get("why")),
+            ("recent times", r["recent_times"].get("why")),
+            ("declared vs touched", r["outputs"].get("why")),
+            ("count cap", r["internal_limits"].get("count_caps_why")),
+            ("kills", r["kills"].get("why")),
+            ("_run", r["through_run"].get("why"))) if why]
+        if whys:
+            L.append(f"- **{r['index']} {r['name']}** — " + "; ".join(whys))
+    return "\n".join(L) + "\n"
+
+
+def write_passport(rec: dict) -> dict:
+    p = passport(rec)
+    PASSPORT_JSON.parent.mkdir(parents=True, exist_ok=True)
+    PASSPORT_JSON.write_text(json.dumps(p, ensure_ascii=False, indent=1),
+                             encoding="utf-8")
+    PASSPORT_MD.write_text(passport_md(p), encoding="utf-8")
+    return p
+
+
 def main(argv: list) -> int:
     if "--selftest" in argv:
         return _selftest()
@@ -614,6 +1421,25 @@ def main(argv: list) -> int:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"-> {OUT.relative_to(REPO)}")
+
+    p = write_passport(rec)
+    s = p["summary"]
+    print()
+    print(f"PASSPORT  {p['steps']} steps | "
+          f"no internal time cap {s['no_internal_time_cap']['n']} | "
+          f"touch undeclared {s['touched_undeclared']['n']} | "
+          f"declare untouched {s['declared_untouched']['n']} | "
+          f"spawn a child {s['spawn_child']['n']} | "
+          f"no history {s['no_history']['n']} | "
+          f"never through _run() {s['never_through_run']['n']}")
+    for reason, d in sorted(s["no_history"]["by_reason"].items()):
+        print(f"  no history x{d['n']:<3} {reason}")
+    for k in s["most_killed"][:10]:
+        print(f"  KILLED {k['kills']}x  {k['step']}  "
+              f"(ledger; log says {k['corroboration'].get('log_lines')} lines / "
+              f"{k['corroboration'].get('log_distinct_observations')} distinct)")
+    print(f"-> {PASSPORT_MD.relative_to(REPO)}  and  "
+          f"{PASSPORT_JSON.relative_to(REPO)}")
     return 0
 
 
