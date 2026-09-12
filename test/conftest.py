@@ -255,6 +255,59 @@ def _blackbox_to_tmp(monkeypatch, tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def _daily_tier_to_tmp(monkeypatch, tmp_path):
+    """No test may read the LIVE daily tier. Autouse, for every test.
+
+    ADDED 12 Sep 2026, in the same hour as the fixture below and for the same
+    reason — which is the point worth recording. core/consolidation.py gained
+    read_daily_tier(), and run() reads memory/daily_tier.jsonl when no path is
+    given. Five tests in test_consolidation.py build a SEALED world under
+    tmp_path/archive and assert on what comes out of it; they immediately started
+    seeing 4 hypotheses out of the real file instead of the 0 their fixture
+    describes. A test that constructs a world and is silently handed the real one
+    is not testing anything it claims to.
+
+    The general shape, twice in one day: a module-level constant pointing at live
+    state is reachable from every test unless something redirects it. The tests
+    were right and the new code was wrong to default past them.
+    """
+    try:
+        from core import consolidation as _con
+        monkeypatch.setattr(_con, "DAILY_TIER", tmp_path / "daily_tier.jsonl")
+    except Exception:
+        pass
+
+
+@pytest.fixture(autouse=True)
+def _canon_invariants_to_tmp(monkeypatch, tmp_path):
+    """No test may write into the LIVE canon. Autouse, for every test.
+
+    ADDED 12 Sep 2026, after a test did exactly that. memory/canon_invariants.json
+    held {"lesson": "c", "evidence": "carried forward by 3 consecutive cycle reviews
+    (c1..c1)"} — "c1" is a fixture's cycle_id, so the writer was a test. The canon is
+    not just another artifact: core/canon.as_frame() renders it into
+    memory/active_canon_frame.txt and core/brain.py:227 loads that file as the SPIRIT
+    block of EVERY prompt. A test's leftover was being carried into every thought the
+    system had, labelled "Consolidated invariants (learned, stable)".
+
+    WHY A FIXTURE AND NOT ONLY THE LENGTH FLOOR in consolidate_invariant: the floor
+    stops a DEGENERATE lesson, not a plausible one. A test promoting "keep the anchor
+    steady when the wind turns" three times would pass the floor and still poison the
+    live canon. The two guards cover different halves, and neither is redundant.
+
+    _no_live_writes below would not have caught it either: it watches write
+    primitives for paths under memory/, but core/canon.py writes through
+    Path.write_text on a module-level constant, and the earlier fixtures in this file
+    exist because the same shape of gap keeps recurring. Redirect the constant.
+    """
+    try:
+        from core import canon as _canon
+        monkeypatch.setattr(_canon, "INVARIANTS", tmp_path / "canon_invariants.json")
+    except Exception:
+        pass
+
+
+@pytest.fixture(autouse=True)
 def _no_live_writes(monkeypatch, request):
     """Intercept the write primitives and fail the test that used one on live state.
 

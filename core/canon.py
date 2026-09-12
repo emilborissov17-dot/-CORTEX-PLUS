@@ -27,6 +27,10 @@ GOAL_FILE      = REPO / "civilization_goal.txt"
 VISION_FILE    = REPO / "civilization_vision.txt"
 WEIGHTS_FILE   = REPO / "config" / "goal_dimension_weights.json"
 INVARIANTS     = REPO / "memory" / "canon_invariants.json"   # consolidated stable lessons
+
+# The floor for a lesson that wants to become permanent law. See consolidate_invariant.
+MIN_LESSON_CHARS = 20
+MIN_LESSON_WORDS = 3
 BOUNDARIES_FILE = REPO / "BOUNDARIES.md"                     # the second canonical document
 
 # ── THE ANCHOR ───────────────────────────────────────────────────────────────
@@ -272,6 +276,28 @@ def consolidate_invariant(lesson: str, evidence: str = "", source: str = "consol
     """Promote a stable lesson into the always-loaded canon — the working->permanent step of
     consolidation. Append-only, timestamped; deduped by lesson text. This is how experience
     becomes part of the frame that future cycles are always reasoning against."""
+    # ── A LETTER CANNOT BECOME LAW (12 Sep 2026) ─────────────────────────────
+    # On 11 Sep the invariant `lesson: "c"` was written here, evidence "carried
+    # forward by 3 consecutive cycle reviews (c1..c1)" — cycle_id "c1" is a test
+    # fixture, so a test had written into the live canon. It sat in
+    # memory/active_canon_frame.txt as "Consolidated invariants (learned, stable): c"
+    # and core/brain.py reads that file into the SPIRIT block of EVERY prompt. One
+    # stray character was being carried into every thought the system had, presented
+    # as a stable law it had learned.
+    #
+    # Two independent defences, because either alone would have failed here: the
+    # conftest fixture keeps tests off this path at all, and this floor keeps a
+    # degenerate lesson out even when the caller is real. The canon is read on every
+    # step; the bar for entering it must be higher than "three reviews agreed", and
+    # a one-character agreement is not a lesson at all.
+    #
+    # The floor is deliberately crude — length and word count — because it is a
+    # SANITY check, not a judge of meaning. Anything cleverer would need a model,
+    # and a model deciding what becomes permanent law is the thing to avoid.
+    text = str(lesson or "").strip()
+    if len(text) < MIN_LESSON_CHARS or len(text.split()) < MIN_LESSON_WORDS:
+        return {"added": False, "reason": "lesson too short to be law"}
+
     doc = _load(INVARIANTS, {"invariants": []})
     inv = doc.get("invariants", [])
     if any((i.get("lesson") if isinstance(i, dict) else i) == lesson for i in inv):

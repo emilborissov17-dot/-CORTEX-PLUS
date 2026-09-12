@@ -131,33 +131,52 @@ def test_mutation_without_record_review_the_loop_is_open_again(tmp_path, monkeyp
 
 # ── A-2: the canon learns only from repetition ────────────────────────────────
 
-def _cf(day, lesson):
-    r = _fail(day); r["carry_forward"] = lesson; return r
+# RETARGETED 12 Sep 2026: the comparison moved from `carry_forward` to `lesson_key`.
+# These three tests were green and measuring nothing reachable — they fed identical
+# prose, which a real model never produces two nights running, so they proved the
+# mechanism worked on inputs it would never see. They now feed what the night really
+# looks like: prose that differs every time, and a short key that can repeat.
+KEY = "measure deep time risk from the indicator band"
+
+
+def _cf(day, lesson, key=KEY):
+    r = _fail(day)
+    r["carry_forward"] = lesson
+    if key is not None:
+        r["lesson_key"] = key
+    return r
 
 
 def test_a_lesson_repeated_three_times_enters_the_canon(tmp_path, monkeypatch):
     from core import canon as C
     monkeypatch.setattr(C, "INVARIANTS", tmp_path / "canon_invariants.json")
-    L = "Measure DEEP_TIME_RISKS_REVIEW through the USGS indicator band, not a qualitative level."
-    out = B.promote_repeated_lesson([_cf(7, L), _cf(8, L + " "), _cf(9, L.lower())])
+    # the prose differs every night, as it really does; only the key repeats
+    out = B.promote_repeated_lesson([
+        _cf(7, "Measure DEEP_TIME through the USGS band, not a qualitative level."),
+        _cf(8, "The qualitative level misled us again; the USGS band is the measure."),
+        _cf(9, "Third night running: read the band, do not trust the level."),
+    ])
     assert out and out["added"] is True and out["n"] == 1
     inv = json.loads((tmp_path / "canon_invariants.json").read_text(encoding="utf-8"))["invariants"]
-    assert inv[0]["lesson"] == L.lower() and inv[0]["source"] == "cycle_review×3"
+    assert inv[0]["lesson"] == KEY and inv[0]["source"] == "cycle_review×3"
+    # the prose is not lost: it is the evidence a human reads
+    assert "Third night running" in inv[0]["evidence"]
 
 
 def test_two_repeats_or_a_changed_lesson_promote_nothing(tmp_path, monkeypatch):
     from core import canon as C
     monkeypatch.setattr(C, "INVARIANTS", tmp_path / "canon_invariants.json")
-    assert B.promote_repeated_lesson([_cf(8, "A"), _cf(9, "A")]) is None
-    assert B.promote_repeated_lesson([_cf(7, "A"), _cf(8, "B"), _cf(9, "A")]) is None
-    assert B.promote_repeated_lesson([_cf(7, ""), _cf(8, ""), _cf(9, "")]) is None
+    other = "check the fetch before trusting the score"
+    assert B.promote_repeated_lesson([_cf(8, "p"), _cf(9, "p")]) is None
+    assert B.promote_repeated_lesson([_cf(7, "p"), _cf(8, "p", other), _cf(9, "p")]) is None
+    assert B.promote_repeated_lesson([_cf(7, "p", ""), _cf(8, "p", ""), _cf(9, "p", "")]) is None
     assert not (tmp_path / "canon_invariants.json").exists()
 
 
 def test_the_same_lesson_is_not_added_twice(tmp_path, monkeypatch):
     from core import canon as C
     monkeypatch.setattr(C, "INVARIANTS", tmp_path / "canon_invariants.json")
-    rows = [_cf(7, "Keep the anchor"), _cf(8, "Keep the anchor"), _cf(9, "Keep the anchor")]
+    rows = [_cf(7, "a"), _cf(8, "b"), _cf(9, "c")]
     assert B.promote_repeated_lesson(rows)["added"] is True
     assert B.promote_repeated_lesson(rows)["added"] is False
 

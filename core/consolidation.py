@@ -59,6 +59,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 ARCHIVE = REPO / "cortex_memory" / "archive"
+DAILY_TIER = REPO / "memory" / "daily_tier.jsonl"
 QUEUE = REPO / "memory" / "consolidation_queue.json"
 LATEST = REPO / "memory" / "consolidation_latest.json"
 
@@ -105,6 +106,72 @@ def read_cycles(window_days: int = WINDOW_DAYS, archive: Path | None = None,
                     "signals": s.get("signals") or []})
     out.sort(key=lambda r: r["date"])
     return out
+
+
+def read_daily_tier(window_days: int = WINDOW_DAYS, path: Path | None = None,
+                    today: date | None = None) -> list:
+    """The DAILY layer, in the same shape read_cycles returns, so it merges untouched.
+
+    WHY THE QUIET PHASE WAS BLIND (12 Sep 2026). This module read only
+    cortex_memory/archive/*/signals.json, and those are assembled in step 24 from
+    auto_levels detail — the ANNUAL layer. World Bank indicators do not move nightly,
+    so the same number appeared at both ends of the window: gdp_per_capita_usd =
+    14405.8 in cycle_000050 (25 Aug) and again in cycle_000065 (12 Sep). That is where
+    46 of 48 series called "constant_series" came from. The series were not flat
+    because the world is still; they were flat because this module was reading the one
+    layer that cannot move in thirty days.
+
+    memory/daily_tier.jsonl is the layer that does move: 2,346 dated observations over
+    61 indicators from 2024-09-11, quakes at 731 points, spy/gld/uup at 502 each.
+
+    ONE POINT PER DAY, LAST WINS — the same rule build_series already applies to
+    cycles, for the same reason: two readings of one day are not two observations of a
+    trend. Rows are emitted in file order so a later line for the same (indicator,
+    date) overwrites an earlier one downstream.
+
+    WINDOW_DAYS APPLIES HERE TOO. This is not a back door to a longer history: a row
+    outside the window is dropped exactly as a cycle outside the window is.
+
+    A row without a `date`, or whose `value` is not a number, is skipped and not
+    counted — a missing reading is not a zero. Booleans are refused explicitly:
+    isinstance(True, int) is True in Python, and a flag silently entering a
+    least-squares fit as 1.0 is the kind of true-shaped nonsense this file exists to
+    keep out. No model, no network — see FORBIDDEN at the foot of this module.
+    """
+    f = path or DAILY_TIER
+    today = today or datetime.now(timezone.utc).date()
+    cutoff = today - timedelta(days=window_days)
+    by_date: dict = {}
+    if not Path(f).is_file():
+        return []
+    try:
+        text = Path(f).read_text(encoding="utf-8")
+    except OSError:
+        return []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except Exception:
+            continue
+        if not isinstance(row, dict):
+            continue
+        metric = row.get("indicator")
+        val = row.get("value")
+        if not metric or isinstance(val, bool) or not isinstance(val, (int, float)):
+            continue
+        try:
+            when = date.fromisoformat(str(row.get("date"))[:10])
+        except Exception:
+            continue
+        if when < cutoff or when > today:
+            continue
+        by_date.setdefault(when, []).append(
+            {"domain": "DAILY", "metric": str(metric), "value": float(val)})
+    return [{"dir": "daily_tier.jsonl", "date": when, "signals": sigs}
+            for when, sigs in sorted(by_date.items())]
 
 
 def build_series(cycles: list) -> dict:
@@ -215,9 +282,14 @@ def _hypothesis(axis: str, metric: str, fit: dict, made_on: date) -> dict | None
 
 def run(write: bool = True, window_days: int = WINDOW_DAYS,
         archive: Path | None = None, today: date | None = None,
-        queue: Path | None = None, latest: Path | None = None) -> dict:
+        queue: Path | None = None, latest: Path | None = None,
+        daily: Path | None = None) -> dict:
     today = today or datetime.now(timezone.utc).date()
     cycles = read_cycles(window_days, archive, today)
+    # MERGED BEFORE THE FILTERS, deliberately: the daily layer must face exactly the
+    # same MIN_POINTS / MIN_SPAN_DAYS / sigma tests as the annual one. A layer that
+    # skipped them would be a privileged series, not a measured one.
+    cycles = cycles + read_daily_tier(window_days, daily, today)
     series = build_series(cycles)
 
     # The rejection taxonomy is the useful half of the output on a night with

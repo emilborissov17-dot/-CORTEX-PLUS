@@ -911,6 +911,10 @@ def debrief_cycle(cycle_log_tail: str = "") -> dict | None:
             "verdict": "1-3 sentences: what actually happened",
             "blind_spot": "what your plan did not see",
             "carry_forward": "what to remember for the next cycle",
+            "lesson_key": ("the SAME lesson as an imperative of at most 8 words, so it can "
+                           "repeat verbatim across nights: no numbers, no cycle names, no "
+                           "dates, no indicator values. Example: 'check the fetch before "
+                           "trusting the score'. If you have no lesson, leave it empty."),
         },
         kind="cycle_review")
     if d:
@@ -931,6 +935,7 @@ def record_review(plan: dict, review: dict) -> dict | None:
            "changed_because": plan.get("changed_because"),
            "success": review.get("success"), "verdict": review.get("verdict"),
            "blind_spot": review.get("blind_spot"), "carry_forward": review.get("carry_forward"),
+           "lesson_key": review.get("lesson_key"),
            "_model": review.get("_model")}
     try:
         REVIEWS.parent.mkdir(parents=True, exist_ok=True)
@@ -939,6 +944,47 @@ def record_review(plan: dict, review: dict) -> dict | None:
         return row
     except Exception:
         return None
+
+
+MAX_KEY_WORDS = 8
+
+
+def lesson_key(review: dict) -> str:
+    """The comparable form of one review's lesson, or "" if there is none.
+
+    WHY THIS FIELD EXISTS (12 Sep 2026). A-2 was wired and live but could never fire.
+    promote_repeated_lesson required the same `carry_forward` in three consecutive
+    reviews, compared strip+lower — and carry_forward is whatever prose the model
+    wrote that night, typically ~250 characters from qwen3:8b. Two nights of free
+    prose are never byte-equal, so the threshold was unreachable and the canon could
+    not learn. The one invariant that DID appear ("c") got there from a test, not
+    from three real nights.
+
+    So the review now answers twice: the prose, which stays as the evidence a human
+    reads, and a short imperative KEY that can actually repeat. The key is compared;
+    the prose is recorded.
+
+    WHAT IS REFUSED, and each refusal returns "" so the caller promotes nothing:
+      * missing, empty, or non-string — the model did not give one;
+      * more than MAX_KEY_WORDS words — that is prose wearing a key, and prose
+        does not repeat;
+      * any digit — a key carrying a number or a cycle id is unique per night by
+        construction, which is the same dead end in a new costume.
+    THE FORBIDDEN FALLBACK IS carry_forward. If the key is absent we promote nothing;
+    quietly comparing the prose again would restore exactly the bug this replaces,
+    and it would do it invisibly.
+    """
+    raw = review.get("lesson_key") if isinstance(review, dict) else None
+    if not isinstance(raw, str):
+        return ""
+    key = " ".join(raw.split()).strip().lower().rstrip(".!")
+    if not key:
+        return ""
+    if len(key.split()) > MAX_KEY_WORDS:
+        return ""
+    if any(ch.isdigit() for ch in key):
+        return ""
+    return key
 
 
 def promote_repeated_lesson(reviews: list, limit: int = REPEAT_LIMIT) -> dict | None:
@@ -966,18 +1012,20 @@ def promote_repeated_lesson(reviews: list, limit: int = REPEAT_LIMIT) -> dict | 
     if len(reviews) < limit:
         return None
     tail = reviews[-limit:]
-    lessons = {str(r.get("carry_forward") or "").strip().lower() for r in tail}
-    if len(lessons) != 1:
+    keys = {lesson_key(r) for r in tail}
+    if len(keys) != 1:
         return None
-    lesson = next(iter(lessons))
-    if not lesson:
+    key = next(iter(keys))
+    if not key:
         return None
+    prose = [str(r.get("carry_forward") or "").strip() for r in tail]
     try:
         from core import canon as _canon  # noqa: PLC0415
         return _canon.consolidate_invariant(
-            lesson,
-            evidence=f"carried forward by {limit} consecutive cycle reviews "
-                     f"({tail[0].get('cycle_id')}..{tail[-1].get('cycle_id')})",
+            key,
+            evidence=(f"carried forward by {limit} consecutive cycle reviews "
+                      f"({tail[0].get('cycle_id')}..{tail[-1].get('cycle_id')}); "
+                      f"last said: {prose[-1][:200]}"),
             source=f"cycle_review×{limit}")
     except Exception:
         return None
