@@ -1,0 +1,66 @@
+{
+ "base": "unsloth/Qwen2.5-3B-Instruct",
+ "before": {
+  "tag": "BEFORE",
+  "probe_long": {
+   "n": 56,
+   "acc": 0.482,
+   "answered": 56,
+   "twins": 28,
+   "flipped": 1
+  },
+  "seen_long": {
+   "n": 58,
+   "acc": 0.448,
+   "answered": 58,
+   "twins": 29,
+   "flipped": 7
+  },
+  "unseen_long": {
+   "n": 60,
+   "acc": 0.483,
+   "answered": 60,
+   "twins": 30,
+   "flipped": 1
+  },
+  "unseen_short": {
+   "n": 66,
+   "acc": 0.5,
+   "answered": 66,
+   "twins": 33,
+   "flipped": 2
+  }
+ },
+ "after": {
+  "tag": "AFTER",
+  "probe_long": {
+   "n": 56,
+   "acc": 1.0,
+   "answered": 56,
+   "twins": 28,
+   "flipped": 28
+  },
+  "seen_long": {
+   "n": 58,
+   "acc": 0.983,
+   "answered": 58,
+   "twins": 29,
+   "flipped": 28
+  },
+  "unseen_long": {
+   "n": 60,
+   "acc": 1.0,
+   "answered": 60,
+   "twins": 30,
+   "flipped": 30
+  },
+  "unseen_short": {
+   "n": 66,
+   "acc": 1.0,
+   "answered": 66,
+   "twins": 33,
+   "flipped": 33
+  }
+ },
+ "train_rows": 4000
+}

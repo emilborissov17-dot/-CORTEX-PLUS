@@ -1,0 +1,73 @@
+# cortex-l1b-3b: Qwen2.5-3B-Instruct + the L1b LoRA (the SKILL of reading a number). 12 Sep 2026.
+#
+# WHERE THE .gguf COMES FROM, because git does not hold it. The file this Modelfile
+# names is 1.80 GB and models/ is ignored wholesale in this PUBLIC repo. It is the
+# merged 4-bit export of the L1b run, downloaded from the Kaggle notebook output:
+#   venv\Scripts\kaggle.exe kernels output emilborissov/notebook36ff21f08b -p models\cortex-l1b
+# The download also carries a 5.8 GB 16-bit safetensors folder (cortex-l1b-gguf/, note
+# that the DIRECTORY named ...-gguf holds the safetensors and ...-gguf_gguf held the
+# actual gguf) plus training checkpoints; all of that was deleted after the move. What
+# is kept beside this file: the .gguf, L1B_RESULT.json and cortex-l1b-lora/ (the 126 MB
+# adapter, from which the export can be rebuilt).
+#
+# TWO SAMPLING LINES WERE REMOVED, and that is the point of this file rather than an
+# oversight. Unsloth writes `PARAMETER temperature 1.5` and `PARAMETER min_p 0.1` here.
+# cortex-l1-3b was created without them, and the probe pins temperature=0.0 at the call
+# — so leaving them in would have let a difference in SAMPLING masquerade as a difference
+# in SKILL when L1b is compared against L1. Identical conditions, or the comparison
+# measures the Modelfile instead of the model.
+# TEMPLATE and both stop lines are Unsloth's, unchanged.
+FROM ./qwen2.5-3b-instruct.Q4_K_M.gguf
+TEMPLATE """{{- if .Messages }}
+{{- if or .System .Tools }}<|im_start|>system
+{{- if .System }}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{{- range .Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end }}<|im_end|>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<|im_end|>
+{{ end }}
+{{- else if eq .Role "tool" }}<|im_start|>user
+<tool_response>
+{{ .Content }}
+</tool_response><|im_end|>
+{{ end }}
+{{- if and (ne .Role "assistant") $last }}<|im_start|>assistant
+{{ end }}
+{{- end }}
+{{- else }}
+{{- if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ end }}{{ .Response }}{{ if .Response }}<|im_end|>{{ end }}"""
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"
+SYSTEM """You are Qwen, created by Alibaba Cloud. You are a helpful assistant."""
