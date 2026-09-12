@@ -68,6 +68,8 @@ MIN_POINTS = 5            # fewer than this is not a series, it is anecdote
 MIN_SPAN_DAYS = 10        # a slope fitted over three days is not slow drift
 HORIZONS = (7, 30, 90)
 MAX_PER_RUN = 40          # a queue nobody can read is the same as no queue
+LONG_RECORD_FACTOR = 3    # the whole record must be at least this many windows long
+                          # before it is allowed to overrule the window's direction
 
 
 # ── reading the archive ───────────────────────────────────────────────────────
@@ -280,6 +282,73 @@ def _hypothesis(axis: str, metric: str, fit: dict, made_on: date) -> dict | None
 
 # ── the run ───────────────────────────────────────────────────────────────────
 
+def long_record(window_days: int = WINDOW_DAYS, archive: Path | None = None,
+                today: date | None = None, daily: Path | None = None) -> dict:
+    """Every point of every series, not only the window — the basis for the two
+    gates below. Same readers, same shape; only the window is removed."""
+    span = max(window_days * 120, 3650)
+    cycles = read_cycles(span, archive, today) + read_daily_tier(span, daily, today)
+    return build_series(cycles)
+
+
+def local_run_not_drift(fit: dict, long_pts: list | None,
+                        win_n: int) -> bool | None:
+    """Does the whole record agree with the direction this window claims?
+
+    THE CASE THIS EXISTS FOR (12 Sep 2026). The first night the daily layer was
+    read, the strongest hypothesis was "quakes.quake_m45_count down to -20.84".
+    The 30-day fall was real: ~30 a day in mid-August, 6-12 in September. But
+    over 731 days the slope is +0.0044 with r2 0.002 — the series is noise
+    around a mean of 21.6, and a month of it fell the way a month sometimes does.
+
+        quakes : window -0.948 (r2 0.575) | whole record +0.0044 (r2 0.002, n=731)
+        spy    : window -0.047 (r2 0.009) | whole record +0.303  (r2 0.862, n=502)
+        gld    : window +0.552 (r2 0.230) | whole record +0.303  (r2 0.797, n=502)
+
+    One rule kills both nonsenses and spares the one claim worth making: if the
+    long record points the OTHER WAY, the window is a run, not a drift.
+
+    WHY THE SIGN AND NOT THE SIZE. A ratio threshold would need a number nobody
+    can defend, and every future disappointment would invite tuning it. The sign
+    is not tunable: either the record agrees about direction or it does not.
+
+    Returns True (a local run), False (the record agrees), or None — NO BASIS,
+    which is not the same as agreement and must never be recorded as one. The
+    annual layer has two points per series and will always answer None.
+    """
+    if not long_pts or len(long_pts) < max(60, LONG_RECORD_FACTOR * win_n):
+        return None
+    long_fit = _fit(long_pts)
+    if long_fit is None or long_fit["slope"] == 0 or fit["slope"] == 0:
+        return None
+    return (long_fit["slope"] > 0) != (fit["slope"] > 0)
+
+
+def impossible_at_the_horizon(h: dict, long_pts: list | None) -> str | None:
+    """Does the claim leave the domain its own series lives in?
+
+    Independent of the gate above, and deliberately so: that one catches a claim
+    the record contradicts, this one catches a claim the record makes IMPOSSIBLE.
+    A series can fall in agreement with its whole history and still be predicted
+    below its own floor.
+
+    The domain is read OFF THE DATA, never off the metric's name: every observed
+    value non-negative and whole means a count, and a count has no values below
+    zero. A name is not a type.
+
+    NOT CLAMPED TO ZERO, on purpose. Clamping turns "the model is wrong here"
+    into "the model says zero" and the wrongness disappears into a plausible
+    number. Refusal keeps it visible.
+    """
+    vals = [v for _, v in (long_pts or [])]
+    if len(vals) < 10:
+        return None                      # too short a record to infer a domain
+    if all(v >= 0 and float(v).is_integer() for v in vals) and h["lo"] < 0:
+        return (f"a count cannot fall below zero, yet the interval is "
+                f"[{h['lo']}, {h['hi']}] (observed min {min(vals)} over {len(vals)} days)")
+    return None
+
+
 def run(write: bool = True, window_days: int = WINDOW_DAYS,
         archive: Path | None = None, today: date | None = None,
         queue: Path | None = None, latest: Path | None = None,
@@ -300,7 +369,13 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
     emitted, rejected = [], {"too_few_points": 0, "too_short_a_span": 0,
                              "degenerate": 0, "constant_series": 0,
                              "fast_enough_for_a_nightly_step": 0,
-                             "inside_the_noise_at_every_horizon": 0}
+                             "inside_the_noise_at_every_horizon": 0,
+                             "local_run_not_drift": 0,
+                             "impossible_at_the_horizon": 0}
+    # Read once for the whole run: the two gates below need the record, not the window.
+    long = long_record(window_days, archive, today, daily)
+    checked = {"judged_against_the_record": 0, "no_long_record": 0}
+    refused = []                     # claims the two gates stopped, kept with their reason
     for (axis, metric), pts in sorted(series.items()):
         if len(pts) < MIN_POINTS:
             rejected["too_few_points"] += 1
@@ -319,9 +394,22 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
                 abs(fit["slope"]) >= 0.5 * fit["mean_abs_step"]:
             rejected["fast_enough_for_a_nightly_step"] += 1
             continue
+        long_pts = long.get((axis, metric))
+        run_not_drift = local_run_not_drift(fit, long_pts, len(pts))
+        checked["no_long_record" if run_not_drift is None
+                else "judged_against_the_record"] += 1
+        if run_not_drift:
+            rejected["local_run_not_drift"] += 1
+            continue
         h = _hypothesis(axis, metric, fit, today)
         if h is None:
             rejected["inside_the_noise_at_every_horizon"] += 1
+            continue
+        why = impossible_at_the_horizon(h, long_pts)
+        if why:
+            rejected["impossible_at_the_horizon"] += 1
+            h["refused_because"] = why      # kept in the record, not only counted
+            refused.append(h)
             continue
         emitted.append(h)
 
@@ -341,6 +429,8 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
         "emitted": len(emitted),
         "truncated": truncated,
         "rejected": rejected,
+        "long_record": checked,
+        "refused": refused,
         "axes": sorted({h["axis"] for h in emitted}),
         "uses_model": False,
         "queue": _rel(queue or QUEUE),
