@@ -1,0 +1,109 @@
+; Import contracts for CORTEX++ (12 September 2026).
+;
+; A contract that FAILS because of a real violation is left failing. The rule is not
+; "make lint-imports green"; it is "know which direction the imports actually run".
+; Loosening a contract to get a green tick would delete the only evidence the layer
+; is broken, which is the whole reason to run this at all.
+;
+;   venv\Scripts\lint-imports.exe > claude\reports\IMPORT_LINTER.txt
+;
+; NOTE ON NAMES. tools/, experiments/ and safety/ have no __init__.py — they are
+; namespace directories, not packages. import-linter can still name their modules,
+; but only modules that are actually imported by something in the graph appear.
+
+[importlinter]
+root_packages =
+    core
+    scripts
+    cockpit
+    training
+    agents
+include_external_packages = True
+
+; (a) The layers. Higher in the list = higher in the stack; a lower layer importing a
+; higher one is the violation. Sensors feed memory, memory feeds the brain, the brain
+; is driven by the runner — never the reverse. fast_cycle_runner is a top-level module,
+; not inside a root package, so it cannot be named as a layer here; contract (c) below
+; covers the runner direction instead.
+[importlinter:contract:layers]
+name = Layers: sensors -> memory -> core.brain
+type = layers
+; interoception reads body_sensorium (core/interoception.py:203) and the reverse does
+; not happen, so the sensors are ORDERED, not siblings. The first version of this
+; contract listed all three with "|", which declares them independent and made that
+; legitimate one-way import look like a violation. Fixed by describing the real order.
+;
+; AND THE ignore_imports LINE IS GONE. It said "core.* -> core.brain" and silenced 10
+; imports — which is exactly the lower-imports-higher direction this contract exists to
+; find. It was written to quiet the output before the output had been looked at. What
+; it was hiding is now visible below, which is the point of the contract.
+layers =
+    core.brain
+    core.durable
+    core.interoception
+    core.body_sensorium | core.receptors
+
+; (b) The quiet phase must stay offline. This is the promise that lets consolidation
+; run unattended: it fits a line to numbers and may not fetch, shell out or ask a model.
+; core/consolidation.py has its own imported_forbidden() check for the same reason;
+; this contract states it at the graph level, where an indirect import would also show.
+[importlinter:contract:consolidation_offline]
+name = core.consolidation imports nothing that reaches the network or a model
+type = forbidden
+source_modules =
+    core.consolidation
+forbidden_modules =
+    requests
+    urllib
+    http
+    socket
+    subprocess
+    ollama
+    openai
+    httpx
+    aiohttp
+
+; (c) Nothing imports the runner. fast_cycle_runner is the top of the stack: it calls
+; the steps, and a step that imports it back would make the cycle's own wiring circular
+; and let a module run the cycle that is running it.
+[importlinter:contract:nobody_imports_the_runner]
+name = No module imports fast_cycle_runner
+type = forbidden
+source_modules =
+    core
+    scripts
+    cockpit
+    training
+    agents
+forbidden_modules =
+    fast_cycle_runner
+
+; (d) The brain does not depend on the experiments. experiments/ is where things are
+; tried and abandoned; core.brain is loaded by every step of every cycle. An import in
+; this direction makes an experiment load-bearing without anyone deciding that it is.
+[importlinter:contract:brain_free_of_experiments]
+name = core.brain imports nothing from experiments
+type = forbidden
+source_modules =
+    core.brain
+forbidden_modules =
+    experiments
+
+; (e) The same offline promise for the contracts checker. core.output_contracts judges
+; other steps' artifacts; if it could fetch or ask a model it would be a participant in
+; what it is judging rather than a check on it.
+[importlinter:contract:output_contracts_offline]
+name = core.output_contracts imports nothing that reaches the network or a model
+type = forbidden
+source_modules =
+    core.output_contracts
+forbidden_modules =
+    requests
+    urllib
+    http
+    socket
+    subprocess
+    ollama
+    openai
+    httpx
+    aiohttp

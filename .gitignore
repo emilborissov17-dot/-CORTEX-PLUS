@@ -320,3 +320,8 @@ training/l1_numbers_train.jsonl
 training/l1_numbers_holdout.jsonl
 training/l1b_train.jsonl
 training/l1b_exam.jsonl
+
+# coverage data files (one per process under parallel = True in cov.ini).
+# NOT ".coverage*" -- that glob also eats cov.ini and .coveragerc.
+.coverage
+.coverage.*
