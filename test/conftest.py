@@ -41,7 +41,13 @@ import pytest
 # can hurt someone lives — the alarm stamp, the night log, the ledger, the
 # heartbeat, the schedule. If a test ever needs to be caught writing to
 # snapshots/, add it here and accept the walk.
-_GUARDED_TREES = ("memory", "config")
+# "logs" joined on 12 Sep 2026, and the omission had a price. logs/supervisor.log
+# is the only narrative record of why a cycle was killed, and it was outside every
+# guard in this file: 720+ synthetic KILL POLICY lines had accumulated in it,
+# including 432 for step='x', which is not a step in any table in this repo. A
+# passport column built on that file made web_intelligence look like the most-
+# killed step in the system; the existence ledger says it has never been killed.
+_GUARDED_TREES = ("memory", "config", "logs")
 _IGNORE_PARTS = {"__pycache__", ".pytest_cache", ".git"}
 # A ceiling, so a runaway tree cannot silently make the canary skip work. If it is
 # ever hit, the fixture SAYS SO rather than quietly measuring less than it claims.
@@ -303,6 +309,38 @@ def _canon_invariants_to_tmp(monkeypatch, tmp_path):
     try:
         from core import canon as _canon
         monkeypatch.setattr(_canon, "INVARIANTS", tmp_path / "canon_invariants.json")
+    except Exception:
+        pass
+
+
+@pytest.fixture(autouse=True)
+def _supervisor_log_to_tmp(monkeypatch, tmp_path):
+    """No test may write into the LIVE supervisor log. Autouse, for every test.
+
+    ADDED 12 Sep 2026, the fourth instance of the same shape: a module-level
+    constant pointing at live state is reachable from every test unless something
+    redirects it. supervisor.LOG_PATH is that constant, and supervisor.log() is
+    called from decide() whenever a step is past its ceiling — so every test that
+    drives a stale heartbeat wrote a KILL POLICY line into the real file.
+
+    THE COST OF NOT HAVING THIS. 720+ fixture lines: web_intelligence x144,
+    trend_tracker x144, step='x' x432. Counting kills from that file makes
+    web_intelligence the most-killed step in the system, when the ledger has never
+    killed it once. And the same file holds ZERO lines for daily_analysis, which
+    the ledger killed six times — so as a source it was wrong in both directions
+    at once.
+
+    Some tests already patch LOG_PATH by hand (test_supervisor.py:462 and :775,
+    test_cycle_reaper.py:68, test_cycle_log_survives_kill.py:52). That is exactly
+    the trouble: it worked, so nobody noticed that the tests which did NOT do it
+    were writing to the real log. Doing it here means no test author has to know.
+
+    Failing open, like its neighbours: in an environment where supervisor cannot be
+    imported there was nothing to redirect anyway.
+    """
+    try:
+        import supervisor as _sup
+        monkeypatch.setattr(_sup, "LOG_PATH", tmp_path / "supervisor.log")
     except Exception:
         pass
 

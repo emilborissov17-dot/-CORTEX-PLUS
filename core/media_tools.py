@@ -245,8 +245,31 @@ class YouTubeBreaker:
 
     @staticmethod
     def is_429(text: str) -> bool:
+        """Kept because callers and tests name it. Narrow on purpose: see below."""
         t = (text or "")
         return "429" in t and ("Too Many Requests" in t or "HTTP Error 429" in t)
+
+    @staticmethod
+    def is_403(text: str) -> bool:
+        t = (text or "")
+        return "403" in t and ("Forbidden" in t or "HTTP Error 403" in t)
+
+    @classmethod
+    def is_refusal(cls, text: str) -> bool:
+        """Refused BY YOUTUBE, BECAUSE OF US — 429 and 403 are the same event.
+
+        12 Sep 2026. Until today only 429 counted, and a 403 fell through to the
+        `else` in record() and set the streak to ZERO. YouTube alternates the two:
+        the subtitle endpoint answers 429, the audio download answers 403, and an
+        alternating sequence never reaches five of either in a row. Measured on one
+        web_intelligence run: 319 refusal lines printed, and memory/yt_backoff.json
+        does not exist, because the breaker never tripped once.
+
+        Both mean the same thing operationally — this host is refusing this caller
+        and more calls will not help — so they share one counter. A refusal that
+        does not count is a breaker that cannot break.
+        """
+        return cls.is_429(text) or cls.is_403(text)
 
     def record(self, stderr_text: str, success: bool = False) -> bool:
         """Feed one attempt's outcome. Returns True if the breaker is (now) parked."""
@@ -257,7 +280,7 @@ class YouTubeBreaker:
                 self.level = 0          # a clean success after the window closes the ladder
                 self._save()
             return self.parked
-        if self.is_429(stderr_text):
+        if self.is_refusal(stderr_text):
             self.streak += 1
             self.total_429 += 1
             if self.streak >= self.trip_after and not self.parked:
@@ -267,7 +290,12 @@ class YouTubeBreaker:
                 self.announced = False
                 self._save()
         else:
-            self.streak = 0        # a non-429 failure is not evidence of rate limiting
+            # DELIBERATE, AND THE 403 FIX MUST NOT EAT IT. A DNS failure, a full disk
+            # or a dead socket is not evidence that YouTube is rate-limiting us.
+            # Counting it would park every yt-dlp call for twenty minutes because the
+            # Wi-Fi blinked, and the night would go blind for a reason the host had no
+            # part in. test_unrelated_failure_still_resets_the_streak holds this line.
+            self.streak = 0
         return self.parked
 
     def park_line(self) -> str:

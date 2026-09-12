@@ -1,0 +1,5982 @@
+{
+ "ts": "2026-09-12T20:28:34+00:00",
+ "steps": 74,
+ "reviewed": 6,
+ "unscheduled_producers": [
+  {
+   "module": "core/axon_agents.py",
+   "outputs_read_by_others": [
+    "memory/orchestration_grounded_latest.json"
+   ]
+  },
+  {
+   "module": "core/card_intake.py",
+   "outputs_read_by_others": [
+    "memory/card_refusals.jsonl",
+    "memory/verified_observations.jsonl"
+   ]
+  },
+  {
+   "module": "core/consolidation.py",
+   "outputs_read_by_others": [
+    "memory/consolidation_latest.json",
+    "memory/consolidation_queue.json",
+    "memory/daily_tier.jsonl"
+   ]
+  },
+  {
+   "module": "core/counterfactual_probe.py",
+   "outputs_read_by_others": [
+    "config/target_config.json",
+    "memory/counterfactual_probe_latest.json"
+   ]
+  },
+  {
+   "module": "core/cycle_profile.py",
+   "outputs_read_by_others": [
+    "config/step_priority.json"
+   ]
+  },
+  {
+   "module": "core/earning.py",
+   "outputs_read_by_others": [
+    "config/earning_classes.json",
+    "config/passage_rules.json"
+   ]
+  },
+  {
+   "module": "core/embed_index.py",
+   "outputs_read_by_others": [
+    "memory/embeddings_cache.json"
+   ]
+  },
+  {
+   "module": "core/feature_proposals.py",
+   "outputs_read_by_others": [
+    "memory/feature_proposals.jsonl"
+   ]
+  },
+  {
+   "module": "core/flow_score.py",
+   "outputs_read_by_others": [
+    "memory/flow_score.jsonl",
+    "memory/step_contract_latest.json"
+   ]
+  },
+  {
+   "module": "core/gdelt_daily.py",
+   "outputs_read_by_others": [
+    "abstractions/trends.json",
+    "master/goal_score_latest.json"
+   ]
+  },
+  {
+   "module": "core/goals.py",
+   "outputs_read_by_others": [
+    "civilization_goal.txt",
+    "civilization_vision.txt",
+    "core_role.txt",
+    "goal_summary.txt",
+    "goal_summary_short.txt",
+    "next_actions.txt"
+   ]
+  },
+  {
+   "module": "core/hypothesis_search.py",
+   "outputs_read_by_others": [
+    "memory/hypotheses.jsonl",
+    "memory/knowledge_base.json",
+    "memory/orchestration_grounded_latest.json"
+   ]
+  },
+  {
+   "module": "core/interval_head.py",
+   "outputs_read_by_others": [
+    "memory/embeddings_cache.json",
+    "memory/interval_head_curve.json",
+    "memory/interval_head_runs.jsonl",
+    "memory/interval_head_weights.npz",
+    "memory/interval_head_weights_prev.npz",
+    "out/brain_scan.json"
+   ]
+  },
+  {
+   "module": "core/merit.py",
+   "outputs_read_by_others": [
+    "memory/divergence_log.jsonl",
+    "memory/merit_ledger.jsonl",
+    "prophecy/prophecy_ledger.jsonl"
+   ]
+  },
+  {
+   "module": "core/perplexity.py",
+   "outputs_read_by_others": [
+    "config/reactions.json"
+   ]
+  },
+  {
+   "module": "core/proposal_gate.py",
+   "outputs_read_by_others": [
+    "memory/improvement_proposals.json"
+   ]
+  },
+  {
+   "module": "core/provenance_pairs.py",
+   "outputs_read_by_others": [
+    "memory/provenance_pairs.json"
+   ]
+  },
+  {
+   "module": "core/reaction.py",
+   "outputs_read_by_others": [
+    "config/reactions.json",
+    "memory/reactions.jsonl"
+   ]
+  },
+  {
+   "module": "core/source_status.py",
+   "outputs_read_by_others": [
+    "config/dead_sources.json"
+   ]
+  },
+  {
+   "module": "core/three_columns.py",
+   "outputs_read_by_others": [
+    "config/reporter_independence.json"
+   ]
+  }
+ ],
+ "unreviewed": 68,
+ "orphans": 7,
+ "stale": 20,
+ "no_module": 32,
+ "test_writes_live_state": [
+  {
+   "file": "test/sweep_server.py",
+   "line": 56,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_agi_scoreboard.py",
+   "line": 86,
+   "target": "AS.REPORT.parent",
+   "code": "AS.REPORT.parent.write(...)"
+  },
+  {
+   "file": "test/test_boot_guard.py",
+   "line": 71,
+   "target": "tmp",
+   "code": "tmp.write(...)"
+  },
+  {
+   "file": "test/test_boot_guard.py",
+   "line": 132,
+   "target": "tmp",
+   "code": "tmp.write(...)"
+  },
+  {
+   "file": "test/test_boot_guard.py",
+   "line": 149,
+   "target": "tmp",
+   "code": "tmp.write(...)"
+  },
+  {
+   "file": "test/test_consolidation_gates.py",
+   "line": 34,
+   "target": "p",
+   "code": "p.write(...)"
+  },
+  {
+   "file": "test/test_consult_free_only.py",
+   "line": 165,
+   "target": "brief",
+   "code": "brief.write(...)"
+  },
+  {
+   "file": "test/test_cycle_logs.py",
+   "line": 122,
+   "target": "log_dir",
+   "code": "log_dir.write(...)"
+  },
+  {
+   "file": "test/test_cycle_logs.py",
+   "line": 136,
+   "target": "log_dir",
+   "code": "log_dir.write(...)"
+  },
+  {
+   "file": "test/test_cycle_logs.py",
+   "line": 137,
+   "target": "log_dir",
+   "code": "log_dir.write(...)"
+  },
+  {
+   "file": "test/test_cycle_logs.py",
+   "line": 124,
+   "target": "log_dir",
+   "code": "log_dir.write(...)"
+  },
+  {
+   "file": "test/test_cycle_profile.py",
+   "line": 201,
+   "target": "dp",
+   "code": "dp.write(...)"
+  },
+  {
+   "file": "test/test_cycle_reaper.py",
+   "line": 314,
+   "target": "runner",
+   "code": "runner.write(...)"
+  },
+  {
+   "file": "test/test_cycle_seals_its_own_completion.py",
+   "line": 63,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_dashboard_freshness.py",
+   "line": 84,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_deterministic_intake.py",
+   "line": 180,
+   "target": "FEED",
+   "code": "FEED.write(...)"
+  },
+  {
+   "file": "test/test_deterministic_intake.py",
+   "line": 188,
+   "target": "FEED",
+   "code": "FEED.write(...)"
+  },
+  {
+   "file": "test/test_deterministic_intake.py",
+   "line": 201,
+   "target": "FEED",
+   "code": "FEED.write(...)"
+  },
+  {
+   "file": "test/test_deterministic_intake.py",
+   "line": 231,
+   "target": "FEED",
+   "code": "FEED.write(...)"
+  },
+  {
+   "file": "test/test_deterministic_intake.py",
+   "line": 253,
+   "target": "PROBE",
+   "code": "PROBE.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 63,
+   "target": "cache",
+   "code": "cache.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 65,
+   "target": "victim",
+   "code": "victim.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 67,
+   "target": "rubbish",
+   "code": "rubbish.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 90,
+   "target": "tmp",
+   "code": "tmp.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 109,
+   "target": "cache",
+   "code": "cache.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 111,
+   "target": "tracked",
+   "code": "tracked.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 122,
+   "target": "cfg",
+   "code": "cfg.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 123,
+   "target": "cfg",
+   "code": "cfg.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 124,
+   "target": "cfg",
+   "code": "cfg.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 144,
+   "target": "old",
+   "code": "old.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 145,
+   "target": "new",
+   "code": "new.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 157,
+   "target": "other",
+   "code": "other.write(...)"
+  },
+  {
+   "file": "test/test_disk_actuator.py",
+   "line": 96,
+   "target": "f",
+   "code": "f.write(...)"
+  },
+  {
+   "file": "test/test_eval_harness.py",
+   "line": 278,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_extra_calls_ledger.py",
+   "line": 238,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_extra_calls_ledger.py",
+   "line": 250,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_fork_advances.py",
+   "line": 147,
+   "target": "tiny",
+   "code": "tiny.write(...)"
+  },
+  {
+   "file": "test/test_fork_advances.py",
+   "line": 262,
+   "target": "tiny",
+   "code": "tiny.write(...)"
+  },
+  {
+   "file": "test/test_goal_impact_pipeline.py",
+   "line": 37,
+   "target": "tmp",
+   "code": "tmp.write(...)"
+  },
+  {
+   "file": "test/test_goal_impact_pipeline.py",
+   "line": 45,
+   "target": "sensorium.SENS_DIR",
+   "code": "sensorium.SENS_DIR.write(...)"
+  },
+  {
+   "file": "test/test_heartbeat_coverage.py",
+   "line": 140,
+   "target": "hb.HEARTBEAT_PATH.parent",
+   "code": "hb.HEARTBEAT_PATH.parent.write(...)"
+  },
+  {
+   "file": "test/test_human_channel_grading.py",
+   "line": 127,
+   "target": "corrupt",
+   "code": "corrupt.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_intake.py",
+   "line": 31,
+   "target": "d",
+   "code": "d.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_intake.py",
+   "line": 32,
+   "target": "d",
+   "code": "d.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 58,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 61,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 89,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 93,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 118,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 121,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 140,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 143,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 159,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 161,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 187,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 189,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 203,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 205,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 236,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 238,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 255,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 260,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 304,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 306,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 316,
+   "target": "store",
+   "code": "store.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_resolution.py",
+   "line": 319,
+   "target": "Path",
+   "code": "Path.write(...)"
+  },
+  {
+   "file": "test/test_hypothesis_search.py",
+   "line": 330,
+   "target": "ledger",
+   "code": "ledger.write(...)"
+  },
+  {
+   "file": "test/test_merkle_integrity.py",
+   "line": 138,
+   "target": "tr",
+   "code": "tr.write(...)"
+  },
+  {
+   "file": "test/test_merkle_integrity.py",
+   "line": 139,
+   "target": "pr",
+   "code": "pr.write(...)"
+  },
+  {
+   "file": "test/test_merkle_integrity.py",
+   "line": 146,
+   "target": "ess",
+   "code": "ess.write(...)"
+  },
+  {
+   "file": "test/test_merkle_integrity.py",
+   "line": 161,
+   "target": "ess",
+   "code": "ess.write(...)"
+  },
+  {
+   "file": "test/test_merkle_integrity.py",
+   "line": 169,
+   "target": "ess",
+   "code": "ess.write(...)"
+  },
+  {
+   "file": "test/test_notary_gate.py",
+   "line": 315,
+   "target": "notary.ATTEST_LOG",
+   "code": "notary.ATTEST_LOG.write(...)"
+  },
+  {
+   "file": "test/test_origin_honesty.py",
+   "line": 164,
+   "target": "PROBE",
+   "code": "PROBE.write(...)"
+  },
+  {
+   "file": "test/test_origin_honesty.py",
+   "line": 286,
+   "target": "STALE",
+   "code": "STALE.write(...)"
+  },
+  {
+   "file": "test/test_origin_honesty.py",
+   "line": 318,
+   "target": "STALE",
+   "code": "STALE.write(...)"
+  },
+  {
+   "file": "test/test_phase_report.py",
+   "line": 72,
+   "target": "path.parent",
+   "code": "path.parent.write(...)"
+  },
+  {
+   "file": "test/test_phase_report.py",
+   "line": 73,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_phase_resume.py",
+   "line": 58,
+   "target": "p.parent",
+   "code": "p.parent.write(...)"
+  },
+  {
+   "file": "test/test_phase_resume.py",
+   "line": 59,
+   "target": "p",
+   "code": "p.write(...)"
+  },
+  {
+   "file": "test/test_prev_step_is_not_the_current_step.py",
+   "line": 67,
+   "target": "log",
+   "code": "log.write(...)"
+  },
+  {
+   "file": "test/test_promotion_seam.py",
+   "line": 58,
+   "target": "REPO",
+   "code": "REPO.write(...)"
+  },
+  {
+   "file": "test/test_promotion_seam.py",
+   "line": 117,
+   "target": "REPO",
+   "code": "REPO.write(...)"
+  },
+  {
+   "file": "test/test_proposal_archive.py",
+   "line": 209,
+   "target": "live",
+   "code": "live.write(...)"
+  },
+  {
+   "file": "test/test_proposal_archive.py",
+   "line": 291,
+   "target": "live",
+   "code": "live.write(...)"
+  },
+  {
+   "file": "test/test_provenance_pairs.py",
+   "line": 52,
+   "target": "PROBE",
+   "code": "PROBE.write(...)"
+  },
+  {
+   "file": "test/test_provenance_pairs.py",
+   "line": 55,
+   "target": "OTHER",
+   "code": "OTHER.write(...)"
+  },
+  {
+   "file": "test/test_publish_reports.py",
+   "line": 88,
+   "target": "p.parent",
+   "code": "p.parent.write(...)"
+  },
+  {
+   "file": "test/test_publish_reports.py",
+   "line": 89,
+   "target": "p",
+   "code": "p.write(...)"
+  },
+  {
+   "file": "test/test_publish_reports.py",
+   "line": 110,
+   "target": "big",
+   "code": "big.write(...)"
+  },
+  {
+   "file": "test/test_publish_reports.py",
+   "line": 120,
+   "target": "big",
+   "code": "big.write(...)"
+  },
+  {
+   "file": "test/test_pulse.py",
+   "line": 272,
+   "target": "_series_f.parent",
+   "code": "_series_f.parent.write(...)"
+  },
+  {
+   "file": "test/test_pulse.py",
+   "line": 273,
+   "target": "_series_f",
+   "code": "_series_f.write(...)"
+  },
+  {
+   "file": "test/test_pulse_cycle_sense.py",
+   "line": 126,
+   "target": "beating",
+   "code": "beating.write(...)"
+  },
+  {
+   "file": "test/test_pulse_cycle_sense.py",
+   "line": 147,
+   "target": "beating",
+   "code": "beating.write(...)"
+  },
+  {
+   "file": "test/test_pulse_lock.py",
+   "line": 87,
+   "target": "_isolated_lock",
+   "code": "_isolated_lock.write(...)"
+  },
+  {
+   "file": "test/test_pulse_lock.py",
+   "line": 103,
+   "target": "_isolated_lock",
+   "code": "_isolated_lock.write(...)"
+  },
+  {
+   "file": "test/test_pulse_lock.py",
+   "line": 116,
+   "target": "_isolated_lock",
+   "code": "_isolated_lock.write(...)"
+  },
+  {
+   "file": "test/test_pulse_lock.py",
+   "line": 132,
+   "target": "_isolated_lock",
+   "code": "_isolated_lock.write(...)"
+  },
+  {
+   "file": "test/test_quarantine_integration.py",
+   "line": 92,
+   "target": "target_path",
+   "code": "target_path.write(...)"
+  },
+  {
+   "file": "test/test_quarantine_integration.py",
+   "line": 127,
+   "target": "target_path",
+   "code": "target_path.write(...)"
+  },
+  {
+   "file": "test/test_quarantine_integration.py",
+   "line": 148,
+   "target": "fake_target",
+   "code": "fake_target.write(...)"
+  },
+  {
+   "file": "test/test_quarantine_integration.py",
+   "line": 175,
+   "target": "fake_target",
+   "code": "fake_target.write(...)"
+  },
+  {
+   "file": "test/test_registration_wall.py",
+   "line": 171,
+   "target": "PROBE",
+   "code": "PROBE.write(...)"
+  },
+  {
+   "file": "test/test_registration_wall.py",
+   "line": 215,
+   "target": "STALE",
+   "code": "STALE.write(...)"
+  },
+  {
+   "file": "test/test_self_forecast.py",
+   "line": 178,
+   "target": "ledger",
+   "code": "ledger.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 176,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 211,
+   "target": "callmap",
+   "code": "callmap.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 99,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 107,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 228,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 170,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_contract.py",
+   "line": 64,
+   "target": "sandbox",
+   "code": "sandbox.write(...)"
+  },
+  {
+   "file": "test/test_step_window.py",
+   "line": 29,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_supervisor.py",
+   "line": 67,
+   "target": "_hb.HEARTBEAT_PATH",
+   "code": "_hb.HEARTBEAT_PATH.write(...)"
+  },
+  {
+   "file": "test/test_timeline.py",
+   "line": 31,
+   "target": "path.parent",
+   "code": "path.parent.write(...)"
+  },
+  {
+   "file": "test/test_timeline.py",
+   "line": 32,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_unclean_stop.py",
+   "line": 57,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/test_unclean_stop.py",
+   "line": 62,
+   "target": "path",
+   "code": "path.write(...)"
+  },
+  {
+   "file": "test/redteam/build_boundary_inputs.py",
+   "line": 163,
+   "target": "OUT",
+   "code": "OUT.write(...)"
+  },
+  {
+   "file": "test/redteam/build_boundary_inputs.py",
+   "line": 197,
+   "target": "OUT",
+   "code": "OUT.write(...)"
+  },
+  {
+   "file": "test/redteam/build_boundary_inputs.py",
+   "line": 173,
+   "target": "OUT",
+   "code": "OUT.write(...)"
+  },
+  {
+   "file": "test/redteam/build_inputs.py",
+   "line": 53,
+   "target": "out_path",
+   "code": "out_path.write(...)"
+  },
+  {
+   "file": "test/redteam/build_inputs.py",
+   "line": 61,
+   "target": "out_path",
+   "code": "out_path.write(...)"
+  },
+  {
+   "file": "venv_train/Lib/site-packages/fsspec/conftest.py",
+   "line": 111,
+   "target": "os.path.join",
+   "code": "os.path.join.write(...)"
+  },
+  {
+   "file": "venv_train/Lib/site-packages/pyarrow/tests/parquet/conftest.py",
+   "line": 84,
+   "target": "fs",
+   "code": "fs.write(...)"
+  }
+ ],
+ "rows": [
+  {
+   "index": "-1",
+   "name": "boot",
+   "line": 2379,
+   "block_lines": 110,
+   "modules": [
+    "core/model_window.py",
+    "core/step_budget.py",
+    "core/step_contract.py",
+    "core/survival_gate.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/model_window.json",
+     "owner": "core/model_window.py",
+     "age_hours": 518.5,
+     "readers": {
+      "live": [
+       "core/cycle_profile.py",
+       "tools/run_a_5sep.ps1"
+      ],
+      "tests": [
+       "test/test_cycle_profile.py",
+       "test/test_model_window.py",
+       "test/test_survival_wiring.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/model_window.json",
+     "owner": "core/model_window.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "core/cycle_profile.py",
+       "tools/run_a_5sep.ps1"
+      ],
+      "tests": [
+       "test/test_cycle_profile.py",
+       "test/test_model_window.py",
+       "test/test_survival_wiring.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/step_callmap.json",
+     "owner": "core/step_contract.py",
+     "age_hours": 536.6,
+     "readers": {
+      "live": [
+       "scripts/step_callmap.py"
+      ],
+      "tests": [
+       "test/test_step_contract.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/step_contract_baseline.json",
+     "owner": "core/step_contract.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/cycle_integrity.py",
+       "core/self_experiment.py",
+       "core/step_budget.py",
+       "core/training_log.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/step_contract_latest.json",
+     "owner": "core/step_contract.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/phase_voice.py",
+       "cockpit/server.py",
+       "core/cycle_integrity.py",
+       "core/flow_score.py",
+       "core/phase_evidence.py"
+      ],
+      "tests": [
+       "test/test_cockpit_doors.py",
+       "test/test_cycle_block_is_measured.py",
+       "test/test_flow_score.py",
+       "test/test_kill_policy_wiring.py",
+       "test/test_self_mirror.py",
+       "test/test_step_window.py"
+      ],
+      "n_live": 10,
+      "n_tests": 6
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0",
+   "name": "body_scan",
+   "line": 2489,
+   "block_lines": 71,
+   "modules": [
+    "core/groq_backend.py",
+    "core/homeostasis.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/backend_order_measured.json",
+     "owner": "core/groq_backend.py",
+     "age_hours": 10.8,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "scripts/backend_league.py",
+       "tools/prophecy_morning.bat"
+      ],
+      "tests": [
+       "test/test_learn_world.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "config/homeostasis.json",
+     "owner": "core/homeostasis.py",
+     "age_hours": 489.3,
+     "readers": {
+      "live": [
+       "core/brain.py",
+       "core/receptors.py",
+       "core/self_diagnosis.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_homeostasis_layer.py"
+      ],
+      "n_live": 4,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/adaptive_directives.json",
+     "owner": "core/homeostasis.py",
+     "age_hours": 2.2,
+     "readers": {
+      "live": [
+       "agents/body/body_scanner.py",
+       "agents/internet/internet_agent.py",
+       "core/brain.py",
+       "core/cycle_map.py",
+       "fast_cycle_runner.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_transcript_fetch.py"
+      ],
+      "n_live": 6,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/homeostasis_state.json",
+     "owner": "core/homeostasis.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/self_profile.json",
+     "owner": "core/homeostasis.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "agents/core/self_modifier.py",
+       "core/cycle_map.py",
+       "experiments/needs/needs_report.py",
+       "experiments/prophecy/goal_prophecy.py",
+       "merkle_memory.py",
+       "search_logic.py"
+      ],
+      "tests": [
+       "test/test_merkle_integrity.py",
+       "test/test_stale_input_is_named.py"
+      ],
+      "n_live": 6,
+      "n_tests": 2
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0.05",
+   "name": "canon_load",
+   "line": 2560,
+   "block_lines": 16,
+   "modules": [
+    "core/canon.py"
+   ],
+   "outputs": [
+    {
+     "path": "BOUNDARIES.md",
+     "owner": "core/canon.py",
+     "age_hours": 1017.5,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/brain.py",
+       "core/disk_actuator.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py",
+       "test/test_disk_actuator.py",
+       "test/test_quarantine_triage.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 7,
+      "n_tests": 6
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "civilization_goal.txt",
+     "owner": "core/canon.py",
+     "age_hours": 4449.8,
+     "readers": {
+      "live": [
+       "agents/core/goal_planner.py",
+       "core/cortex_orchestrator.py",
+       "core/cortex_reasoner.py",
+       "core/goals.py",
+       "experiments/prophecy/goal_prophecy.py",
+       "github_publisher.py"
+      ],
+      "tests": [
+       "test/test_axis_tree_contract.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py"
+      ],
+      "n_live": 15,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "civilization_vision.txt",
+     "owner": "core/canon.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/cortex_orchestrator.py",
+       "core/goals.py",
+       "experiments/prophecy/goal_prophecy.py",
+       "github_publisher.py",
+       "merkle_memory.py"
+      ],
+      "tests": [
+       "test/test_canon_boundaries.py"
+      ],
+      "n_live": 8,
+      "n_tests": 1
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "config/goal_dimension_weights.json",
+     "owner": "core/canon.py",
+     "age_hours": 1060.5,
+     "readers": {
+      "live": [
+       "experiments/browser_scout/goal_impact.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/canon_invariants.json",
+     "owner": "core/canon.py",
+     "age_hours": 12.1,
+     "readers": {
+      "live": [
+       "core/output_contracts.py",
+       "safety/protected_paths.py",
+       "scripts/agi_scoreboard.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_brain_reviews.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_floor_and_lesson_key.py"
+      ],
+      "n_live": 4,
+      "n_tests": 4
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "STALE"
+   ],
+   "review": {
+    "verdict": "ДЕФЕКТ: инвариантът е урок `c` с доказателство `(c1..c1)` — фикстура, влязла в живия канон на 11.09 11:24 и оттам във вс",
+    "date": "2026-09-12",
+    "points": "11, 8",
+    "phase": "A"
+   }
+  },
+  {
+   "index": "0.1",
+   "name": "telegram_approvals",
+   "line": 2576,
+   "block_lines": 14,
+   "modules": [
+    "core/brain.py"
+   ],
+   "outputs": [
+    {
+     "path": "BOUNDARIES.md",
+     "owner": "core/brain.py",
+     "age_hours": 1017.5,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/canon.py",
+       "core/disk_actuator.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py",
+       "test/test_disk_actuator.py",
+       "test/test_quarantine_triage.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 7,
+      "n_tests": 6
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "LAW_OF_THE_BRAIN.md",
+     "owner": "core/brain.py",
+     "age_hours": 490.6,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_disk_actuator.py",
+       "test/test_language_pin.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/few_shot_seed.json",
+     "owner": "core/brain.py",
+     "age_hours": 490.3,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_amnesia_mode.py",
+       "test/test_enum_migration.py"
+      ],
+      "n_live": 0,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE",
+      "TEST_ONLY"
+     ]
+    },
+    {
+     "path": "config/model_roles.json",
+     "owner": "core/brain.py",
+     "age_hours": 12.9,
+     "readers": {
+      "live": [
+       "core/constancy.py"
+      ],
+      "tests": [
+       "test/test_numeric_judge.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_plan.json",
+     "owner": "core/brain.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_reviews.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/output_contracts.py",
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [
+       "test/test_agi_scoreboard.py",
+       "test/test_brain_reviews.py"
+      ],
+      "n_live": 2,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain_relay.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py",
+       "core/language_gate.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_stance.json",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/phase_debrief.py",
+       "core/phase_evidence.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_phase_debrief.py"
+      ],
+      "n_live": 5,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/cycle_report.py",
+       "core/self_mirror.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/llm_provenance.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 0.5,
+     "readers": {
+      "live": [
+       "core/answered_by.py",
+       "core/durable.py",
+       "core/groq_backend.py",
+       "core/phase_report.py",
+       "core/redact.py",
+       "scripts/backend_league.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_gemini_budget_and_usage.py",
+       "test/test_phase_report.py",
+       "test/test_provenance_model_id.py",
+       "test/test_redact.py",
+       "test/test_strategist_llm_errors.py"
+      ],
+      "n_live": 8,
+      "n_tests": 6
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/repair_proposals.json",
+     "owner": "core/brain.py",
+     "age_hours": 43.1,
+     "readers": {
+      "live": [
+       "core/self_diagnosis.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "TEST_ONLY",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0.2",
+   "name": "brain_briefing",
+   "line": 2590,
+   "block_lines": 18,
+   "modules": [
+    "core/brain.py"
+   ],
+   "outputs": [
+    {
+     "path": "BOUNDARIES.md",
+     "owner": "core/brain.py",
+     "age_hours": 1017.5,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/canon.py",
+       "core/disk_actuator.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py",
+       "test/test_disk_actuator.py",
+       "test/test_quarantine_triage.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 7,
+      "n_tests": 6
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "LAW_OF_THE_BRAIN.md",
+     "owner": "core/brain.py",
+     "age_hours": 490.6,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_disk_actuator.py",
+       "test/test_language_pin.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/few_shot_seed.json",
+     "owner": "core/brain.py",
+     "age_hours": 490.3,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_amnesia_mode.py",
+       "test/test_enum_migration.py"
+      ],
+      "n_live": 0,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE",
+      "TEST_ONLY"
+     ]
+    },
+    {
+     "path": "config/model_roles.json",
+     "owner": "core/brain.py",
+     "age_hours": 12.9,
+     "readers": {
+      "live": [
+       "core/constancy.py"
+      ],
+      "tests": [
+       "test/test_numeric_judge.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_plan.json",
+     "owner": "core/brain.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_reviews.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/output_contracts.py",
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [
+       "test/test_agi_scoreboard.py",
+       "test/test_brain_reviews.py"
+      ],
+      "n_live": 2,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain_relay.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py",
+       "core/language_gate.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_stance.json",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/phase_debrief.py",
+       "core/phase_evidence.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_phase_debrief.py"
+      ],
+      "n_live": 5,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/cycle_report.py",
+       "core/self_mirror.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/llm_provenance.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 0.5,
+     "readers": {
+      "live": [
+       "core/answered_by.py",
+       "core/durable.py",
+       "core/groq_backend.py",
+       "core/phase_report.py",
+       "core/redact.py",
+       "scripts/backend_league.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_gemini_budget_and_usage.py",
+       "test/test_phase_report.py",
+       "test/test_provenance_model_id.py",
+       "test/test_redact.py",
+       "test/test_strategist_llm_errors.py"
+      ],
+      "n_live": 8,
+      "n_tests": 6
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/repair_proposals.json",
+     "owner": "core/brain.py",
+     "age_hours": 43.1,
+     "readers": {
+      "live": [
+       "core/self_diagnosis.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "TEST_ONLY",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0.25",
+   "name": "notify_patches_and_initiatives",
+   "line": 2608,
+   "block_lines": 4,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0.5",
+   "name": "dependency_check",
+   "line": 2612,
+   "block_lines": 58,
+   "modules": [
+    "core/brain.py"
+   ],
+   "outputs": [
+    {
+     "path": "BOUNDARIES.md",
+     "owner": "core/brain.py",
+     "age_hours": 1017.5,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/canon.py",
+       "core/disk_actuator.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py",
+       "test/test_disk_actuator.py",
+       "test/test_quarantine_triage.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 7,
+      "n_tests": 6
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "LAW_OF_THE_BRAIN.md",
+     "owner": "core/brain.py",
+     "age_hours": 490.6,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_disk_actuator.py",
+       "test/test_language_pin.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/few_shot_seed.json",
+     "owner": "core/brain.py",
+     "age_hours": 490.3,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_amnesia_mode.py",
+       "test/test_enum_migration.py"
+      ],
+      "n_live": 0,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE",
+      "TEST_ONLY"
+     ]
+    },
+    {
+     "path": "config/model_roles.json",
+     "owner": "core/brain.py",
+     "age_hours": 12.9,
+     "readers": {
+      "live": [
+       "core/constancy.py"
+      ],
+      "tests": [
+       "test/test_numeric_judge.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_plan.json",
+     "owner": "core/brain.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_reviews.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/output_contracts.py",
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [
+       "test/test_agi_scoreboard.py",
+       "test/test_brain_reviews.py"
+      ],
+      "n_live": 2,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain_relay.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py",
+       "core/language_gate.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_stance.json",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/phase_debrief.py",
+       "core/phase_evidence.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_phase_debrief.py"
+      ],
+      "n_live": 5,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/cycle_report.py",
+       "core/self_mirror.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/llm_provenance.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 0.5,
+     "readers": {
+      "live": [
+       "core/answered_by.py",
+       "core/durable.py",
+       "core/groq_backend.py",
+       "core/phase_report.py",
+       "core/redact.py",
+       "scripts/backend_league.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_gemini_budget_and_usage.py",
+       "test/test_phase_report.py",
+       "test/test_provenance_model_id.py",
+       "test/test_redact.py",
+       "test/test_strategist_llm_errors.py"
+      ],
+      "n_live": 8,
+      "n_tests": 6
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/repair_proposals.json",
+     "owner": "core/brain.py",
+     "age_hours": 43.1,
+     "readers": {
+      "live": [
+       "core/self_diagnosis.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "TEST_ONLY",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "0.7",
+   "name": "needs_reanalysis_scan",
+   "line": 2670,
+   "block_lines": 12,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "1",
+   "name": "web_intelligence",
+   "line": 2682,
+   "block_lines": 15,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.5",
+   "name": "global_indicators",
+   "line": 2697,
+   "block_lines": 97,
+   "modules": [
+    "core/global_indicators.py",
+    "core/provenance.py",
+    "core/source_trust.py"
+   ],
+   "outputs": [
+    {
+     "path": "snapshots/master/global_indicators_latest.json",
+     "owner": "core/provenance.py",
+     "age_hours": 2.7,
+     "readers": {
+      "live": [
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/cadence.py",
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/daily_tier.py"
+      ],
+      "tests": [
+       "test/test_daily_tier.py",
+       "test/test_origin_honesty.py",
+       "test/test_snapshot_carry_forward.py",
+       "test/test_usgs_quakes.py",
+       "test/test_verifier_inputs.py"
+      ],
+      "n_live": 15,
+      "n_tests": 5
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/provenance_latest.json",
+     "owner": "core/provenance.py",
+     "age_hours": 2.7,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "attestation/quarantine_attestations.jsonl",
+     "owner": "core/source_trust.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "core/cycle_report.py",
+       "core/provenance.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "config/metric_domains.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 676.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "config/source_trust_rules.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 676.3,
+     "readers": {
+      "live": [
+       "experiments/grounding/divergence_ledger.py",
+       "experiments/prophecy/goal_prophecy.py"
+      ],
+      "tests": [
+       "test/test_divergence_ledger_recorder.py"
+      ],
+      "n_live": 2,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/axis_history.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 2.6,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/alarm_bands.py",
+       "core/axis_backfill.py",
+       "core/constancy.py",
+       "core/cortex_orchestrator.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_axis_backfill.py",
+       "test/test_axis_history_preserves_unmeasured.py",
+       "test/test_cockpit_transmits_unmeasured.py",
+       "test/test_cockpit_world.py",
+       "test/test_measured_flag_seam.py",
+       "test/test_resolve_ideas_defects.py"
+      ],
+      "n_live": 19,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/distrust_ledger.jsonl",
+     "owner": "core/source_trust.py",
+     "age_hours": 483.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "memory/source_trust_state.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 483.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.52",
+   "name": "daily_tier",
+   "line": 2794,
+   "block_lines": 11,
+   "modules": [
+    "core/daily_tier.py"
+   ],
+   "outputs": [
+    {
+     "path": "snapshots/master/global_indicators_latest.json",
+     "owner": "core/daily_tier.py",
+     "age_hours": 2.7,
+     "readers": {
+      "live": [
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/cadence.py",
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/provenance.py"
+      ],
+      "tests": [
+       "test/test_daily_tier.py",
+       "test/test_origin_honesty.py",
+       "test/test_snapshot_carry_forward.py",
+       "test/test_usgs_quakes.py",
+       "test/test_verifier_inputs.py"
+      ],
+      "n_live": 15,
+      "n_tests": 5
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/daily_tier.jsonl",
+     "owner": "core/daily_tier.py",
+     "age_hours": 4.1,
+     "readers": {
+      "live": [
+       "core/consolidation.py",
+       "core/cycle_map.py",
+       "core/output_contracts.py",
+       "fast_cycle_runner.py",
+       "scripts/agi_scoreboard.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_consolidation_daily.py",
+       "test/test_consolidation_gates.py",
+       "test/test_daily_tier.py"
+      ],
+      "n_live": 6,
+      "n_tests": 4
+     },
+     "flags": []
+    }
+   ],
+   "flags": [],
+   "review": {
+    "verdict": "РАБОТИ: 2346 наблюдения, 61 показателя, 2024-09-11..2026-09-12 (quakes 731, spy/gld/uup по 502). НО изходът му не се чет",
+    "date": "2026-09-12",
+    "points": "8, 2",
+    "phase": "B"
+   }
+  },
+  {
+   "index": "2.54",
+   "name": "sensorium_ingest",
+   "line": 2805,
+   "block_lines": 25,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.55",
+   "name": "browser_scout",
+   "line": 2830,
+   "block_lines": 14,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.6",
+   "name": "composers",
+   "line": 2844,
+   "block_lines": 31,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.7",
+   "name": "grounding_ledger",
+   "line": 2875,
+   "block_lines": 21,
+   "modules": [
+    "core/source_trust.py"
+   ],
+   "outputs": [
+    {
+     "path": "attestation/quarantine_attestations.jsonl",
+     "owner": "core/source_trust.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "core/cycle_report.py",
+       "core/provenance.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "config/metric_domains.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 676.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "config/source_trust_rules.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 676.3,
+     "readers": {
+      "live": [
+       "experiments/grounding/divergence_ledger.py",
+       "experiments/prophecy/goal_prophecy.py"
+      ],
+      "tests": [
+       "test/test_divergence_ledger_recorder.py"
+      ],
+      "n_live": 2,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/axis_history.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 2.6,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/alarm_bands.py",
+       "core/axis_backfill.py",
+       "core/constancy.py",
+       "core/cortex_orchestrator.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_axis_backfill.py",
+       "test/test_axis_history_preserves_unmeasured.py",
+       "test/test_cockpit_transmits_unmeasured.py",
+       "test/test_cockpit_world.py",
+       "test/test_measured_flag_seam.py",
+       "test/test_resolve_ideas_defects.py"
+      ],
+      "n_live": 19,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/distrust_ledger.jsonl",
+     "owner": "core/source_trust.py",
+     "age_hours": 483.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "memory/source_trust_state.json",
+     "owner": "core/source_trust.py",
+     "age_hours": 483.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "2.75",
+   "name": "llm_self_review_axes",
+   "line": 2896,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "3",
+   "name": "trend_tracker",
+   "line": 2901,
+   "block_lines": 4,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "3.5",
+   "name": "cortexstrategist",
+   "line": 2905,
+   "block_lines": 8,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "4",
+   "name": "internet_intelligence",
+   "line": 2913,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "5",
+   "name": "civilization_snapshots",
+   "line": 2918,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "6",
+   "name": "planet_snapshots",
+   "line": 2923,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "7",
+   "name": "human_snapshots",
+   "line": 2928,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "8",
+   "name": "cosmos_snapshots",
+   "line": 2933,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "9",
+   "name": "planetary_potential",
+   "line": 2938,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "10",
+   "name": "energy_review",
+   "line": 2943,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "11",
+   "name": "self_awareness",
+   "line": 2948,
+   "block_lines": 7,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12",
+   "name": "update_master",
+   "line": 2955,
+   "block_lines": 10,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.3",
+   "name": "system_hypergraph",
+   "line": 2965,
+   "block_lines": 9,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.4",
+   "name": "scoring_engine",
+   "line": 2974,
+   "block_lines": 50,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.42",
+   "name": "alarm_bands",
+   "line": 3024,
+   "block_lines": 6,
+   "modules": [
+    "core/alarm_bands.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/alarm_indicators.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 52.3,
+     "readers": {
+      "live": [
+       "core/counterfactual_probe.py"
+      ],
+      "tests": [
+       "test/test_alarm_indicators.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/indicator_cadence.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 132.5,
+     "readers": {
+      "live": [
+       "core/cadence.py"
+      ],
+      "tests": [
+       "test/test_usgs_quakes.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/target_config.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 33.0,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/core/goal_planner.py",
+       "citation_verifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/axis_backfill.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py",
+       "test/test_axis_tree_contract.py",
+       "test/test_axon_roles.py",
+       "test/test_cockpit_world.py",
+       "test/test_dashboard_freshness.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 29,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/gdelt_daily.py",
+       "core/level_reconciler.py",
+       "core/measurement_honesty.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/alarm_bands_latest.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 19.1,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/axis_history.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 2.6,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/axis_backfill.py",
+       "core/constancy.py",
+       "core/cortex_orchestrator.py",
+       "core/cycle_map.py",
+       "core/daily_tier.py"
+      ],
+      "tests": [
+       "test/test_axis_backfill.py",
+       "test/test_axis_history_preserves_unmeasured.py",
+       "test/test_cockpit_transmits_unmeasured.py",
+       "test/test_cockpit_world.py",
+       "test/test_measured_flag_seam.py",
+       "test/test_resolve_ideas_defects.py"
+      ],
+      "n_live": 19,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/constancy_bands_latest.json",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 19.1,
+     "readers": {
+      "live": [
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [
+       "test/test_stagnation_priority.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/verified_observations.jsonl",
+     "owner": "core/alarm_bands.py",
+     "age_hours": 37.3,
+     "readers": {
+      "live": [
+       "core/card_intake.py",
+       "scripts/agi_scoreboard.py",
+       "training/verified_corpus.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.45",
+   "name": "facade_self_check",
+   "line": 3030,
+   "block_lines": 21,
+   "modules": [
+    "core/scorer_self_check.py"
+   ],
+   "outputs": [],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.5",
+   "name": "auto_levels",
+   "line": 3051,
+   "block_lines": 18,
+   "modules": [
+    "memory/auto_level.py"
+   ],
+   "outputs": [
+    {
+     "path": "snapshots/master/master_snapshot_latest.json",
+     "owner": "memory/auto_level.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/body/body_scanner.py",
+       "agents/core/cortex_core_agent.py",
+       "agents/core/daily_analysis_agent.py",
+       "agents/core/feedback_loop.py",
+       "agents/hyperclaw/hyperclaw_orchestrator.py",
+       "agents/internet/internet_agent.py"
+      ],
+      "tests": [
+       "test/test_gate_producers_declare.py",
+       "test/test_protected_paths.py"
+      ],
+      "n_live": 16,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/auto_levels.json",
+     "owner": "memory/auto_level.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/core/cortex_core_agent.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py",
+       "agents/core/self_observer.py",
+       "agents/core/self_observer_backup.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_declared_provenance.py",
+       "test/test_gate_producers_declare.py",
+       "test/test_level_reconciler.py",
+       "test/test_metta_parallel.py",
+       "test/test_micro_cycle.py"
+      ],
+      "n_live": 16,
+      "n_tests": 5
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.55",
+   "name": "level_reconcile",
+   "line": 3069,
+   "block_lines": 14,
+   "modules": [
+    "core/level_reconciler.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/target_config.json",
+     "owner": "core/level_reconciler.py",
+     "age_hours": 33.0,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/core/goal_planner.py",
+       "citation_verifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/alarm_bands.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py",
+       "test/test_axis_tree_contract.py",
+       "test/test_axon_roles.py",
+       "test/test_cockpit_world.py",
+       "test/test_dashboard_freshness.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 29,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/level_reconciler.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/alarm_bands.py",
+       "core/gdelt_daily.py",
+       "core/measurement_honesty.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/auto_levels.json",
+     "owner": "core/level_reconciler.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/core/cortex_core_agent.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py",
+       "agents/core/self_observer.py",
+       "agents/core/self_observer_backup.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_declared_provenance.py",
+       "test/test_gate_producers_declare.py",
+       "test/test_level_reconciler.py",
+       "test/test_metta_parallel.py",
+       "test/test_micro_cycle.py"
+      ],
+      "n_live": 16,
+      "n_tests": 5
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/level_corrections.jsonl",
+     "owner": "core/level_reconciler.py",
+     "age_hours": 19.1,
+     "readers": {
+      "live": [
+       "core/phase_evidence.py",
+       "core/self_mirror.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.56",
+   "name": "axis_history",
+   "line": 3083,
+   "block_lines": 3,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.6",
+   "name": "goal_score_calculator",
+   "line": 3086,
+   "block_lines": 45,
+   "modules": [
+    "core/reconsider.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/night_events.jsonl",
+     "owner": "core/reconsider.py",
+     "age_hours": 0.4,
+     "readers": {
+      "live": [
+       "core/blind_producers.py",
+       "core/cycle_report.py",
+       "core/durable.py",
+       "core/metta_check.py",
+       "core/redact.py",
+       "core/stale_inputs.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_alarm_levels.py",
+       "test/test_cycle_log_survives_kill.py",
+       "test/test_cycle_logs.py",
+       "test/test_cycle_reaper.py",
+       "test/test_exit_log_is_durable.py"
+      ],
+      "n_live": 15,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/reconsider_history.jsonl",
+     "owner": "core/reconsider.py",
+     "age_hours": 451.4,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py"
+      ],
+      "tests": [
+       "test/test_enum_migration.py",
+       "test/test_timeline.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/reconsider_latest.json",
+     "owner": "core/reconsider.py",
+     "age_hours": 451.4,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE"
+     ]
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.65",
+   "name": "deduction",
+   "line": 3131,
+   "block_lines": 13,
+   "modules": [
+    "core/deduction.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/deduction_rule_stats.json",
+     "owner": "core/deduction.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/deductions_latest.json",
+     "owner": "core/deduction.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/core/daily_analysis_agent.py",
+       "core/brain.py",
+       "core/cycle_map.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "experiments/needs/needs_report.py"
+      ],
+      "tests": [],
+      "n_live": 8,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.66",
+   "name": "constancy_and_constellation",
+   "line": 3144,
+   "block_lines": 20,
+   "modules": [
+    "core/constancy.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/axis_history.json",
+     "owner": "core/constancy.py",
+     "age_hours": 2.6,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/alarm_bands.py",
+       "core/axis_backfill.py",
+       "core/cortex_orchestrator.py",
+       "core/cycle_map.py",
+       "core/daily_tier.py"
+      ],
+      "tests": [
+       "test/test_axis_backfill.py",
+       "test/test_axis_history_preserves_unmeasured.py",
+       "test/test_cockpit_transmits_unmeasured.py",
+       "test/test_cockpit_world.py",
+       "test/test_measured_flag_seam.py",
+       "test/test_resolve_ideas_defects.py"
+      ],
+      "n_live": 19,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/composed_indicators.json",
+     "owner": "core/constancy.py",
+     "age_hours": 2.7,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/deduction.py",
+       "core/phase_evidence.py",
+       "experiments/composers/composer.py",
+       "experiments/grounding/divergence_ledger.py",
+       "scripts/cortex_query.py"
+      ],
+      "tests": [
+       "test/test_k1_metrics_resolve.py"
+      ],
+      "n_live": 7,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/constancy_latest.json",
+     "owner": "core/constancy.py",
+     "age_hours": 2.4,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/reconsider.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/constellation_latest.json",
+     "owner": "core/constancy.py",
+     "age_hours": 2.3,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.68",
+   "name": "axis_feed",
+   "line": 3164,
+   "block_lines": 7,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.7",
+   "name": "cognitive_orchestrator",
+   "line": 3171,
+   "block_lines": 29,
+   "modules": [
+    "core/cortex_orchestrator.py",
+    "core/orchestrator_grounded.py"
+   ],
+   "outputs": [
+    {
+     "path": "civilization_goal.txt",
+     "owner": "core/cortex_orchestrator.py",
+     "age_hours": 4449.8,
+     "readers": {
+      "live": [
+       "agents/core/goal_planner.py",
+       "core/canon.py",
+       "core/cortex_reasoner.py",
+       "core/goals.py",
+       "experiments/prophecy/goal_prophecy.py",
+       "github_publisher.py"
+      ],
+      "tests": [
+       "test/test_axis_tree_contract.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py"
+      ],
+      "n_live": 15,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "civilization_vision.txt",
+     "owner": "core/cortex_orchestrator.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/canon.py",
+       "core/goals.py",
+       "experiments/prophecy/goal_prophecy.py",
+       "github_publisher.py",
+       "merkle_memory.py"
+      ],
+      "tests": [
+       "test/test_canon_boundaries.py"
+      ],
+      "n_live": 8,
+      "n_tests": 1
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/orchestrator_grounded.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/alarm_bands.py",
+       "core/gdelt_daily.py",
+       "core/level_reconciler.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/orchestration_grounded_latest.json",
+     "owner": "core/orchestrator_grounded.py",
+     "age_hours": 2.3,
+     "readers": {
+      "live": [
+       "core/axon_agents.py",
+       "core/hypothesis_search.py"
+      ],
+      "tests": [
+       "test/test_orchestrator_grounded.py"
+      ],
+      "n_live": 2,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "openclaw_queue/axis_feeds_latest.json",
+     "owner": "core/orchestrator_grounded.py",
+     "age_hours": 2.3,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "core/cycle_map.py",
+       "core/metta_parallel.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_axis_feed.py",
+       "test/test_orchestrator_grounded.py"
+      ],
+      "n_live": 4,
+      "n_tests": 2
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "12.75",
+   "name": "brain_reconsider",
+   "line": 3200,
+   "block_lines": 16,
+   "modules": [
+    "core/reconsider.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/night_events.jsonl",
+     "owner": "core/reconsider.py",
+     "age_hours": 0.4,
+     "readers": {
+      "live": [
+       "core/blind_producers.py",
+       "core/cycle_report.py",
+       "core/durable.py",
+       "core/metta_check.py",
+       "core/redact.py",
+       "core/stale_inputs.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_alarm_levels.py",
+       "test/test_cycle_log_survives_kill.py",
+       "test/test_cycle_logs.py",
+       "test/test_cycle_reaper.py",
+       "test/test_exit_log_is_durable.py"
+      ],
+      "n_live": 15,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/reconsider_history.jsonl",
+     "owner": "core/reconsider.py",
+     "age_hours": 451.4,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py"
+      ],
+      "tests": [
+       "test/test_enum_migration.py",
+       "test/test_timeline.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/reconsider_latest.json",
+     "owner": "core/reconsider.py",
+     "age_hours": 451.4,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE"
+     ]
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "13",
+   "name": "body_scan",
+   "line": 3216,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "14",
+   "name": "growth_planner",
+   "line": 3221,
+   "block_lines": 6,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "15.6",
+   "name": "hyperclaw",
+   "line": 3227,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "15.7",
+   "name": "hyperclaw_plan",
+   "line": 3232,
+   "block_lines": 17,
+   "modules": [
+    "core/notary.py"
+   ],
+   "outputs": [
+    {
+     "path": "attest.jsonl",
+     "owner": "core/notary.py",
+     "age_hours": null,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_declared_step_inputs.py",
+       "test/test_human_channel_grading.py",
+       "test/test_notary_gate.py"
+      ],
+      "n_live": 0,
+      "n_tests": 3
+     },
+     "flags": [
+      "MISSING"
+     ]
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "15.8",
+   "name": "github_publish",
+   "line": 3249,
+   "block_lines": 24,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "16",
+   "name": "action_recommendations",
+   "line": 3273,
+   "block_lines": 23,
+   "modules": [
+    "core/cortex_reasoner.py",
+    "memory/context_injector.py",
+    "memory/semantic_memory.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/causal_log.json",
+     "owner": "memory/context_injector.py",
+     "age_hours": 18.8,
+     "readers": {
+      "live": [
+       "agents/core/self_observer.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "17",
+   "name": "self_observer",
+   "line": 3296,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "18",
+   "name": "self_modifier",
+   "line": 3301,
+   "block_lines": 6,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "19",
+   "name": "execute_patches",
+   "line": 3307,
+   "block_lines": 14,
+   "modules": [
+    "core/metta_check.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/divergence_log.jsonl",
+     "owner": "core/metta_check.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "core/cycle_report.py",
+       "core/merit.py"
+      ],
+      "tests": [
+       "test/conftest.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/last_attempt.txt",
+     "owner": "core/metta_check.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "core/notary.py"
+      ],
+      "tests": [
+       "test/test_boot_guard.py",
+       "test/test_declared_provenance.py",
+       "test/test_notary_gate.py"
+      ],
+      "n_live": 1,
+      "n_tests": 3
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "memory/night_events.jsonl",
+     "owner": "core/metta_check.py",
+     "age_hours": 0.4,
+     "readers": {
+      "live": [
+       "core/blind_producers.py",
+       "core/cycle_report.py",
+       "core/durable.py",
+       "core/reconsider.py",
+       "core/redact.py",
+       "core/stale_inputs.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_alarm_levels.py",
+       "test/test_cycle_log_survives_kill.py",
+       "test/test_cycle_logs.py",
+       "test/test_cycle_reaper.py",
+       "test/test_exit_log_is_durable.py"
+      ],
+      "n_live": 15,
+      "n_tests": 13
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "20",
+   "name": "feedback_loop",
+   "line": 3321,
+   "block_lines": 17,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "20.05",
+   "name": "resolve_hypotheses",
+   "line": 3338,
+   "block_lines": 17,
+   "modules": [
+    "core/hypothesis_resolution.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/hypothesis_resolution_latest.json",
+     "owner": "core/hypothesis_resolution.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_hypothesis_resolution.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "20.07",
+   "name": "belief_revision",
+   "line": 3355,
+   "block_lines": 18,
+   "modules": [
+    "core/belief_revision.py"
+   ],
+   "outputs": [
+    {
+     "path": "cortex_memory/hypotheses/resolved.json",
+     "owner": "core/belief_revision.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/hypothesis_intake.py",
+       "core/hypothesis_resolution.py",
+       "core/self_improve/requirer.py",
+       "evaluator.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_belief_revision.py",
+       "test/test_hypothesis_resolution.py",
+       "test/test_self_improve_requirer.py"
+      ],
+      "n_live": 7,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/belief_state.json",
+     "owner": "core/belief_revision.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_belief_revision.py",
+       "test/test_produces_has_a_reader.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/revision_ledger.jsonl",
+     "owner": "core/belief_revision.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_belief_revision.py"
+      ],
+      "n_live": 0,
+      "n_tests": 1
+     },
+     "flags": [
+      "TEST_ONLY"
+     ]
+    }
+   ],
+   "flags": [
+    "TEST_ONLY",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "20.06",
+   "name": "hypothesis_intake",
+   "line": 3373,
+   "block_lines": 18,
+   "modules": [
+    "core/hypothesis_intake.py",
+    "core/measurement_honesty.py"
+   ],
+   "outputs": [
+    {
+     "path": "cortex_memory/hypotheses/pending.json",
+     "owner": "core/hypothesis_intake.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "citation_verifier.py",
+       "core/consolidation.py",
+       "core/cycle_map.py",
+       "core/hypothesis_resolution.py",
+       "evaluator.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_cockpit.py",
+       "test/test_cockpit_render_sweep.py",
+       "test/test_hypothesis_intake.py",
+       "test/test_hypothesis_resolution.py",
+       "test/test_openclaw_bridge.py",
+       "test/test_openclaw_schema_gate.py"
+      ],
+      "n_live": 8,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/consolidation_queue.json",
+     "owner": "core/hypothesis_intake.py",
+     "age_hours": 21.1,
+     "readers": {
+      "live": [
+       "core/consolidation.py",
+       "core/output_contracts.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/hypothesis_intake_latest.json",
+     "owner": "core/hypothesis_intake.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "config/axis_source_map.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 365.4,
+     "readers": {
+      "live": [
+       "experiments/pulse/pulse_continuum.py"
+      ],
+      "tests": [
+       "test/test_k1_metrics_resolve.py",
+       "test/test_measurement_honesty.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/target_config.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 33.0,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/core/goal_planner.py",
+       "citation_verifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/alarm_bands.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py",
+       "test/test_axis_tree_contract.py",
+       "test/test_axon_roles.py",
+       "test/test_cockpit_world.py",
+       "test/test_dashboard_freshness.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 29,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/alarm_bands.py",
+       "core/gdelt_daily.py",
+       "core/level_reconciler.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/goal_score_history.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "agents/core/feedback_loop.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/axis_history.py"
+      ],
+      "tests": [
+       "test/test_axis_history.py",
+       "test/test_axis_score_total.py",
+       "test/test_earning_verifier.py",
+       "test/test_feedback_measured_scores.py",
+       "test/test_fork_advances.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 23,
+      "n_tests": 9
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/measurement_honesty_latest.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "fast_cycle_runner.py",
+       "tools/compass.py"
+      ],
+      "tests": [
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE"
+   ],
+   "review": {
+    "verdict": "ДЕФЕКТ (огледален на ORPHAN): четецът е в цикъла всяка нощ, а производителят core/consolidation.py не се вика от НИЩО в ",
+    "date": "2026-09-12",
+    "points": "5, 6, 12",
+    "phase": "F"
+   }
+  },
+  {
+   "index": "20.1",
+   "name": "measurement_honesty",
+   "line": 3391,
+   "block_lines": 26,
+   "modules": [
+    "core/measurement_honesty.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/axis_source_map.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 365.4,
+     "readers": {
+      "live": [
+       "experiments/pulse/pulse_continuum.py"
+      ],
+      "tests": [
+       "test/test_k1_metrics_resolve.py",
+       "test/test_measurement_honesty.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/target_config.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 33.0,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/core/goal_planner.py",
+       "citation_verifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/alarm_bands.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py",
+       "test/test_axis_tree_contract.py",
+       "test/test_axon_roles.py",
+       "test/test_cockpit_world.py",
+       "test/test_dashboard_freshness.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 29,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/alarm_bands.py",
+       "core/gdelt_daily.py",
+       "core/level_reconciler.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/goal_score_history.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "agents/core/feedback_loop.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/axis_history.py"
+      ],
+      "tests": [
+       "test/test_axis_history.py",
+       "test/test_axis_score_total.py",
+       "test/test_earning_verifier.py",
+       "test/test_feedback_measured_scores.py",
+       "test/test_fork_advances.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 23,
+      "n_tests": 9
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/measurement_honesty_latest.json",
+     "owner": "core/measurement_honesty.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "fast_cycle_runner.py",
+       "tools/compass.py"
+      ],
+      "tests": [
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "20.2",
+   "name": "resolve_ideas",
+   "line": 3417,
+   "block_lines": 27,
+   "modules": [
+    "tools/resolve_ideas.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/idea_dimension_aliases.json",
+     "owner": "tools/resolve_ideas.py",
+     "age_hours": 364.3,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "config/target_config.json",
+     "owner": "tools/resolve_ideas.py",
+     "age_hours": 33.0,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/core/goal_planner.py",
+       "citation_verifier.py",
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/alarm_bands.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py",
+       "test/test_axis_tree_contract.py",
+       "test/test_axon_roles.py",
+       "test/test_cockpit_world.py",
+       "test/test_dashboard_freshness.py",
+       "test/test_k1_measurement_honesty.py"
+      ],
+      "n_live": 29,
+      "n_tests": 13
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/axis_history.json",
+     "owner": "tools/resolve_ideas.py",
+     "age_hours": 2.6,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/alarm_bands.py",
+       "core/axis_backfill.py",
+       "core/constancy.py",
+       "core/cortex_orchestrator.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_axis_backfill.py",
+       "test/test_axis_history_preserves_unmeasured.py",
+       "test/test_cockpit_transmits_unmeasured.py",
+       "test/test_cockpit_world.py",
+       "test/test_measured_flag_seam.py",
+       "test/test_resolve_ideas_defects.py"
+      ],
+      "n_live": 19,
+      "n_tests": 8
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/idea_resolutions.jsonl",
+     "owner": "tools/resolve_ideas.py",
+     "age_hours": 18.6,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_resolve_ideas_wired.py"
+      ],
+      "n_live": 2,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/idea_stream.jsonl",
+     "owner": "tools/resolve_ideas.py",
+     "age_hours": 21.1,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "experiments/pulse/pulse_continuum.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_pulse.py",
+       "test/test_resolve_ideas_wired.py"
+      ],
+      "n_live": 4,
+      "n_tests": 2
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "21",
+   "name": "session_update",
+   "line": 3444,
+   "block_lines": 7,
+   "modules": [
+    "core/session_updater.py"
+   ],
+   "outputs": [],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "22",
+   "name": "daily_analysis",
+   "line": 3451,
+   "block_lines": 5,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "22.5",
+   "name": "data_scout",
+   "line": 3456,
+   "block_lines": 14,
+   "modules": [
+    "core/data_scout.py"
+   ],
+   "outputs": [
+    {
+     "path": "agi_axes_spec.txt",
+     "owner": "core/data_scout.py",
+     "age_hours": 537.5,
+     "readers": {
+      "live": [
+       "agents/hyperclaw/hyperclaw_orchestrator.py",
+       "agents/planet/planetary_potential_review_agent_qwen.py",
+       "civilization_state_review_agent_qwen.py",
+       "cortex/agent_loop.py",
+       "data_source_audit.py",
+       "qwen_civilization_daily_review_agent.py"
+      ],
+      "tests": [
+       "test/test_axis_tree_contract.py"
+      ],
+      "n_live": 7,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/composer_needs.json",
+     "owner": "core/data_scout.py",
+     "age_hours": 2.7,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "experiments/browser_scout/autonomous_scout.py",
+       "experiments/browser_scout/goal_impact_collector.py",
+       "experiments/composers/composer.py",
+       "experiments/needs/needs_report.py",
+       "experiments/pulse/pulse_continuum.py"
+      ],
+      "tests": [
+       "test/test_cortex_query.py"
+      ],
+      "n_live": 8,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/discovered_data_sources.json",
+     "owner": "core/data_scout.py",
+     "age_hours": 1.5,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/source_lifecycle.py",
+       "core/source_registration.py",
+       "experiments/composers/composer.py",
+       "experiments/desktop_hands/axis_hands.py",
+       "experiments/desktop_hands/harvest.py"
+      ],
+      "tests": [
+       "test/test_source_lifecycle.py"
+      ],
+      "n_live": 11,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "23",
+   "name": "continuous_learning",
+   "line": 3470,
+   "block_lines": 12,
+   "modules": [
+    "memory/continuous_learner.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/cycle_knowledge_log.json",
+     "owner": "memory/continuous_learner.py",
+     "age_hours": 2.1,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_k3_supporting_sources.py"
+      ],
+      "n_live": 0,
+      "n_tests": 1
+     },
+     "flags": [
+      "TEST_ONLY"
+     ]
+    },
+    {
+     "path": "memory/knowledge_base.json",
+     "owner": "memory/continuous_learner.py",
+     "age_hours": 2.1,
+     "readers": {
+      "live": [
+       "agents/core/self_observer.py",
+       "core/cycle_map.py",
+       "core/hypothesis_search.py",
+       "tools/attention_ratio.py"
+      ],
+      "tests": [
+       "test/test_hypothesis_search.py",
+       "test/test_k3_supporting_sources.py",
+       "test/test_protected_paths.py"
+      ],
+      "n_live": 4,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/problem_solution_db.json",
+     "owner": "memory/continuous_learner.py",
+     "age_hours": 2.1,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_k3_supporting_sources.py"
+      ],
+      "n_live": 0,
+      "n_tests": 1
+     },
+     "flags": [
+      "TEST_ONLY"
+     ]
+    }
+   ],
+   "flags": [
+    "TEST_ONLY",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "24",
+   "name": "merklememory_commit",
+   "line": 3482,
+   "block_lines": 100,
+   "modules": [
+    "memory/existence_ledger.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/existence_ledger.jsonl",
+     "owner": "memory/existence_ledger.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/entropy.py",
+       "cockpit/server.py",
+       "cockpit/timeline.py",
+       "core/death_bell.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_ast_gate.py",
+       "test/test_cycle_seals_its_own_completion.py",
+       "test/test_disk_actuator.py",
+       "test/test_durable_writes.py",
+       "test/test_existence_ledger.py",
+       "test/test_prophecy_one_per_night.py"
+      ],
+      "n_live": 27,
+      "n_tests": 14
+     },
+     "flags": []
+    }
+   ],
+   "flags": [],
+   "review": {
+    "verdict": "ДЕФЕКТ НА ОБХВАТА: сигналите се сглобяват само от auto_levels details = годишният слой. Доказателство: gdp_per_capita_us",
+    "date": "2026-09-12",
+    "points": "8, 12",
+    "phase": "G"
+   }
+  },
+  {
+   "index": "24.1",
+   "name": "merkle_verify",
+   "line": 3582,
+   "block_lines": 26,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE"
+   ],
+   "review": {
+    "verdict": "РАБОТИ: цикъл 65, 02:13, stored==recomputed, 46 сигнала, ok=true. Доказателство, не учене — не носи точка 2 и 10.",
+    "date": "2026-09-12",
+    "points": "12",
+    "phase": "G"
+   }
+  },
+  {
+   "index": "25",
+   "name": "training_data_accumulation",
+   "line": 3608,
+   "block_lines": 51,
+   "modules": [
+    "core/training_log.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/training_log.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/brain.py",
+       "core/cycle_report.py",
+       "core/self_mirror.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/step_contract_baseline.json",
+     "owner": "core/training_log.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/cycle_integrity.py",
+       "core/self_experiment.py",
+       "core/step_budget.py",
+       "core/step_contract.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/training_log.jsonl",
+     "owner": "core/training_log.py",
+     "age_hours": 2.1,
+     "readers": {
+      "live": [
+       "core/interval_head.py",
+       "core/phase_evidence.py",
+       "tools/brain_scan.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.35",
+   "name": "metta_column",
+   "line": 3659,
+   "block_lines": 6,
+   "modules": [
+    "core/metta_parallel.py"
+   ],
+   "outputs": [
+    {
+     "path": "snapshots/master/goal_score_latest.json",
+     "owner": "core/metta_parallel.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "agents/body/body_scanner.py",
+       "agents/cortex_strategist/cortex_strategist_agent.py",
+       "core/alarm_bands.py",
+       "core/gdelt_daily.py",
+       "core/level_reconciler.py"
+      ],
+      "tests": [
+       "test/test_gdelt_daily.py",
+       "test/test_k1_measurement_honesty.py",
+       "test/test_metta_parallel.py"
+      ],
+      "n_live": 16,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/auto_levels.json",
+     "owner": "core/metta_parallel.py",
+     "age_hours": 2.5,
+     "readers": {
+      "live": [
+       "agents/core/cortex_core_agent.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py",
+       "agents/core/self_observer.py",
+       "agents/core/self_observer_backup.py",
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_declared_provenance.py",
+       "test/test_gate_producers_declare.py",
+       "test/test_level_reconciler.py",
+       "test/test_metta_parallel.py",
+       "test/test_micro_cycle.py"
+      ],
+      "n_live": 16,
+      "n_tests": 5
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/metta_assessment_latest.json",
+     "owner": "core/metta_parallel.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "openclaw_queue/axis_feeds_latest.json",
+     "owner": "core/metta_parallel.py",
+     "age_hours": 2.3,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "core/cycle_map.py",
+       "core/orchestrator_grounded.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_axis_feed.py",
+       "test/test_orchestrator_grounded.py"
+      ],
+      "n_live": 4,
+      "n_tests": 2
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.36",
+   "name": "brain_relay",
+   "line": 3665,
+   "block_lines": 15,
+   "modules": [
+    "core/brain_relay.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/brain_relay.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py",
+       "core/language_gate.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_relay_cursor.json",
+     "owner": "core/brain_relay.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "ORPHAN"
+     ]
+    }
+   ],
+   "flags": [
+    "ORPHAN",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.38",
+   "name": "proposal_sla",
+   "line": 3680,
+   "block_lines": 6,
+   "modules": [
+    "core/proposal_sla.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/improvement_proposals.json",
+     "owner": "core/proposal_sla.py",
+     "age_hours": 2.2,
+     "readers": {
+      "live": [
+       "_check_proposals.py",
+       "_clean_proposals.py",
+       "_diag.py",
+       "agents/core/feedback_loop.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py"
+      ],
+      "tests": [
+       "test/test_approval_server_is_closed.py",
+       "test/test_blind_producer_provenance.py",
+       "test/test_cockpit_doors.py",
+       "test/test_extra_calls_ledger.py",
+       "test/test_initiative_hygiene.py",
+       "test/test_needs_approvals.py"
+      ],
+      "n_live": 30,
+      "n_tests": 14
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/pending_approvals.json",
+     "owner": "core/proposal_sla.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/server.py",
+       "core/brain.py",
+       "core/cycle_map.py",
+       "cortex_approval_server.py",
+       "experiments/needs/approve_reader.py",
+       "experiments/needs/needs_report.py"
+      ],
+      "tests": [
+       "test/test_approval_server_is_closed.py"
+      ],
+      "n_live": 7,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/proposal_sla_escalated.json",
+     "owner": "core/proposal_sla.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "memory/proposal_sla_queue.json",
+     "owner": "core/proposal_sla.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/threshold_proposals.json",
+     "owner": "core/proposal_sla.py",
+     "age_hours": 538.6,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "scripts/propose_alarm_thresholds.py"
+      ],
+      "tests": [
+       "test/test_alarm_bands.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": [
+      "STALE"
+     ]
+    }
+   ],
+   "flags": [
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.37",
+   "name": "needs_auth",
+   "line": 3686,
+   "block_lines": 11,
+   "modules": [
+    "core/needs_auth.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/dead_sources.json",
+     "owner": "core/needs_auth.py",
+     "age_hours": 131.5,
+     "readers": {
+      "live": [
+       "core/global_indicators.py",
+       "core/market_news.py",
+       "core/phase_evidence.py",
+       "core/self_diagnosis.py",
+       "core/source_status.py",
+       "core/source_trust.py"
+      ],
+      "tests": [
+       "test/test_needs_auth.py",
+       "test/test_protected_paths.py",
+       "test/test_source_status.py"
+      ],
+      "n_live": 7,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/needs_auth_asked.json",
+     "owner": "core/needs_auth.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "ORPHAN"
+     ]
+    }
+   ],
+   "flags": [
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.43",
+   "name": "learn_world",
+   "line": 3697,
+   "block_lines": 12,
+   "modules": [
+    "core/learn_world.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/learn_world_latest.json",
+     "owner": "core/learn_world.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_learn_world.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.44",
+   "name": "self_experiment",
+   "line": 3709,
+   "block_lines": 10,
+   "modules": [
+    "core/self_experiment.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/scheduler.json",
+     "owner": "core/self_experiment.py",
+     "age_hours": 20.6,
+     "readers": {
+      "live": [
+       "core/brain.py",
+       "core/interoception.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "core/step_budget.py",
+       "core/survival_mode.py"
+      ],
+      "tests": [
+       "test/test_cloud_demotion_expiry.py",
+       "test/test_disk_actuator.py",
+       "test/test_micro_cycle.py",
+       "test/test_one_ceiling.py",
+       "test/test_protected_paths.py",
+       "test/test_publish_reports.py"
+      ],
+      "n_live": 14,
+      "n_tests": 15
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/existence_ledger.jsonl",
+     "owner": "core/self_experiment.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/entropy.py",
+       "cockpit/server.py",
+       "cockpit/timeline.py",
+       "core/death_bell.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_ast_gate.py",
+       "test/test_cycle_seals_its_own_completion.py",
+       "test/test_disk_actuator.py",
+       "test/test_durable_writes.py",
+       "test/test_existence_ledger.py",
+       "test/test_prophecy_one_per_night.py"
+      ],
+      "n_live": 27,
+      "n_tests": 14
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/improvement_proposals.json",
+     "owner": "core/self_experiment.py",
+     "age_hours": 2.2,
+     "readers": {
+      "live": [
+       "_check_proposals.py",
+       "_clean_proposals.py",
+       "_diag.py",
+       "agents/core/feedback_loop.py",
+       "agents/core/goal_planner.py",
+       "agents/core/self_modifier.py"
+      ],
+      "tests": [
+       "test/test_approval_server_is_closed.py",
+       "test/test_blind_producer_provenance.py",
+       "test/test_cockpit_doors.py",
+       "test/test_extra_calls_ledger.py",
+       "test/test_initiative_hygiene.py",
+       "test/test_needs_approvals.py"
+      ],
+      "n_live": 30,
+      "n_tests": 14
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/self_experiment_overlay.json",
+     "owner": "core/self_experiment.py",
+     "age_hours": null,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 0,
+      "n_tests": 1
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "memory/self_experiments.json",
+     "owner": "core/self_experiment.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/phase_evidence.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_micro_cycle.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 3,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/step_contract_baseline.json",
+     "owner": "core/self_experiment.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/cycle_integrity.py",
+       "core/step_budget.py",
+       "core/step_contract.py",
+       "core/training_log.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.45",
+   "name": "self_mirror",
+   "line": 3719,
+   "block_lines": 14,
+   "modules": [
+    "core/self_mirror.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/body_scan_latest.json",
+     "owner": "core/self_mirror.py",
+     "age_hours": 18.7,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "core/brain.py",
+       "core/cycle_map.py",
+       "core/groq_backend.py",
+       "core/self_diagnosis.py",
+       "cortex_scanner.py"
+      ],
+      "tests": [],
+      "n_live": 7,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/self_mirror.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/brain.py",
+       "core/cycle_report.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/level_corrections.jsonl",
+     "owner": "core/self_mirror.py",
+     "age_hours": 19.1,
+     "readers": {
+      "live": [
+       "core/level_reconciler.py",
+       "core/phase_evidence.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/self_mirror_latest.json",
+     "owner": "core/self_mirror.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/cycle_map.py",
+       "core/interoception.py",
+       "core/phase_evidence.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_interoception.py",
+       "test/test_micro_cycle.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 6,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/self_mirror_log.jsonl",
+     "owner": "core/self_mirror.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/phase_evidence.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_micro_cycle.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 3,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/step_contract_latest.json",
+     "owner": "core/self_mirror.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/phase_voice.py",
+       "cockpit/server.py",
+       "core/cycle_integrity.py",
+       "core/flow_score.py",
+       "core/phase_evidence.py"
+      ],
+      "tests": [
+       "test/test_cockpit_doors.py",
+       "test/test_cycle_block_is_measured.py",
+       "test/test_flow_score.py",
+       "test/test_kill_policy_wiring.py",
+       "test/test_self_mirror.py",
+       "test/test_step_window.py"
+      ],
+      "n_live": 10,
+      "n_tests": 6
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.46",
+   "name": "read_the_mirror",
+   "line": 3733,
+   "block_lines": 11,
+   "modules": [
+    "core/interoception.py"
+   ],
+   "outputs": [
+    {
+     "path": "config/scheduler.json",
+     "owner": "core/interoception.py",
+     "age_hours": 20.6,
+     "readers": {
+      "live": [
+       "core/brain.py",
+       "core/self_diagnosis.py",
+       "core/self_experiment.py",
+       "core/source_trust.py",
+       "core/step_budget.py",
+       "core/survival_mode.py"
+      ],
+      "tests": [
+       "test/test_cloud_demotion_expiry.py",
+       "test/test_disk_actuator.py",
+       "test/test_micro_cycle.py",
+       "test/test_one_ceiling.py",
+       "test/test_protected_paths.py",
+       "test/test_publish_reports.py"
+      ],
+      "n_live": 14,
+      "n_tests": 15
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/existence_ledger.jsonl",
+     "owner": "core/interoception.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/entropy.py",
+       "cockpit/server.py",
+       "cockpit/timeline.py",
+       "core/death_bell.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_ast_gate.py",
+       "test/test_cycle_seals_its_own_completion.py",
+       "test/test_disk_actuator.py",
+       "test/test_durable_writes.py",
+       "test/test_existence_ledger.py",
+       "test/test_prophecy_one_per_night.py"
+      ],
+      "n_live": 27,
+      "n_tests": 14
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/mirror_read_latest.json",
+     "owner": "core/interoception.py",
+     "age_hours": 18.2,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/phase_evidence.py"
+      ],
+      "tests": [],
+      "n_live": 2,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/scheduler_state.json",
+     "owner": "core/interoception.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "agents/core/daily_analysis_agent.py",
+       "core/disk_actuator.py",
+       "core/survival_mode.py",
+       "experiments/audit/watch_cycle.py",
+       "fast_cycle_runner.py",
+       "media_intel_scheduler.py"
+      ],
+      "tests": [
+       "test/test_protected_paths.py",
+       "test/test_self_improve_requirer.py",
+       "test/test_supervisor.py",
+       "test/test_survival_mode.py"
+      ],
+      "n_live": 8,
+      "n_tests": 4
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/self_mirror_latest.json",
+     "owner": "core/interoception.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/cycle_map.py",
+       "core/phase_evidence.py",
+       "core/self_mirror.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_interoception.py",
+       "test/test_micro_cycle.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 6,
+      "n_tests": 3
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.5",
+   "name": "brain_debrief",
+   "line": 3744,
+   "block_lines": 17,
+   "modules": [
+    "core/brain.py"
+   ],
+   "outputs": [
+    {
+     "path": "BOUNDARIES.md",
+     "owner": "core/brain.py",
+     "age_hours": 1017.5,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/canon.py",
+       "core/disk_actuator.py",
+       "core/self_diagnosis.py",
+       "core/source_trust.py",
+       "safety/protected_paths.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_canon_boundaries.py",
+       "test/test_canon_english.py",
+       "test/test_disk_actuator.py",
+       "test/test_quarantine_triage.py",
+       "test/test_self_experiment.py"
+      ],
+      "n_live": 7,
+      "n_tests": 6
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "LAW_OF_THE_BRAIN.md",
+     "owner": "core/brain.py",
+     "age_hours": 490.6,
+     "readers": {
+      "live": [
+       "core/aggressive_cleanup.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_disk_actuator.py",
+       "test/test_language_pin.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "config/few_shot_seed.json",
+     "owner": "core/brain.py",
+     "age_hours": 490.3,
+     "readers": {
+      "live": [],
+      "tests": [
+       "test/test_amnesia_mode.py",
+       "test/test_enum_migration.py"
+      ],
+      "n_live": 0,
+      "n_tests": 2
+     },
+     "flags": [
+      "STALE",
+      "TEST_ONLY"
+     ]
+    },
+    {
+     "path": "config/model_roles.json",
+     "owner": "core/brain.py",
+     "age_hours": 12.9,
+     "readers": {
+      "live": [
+       "core/constancy.py"
+      ],
+      "tests": [
+       "test/test_numeric_judge.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_plan.json",
+     "owner": "core/brain.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/cycle_report.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_cycle_reviews.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 2.0,
+     "readers": {
+      "live": [
+       "core/output_contracts.py",
+       "scripts/agi_scoreboard.py"
+      ],
+      "tests": [
+       "test/test_agi_scoreboard.py",
+       "test/test_brain_reviews.py"
+      ],
+      "n_live": 2,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain_relay.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py",
+       "core/language_gate.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_stance.json",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "core/phase_debrief.py",
+       "core/phase_evidence.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_phase_debrief.py"
+      ],
+      "n_live": 5,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/cycle_report.py",
+       "core/self_mirror.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/llm_provenance.jsonl",
+     "owner": "core/brain.py",
+     "age_hours": 0.5,
+     "readers": {
+      "live": [
+       "core/answered_by.py",
+       "core/durable.py",
+       "core/groq_backend.py",
+       "core/phase_report.py",
+       "core/redact.py",
+       "scripts/backend_league.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_gemini_budget_and_usage.py",
+       "test/test_phase_report.py",
+       "test/test_provenance_model_id.py",
+       "test/test_redact.py",
+       "test/test_strategist_llm_errors.py"
+      ],
+      "n_live": 8,
+      "n_tests": 6
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/repair_proposals.json",
+     "owner": "core/brain.py",
+     "age_hours": 43.1,
+     "readers": {
+      "live": [
+       "core/self_diagnosis.py"
+      ],
+      "tests": [],
+      "n_live": 1,
+      "n_tests": 0
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "STALE",
+    "TEST_ONLY"
+   ],
+   "review": {
+    "verdict": "ЧАСТИЧНО: A-1 е поправено — memory/brain_cycle_reviews.jsonl има истински ред от 12.09 02:20. A-2 е завързано, но мъртво",
+    "date": "2026-09-12",
+    "points": "9, 10, 2",
+    "phase": "G"
+   }
+  },
+  {
+   "index": "25.6",
+   "name": "cycle_report",
+   "line": 3761,
+   "block_lines": 38,
+   "modules": [
+    "core/cycle_report.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/brain_cycle_plan.json",
+     "owner": "core/cycle_report.py",
+     "age_hours": 2.8,
+     "readers": {
+      "live": [
+       "core/brain.py",
+       "core/cycle_map.py",
+       "core/phase_evidence.py",
+       "core/reconsider.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [],
+      "n_live": 5,
+      "n_tests": 0
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_step_log.jsonl",
+     "owner": "core/cycle_report.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/timeline.py",
+       "core/brain.py",
+       "core/self_mirror.py",
+       "core/training_log.py",
+       "experiments/audit/watch_cycle.py",
+       "scripts/_probe_attend.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_cockpit_legend.py",
+       "test/test_enum_migration.py",
+       "test/test_language_pin.py",
+       "test/test_prev_step_is_not_the_current_step.py",
+       "test/test_self_mirror.py"
+      ],
+      "n_live": 7,
+      "n_tests": 7
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.7",
+   "name": "cortex_scan",
+   "line": 3799,
+   "block_lines": 32,
+   "modules": [],
+   "outputs": [],
+   "flags": [
+    "NO_MODULE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  },
+  {
+   "index": "25.8",
+   "name": "compass",
+   "line": 3831,
+   "block_lines": 348,
+   "modules": [
+    "core/blackbox.py",
+    "core/cycle_vector.py",
+    "core/language_gate.py",
+    "core/model_window.py",
+    "core/phase_resume.py",
+    "core/phase_tracker.py",
+    "core/survival_mode.py",
+    "memory/autonomic_pulse.py",
+    "memory/heartbeat.py",
+    "tools/compass.py"
+   ],
+   "outputs": [
+    {
+     "path": "memory/blackbox.jsonl",
+     "owner": "core/blackbox.py",
+     "age_hours": 0.0,
+     "readers": {
+      "live": [
+       "agents/core/self_modifier.py",
+       "core/earning.py",
+       "tools/read_the_blackbox.py",
+       "tools/step_audit.py"
+      ],
+      "tests": [
+       "test/conftest.py"
+      ],
+      "n_live": 4,
+      "n_tests": 1
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/state_vectors.jsonl",
+     "owner": "core/cycle_vector.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/norms.py",
+       "cockpit/phase_voice.py",
+       "cockpit/server.py",
+       "cockpit/somatic.py",
+       "cockpit/vector.py"
+      ],
+      "tests": [
+       "test/test_cycle_block_is_measured.py",
+       "test/test_cycle_vector.py",
+       "test/test_state_vectors_marker_row.py",
+       "test/test_vector_scalars.py"
+      ],
+      "n_live": 9,
+      "n_tests": 4
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/brain_journal.jsonl",
+     "owner": "core/language_gate.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "cockpit/entropy.py",
+       "cockpit/timeline.py",
+       "core/brain.py",
+       "core/brain_relay.py",
+       "core/cycle_map.py",
+       "core/disk_actuator.py"
+      ],
+      "tests": [
+       "test/conftest.py",
+       "test/test_amnesia_mode.py",
+       "test/test_audit_exemplars.py",
+       "test/test_brain_relay.py",
+       "test/test_cockpit_legend.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 10,
+      "n_tests": 12
+     },
+     "flags": []
+    },
+    {
+     "path": "memory/language_quarantine.json",
+     "owner": "core/language_gate.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_language_purity.py",
+       "test/test_quarantine_written_flag.py"
+      ],
+      "n_live": 1,
+      "n_tests": 2
+     },
+     "flags": []
+    },
+    {
+     "path": "config/model_window.json",
+     "owner": "core/model_window.py",
+     "age_hours": 518.5,
+     "readers": {
+      "live": [
+       "core/cycle_profile.py",
+       "tools/run_a_5sep.ps1"
+      ],
+      "tests": [
+       "test/test_cycle_profile.py",
+       "test/test_model_window.py",
+       "test/test_survival_wiring.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/model_window.json",
+     "owner": "core/model_window.py",
+     "age_hours": 1.9,
+     "readers": {
+      "live": [
+       "core/cycle_profile.py",
+       "tools/run_a_5sep.ps1"
+      ],
+      "tests": [
+       "test/test_cycle_profile.py",
+       "test/test_model_window.py",
+       "test/test_survival_wiring.py"
+      ],
+      "n_live": 2,
+      "n_tests": 3
+     },
+     "flags": []
+    },
+    {
+     "path": "config/cycle_phases.json",
+     "owner": "core/phase_tracker.py",
+     "age_hours": 27.3,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "core/hypothesis_intake.py",
+       "core/hypothesis_resolution.py",
+       "core/phase_evidence.py",
+       "core/phase_report.py",
+       "core/phase_resume.py"
+      ],
+      "tests": [
+       "test/test_belief_revision.py",
+       "test/test_checkpoint_wiring.py",
+       "test/test_compass_wired.py",
+       "test/test_cycle_phases_cover_every_step.py",
+       "test/test_daily_tier.py",
+       "test/test_hypothesis_intake.py"
+      ],
+      "n_live": 10,
+      "n_tests": 17
+     },
+     "flags": []
+    },
+    {
+     "path": "scheduler_state.json",
+     "owner": "core/survival_mode.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "agents/core/daily_analysis_agent.py",
+       "core/disk_actuator.py",
+       "core/interoception.py",
+       "experiments/audit/watch_cycle.py",
+       "fast_cycle_runner.py",
+       "media_intel_scheduler.py"
+      ],
+      "tests": [
+       "test/test_protected_paths.py",
+       "test/test_self_improve_requirer.py",
+       "test/test_supervisor.py",
+       "test/test_survival_mode.py"
+      ],
+      "n_live": 8,
+      "n_tests": 4
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "step_priority.json",
+     "owner": "core/survival_mode.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "core/cycle_profile.py",
+       "core/kill_policy.py",
+       "fast_cycle_runner.py",
+       "supervisor.py"
+      ],
+      "tests": [
+       "test/test_cycle_profile.py",
+       "test/test_survival_mode.py"
+      ],
+      "n_live": 4,
+      "n_tests": 2
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "survival_state.json",
+     "owner": "core/survival_mode.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/server.py",
+       "fast_cycle_runner.py",
+       "supervisor.py"
+      ],
+      "tests": [],
+      "n_live": 4,
+      "n_tests": 0
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "memory/pulse_history.jsonl",
+     "owner": "memory/autonomic_pulse.py",
+     "age_hours": 4427.4,
+     "readers": {
+      "live": [],
+      "tests": [],
+      "n_live": 0,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE",
+      "ORPHAN"
+     ]
+    },
+    {
+     "path": "memory/pulse_latest.json",
+     "owner": "memory/autonomic_pulse.py",
+     "age_hours": 4427.4,
+     "readers": {
+      "live": [
+       "core/cortex_orchestrator.py",
+       "core/cortex_reasoner.py",
+       "core/session_updater.py"
+      ],
+      "tests": [],
+      "n_live": 3,
+      "n_tests": 0
+     },
+     "flags": [
+      "STALE"
+     ]
+    },
+    {
+     "path": "memory/heartbeat.json",
+     "owner": "memory/heartbeat.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "cockpit/datasources.py",
+       "cockpit/phase_voice.py",
+       "cockpit/server.py",
+       "core/aggressive_cleanup.py",
+       "core/axon_agents.py",
+       "core/brain.py"
+      ],
+      "tests": [
+       "test/test_aggressive_cleanup.py",
+       "test/test_ast_gate.py",
+       "test/test_axon_agents.py",
+       "test/test_cycle_reaper.py",
+       "test/test_cycle_seals_its_own_completion.py",
+       "test/test_disk_actuator.py"
+      ],
+      "n_live": 24,
+      "n_tests": 16
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "axis_feeds.jsonl",
+     "owner": "tools/compass.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "agents/axis/axis_feed.py",
+       "core/phase_evidence.py",
+       "scripts/micro_cycle.py"
+      ],
+      "tests": [
+       "test/test_axis_feed.py"
+      ],
+      "n_live": 3,
+      "n_tests": 1
+     },
+     "flags": [
+      "MISSING"
+     ]
+    },
+    {
+     "path": "memory/compass_latest.json",
+     "owner": "tools/compass.py",
+     "age_hours": 18.1,
+     "readers": {
+      "live": [
+       "core/cycle_map.py"
+      ],
+      "tests": [
+       "test/test_compass_wired.py"
+      ],
+      "n_live": 1,
+      "n_tests": 1
+     },
+     "flags": []
+    }
+   ],
+   "flags": [
+    "MISSING",
+    "ORPHAN",
+    "STALE",
+    "UNREVIEWED"
+   ],
+   "review": null
+  }
+ ]
+}
