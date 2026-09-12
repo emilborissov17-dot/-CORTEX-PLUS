@@ -127,6 +127,23 @@ def _units() -> dict:
 
 # ── 1. ВСЯКА СЕРИЯ ПООТДЕЛНО: очакван режим и присъда ────────────────────────
 
+def _judge_banner(judge: str | None) -> str:
+    """What this run used to judge indicators, said out loud.
+
+    core/brain.numeric_judge() returns None when the named model is not installed,
+    and the caller then falls back to the smallest model. That fallback must never be
+    silent: qwen2.5:3b scored 0/9 on core/counterfactual_probe.py — it answers without
+    reading the number — so a run judged by it looks exactly like a run judged well.
+    The number goes in the line, because "fell back" is a shrug and "0/9" is a warning.
+    """
+    if judge:
+        return f"  [CONSTANCY] numeric judge: {judge}, lean prompt (10/10 on the probe, 12 Sep)"
+    return ("  [CONSTANCY] no numeric judge installed (config/model_roles.json) -> "
+            "falling back to fast=True, the smallest installed model, which scored 0/9 "
+            "on the counterfactual probe. These healthy/alarm verdicts are weak; treat "
+            "them as unread rather than as judgements.")
+
+
 def judge_series(limit: int = 24) -> dict:
     series = _series_from_history()
     units = _units()
@@ -144,6 +161,14 @@ def judge_series(limit: int = 24) -> dict:
         from core import brain
     except Exception:
         brain = None
+
+    judge = None
+    if brain:
+        try:
+            judge = brain.numeric_judge()
+        except Exception:
+            judge = None
+        print(_judge_banner(judge))
 
     for r in rows:
         if not brain:
@@ -171,7 +196,17 @@ def judge_series(limit: int = 24) -> dict:
                 "alarm": "true/false — is there cause for alarm",
                 "reading": "what EXACTLY this series tells you, in one or two sentences",
             },
-            kind="constancy", fast=True)
+            kind="constancy",
+            # THE NUMERIC JUDGE, WITH THE SELF-WRAPPER OFF (12 Sep 2026).
+            # healthy/alarm are numeric comparisons wearing booleans: they are
+            # decided from cv, the min..max range, the last value and n. The
+            # wrapper costs accuracy on exactly that kind of question (4352 of
+            # 5028 prompt characters are the system describing itself, and a
+            # changed free-RAM figure flipped 3 of 9 verdicts at temperature 0),
+            # so the judge is asked lean. With no judge installed we keep the old
+            # behaviour exactly — fast=True, full wrapper — and the banner above
+            # has already said so.
+            fast=(judge is None), model_override=judge, lean=bool(judge))
         r["verdict"] = {k: v for k, v in (d or {}).items() if not k.startswith("_")} or None
         if d:
             r["by"] = d.get("_model")

@@ -1,0 +1,41 @@
+{
+ "numeric_judge": "cortex-l1b-3b:latest",
+ "_why": "counterfactual probe 12 Sep: 10/10 wrapped x2 and lean; qwen2.5:3b 0/9",
+ "_detail": {
+  "measured": "core/counterfactual_probe.py --compare local:cortex-l1b-3b local:cortex-l1b-3b+lean",
+  "runs": [
+   {
+    "ts": "2026-09-12T06:54:01+00:00",
+    "asker": "local:cortex-l1b-3b",
+    "tracks": "10/10",
+    "tracks_rate": 1.0
+   },
+   {
+    "ts": "2026-09-12T06:54:01+00:00",
+    "asker": "local:cortex-l1b-3b+lean",
+    "tracks": "10/10",
+    "tracks_rate": 1.0
+   },
+   {
+    "ts": "2026-09-12T07:06:12+00:00",
+    "asker": "local:cortex-l1b-3b",
+    "tracks": "10/10",
+    "tracks_rate": 1.0
+   }
+  ],
+  "wrapper_moved_between_the_two_wrapped_runs": {
+   "self_state_sha256_run1": "b85fb85cc50f7394",
+   "self_state_sha256_run2": "ab6086034ebbb1dd",
+   "why_it_matters": "the same term flipped 3 of 9 of cortex-l1-3b's verdicts at temperature 0; L1b returned identical verdicts on all ten"
+  },
+  "beaten": {
+   "qwen2.5:3b": "0/9",
+   "cortex-l1-3b wrapped": "0.111 / 0.111 / 0.222 / 0.000 over four runs",
+   "qwen3:8b": "9/9 on 2026-09-11"
+  },
+  "case_set_note": "the L1b runs are n=10; the earlier comparisons are n=9. target:MATERIALS_WASTE_REVIEW gained a usable counterfactual in between, so 10/10 is not strictly like-for-like with 9/9 — L1b got all ten, including the nine the others were asked.",
+  "provenance": "90/90 calls answered by cortex-l1b-3b:latest (memory/llm_provenance.jsonl)",
+  "report": "claude/reports/L1B_ADOPTION.md",
+  "NAME_IS_EXPLICIT_ON_PURPOSE": "The model is NOT renamed to cortex-l1b:3b. brain._fast_model() picks the smallest installed model by a regex that reads the digits after a COLON in the name, so a tag like 'cortex-l1b:3b' would score 3.0 and silently become the answer for EVERY fast=True call in the system. Here a role is chosen by name, in a config, for one named caller. A quiet global effect is exactly what this file exists to avoid."
+ }
+}

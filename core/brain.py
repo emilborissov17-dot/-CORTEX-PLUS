@@ -412,6 +412,44 @@ def models() -> list:
         return []
 
 
+ROLES = BASE / "config" / "model_roles.json"
+
+
+def numeric_judge() -> str | None:
+    """The model chosen for a NUMERIC verdict, or None if it is not installed.
+
+    WHY A ROLE AND NOT A RENAME (12 Sep 2026). cortex-l1b-3b reads a number where
+    the rest do not: on the nine/ten real cases of core/counterfactual_probe.py it
+    scored 10/10 wrapped (twice, with the wrapper demonstrably CHANGED between the
+    two runs) and 10/10 lean, against 0/9 for qwen2.5:3b and 0.111/0.111/0.222/0.000
+    for its own predecessor. The tempting way to wire that in is to retag it
+    "cortex-l1b:3b" so _fast_model() picks it — and that is exactly wrong: that
+    function returns the smallest installed model for EVERY fast=True call in the
+    system, so a rename is a silent, global change of mind nobody asked for. A role
+    is named in config/model_roles.json and read by one named caller.
+
+    NONE IS AN ANSWER, NOT AN ERROR, and the caller must say so out loud. A missing
+    config, a malformed one, or a model that is simply not installed on this machine
+    all return None, and core/constancy.py prints what it fell back to. The forbidden
+    behaviour is silently substituting the small model and letting its verdicts read
+    as the judge's: that is how "all backends failed" once hid a parse error.
+    """
+    try:
+        name = (json.loads(ROLES.read_text(encoding="utf-8")) or {}).get("numeric_judge")
+    except Exception:
+        return None
+    if not name or not isinstance(name, str):
+        return None
+    have = models()
+    if name in have:
+        return name
+    # same ":latest" resolution the probe needed: ollama lists what you created as
+    # "<name>:latest", and asking for the bare name finds no exact match.
+    if f"{name}:latest" in have:
+        return f"{name}:latest"
+    return None
+
+
 def _pick_model() -> tuple:
     try:
         from core.groq_backend import _pick_local_model, _OLLAMA_URL
