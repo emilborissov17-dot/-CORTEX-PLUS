@@ -112,6 +112,11 @@ def _current_span():
 # that a dead worker is a FAILURE and not a footnote in stderr.
 THREAD_ERRORS = []
 
+# Reads are the loud channel: a cycle opens tens of thousands of files for
+# reading, and coalescing only collapses repeats of the SAME path. Asked for
+# explicitly, by the instrumented run that needs to learn a step's inputs.
+READ_CHANNEL = os.environ.get("CORTEX_TRACE_READS") == "1"
+
 _state = {
     "on": False,
     "t0": 0.0,
@@ -399,6 +404,19 @@ def _audit(name: str, args) -> None:
         if name == "open":
             mode = args[1] if len(args) > 1 else ""
             if not mode or not any(c in str(mode) for c in "wax+"):
+                # A READ IS AN INPUT, AND ONLY WRITES WERE RECORDED UNTIL NOW.
+                # A step's contract is what it CONSUMES as much as what it
+                # produces: skipping a step because "nothing changed" is only
+                # honest if the record knows what it was reading. Off by default
+                # because a night opens tens of thousands of files for reading
+                # and the trace is meant to be read by a human; on for the
+                # instrumented runs that build the contracts.
+                if not READ_CHANNEL:
+                    return
+                rel = _rel_if_ours(args[0])
+                if rel is None:
+                    return
+                event("read", {"path": rel})
                 return
             rel = _rel_if_ours(args[0])
             if rel is None:
@@ -517,7 +535,7 @@ class span:
         self.sp = open_span(self.name, self.attr, self.parent)
         self.token = _CURRENT.set(self.sp)
         # Only a step is published process-wide; see the note beside _CURRENT_STEP.
-        self.is_step = self.name.startswith("step:")
+        self.is_step = self.name.startswith(("step:", "stepb:"))
         if self.is_step:
             _STEP_STACK.append(_CURRENT_STEP)
             _CURRENT_STEP = self.sp
@@ -545,6 +563,62 @@ class span:
             global _CURRENT_STEP
             _CURRENT_STEP = _STEP_STACK.pop() if _STEP_STACK else None
         return False
+
+
+# ── THE BOUNDARY FOR STEPS THAT NEVER CALL _run() ──────────────────────
+#
+# 44 of the 75 steps in the map have a measured contract. The other 31 have none,
+# for a structural reason rather than a neglectful one: they are inline blocks in
+# fast_cycle_runner, so _run() never wraps them, StepContract is never opened, and
+# nobody ever writes a row. The 900 s ceiling that killed the cycle on the morning
+# of 13 Sep 2026 sat on one of them — constancy_and_constellation, never measured
+# once, killed for exceeding a number chosen by default.
+#
+# beat() is the one thing all 75 do call. So the boundary comes from there: a beat
+# closes the previous inline span and opens the next.
+#
+# WHY "stepb:" AND NOT "step:". beat() is called BEFORE _run(), so for the 44 that
+# do go through _run the beat span would WRAP the _run span, and the arithmetic in
+# tools/trace_report.py — which sums step:* against wall clock — would count those
+# seconds twice. The prefix keeps them out of that sum. It still publishes as the
+# current step, so events land on it when there is no _run span, which is the
+# entire point of adding it.
+_BEAT_SPAN = None
+_BEAT_LABEL = None
+
+
+def mark_step(step, index=None) -> None:
+    """Called from beat(). Closes the previous inline span, opens this one.
+
+    Never raises — an observer may not cost a step. Idempotent per label, so the
+    several beats a long step emits do not chop it into pieces.
+    """
+    global _BEAT_SPAN, _BEAT_LABEL
+    try:
+        if not _state["on"]:
+            return
+        label = str(step)
+        if label == _BEAT_LABEL:
+            return
+        _close_beat_span("OK")
+        sp = span("stepb:" + label, {"step": label, "index": index,
+                                     "source": "beat"})
+        sp.__enter__()
+        _BEAT_SPAN, _BEAT_LABEL = sp, label
+    except Exception:
+        _BEAT_SPAN, _BEAT_LABEL = None, None
+
+
+def _close_beat_span(status="OK") -> None:
+    """Close the open inline span, if there is one. Never raises."""
+    global _BEAT_SPAN, _BEAT_LABEL
+    sp, _BEAT_SPAN, _BEAT_LABEL = _BEAT_SPAN, None, None
+    if sp is None:
+        return
+    try:
+        sp.__exit__(None, None, None)
+    except Exception:
+        pass
 
 
 # ── lifecycle ─────────────────────────────────────────────────────────────────
@@ -633,6 +707,10 @@ def adopt(cycle_id) -> str | None:
 def stop(status: str = "OK") -> None:
     if not _state["on"]:
         return
+    # THE LAST INLINE STEP IS CLOSED HERE. Left open it would read as "the cycle
+    # died inside this step", which is precisely what an open with no span is
+    # reserved to mean.
+    _close_beat_span(status)
     _state["stopping"].set()
     # ONE sentinel, and BARE. The first version also queued it as (None, _SENTINEL);
     # the loop unpacked that as an ordinary item, the sentinel ended up in `pending`,

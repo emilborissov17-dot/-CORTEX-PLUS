@@ -181,6 +181,17 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
         # ask. No second threshold lives here.
         from core.halt import check as _halt_check
         _halt_check(step, step_index)
+        # THE BOUNDARY OF A STEP THAT NEVER CALLS _run(). 31 of the 75 steps
+        # are inline blocks, so no StepContract is ever opened for them and no
+        # duration was ever recorded — which is how a step could be killed for
+        # exceeding a 900 s ceiling nobody had ever measured it against. beat()
+        # is the one call all 75 make, so the boundary is taken here.
+        # Never raises; costs one span row per step.
+        try:
+            from core import flight_recorder as _fr_b
+            _fr_b.mark_step(step, step_index)
+        except Exception:
+            pass
         from core.brain import attend as _attend
         _said = _attend(step)
     except Exception:
