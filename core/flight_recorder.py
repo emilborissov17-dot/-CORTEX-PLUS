@@ -529,7 +529,12 @@ class span:
         attr = dict(self.attr)
         st = "OK"
         if et is not None:
-            st = "ERROR"
+            # A VOLUNTARY HALT IS NOT AN ERROR, and the morning report must not
+            # colour it like one: nothing failed in this step, the cycle decided
+            # to stop inside it. Recognised by NAME rather than by import — the
+            # recorder must never import the things it records, and core.halt
+            # imports this module.
+            st = "HALTED" if getattr(et, "__name__", "") == "VoluntaryHalt" else "ERROR"
             attr["error_type"] = getattr(et, "__name__", str(et))
             attr["error"] = ("".join(traceback.format_exception_only(et, ev))
                              .strip()[:ERR_CHARS])

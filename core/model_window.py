@@ -76,7 +76,10 @@ OLLAMA_URL = os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434")
 
 # keep_alive values. -1 means "never expire" to Ollama; it is the whole point of
 # the outside-the-window regime — a model that expires is a model that reloads.
-FOREVER = -1
+FOREVER = -1        # still what the window itself uses; see pin_small
+LEASE_MARGIN_SEC = 600      # on top of the largest step ceiling
+LEASE_FALLBACK_SEC = 4200   # only when scheduler.json cannot be read
+_LAST_RENEWAL = 0.0
 BIG_KEEP_ALIVE = "30m"
 
 SMALL_DEFAULT = "qwen2.5:3b"
@@ -176,9 +179,70 @@ def _set_keep_alive(model: str, keep_alive, url: str = OLLAMA_URL,
         return False
 
 
-def pin_small(url: str = OLLAMA_URL) -> bool:
-    """Hold 3b resident with no expiry. The outside-the-window steady state."""
-    return _set_keep_alive(small_model(), FOREVER, url)
+def lease_seconds(cfg_path=None) -> int:
+    """How long a pin may outlive the process that asked for it.
+
+    DERIVED FROM config/scheduler.json, never typed in here. The lease has to
+    outlast the LONGEST a step can legitimately go without beating, or it would
+    expire in the middle of honest work — and the longest such interval is the
+    largest per-step ceiling, which that file already owns and this must not
+    duplicate. The margin on top covers the gap between the last beat before a
+    step and the step itself.
+
+    Today that is 3600s (web_intelligence, internet_intelligence) + 600 = 4200s.
+    If a human raises a ceiling, this follows without anyone remembering to.
+    """
+    import json as _json
+    try:
+        blob = _json.loads((cfg_path or (BASE / "config" / "scheduler.json"))
+                           .read_text(encoding="utf-8"))
+        ceilings = [int(v) for k, v in (blob.get("step_ceilings_sec") or {}).items()
+                    if isinstance(v, (int, float))]
+        return int(max(ceilings) + LEASE_MARGIN_SEC) if ceilings else LEASE_FALLBACK_SEC
+    except Exception:
+        return LEASE_FALLBACK_SEC
+
+
+def pin_small(url: str = OLLAMA_URL, seconds: int | None = None) -> bool:
+    """Hold 3b resident for a LEASE, renewed by every beat while a cycle lives.
+
+    WHAT CHANGED, AND WHAT DID NOT (13 Sep 2026). It used to be keep_alive=-1 and
+    the reasoning for that is intact: outside the window the small model must stay
+    resident, or the load/unload alternation this module exists to prevent comes
+    straight back. While a cycle is alive the model is still held continuously —
+    memory/heartbeat.beat() renews the lease, and a live cycle beats.
+
+    THE DEFECT WAS THAT THE LOAN HAD NO OWNER. Measured: /api/ps showed
+    qwen2.5:3b with expires 2318-12-24 — 292 years — holding 1139 MB of system RSS
+    and 2208 MB of VRAM. Three cycles died today and each left the pin behind, so
+    the next cycle started in memory the dead had not released. The 09:34 catch-up
+    began with 138 MB free and over a gigabyte of that was held by a corpse.
+
+    A lease needs nobody to remember it. That is the whole reason it is a lease
+    and not a flag somebody is supposed to notice.
+    """
+    return _set_keep_alive(small_model(),
+                           int(seconds if seconds is not None else lease_seconds()),
+                           url)
+
+
+def renew_small(url: str = OLLAMA_URL, min_gap_sec: float = 300.0) -> bool:
+    """Extend the lease, at most once every min_gap_sec. Never raises.
+
+    Throttled because beat() runs 75 times a night and an HTTP round trip per beat
+    would be a cost paid for nothing: the lease is over an hour long and renewing
+    it every five minutes keeps it comfortably ahead of any step.
+    """
+    import time as _t
+    global _LAST_RENEWAL
+    now = _t.time()
+    if now - _LAST_RENEWAL < float(min_gap_sec):
+        return False
+    _LAST_RENEWAL = now
+    try:
+        return bool(pin_small(url))
+    except Exception:
+        return False
 
 
 def release_big(url: str = OLLAMA_URL) -> bool:

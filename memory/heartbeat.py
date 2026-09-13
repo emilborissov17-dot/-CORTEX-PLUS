@@ -160,6 +160,27 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
         pass
 
     try:
+        # THE LEASE IS RENEWED BY THE LIVING. beat() is the one gate all 75 steps
+        # pass, which is why the brain was hung here too. A cycle that is alive
+        # renews its hold on the small model; a cycle that has died stops renewing
+        # and the hold expires on its own, with nobody having to remember it.
+        # Throttled inside renew_small, and it never raises.
+        try:
+            from core.model_window import renew_small as _renew
+            _renew()
+        except Exception:
+            pass
+        # THE THIRD STATE. Until today a cycle either finished or was killed, so
+        # one bad minute at step 48 threw away two hours and left a record saying
+        # only "died". beat() is the one gate all 75 steps pass, so it is where
+        # the cycle finds out it should stop. VoluntaryHalt is a BaseException on
+        # purpose: _run catches Exception, and it would otherwise swallow the
+        # decision and walk the cycle into memory that is not there.
+        #
+        # The line is core/homeostasis — the same gate the supervisor and the boot
+        # ask. No second threshold lives here.
+        from core.halt import check as _halt_check
+        _halt_check(step, step_index)
         from core.brain import attend as _attend
         _said = _attend(step)
     except Exception:

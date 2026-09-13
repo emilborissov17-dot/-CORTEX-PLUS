@@ -1149,6 +1149,37 @@ def refusals_today(state, today) -> int:
     return int((state.get("refusals") or {}).get(today, 0))
 
 
+def _release_after_death(cycle_id=None) -> dict:
+    """A dead cycle's model hold is released by the one process still alive.
+
+    ORDER MATTERS AND IT IS THE POINT. The supervisor is what writes CYCLE_DIED,
+    so it is standing right there at the only moment when the corpse's loan is
+    known to be a corpse's. Releasing here, before any later tick reads memory,
+    turns "I refuse to spawn because a dead cycle is holding 1.1 GB" into "I
+    cleaned up after the dead cycle and then spawned".
+
+    The lease added to model_window covers the same failure on a longer timescale
+    — an hour and ten minutes — and that is not fast enough on its own: today's
+    collapse took fifteen minutes from the first death to an exhausted budget.
+    The lease is what saves an unattended machine; this is what saves the night.
+
+    Uses the release built for cure_refusal, with its own guards intact: it does
+    nothing while the 8b window is open, and nothing if that cannot be read.
+    """
+    try:
+        from core.aggressive_cleanup import release_ollama
+        rec = release_ollama(apply=True)
+        if rec.get("released"):
+            log(f"released the dead cycle's model hold ({', '.join(rec['released'])}); "
+                f"free {rec.get('ram_free_mb_before')} -> {rec.get('ram_free_mb_after')} MB")
+        elif rec.get("skipped"):
+            log(f"model hold NOT released after death: {rec['skipped']}")
+        return rec
+    except Exception as e:                                   # noqa: BLE001
+        log(f"model release after death unavailable ({type(e).__name__}: {e})")
+        return {"error": str(e)}
+
+
 def memory_allows_spawn(now, cfg, assess=None, clean=None) -> tuple:
     """(allowed, info) — ask the GATE'S OWN verdict before spawning anything.
 
@@ -1916,6 +1947,8 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         ledger.record_death(cycle_id=action.cycle_id or "unknown",
                             pid=action.pid or -1, last_step=action.wedged_step,
                             detail=action.reason)
+        # The corpse lets go of the model before anything else reads the memory.
+        _release_after_death(action.cycle_id)
         # Ring BEFORE the lock is cleared and the state is rewritten: the facts
         # sent are the facts just written to the ledger, not a re-derivation of
         # them after the surrounding state has moved on.

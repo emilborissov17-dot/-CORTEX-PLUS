@@ -29,6 +29,17 @@ from datetime import datetime, timezone, timedelta
 # there before the first real run. A recorder that records test collection is
 # recording the wrong process.
 _fr = None
+# What the halt handler needs to name the moment. Filled in as the cycle learns
+# them; a halt before either is known still records, with None, rather than not
+# recording at all.
+_CYCLE_ID_FOR_HALT = None
+_STEPS_DONE_FOR_HALT = [0]
+try:
+    from core.halt import VoluntaryHalt as _VoluntaryHalt
+except Exception:                     # noqa: BLE001
+    class _VoluntaryHalt(BaseException):
+        """Never raised when core.halt is missing; the except clause stays valid."""
+
 if __name__ == "__main__":
     try:
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
@@ -121,6 +132,7 @@ def _close_open_step() -> None:
 
 
 def beat(step, step_index=None, cycle_id=None):
+    _STEPS_DONE_FOR_HALT[0] += 1
     """Границата на стъпка: затвори предишната на запис, после обяви новата."""
     # ── THE DURABILITY BARRIER (23 Aug 2026) ──────────────────────────────
     # core/durable.py lets the two high-frequency writers — llm_provenance
@@ -332,6 +344,7 @@ def _classify_cycle_id(env_id):
             _sealed = LAST_CYCLE_ID.read_text(encoding="utf-8").strip() or None
         except Exception:
             _sealed = None
+        globals()["_CYCLE_ID_FOR_HALT"] = cid
         if _fr is not None:
             # The trace takes the cycle's name here; the buffered rows from the
             # import phase are replayed into the file as soon as it has one.
@@ -4280,6 +4293,26 @@ if __name__ == "__main__":
             with _lidaction_guard():
                 try:
                     main()
+                except _VoluntaryHalt as _halt:
+                    # STOPPED ON PURPOSE, NOT DEAD. The distinction is the whole
+                    # feature: a death costs a restart from a budget of two and
+                    # makes the supervisor try again immediately into the same
+                    # wall. A halt says where it stopped, keeps everything already
+                    # written, and lets the next run continue from there.
+                    from core import halt as _halt_mod
+                    _halt_mod.record(_halt, cycle_id=_CYCLE_ID_FOR_HALT,
+                                     steps_done=_STEPS_DONE_FOR_HALT[0])
+                    try:
+                        from memory.heartbeat import retire as _hb_retire
+                        _hb_retire(f"halted at {_halt.step}: {_halt.reason}",
+                                   by="cycle:voluntary_halt")
+                    except Exception:
+                        pass
+                    try:
+                        LOCK_PATH.unlink(missing_ok=True)
+                    except Exception:
+                        pass
+                    raise SystemExit(_halt_mod.HALT_EXIT_CODE)
                 except KeyboardInterrupt:
                     _clear_heartbeat()
                     _note_boot_abort("прекъснат от човек (Ctrl+C) — пулсът е изчистен, "

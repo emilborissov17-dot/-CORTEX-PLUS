@@ -142,7 +142,7 @@ def fold(rows: list) -> dict:
         if n.startswith("step:"):
             canon = _canonical(n[5:])
             ms_by_step[canon] += int(s.get("ms") or 0)
-            if s.get("st") == "ERROR" or canon not in status_by_step:
+            if s.get("st") in ("ERROR", "HALTED") or canon not in status_by_step:
                 status_by_step[canon] = s.get("st", "UNSET")
 
     files_by_step = defaultdict(lambda: defaultdict(int))
@@ -296,7 +296,7 @@ def md(f: dict, trace: Path) -> str:
 
 HTML_CSS = """
 :root{--bg:#fbfbfa;--fg:#1d1d1b;--line:#d8d8d4;--ok:#4a7c59;--err:#a4383a;
---unset:#8a8a86;--ev:#c8a24a;--band:#eeeeea}
+--unset:#8a8a86;--halt:#3d6b8c;--ev:#c8a24a;--band:#eeeeea}
 *{box-sizing:border-box}
 body{margin:0;padding:0 16px 48px;background:var(--bg);color:var(--fg);
 font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -305,7 +305,7 @@ h1{font-size:17px;margin:20px 0 4px}
 .row{position:relative;height:20px;margin:1px 0}
 .bar{position:absolute;height:16px;border-radius:2px;color:#fff;font-size:11px;
 line-height:16px;padding:0 5px;overflow:hidden;white-space:nowrap}
-.OK{background:var(--ok)} .ERROR{background:var(--err)} .UNSET{background:var(--unset)}
+.OK{background:var(--ok)} .ERROR{background:var(--err)} .UNSET{background:var(--unset)} .HALTED{background:var(--halt)}
 .open{background:repeating-linear-gradient(45deg,var(--err),var(--err) 5px,#c05a5c 5px,#c05a5c 10px)}
 .tick{position:absolute;width:2px;height:16px;background:var(--ev);opacity:.75;top:2px}
 .axis{position:relative;height:22px;border-bottom:1px solid var(--line);margin-bottom:6px}
@@ -346,7 +346,7 @@ def html_page(f: dict, trace: Path) -> str:
            f"{len(f['spans'])} spans &middot; {len(f['evs'])} events &middot; "
            f"wall clock {f['last_t']:.0f}s</div>",
            "<div class=legend>"
-           "<i class=OK></i>OK<i class=ERROR></i>ERROR<i class=UNSET></i>UNSET"
+           "<i class=OK></i>OK<i class=ERROR></i>ERROR<i class=HALTED></i>HALTED (stopped on purpose)<i class=UNSET></i>UNSET"
            "<i class=open></i>open with no span (died inside)"
            "<i style='background:var(--ev)'></i>event</div>",
            "<div class=axis>"]

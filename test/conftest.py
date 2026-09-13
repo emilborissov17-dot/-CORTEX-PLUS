@@ -143,6 +143,13 @@ _NEUTRALISED = (
     ("core.notary", "attest", lambda *a, **k: None),
     ("core.self_diagnosis", "diagnose", lambda *a, **k: {"cause": "MOCKED_IN_TESTS"}),
     ("core.phase_tracker", "on_beat", lambda *a, **k: None),
+    # ADDED 13 Sep 2026 with core/halt.py. beat() now asks the survival gate
+    # and raises VoluntaryHalt when the machine is starved. That is right in
+    # a cycle and wrong in a unit test: test_beat_writes_step_and_pid failed
+    # the moment the real machine dropped under the gate, which says nothing
+    # about beat() and everything about the room it was run in. The halt has
+    # its own tests, which call it directly.
+    ("core.halt", "check", lambda *a, **k: None),
 )
 
 
