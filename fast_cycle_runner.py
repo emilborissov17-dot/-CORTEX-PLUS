@@ -22,14 +22,22 @@ from datetime import datetime, timezone, timedelta
 # It is stdlib-only and never raises out of its own hooks. If it cannot start,
 # the cycle proceeds unrecorded rather than not at all — an observer that can
 # stop the thing it observes has failed at being an observer.
-try:
-    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-    from core import flight_recorder as _fr
-    _fr.start()
-except Exception as _fr_e:            # noqa: BLE001
-    _fr = None
-    print(f"[FAST_CYCLE] flight recorder did not start: "
-          f"{type(_fr_e).__name__}: {_fr_e}")
+# ONLY WHEN THIS FILE IS THE CYCLE, never on import. Found within the hour:
+# several tests import fast_cycle_runner to parse it, each import started a
+# recorder that nobody adopted, and thirty seconds later its fallback timer wrote
+# a provisional trace into the LIVE memory/cycle_trace. Six of them were sitting
+# there before the first real run. A recorder that records test collection is
+# recording the wrong process.
+_fr = None
+if __name__ == "__main__":
+    try:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+        from core import flight_recorder as _fr
+        _fr.start()
+    except Exception as _fr_e:        # noqa: BLE001
+        _fr = None
+        print(f"[FAST_CYCLE] flight recorder did not start: "
+              f"{type(_fr_e).__name__}: {_fr_e}")
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
