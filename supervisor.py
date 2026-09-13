@@ -1149,6 +1149,130 @@ def refusals_today(state, today) -> int:
     return int((state.get("refusals") or {}).get(today, 0))
 
 
+def memory_allows_spawn(now, cfg, assess=None, clean=None) -> tuple:
+    """(allowed, info) — ask the GATE'S OWN verdict before spawning anything.
+
+    WHY THIS IS HERE AND NOT IN THE CHILD. 13 Sep 2026, from the ledger:
+
+        07:54  CYCLE_DIED
+        07:59  MISSED_RUN_CATCHUP  -> spawned with 2283 MB free -> died 09:29
+        09:34  MISSED_RUN_CATCHUP  -> spawned with  138 MB free -> died 09:49
+        09:49  CYCLE_FAILED_BUDGET_EXHAUSTED
+
+    The child DOES carry the gate, at fast_cycle_runner.py:2571. It never reached
+    it. The trace of the 09:34 run shows the process dying eight seconds in, at
+    core/brain.py:409 asking a language model for commentary on the boot
+    heartbeat, with 46.7 MB free — 127 lines before anything read the memory. A
+    gate the process cannot survive long enough to consult is not a gate.
+
+    THE THRESHOLD IS NOT DUPLICATED. This calls core/homeostasis.assess() and
+    reads its can_start. The number 92 exists in exactly one place, in a protected
+    file, and this function does not know what it is. If the gate's rule changes,
+    this changes with it and nobody has to remember.
+
+    THIS CAN ONLY NARROW. It may stop a spawn; it can never cause one. The
+    README's own words: "a system that can widen its own restart budget has no
+    restart budget."
+
+    FAIL-OPEN, deliberately. If homeostasis cannot be imported or raises, the
+    answer is "allowed". An unreadable sensor must not silently become a refusal
+    to run at all — that would turn a broken import into a system that never wakes
+    up, which is worse than the failure it guards against.
+    """
+    def _ask():
+        try:
+            if assess is not None:
+                return assess()
+            from core.homeostasis import assess as _a
+            return _a(verbose=False) or {}
+        except Exception as e:                                   # noqa: BLE001
+            return {"can_start": True, "_unavailable": f"{type(e).__name__}: {e}"}
+
+    # The numbers below are for the RECORD, not for the decision. assess() does
+    # not return its hardware reading, only a verdict and a sentence, and a refusal
+    # nobody can check afterwards is a refusal nobody will trust. psutil is read
+    # here to write down what the moment looked like; it decides nothing, and the
+    # threshold stays where it is.
+    def _seen():
+        try:
+            import psutil
+            v = psutil.virtual_memory()
+            return {"ram_free_mb": round(v.available / 1048576.0, 1),
+                    "ram_percent": v.percent}
+        except Exception:
+            return {"ram_free_mb": None, "ram_percent": None}
+
+    before = _ask()
+    if before.get("_unavailable"):
+        return True, {"verdict": "gate unavailable, failing open",
+                      "detail": before["_unavailable"], "seen": _seen()}
+    info = {"before": {"can_start": bool(before.get("can_start")),
+                       "abort_reason": before.get("abort_reason"),
+                       **_seen()}}
+    if before.get("can_start"):
+        info["verdict"] = "the gate allows the start"
+        return True, info
+
+    # CLEANING BEFORE THE REFUSAL — the same order Emil approved on 27 Aug, and the
+    # same helper. A refusal that cleaning cured is not a refusal.
+    try:
+        if clean is not None:
+            clean()
+        else:
+            from core.aggressive_cleanup import cure_refusal
+            cure_refusal(apply=True)
+        info["cleaned"] = True
+    except Exception as e:                                       # noqa: BLE001
+        info["cleaned"] = False
+        info["clean_error"] = f"{type(e).__name__}: {e}"
+
+    after = _ask()
+    info["after"] = {"can_start": bool(after.get("can_start")),
+                     "abort_reason": after.get("abort_reason"), **_seen()}
+    if after.get("can_start"):
+        info["verdict"] = "cleaning cured it; nothing is charged because nothing " \
+                          "was refused in the end"
+        return True, info
+    info["verdict"] = "the gate still refuses after cleaning"
+    return False, info
+
+
+def _memory_refusal_action(now, cfg, state, info) -> Action:
+    """Charge a REFUSAL, never a restart, and do not satisfy the day.
+
+    A refusal is not a death — that separation is why the two budgets exist, and
+    today it did nothing because memory never entered it. The day is left
+    UNSATISFIED on purpose: the next tick may find the machine recovered and start
+    normally, which is the whole difference between "not now" and "not tonight".
+    """
+    night = cycle_day(now, cfg)
+    used = refusals_today(state, night)
+    budget = refusal_budget(cfg)
+    reason = (f"REFUSED BEFORE SPAWN: {info.get('verdict')} — "
+              f"{(info.get('after') or info.get('before') or {}).get('abort_reason')}")
+    if used >= budget:
+        state["survival_sleep"] = {
+            "since": datetime.now(timezone.utc).isoformat(), "night": night,
+            "refusals": used, "budget": budget,
+            "until": f"the next {int(cfg.get('daily_hour', 3)):02d}:00",
+            "reason": reason, "memory": info,
+        }
+        save_state(state)
+        log(f"{reason}; {used}/{budget} refusals for the night of {night} — "
+            f"SURVIVAL SLEEP, no further attempt until the next "
+            f"{int(cfg.get('daily_hour', 3)):02d}:00")
+        return Action(SURVIVAL_SLEEP, reason=reason,
+                      details={"refusals_used": used, "refusal_budget": budget,
+                               "night": night, "memory": info})
+    state.setdefault("refusals", {})[night] = used + 1
+    save_state(state)
+    log(f"{reason}; refusal {used + 1}/{budget} for the night of {night} — "
+        f"NOT spawning, and NOT charging a restart. The day stays owed.")
+    return Action(NOTHING, reason=reason,
+                  details={"refusals_used": used + 1, "refusal_budget": budget,
+                           "night": night, "memory": info})
+
+
 def _refused_cycle_action(now, state, today, cfg, lock) -> Action:
     """A stale lock behind a refusal: clear it, write nothing, owe the night.
 
@@ -1862,6 +1986,14 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         return action
 
     if action.kind in (START, CATCHUP):
+        # THE MACHINE IS ASKED BEFORE THE NIGHT IS SPENT. Everything above this
+        # line is bookkeeping about time — the lock, the budget, the schedule, the
+        # grace window — and none of it knows whether the machine can hold a
+        # cycle. On 13 Sep 2026 that gap spawned into 138 MB of free memory and
+        # spent the restart budget in fifteen minutes.
+        _mem_ok, _mem = memory_allows_spawn(now, cfg)
+        if not _mem_ok:
+            return _memory_refusal_action(now, cfg, state, _mem)
         cycle_id = now.isoformat()
         pid = spawn_cycle(cycle_id)
         if pid is None:

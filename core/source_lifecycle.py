@@ -82,6 +82,136 @@ CONTRADICTION_TOLERANCE = 0.25
 # too unstable for its next reading to mean anything.
 CHAOS_CV = 0.5
 
+# ── BOOTSTRAP: TRUST THAT WAS ENTERED, NOT EARNED — AND NOW EXPIRES ──────────
+#
+# Measured 13 Sep 2026: of 20 TRUSTED sources, 18 carry clean_streak 0 and
+# cv 0.000. They did not pass the gate below; they were written in as trusted.
+# Only four sources in the whole register have ever accumulated a streak.
+#
+# THE ENTERED TRUST IS NOT DELETED, and that decision is the point. Deleting it
+# leaves twenty candidates and no criterion for any of them — the register would
+# lose what little it knows in exchange for tidiness. Instead the grant becomes a
+# CONTRACT WITH AN END DATE: who granted it, when, on what grounds, and until
+# when. Unrenewed, it lapses to CANDIDATE automatically, and the source then asks
+# for trust by the same means as everyone else — just with a running start.
+#
+# WHY EXPIRY AND NOT A REVIEW FLAG. A flag needs somebody to look at it, and the
+# whole finding of this week is that nobody looks: six machines wrote their own
+# failure honestly and none of the sentences were read. An expiry needs nobody.
+# The default outcome of being ignored is losing the privilege, which is the only
+# direction that is safe when the reader is absent.
+#
+# THE FORBIDDEN FALLBACK is renewing on activity. A source that keeps answering is
+# not thereby trustworthy — 326 of the 435 ledger events are refusals from sources
+# that answered something. Renewal is an act with a name attached, or it is expiry.
+
+BOOTSTRAP_DAYS = 90
+
+
+def _parse_ts(s):
+    from datetime import datetime, timezone
+    try:
+        d = datetime.fromisoformat(str(s).replace("Z", "+00:00"))
+        return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
+def grant_bootstrap(rec: dict, by: str, because: str,
+                    days: int = BOOTSTRAP_DAYS) -> dict:
+    """Write the grant onto a record that is TRUSTED without having earned it."""
+    from datetime import datetime, timezone, timedelta
+    now = datetime.now(timezone.utc)
+    rec["bootstrap"] = {"granted_at": now.isoformat(), "granted_by": str(by),
+                        "because": str(because),
+                        "valid_until": (now + timedelta(days=int(days))).isoformat(),
+                        "renewals": rec.get("bootstrap", {}).get("renewals", 0)}
+    return rec
+
+
+def bootstrap_expired(rec: dict, now=None) -> bool:
+    """True when a grant exists and its date has passed. No grant is not expiry."""
+    from datetime import datetime, timezone
+    b = (rec or {}).get("bootstrap")
+    if not isinstance(b, dict):
+        return False
+    until = _parse_ts(b.get("valid_until"))
+    if until is None:
+        return True                      # a grant with no end date is not a grant
+    return (now or datetime.now(timezone.utc)) > until
+
+
+def earned(rec: dict) -> bool:
+    """Did this source reach TRUSTED through the gate, rather than by being entered?"""
+    return bool(rec) and int(rec.get("clean_streak") or 0) >= PROMOTE_AFTER
+
+
+def expire_bootstraps(state: dict | None = None, now=None,
+                      ledger: pathlib.Path | None = None) -> list:
+    """Lapse every expired grant to CANDIDATE. Returns what moved, with reasons.
+
+    A source that has EARNED its streak in the meantime keeps TRUSTED and simply
+    loses the grant: the grant was a loan against evidence that has since arrived.
+    """
+    own = state is None
+    st = load() if own else state
+    moved = []
+    for sid, rec in st.items():
+        if not isinstance(rec, dict) or not rec.get("bootstrap"):
+            continue
+        if not bootstrap_expired(rec, now):
+            continue
+        if earned(rec):
+            rec.pop("bootstrap", None)
+            moved.append({"source_id": sid, "was": rec.get("state"),
+                          "now": rec.get("state"), "why": "grant lapsed, but the "
+                          "streak was earned in the meantime"})
+            continue
+        was = rec.get("state")
+        rec["state"] = CANDIDATE
+        rec["demoted_at"] = _now()
+        rec["bootstrap_lapsed_at"] = _now()
+        moved.append({"source_id": sid, "was": was, "now": CANDIDATE,
+                      "why": f"bootstrap granted {rec['bootstrap'].get('granted_at')} "
+                             f"expired {rec['bootstrap'].get('valid_until')} unrenewed"})
+        log({"source_id": sid, "event": "bootstrap_lapsed",
+             "was": was, "now": CANDIDATE,
+             "bootstrap": rec.get("bootstrap")}, ledger)
+    if own and moved:
+        save(st)
+    return moved
+
+
+def backfill_bootstraps(state: dict | None = None, by: str = "unknown",
+                        days: int = BOOTSTRAP_DAYS) -> list:
+    """Mark every TRUSTED record that never earned its streak as a bootstrap grant.
+
+    WHO granted it is honestly recorded as unknown: the register carries no
+    author for these rows, and inventing one would be the same kind of fiction
+    the grant itself is. What IS recorded is the evidence that it was entered —
+    the streak and the cv at the moment of backfill.
+    """
+    own = state is None
+    st = load() if own else state
+    done = []
+    for sid, rec in st.items():
+        if not isinstance(rec, dict) or rec.get("state") != TRUSTED:
+            continue
+        if earned(rec) or rec.get("bootstrap"):
+            continue
+        grant_bootstrap(rec, by, (
+            f"entered as TRUSTED before the bootstrap contract existed; at backfill "
+            f"clean_streak={rec.get('clean_streak', 0)} cv={rec.get('cv')} "
+            f"observations={rec.get('observations', 0)} — it did not pass the gate"),
+            days)
+        done.append({"source_id": sid, "clean_streak": rec.get("clean_streak", 0),
+                     "cv": rec.get("cv"),
+                     "valid_until": rec["bootstrap"]["valid_until"]})
+    if own and done:
+        save(st)
+    return done
+
+
 WINDOW = PROMOTE_AFTER
 
 

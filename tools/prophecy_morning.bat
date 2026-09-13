@@ -63,12 +63,33 @@ call :step "self_forecast --predict" "%PY% experiments\prophecy\self_forecast.py
 REM --- daily_tier BEFORE the world loop: keep tonight's global_indicators fetch as
 REM --- dated observations (AGI-5). The world loop reads this tier; before it, the
 REM --- daily leaves were fetched every night and overwritten every night.
+REM --- The years behind every axis (Emil, 11 Sep 2026): World Bank + NOAA annual series,
+REM --- oldest to last, into memory\axis_history_annual.json (own file; never the learner).
+call :step "axis_backfill"          "%PY% core\axis_backfill.py"                           yes
 call :step "daily_tier"             "%PY% core\daily_tier.py"                              no
 call :step "world_forecast --score"   "%PY% experiments\prophecy\world_forecast.py --score"     yes
 call :step "world_forecast --predict" "%PY% experiments\prophecy\world_forecast.py --predict"   yes
 call :step "scoreboard --write"      "%PY% experiments\prophecy\scoreboard.py --write"          no
+rem The reader goes FIRST: six machines wrote their failure honestly on 13 Sep
+rem 2026 and nobody read one of them. A log nobody reads is a log that is not kept.
+call :step "morning_read"          "%PY% tools\morning_read.py"                              no
 call :step "card_intake"            "%PY% core\card_intake.py"                                no
 call :step "verified_corpus"        "%PY% training\verified_corpus.py"                       no
+REM --- E1 (11 Sep 2026): does knowing the other daily series help? transfer A->B and
+REM --- the learning curve k=10/20/40/80, walk-forward, against persistence (points 1, 3).
+call :step "cross_series_bench"     "%PY% experiments\prophecy\cross_series_bench.py --write" yes
+REM --- E3 (11 Sep 2026): the BRAIN (qwen3:8b) proposes inputs for the direction learner;
+REM --- the EXAM keeps an input only if it improves direction on unseen days (>= 2 SE).
+call :step "feature_proposals"      "%PY% core\feature_proposals.py"                         yes
+REM --- Point 13 probe: the same two numbers, mirrored across the line, and a date
+REM --- change; the verdict must follow the number and only the number (#61).
+call :step "counterfactual_probe"   "%PY% core\counterfactual_probe.py"                       yes
+REM --- Which cloud mind goes first, by measurement (11 Sep 2026): provenance + probe ->
+REM --- memory\backend_order_measured.json, read by core\groq_backend.py tonight.
+call :step "backend_league"         "%PY% scripts\backend_league.py --write"                  no
+REM --- LAST: the 14 AGI points as numbers, read from everything above (11 Sep 2026,
+REM --- Claude accountable). A number that cannot be read is "-" with a reason.
+call :step "agi_scoreboard"         "%PY% scripts\agi_scoreboard.py --write"                  no
 
 echo.
 if defined FAILED (

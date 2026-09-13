@@ -70,6 +70,193 @@ KIND_RULES = {
     "http_gdelt_tone":  {"location": "url",  "rule": None},   # fixed payload shape
 }
 
+
+# ── THE REGISTRATION CONTRACT, SECOND HALF: cadence and provenance ───────────
+#
+# The rules above answer "can this be fetched at all". They cannot answer the two
+# questions that turned out to matter more:
+#
+#   how often does this number legitimately change?
+#   who actually MEASURED it, as opposed to who handed it to us?
+#
+# Neither had a field anywhere in the repo, and the cost is measured, not feared.
+# 62 series entered the daily tier; 49 of them have never once changed, because
+# they are annual figures stamped with today's date. A flat row is not an empty
+# defect — it passes five clean observations with CV 0, becomes TRUSTED, and then
+# the April revision lands and the machine calls a correct number a lie. The input
+# defect is first rewarded and then punished.
+#
+# CADENCE IS DECLARED, NEVER INFERRED. Inferring it from the data is exactly the
+# trap: an annual series read daily looks perfectly stable, so any inference would
+# conclude "daily and remarkably steady" — the wrong answer with high confidence.
+# A source that does not declare its cadence is not assumed to be daily. It is
+# refused entry to the daily tier, and says so.
+
+CADENCE_DAILY, CADENCE_WEEKLY = "daily", "weekly"
+CADENCE_MONTHLY, CADENCE_ANNUAL = "monthly", "annual"
+CADENCE = (CADENCE_DAILY, CADENCE_WEEKLY, CADENCE_MONTHLY, CADENCE_ANNUAL)
+_CADENCE_DAYS = {CADENCE_DAILY: 1, CADENCE_WEEKLY: 7,
+                 CADENCE_MONTHLY: 30, CADENCE_ANNUAL: 365}
+
+# The entry rule for the daily tier: cadence <= one day. Everything slower belongs
+# in the slow layer and is judged against its declared revision calendar instead.
+DAILY_TIER_MAX_DAYS = 1
+
+# What a registered source must carry BESIDES its fetch rule.
+#   axis            which axis it feeds
+#   key             EXACTLY the key the composer already uses for this quantity —
+#                   a second sensor filed under a different name is never compared
+#                   with the first, and source_lifecycle's contradiction branch has
+#                   therefore never executed once in 435 ledger events
+#   cadence         one of CADENCE, declared
+#   primary_source  who MEASURED it: NOAA, USGS, World Bank, WHO — an organisation,
+#                   never a URL. Two aggregators of one primary source are one
+#                   witness wearing two coats
+#   unit            because a ppm/ppb swap is a factor of 1000 and looks like news
+PROVENANCE_REQUIRED = ("axis", "key", "cadence", "primary_source", "unit")
+
+# Not required, and each absence means something specific rather than nothing.
+#   aggregator         who relays it, when we are not reading the primary directly
+#   revision_calendar  when it legitimately revises (the WDI: April and September).
+#                      Without it, every revision reads as a contradiction.
+PROVENANCE_OPTIONAL = ("aggregator", "revision_calendar")
+
+
+def cadence_days(entry) -> "int | None":
+    """Days between legitimate changes, or None when nothing was declared."""
+    c = str((entry or {}).get("cadence") or "").strip().lower()
+    return _CADENCE_DAYS.get(c)
+
+
+def missing_provenance(entry) -> list:
+    """Which contract fields this source does not carry. Order is stable."""
+    e = entry or {}
+    out = []
+    for field in PROVENANCE_REQUIRED:
+        v = e.get(field)
+        if v is None or not str(v).strip():
+            out.append(field)
+        elif field == "cadence" and str(v).strip().lower() not in CADENCE:
+            out.append("cadence=" + str(v)[:20] + " (not one of " + "|".join(CADENCE) + ")")
+    return out
+
+
+def may_enter_daily_tier(entry) -> tuple:
+    """(allowed, reason). A refusal always says which field decided it.
+
+    THE FORBIDDEN FALLBACK is defaulting an undeclared cadence to daily. That is
+    how 49 annual figures got a fresh date every night. Undeclared means refused,
+    and the reason names the missing field so somebody can add it.
+    """
+    e = entry or {}
+    days = cadence_days(e)
+    if days is None:
+        raw = str(e.get("cadence") or "").strip()
+        return False, ("no cadence declared" if not raw
+                       else f"cadence {raw!r} is not one of {'|'.join(CADENCE)}")
+    if days > DAILY_TIER_MAX_DAYS:
+        return False, (f"cadence {e.get('cadence')} changes every ~{days}d; the daily "
+                       f"tier takes <= {DAILY_TIER_MAX_DAYS}d. It belongs in the slow "
+                       f"layer, judged against its revision calendar")
+    return True, "daily cadence declared"
+
+
+def rejection_reason(entry) -> "str | None":
+    """The reason the quiet phase should print instead of 'constant_series'.
+
+    'constant_series' reads as a property of the world: this number did not move.
+    'annual value stamped daily' reads as what it is: a defect at the input. The
+    two are not the same finding and must not share a name.
+    """
+    ok, why = may_enter_daily_tier(entry)
+    if ok:
+        return None
+    if cadence_days(entry) and cadence_days(entry) > DAILY_TIER_MAX_DAYS:
+        return "annual value stamped daily" if entry.get("cadence") == CADENCE_ANNUAL \
+            else f"{entry.get('cadence')} value stamped daily"
+    return "cadence undeclared"
+
+
+# ── measuring the registers we already have against the contract ─────────────
+
+def _iter_registered() -> list:
+    """Every source record this repo holds today, from all three registers.
+
+    Read-only, and deliberately across all three: the contract is worth nothing if
+    it only describes the register that happens to be easiest to fix.
+    """
+    import json as _json
+    out = []
+
+    seed = BASE / "config" / "openclaw_sources.json"
+    try:
+        for s in (_json.loads(seed.read_text(encoding="utf-8")).get("sources") or []):
+            out.append(("config/openclaw_sources.json", dict(s)))
+    except Exception:
+        pass
+
+    specs = BASE / "config" / "composer_specs.json"
+    try:
+        blob = _json.loads(specs.read_text(encoding="utf-8"))
+        for axis, spec in blob.items():
+            if axis == "_meta" or not isinstance(spec, dict):
+                continue
+            for slot, body in (spec.get("portfolio") or {}).items():
+                for s in (body.get("sources") or []):
+                    e = dict(s)
+                    e.setdefault("axis", axis)
+                    e.setdefault("primary_source", e.get("org"))
+                    e.setdefault("slot", slot)
+                    out.append(("config/composer_specs.json", e))
+    except Exception:
+        pass
+
+    disc = BASE / "memory" / "discovered_data_sources.json"
+    try:
+        blob = _json.loads(disc.read_text(encoding="utf-8"))
+        for axis, body in blob.items():
+            if not isinstance(body, dict):
+                continue
+            for s in (body.get("sources") or []):
+                e = dict(s)
+                e.setdefault("axis", axis)
+                e.setdefault("primary_source", e.get("org"))
+                out.append(("memory/discovered_data_sources.json", e))
+    except Exception:
+        pass
+    return out
+
+
+def contract_report() -> dict:
+    """How far every registered source is from the contract. Counts, and names."""
+    import collections
+    rows = _iter_registered()
+    per_field = collections.Counter()
+    per_register = collections.defaultdict(lambda: {"n": 0, "complete": 0})
+    complete, incomplete = [], []
+    for register, e in rows:
+        miss = missing_provenance(e)
+        per_register[register]["n"] += 1
+        if miss:
+            for m in miss:
+                per_field[m.split("=")[0]] += 1
+            incomplete.append({"register": register, "axis": e.get("axis"),
+                               "id": e.get("id") or e.get("key") or e.get("url"),
+                               "missing": miss})
+        else:
+            per_register[register]["complete"] += 1
+            complete.append({"register": register, "axis": e.get("axis"),
+                             "id": e.get("id") or e.get("key"),
+                             "cadence": e.get("cadence")})
+    allowed = sum(1 for _r, e in rows if may_enter_daily_tier(e)[0])
+    return {"total": len(rows), "complete": len(complete),
+            "incomplete": len(incomplete),
+            "missing_by_field": dict(per_field.most_common()),
+            "by_register": {k: dict(v) for k, v in per_register.items()},
+            "may_enter_daily_tier": allowed,
+            "complete_rows": complete, "incomplete_rows": incomplete}
+
+
 _MAX_DEPTH = 6
 
 # Function words only. It is tempting to also strip "count", "value", "total", "rate",
@@ -575,5 +762,18 @@ if __name__ == "__main__":
             print("  nothing to restore — no candidate carries the no-parsing-rule marker")
         if res.get("error"):
             print(f"  ERROR {res['error']}")
+    elif "--contract" in sys.argv:
+        rep = contract_report()
+        print("REGISTRATION CONTRACT — cadence and provenance")
+        print(f"  sources registered anywhere : {rep['total']}")
+        print(f"  carry the whole contract    : {rep['complete']}")
+        print(f"  incomplete                  : {rep['incomplete']}")
+        print(f"  may enter the daily tier    : {rep['may_enter_daily_tier']}")
+        print("  missing, by field:")
+        for f, n in rep["missing_by_field"].items():
+            print(f"      {f:18s} missing in {n}")
+        print("  by register:")
+        for r, v in rep["by_register"].items():
+            print(f"      {r:38s} {v['complete']}/{v['n']} complete")
     else:
         print(__doc__)
