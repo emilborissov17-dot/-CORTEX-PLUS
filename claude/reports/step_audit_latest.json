@@ -1,6 +1,6 @@
 {
- "ts": "2026-09-12T20:28:34+00:00",
- "steps": 74,
+ "ts": "2026-09-13T06:17:47+00:00",
+ "steps": 75,
  "reviewed": 6,
  "unscheduled_producers": [
   {
@@ -146,7 +146,7 @@
    ]
   }
  ],
- "unreviewed": 68,
+ "unreviewed": 69,
  "orphans": 7,
  "stale": 20,
  "no_module": 32,
@@ -180,12 +180,6 @@
    "line": 149,
    "target": "tmp",
    "code": "tmp.write(...)"
-  },
-  {
-   "file": "test/test_consolidation_gates.py",
-   "line": 34,
-   "target": "p",
-   "code": "p.write(...)"
   },
   {
    "file": "test/test_consult_free_only.py",
@@ -924,7 +918,7 @@
     {
      "path": "config/model_window.json",
      "owner": "core/model_window.py",
-     "age_hours": 518.5,
+     "age_hours": 528.3,
      "readers": {
       "live": [
        "core/cycle_profile.py",
@@ -945,7 +939,7 @@
     {
      "path": "memory/model_window.json",
      "owner": "core/model_window.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_profile.py",
@@ -964,7 +958,7 @@
     {
      "path": "memory/step_callmap.json",
      "owner": "core/step_contract.py",
-     "age_hours": 536.6,
+     "age_hours": 546.4,
      "readers": {
       "live": [
        "scripts/step_callmap.py"
@@ -982,7 +976,7 @@
     {
      "path": "memory/step_contract_baseline.json",
      "owner": "core/step_contract.py",
-     "age_hours": 2.0,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_integrity.py",
@@ -1000,7 +994,7 @@
     {
      "path": "memory/step_contract_latest.json",
      "owner": "core/step_contract.py",
-     "age_hours": 2.0,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -1043,7 +1037,7 @@
     {
      "path": "memory/backend_order_measured.json",
      "owner": "core/groq_backend.py",
-     "age_hours": 10.8,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -1061,7 +1055,7 @@
     {
      "path": "config/homeostasis.json",
      "owner": "core/homeostasis.py",
-     "age_hours": 489.3,
+     "age_hours": 499.1,
      "readers": {
       "live": [
        "core/brain.py",
@@ -1082,7 +1076,7 @@
     {
      "path": "memory/adaptive_directives.json",
      "owner": "core/homeostasis.py",
-     "age_hours": 2.2,
+     "age_hours": 4.9,
      "readers": {
       "live": [
        "agents/body/body_scanner.py",
@@ -1103,7 +1097,7 @@
     {
      "path": "memory/homeostasis_state.json",
      "owner": "core/homeostasis.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py"
@@ -1117,7 +1111,7 @@
     {
      "path": "memory/self_profile.json",
      "owner": "core/homeostasis.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "agents/core/self_modifier.py",
@@ -1155,7 +1149,7 @@
     {
      "path": "BOUNDARIES.md",
      "owner": "core/canon.py",
-     "age_hours": 1017.5,
+     "age_hours": 1027.3,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1183,7 +1177,7 @@
     {
      "path": "civilization_goal.txt",
      "owner": "core/canon.py",
-     "age_hours": 4449.8,
+     "age_hours": 4459.6,
      "readers": {
       "live": [
        "agents/core/goal_planner.py",
@@ -1231,7 +1225,7 @@
     {
      "path": "config/goal_dimension_weights.json",
      "owner": "core/canon.py",
-     "age_hours": 1060.5,
+     "age_hours": 1070.3,
      "readers": {
       "live": [
        "experiments/browser_scout/goal_impact.py"
@@ -1247,7 +1241,7 @@
     {
      "path": "memory/canon_invariants.json",
      "owner": "core/canon.py",
-     "age_hours": 12.1,
+     "age_hours": 21.9,
      "readers": {
       "live": [
        "core/output_contracts.py",
@@ -1290,7 +1284,7 @@
     {
      "path": "BOUNDARIES.md",
      "owner": "core/brain.py",
-     "age_hours": 1017.5,
+     "age_hours": 1027.3,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1318,7 +1312,7 @@
     {
      "path": "LAW_OF_THE_BRAIN.md",
      "owner": "core/brain.py",
-     "age_hours": 490.6,
+     "age_hours": 500.4,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1339,7 +1333,7 @@
     {
      "path": "config/few_shot_seed.json",
      "owner": "core/brain.py",
-     "age_hours": 490.3,
+     "age_hours": 500.2,
      "readers": {
       "live": [],
       "tests": [
@@ -1357,7 +1351,7 @@
     {
      "path": "config/model_roles.json",
      "owner": "core/brain.py",
-     "age_hours": 12.9,
+     "age_hours": 22.7,
      "readers": {
       "live": [
        "core/constancy.py"
@@ -1373,7 +1367,7 @@
     {
      "path": "memory/brain_cycle_plan.json",
      "owner": "core/brain.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -1391,7 +1385,7 @@
     {
      "path": "memory/brain_cycle_reviews.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 2.0,
+     "age_hours": 4.2,
      "readers": {
       "live": [
        "core/output_contracts.py",
@@ -1409,7 +1403,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -1435,7 +1429,7 @@
     {
      "path": "memory/brain_stance.json",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -1456,7 +1450,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -1482,7 +1476,7 @@
     {
      "path": "memory/llm_provenance.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 0.5,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/answered_by.py",
@@ -1508,7 +1502,7 @@
     {
      "path": "memory/repair_proposals.json",
      "owner": "core/brain.py",
-     "age_hours": 43.1,
+     "age_hours": 52.9,
      "readers": {
       "live": [
        "core/self_diagnosis.py"
@@ -1517,7 +1511,9 @@
       "n_live": 1,
       "n_tests": 0
      },
-     "flags": []
+     "flags": [
+      "STALE"
+     ]
     }
    ],
    "flags": [
@@ -1539,7 +1535,7 @@
     {
      "path": "BOUNDARIES.md",
      "owner": "core/brain.py",
-     "age_hours": 1017.5,
+     "age_hours": 1027.3,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1567,7 +1563,7 @@
     {
      "path": "LAW_OF_THE_BRAIN.md",
      "owner": "core/brain.py",
-     "age_hours": 490.6,
+     "age_hours": 500.4,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1588,7 +1584,7 @@
     {
      "path": "config/few_shot_seed.json",
      "owner": "core/brain.py",
-     "age_hours": 490.3,
+     "age_hours": 500.2,
      "readers": {
       "live": [],
       "tests": [
@@ -1606,7 +1602,7 @@
     {
      "path": "config/model_roles.json",
      "owner": "core/brain.py",
-     "age_hours": 12.9,
+     "age_hours": 22.7,
      "readers": {
       "live": [
        "core/constancy.py"
@@ -1622,7 +1618,7 @@
     {
      "path": "memory/brain_cycle_plan.json",
      "owner": "core/brain.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -1640,7 +1636,7 @@
     {
      "path": "memory/brain_cycle_reviews.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 2.0,
+     "age_hours": 4.2,
      "readers": {
       "live": [
        "core/output_contracts.py",
@@ -1658,7 +1654,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -1684,7 +1680,7 @@
     {
      "path": "memory/brain_stance.json",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -1705,7 +1701,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -1731,7 +1727,7 @@
     {
      "path": "memory/llm_provenance.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 0.5,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/answered_by.py",
@@ -1757,7 +1753,7 @@
     {
      "path": "memory/repair_proposals.json",
      "owner": "core/brain.py",
-     "age_hours": 43.1,
+     "age_hours": 52.9,
      "readers": {
       "live": [
        "core/self_diagnosis.py"
@@ -1766,7 +1762,9 @@
       "n_live": 1,
       "n_tests": 0
      },
-     "flags": []
+     "flags": [
+      "STALE"
+     ]
     }
    ],
    "flags": [
@@ -1801,7 +1799,7 @@
     {
      "path": "BOUNDARIES.md",
      "owner": "core/brain.py",
-     "age_hours": 1017.5,
+     "age_hours": 1027.3,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1829,7 +1827,7 @@
     {
      "path": "LAW_OF_THE_BRAIN.md",
      "owner": "core/brain.py",
-     "age_hours": 490.6,
+     "age_hours": 500.4,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -1850,7 +1848,7 @@
     {
      "path": "config/few_shot_seed.json",
      "owner": "core/brain.py",
-     "age_hours": 490.3,
+     "age_hours": 500.2,
      "readers": {
       "live": [],
       "tests": [
@@ -1868,7 +1866,7 @@
     {
      "path": "config/model_roles.json",
      "owner": "core/brain.py",
-     "age_hours": 12.9,
+     "age_hours": 22.7,
      "readers": {
       "live": [
        "core/constancy.py"
@@ -1884,7 +1882,7 @@
     {
      "path": "memory/brain_cycle_plan.json",
      "owner": "core/brain.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -1902,7 +1900,7 @@
     {
      "path": "memory/brain_cycle_reviews.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 2.0,
+     "age_hours": 4.2,
      "readers": {
       "live": [
        "core/output_contracts.py",
@@ -1920,7 +1918,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -1946,7 +1944,7 @@
     {
      "path": "memory/brain_stance.json",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -1967,7 +1965,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -1993,7 +1991,7 @@
     {
      "path": "memory/llm_provenance.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 0.5,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/answered_by.py",
@@ -2019,7 +2017,7 @@
     {
      "path": "memory/repair_proposals.json",
      "owner": "core/brain.py",
-     "age_hours": 43.1,
+     "age_hours": 52.9,
      "readers": {
       "live": [
        "core/self_diagnosis.py"
@@ -2028,7 +2026,9 @@
       "n_live": 1,
       "n_tests": 0
      },
-     "flags": []
+     "flags": [
+      "STALE"
+     ]
     }
    ],
    "flags": [
@@ -2078,7 +2078,7 @@
     {
      "path": "snapshots/master/global_indicators_latest.json",
      "owner": "core/provenance.py",
-     "age_hours": 2.7,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "agents/body/body_scanner.py",
@@ -2103,7 +2103,7 @@
     {
      "path": "memory/provenance_latest.json",
      "owner": "core/provenance.py",
-     "age_hours": 2.7,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -2135,7 +2135,7 @@
     {
      "path": "config/metric_domains.json",
      "owner": "core/source_trust.py",
-     "age_hours": 676.3,
+     "age_hours": 686.1,
      "readers": {
       "live": [],
       "tests": [],
@@ -2150,7 +2150,7 @@
     {
      "path": "config/source_trust_rules.json",
      "owner": "core/source_trust.py",
-     "age_hours": 676.3,
+     "age_hours": 686.1,
      "readers": {
       "live": [
        "experiments/grounding/divergence_ledger.py",
@@ -2169,7 +2169,7 @@
     {
      "path": "memory/axis_history.json",
      "owner": "core/source_trust.py",
-     "age_hours": 2.6,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -2195,7 +2195,7 @@
     {
      "path": "memory/distrust_ledger.jsonl",
      "owner": "core/source_trust.py",
-     "age_hours": 483.3,
+     "age_hours": 5.9,
      "readers": {
       "live": [],
       "tests": [],
@@ -2203,14 +2203,13 @@
       "n_tests": 0
      },
      "flags": [
-      "STALE",
       "ORPHAN"
      ]
     },
     {
      "path": "memory/source_trust_state.json",
      "owner": "core/source_trust.py",
-     "age_hours": 483.3,
+     "age_hours": 5.9,
      "readers": {
       "live": [],
       "tests": [],
@@ -2218,7 +2217,6 @@
       "n_tests": 0
      },
      "flags": [
-      "STALE",
       "ORPHAN"
      ]
     }
@@ -2243,7 +2241,7 @@
     {
      "path": "snapshots/master/global_indicators_latest.json",
      "owner": "core/daily_tier.py",
-     "age_hours": 2.7,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "agents/body/body_scanner.py",
@@ -2268,7 +2266,7 @@
     {
      "path": "memory/daily_tier.jsonl",
      "owner": "core/daily_tier.py",
-     "age_hours": 4.1,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "core/consolidation.py",
@@ -2367,7 +2365,7 @@
     {
      "path": "config/metric_domains.json",
      "owner": "core/source_trust.py",
-     "age_hours": 676.3,
+     "age_hours": 686.1,
      "readers": {
       "live": [],
       "tests": [],
@@ -2382,7 +2380,7 @@
     {
      "path": "config/source_trust_rules.json",
      "owner": "core/source_trust.py",
-     "age_hours": 676.3,
+     "age_hours": 686.1,
      "readers": {
       "live": [
        "experiments/grounding/divergence_ledger.py",
@@ -2401,7 +2399,7 @@
     {
      "path": "memory/axis_history.json",
      "owner": "core/source_trust.py",
-     "age_hours": 2.6,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -2427,7 +2425,7 @@
     {
      "path": "memory/distrust_ledger.jsonl",
      "owner": "core/source_trust.py",
-     "age_hours": 483.3,
+     "age_hours": 5.9,
      "readers": {
       "live": [],
       "tests": [],
@@ -2435,14 +2433,13 @@
       "n_tests": 0
      },
      "flags": [
-      "STALE",
       "ORPHAN"
      ]
     },
     {
      "path": "memory/source_trust_state.json",
      "owner": "core/source_trust.py",
-     "age_hours": 483.3,
+     "age_hours": 5.9,
      "readers": {
       "live": [],
       "tests": [],
@@ -2450,7 +2447,6 @@
       "n_tests": 0
      },
      "flags": [
-      "STALE",
       "ORPHAN"
      ]
     }
@@ -2657,7 +2653,7 @@
     {
      "path": "config/alarm_indicators.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 52.3,
+     "age_hours": 62.1,
      "readers": {
       "live": [
        "core/counterfactual_probe.py"
@@ -2675,7 +2671,7 @@
     {
      "path": "config/indicator_cadence.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 132.5,
+     "age_hours": 142.3,
      "readers": {
       "live": [
        "core/cadence.py"
@@ -2693,7 +2689,7 @@
     {
      "path": "config/target_config.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 33.0,
+     "age_hours": 42.9,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -2719,7 +2715,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -2742,7 +2738,7 @@
     {
      "path": "memory/alarm_bands_latest.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 19.1,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -2757,7 +2753,7 @@
     {
      "path": "memory/axis_history.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 2.6,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -2783,7 +2779,7 @@
     {
      "path": "memory/constancy_bands_latest.json",
      "owner": "core/alarm_bands.py",
-     "age_hours": 19.1,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "scripts/agi_scoreboard.py"
@@ -2799,7 +2795,7 @@
     {
      "path": "memory/verified_observations.jsonl",
      "owner": "core/alarm_bands.py",
-     "age_hours": 37.3,
+     "age_hours": 47.2,
      "readers": {
       "live": [
        "core/card_intake.py",
@@ -2845,7 +2841,7 @@
     {
      "path": "snapshots/master/master_snapshot_latest.json",
      "owner": "memory/auto_level.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/body/body_scanner.py",
@@ -2867,7 +2863,7 @@
     {
      "path": "memory/auto_levels.json",
      "owner": "memory/auto_level.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/core/cortex_core_agent.py",
@@ -2907,7 +2903,7 @@
     {
      "path": "config/target_config.json",
      "owner": "core/level_reconciler.py",
-     "age_hours": 33.0,
+     "age_hours": 42.9,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -2933,7 +2929,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/level_reconciler.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -2956,7 +2952,7 @@
     {
      "path": "memory/auto_levels.json",
      "owner": "core/level_reconciler.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/core/cortex_core_agent.py",
@@ -2981,7 +2977,7 @@
     {
      "path": "memory/level_corrections.jsonl",
      "owner": "core/level_reconciler.py",
-     "age_hours": 19.1,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "core/phase_evidence.py",
@@ -3024,7 +3020,7 @@
     {
      "path": "memory/night_events.jsonl",
      "owner": "core/reconsider.py",
-     "age_hours": 0.4,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/blind_producers.py",
@@ -3050,7 +3046,7 @@
     {
      "path": "memory/reconsider_history.jsonl",
      "owner": "core/reconsider.py",
-     "age_hours": 451.4,
+     "age_hours": 461.2,
      "readers": {
       "live": [
        "cockpit/timeline.py"
@@ -3069,7 +3065,7 @@
     {
      "path": "memory/reconsider_latest.json",
      "owner": "core/reconsider.py",
-     "age_hours": 451.4,
+     "age_hours": 461.2,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3101,7 +3097,7 @@
     {
      "path": "memory/deduction_rule_stats.json",
      "owner": "core/deduction.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3115,7 +3111,7 @@
     {
      "path": "memory/deductions_latest.json",
      "owner": "core/deduction.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/core/daily_analysis_agent.py",
@@ -3149,7 +3145,7 @@
     {
      "path": "memory/axis_history.json",
      "owner": "core/constancy.py",
-     "age_hours": 2.6,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -3175,7 +3171,7 @@
     {
      "path": "memory/composed_indicators.json",
      "owner": "core/constancy.py",
-     "age_hours": 2.7,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -3196,7 +3192,7 @@
     {
      "path": "memory/constancy_latest.json",
      "owner": "core/constancy.py",
-     "age_hours": 2.4,
+     "age_hours": 5.1,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -3212,7 +3208,7 @@
     {
      "path": "memory/constellation_latest.json",
      "owner": "core/constancy.py",
-     "age_hours": 2.3,
+     "age_hours": 5.0,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -3256,7 +3252,7 @@
     {
      "path": "civilization_goal.txt",
      "owner": "core/cortex_orchestrator.py",
-     "age_hours": 4449.8,
+     "age_hours": 4459.6,
      "readers": {
       "live": [
        "agents/core/goal_planner.py",
@@ -3304,7 +3300,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/orchestrator_grounded.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -3327,7 +3323,7 @@
     {
      "path": "memory/orchestration_grounded_latest.json",
      "owner": "core/orchestrator_grounded.py",
-     "age_hours": 2.3,
+     "age_hours": 5.0,
      "readers": {
       "live": [
        "core/axon_agents.py",
@@ -3344,7 +3340,7 @@
     {
      "path": "openclaw_queue/axis_feeds_latest.json",
      "owner": "core/orchestrator_grounded.py",
-     "age_hours": 2.3,
+     "age_hours": 5.0,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -3381,7 +3377,7 @@
     {
      "path": "memory/night_events.jsonl",
      "owner": "core/reconsider.py",
-     "age_hours": 0.4,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/blind_producers.py",
@@ -3407,7 +3403,7 @@
     {
      "path": "memory/reconsider_history.jsonl",
      "owner": "core/reconsider.py",
-     "age_hours": 451.4,
+     "age_hours": 461.2,
      "readers": {
       "live": [
        "cockpit/timeline.py"
@@ -3426,7 +3422,7 @@
     {
      "path": "memory/reconsider_latest.json",
      "owner": "core/reconsider.py",
-     "age_hours": 451.4,
+     "age_hours": 461.2,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3546,7 +3542,7 @@
     {
      "path": "memory/causal_log.json",
      "owner": "memory/context_injector.py",
-     "age_hours": 18.8,
+     "age_hours": 28.6,
      "readers": {
       "live": [
        "agents/core/self_observer.py",
@@ -3602,7 +3598,7 @@
     {
      "path": "memory/divergence_log.jsonl",
      "owner": "core/metta_check.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -3640,7 +3636,7 @@
     {
      "path": "memory/night_events.jsonl",
      "owner": "core/metta_check.py",
-     "age_hours": 0.4,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/blind_producers.py",
@@ -3695,7 +3691,7 @@
     {
      "path": "memory/hypothesis_resolution_latest.json",
      "owner": "core/hypothesis_resolution.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3726,7 +3722,7 @@
     {
      "path": "cortex_memory/hypotheses/resolved.json",
      "owner": "core/belief_revision.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -3749,7 +3745,7 @@
     {
      "path": "memory/belief_state.json",
      "owner": "core/belief_revision.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3766,7 +3762,7 @@
     {
      "path": "memory/revision_ledger.jsonl",
      "owner": "core/belief_revision.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [],
       "tests": [
@@ -3790,16 +3786,15 @@
    "index": "20.06",
    "name": "hypothesis_intake",
    "line": 3373,
-   "block_lines": 18,
+   "block_lines": 23,
    "modules": [
-    "core/hypothesis_intake.py",
-    "core/measurement_honesty.py"
+    "core/hypothesis_intake.py"
    ],
    "outputs": [
     {
      "path": "cortex_memory/hypotheses/pending.json",
      "owner": "core/hypothesis_intake.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "citation_verifier.py",
@@ -3825,23 +3820,25 @@
     {
      "path": "memory/consolidation_queue.json",
      "owner": "core/hypothesis_intake.py",
-     "age_hours": 21.1,
+     "age_hours": 7.1,
      "readers": {
       "live": [
        "core/consolidation.py",
        "core/output_contracts.py",
        "tools/step_audit.py"
       ],
-      "tests": [],
+      "tests": [
+       "test/test_consolidation_gates.py"
+      ],
       "n_live": 3,
-      "n_tests": 0
+      "n_tests": 1
      },
      "flags": []
     },
     {
      "path": "memory/hypothesis_intake_latest.json",
      "owner": "core/hypothesis_intake.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -3851,11 +3848,30 @@
       "n_tests": 0
      },
      "flags": []
-    },
+    }
+   ],
+   "flags": [],
+   "review": {
+    "verdict": "ДЕФЕКТ (огледален на ORPHAN): четецът е в цикъла всяка нощ, а производителят core/consolidation.py не се вика от НИЩО в ",
+    "date": "2026-09-12",
+    "points": "5, 6, 12",
+    "phase": "F"
+   }
+  },
+  {
+   "index": "20.08",
+   "name": "output_contracts",
+   "line": 3396,
+   "block_lines": 25,
+   "modules": [
+    "core/measurement_honesty.py",
+    "core/output_contracts.py"
+   ],
+   "outputs": [
     {
      "path": "config/axis_source_map.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 365.4,
+     "age_hours": 375.2,
      "readers": {
       "live": [
        "experiments/pulse/pulse_continuum.py"
@@ -3874,7 +3890,7 @@
     {
      "path": "config/target_config.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 33.0,
+     "age_hours": 42.9,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -3900,7 +3916,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -3923,7 +3939,7 @@
     {
      "path": "memory/goal_score_history.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "agents/core/feedback_loop.py",
@@ -3949,7 +3965,7 @@
     {
      "path": "memory/measurement_honesty_latest.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -3963,22 +3979,38 @@
       "n_tests": 1
      },
      "flags": []
+    },
+    {
+     "path": "output_contracts_latest.json",
+     "owner": "core/output_contracts.py",
+     "age_hours": null,
+     "readers": {
+      "live": [
+       "core/cycle_map.py",
+       "fast_cycle_runner.py"
+      ],
+      "tests": [
+       "test/test_output_contracts.py"
+      ],
+      "n_live": 2,
+      "n_tests": 1
+     },
+     "flags": [
+      "MISSING"
+     ]
     }
    ],
    "flags": [
-    "STALE"
+    "MISSING",
+    "STALE",
+    "UNREVIEWED"
    ],
-   "review": {
-    "verdict": "ДЕФЕКТ (огледален на ORPHAN): четецът е в цикъла всяка нощ, а производителят core/consolidation.py не се вика от НИЩО в ",
-    "date": "2026-09-12",
-    "points": "5, 6, 12",
-    "phase": "F"
-   }
+   "review": null
   },
   {
    "index": "20.1",
    "name": "measurement_honesty",
-   "line": 3391,
+   "line": 3421,
    "block_lines": 26,
    "modules": [
     "core/measurement_honesty.py"
@@ -3987,7 +4019,7 @@
     {
      "path": "config/axis_source_map.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 365.4,
+     "age_hours": 375.2,
      "readers": {
       "live": [
        "experiments/pulse/pulse_continuum.py"
@@ -4006,7 +4038,7 @@
     {
      "path": "config/target_config.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 33.0,
+     "age_hours": 42.9,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -4032,7 +4064,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -4055,7 +4087,7 @@
     {
      "path": "memory/goal_score_history.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "agents/core/feedback_loop.py",
@@ -4081,7 +4113,7 @@
     {
      "path": "memory/measurement_honesty_latest.json",
      "owner": "core/measurement_honesty.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -4106,7 +4138,7 @@
   {
    "index": "20.2",
    "name": "resolve_ideas",
-   "line": 3417,
+   "line": 3447,
    "block_lines": 27,
    "modules": [
     "tools/resolve_ideas.py"
@@ -4115,7 +4147,7 @@
     {
      "path": "config/idea_dimension_aliases.json",
      "owner": "tools/resolve_ideas.py",
-     "age_hours": 364.3,
+     "age_hours": 374.1,
      "readers": {
       "live": [],
       "tests": [],
@@ -4130,7 +4162,7 @@
     {
      "path": "config/target_config.json",
      "owner": "tools/resolve_ideas.py",
-     "age_hours": 33.0,
+     "age_hours": 42.9,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -4156,7 +4188,7 @@
     {
      "path": "memory/axis_history.json",
      "owner": "tools/resolve_ideas.py",
-     "age_hours": 2.6,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -4182,7 +4214,7 @@
     {
      "path": "memory/idea_resolutions.jsonl",
      "owner": "tools/resolve_ideas.py",
-     "age_hours": 18.6,
+     "age_hours": 4.6,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -4199,7 +4231,7 @@
     {
      "path": "memory/idea_stream.jsonl",
      "owner": "tools/resolve_ideas.py",
-     "age_hours": 21.1,
+     "age_hours": 7.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -4227,7 +4259,7 @@
   {
    "index": "21",
    "name": "session_update",
-   "line": 3444,
+   "line": 3474,
    "block_lines": 7,
    "modules": [
     "core/session_updater.py"
@@ -4241,7 +4273,7 @@
   {
    "index": "22",
    "name": "daily_analysis",
-   "line": 3451,
+   "line": 3481,
    "block_lines": 5,
    "modules": [],
    "outputs": [],
@@ -4254,7 +4286,7 @@
   {
    "index": "22.5",
    "name": "data_scout",
-   "line": 3456,
+   "line": 3486,
    "block_lines": 14,
    "modules": [
     "core/data_scout.py"
@@ -4263,7 +4295,7 @@
     {
      "path": "agi_axes_spec.txt",
      "owner": "core/data_scout.py",
-     "age_hours": 537.5,
+     "age_hours": 547.3,
      "readers": {
       "live": [
        "agents/hyperclaw/hyperclaw_orchestrator.py",
@@ -4286,7 +4318,7 @@
     {
      "path": "memory/composer_needs.json",
      "owner": "core/data_scout.py",
-     "age_hours": 2.7,
+     "age_hours": 5.9,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -4307,7 +4339,7 @@
     {
      "path": "memory/discovered_data_sources.json",
      "owner": "core/data_scout.py",
-     "age_hours": 1.5,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -4335,7 +4367,7 @@
   {
    "index": "23",
    "name": "continuous_learning",
-   "line": 3470,
+   "line": 3500,
    "block_lines": 12,
    "modules": [
     "memory/continuous_learner.py"
@@ -4344,7 +4376,7 @@
     {
      "path": "memory/cycle_knowledge_log.json",
      "owner": "memory/continuous_learner.py",
-     "age_hours": 2.1,
+     "age_hours": 4.3,
      "readers": {
       "live": [],
       "tests": [
@@ -4360,7 +4392,7 @@
     {
      "path": "memory/knowledge_base.json",
      "owner": "memory/continuous_learner.py",
-     "age_hours": 2.1,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "agents/core/self_observer.py",
@@ -4381,7 +4413,7 @@
     {
      "path": "memory/problem_solution_db.json",
      "owner": "memory/continuous_learner.py",
-     "age_hours": 2.1,
+     "age_hours": 4.3,
      "readers": {
       "live": [],
       "tests": [
@@ -4404,7 +4436,7 @@
   {
    "index": "24",
    "name": "merklememory_commit",
-   "line": 3482,
+   "line": 3512,
    "block_lines": 100,
    "modules": [
     "memory/existence_ledger.py"
@@ -4413,7 +4445,7 @@
     {
      "path": "memory/existence_ledger.jsonl",
      "owner": "memory/existence_ledger.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -4448,7 +4480,7 @@
   {
    "index": "24.1",
    "name": "merkle_verify",
-   "line": 3582,
+   "line": 3612,
    "block_lines": 26,
    "modules": [],
    "outputs": [],
@@ -4465,7 +4497,7 @@
   {
    "index": "25",
    "name": "training_data_accumulation",
-   "line": 3608,
+   "line": 3638,
    "block_lines": 51,
    "modules": [
     "core/training_log.py"
@@ -4474,7 +4506,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/training_log.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -4500,7 +4532,7 @@
     {
      "path": "memory/step_contract_baseline.json",
      "owner": "core/training_log.py",
-     "age_hours": 2.0,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_integrity.py",
@@ -4518,7 +4550,7 @@
     {
      "path": "memory/training_log.jsonl",
      "owner": "core/training_log.py",
-     "age_hours": 2.1,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/interval_head.py",
@@ -4540,7 +4572,7 @@
   {
    "index": "25.35",
    "name": "metta_column",
-   "line": 3659,
+   "line": 3689,
    "block_lines": 6,
    "modules": [
     "core/metta_parallel.py"
@@ -4549,7 +4581,7 @@
     {
      "path": "snapshots/master/goal_score_latest.json",
      "owner": "core/metta_parallel.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -4572,7 +4604,7 @@
     {
      "path": "memory/auto_levels.json",
      "owner": "core/metta_parallel.py",
-     "age_hours": 2.5,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "agents/core/cortex_core_agent.py",
@@ -4597,7 +4629,7 @@
     {
      "path": "memory/metta_assessment_latest.json",
      "owner": "core/metta_parallel.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -4612,7 +4644,7 @@
     {
      "path": "openclaw_queue/axis_feeds_latest.json",
      "owner": "core/metta_parallel.py",
-     "age_hours": 2.3,
+     "age_hours": 5.0,
      "readers": {
       "live": [
        "agents/axis/axis_feed.py",
@@ -4638,7 +4670,7 @@
   {
    "index": "25.36",
    "name": "brain_relay",
-   "line": 3665,
+   "line": 3695,
    "block_lines": 15,
    "modules": [
     "core/brain_relay.py"
@@ -4647,7 +4679,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/brain_relay.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -4673,7 +4705,7 @@
     {
      "path": "memory/brain_relay_cursor.json",
      "owner": "core/brain_relay.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [],
       "tests": [],
@@ -4694,7 +4726,7 @@
   {
    "index": "25.38",
    "name": "proposal_sla",
-   "line": 3680,
+   "line": 3710,
    "block_lines": 6,
    "modules": [
     "core/proposal_sla.py"
@@ -4703,7 +4735,7 @@
     {
      "path": "memory/improvement_proposals.json",
      "owner": "core/proposal_sla.py",
-     "age_hours": 2.2,
+     "age_hours": 4.9,
      "readers": {
       "live": [
        "_check_proposals.py",
@@ -4729,7 +4761,7 @@
     {
      "path": "memory/pending_approvals.json",
      "owner": "core/proposal_sla.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/server.py",
@@ -4750,7 +4782,7 @@
     {
      "path": "memory/proposal_sla_escalated.json",
      "owner": "core/proposal_sla.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [],
       "tests": [],
@@ -4764,7 +4796,7 @@
     {
      "path": "memory/proposal_sla_queue.json",
      "owner": "core/proposal_sla.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -4779,7 +4811,7 @@
     {
      "path": "memory/threshold_proposals.json",
      "owner": "core/proposal_sla.py",
-     "age_hours": 538.6,
+     "age_hours": 548.4,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -4807,7 +4839,7 @@
   {
    "index": "25.37",
    "name": "needs_auth",
-   "line": 3686,
+   "line": 3716,
    "block_lines": 11,
    "modules": [
     "core/needs_auth.py"
@@ -4816,7 +4848,7 @@
     {
      "path": "config/dead_sources.json",
      "owner": "core/needs_auth.py",
-     "age_hours": 131.5,
+     "age_hours": 141.3,
      "readers": {
       "live": [
        "core/global_indicators.py",
@@ -4841,7 +4873,7 @@
     {
      "path": "memory/needs_auth_asked.json",
      "owner": "core/needs_auth.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [],
       "tests": [],
@@ -4863,7 +4895,7 @@
   {
    "index": "25.43",
    "name": "learn_world",
-   "line": 3697,
+   "line": 3727,
    "block_lines": 12,
    "modules": [
     "core/learn_world.py"
@@ -4872,7 +4904,7 @@
     {
      "path": "memory/learn_world_latest.json",
      "owner": "core/learn_world.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py"
@@ -4894,7 +4926,7 @@
   {
    "index": "25.44",
    "name": "self_experiment",
-   "line": 3709,
+   "line": 3739,
    "block_lines": 10,
    "modules": [
     "core/self_experiment.py"
@@ -4903,7 +4935,7 @@
     {
      "path": "config/scheduler.json",
      "owner": "core/self_experiment.py",
-     "age_hours": 20.6,
+     "age_hours": 6.5,
      "readers": {
       "live": [
        "core/brain.py",
@@ -4929,7 +4961,7 @@
     {
      "path": "memory/existence_ledger.jsonl",
      "owner": "core/self_experiment.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -4955,7 +4987,7 @@
     {
      "path": "memory/improvement_proposals.json",
      "owner": "core/self_experiment.py",
-     "age_hours": 2.2,
+     "age_hours": 4.9,
      "readers": {
       "live": [
        "_check_proposals.py",
@@ -4997,7 +5029,7 @@
     {
      "path": "memory/self_experiments.json",
      "owner": "core/self_experiment.py",
-     "age_hours": 18.2,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -5016,7 +5048,7 @@
     {
      "path": "memory/step_contract_baseline.json",
      "owner": "core/self_experiment.py",
-     "age_hours": 2.0,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_integrity.py",
@@ -5041,7 +5073,7 @@
   {
    "index": "25.45",
    "name": "self_mirror",
-   "line": 3719,
+   "line": 3749,
    "block_lines": 14,
    "modules": [
     "core/self_mirror.py"
@@ -5050,7 +5082,7 @@
     {
      "path": "memory/body_scan_latest.json",
      "owner": "core/self_mirror.py",
-     "age_hours": 18.7,
+     "age_hours": 4.7,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5069,7 +5101,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/self_mirror.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -5095,7 +5127,7 @@
     {
      "path": "memory/level_corrections.jsonl",
      "owner": "core/self_mirror.py",
-     "age_hours": 19.1,
+     "age_hours": 5.2,
      "readers": {
       "live": [
        "core/level_reconciler.py",
@@ -5110,7 +5142,7 @@
     {
      "path": "memory/self_mirror_latest.json",
      "owner": "core/self_mirror.py",
-     "age_hours": 2.0,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5133,7 +5165,7 @@
     {
      "path": "memory/self_mirror_log.jsonl",
      "owner": "core/self_mirror.py",
-     "age_hours": 2.0,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -5152,7 +5184,7 @@
     {
      "path": "memory/step_contract_latest.json",
      "owner": "core/self_mirror.py",
-     "age_hours": 2.0,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5184,7 +5216,7 @@
   {
    "index": "25.46",
    "name": "read_the_mirror",
-   "line": 3733,
+   "line": 3763,
    "block_lines": 11,
    "modules": [
     "core/interoception.py"
@@ -5193,7 +5225,7 @@
     {
      "path": "config/scheduler.json",
      "owner": "core/interoception.py",
-     "age_hours": 20.6,
+     "age_hours": 6.5,
      "readers": {
       "live": [
        "core/brain.py",
@@ -5219,7 +5251,7 @@
     {
      "path": "memory/existence_ledger.jsonl",
      "owner": "core/interoception.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5245,7 +5277,7 @@
     {
      "path": "memory/mirror_read_latest.json",
      "owner": "core/interoception.py",
-     "age_hours": 18.2,
+     "age_hours": 4.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -5260,7 +5292,7 @@
     {
      "path": "memory/scheduler_state.json",
      "owner": "core/interoception.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "agents/core/daily_analysis_agent.py",
@@ -5284,7 +5316,7 @@
     {
      "path": "memory/self_mirror_latest.json",
      "owner": "core/interoception.py",
-     "age_hours": 2.0,
+     "age_hours": 4.3,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5313,7 +5345,7 @@
   {
    "index": "25.5",
    "name": "brain_debrief",
-   "line": 3744,
+   "line": 3774,
    "block_lines": 17,
    "modules": [
     "core/brain.py"
@@ -5322,7 +5354,7 @@
     {
      "path": "BOUNDARIES.md",
      "owner": "core/brain.py",
-     "age_hours": 1017.5,
+     "age_hours": 1027.3,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -5350,7 +5382,7 @@
     {
      "path": "LAW_OF_THE_BRAIN.md",
      "owner": "core/brain.py",
-     "age_hours": 490.6,
+     "age_hours": 500.4,
      "readers": {
       "live": [
        "core/aggressive_cleanup.py",
@@ -5371,7 +5403,7 @@
     {
      "path": "config/few_shot_seed.json",
      "owner": "core/brain.py",
-     "age_hours": 490.3,
+     "age_hours": 500.2,
      "readers": {
       "live": [],
       "tests": [
@@ -5389,7 +5421,7 @@
     {
      "path": "config/model_roles.json",
      "owner": "core/brain.py",
-     "age_hours": 12.9,
+     "age_hours": 22.7,
      "readers": {
       "live": [
        "core/constancy.py"
@@ -5405,7 +5437,7 @@
     {
      "path": "memory/brain_cycle_plan.json",
      "owner": "core/brain.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -5423,7 +5455,7 @@
     {
      "path": "memory/brain_cycle_reviews.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 2.0,
+     "age_hours": 4.2,
      "readers": {
       "live": [
        "core/output_contracts.py",
@@ -5441,7 +5473,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -5467,7 +5499,7 @@
     {
      "path": "memory/brain_stance.json",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/datasources.py",
@@ -5488,7 +5520,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -5514,7 +5546,7 @@
     {
      "path": "memory/llm_provenance.jsonl",
      "owner": "core/brain.py",
-     "age_hours": 0.5,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/answered_by.py",
@@ -5540,7 +5572,7 @@
     {
      "path": "memory/repair_proposals.json",
      "owner": "core/brain.py",
-     "age_hours": 43.1,
+     "age_hours": 52.9,
      "readers": {
       "live": [
        "core/self_diagnosis.py"
@@ -5549,7 +5581,9 @@
       "n_live": 1,
       "n_tests": 0
      },
-     "flags": []
+     "flags": [
+      "STALE"
+     ]
     }
    ],
    "flags": [
@@ -5566,7 +5600,7 @@
   {
    "index": "25.6",
    "name": "cycle_report",
-   "line": 3761,
+   "line": 3791,
    "block_lines": 38,
    "modules": [
     "core/cycle_report.py"
@@ -5575,7 +5609,7 @@
     {
      "path": "memory/brain_cycle_plan.json",
      "owner": "core/cycle_report.py",
-     "age_hours": 2.8,
+     "age_hours": 6.2,
      "readers": {
       "live": [
        "core/brain.py",
@@ -5593,7 +5627,7 @@
     {
      "path": "memory/brain_step_log.jsonl",
      "owner": "core/cycle_report.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/timeline.py",
@@ -5625,7 +5659,7 @@
   {
    "index": "25.7",
    "name": "cortex_scan",
-   "line": 3799,
+   "line": 3829,
    "block_lines": 32,
    "modules": [],
    "outputs": [],
@@ -5638,7 +5672,7 @@
   {
    "index": "25.8",
    "name": "compass",
-   "line": 3831,
+   "line": 3861,
    "block_lines": 348,
    "modules": [
     "core/blackbox.py",
@@ -5675,7 +5709,7 @@
     {
      "path": "memory/state_vectors.jsonl",
      "owner": "core/cycle_vector.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -5699,7 +5733,7 @@
     {
      "path": "memory/brain_journal.jsonl",
      "owner": "core/language_gate.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "cockpit/entropy.py",
@@ -5725,7 +5759,7 @@
     {
      "path": "memory/language_quarantine.json",
      "owner": "core/language_gate.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "fast_cycle_runner.py"
@@ -5742,7 +5776,7 @@
     {
      "path": "config/model_window.json",
      "owner": "core/model_window.py",
-     "age_hours": 518.5,
+     "age_hours": 528.3,
      "readers": {
       "live": [
        "core/cycle_profile.py",
@@ -5763,7 +5797,7 @@
     {
      "path": "memory/model_window.json",
      "owner": "core/model_window.py",
-     "age_hours": 1.9,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_profile.py",
@@ -5782,7 +5816,7 @@
     {
      "path": "config/cycle_phases.json",
      "owner": "core/phase_tracker.py",
-     "age_hours": 27.3,
+     "age_hours": 0.1,
      "readers": {
       "live": [
        "core/cycle_map.py",
@@ -5875,7 +5909,7 @@
     {
      "path": "memory/pulse_history.jsonl",
      "owner": "memory/autonomic_pulse.py",
-     "age_hours": 4427.4,
+     "age_hours": 4437.2,
      "readers": {
       "live": [],
       "tests": [],
@@ -5890,7 +5924,7 @@
     {
      "path": "memory/pulse_latest.json",
      "owner": "memory/autonomic_pulse.py",
-     "age_hours": 4427.4,
+     "age_hours": 4437.2,
      "readers": {
       "live": [
        "core/cortex_orchestrator.py",
@@ -5956,7 +5990,7 @@
     {
      "path": "memory/compass_latest.json",
      "owner": "tools/compass.py",
-     "age_hours": 18.1,
+     "age_hours": 4.1,
      "readers": {
       "live": [
        "core/cycle_map.py"

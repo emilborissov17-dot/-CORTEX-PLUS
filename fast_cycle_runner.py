@@ -3376,6 +3376,36 @@ def main():
         print(_hi_line(_hi_run(write=True)))
     _run("hypothesis_intake", _hypothesis_intake_step)
 
+    # ── 20.07. Output contracts — the judge finally gets invited to the trial ──
+    # core/output_contracts.py has existed and been green for days with NOBODY
+    # CALLING IT: step_audit listed it among the unscheduled producers, which is
+    # the politest possible way of saying a check that never runs is a check that
+    # does not exist. It writes memory/output_contracts_latest.json.
+    #
+    # PLACED HERE, AND NOT "right after consolidation", because there is no
+    # consolidation step: core/consolidation.run() is called only by
+    # experiments/pulse/pulse_continuum.py, and the cycle merely CONSUMES what the
+    # pulse left, at 20.06 above. So this sits immediately after the step that eats
+    # the queue, which is the nearest thing the cycle has to "after consolidation".
+    #
+    # A VIOLATION DOES NOT STOP THE NIGHT. check_all() catches each contract's own
+    # exception and records it as a violation rather than raising, and _run() would
+    # catch a raise anyway. The contract judges; it does not sentence. Losing the
+    # remaining steps because a check found something would trade a whole cycle for
+    # a line of text that is already on disk.
+    beat("output_contracts", "20.08")
+
+    def _output_contracts_step():
+        from core.output_contracts import check_all as _oc_check
+        from core.output_contracts import summary_line as _oc_line
+        rec = _oc_check()
+        print(_oc_line(rec))
+        for v in rec["violations"][:10]:
+            tag = "NOTE" if v.get("severity") == "note" else "VIOLATION"
+            print(f"  CONTRACT {tag} {v.get('contract')}: {str(v.get('why'))[:200]}")
+
+    _run("output_contracts", _output_contracts_step)
+
     # ── 20.1. K1 — THE FIRST NEEDLE (ITEM 7.1, 28 Aug 2026) ────────────────
     # memory/measurement_honesty_latest.json had not been written since
     # 20 August because NOTHING called it: AST-checked, the only importers of

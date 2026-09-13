@@ -14,6 +14,7 @@ E. IMPOSSIBLE AT THE HORIZON — излиза ли твърдението от �
 from __future__ import annotations
 
 import json
+import math
 import sys
 from datetime import date, timedelta
 from pathlib import Path
@@ -166,3 +167,156 @@ def test_the_run_still_uses_no_model_and_no_network():
 
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-q"]))
+
+# ── F и G ────────────────────────────────────────────────────────────────────
+#
+# F. SLOPE SMALLER THAN ITS OWN ERROR — по-малко ли е движението от грешката,
+#    с която е измерено движението.
+# G. HORIZON LONGER THAN THE RECORD — не се предсказва по-далеч напред, отколкото
+#    сме гледали назад.
+#
+# ВСИЧКИ СТОЙНОСТИ ПО-ДОЛУ СА ИСТИНСКИ, прочетени от memory/daily_tier.jsonl на
+# 13 септември 2026 и записани тук като числа, за да е тестът и истински, и
+# детерминиран. Четенето на живия файл вътре в теста не върши работа: conftest
+# пренасочва c.DAILY_TIER към tmp_path — и е прав да го прави — а и утрешната нощ
+# ще смени числата под краката на теста.
+
+TODAY_13 = date(2026, 9, 13)
+
+# CLIMATE_GLOBAL_RISK_REVIEW/co2_annual_increase, 28 точки, 2026-08-14..09-13.
+# Наклон -0.00269/ден при стандартна грешка 0.00602 — 0.45 пъти собствената си
+# грешка. Точно тази хипотеза стоеше в нощния memory/consolidation_queue.json.
+REAL_CO2_ANNUAL = [(30, 2.3), (29, 2.3), (28, 2.1), (27, 2.1), (23, 2.1), (22, 1.3),
+                   (21, 1.4), (20, 1.4), (19, 1.4), (18, 1.4), (17, 1.4), (16, 1.4),
+                   (15, 1.8), (14, 1.8), (13, 1.8), (12, 1.8), (11, 1.8), (10, 1.8),
+                   (9, 1.8), (8, 1.8), (7, 1.9), (6, 1.9), (5, 1.9), (4, 1.9),
+                   (3, 1.9), (2, 1.9), (1, 1.8), (0, 1.8)]
+
+# Съседът ѝ в същата ос: същият прозорец, същата дължина, сигма до втория знак
+# същата — и минава вратата 5.3 пъти. Разликата е само в това отношение, което е
+# и причината сигма и r2 поотделно да не стигат.
+REAL_CO2_PPM = [(30, 428.2), (29, 428.2), (28, 427.6), (27, 427.6), (23, 427.6),
+                (22, 426.9), (21, 427.0), (20, 427.0), (19, 427.0), (18, 427.0),
+                (17, 427.0), (16, 427.0), (15, 426.9), (14, 426.9), (13, 426.9),
+                (12, 426.9), (11, 426.9), (10, 426.9), (9, 426.9), (8, 426.9),
+                (7, 427.1), (6, 427.1), (5, 427.1), (4, 427.1), (3, 427.1),
+                (2, 427.1), (1, 426.3), (0, 426.3)]
+
+# quakes.quake_m45_count, 60 дни. Наклонът ѝ е 3.9 пъти грешката си, тоест минава
+# F — и точно затова стига до G, където иска хоризонт 90 върху запис от 59 дни.
+REAL_QUAKES_60 = [(60, 20.0), (59, 31.0), (58, 63.0), (57, 32.0), (56, 21.0),
+                  (55, 27.0), (54, 32.0), (53, 22.0), (52, 24.0), (51, 28.0),
+                  (50, 9.0), (49, 14.0), (48, 35.0), (47, 33.0), (46, 33.0),
+                  (45, 39.0), (44, 24.0), (43, 28.0), (42, 28.0), (41, 12.0),
+                  (40, 15.0), (39, 42.0), (38, 14.0), (37, 16.0), (36, 21.0),
+                  (35, 23.0), (34, 20.0), (33, 22.0), (32, 14.0), (31, 14.0),
+                  (30, 36.0), (29, 56.0), (28, 33.0), (27, 41.0), (26, 32.0),
+                  (25, 31.0), (24, 31.0), (23, 29.0), (22, 22.0), (21, 17.0),
+                  (20, 22.0), (19, 17.0), (18, 25.0), (17, 22.0), (16, 17.0),
+                  (15, 15.0), (14, 18.0), (13, 10.0), (12, 18.0), (11, 18.0),
+                  (10, 24.0), (9, 12.0), (8, 15.0), (7, 15.0), (6, 7.0),
+                  (5, 16.0), (4, 12.0), (3, 9.0), (2, 6.0), (1, 13.0)]
+
+
+def _sealed(tmp_path, ind, pairs):
+    """Запечатан свят от ИСТИНСКИ двойки (дни назад от 13 септември, стойност)."""
+    p = tmp_path / "real.jsonl"
+    p.write_text(chr(10).join(json.dumps(
+        {"date": (TODAY_13 - timedelta(days=d)).isoformat(),
+         "indicator": ind, "value": v}) for d, v in pairs), encoding="utf-8")
+    return p
+
+
+def _fit_of(tier, ind, window=30):
+    series = c.build_series(c.read_daily_tier(window, tier, TODAY_13))
+    return c._fit(series[("DAILY", ind)])
+
+
+def test_the_real_co2_annual_increase_is_refused_for_being_smaller_than_its_error(tmp_path):
+    """Хипотезата от нощния опис пада, и отказът носи числата, не само присъдата."""
+    tier = _sealed(tmp_path, "co2.annual_increase", REAL_CO2_ANNUAL)
+    rec = c.run(write=False, today=TODAY_13, archive=tmp_path / "none", daily=tier)
+    assert rec["rejected"]["slope_smaller_than_its_own_error"] == 1
+    assert rec["emitted"] == 0, "движение под собствената си грешка не е движение"
+    r = next(x for x in rec["refused"]
+             if x.get("gate") == "slope_smaller_than_its_own_error")
+    assert r["ratio"] == pytest.approx(0.447, abs=0.01)
+    assert r["abs_slope"] == pytest.approx(0.00269, abs=1e-4)
+    assert r["se_slope"] == pytest.approx(0.00602, abs=1e-4)
+    assert r["required_ratio"] == 2.0
+
+
+def test_the_real_co2_ppm_beside_it_clears_the_same_gate(tmp_path):
+    """Същата ос, същият прозорец, същата сигма — и минава пет пъти. Врата, която
+    режеше по сигма или по r2, щеше да отреже и това."""
+    tier = _sealed(tmp_path, "co2.ppm_current", REAL_CO2_PPM)
+    fit = _fit_of(tier, "co2.ppm_current")
+    assert c.slope_smaller_than_its_own_error(fit) is None
+    assert abs(fit["slope"]) / fit["se_slope"] > 5.0
+    rec = c.run(write=False, today=TODAY_13, archive=tmp_path / "none", daily=tier)
+    assert rec["emitted"] == 1
+    assert rec["rejected"]["slope_smaller_than_its_own_error"] == 0
+
+
+def test_the_standard_error_comes_from_the_same_points_as_the_fit(tmp_path):
+    """se = sigma / sqrt(Sxx), с Sxx на редовете, по които е направена нагласата.
+    Пресметнат наново другаде, той можеше да не съвпадне с линията, която съди."""
+    tier = _sealed(tmp_path, "co2.ppm_current", REAL_CO2_PPM)
+    fit = _fit_of(tier, "co2.ppm_current")
+    assert fit["se_slope"] == pytest.approx(
+        fit["sigma"] / math.sqrt(fit["sxx"]), rel=1e-12)
+
+
+def test_the_factor_is_two_standard_errors_and_pinned():
+    assert c.MIN_SLOPE_T == 2.0, "разхлабването на този праг е решение, не дреболия"
+
+
+def test_a_ninety_day_claim_on_a_fifty_nine_day_record_is_refused(tmp_path):
+    """Истинските земетресения за 60 дни: наклонът минава F, хоризонтът пада на G."""
+    tier = _sealed(tmp_path, "quakes.quake_m45_count", REAL_QUAKES_60)
+    rec = c.run(write=False, today=TODAY_13, window_days=60,
+                archive=tmp_path / "none", daily=tier)
+    assert rec["rejected"]["horizon_longer_than_the_record"] == 1
+    assert rec["emitted"] == 0
+    r = next(x for x in rec["refused"]
+             if x.get("gate") == "horizon_longer_than_the_record")
+    assert r["horizon_days"] == 90 and r["span_days"] == 59
+
+
+def test_the_horizon_is_refused_and_not_quietly_shortened(tmp_path):
+    """Подрязването щеше да запази твърдението живо, отговаряйки на друг въпрос.
+    Записаният отказ трябва да носи ИСКАНИЯ хоризонт, не удобен по-къс."""
+    tier = _sealed(tmp_path, "quakes.quake_m45_count", REAL_QUAKES_60)
+    rec = c.run(write=False, today=TODAY_13, window_days=60,
+                archive=tmp_path / "none", daily=tier)
+    r = next(x for x in rec["refused"]
+             if x.get("gate") == "horizon_longer_than_the_record")
+    assert r["horizon_days"] == 90, "хоризонтът е подрязан вместо отказан"
+    assert not any(h["horizon_days"] < 90 for h in rec["hypotheses"])
+
+
+def test_a_horizon_inside_the_record_passes_the_gate(tmp_path):
+    tier = _sealed(tmp_path, "co2.ppm_current", REAL_CO2_PPM)
+    fit = _fit_of(tier, "co2.ppm_current")
+    h = c._hypothesis("A", "m", fit, TODAY_13)
+    assert h["horizon_days"] <= fit["span_days"]
+    assert c.horizon_longer_than_the_record(h, fit) is None
+
+
+@pytest.mark.parametrize("ind,pairs,window", [
+    ("co2.annual_increase", REAL_CO2_ANNUAL, 30),
+    ("co2.ppm_current", REAL_CO2_PPM, 30),
+    ("quakes.quake_m45_count", REAL_QUAKES_60, 60),
+])
+def test_every_series_lands_in_exactly_one_bucket(tmp_path, ind, pairs, window):
+    """rejected + emitted + truncated == considered, и за трите свята.
+
+    run() вече вдига AssertionError, ако сметката не излезе; това го проверява
+    отвън, така че премахването на онази проверка да се вижда като червен тест,
+    а не като по-тих изход.
+    """
+    tier = _sealed(tmp_path, ind, pairs)
+    rec = c.run(write=False, today=TODAY_13, window_days=window,
+                archive=tmp_path / "none", daily=tier)
+    assert (sum(rec["rejected"].values()) + rec["emitted"] + rec["truncated"]
+            == rec["series_considered"])

@@ -350,6 +350,10 @@
           "index": "20.06"
         },
         {
+          "name": "output_contracts",
+          "index": "20.08"
+        },
+        {
           "name": "measurement_honesty",
           "index": "20.1"
         },

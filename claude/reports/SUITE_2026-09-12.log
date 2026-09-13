@@ -1,0 +1,1476 @@
+........................................................................ [  1%]
+........................................................................ [  2%]
+.................................................................F...... [  4%]
+........................................................................ [  5%]
+........................................................................ [  7%]
+..............................................F......................... [  8%]
+........................................................................ [ 10%]
+.....................F...........F.........F............................ [ 11%]
+.............................................F..F....................... [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 16%]
+........................................................................ [ 17%]
+............s...........................s............................... [ 18%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+..............................................FF........................ [ 23%]
+........................F.F............................................. [ 24%]
+........................................................................ [ 26%]
+............................................................F.......F... [ 27%]
+........................................................................ [ 29%]
+...........................................................F............ [ 30%]
+......................................FFE............................... [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 36%]
+................................................F....................... [ 37%]
+...................................................F.................... [ 39%]
+............................................ss...............s.ss....... [ 40%]
+.............................................F.......................... [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 45%]
+............................F........................................... [ 46%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+..............................................F......................... [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+...............................................F.F...................... [ 55%]
+..................................................................FF.... [ 56%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+.............................................F..F....................... [ 61%]
+..............................................................s....s.... [ 62%]
+..s..................................................................... [ 64%]
+...................................FF................................... [ 65%]
+.........................................F...........................F.. [ 67%]
+.....................................................................F.. [ 68%]
+........................................................................ [ 69%]
+.................................................................ss.s... [ 71%]
+.......................................................F................ [ 72%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 77%]
+....................................................................xx.x [ 78%]
+...x.x.................s.....................................x.......... [ 80%]
+...............................................................F.......F [ 81%]
+..FF.F.................................................................. [ 83%]
+.....FFF................................................F.......F....... [ 84%]
+........................................................................ [ 85%]
+..................................................................E.E... [ 87%]
+........................................................................ [ 88%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+..................................................F..................... [ 99%]
+..............................................                           [100%]
+=================================== ERRORS ====================================
+________ ERROR at teardown of test_the_barrier_uses_a_writable_handle _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001523D86D6A0>
+request = <SubRequest '_no_live_writes' for <Function test_the_barrier_uses_a_writable_handle>>
+
+    @pytest.fixture(autouse=True)
+    def _no_live_writes(monkeypatch, request):
+        """Intercept the write primitives and fail the test that used one on live state.
+    
+        Recorded and asserted at teardown rather than raised at the call site — and
+        that choice is itself a lesson from 16 Aug. The first attempt to guard the
+        alarm raised inside the write; the raise was swallowed by alarm_human's
+        `except Exception: pass`, the test went green, and the network call had still
+        happened. Anything that can be caught will be caught by fail-open code. A list
+        no exception handler can reach cannot be.
+        """
+        import builtins
+        import os as _os
+        import shutil as _shutil
+    
+        _open, _wt, _wb = builtins.open, Path.write_text, Path.write_bytes
+        _replace, _rename = _os.replace, _os.rename
+        _move, _copy2 = _shutil.move, _shutil.copy2
+    
+        def _note(target, how):
+            bad = _is_live(target)
+            if bad:
+                _LIVE_WRITES.append((request.node.name, how, bad))
+    
+        def open_(file, mode="r", *a, **k):
+            if any(c in str(mode) for c in ("w", "a", "x", "+")):
+                _note(file, "open")
+            return _open(file, mode, *a, **k)
+    
+        def wt(self, *a, **k):
+            _note(self, "Path.write_text")
+            return _wt(self, *a, **k)
+    
+        def wb(self, *a, **k):
+            _note(self, "Path.write_bytes")
+            return _wb(self, *a, **k)
+    
+        def replace_(src, dst, *a, **k):
+            _note(dst, "os.replace")
+            return _replace(src, dst, *a, **k)
+    
+        def rename_(src, dst, *a, **k):
+            _note(dst, "os.rename")
+            return _rename(src, dst, *a, **k)
+    
+        def move_(src, dst, *a, **k):
+            _note(dst, "shutil.move")
+            return _move(src, dst, *a, **k)
+    
+        def copy2_(src, dst, *a, **k):
+            _note(dst, "shutil.copy2")
+            return _copy2(src, dst, *a, **k)
+    
+        monkeypatch.setattr(builtins, "open", open_)
+        monkeypatch.setattr(Path, "write_text", wt)
+        monkeypatch.setattr(Path, "write_bytes", wb)
+        monkeypatch.setattr(_os, "replace", replace_)
+        monkeypatch.setattr(_os, "rename", rename_)
+        monkeypatch.setattr(_shutil, "move", move_)
+        monkeypatch.setattr(_shutil, "copy2", copy2_)
+    
+        mine_before = len(_LIVE_WRITES)
+        yield
+        mine = _LIVE_WRITES[mine_before:]
+        if mine:
+            lines = "\n".join(f"  {how} -> {path}" for _t, how, path in mine)
+>           raise AssertionError(
+                f"THIS TEST WROTE TO LIVE STATE:\n{lines}\n\n"
+                "On 16 Aug 2026 this exact class of leak sent a fabricated emergency "
+                "alarm to the human's phone and then suppressed the day's real one, and "
+                "wrote invented steps into the log the system uses to judge its own "
+                "brain.\nFix the FIXTURE — redirect the path into tmp_path. If the write "
+                "is genuinely intended, it does not belong in a test.")
+E           AssertionError: THIS TEST WROTE TO LIVE STATE:
+E             open -> C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\memory\llm_provenance.jsonl
+E           
+E           On 16 Aug 2026 this exact class of leak sent a fabricated emergency alarm to the human's phone and then suppressed the day's real one, and wrote invented steps into the log the system uses to judge its own brain.
+E           Fix the FIXTURE — redirect the path into tmp_path. If the write is genuinely intended, it does not belong in a test.
+
+test\conftest.py:414: AssertionError
+_ ERROR at teardown of test_each_question_is_asked_open_book_and_closed_book __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001524504B930>
+request = <SubRequest '_no_live_writes' for <Function test_each_question_is_asked_open_book_and_closed_book>>
+
+    @pytest.fixture(autouse=True)
+    def _no_live_writes(monkeypatch, request):
+        """Intercept the write primitives and fail the test that used one on live state.
+    
+        Recorded and asserted at teardown rather than raised at the call site — and
+        that choice is itself a lesson from 16 Aug. The first attempt to guard the
+        alarm raised inside the write; the raise was swallowed by alarm_human's
+        `except Exception: pass`, the test went green, and the network call had still
+        happened. Anything that can be caught will be caught by fail-open code. A list
+        no exception handler can reach cannot be.
+        """
+        import builtins
+        import os as _os
+        import shutil as _shutil
+    
+        _open, _wt, _wb = builtins.open, Path.write_text, Path.write_bytes
+        _replace, _rename = _os.replace, _os.rename
+        _move, _copy2 = _shutil.move, _shutil.copy2
+    
+        def _note(target, how):
+            bad = _is_live(target)
+            if bad:
+                _LIVE_WRITES.append((request.node.name, how, bad))
+    
+        def open_(file, mode="r", *a, **k):
+            if any(c in str(mode) for c in ("w", "a", "x", "+")):
+                _note(file, "open")
+            return _open(file, mode, *a, **k)
+    
+        def wt(self, *a, **k):
+            _note(self, "Path.write_text")
+            return _wt(self, *a, **k)
+    
+        def wb(self, *a, **k):
+            _note(self, "Path.write_bytes")
+            return _wb(self, *a, **k)
+    
+        def replace_(src, dst, *a, **k):
+            _note(dst, "os.replace")
+            return _replace(src, dst, *a, **k)
+    
+        def rename_(src, dst, *a, **k):
+            _note(dst, "os.rename")
+            return _rename(src, dst, *a, **k)
+    
+        def move_(src, dst, *a, **k):
+            _note(dst, "shutil.move")
+            return _move(src, dst, *a, **k)
+    
+        def copy2_(src, dst, *a, **k):
+            _note(dst, "shutil.copy2")
+            return _copy2(src, dst, *a, **k)
+    
+        monkeypatch.setattr(builtins, "open", open_)
+        monkeypatch.setattr(Path, "write_text", wt)
+        monkeypatch.setattr(Path, "write_bytes", wb)
+        monkeypatch.setattr(_os, "replace", replace_)
+        monkeypatch.setattr(_os, "rename", rename_)
+        monkeypatch.setattr(_shutil, "move", move_)
+        monkeypatch.setattr(_shutil, "copy2", copy2_)
+    
+        mine_before = len(_LIVE_WRITES)
+        yield
+        mine = _LIVE_WRITES[mine_before:]
+        if mine:
+            lines = "\n".join(f"  {how} -> {path}" for _t, how, path in mine)
+>           raise AssertionError(
+                f"THIS TEST WROTE TO LIVE STATE:\n{lines}\n\n"
+                "On 16 Aug 2026 this exact class of leak sent a fabricated emergency "
+                "alarm to the human's phone and then suppressed the day's real one, and "
+                "wrote invented steps into the log the system uses to judge its own "
+                "brain.\nFix the FIXTURE — redirect the path into tmp_path. If the write "
+                "is genuinely intended, it does not belong in a test.")
+E           AssertionError: THIS TEST WROTE TO LIVE STATE:
+E             Path.write_text -> C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\memory\_test_self_read_latest.json
+E           
+E           On 16 Aug 2026 this exact class of leak sent a fabricated emergency alarm to the human's phone and then suppressed the day's real one, and wrote invented steps into the log the system uses to judge its own brain.
+E           Fix the FIXTURE — redirect the path into tmp_path. If the write is genuinely intended, it does not belong in a test.
+
+test\conftest.py:414: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"model": "m", "open": {"asked": 12, "right": 0, "rate": 0.0}, "closed": {"asked": 12, "right": 0, "rate": 0.0}, "trap_open_invented": 0, "trap_closed_invented": 0, "silent": 0, "fallback": 0}
+_ ERROR at teardown of test_a_fallback_or_silence_is_not_scored_as_an_answer __
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000015245048E50>
+request = <SubRequest '_no_live_writes' for <Function test_a_fallback_or_silence_is_not_scored_as_an_answer>>
+
+    @pytest.fixture(autouse=True)
+    def _no_live_writes(monkeypatch, request):
+        """Intercept the write primitives and fail the test that used one on live state.
+    
+        Recorded and asserted at teardown rather than raised at the call site — and
+        that choice is itself a lesson from 16 Aug. The first attempt to guard the
+        alarm raised inside the write; the raise was swallowed by alarm_human's
+        `except Exception: pass`, the test went green, and the network call had still
+        happened. Anything that can be caught will be caught by fail-open code. A list
+        no exception handler can reach cannot be.
+        """
+        import builtins
+        import os as _os
+        import shutil as _shutil
+    
+        _open, _wt, _wb = builtins.open, Path.write_text, Path.write_bytes
+        _replace, _rename = _os.replace, _os.rename
+        _move, _copy2 = _shutil.move, _shutil.copy2
+    
+        def _note(target, how):
+            bad = _is_live(target)
+            if bad:
+                _LIVE_WRITES.append((request.node.name, how, bad))
+    
+        def open_(file, mode="r", *a, **k):
+            if any(c in str(mode) for c in ("w", "a", "x", "+")):
+                _note(file, "open")
+            return _open(file, mode, *a, **k)
+    
+        def wt(self, *a, **k):
+            _note(self, "Path.write_text")
+            return _wt(self, *a, **k)
+    
+        def wb(self, *a, **k):
+            _note(self, "Path.write_bytes")
+            return _wb(self, *a, **k)
+    
+        def replace_(src, dst, *a, **k):
+            _note(dst, "os.replace")
+            return _replace(src, dst, *a, **k)
+    
+        def rename_(src, dst, *a, **k):
+            _note(dst, "os.rename")
+            return _rename(src, dst, *a, **k)
+    
+        def move_(src, dst, *a, **k):
+            _note(dst, "shutil.move")
+            return _move(src, dst, *a, **k)
+    
+        def copy2_(src, dst, *a, **k):
+            _note(dst, "shutil.copy2")
+            return _copy2(src, dst, *a, **k)
+    
+        monkeypatch.setattr(builtins, "open", open_)
+        monkeypatch.setattr(Path, "write_text", wt)
+        monkeypatch.setattr(Path, "write_bytes", wb)
+        monkeypatch.setattr(_os, "replace", replace_)
+        monkeypatch.setattr(_os, "rename", rename_)
+        monkeypatch.setattr(_shutil, "move", move_)
+        monkeypatch.setattr(_shutil, "copy2", copy2_)
+    
+        mine_before = len(_LIVE_WRITES)
+        yield
+        mine = _LIVE_WRITES[mine_before:]
+        if mine:
+            lines = "\n".join(f"  {how} -> {path}" for _t, how, path in mine)
+>           raise AssertionError(
+                f"THIS TEST WROTE TO LIVE STATE:\n{lines}\n\n"
+                "On 16 Aug 2026 this exact class of leak sent a fabricated emergency "
+                "alarm to the human's phone and then suppressed the day's real one, and "
+                "wrote invented steps into the log the system uses to judge its own "
+                "brain.\nFix the FIXTURE — redirect the path into tmp_path. If the write "
+                "is genuinely intended, it does not belong in a test.")
+E           AssertionError: THIS TEST WROTE TO LIVE STATE:
+E             Path.write_text -> C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\memory\_test_self_read_latest.json
+E           
+E           On 16 Aug 2026 this exact class of leak sent a fabricated emergency alarm to the human's phone and then suppressed the day's real one, and wrote invented steps into the log the system uses to judge its own brain.
+E           Fix the FIXTURE — redirect the path into tmp_path. If the write is genuinely intended, it does not belong in a test.
+
+test\conftest.py:414: AssertionError
+---------------------------- Captured stdout call -----------------------------
+{"model": "m", "open": {"asked": 0, "right": 0, "rate": null}, "closed": {"asked": 0, "right": 0, "rate": null}, "trap_open_invented": 0, "trap_closed_invented": 0, "silent": 0, "fallback": 4}
+================================== FAILURES ===================================
+___________________ test_todays_coverage_is_still_thirteen ____________________
+
+    def test_todays_coverage_is_still_thirteen():
+        """If this fails, the cycle measures a different number of axes than it did
+        on 6 Sep. That is a finding about coverage, not a broken test — read it,
+        then update the constant."""
+        from core.gate_contract import gradeable_indicators
+        n = len(gradeable_indicators())
+>       assert n == INDICATORS_ON_6_SEP, (
+            f"measured_axes() now returns {n}, was {INDICATORS_ON_6_SEP} on 6 Sep")
+E       AssertionError: measured_axes() now returns 14, was 13 on 6 Sep
+E       assert 14 == 13
+
+test\test_axis_history.py:53: AssertionError
+_______ test_the_two_june_hypotheses_are_skipped_rather_than_mislearned _______
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_two_june_hypotheses_a0')
+
+    def test_the_two_june_hypotheses_are_skipped_rather_than_mislearned(tmp_path):
+        """The live resolved.json rows predate intervals and methods entirely. They must
+        not be folded in at some invented width. RESTORED 4 Sep 2026 after an edit
+        dropped it."""
+        rec = BR.run(write=False, state_path=tmp_path / "s.json",
+                     ledger_path=tmp_path / "l.jsonl")
+>       assert rec["revisions"] == 0
+E       assert 2 == 0
+
+test\test_belief_revision.py:214: AssertionError
+___________ test_every_source_in_the_real_specs_declares_a_cadence ____________
+
+    def test_every_source_in_the_real_specs_declares_a_cadence():
+        rep = cd.audit_specs()
+>       assert not rep["missing"], (
+            f"{len(rep['missing'])} of {rep['total']} sources declare no cadence: "
+            + ", ".join(rep["missing"][:6]))
+E       AssertionError: 1 of 82 sources declare no cadence: WATER_REVIEW/anchor_annual/promoted_27965
+E       assert not ['WATER_REVIEW/anchor_annual/promoted_27965']
+
+test\test_cadence_gate.py:50: AssertionError
+______ test_the_prompt_shows_both_tiers_with_next_expected_on_slow_lines ______
+
+    def test_the_prompt_shows_both_tiers_with_next_expected_on_slow_lines():
+        from core.gate_contract import indicator_block
+        block = indicator_block()
+        assert "DAILY-TIER" in block and "SLOW-TIER" in block
+        slow = block.split("SLOW-TIER", 1)[1]
+        for line in [l for l in slow.splitlines() if l.startswith("  ")]:
+            # Two honest shapes since the overdue decision: a series with a known
+            # next date names it, and an OVERDUE one says the date is unknown rather
+            # than printing an invented one. This test previously demanded the first
+            # shape of every line and so pinned the default that was removed.
+>           assert ("next expected" in line
+                    or "next publication date unknown" in line), line
+E           AssertionError:   MATERIALS_WASTE_REVIEW: 9.6359  [unit: percent of GNI; means: adjusted net savings pct; GOOD_DIRECTION: up]  (cadence UNDECLARED - any deadline will be refused)
+E           assert ('next expected' in '  MATERIALS_WASTE_REVIEW: 9.6359  [unit: percent of GNI; means: adjusted net savings pct; GOOD_DIRECTION: up]  (cadence UNDECLARED - any deadline will be refused)' or 'next publication date unknown' in '  MATERIALS_WASTE_REVIEW: 9.6359  [unit: percent of GNI; means: adjusted net savings pct; GOOD_DIRECTION: up]  (cadence UNDECLARED - any deadline will be refused)')
+
+test\test_cadence_gate.py:170: AssertionError
+______________ test_how_many_of_the_thirteen_are_usable_tonight _______________
+
+    def test_how_many_of_the_thirteen_are_usable_tonight():
+        """THE TRUE STATE, recorded. Two: CO2 (daily) and PLANETARY_POTENTIAL, whose
+        2025 figure means its next is genuinely still ahead. The other eleven are
+        overdue or have no observation date at all. This is not a regression and the
+        fix is a monthly tier, not a looser gate."""
+        from datetime import timedelta
+        from core.gate_contract import gradeable_indicators
+        usable = []
+        for k in gradeable_indicators():
+>           info = cd.for_indicator(k, today=TODAY)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test\test_cadence_gate.py:254: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+name = 'MATERIALS_WASTE_REVIEW', snapshot = None, path = None
+today = datetime.date(2026, 9, 6)
+
+    def for_indicator(name: str, snapshot: pathlib.Path | None = None,
+                      path: pathlib.Path | None = None, today: date | None = None) -> dict:
+        """{"cadence", "tier", "last_observed", "next_expected", "source"} or raises.
+    
+        An indicator nobody declared is an error, not a daily one.
+        """
+        decl = declared(path)
+        if name not in decl:
+>           raise CadenceError(f"indicator {name!r} has no declared cadence in {CONFIG.name}")
+E           core.cadence.CadenceError: indicator 'MATERIALS_WASTE_REVIEW' has no declared cadence in indicator_cadence.json
+
+core\cadence.py:148: CadenceError
+___________________ test_the_test_job_uses_the_network_flag ___________________
+
+    def test_the_test_job_uses_the_network_flag():
+        body = CI.read_text(encoding="utf-8")
+>       assert '-m "not network"' in body, (
+            "the pipeline does not use the marker this file exists to protect")
+E       AssertionError: the pipeline does not use the marker this file exists to protect
+E       assert '-m "not network"' in 'name: CI\n\n# 6 Sep 2026 — CI RUNS ONLY WHAT RUNS ANYWHERE.\n#\n# WHY THIS WAS REWRITTEN. The previous workflow ran t...    test/test_step_contract.py\n    test/test_pc4_partc.py\n    test/test_pc4_extrap.py\n    test/test_suite_gate.py\n'
+
+test\test_ci_contract.py:124: AssertionError
+___________________ test_no_hardcoded_drive_letters_in_code ___________________
+
+    def test_no_hardcoded_drive_letters_in_code():
+        """Finding 4 of the 21 Aug fork test: Path("Z:/nonexistent/dir/hb.json") is
+        an unwritable absolute path on Windows and an ordinary RELATIVE path on
+        Linux, where the test it guarded passed while exercising the opposite
+        behaviour from the one its name claims."""
+        offenders = []
+        for f in REPO.rglob("*.py"):
+            if any(p in SKIP_PARTS for p in f.parts):
+                continue
+            rel = str(f.relative_to(REPO)).replace("\\", "/")
+            if rel in DRIVE_LETTERS_ARE_THE_POINT:
+                continue
+            for i, line in enumerate(f.read_text(encoding="utf-8",
+                                                 errors="ignore").splitlines(), 1):
+                if DRIVE.search(line) and not line.strip().startswith("#"):
+                    offenders.append(f"{rel}:{i}: {line.strip()[:100]}")
+>       assert not offenders, (
+            "hardcoded drive letters make a path mean different things on different "
+            "platforms:\n" + "\n".join(offenders))
+E       AssertionError: hardcoded drive letters make a path mean different things on different platforms:
+E         core/receptors.py:695: r"C:\Windows\System32\LogFiles\Firewall\pfirewall.log")
+E         test/cdp.py:29: r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+E         test/cdp.py:30: r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+E         test/test_disk_actuator.py:226: ok, why = da.is_protected(pathlib.Path("C:/Windows/System32/x.tmp"),
+E         test/test_media_tools.py:158: assert M._version_flag("C:/x/ffmpeg.exe") == "-version"
+E         test/test_media_tools.py:174: monkeypatch.setattr(M, "find_deno", lambda: "C:/x/deno.exe")
+E         test/test_missing_dep_alert.py:71: _fake_status(monkeypatch, deno="C:/deno/deno.exe", deno_ok=False,
+E         test/test_missing_dep_alert.py:75: assert "C:/deno/deno.exe" in items[0]["why"]
+E         venv_train/Lib/site-packages/numpy/__config__.py:79: "include directory": r"C:/Users/runneradmin/AppData/Local/Temp/cibw-run-aabpcgf3/cp312-win_amd64/bui
+E         venv_train/Lib/site-packages/numpy/__config__.py:80: "lib directory": r"C:/Users/runneradmin/AppData/Local/Temp/cibw-run-aabpcgf3/cp312-win_amd64/build/v
+E         venv_train/Lib/site-packages/numpy/__config__.py:82: "pc file directory": r"D:/a/numpy-release/numpy-release/.openblas",
+E         venv_train/Lib/site-packages/numpy/__config__.py:89: "include directory": r"C:/Users/runneradmin/AppData/Local/Temp/cibw-run-aabpcgf3/cp312-win_amd64/bui
+E         venv_train/Lib/site-packages/numpy/__config__.py:90: "lib directory": r"C:/Users/runneradmin/AppData/Local/Temp/cibw-run-aabpcgf3/cp312-win_amd64/build/v
+E         venv_train/Lib/site-packages/numpy/__config__.py:92: "pc file directory": r"D:/a/numpy-release/numpy-release/.openblas",
+E         venv_train/Lib/site-packages/numpy/__config__.py:96: "path": r"C:\Users\runneradmin\AppData\Local\Temp\build-env-03ol50fu\Scripts\python.exe",
+E         venv_train/Lib/site-packages/psutil/_pswindows.py:159: "C:\Windows\systemew\file.txt".
+E         venv_train/Lib/site-packages/setuptools/msvc.py:441: "C:\ProgramData\Microsoft\VisualStudio\Packages\_Instances".
+E         venv_train/Lib/site-packages/setuptools/msvc.py:449: instances_dir = r'C:\ProgramData\Microsoft\VisualStudio\Packages\_Instances'
+E         venv_train/Lib/site-packages/torch/_appdirs.py:155: Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
+E         venv_train/Lib/site-packages/torch/_appdirs.py:268: Vista:      (Fail! "C:\ProgramData" is a hidden *system* directory on Vista.)
+E         venv_train/Lib/site-packages/torch/__init__.py:163: pfiles_path = os.getenv("ProgramFiles", r"C:\Program Files")
+E         venv_train/Lib/site-packages/_pytest/config/findpaths.py:348: file system ("/" on Unix and "C:\\" on Windows for example).
+E         venv_train/Lib/site-packages/torch/utils/backend_registration.py:380: message += f"BackendModule needs to have the following API's:\n `{func_name}(*args, **kwargs)`. \n"
+E         venv_train/Lib/site-packages/torch/utils/collect_env.py:196: system_root = os.environ.get('SYSTEMROOT', 'C:\\Windows')
+E         venv_train/Lib/site-packages/torch/utils/collect_env.py:234: system_root = os.environ.get('SYSTEMROOT', 'C:\\Windows')
+E         venv_train/Lib/site-packages/torch/utils/collect_env.py:235: program_files_root = os.environ.get('PROGRAMFILES', 'C:\\Program Files')
+E         venv_train/Lib/site-packages/torch/utils/cpp_extension.py:106: 'C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v*.*')
+E         venv_train/Lib/site-packages/torch/ao/quantization/fx/utils.py:885: f"QConfig {debug_string} quantization range must fall within the backend's:\n"
+E         venv_train/Lib/site-packages/setuptools/_vendor/backports/tarfile/__init__.py:1782: 'r' or 'r:\*' open for reading with transparent compression
+E         venv_train/Lib/site-packages/setuptools/_distutils/command/build_ext.py:690: fn = os.path.join(f"c:\\swig{vers}", "swig.exe")
+E         venv_train/Lib/site-packages/pip/_vendor/pkg_resources/__init__.py:1786: >>> vrp(r'C:\\foo/bar.txt')
+E         venv_train/Lib/site-packages/pip/_vendor/platformdirs/windows.py:243: os.path.normpath(os.environ.get("PROGRAMDATA", os.environ.get("ALLUSERSPROFILE", "C:\\ProgramData"))
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3190: a = np.array(['P:\\20x_dapi_cy3\\20x_dapi_cy3_20100185_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3191: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100186_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3192: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100187_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3193: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100189_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3194: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100190_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3195: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100191_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3196: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100192_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3197: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100193_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3198: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100194_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3199: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100195_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3200: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100196_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3201: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100197_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3202: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100198_1',
+E         venv_train/Lib/site-packages/numpy/_core/tests/test_multiarray.py:3203: 'P:\\20x_dapi_cy3\\20x_dapi_cy3_20100199_1'],
+E         venv_train/Lib/site-packages/numpy/lib/tests/test__datasource.py:46: '..\\system.dat', 'c:\\windows\\system.dat']
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:18: print("Q:\n",Q)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:19: print("H:\n",H)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:40: print("B:\n", B)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:55: print("Q:\n", Q)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:56: print("R:\n", R)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:86: print("B:\n", B)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen.py:101: print("E:\n", E)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:80: print("U:\n", str(U))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:81: print("S:\n", str(S0))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:82: print("V:\n", str(V))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:93: print("D:\n", str(D), "\n", err)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:99: print("E:\n", str(E), "\n", err)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:119: print("U:\n", str(U))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:120: print("S:\n", str(S0))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:121: print("V:\n", str(V))
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:132: print("D:\n", str(D), "\n", err)
+E         venv_train/Lib/site-packages/mpmath/tests/test_eigen_symmetric.py:138: print("E:\n", str(E), "\n", err)
+E       assert not ['core/receptors.py:695: r"C:\\Windows\\System32\\LogFiles\\Firewall\\pfirewall.log")', 'test/cdp.py:29: r"C:\\Program...xe") == "-version"', 'test/test_media_tools.py:174: monkeypatch.setattr(M, "find_deno", lambda: "C:/x/deno.exe")', ...]
+
+test\test_ci_contract.py:188: AssertionError
+_ PaidSubstitutionIsRefused.test_a_free_model_serving_the_request_is_an_answer _
+
+self = <test_consult_free_only.PaidSubstitutionIsRefused testMethod=test_a_free_model_serving_the_request_is_an_answer>
+
+    def test_a_free_model_serving_the_request_is_an_answer(self):
+        # Негативен контрол: пазачът не трябва да блокира ЛЕГИТИМЕН безплатен
+        # отговор — иначе „всичко е отказано" щеше да минава за коректност.
+        free = consult.OPPONENTS[-1]
+    
+        def fake_post(url, **kw):
+            return _Resp(200, _served(free, "ето къде грешиш"))
+    
+        res = self._run_with(fake_post)
+        self.assertTrue(res["ok"], res)
+>       self.assertEqual(res["backend"], free)
+E       AssertionError: 'nvidia:nvidia/nemotron-3-super-120b-a12b:free' != 'nvidia/nemotron-3-super-120b-a12b:free'
+E       - nvidia:nvidia/nemotron-3-super-120b-a12b:free
+E       ? -------
+E       + nvidia/nemotron-3-super-120b-a12b:free
+
+test\test_consult_free_only.py:112: AssertionError
+_ PaidSubstitutionIsRefused.test_a_paid_model_serving_the_request_is_not_an_answer _
+
+self = <test_consult_free_only.PaidSubstitutionIsRefused testMethod=test_a_paid_model_serving_the_request_is_not_an_answer>
+
+    def test_a_paid_model_serving_the_request_is_not_an_answer(self):
+        calls = []
+    
+        def fake_post(url, **kw):
+            calls.append(kw["json"]["model"])
+            # OpenRouter приема заявката, но я обслужва с ПЛАТЕНИЯ вариант.
+            return _Resp(200, _served("moonshotai/kimi-k2.6"))
+    
+        res = self._run_with(fake_post)
+>       self.assertFalse(res["ok"],
+                         "отговор от платен модел беше приет — пазачът го няма")
+E       AssertionError: True is not false : отговор от платен модел беше приет — пазачът го няма
+
+test\test_consult_free_only.py:84: AssertionError
+___________________ test_the_five_test_rows_are_still_there ___________________
+
+    def test_the_five_test_rows_are_still_there():
+        p = REPO / "memory" / "p_survive_history.jsonl"
+        rows = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines()
+                if l.strip()]
+        data = [r for r in rows if r.get("kind") != "ANNOTATION"]
+>       assert len(data) == 5, "a history line was deleted: {}".format(len(data))
+E       AssertionError: a history line was deleted: 29
+E       assert 29 == 5
+E        +  where 29 = len([{'metric': 'p_survive_next_cycle', 'value': None, 'confidence': 'none', 'horizon_seconds': 14400.0, ...}, {'metric': ...0, ...}, {'metric': 'p_survive_next_cycle', 'value': 0.0044, 'confidence': 'low', 'horizon_seconds': 6829.1, ...}, ...])
+
+test\test_corrections_27.py:150: AssertionError
+______________ test_the_annotation_comes_after_what_it_annotates ______________
+
+    def test_the_annotation_comes_after_what_it_annotates():
+        p = REPO / "memory" / "p_survive_history.jsonl"
+        lines = [l for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+>       assert json.loads(lines[-1]).get("kind") == "ANNOTATION"
+E       assert None == 'ANNOTATION'
+E        +  where None = <built-in method get of dict object at 0x00000152427B8F00>('kind')
+E        +    where <built-in method get of dict object at 0x00000152427B8F00> = {'metric': 'p_survive_next_cycle', 'value': 1.0, 'confidence': 'high', 'horizon_seconds': 7549.3, ...}.get
+E        +      where {'metric': 'p_survive_next_cycle', 'value': 1.0, 'confidence': 'high', 'horizon_seconds': 7549.3, ...} = <function loads at 0x0000015216F38A90>('{"metric": "p_survive_next_cycle", "value": 1.0, "confidence": "high", "horizon_seconds": 7549.3, "horizon_source": "...02ed9f1991de865253ccd07b83", "ts": "2026-09-12T17:39:31.739654+00:00", "cycle_id": "2026-09-12T20:39:02.246817+03:00"}')
+E        +        where <function loads at 0x0000015216F38A90> = json.loads
+
+test\test_corrections_27.py:170: AssertionError
+________ test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk _________
+
+sandbox = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_end_to_end_a_spawned_cycl0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001523E62DA90>
+
+    @pytest.mark.skipif(os.name != "nt",
+                        reason="the reaper waits on a non-child by handle, which is "
+                               "a Windows capability; POSIX records it unavailable")
+    def test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk(sandbox, monkeypatch):
+        """The whole chain, with real processes: supervisor -> detached reaper -> file.
+    
+        The unit tests above call reap() directly, so they would still pass if
+        spawn_cycle never started a reaper, or started one that could not import
+        itself, or handed it the wrong pid. This is the one that fails if the wiring
+        is wrong.
+        """
+        runner = sandbox / "runner.py"
+        runner.write_text("import sys, time\ntime.sleep(0.3)\nsys.exit(5)\n",
+                          encoding="utf-8")
+        monkeypatch.setattr(sup, "RUNNER", runner)
+        monkeypatch.setattr(sup, "REAPER_SETTLE_SEC", 0.5)
+    
+        pid = sup.spawn_cycle("e2e-test")
+        assert pid, "the cycle failed to spawn"
+    
+        record = sandbox / "cycle_exit.json"
+        deadline = time.monotonic() + 40.0
+        while time.monotonic() < deadline:
+            if record.exists():
+                break
+            time.sleep(0.1)
+        assert record.exists(), (
+            "no exit record appeared — spawn_cycle did not start a working reaper")
+    
+        rec = json.loads(record.read_text(encoding="utf-8"))
+>       assert rec["exit_code"] == 5, (
+               ^^^^^^^^^^^^^^^^
+            f"the chain recorded the wrong code: {rec}. The launcher stub is "
+            f"supposed to forward its child's exit code; if this is 0 or 1 it did "
+            f"not, and the reaper is watching the wrong process.")
+E       KeyError: 'exit_code'
+
+test\test_cycle_reaper.py:332: KeyError
+---------------------------- Captured stdout call -----------------------------
+[2026-09-12T20:01:46.019891+00:00] cycle output -> C:\Users\emilb\AppData\Local\Temp\pytest-of-emilb\pytest-62\test_end_to_end_a_spawned_cycl0\cycle_logs\cycle_2026-09-12_230146.log
+[2026-09-12T20:01:46.027228+00:00] reaper 232604 watching cycle pid 239704 -> C:\Users\emilb\AppData\Local\Temp\pytest-of-emilb\pytest-62\test_end_to_end_a_spawned_cycl0\cycle_exit.json
+___________ test_sealing_a_cycle_here_leaves_the_real_ledgers_alone ___________
+
+    def test_sealing_a_cycle_here_leaves_the_real_ledgers_alone():
+        """Every path _seal_cycle_record touches, checked on disk.
+    
+        A redirect that covers three of a function's four write surfaces is not a
+        sandbox. This asserts the real files by name rather than trusting that the
+        fixture kept up with the code.
+        """
+        for rel in ("memory/extra_calls_log.jsonl",
+                    "memory/extra_calls_suspended.flag"):
+>           assert not (REPO / rel).exists(), (
+                "%s exists, and no real cycle has run: a test wrote it" % rel)
+E           AssertionError: memory/extra_calls_log.jsonl exists, and no real cycle has run: a test wrote it
+E           assert not True
+E            +  where True = exists()
+E            +    where exists = (WindowsPath('C:/Users/emilb/Desktop/AGI/CORTEX++_MERGED') / 'memory/extra_calls_log.jsonl').exists
+
+test\test_cycle_seals_its_own_completion.py:185: AssertionError
+_____ test_the_sealed_record_shows_direction_as_the_last_generated_field ______
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_sealed_record_shows_d0')
+
+    def test_the_sealed_record_shows_direction_as_the_last_generated_field(tmp_path):
+        """THE TEST THE ROUND EXISTS FOR. Not 'the record has a direction' — the record
+        shows WHERE in the generation the direction came, and it came last."""
+        bet = _seal(tmp_path, [_c(event=2, direction="DOWN"), _c(event=2, direction="DOWN")])
+        spy = bet["assets"]["SPY"]
+>       assert spy["sealed_direction"] == "DOWN"
+E       AssertionError: assert None == 'DOWN'
+
+test\test_direction_last.py:164: AssertionError
+_________ test_a_batched_append_is_only_guaranteed_after_the_barrier __________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_a_batched_append_is_only_0')
+
+    def test_a_batched_append_is_only_guaranteed_after_the_barrier(tmp_path):
+        path = tmp_path / "b.jsonl"
+        for i in range(5):
+            durable.append_json(path, {"n": i}, batched=True)
+>       assert durable.pending() == ["b.jsonl"]
+E       AssertionError: assert ['b.jsonl', '...enance.jsonl'] == ['b.jsonl']
+E         
+E         Left contains one more item: 'llm_provenance.jsonl'
+E         Use -v to get more diff
+
+test\test_durable_writes.py:78: AssertionError
+___________________ test_the_barrier_uses_a_writable_handle ___________________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_barrier_uses_a_writab0')
+
+    def test_the_barrier_uses_a_writable_handle(tmp_path):
+        """Measured, not assumed: fsync on an O_RDONLY fd is FlushFileBuffers on
+        Windows, needs GENERIC_WRITE, and fails. The first version of barrier()
+        reported synced=0 failed=1 while reading as durability."""
+        path = tmp_path / "w.jsonl"
+        durable.append_json(path, {"n": 1}, batched=True)
+        res = durable.barrier()
+>       assert res["synced"] == 1 and res["failed"] == 0, res
+E       AssertionError: {'synced': 3, 'failed': 0, 'paths': ['b.jsonl', 'w.jsonl', 'llm_provenance.jsonl']}
+E       assert (3 == 1)
+
+test\test_durable_writes.py:92: AssertionError
+________________ test_the_live_record_really_is_median_skewed _________________
+
+    def test_the_live_record_really_is_median_skewed():
+        """Pins the number quoted in the module docstring."""
+        steps = json.loads((REPO / "memory" / "step_contract_latest.json")
+                           .read_text(encoding="utf-8")).get("steps") or []
+        vals = [float(s["seconds"]) for s in steps
+                if isinstance(s.get("seconds"), (int, float))]
+        if len(vals) < 5:
+            pytest.skip("not enough recorded steps to show the skew")
+        import statistics
+>       assert statistics.mean(vals) > 2 * statistics.median(vals), (
+            "the live record is no longer mean-skewed; the median argument still "
+            "holds but the docstring's numbers are stale")
+E       AssertionError: the live record is no longer mean-skewed; the median argument still holds but the docstring's numbers are stale
+E       assert 15.097999999999999 > (2 * 8.305)
+E        +  where 15.097999999999999 = <function mean at 0x000001521BA83B60>([14.93, 39.94, 11.45, 44.16, 0.87, 0.79, ...])
+E        +    where <function mean at 0x000001521BA83B60> = <module 'statistics' from 'C:\\Users\\emilb\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\statistics.py'>.mean
+E        +  and   8.305 = <function median at 0x000001521BA82B90>([14.93, 39.94, 11.45, 44.16, 0.87, 0.79, ...])
+E        +    where <function median at 0x000001521BA82B90> = <module 'statistics' from 'C:\\Users\\emilb\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\statistics.py'>.median
+
+test\test_flow_score.py:321: AssertionError
+________________ test_the_known_blind_list_has_not_gone_stale _________________
+
+    def test_the_known_blind_list_has_not_gone_stale():
+        """A name left here after the step is declared makes the ratchet loose, and
+        a limit above the count is a place for the next defect to hide."""
+        found = set(_blind_producers())
+        stale = KNOWN_BLIND - found
+>       assert not stale, (
+            f"these are in KNOWN_BLIND but are no longer blind: {sorted(stale)}. "
+            f"Remove them from KNOWN_BLIND in the commit that declared them.")
+E       AssertionError: these are in KNOWN_BLIND but are no longer blind: ['self_observer']. Remove them from KNOWN_BLIND in the commit that declared them.
+E       assert not {'self_observer'}
+
+test\test_gate_producers_declare.py:95: AssertionError
+______________ test_each_beat_reports_the_step_it_is_actually_in ______________
+
+    def test_each_beat_reports_the_step_it_is_actually_in():
+        """A beat carrying the wrong step id is worse than a missing one: the watchdog's
+        per-step ceiling is keyed on that id, so a slow step reporting a fast step's number
+        gets killed early, and the log points the reader at the wrong place."""
+        wrong = [f"step {num} ({desc}) beats as {bid!r}"
+                 for num, desc, beats, bid in _steps_and_beats()
+                 if beats and bid and bid != num]
+>       assert not wrong, ("These beats report a different step id than their boundary:\n  "
+                           + "\n  ".join(wrong))
+E       AssertionError: These beats report a different step id than their boundary:
+E           step 2 (LLM self-review оси) beats as '2.5'
+E           step 12.45 (Facade self-check — did each real scorer consume real data, or) beats as '12.42'
+E           step 12.6 (Goal score calculator) beats as '12.56'
+E           step 12.7 (Cognitive Orchestrator — Attentional Meta Protocol) beats as '12.65'
+E           step 25.4 (СИМВОЛНАТА КОЛОНА И РЕЛЕТО) beats as '25.35'
+E           step 25.37 (ИЗТОЧНИЦИ, КОИТО ЧАКАТ КЛЮЧ) beats as '25.38'
+E       assert not ["step 2 (LLM self-review оси) beats as '2.5'", "step 12.45 (Facade self-check — did each real scorer consume real dat..."step 25.4 (СИМВОЛНАТА КОЛОНА И РЕЛЕТО) beats as '25.35'", "step 25.37 (ИЗТОЧНИЦИ, КОИТО ЧАКАТ КЛЮЧ) beats as '25.38'"]
+
+test\test_heartbeat_coverage.py:93: AssertionError
+_________ test_semantic_memory_does_not_remember_unknown_but_names_it _________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_semantic_memory_does_not_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001523EB27B60>
+capsys = <_pytest.capture.CaptureFixture object at 0x0000015242FD8FD0>
+
+    def test_semantic_memory_does_not_remember_unknown_but_names_it(tmp_path, monkeypatch, capsys):
+>       import memory.semantic_memory as sm
+
+test\test_internet_truncation.py:200: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+memory\semantic_memory.py:9: in <module>
+    import chromadb
+venv\Lib\site-packages\chromadb\__init__.py:11: in <module>
+    from chromadb.auth.token_authn import TokenTransportHeader
+venv\Lib\site-packages\chromadb\auth\token_authn\__init__.py:24: in <module>
+    from chromadb.telemetry.opentelemetry import (
+venv\Lib\site-packages\chromadb\telemetry\opentelemetry\__init__.py:13: in <module>
+    from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+venv\Lib\site-packages\opentelemetry\exporter\otlp\proto\grpc\trace_exporter\__init__.py:15: in <module>
+    from opentelemetry.exporter.otlp.proto.grpc.exporter import (  # noqa: F401
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    # Copyright The OpenTelemetry Authors
+    # SPDX-License-Identifier: Apache-2.0
+    
+    """OTLP Exporter
+    
+    This module provides a mixin class for OTLP exporters that send telemetry data
+    to an OTLP-compatible receiver via gRPC. It includes a configurable reconnection
+    logic to handle transient collector outages.
+    
+    """
+    
+    import os
+    import random
+    import threading
+    from abc import ABC, abstractmethod
+    from collections.abc import (
+        Callable,
+        Iterable,
+        Sequence,  # noqa: F401
+    )
+    from collections.abc import Sequence as TypingSequence
+    from logging import getLogger
+    from os import environ
+    from time import time
+    from typing import (  # noqa: F401
+        Any,
+        Generic,
+        Literal,
+        NewType,
+        Optional,
+        TypeVar,
+        Union,
+    )
+    from urllib.parse import urlparse
+    
+    from google.rpc.error_details_pb2 import RetryInfo
+    from typing_extensions import deprecated
+    
+    from grpc import (
+        ChannelCredentials,
+        Compression,
+        RpcError,
+        StatusCode,
+        insecure_channel,
+        secure_channel,
+        ssl_channel_credentials,
+    )
+>   from opentelemetry.exporter.otlp.proto.common._exporter_metrics import (
+        create_exporter_metrics,
+    )
+E   ModuleNotFoundError: No module named 'opentelemetry.exporter.otlp.proto.common._exporter_metrics'
+
+venv\Lib\site-packages\opentelemetry\exporter\otlp\proto\grpc\exporter.py:48: ModuleNotFoundError
+_______ test_climate_global_risk_is_corrected_to_high_under_the_ruling ________
+
+    def test_climate_global_risk_is_corrected_to_high_under_the_ruling():
+        """THE SECOND PROOF, rewritten by Emil's polarity ruling of 21 August.
+    
+        This test used to assert the opposite — that a _RISK_ axis is FLAGGED and
+        never corrected — because nobody had said whether LOW meant "low risk" or
+        "far from goal". The ruling settled it: the level word describes CLOSENESS
+        TO GOAL on every axis, risk inverts once at measurement and never in the
+        label. So 81.85/100 is HIGH, and the axis is corrected like any other.
+        """
+        result = lr.reconcile()
+        row = next((r for r in result["rows"] if r["axis"] == UNPINNED_AXIS), None)
+    
+        assert row is not None
+        assert row["verdict"] == lr.CORRECTED, (
+            f"\n  CLIMATE_GLOBAL_RISK WAS {row['verdict']}, NOT CORRECTED.\n"
+            f"  Under the ruling there is nothing left to be ambiguous about:\n"
+            f"  the word means closeness to goal on every axis.\n"
+        )
+        assert row["corrected_to"] == "HIGH"
+>       assert row["score"] == pytest.approx(0.8185)
+E       assert 0.821 == 0.8185 ± 8.2e-07
+E         
+E         comparison failed
+E         Obtained: 0.821
+E         Expected: 0.8185 ± 8.2e-07
+
+test\test_level_reconciler.py:109: AssertionError
+______________ test_the_live_climate_fact_is_what_we_think_it_is ______________
+
+    def test_the_live_climate_fact_is_what_we_think_it_is():
+        """Guard the premise. If auto_levels or goal_score changes shape, the proof
+        below would pass or fail for reasons unrelated to the rule."""
+        facts = mp.gather_facts()
+        climate = next((f for f in facts if f["axis"] == CLIMATE), None)
+    
+        assert climate is not None, "CLIMATE_GLOBAL_RISK_REVIEW is not in the feeds"
+        assert climate["level"] == "LOW", f"auto_levels no longer says LOW: {climate['level']}"
+>       assert climate["score"] == pytest.approx(0.8185), climate["score"]
+E       AssertionError: 0.821
+E       assert 0.821 == 0.8185 ± 8.2e-07
+E         
+E         comparison failed
+E         Obtained: 0.821
+E         Expected: 0.8185 ± 8.2e-07
+
+test\test_metta_parallel.py:66: AssertionError
+_________________ test_the_disagreement_states_both_readings __________________
+
+    def test_the_disagreement_states_both_readings():
+        """An operator must not have to open two files to see the contradiction."""
+        facts = mp.gather_facts()
+        fired = mp.evaluate_python(facts)
+        entry = next(d for d in mp.disagreements(facts, fired) if d["axis"] == CLIMATE)
+    
+        assert entry["level"] == "LOW"
+>       assert entry["score_pct"] == pytest.approx(81.85)
+E       assert 82.1 == 81.85 ± 8.2e-05
+E         
+E         comparison failed
+E         Obtained: 82.1
+E         Expected: 81.85 ± 8.2e-05
+
+test\test_metta_parallel.py:91: AssertionError
+__________ test_the_live_registry_shows_ucdp_active_and_eia_waiting ___________
+
+    def test_the_live_registry_shows_ucdp_active_and_eia_waiting():
+        """The UCDP precedent, on this machine: its token is in .env, so it reads
+        ACTIVE with nothing having been switched."""
+        rows = {r["source"]: r for r in na.scan()}
+        assert rows["ucdp_api"]["state"] == na.ACTIVE
+>       assert rows["eia_api"]["state"] == na.WAITING
+               ^^^^^^^^^^^^^^^
+E       KeyError: 'eia_api'
+
+test\test_needs_auth.py:228: KeyError
+_______________ test_the_waiting_sources_reach_the_cycle_report _______________
+
+    def test_the_waiting_sources_reach_the_cycle_report():
+        waiting = na.for_cycle_report()
+>       assert any(r["source"] == "eia_api" for r in waiting)
+E       assert False
+E        +  where False = any(<generator object test_the_waiting_sources_reach_the_cycle_report.<locals>.<genexpr> at 0x0000015242F669B0>)
+
+test\test_needs_auth.py:234: AssertionError
+_________ test_nothing_outside_the_allowed_files_mentions_it_in_code __________
+
+    def test_nothing_outside_the_allowed_files_mentions_it_in_code():
+        """The broad sweep: every tracked source file in the repo."""
+        import subprocess
+        r = subprocess.run(["git", "ls-files"], cwd=str(REPO),
+                           capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr
+        offenders = []
+        for rel in r.stdout.splitlines():
+            if not rel.endswith((".py", ".md", ".json", ".txt", ".yaml")):
+                continue
+            if rel in ALLOWED:
+                continue
+            try:
+                text = (REPO / rel).read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            if any(_MENTION.search(l) for l in _code_lines(text)):
+                offenders.append(rel)
+>       assert not offenders, offenders
+E       AssertionError: ['claude/reports/HANDOFF_5SEP_0115.md', 'config/attention_map.json', 'docs/HANDOVER_2026-09-10.md', 'docs/QUEUE.md', 'experiments/prophecy/self_forecast.py', 'test/test_self_forecast.py']
+E       assert not ['claude/reports/HANDOFF_5SEP_0115.md', 'config/attention_map.json', 'docs/HANDOVER_2026-09-10.md', 'docs/QUEUE.md', 'experiments/prophecy/self_forecast.py', 'test/test_self_forecast.py']
+
+test\test_p_survive.py:248: AssertionError
+_________ test_the_recorded_line_is_not_written_where_a_prompt_reads __________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_recorded_line_is_not_0')
+
+    def test_the_recorded_line_is_not_written_where_a_prompt_reads(tmp_path):
+        """memory/ is full of files the mirror reads. This one has its own name and
+        nothing reads it back."""
+        assert ps.HISTORY.name == "p_survive_history.jsonl"
+        import subprocess
+        r = subprocess.run(["git", "grep", "-l", "p_survive_history"],
+                           cwd=str(REPO), capture_output=True, text=True)
+        readers = [f for f in r.stdout.splitlines() if f not in ALLOWED]
+>       assert not readers, readers
+E       AssertionError: ['config/attention_map.json']
+E       assert not ['config/attention_map.json']
+
+test\test_p_survive.py:283: AssertionError
+_____ test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test _____
+
+    def test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test():
+        """The measured result, kept as a test so a later loosening of the gate is
+        visible as a change in this number rather than as nothing at all.
+    
+        D_SCORE survives, and correctly: the composite IS D_SCORE's own number. The
+        other five borrowed it. That the gate lets exactly one through is the point
+        — a rule that rejected all six would be indistinguishable from a rule that
+        rejects everything, which is what the previous night's gate did.
+        """
+        menus = pe.all_menus()
+        survived, rejected = [], []
+        for f in sorted(FIXTURES.glob("*.json")):
+            rec = json.loads(f.read_text(encoding="utf-8"))
+            phase = rec["phase"]
+            ok, _ = pd.validate(rec["debrief"], menus[phase],
+                                pe.own_numbers(phase, menus))
+            (survived if ok else rejected).append(phase)
+    
+>       assert survived == ["D_SCORE"], (
+            f"survived={survived} rejected={rejected} — expected D_SCORE alone")
+E       AssertionError: survived=['B_SENSE'] rejected=['A_ORIENT', 'C_SNAPSHOT', 'D_SCORE', 'E_PROPOSE', 'F_SELF'] — expected D_SCORE alone
+E       assert ['B_SENSE'] == ['D_SCORE']
+E         
+E         At index 0 diff: 'B_SENSE' != 'D_SCORE'
+E         Use -v to get more diff
+
+test\test_phase_evidence_swap.py:236: AssertionError
+_______________ test_the_replay_script_reports_the_same_number ________________
+
+    def test_the_replay_script_reports_the_same_number():
+        """The script is the thing a human runs; if it and the library disagree, the
+        human is reading a different gate from the one that runs."""
+        from scripts.replay_debriefs import replay
+        out = replay(FIXTURES)
+        was = [r for r in out["rows"] if r["was"]]
+        now = [r for r in was if r["now"]]
+        assert len(was) == 6
+        assert len(now) == 1
+>       assert now[0]["phase"] == "D_SCORE"
+E       AssertionError: assert 'B_SENSE' == 'D_SCORE'
+E         
+E         - D_SCORE
+E         + B_SENSE
+
+test\test_phase_evidence_swap.py:250: AssertionError
+____________ test_the_cli_refuses_without_claiming_the_cycle_lock _____________
+
+    def test_the_cli_refuses_without_claiming_the_cycle_lock():
+        """REGRESSION, 20 Aug 2026. The first version called _classify_cycle_id() to
+        learn the cycle_id — and that function CLAIMS memory/cycle.lock as a side
+        effect. Running `--from D_SCORE` therefore overwrote the lock of a cycle
+        that was still on disk. A gate that seizes the lock in order to announce it
+        will not run is worse than no gate.
+        """
+        lock = REPO / "memory" / "cycle.lock"
+        before = lock.read_bytes() if lock.exists() else None
+    
+        result = subprocess.run(
+            [sys.executable, str(REPO / "fast_cycle_runner.py"), "--from", "D_SCORE"],
+            cwd=str(REPO), capture_output=True, text=True, timeout=180,
+            env={**os.environ, "PYTHONIOENCODING": "utf-8"},
+        )
+    
+        after = lock.read_bytes() if lock.exists() else None
+        assert after == before, (
+            "running the resume gate modified memory/cycle.lock. It must be read-only: "
+            "a live cycle owns that file."
+        )
+        assert "поех ключалката" not in result.stdout, (
+            "the gate ran the boot block, which claims the lock"
+        )
+        assert result.returncode == 2, f"expected refusal exit 2, got {result.returncode}"
+>       assert "REFUSING --from" in result.stdout
+E       AssertionError: assert 'REFUSING --from' in '[PHASE] no cycle_id: neither CORTEX_CYCLE_ID nor a readable memory/cycle.lock. There is no cycle to resume into.\n'
+E        +  where '[PHASE] no cycle_id: neither CORTEX_CYCLE_ID nor a readable memory/cycle.lock. There is no cycle to resume into.\n' = CompletedProcess(args=['C:\\Users\\emilb\\Desktop\\AGI\\CORTEX++_MERGED\\venv\\Scripts\\python.exe', 'C:\\Users\\emilb...no cycle_id: neither CORTEX_CYCLE_ID nor a readable memory/cycle.lock. There is no cycle to resume into.\n', stderr='').stdout
+
+test\test_phase_resume.py:206: AssertionError
+____________________ test_every_promised_path_has_an_entry ____________________
+
+    def test_every_promised_path_has_an_entry():
+        """THE RULE. A produces path with no entry here is a file nobody has said they
+        need."""
+        missing = sorted(set(_promised()) - set(_declared()))
+>       assert not missing, (
+            "these paths are promised by config/cycle_phases.json and have NO entry in "
+            "config/produces_readers.json. Name a reader, or stop producing them:\n  "
+            + "\n  ".join(missing))
+E       AssertionError: these paths are promised by config/cycle_phases.json and have NO entry in config/produces_readers.json. Name a reader, or stop producing them:
+E           memory/backend_order_measured.json
+E           memory/daily_tier.jsonl
+E           memory/learn_world_latest.json
+E       assert not ['memory/backend_order_measured.json', 'memory/daily_tier.jsonl', 'memory/learn_world_latest.json']
+
+test\test_produces_has_a_reader.py:48: AssertionError
+___________________ test_there_are_no_patches_from_13_july ____________________
+
+    def test_there_are_no_patches_from_13_july():
+        """The citation named 13 July. The earliest on disk is later, and saying so
+        is the point of counting rather than quoting."""
+        rows = sla.quarantined()
+        oldest = max(r["age_hours"] for r in rows) / 24
+        earliest = min(datetime.fromisoformat(r["entered"]) for r in rows)
+    
+        assert earliest.date() > datetime(2026, 7, 20, tzinfo=timezone.utc).date(), (
+            f"earliest quarantined patch is {earliest.date()}"
+        )
+>       assert 20 < oldest < 40, f"oldest is {oldest:.1f} days"
+E       AssertionError: oldest is 45.6 days
+E       assert 45.57083333333333 < 40
+
+test\test_proposal_sla.py:190: AssertionError
+____________________ test_the_scanner_does_not_read_itself ____________________
+
+    def test_the_scanner_does_not_read_itself():
+        """The comment in triage_quarantine.py naming agents/registry.json as an example of
+        an orphan made the scanner find a 'reader' for it — the tool answering its own
+        question with its own prose."""
+        w = T._wiring('P = "registry.json"', "probe.py")
+>       assert "registry.json" in w["orphan_artifacts"], \
+            "the tool's own documentation must not count as a loader"
+E       AssertionError: the tool's own documentation must not count as a loader
+E       assert 'registry.json' in []
+
+test\test_quarantine_triage.py:83: AssertionError
+__________ test_script_style_suite[experiments/dreams/test_dream.py] __________
+
+script = 'experiments/dreams/test_dream.py'
+
+    @pytest.mark.parametrize("script", SCRIPT_STYLE)
+    def test_script_style_suite(script):
+        env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+        proc = subprocess.run([sys.executable, str(REPO / script)],
+                              cwd=str(REPO), env=env, capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=900)
+        if proc.returncode != 0:
+            tail = "\n".join((proc.stdout or "").splitlines()[-25:])
+>           pytest.fail(f"{script} exited {proc.returncode}\n"
+                        f"--- stdout (tail) ---\n{tail}\n"
+                        f"--- stderr (tail) ---\n{(proc.stderr or '')[-2000:]}")
+E           Failed: experiments/dreams/test_dream.py exited 1
+E           --- stdout (tail) ---
+E           
+E           ── facts-gathering (real readers, synthetic day) ──
+E             [PASS] exactly 4 ledger events for 2026-07-14 (yesterday's excluded) — got 4: ['MISSED_RUN_CATCHUP', 'CYCLE_STARTED', 'CYCLE_KILLED', 'LOCK_STALE_CLEARED']
+E             [PASS] the previous day's CYCLE_FINISHED did NOT leak into today
+E             [PASS] goal composite read = 0.5459
+E             [PASS] previous goal from sidecar = 0.52
+E             [FAIL] delta computed = None
+E             [PASS] cycle log tail read (and mentions the failing step)
+E             [PASS] real analyze.py ran on the synthetic stream and returned C1=PASS
+E           
+E           ── the PASS criterion tells memory from template ──
+E               good note: 4/5 lines rest on a day-specific anchor; 2 distinct ledger event(s) named (CYCLE_STARTED, LOCK_STALE_CLEARED).
+E             [PASS] GOOD note PASSES (4/5 lines, 2 events)
+E             [PASS] GOOD note has >= 3 verifiable lines
+E             [PASS] GOOD note names >= 2 real ledger events
+E               template note: 0/5 lines rest on a day-specific anchor; 0 distinct ledger event(s) named (none).
+E             [PASS] TEMPLATE note FAILS (0/5 lines, 0 events)
+E             [PASS] the README's canonical FAIL example FAILS
+E           
+E           ── writing a note updates the goal sidecar (idempotently) ──
+E             [PASS] today recorded exactly once in the sidecar (got 1)
+E             [PASS] note file written with the right header
+E           
+E           ======================================================================
+E           RESULT: FAILURES ABOVE
+E           --- stderr (tail) ---
+
+test\test_script_suite.py:34: Failed
+__________ test_script_style_suite[test/test_goal_score_package.py] ___________
+
+script = 'test/test_goal_score_package.py'
+
+    @pytest.mark.parametrize("script", SCRIPT_STYLE)
+    def test_script_style_suite(script):
+        env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+        proc = subprocess.run([sys.executable, str(REPO / script)],
+                              cwd=str(REPO), env=env, capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=900)
+        if proc.returncode != 0:
+            tail = "\n".join((proc.stdout or "").splitlines()[-25:])
+>           pytest.fail(f"{script} exited {proc.returncode}\n"
+                        f"--- stdout (tail) ---\n{tail}\n"
+                        f"--- stderr (tail) ---\n{(proc.stderr or '')[-2000:]}")
+E           Failed: test/test_goal_score_package.py exited 1
+E           --- stdout (tail) ---
+E           FAIL: 2 place(s) read the composite without its package (12343 files checked)
+E             - core\phase_evidence.py:333 в _c() чете composite_score БЕЗ покритието. Числото само по себе си е тъмна цифра — вземи и coverage_of_goal/coverage_of_measurable, или ползвай goal_score_calculator.format_headline().
+E             - scripts\migrate_pin_score_meaning.py:93 в composite() чете composite_score БЕЗ покритието. Числото само по себе си е тъмна цифра — вземи и coverage_of_goal/coverage_of_measurable, или ползвай goal_score_calculator.format_headline().
+E           --- stderr (tail) ---
+
+test\test_script_suite.py:34: Failed
+____________ test_script_style_suite[test/test_needs_approvals.py] ____________
+
+script = 'test/test_needs_approvals.py'
+
+    @pytest.mark.parametrize("script", SCRIPT_STYLE)
+    def test_script_style_suite(script):
+        env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+        proc = subprocess.run([sys.executable, str(REPO / script)],
+                              cwd=str(REPO), env=env, capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=900)
+        if proc.returncode != 0:
+            tail = "\n".join((proc.stdout or "").splitlines()[-25:])
+>           pytest.fail(f"{script} exited {proc.returncode}\n"
+                        f"--- stdout (tail) ---\n{tail}\n"
+                        f"--- stderr (tail) ---\n{(proc.stderr or '')[-2000:]}")
+E           Failed: test/test_needs_approvals.py exited 1
+E           --- stdout (tail) ---
+E           PASS first accept appends
+E           PASS second accept is a no-op, not a twin
+E           PASS third accept still a no-op (the live 'OK d24e' case)
+E           PASS no-op is flagged distinctly from a real accept, so the reply can differ
+E           PASS a different axis still appends (dedup is not a blanket block)
+E           PASS a different goal on the same axis still appends
+E           PASS extract-less candidate is still refused
+E           PASS refused candidate marked rejected, with the reason and a timestamp
+E           PASS the OTHER candidate is untouched
+E           PASS marking an unknown url is a no-op, not a crash
+E           PASS _parse_candidate surfaces the rejected status
+E           PASS a rejected candidate is no longer offered for approval
+E           PASS flipping it back to active offers it again (the skip is status-driven)
+E           PASS push reports sent
+E           PASS the brief goes first
+E           PASS one extra per APPROVAL item — the high-only item gets none
+E           PASS each extra is EXACTLY the reply text and nothing else
+E           FAIL the inline hint stays in the brief (extras are an addition, not a move)
+E           PASS count recorded on the report
+E           PASS no approval items -> brief only, zero extras
+E           PASS failing extra still reports sent (fail-open)
+E           
+E           1 FAILED: ['the inline hint stays in the brief (extras are an addition, not a move)']
+E           --- stderr (tail) ---
+
+test\test_script_suite.py:34: Failed
+___________ test_script_style_suite[test/test_no_exit_on_import.py] ___________
+
+script = 'test/test_no_exit_on_import.py'
+
+    @pytest.mark.parametrize("script", SCRIPT_STYLE)
+    def test_script_style_suite(script):
+        env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+        proc = subprocess.run([sys.executable, str(REPO / script)],
+                              cwd=str(REPO), env=env, capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=900)
+        if proc.returncode != 0:
+            tail = "\n".join((proc.stdout or "").splitlines()[-25:])
+>           pytest.fail(f"{script} exited {proc.returncode}\n"
+                        f"--- stdout (tail) ---\n{tail}\n"
+                        f"--- stderr (tail) ---\n{(proc.stderr or '')[-2000:]}")
+E           Failed: test/test_no_exit_on_import.py exited 1
+E           --- stdout (tail) ---
+E           FAIL: модул(и) убиват процеса ПРИ ИМПОРТ — забранено:
+E             Broker-bot\_ARCHIVE\broker-bot-v2\push_to_github.py:46
+E             Broker-bot\_ARCHIVE\broker-bot-v2\push_to_github.py:60
+E             Broker-bot\_ARCHIVE\broker-bot-v2\run_backtest.py:29
+E             Broker-bot\_ARCHIVE\broker-bot-v2\run_bot.py:40
+E             Broker-bot\_ARCHIVE\broker-bot-v2\run_compare.py:31
+E             Broker-bot\_ARCHIVE\push_to_github.py:46
+E             Broker-bot\_ARCHIVE\push_to_github.py:60
+E             Broker-bot\_ARCHIVE\run_backtest.py:29
+E             Broker-bot\_ARCHIVE\run_bot.py:40
+E             Broker-bot\_ARCHIVE\run_compare.py:31
+E             Broker-bot\go_cloud.py:96
+E             Broker-bot\push_to_github.py:109
+E             Broker-bot\push_to_github.py:121
+E             Broker-bot\run_backtest.py:29
+E             Broker-bot\run_bot.py:40
+E             Broker-bot\run_compare.py:31
+E           Поправка: вдигни ImportError или деградирай с флаг (виж HAS_FEEDPARSER в web_intelligence_agent.py).
+E             (24 script-style file(s) exempt by test/_script_style.py — module-level sys.exit is their documented convention)
+E           --- stderr (tail) ---
+
+test\test_script_suite.py:34: Failed
+____________ test_script_style_suite[test/test_origin_honesty.py] _____________
+
+script = 'test/test_origin_honesty.py'
+
+    @pytest.mark.parametrize("script", SCRIPT_STYLE)
+    def test_script_style_suite(script):
+        env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+        proc = subprocess.run([sys.executable, str(REPO / script)],
+                              cwd=str(REPO), env=env, capture_output=True,
+                              text=True, encoding="utf-8", errors="replace", timeout=900)
+        if proc.returncode != 0:
+            tail = "\n".join((proc.stdout or "").splitlines()[-25:])
+>           pytest.fail(f"{script} exited {proc.returncode}\n"
+                        f"--- stdout (tail) ---\n{tail}\n"
+                        f"--- stderr (tail) ---\n{(proc.stderr or '')[-2000:]}")
+E           Failed: test/test_origin_honesty.py exited 1
+E           --- stdout (tail) ---
+E           PASS an all-self-reported axis raises self_reported_only
+E           PASS DIVERSITY IS NOW ORIGINS: 3 labels on 1 file scores 1 origin over 2 slots
+E           PASS ...and says what it is counting
+E           PASS the label count is still published, and higher — that is the point
+E           PASS ...explicitly named as labels, not origins
+E           PASS the FRESHEST live source is the primary, not the first-declared
+E           PASS ...the stale one is still reported, not hidden
+E           PASS ...serving its cached value, with its real age on it so the human sees why it lost
+E           PASS among sources of EQUAL age the declared priority order still wins — this only ever demotes a source older than its sibling
+E           PASS the live spec has sources to compare (82)
+E           PASS cortex_query's origin() agrees with provenance on EVERY live source
+E           PASS ...and its reporter lookup agrees too
+E           PASS the duplication is declared, not accidental
+E           PASS --clock added no project import — the read path stays unmediated
+E           PASS ...and specifically no subprocess, which would reopen the gate for every command
+E           
+E           LIVE PORTFOLIO (82 sources):
+E             self_reported      46     56%
+E             independent        30     37%
+E             adversarial         0      0%
+E             unknown             6      7%
+E           PASS most of the portfolio is self-reported, and the number is visible
+E           FAIL nothing landed in unknown by accident of seeding — the queue is short and named
+E           
+E           1 FAILED: ['nothing landed in unknown by accident of seeding — the queue is short and named']
+E           --- stderr (tail) ---
+
+test\test_script_suite.py:34: Failed
+___ test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees ___
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_a_guarded_arm_counts_from0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000152440EEF90>
+
+    def test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees(tmp_path, monkeypatch):
+        """THE STEP 6a DEFECT. The file reads 1500 (arm b). Ordinal 0 alternates to
+        arm a. Before the fix that row was recorded 'NOT counted: arm not applied' —
+        14 of exp-001's 30 nights burned that way, describing an ENFORCED
+        PROHIBITION as a failed write. The arm must be read from the file."""
+        row, _ = _observe_with_file(tmp_path, 1500, 0, monkeypatch)
+        assert sx.arm_for_cycle(0) == "a", "ordinal 0 does alternate to a"
+>       assert row["arm_expected"] == "b", "but the guarded arm is whatever the file holds"
+E       AssertionError: but the guarded arm is whatever the file holds
+E       assert None == 'b'
+
+test\test_self_experiment.py:575: AssertionError
+______________ test_the_other_ordinal_reads_the_same_guarded_arm ______________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_other_ordinal_reads_t0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000152440EF070>
+
+    def test_the_other_ordinal_reads_the_same_guarded_arm(tmp_path, monkeypatch):
+        """Negative control on the alternation: the ordinal must not matter at all
+        for a guarded knob. Ordinal 1 alternates to b and would have 'counted' by
+        accident — the point is that the SOURCE changed, not that b got lucky."""
+        row, _ = _observe_with_file(tmp_path, 1500, 1, monkeypatch)
+>       assert row["arm_expected"] == "b" and row["counts"] is True
+E       AssertionError: assert (None == 'b')
+
+test\test_self_experiment.py:586: AssertionError
+____________ test_a_guarded_file_holding_neither_arm_still_refuses ____________
+
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_a_guarded_file_holding_ne0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000152441B8AD0>
+
+    def test_a_guarded_file_holding_neither_arm_still_refuses(tmp_path, monkeypatch):
+        """The fix must not turn into 'everything counts'. A ceiling that is neither
+        900 nor 1500 belongs to no arm and must NOT be counted."""
+        row, _ = _observe_with_file(tmp_path, 1200, 0, monkeypatch)
+        assert row["arm_expected"] is None
+        assert row["counts"] is False
+>       assert "neither arm" in row["why_not"]
+E       AssertionError: assert 'neither arm' in 'config/scheduler.json was edited at 2026-09-11T23:50:01, after this cycle ended at 2026-09-02T00:00:00 — what was in force then cannot be established from the file'
+
+test\test_self_experiment.py:599: AssertionError
+_________________ test_the_ceiling_does_not_decide_the_merits _________________
+
+mocked_models = (<function _fixture_models.<locals>.<lambda> at 0x0000015244165C70>, <function _fixture_models.<locals>.<lambda> at 0x0000015244166610>)
+tmp_path = WindowsPath('C:/Users/emilb/AppData/Local/Temp/pytest-of-emilb/pytest-62/test_the_ceiling_does_not_deci0')
+
+    def test_the_ceiling_does_not_decide_the_merits(mocked_models, tmp_path):
+        """THE SPLIT, AND THE REASON FOR IT.
+    
+        Until 8 Sep 2026 one verdict answered both questions, and the answer was
+        always "global_cap is LOCKED" — correct about production, a NON-ANSWER about
+        the patch. Every run ended FAIL for a reason that had nothing to do with the
+        work, so a competent patch and a confabulated one were indistinguishable in
+        the record. A gate that returns the same verdict to every input is not
+        grading.
+    
+        Now a good patch PASSES on merits while production stays locked, and this
+        test fails if those two are ever wired back together."""
+        brain, coder = mocked_models
+        P.OUT_DIR = tmp_path / "runs"
+    
+        record = P.run_once(dict(OBS), brain=brain, coder=coder)
+    
+        assert record["policy_locked"] is True
+        assert record["production_verdict"] == "FAIL"
+>       assert record["verdict"] == "PASS", (
+            f"a patch that applies, stays in scope, keeps the tests green and has a "
+            f"recomputable metric did not pass on merits: {record['reason']}")
+E       AssertionError: a patch that applies, stays in scope, keeps the tests green and has a recomputable metric did not pass on merits: failed on tests_pass: tests_pass: pytest exited 1 on ['test/test_self_improve_requirer.py']: 17 failed, 75 passed in 40.00s
+E       assert 'FAIL' == 'PASS'
+E         
+E         - PASS
+E         + FAIL
+
+test\test_self_improve_pipeline.py:143: AssertionError
+____ test_the_patch_is_applied_outside_the_repository_and_nothing_survives ____
+
+    def test_the_patch_is_applied_outside_the_repository_and_nothing_survives():
+        """The subprocess half of the same question, which the in-process guard
+        cannot see: the patch is applied in a throwaway worktree under the system
+        temp directory, and no worktree is left registered afterwards."""
+        import subprocess
+    
+        from core.self_improve import merits as M
+    
+        seen = {}
+        with M.Sandbox() as sb:
+            seen["path"] = sb.path
+            assert sb.path.is_dir()
+            assert REPO not in sb.path.parents, (
+                f"the sandbox is INSIDE the repository: {sb.path}")
+    
+        assert not seen["path"].exists(), "the sandbox worktree was left on disk"
+        listed = subprocess.run(["git", "worktree", "list"], cwd=str(REPO),
+                                capture_output=True, text=True).stdout.splitlines()
+>       assert len(listed) == 1, f"a sandbox worktree survived: {listed}"
+E       AssertionError: a sandbox worktree survived: ['C:/Users/emilb/Desktop/AGI/CORTEX++_MERGED                      8cf7b69 [experimental/self-mod]', 'C:/Users/emilb/AppData/Local/Temp/selfmod_sandbox_wpfl8y3r/tree 8cf7b69 (detached HEAD)']
+E       assert 2 == 1
+E        +  where 2 = len(['C:/Users/emilb/Desktop/AGI/CORTEX++_MERGED                      8cf7b69 [experimental/self-mod]', 'C:/Users/emilb/AppData/Local/Temp/selfmod_sandbox_wpfl8y3r/tree 8cf7b69 (detached HEAD)'])
+
+test\test_self_improve_pipeline.py:344: AssertionError
+_________________ test_every_verifier_declares_what_it_reads __________________
+
+    def test_every_verifier_declares_what_it_reads():
+        """A step may not hold the right to break inherited provenance while being
+        unable to state its own. Fails until every name in VERIFIERS is declared."""
+        missing = _undeclared()
+>       assert not missing, (
+            "these steps are in core.notary.VERIFIERS with NO declared inputs in "
+            "config/step_inputs.json:\n  "
+            + "\n  ".join(missing)
+            + "\n\nEach resolves to _age_state([]) -> UNKNOWN(0), which stamps level_0 "
+              "on everything it produces and refuses every irreversible step that "
+              "inherits from it. This is what cost 15 nights of github_publish and 19 "
+              "of self_modifier.\n\n" + REMEDY
+        )
+E       AssertionError: these steps are in core.notary.VERIFIERS with NO declared inputs in config/step_inputs.json:
+E           browser_scout
+E           internet_intelligence
+E         
+E         Each resolves to _age_state([]) -> UNKNOWN(0), which stamps level_0 on everything it produces and refuses every irreversible step that inherits from it. This is what cost 15 nights of github_publish and 19 of self_modifier.
+E         
+E         Declare its inputs in config/step_inputs.json under 'steps', following that file's _how_to_add_a_step: read the module the step actually calls, list what it opens on THAT path, and fill in 'derived_from'. If the step does not belong in VERIFIERS, remove it from core/notary.VERIFIERS instead — either answer is acceptable; leaving it undeclared is not.
+E       assert not ['browser_scout', 'internet_intelligence']
+
+test\test_verifier_inputs.py:132: AssertionError
+============================== warnings summary ===============================
+test/test_canon_boundaries.py: 4 warnings
+test/test_protected_paths.py: 11 warnings
+test/test_quarantine_integration.py: 1 warning
+  C:\Users\emilb\Desktop\AGI\CORTEX++_MERGED\patch_guardian.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    self.timestamp = datetime.utcnow().isoformat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================ slowest 12 durations =============================
+139.25s call     test/test_script_suite.py::test_script_style_suite[test/test_registration_wall.py]
+83.61s call     test/test_script_suite.py::test_script_style_suite[test/test_goal_score_package.py]
+80.07s call     test/test_cycle_vector.py::test_twenty_cycles_warm_the_lexicon
+67.80s call     test/test_aggressive_cleanup.py::test_a_cured_refusal_is_not_charged_to_the_pool
+63.59s call     test/test_aggressive_cleanup.py::test_a_refusal_cleaning_could_not_cure_is_counted
+63.20s call     test/test_aggressive_cleanup.py::test_the_cure_cleans_before_it_asks_again
+48.05s call     test/test_self_improve_pipeline.py::test_the_pipeline_runs_end_to_end_and_reaches_a_verdict
+47.93s call     test/test_self_improve_pipeline.py::test_the_production_ceiling_is_still_LOCKED_and_still_says_so
+46.63s call     test/test_self_improve_pipeline.py::test_the_rendered_report_shows_both_verdicts_and_what_each_governs
+46.51s call     test/test_self_improve_pipeline.py::test_the_implementer_is_given_the_real_file_content
+46.49s call     test/test_self_improve_pipeline.py::test_the_retry_loop_feeds_gits_real_error_back_and_succeeds
+46.45s call     test/test_self_improve_pipeline.py::test_the_ceiling_does_not_decide_the_merits
+=========================== short test summary info ===========================
+FAILED test/test_axis_history.py::test_todays_coverage_is_still_thirteen - As...
+FAILED test/test_belief_revision.py::test_the_two_june_hypotheses_are_skipped_rather_than_mislearned
+FAILED test/test_cadence_gate.py::test_every_source_in_the_real_specs_declares_a_cadence
+FAILED test/test_cadence_gate.py::test_the_prompt_shows_both_tiers_with_next_expected_on_slow_lines
+FAILED test/test_cadence_gate.py::test_how_many_of_the_thirteen_are_usable_tonight
+FAILED test/test_ci_contract.py::test_the_test_job_uses_the_network_flag - As...
+FAILED test/test_ci_contract.py::test_no_hardcoded_drive_letters_in_code - As...
+FAILED test/test_consult_free_only.py::PaidSubstitutionIsRefused::test_a_free_model_serving_the_request_is_an_answer
+FAILED test/test_consult_free_only.py::PaidSubstitutionIsRefused::test_a_paid_model_serving_the_request_is_not_an_answer
+FAILED test/test_corrections_27.py::test_the_five_test_rows_are_still_there
+FAILED test/test_corrections_27.py::test_the_annotation_comes_after_what_it_annotates
+FAILED test/test_cycle_reaper.py::test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk
+FAILED test/test_cycle_seals_its_own_completion.py::test_sealing_a_cycle_here_leaves_the_real_ledgers_alone
+FAILED test/test_direction_last.py::test_the_sealed_record_shows_direction_as_the_last_generated_field
+FAILED test/test_durable_writes.py::test_a_batched_append_is_only_guaranteed_after_the_barrier
+FAILED test/test_durable_writes.py::test_the_barrier_uses_a_writable_handle
+FAILED test/test_flow_score.py::test_the_live_record_really_is_median_skewed
+FAILED test/test_gate_producers_declare.py::test_the_known_blind_list_has_not_gone_stale
+FAILED test/test_heartbeat_coverage.py::test_each_beat_reports_the_step_it_is_actually_in
+FAILED test/test_internet_truncation.py::test_semantic_memory_does_not_remember_unknown_but_names_it
+FAILED test/test_level_reconciler.py::test_climate_global_risk_is_corrected_to_high_under_the_ruling
+FAILED test/test_metta_parallel.py::test_the_live_climate_fact_is_what_we_think_it_is
+FAILED test/test_metta_parallel.py::test_the_disagreement_states_both_readings
+FAILED test/test_needs_auth.py::test_the_live_registry_shows_ucdp_active_and_eia_waiting
+FAILED test/test_needs_auth.py::test_the_waiting_sources_reach_the_cycle_report
+FAILED test/test_p_survive.py::test_nothing_outside_the_allowed_files_mentions_it_in_code
+FAILED test/test_p_survive.py::test_the_recorded_line_is_not_written_where_a_prompt_reads
+FAILED test/test_phase_evidence_swap.py::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test
+FAILED test/test_phase_evidence_swap.py::test_the_replay_script_reports_the_same_number
+FAILED test/test_phase_resume.py::test_the_cli_refuses_without_claiming_the_cycle_lock
+FAILED test/test_produces_has_a_reader.py::test_every_promised_path_has_an_entry
+FAILED test/test_proposal_sla.py::test_there_are_no_patches_from_13_july - As...
+FAILED test/test_quarantine_triage.py::test_the_scanner_does_not_read_itself
+FAILED test/test_script_suite.py::test_script_style_suite[experiments/dreams/test_dream.py]
+FAILED test/test_script_suite.py::test_script_style_suite[test/test_goal_score_package.py]
+FAILED test/test_script_suite.py::test_script_style_suite[test/test_needs_approvals.py]
+FAILED test/test_script_suite.py::test_script_style_suite[test/test_no_exit_on_import.py]
+FAILED test/test_script_suite.py::test_script_style_suite[test/test_origin_honesty.py]
+FAILED test/test_self_experiment.py::test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees
+FAILED test/test_self_experiment.py::test_the_other_ordinal_reads_the_same_guarded_arm
+FAILED test/test_self_experiment.py::test_a_guarded_file_holding_neither_arm_still_refuses
+FAILED test/test_self_improve_pipeline.py::test_the_ceiling_does_not_decide_the_merits
+FAILED test/test_self_improve_pipeline.py::test_the_patch_is_applied_outside_the_repository_and_nothing_survives
+FAILED test/test_verifier_inputs.py::test_every_verifier_declares_what_it_reads
+ERROR test/test_durable_writes.py::test_the_barrier_uses_a_writable_handle - ...
+ERROR test/test_self_read_probe.py::test_each_question_is_asked_open_book_and_closed_book
+ERROR test/test_self_read_probe.py::test_a_fallback_or_silence_is_not_scored_as_an_answer
+44 failed, 4875 passed, 16 skipped, 6 xfailed, 16 warnings, 3 errors in 2293.95s (0:38:13)
+PYTEST_EXIT=1

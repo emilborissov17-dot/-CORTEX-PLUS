@@ -110,3 +110,13 @@ opencv-python-headless==5.0.0.93
 # cockpit/somatic.py — the mic and camera capture paths. ONE sample each, reduced
 # to a scalar before the function returns; no audio or image is ever written. Both
 # are OFF by default and gated by config_expression.yaml.
+
+opentelemetry-exporter-otlp-proto-grpc==1.37.0
+# NOT imported by anything in this repo — chromadb pulls the opentelemetry family
+# in, and on 12 Sep 2026 a fresh install left this ONE package at 1.42.1 beside a
+# 1.37.0 api/sdk/proto/common. 1.42.1 imports
+#   opentelemetry.exporter.otlp.proto.common._exporter_metrics
+# which 1.37.0 does not ship, and cortex_reasoner died on the import — the first
+# error the black box had ever recorded. Pinned to the family it must match, not
+# to the newest it can reach. test/test_opentelemetry_family_agrees.py fails if
+# the versions drift apart again, because a pin is a request and a test is not.

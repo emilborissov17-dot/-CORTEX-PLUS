@@ -61,15 +61,30 @@ def test_it_uses_no_model_no_network_no_subprocess():
 
 def test_a_slow_drift_no_single_night_could_see_becomes_a_hypothesis(tmp_path):
     # 0.02/day under +/-0.5 night-to-night noise: each night's move is swamped,
-    # 30 nights of it is not. A drift of 0.4/day with 0.15 noise would be visible
+    # 60 nights of it is not. A drift of 0.4/day with 0.15 noise would be visible
     # nightly and is correctly refused as the daily cycle's job, not this module's.
+    #
+    # THE RECORD WAS 30 NIGHTS UNTIL 13 SEP 2026, and gates F and G both say that
+    # was not enough. Measured on this very fixture:
+    #   30 nights: slope 0.02, se 0.01090 -> 1.53 standard errors. Under gate F the
+    #              direction is not certifiable, and the sentence above ("30 nights
+    #              of it is not swamped") was simply false.
+    #   and even clearing F, the shortest horizon that beats the noise is 30 days
+    #   against a span of 29, so gate G refuses it too.
+    #   60 nights: the same drift, the same noise, 5.06 standard errors, horizon 30
+    #              inside a span of 59. Emitted.
+    #
+    # The drift and the noise are deliberately UNTOUCHED. Weakening a gate, or
+    # steepening the drift until the old length passed, would have kept the test
+    # green while deleting what it just found out. What changed is the only thing
+    # the gates actually objected to: how long we looked.
     root = tmp_path / "archive"
-    today = _drifting(root, days=30, start=100.0, step=0.02,
+    today = _drifting(root, days=60, start=100.0, step=0.02,
                       noise=(0.5, -0.5))
 
-    rec = CO.run(write=False, archive=root, today=today)
+    rec = CO.run(write=False, archive=root, today=today, window_days=60)
 
-    assert rec["cycles_read"] == 30
+    assert rec["cycles_read"] == 60
     assert rec["emitted"] == 1
     h = rec["hypotheses"][0]
     assert h["axis"] == "ENERGY_REVIEW" and h["metric"] == "m"

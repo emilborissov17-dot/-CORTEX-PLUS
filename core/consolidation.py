@@ -70,6 +70,8 @@ HORIZONS = (7, 30, 90)
 MAX_PER_RUN = 40          # a queue nobody can read is the same as no queue
 LONG_RECORD_FACTOR = 3    # the whole record must be at least this many windows long
                           # before it is allowed to overrule the window's direction
+MIN_SLOPE_T = 2.0         # |slope| must clear this many standard errors of itself
+                          # before the movement counts as movement at all
 
 
 # ── reading the archive ───────────────────────────────────────────────────────
@@ -224,7 +226,13 @@ def _fit(points: list) -> dict | None:
     sigma = math.sqrt(sse / (n - 2)) if n > 2 else 0.0
     # night-to-night movement: what a single cycle COULD have seen
     steps = [abs(ys[i] - ys[i - 1]) for i in range(1, n)]
+    # THE ERROR ON THE SLOPE ITSELF, not on the points. se = sigma / sqrt(Sxx) is
+    # the textbook standard error of a least-squares slope, and it is computed here
+    # rather than at the gate so that it comes from the SAME xs the fit used. A gate
+    # that recomputed its own xs could disagree with the line it is judging.
+    se_slope = (sigma / math.sqrt(sxx)) if sigma > 0 else 0.0
     return {"slope": slope, "intercept": intercept, "sigma": sigma,
+            "se_slope": se_slope, "sxx": sxx,
             "r2": (1 - sse / sst) if sst > 0 else 0.0,
             "n": n, "span_days": xs[-1], "last_x": xs[-1], "last_y": ys[-1],
             "mean_abs_step": (sum(steps) / len(steps)) if steps else 0.0,
@@ -324,6 +332,74 @@ def local_run_not_drift(fit: dict, long_pts: list | None,
     return (long_fit["slope"] > 0) != (fit["slope"] > 0)
 
 
+def slope_smaller_than_its_own_error(fit: dict, factor: float = MIN_SLOPE_T) -> dict | None:
+    """GATE F. Is the movement bigger than the error with which we measured it?
+
+    In plain words: if the movement is smaller than the error on the movement, we
+    have not measured a movement. The line still has a slope — least squares always
+    returns one — but the number is indistinguishable from zero given the scatter
+    around it, and a claim built on it is a claim about the noise.
+
+    THE CASE THIS EXISTS FOR (13 Sep 2026). Last night's queue held
+    co2_annual_increase, slope -0.00269/day over 28 points. Its standard error is
+    0.00602, so |slope| is 0.45 of its own error: the fit cannot tell the direction
+    from flat. Its neighbour co2_ppm_current, slope -0.0342 with se 0.00650, clears
+    it 5.3 times over and is a real trend. Same series length, same window, same
+    sigma to two decimals — only this ratio separates them, which is exactly why
+    r2 and sigma alone were not enough.
+
+    WHY A t-RATIO AND NOT A THRESHOLD ON r2. r2 says how much of the scatter the
+    line explains; it says nothing about whether the slope could have been zero.
+    A series can have a low r2 and a slope that is certainly non-zero (many points,
+    small residuals) or a high r2 on four points that means nothing. The standard
+    error asks the question directly.
+
+    Returns None when the slope clears the bar, or the numbers when it does not —
+    numbers, not a bare verdict, because a refusal a human cannot check is a
+    refusal a human has to trust.
+    """
+    se = fit.get("se_slope") or 0.0
+    if se <= 0:
+        return None                      # no scatter to speak of; other gates cover it
+    ratio = abs(fit["slope"]) / se
+    if ratio >= factor:
+        return None
+    return {"abs_slope": round(abs(fit["slope"]), 8),
+            "se_slope": round(se, 8),
+            "ratio": round(ratio, 3),
+            "required_ratio": factor,
+            "refused_because": (
+                f"the slope is {ratio:.2f} times its own standard error "
+                f"(|slope| {abs(fit['slope']):.6g} against se {se:.6g}); below "
+                f"{factor:g} the movement is smaller than the error with which it "
+                f"was measured, so no movement has been measured")}
+
+
+def horizon_longer_than_the_record(h: dict, fit: dict) -> str | None:
+    """GATE G. Do not predict further forward than we have looked back.
+
+    A 90-day claim fitted to 30 days of record is not a long-range prediction, it
+    is a short line drawn three times as far as it was ever observed. The interval
+    it carries is computed from the residuals of those 30 days and says nothing
+    about the two months after them.
+
+    NOT TRUNCATED TO THE SPAN, REFUSED. Shortening the horizon until it fits would
+    keep the claim alive by quietly answering a different question from the one the
+    fit asked, and the queue would fill with claims nobody chose to make. A
+    hypothesis that cannot be stated at its own horizon is not a hypothesis.
+
+    Returns the reason, or None when the horizon sits inside the record.
+    """
+    span = fit.get("span_days")
+    if span is None:
+        return None
+    if h["horizon_days"] > span:
+        return (f"the horizon is {h['horizon_days']} days but the record is only "
+                f"{span} days long; a claim reaching further forward than the "
+                f"evidence reaches back is not supported by it")
+    return None
+
+
 def impossible_at_the_horizon(h: dict, long_pts: list | None) -> str | None:
     """Does the claim leave the domain its own series lives in?
 
@@ -371,6 +447,8 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
                              "fast_enough_for_a_nightly_step": 0,
                              "inside_the_noise_at_every_horizon": 0,
                              "local_run_not_drift": 0,
+                             "slope_smaller_than_its_own_error": 0,
+                             "horizon_longer_than_the_record": 0,
                              "impossible_at_the_horizon": 0}
     # Read once for the whole run: the two gates below need the record, not the window.
     long = long_record(window_days, archive, today, daily)
@@ -394,6 +472,12 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
                 abs(fit["slope"]) >= 0.5 * fit["mean_abs_step"]:
             rejected["fast_enough_for_a_nightly_step"] += 1
             continue
+        weak = slope_smaller_than_its_own_error(fit)
+        if weak:
+            rejected["slope_smaller_than_its_own_error"] += 1
+            refused.append({"axis": axis, "metric": metric,
+                            "gate": "slope_smaller_than_its_own_error", **weak})
+            continue
         long_pts = long.get((axis, metric))
         run_not_drift = local_run_not_drift(fit, long_pts, len(pts))
         checked["no_long_record" if run_not_drift is None
@@ -404,6 +488,13 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
         h = _hypothesis(axis, metric, fit, today)
         if h is None:
             rejected["inside_the_noise_at_every_horizon"] += 1
+            continue
+        too_far = horizon_longer_than_the_record(h, fit)
+        if too_far:
+            rejected["horizon_longer_than_the_record"] += 1
+            h["refused_because"] = too_far
+            h["gate"] = "horizon_longer_than_the_record"
+            refused.append(h)
             continue
         why = impossible_at_the_horizon(h, long_pts)
         if why:
@@ -417,6 +508,18 @@ def run(write: bool = True, window_days: int = WINDOW_DAYS,
     emitted.sort(key=lambda h: (-h["r2"], h["axis"], h["metric"]))
     truncated = max(0, len(emitted) - MAX_PER_RUN)
     emitted = emitted[:MAX_PER_RUN]
+
+    # EVERY SERIES IS ACCOUNTED FOR. Not a comment — a raise. A new gate that forgot
+    # to increment its bucket would otherwise make series disappear silently, and
+    # the queue would look clean because the losses were invisible rather than
+    # because there were none.
+    counted = sum(rejected.values()) + len(emitted) + truncated
+    if counted != len(series):
+        raise AssertionError(
+            f"consolidation lost {len(series) - counted} of {len(series)} series: "
+            f"rejected {sum(rejected.values())} + emitted {len(emitted)} + "
+            f"truncated {truncated} = {counted}. Every series must land in exactly "
+            f"one bucket; a gate that continues without counting hides the loss.")
 
     rec = {
         "ts": datetime.now(timezone.utc).isoformat(),
