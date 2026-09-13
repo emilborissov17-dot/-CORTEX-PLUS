@@ -325,3 +325,8 @@ training/l1b_exam.jsonl
 # NOT ".coverage*" -- that glob also eats cov.ini and .coveragerc.
 .coverage
 .coverage.*
+
+# One trace per cycle, written by core/flight_recorder.py. Runtime evidence,
+# not source: a night produces thousands of rows and they belong on the machine
+# that made them. claude/reports/TRACE_*.md is the part meant to be read and kept.
+memory/cycle_trace/

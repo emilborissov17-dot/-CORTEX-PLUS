@@ -8,6 +8,29 @@ from __future__ import annotations
 import subprocess, sys, pathlib, json, time, gc
 from datetime import datetime, timezone, timedelta
 
+# ── THE FLIGHT RECORDER STARTS BEFORE ANYTHING ELSE ─────────────────────────
+# Deliberately the first repo import in this file, and the first line of the
+# night. On 13 Sep 2026 the cycle had 75 steps and 43 of them opened a contract;
+# of a 129-minute night, 64 minutes were accounted for. The missing hour was not
+# idle, it was unobserved — and an unobserved hour is indistinguishable from one
+# that did not happen.
+#
+# Started here, with no cycle id, because the imports below ARE part of the
+# night: whatever they cost is time the record should already be watching. Rows
+# are buffered until adopt() learns the id, which happens a second later.
+#
+# It is stdlib-only and never raises out of its own hooks. If it cannot start,
+# the cycle proceeds unrecorded rather than not at all — an observer that can
+# stop the thing it observes has failed at being an observer.
+try:
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    from core import flight_recorder as _fr
+    _fr.start()
+except Exception as _fr_e:            # noqa: BLE001
+    _fr = None
+    print(f"[FAST_CYCLE] flight recorder did not start: "
+          f"{type(_fr_e).__name__}: {_fr_e}")
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
@@ -301,6 +324,14 @@ def _classify_cycle_id(env_id):
             _sealed = LAST_CYCLE_ID.read_text(encoding="utf-8").strip() or None
         except Exception:
             _sealed = None
+        if _fr is not None:
+            # The trace takes the cycle's name here; the buffered rows from the
+            # import phase are replayed into the file as soon as it has one.
+            try:
+                _fr.adopt(cid)
+                print(f"[FAST_CYCLE] flight recorder -> {_fr.path()}")
+            except Exception as _e:      # noqa: BLE001
+                print(f"[FAST_CYCLE] flight recorder adopt failed: {_e}")
         CYCLE_ORIGIN.write_text(json.dumps(
             {"cycle_id": cid, "origin": origin, "why": why,
              # the latest cycle SEEN, sealed or not — the boot guard's reference
@@ -1062,163 +1093,189 @@ def _bb_step(label):
 
 
 def _run(label, fn, free_after=False):
-    # ── МОДЕЛЪТ СЕ СМЕНЯ ПО ПРОЗОРЕЦ, НЕ ПО СТЪПКА (22 авг 2026) ───────────
-    # core/model_window.py opens the 8b window when the cycle reaches the first
-    # step inside it and closes it after the last, unloading 8b and re-pinning 3b.
-    # Driven from here, by the cycle's real position, because a caller that has to
-    # REMEMBER to close a window is a caller that will one day forget.
-    # FAIL-OPEN: a residency policy that raises must not cost a step.
-    try:
-        from core import model_window as _mw
-        _mw.on_step(label)
-    except Exception as e:
-        print(f"[FAST_CYCLE] model_window.on_step({label}) -> "
-              f"{type(e).__name__}: {e}")
-    # 15 Aug 2026 (закон, т.1 и 3): преди да тръгне стъпка, се пита мозъкът какво
-    # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
-    # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
-    # (core.brain.skipped_by_brain пази този списък).
-    # Survival mode: a NORMAL step does not run at all tonight.
-    # Checked before the resume gate because the two answer different questions —
-    # "was it already done" versus "can the system afford it" — and affordability
-    # is the one that decides whether the step exists tonight.
-    if _SURVIVAL["active"]:
+    # ── EVERY STEP LEAVES A SPAN, AND A KILLED ONE LEAVES ONLY ITS OPEN ──────
+    # The recorder's span wraps the whole body: the `open` row is written and
+    # flushed before anything else happens, the `span` row only after everything
+    # has. A step the process dies inside therefore leaves an open with no span,
+    # and that asymmetry is how the trace says where the night stopped.
+    #
+    # NOT a wrapper function around a renamed body. It was that for twenty
+    # minutes, and test_phase_report_names_failures caught it: that test walks
+    # the AST of the function named _run and requires its except branch to reach
+    # phase_tracker.note_failure. A body moved elsewhere left the guard staring
+    # at an empty shell while still passing everything else.
+    _span = None
+    if _fr is not None and _fr.is_on():
         try:
-            from core.cycle_map import ALIASES as _AL1
-            if _AL1.get(label, label) in _SURVIVAL["skip"]:
-                print(f"[FAST_CYCLE] {label} -> SKIPPED (survival mode: NORMAL "
-                      f"priority, and the system is running on less)")
-                return
-        except Exception as e:
-            print(f"[FAST_CYCLE] survival gate for {label} -> "
-                  f"{type(e).__name__}: {e} (running it)")
-    # Already done by the cycle this run is continuing? Then it is not done again.
-    # Checked BEFORE the brain's opinion and before the contract opens, because a
-    # step that is being skipped should not open a contract it will never finish.
-    if _RESUME["active"]:
+            _span = _fr.span("step:" + str(label),
+                             {"step": str(label), "source": "_run"})
+            _span.__enter__()
+        except Exception:            # the observer may never cost a step
+            _span = None
+    try:
+        # ── МОДЕЛЪТ СЕ СМЕНЯ ПО ПРОЗОРЕЦ, НЕ ПО СТЪПКА (22 авг 2026) ───────────
+        # core/model_window.py opens the 8b window when the cycle reaches the first
+        # step inside it and closes it after the last, unloading 8b and re-pinning 3b.
+        # Driven from here, by the cycle's real position, because a caller that has to
+        # REMEMBER to close a window is a caller that will one day forget.
+        # FAIL-OPEN: a residency policy that raises must not cost a step.
         try:
-            from core.cycle_map import ALIASES as _AL
-            if _AL.get(label, label) in _RESUME["skip"]:
-                print(f"[FAST_CYCLE] {label} -> SKIPPED (resume: completed by "
-                      f"{os.environ.get('CORTEX_RESUME_CYCLE_ID', '?')})")
-                return
+            from core import model_window as _mw
+            _mw.on_step(label)
         except Exception as e:
-            print(f"[FAST_CYCLE] resume gate for {label} -> "
-                  f"{type(e).__name__}: {e} (running it)")
-    try:
-        from core.brain import skipped_by_brain as _skip, stance as _stance
-        if _skip(label):
-            print(f"[FAST_CYCLE] {label} -> SKIPPED BY BRAIN: "
-                  f"{str(_stance().get('expect'))[:120]}")
-            return
-    except Exception:
-        pass
-    # ── СЪДЕНО ПО СЛЕДАТА, НЕ ПО МЪЛЧАНИЕТО (21 авг 2026) ──────────────────
-    # Долният except печата един ред и продължава. Стъпка, която е глътнала
-    # грешката си и не е записала нищо, изглежда в ЦЯЛАТА следа на цикъла точно
-    # като стъпка, която си е свършила работата. core/step_contract.py мери
-    # какво е ПИПНАЛА спрямо какво обикновено пипа: NO_EFFECT е тихият отказ.
-    # Цена: две снимки на 4853 файла = ~0.8s на стъпка, ~42s на цикъл от 1h47m.
-    # FAIL-OPEN: счупен контракт не бива да убива стъпка.
-    _contract = None
-    try:
-        from core.step_contract import StepContract
-        _contract = StepContract(label)
-        _contract.__enter__()
-    except Exception:
+            print(f"[FAST_CYCLE] model_window.on_step({label}) -> "
+                  f"{type(e).__name__}: {e}")
+        # 15 Aug 2026 (закон, т.1 и 3): преди да тръгне стъпка, се пита мозъкът какво
+        # е казал за нея в beat(). Ако е решил "пропусни" — пропуска се и се записва
+        # ЧИЯ е била преценката. Гръбнакът на одита не се пропуска по мнение
+        # (core.brain.skipped_by_brain пази този списък).
+        # Survival mode: a NORMAL step does not run at all tonight.
+        # Checked before the resume gate because the two answer different questions —
+        # "was it already done" versus "can the system afford it" — and affordability
+        # is the one that decides whether the step exists tonight.
+        if _SURVIVAL["active"]:
+            try:
+                from core.cycle_map import ALIASES as _AL1
+                if _AL1.get(label, label) in _SURVIVAL["skip"]:
+                    print(f"[FAST_CYCLE] {label} -> SKIPPED (survival mode: NORMAL "
+                          f"priority, and the system is running on less)")
+                    return
+            except Exception as e:
+                print(f"[FAST_CYCLE] survival gate for {label} -> "
+                      f"{type(e).__name__}: {e} (running it)")
+        # Already done by the cycle this run is continuing? Then it is not done again.
+        # Checked BEFORE the brain's opinion and before the contract opens, because a
+        # step that is being skipped should not open a contract it will never finish.
+        if _RESUME["active"]:
+            try:
+                from core.cycle_map import ALIASES as _AL
+                if _AL.get(label, label) in _RESUME["skip"]:
+                    print(f"[FAST_CYCLE] {label} -> SKIPPED (resume: completed by "
+                          f"{os.environ.get('CORTEX_RESUME_CYCLE_ID', '?')})")
+                    return
+            except Exception as e:
+                print(f"[FAST_CYCLE] resume gate for {label} -> "
+                      f"{type(e).__name__}: {e} (running it)")
+        try:
+            from core.brain import skipped_by_brain as _skip, stance as _stance
+            if _skip(label):
+                print(f"[FAST_CYCLE] {label} -> SKIPPED BY BRAIN: "
+                      f"{str(_stance().get('expect'))[:120]}")
+                return
+        except Exception:
+            pass
+        # ── СЪДЕНО ПО СЛЕДАТА, НЕ ПО МЪЛЧАНИЕТО (21 авг 2026) ──────────────────
+        # Долният except печата един ред и продължава. Стъпка, която е глътнала
+        # грешката си и не е записала нищо, изглежда в ЦЯЛАТА следа на цикъла точно
+        # като стъпка, която си е свършила работата. core/step_contract.py мери
+        # какво е ПИПНАЛА спрямо какво обикновено пипа: NO_EFFECT е тихият отказ.
+        # Цена: две снимки на 4853 файла = ~0.8s на стъпка, ~42s на цикъл от 1h47m.
+        # FAIL-OPEN: счупен контракт не бива да убива стъпка.
         _contract = None
-    # ── ЕДИН БЮДЖЕТ ЗА СТЪПКАТА, ПОДЕЛЕН ОТ ВСИЧКИ ѝ ПОВИКВАНИЯ (22 авг) ───
-    # Opened here so every call_groq_meta inside fn() draws from the same B.
-    # daily_analysis made 24 model calls in one run on 20 Aug; giving each of
-    # them B would have been a budget of 24xB, which is not a budget.
-    # The step's priority decides only one thing — whether the 8b tier is on the
-    # ladder at all (config/step_priority.json says so in its own README).
-    try:
-        from core import step_budget as _sb
-        from core.cycle_map import ALIASES as _AL0
-        from core.survival_mode import priority_of as _prio
-        _sb.begin_step(_AL0.get(label, label), _prio(_AL0.get(label, label)))
-    except Exception as e:
-        print(f"[FAST_CYCLE] step_budget.begin_step({label}) -> "
-              f"{type(e).__name__}: {e}")
-    _completed = False
-    try:
-        with _bb_step(label):
-            fn()
-        print(f"[FAST_CYCLE] {label} -> OK")
-        _completed = True
-    except Exception as e:
-        # str(e) can be empty (e.g. bare MemoryError()) — always show the
-        # exception type too, so a failure never renders as a blank message.
-        print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
-        # ── AND THE PHASE REPORT HEARS ABOUT IT (ITEM 21c, 29 Aug 2026) ──────
-        # Until today a raised step was a line on stdout and nothing else: the
-        # phase report listed it under steps_run, because phase_tracker records
-        # step_ok at beat() time, and steps_failed was empty in all 133 reports
-        # on disk. G_LEARN only caught the 2026-08-29 feedback_loop crash
-        # because produces_check independently saw a stale artifact — a step
-        # that crashed AFTER writing its artifact would have read DONE.
         try:
-            from core import phase_tracker as _pt
-            _pt.note_failure(label, e)
+            from core.step_contract import StepContract
+            _contract = StepContract(label)
+            _contract.__enter__()
         except Exception:
-            pass
-        if _contract is not None:
-            _contract.note_swallowed(f"{type(e).__name__}: {e}")
-        # ── ГРАНИЦАТА НЕ БИВА ДА СПАСЯВА ПАДНАЛА СТЪПКА (23 авг 2026) ──────
-        # _run() знае, че fn() е хвърлила, и затова не пише чекпойнт. Но новата
-        # граница в beat() не знае и щеше да ѝ запише how=boundary — тоест
-        # падналата стъпка щеше да излезе на екрана като завършена, което е
-        # точно лъжата, заради която чекпойнтите изобщо съществуват. Записът се
-        # маркира като „вече уреден", което значи „и няма да има".
-        try:
-            from core.cycle_map import _canon as _cm_canon2
-            _OPEN_STEP["checkpointed"].add(_cm_canon2(label))
-        except Exception:
-            pass
-    finally:
-        # Closed BEFORE the contract is judged: the contract's verdict depends on
-        # what this account recorded, so a spend summary that lands afterwards
-        # describes a step that has already been sentenced.
+            _contract = None
+        # ── ЕДИН БЮДЖЕТ ЗА СТЪПКАТА, ПОДЕЛЕН ОТ ВСИЧКИ ѝ ПОВИКВАНИЯ (22 авг) ───
+        # Opened here so every call_groq_meta inside fn() draws from the same B.
+        # daily_analysis made 24 model calls in one run on 20 Aug; giving each of
+        # them B would have been a budget of 24xB, which is not a budget.
+        # The step's priority decides only one thing — whether the 8b tier is on the
+        # ladder at all (config/step_priority.json says so in its own README).
         try:
             from core import step_budget as _sb
-            _spent = _sb.end_step()
-            if _spent and _spent.get("calls"):
-                # ITEM 44.1: BOTH COUNTERS. `degraded` now means what the step
-                # contract means — the answer did not come from the cloud — and
-                # `no_tier` keeps the older, narrower fact. On 2026-08-29 this
-                # line read degraded=0 for twelve steps the contract called
-                # DEGRADED, because a local answer returns OK.
-                print("[BUDGET] {}: {} model call(s), {:.0f}s of B={:.0f}s, "
-                      "tiers={} degraded={} no_tier={}".format(
-                          label, _spent["calls"], _spent["spent"],
-                          _spent["budget"].seconds, _spent["tiers"] or "{}",
-                          _spent.get("degraded_calls"),
-                          _spent.get("no_tier_calls")))
+            from core.cycle_map import ALIASES as _AL0
+            from core.survival_mode import priority_of as _prio
+            _sb.begin_step(_AL0.get(label, label), _prio(_AL0.get(label, label)))
         except Exception as e:
-            print(f"[FAST_CYCLE] step_budget.end_step({label}) -> "
+            print(f"[FAST_CYCLE] step_budget.begin_step({label}) -> "
                   f"{type(e).__name__}: {e}")
-        if _contract is not None:
+        _completed = False
+        try:
+            with _bb_step(label):
+                fn()
+            print(f"[FAST_CYCLE] {label} -> OK")
+            _completed = True
+        except Exception as e:
+            # str(e) can be empty (e.g. bare MemoryError()) — always show the
+            # exception type too, so a failure never renders as a blank message.
+            print(f"[FAST_CYCLE] {label} -> FAILED: {type(e).__name__}: {e}")
+            # ── AND THE PHASE REPORT HEARS ABOUT IT (ITEM 21c, 29 Aug 2026) ──────
+            # Until today a raised step was a line on stdout and nothing else: the
+            # phase report listed it under steps_run, because phase_tracker records
+            # step_ok at beat() time, and steps_failed was empty in all 133 reports
+            # on disk. G_LEARN only caught the 2026-08-29 feedback_loop crash
+            # because produces_check independently saw a stale artifact — a step
+            # that crashed AFTER writing its artifact would have read DONE.
             try:
-                _contract.finish()
+                from core import phase_tracker as _pt
+                _pt.note_failure(label, e)
             except Exception:
                 pass
-    # ── ЗАВЪРШВАНЕТО СЕ ЗАПИСВА, НЕ ВЛИЗАНЕТО (22 авг 2026) ────────────────
-    # Deliberately here and NOT inside beat(). beat() fires when a step is
-    # ENTERED; a cycle that dies mid-step has beaten for it, and a checkpoint
-    # written on entry would name that step as done and let a resume skip the
-    # work it died in the middle of. Completion is the only thing worth
-    # recording, and `_completed` is set on the success path only — the except
-    # branch above swallows the error and carries on, so "we got here" is not
-    # the same question as "it worked".
-    # WRITE-ONLY TODAY. Nothing reads this to skip steps; --resume is item 3 and
-    # is off by default. This exists so that tomorrow's resume has a real record
-    # to stand on instead of an inferred one.
-    if _completed:
-        _checkpoint_step(label)
-    if free_after:
-        _free_ollama()
-    gc.collect()  # release memory after every agent step
+            if _contract is not None:
+                _contract.note_swallowed(f"{type(e).__name__}: {e}")
+            # ── ГРАНИЦАТА НЕ БИВА ДА СПАСЯВА ПАДНАЛА СТЪПКА (23 авг 2026) ──────
+            # _run() знае, че fn() е хвърлила, и затова не пише чекпойнт. Но новата
+            # граница в beat() не знае и щеше да ѝ запише how=boundary — тоест
+            # падналата стъпка щеше да излезе на екрана като завършена, което е
+            # точно лъжата, заради която чекпойнтите изобщо съществуват. Записът се
+            # маркира като „вече уреден", което значи „и няма да има".
+            try:
+                from core.cycle_map import _canon as _cm_canon2
+                _OPEN_STEP["checkpointed"].add(_cm_canon2(label))
+            except Exception:
+                pass
+        finally:
+            # Closed BEFORE the contract is judged: the contract's verdict depends on
+            # what this account recorded, so a spend summary that lands afterwards
+            # describes a step that has already been sentenced.
+            try:
+                from core import step_budget as _sb
+                _spent = _sb.end_step()
+                if _spent and _spent.get("calls"):
+                    # ITEM 44.1: BOTH COUNTERS. `degraded` now means what the step
+                    # contract means — the answer did not come from the cloud — and
+                    # `no_tier` keeps the older, narrower fact. On 2026-08-29 this
+                    # line read degraded=0 for twelve steps the contract called
+                    # DEGRADED, because a local answer returns OK.
+                    print("[BUDGET] {}: {} model call(s), {:.0f}s of B={:.0f}s, "
+                          "tiers={} degraded={} no_tier={}".format(
+                              label, _spent["calls"], _spent["spent"],
+                              _spent["budget"].seconds, _spent["tiers"] or "{}",
+                              _spent.get("degraded_calls"),
+                              _spent.get("no_tier_calls")))
+            except Exception as e:
+                print(f"[FAST_CYCLE] step_budget.end_step({label}) -> "
+                      f"{type(e).__name__}: {e}")
+            if _contract is not None:
+                try:
+                    _contract.finish()
+                except Exception:
+                    pass
+        # ── ЗАВЪРШВАНЕТО СЕ ЗАПИСВА, НЕ ВЛИЗАНЕТО (22 авг 2026) ────────────────
+        # Deliberately here and NOT inside beat(). beat() fires when a step is
+        # ENTERED; a cycle that dies mid-step has beaten for it, and a checkpoint
+        # written on entry would name that step as done and let a resume skip the
+        # work it died in the middle of. Completion is the only thing worth
+        # recording, and `_completed` is set on the success path only — the except
+        # branch above swallows the error and carries on, so "we got here" is not
+        # the same question as "it worked".
+        # WRITE-ONLY TODAY. Nothing reads this to skip steps; --resume is item 3 and
+        # is off by default. This exists so that tomorrow's resume has a real record
+        # to stand on instead of an inferred one.
+        if _completed:
+            _checkpoint_step(label)
+        if free_after:
+            _free_ollama()
+        gc.collect()  # release memory after every agent step
+    finally:
+        if _span is not None:
+            try:
+                _span.__exit__(None, None, None)
+            except Exception:
+                pass
 
 def _note_night(subject: str, detail: str) -> None:
     """Нощно събитие — това, което сутрешните доклади четат."""
@@ -3376,7 +3433,7 @@ def main():
         print(_hi_line(_hi_run(write=True)))
     _run("hypothesis_intake", _hypothesis_intake_step)
 
-    # ── 20.07. Output contracts — the judge finally gets invited to the trial ──
+    # ── 20.08. Output contracts — the judge finally gets invited to the trial ──
     # core/output_contracts.py has existed and been green for days with NOBODY
     # CALLING IT: step_audit listed it among the unscheduled producers, which is
     # the politest possible way of saying a check that never runs is a check that
@@ -4106,6 +4163,17 @@ def _phase_cli(argv: list) -> None:
     print("[PHASE] step-level skipping is not wired yet — see _phase_cli.__doc__. "
           "Nothing was run.")
     raise SystemExit(0)
+
+
+# ── the flight recorder is flushed on any ordinary exit ─────────────────────
+# Not on a kill, and not on os._exit — nothing runs then. Those are the runs
+# whose last `open` has no `span`, and that record is the finding.
+try:
+    import atexit as _atexit
+    if _fr is not None:
+        _atexit.register(lambda: _fr.stop())
+except Exception:
+    pass
 
 
 if __name__ == "__main__":
