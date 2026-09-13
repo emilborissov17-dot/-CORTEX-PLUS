@@ -187,6 +187,13 @@ def test_the_cli_refuses_without_claiming_the_cycle_lock():
     """
     lock = REPO / "memory" / "cycle.lock"
     before = lock.read_bytes() if lock.exists() else None
+    # READ-ONLY MEANS THE TRACE TOO. 13 Sep 2026: the runner started a flight
+    # recorder at __main__, so this very invocation created a provisional trace
+    # under memory/cycle_trace/ and held it for thirty seconds while refusing.
+    # Counted here rather than in a test of its own, because the spawn that
+    # proves it is already happening on the next line.
+    traces = REPO / "memory" / "cycle_trace"
+    traces_before = {p.name for p in traces.glob("*.jsonl")} if traces.is_dir() else set()
 
     result = subprocess.run(
         [sys.executable, str(REPO / "fast_cycle_runner.py"), "--from", "D_SCORE"],
@@ -199,6 +206,10 @@ def test_the_cli_refuses_without_claiming_the_cycle_lock():
         "running the resume gate modified memory/cycle.lock. It must be read-only: "
         "a live cycle owns that file."
     )
+    traces_after = {p.name for p in traces.glob("*.jsonl")} if traces.is_dir() else set()
+    assert traces_after == traces_before, (
+        f"the resume gate left {sorted(traces_after - traces_before)} in "
+        f"memory/cycle_trace/. A run that refuses must not record.")
     assert "поех ключалката" not in result.stdout, (
         "the gate ran the boot block, which claims the lock"
     )

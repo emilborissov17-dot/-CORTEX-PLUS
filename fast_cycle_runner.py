@@ -40,7 +40,21 @@ except Exception:                     # noqa: BLE001
     class _VoluntaryHalt(BaseException):
         """Never raised when core.halt is missing; the except clause stays valid."""
 
-if __name__ == "__main__":
+# AN INSPECTION RUN GETS NO RECORDER, BECAUSE A RECORDER WRITES.
+# Measured 13 Sep 2026. The suite spawns the real `fast_cycle_runner.py --from
+# D_SCORE` — test_phase_resume, whose whole assertion is that the resume gate
+# touches nothing — and the line below handed that process a flight recorder.
+# It created memory/cycle_trace/provisional-20260913T134819.jsonl and held it
+# open for thirty seconds before the gate refused with exit 2. A run that exists
+# to prove it writes nothing was writing into live state, and every test that
+# digests memory/ during those thirty seconds saw it.
+#
+# These flags never run a cycle: --only and --from refuse or report, --pulse is
+# a monitor, --help prints. A cycle is the invocation with no flag at all.
+_INSPECTION_ARGV = ("--only", "--from", "--pulse", "--help", "-h")
+_IS_INSPECTION = any(a in _INSPECTION_ARGV for a in sys.argv[1:])
+
+if __name__ == "__main__" and not _IS_INSPECTION:
     try:
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
         from core import flight_recorder as _fr

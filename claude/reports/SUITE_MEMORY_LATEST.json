@@ -1,0 +1,61 @@
+{
+  "utc": "2026-09-13T14:06:58Z",
+  "rc": 1,
+  "duration_sec": 2672.4,
+  "baseline_free_mb": 1849.0,
+  "baseline_used_pct": 87.0,
+  "min_free_mb": 22.6,
+  "min_free_at_sec": 1892.2,
+  "max_used_pct": 99.8,
+  "peak_tree_rss_mb": 1080.0,
+  "peak_rss_at_sec": 337.4,
+  "peak_child_processes": 19,
+  "drop_from_baseline_mb": 1826.4,
+  "samples": 4740,
+  "log": "claude\\reports\\SUITE_2026-09-13_1622.log",
+  "summary_line": "48 failed, 4973 passed, 15 skipped, 6 xfailed, 17 warnings, 3 errors in 2620.68s (0:43:40)",
+  "channels": {
+    "min_free_mb": {
+      "value": 22.6,
+      "at_sec": 1892.2,
+      "status": "CONTAMINATED",
+      "usable_for_threshold": false,
+      "why": "An ARC evaluation (tools/arc_f1.py) ran in parallel and loaded qwen2.5:3b, and a browser plus the desktop app were resident. Foreign RSS peaked at 4663.4 MB against a suite peak of 1080.0 MB, so this channel measured the machine, not the suite. Kept and marked rather than deleted: a channel that was attempted and came back dirty is evidence; a missing field is not.",
+      "witness_peak_rss_mb": {
+        "ollama.exe": 2083.3,
+        "chrome.exe": 1392.0,
+        "claude.exe": 1226.0,
+        "comet.exe": 455.2,
+        "msedgewebview2.exe": 359.5,
+        "Discord.exe": 340.9,
+        "MsMpEng.exe": 309.2,
+        "WindowsTerminal.exe": 131.2,
+        "explorer.exe": 118.6
+      },
+      "witness_samples": 114,
+      "witness_window_utc": [
+        "2026-09-13T13:48:27Z",
+        "2026-09-13T14:07:00Z"
+      ],
+      "witness_note": "sampled every 5 s from 13:48 UTC, i.e. the last 19 of the 44 minutes. The suite's own peak fell at 337 s (13:28 UTC), before sampling began, and comes from the harness, not from these rows."
+    },
+    "peak_tree_rss_mb": {
+      "value": 1080.0,
+      "at_sec": 337.4,
+      "status": "VALID",
+      "usable_for_threshold": true,
+      "why": "Parent plus all 19 children of the pytest tree. Attributable whatever else the machine loaded, which is why the threshold is taken from here. It is a FLOOR: page cache and anything the OS charges elsewhere are not in it.",
+      "peak_child_processes": 19
+    },
+    "ollama_delta_mb": {
+      "value": null,
+      "status": "NOT MEASURED",
+      "usable_for_threshold": false,
+      "why": "Requires a run with nothing else on the machine. A concurrent ARC evaluation held the model for the whole window, so the suite's own model cost cannot be separated from it. Absent rather than wrong."
+    }
+  },
+  "threshold_channel": "peak_tree_rss_mb",
+  "measured_requirement_mb": 1080.0,
+  "supersedes_guess": "the rule was 'run the suite when the machine is under 80% used'. That number was never measured. The measured demand is 1080.0 MB of resident memory at peak.",
+  "annotation_note": "witnesses for THIS run were sampled by a separate loop started mid-run by hand; tools/bench_suite.py now samples them itself, so the next run detects contamination instead of having it declared afterwards."
+}
