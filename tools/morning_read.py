@@ -14,6 +14,15 @@ correct, timestamped, and unread.
 Without a reader, in a year we will have sixty machines honestly recording that
 nobody reads them.
 
+THE SEVENTH MACHINE. claude/CLAUDE_ERRORS.md is Claude's own register of its own
+mistakes, kept by hand, and it is here under exactly the same rule as the other
+six: a machine that records its failure and is not read has recorded nothing. Its
+newest row is printed unconditionally, beside the three worst sentences rather
+than competing with them — the other five are ranked against each other because
+only one of them can be the worst thing that happened last night, while this one
+is not that kind of claim. Its contents are not this program's business: it reads
+the last row of the table and prints it verbatim.
+
 So: no judgement, no summary, no scoring. The three worst sentences, verbatim, in
 a declared severity order — a cycle killed outranks a contract violated, which
 outranks an internal error, which outranks a blind eye, which outranks one
@@ -24,7 +33,8 @@ TWO HONEST LIMITS.
   * It reads the NEWEST matching entry in each file, not "yesterday's". These logs
     are append-only, so the newest failure is the one that matters this morning;
     date filtering would cost more lines than the whole file has.
-  * Twenty lines of code, as asked. This docstring is not code — the reason had to
+  * Twenty-five lines of code. Twenty was the budget for five sources; the sixth
+    cost five, counted after the fact rather than claimed before it. This docstring is not code — the reason had to
     live at the head of the file, and it is longer than the program. That is the
     correct proportion for a thing whose entire purpose is that somebody reads it.
 
@@ -37,6 +47,10 @@ SPEC = [("existence_ledger.jsonl", "CYCLE KILLED", lambda d: d.get("event") == "
         ("blackbox.jsonl", "BLACKBOX ERROR", lambda d: d.get("phase") == "error", None),
         ("collector_runs.jsonl", "COLLECTOR BLIND", lambda d: bool(d.get("browse_failed")), "browse_failed"),
         ("source_lifecycle_ledger.jsonl", "SOURCE REFUSED", lambda d: d.get("event") == "refusal", "reason")]
+REG = MEM.parent / "claude" / "CLAUDE_ERRORS.md"
+_reg = [[c.strip() for c in l.strip().strip("|").split("|")]
+        for l in (REG.read_text(encoding="utf-8", errors="replace") if REG.is_file() else "").splitlines()
+        if l.startswith("|") and "твърдях" not in l and set(l.strip()) - set("|- ")]
 def _j(line):
     try: return json.loads(line)
     except Exception: return None
@@ -50,3 +64,4 @@ found = [(lab, str(r[-1].get(f) if f else r[-1])[:300]) for n, lab, hit, f in SP
 print("MORNING READ — the machines wrote these; until now nobody read them." + ("" if found else "  (nothing recorded)"))
 for label, sentence in found[:3]:
     print(f"  {label}: {sentence}")
+if _reg: print("  CLAUDE ERROR: " + " — ".join(_reg[-1][:3])[:300])
