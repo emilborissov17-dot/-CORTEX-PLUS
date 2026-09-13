@@ -330,3 +330,9 @@ training/l1b_exam.jsonl
 # not source: a night produces thousands of rows and they belong on the machine
 # that made them. claude/reports/TRACE_*.md is the part meant to be read and kept.
 memory/cycle_trace/
+
+# ARC-AGI evaluation set (fchollet/ARC-AGI, Apache-2.0). Redistributable with the
+# licence kept, but a 1.6 MB foreign dataset does not belong in our repository —
+# it is downloaded, not authored here. data/arc_eval_400.json is untracked today
+# and this line is what keeps a future `git add data/` from changing that.
+data/arc_eval_400.json
