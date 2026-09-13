@@ -655,7 +655,11 @@ def start(cycle_id=None) -> str | None:
     threading.excepthook = _thread_died
 
     calls_on = _maybe_start_calls()
-    _state["channels"] = ["pulse", "audit"] + (["calls"] if calls_on else [])
+    # The head says which channels were ON, so a reader can tell "this step
+    # read nothing" from "reads were not being recorded". Without it an
+    # ordinary night would make every step look like it consumes nothing.
+    _state["channels"] = (["pulse", "audit"] + (["calls"] if calls_on else [])
+                          + (["read"] if READ_CHANNEL else []))
 
     _state["writer"] = threading.Thread(target=_writer_loop, name="fr-writer",
                                         daemon=True)
