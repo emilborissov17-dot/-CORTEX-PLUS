@@ -59,6 +59,13 @@ TRACE_DIR = os.path.join(REPO, "memory", "cycle_trace")
 
 PULSE_SEC = 1.0
 FLUSH_SEC = 2.0
+# A coalesced row is emitted at least this often even while its key keeps
+# being hit. Without it a step stuck in one place writes NOTHING until it
+# moves: watched live on 13 Sep, the trace went quiet for three minutes
+# while the cycle was alive and working. Silence that means 'busy' is
+# indistinguishable from silence that means 'dead', which is the one
+# distinction this recorder exists to make.
+COALESCE_MAX_SEC = 30.0
 FSYNC_EVERY = 200
 BUFFER_CAP = 5000          # rows held before a cycle_id arrives
 BUFFER_SEC = 30.0          # seconds held before giving up and using a provisional name
@@ -73,6 +80,32 @@ SKIP_PARTS = (os.sep + "venv" + os.sep, os.sep + "__pycache__" + os.sep,
               os.sep + "memory" + os.sep + "cycle_trace" + os.sep)
 
 _CURRENT = contextvars.ContextVar("flight_recorder_span", default=None)
+
+# ── WHY THERE ARE TWO OF THESE, AND THE SECOND IS NOT REDUNDANT ──────────────
+# A ContextVar is per-context. The pulse runs in its own thread and reads the
+# default forever; a worker thread started by a step begins with a fresh context
+# and reads the default too. Measured on the cycle of 13 Sep: 0 of 119 pulses
+# carried a span id even while step:internet_agent was open for 1691 seconds, and
+# only 2 of the cycle's 154 spawns were attributable — internet_agent does its
+# fetching in threads, so every child it started fell into "unattributed".
+#
+# That is not a rounding error, it is the difference between "the browser step
+# spawned 2 processes" and "somewhere between 2 and 154". A record that cannot say
+# which is not measuring.
+#
+# So the ContextVar stays — it is the right thing for nesting inside one thread,
+# where an inner span must not leak out of its scope — and a PLAIN module
+# variable carries the step for everyone else. The plain one is deliberately only
+# ever the STEP span, never a nested call span: a worker thread has no way to know
+# which inner span it belongs to, and guessing one would be worse than naming the
+# step it certainly belongs to.
+_CURRENT_STEP = None            # the innermost open "step:*" span, process-wide
+_STEP_STACK = []                # so a nested step restores its parent on exit
+
+
+def _current_span():
+    """The span an event belongs to: this context's, or the process-wide step."""
+    return _CURRENT.get() or _CURRENT_STEP
 
 # A thread that dies quietly takes the record with it and leaves the verdict
 # green — measured, on the first run of this file's own selftest. Captured here so
@@ -239,8 +272,13 @@ def _writer_loop() -> None:
                 cur["attr"]["t_end"] = row["t"]
             fresh.add(key)
         if time.time() - last >= FLUSH_SEC:
-            for key in [k for k in pending if k not in fresh]:
-                _emit_sync(pending.pop(key))
+            now_t = _now()
+            for key in list(pending):
+                row = pending[key]
+                idle = key not in fresh
+                held = now_t - float(row.get("t") or 0.0)
+                if idle or held >= COALESCE_MAX_SEC:
+                    _emit_sync(pending.pop(key))
             fresh.clear()
             last = time.time()
     for row in pending.values():
@@ -264,7 +302,7 @@ def event(name: str, attr: dict, sp=None) -> None:
     """Queue one 'ev'. Safe from any thread, never raises."""
     if not _state["on"]:
         return
-    row = {"k": "ev", "sp": sp if sp is not None else _CURRENT.get(),
+    row = {"k": "ev", "sp": sp if sp is not None else _current_span(),
            "name": name, "t": _now(), "attr": dict(attr)}
     row["attr"].setdefault("n", 1)
     key = (row["sp"], name, attr.get("path") or attr.get("where")
@@ -316,7 +354,7 @@ def _pulse_loop() -> None:
             else:
                 rel = os.path.relpath(top.f_code.co_filename, REPO).replace("\\", "/")
                 where = f"{rel}:{top.f_lineno}:{top.f_code.co_name}"
-            sp = _CURRENT.get()
+            sp = _current_span()
             step = None if sp else _step_from_stack(fr)
             rss, avail = _mem()
             attr = {"where": where, "rss_mb": rss, "avail_mb": avail,
@@ -471,12 +509,18 @@ class span:
         self.parent = None
 
     def __enter__(self):
+        global _CURRENT_STEP
         if not _state["on"]:
             return self
-        self.parent = _CURRENT.get()
+        self.parent = _CURRENT.get() or _CURRENT_STEP
         self.t = _now()
         self.sp = open_span(self.name, self.attr, self.parent)
         self.token = _CURRENT.set(self.sp)
+        # Only a step is published process-wide; see the note beside _CURRENT_STEP.
+        self.is_step = self.name.startswith("step:")
+        if self.is_step:
+            _STEP_STACK.append(_CURRENT_STEP)
+            _CURRENT_STEP = self.sp
         return self
 
     def __exit__(self, et, ev, tb):
@@ -492,6 +536,9 @@ class span:
         close_span(self.sp, self.t, self.name, self.parent, st, attr)
         if self.token is not None:
             _CURRENT.reset(self.token)
+        if getattr(self, "is_step", False):
+            global _CURRENT_STEP
+            _CURRENT_STEP = _STEP_STACK.pop() if _STEP_STACK else None
         return False
 
 
@@ -509,6 +556,9 @@ def start(cycle_id=None) -> str | None:
     _state["buffer"] = []
     _state["dropped"] = 0
     _state["last_t"] = 0.0
+    global _CURRENT_STEP
+    _CURRENT_STEP = None
+    _STEP_STACK.clear()
     _state["on"] = True
 
     THREAD_ERRORS.clear()

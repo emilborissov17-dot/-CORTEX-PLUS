@@ -275,3 +275,104 @@ def test_a_killed_process_leaves_an_open_without_a_span(tmp_path):
     dead = [s for s in spans if s["name"] == "step:the_one_it_died_in"]
     assert dead and dead[0]["status"]["code"] == 2
     assert any(kv["key"] == "unclosed" for kv in dead[0]["attributes"])
+
+
+# ── 7. attribution across threads: the defect that made measurement useless ──
+
+def test_an_event_from_a_worker_thread_is_attributed_to_the_step(rec):
+    """THE DEFECT: a ContextVar is per-context, so a worker thread reads the
+    default. Measured on the cycle of 13 Sep — 0 of 119 pulses carried a span id
+    while step:internet_agent was open for 1691s, and only 2 of 154 spawns were
+    attributable, because internet_agent fetches in threads. 'Between 2 and 154'
+    is not a measurement."""
+    import threading as _th
+    p = rec.start("t-threads")
+    seen = {}
+    with rec.span("step:fetcher", {"step": "fetcher"}) as sp:
+        def _worker():
+            rec.event("spawn", {"argv": ["yt-dlp"], "pid": 1})
+            seen["sp"] = sp.sp
+        th = _th.Thread(target=_worker)
+        th.start()
+        th.join()
+    rec.stop()
+    spawns = [r for r in _rows(p) if r.get("name") == "spawn"]
+    assert spawns, "the worker thread's event never reached the trace"
+    assert spawns[0]["sp"] == seen["sp"], (
+        f"the event was filed under {spawns[0]['sp']!r} instead of the open step "
+        f"{seen['sp']!r} — worker threads are unattributed again")
+
+
+def test_the_step_is_released_when_it_closes(rec):
+    """The process-wide step must not outlive its span, or the next unattributed
+    event would be filed under a step that has already finished."""
+    p = rec.start("t-release")
+    with rec.span("step:one", {"step": "one"}):
+        pass
+    rec.event("touch", {"ev": "open-w", "path": "after.json"})
+    rec.stop()
+    after = [r for r in _rows(p) if (r.get("attr") or {}).get("path") == "after.json"]
+    assert after and after[0]["sp"] is None, (
+        "an event after the step closed was still attributed to it")
+
+
+def test_a_nested_step_restores_its_parent(rec):
+    p = rec.start("t-nested")
+    with rec.span("step:outer", {"step": "outer"}) as outer:
+        with rec.span("step:inner", {"step": "inner"}):
+            pass
+        rec.event("touch", {"ev": "open-w", "path": "back_in_outer.json"})
+    rec.stop()
+    row = next(r for r in _rows(p)
+               if (r.get("attr") or {}).get("path") == "back_in_outer.json")
+    assert row["sp"] == outer.sp, "the inner step did not give the parent back"
+
+
+# ── 8. a stalled step must not go silent ─────────────────────────────────────
+
+def test_the_coalescing_ceiling_is_pinned_and_below_a_minute():
+    """Watched live on 13 Sep: the trace went quiet for three minutes while the
+    cycle was alive, because a coalesced key is only emitted once it stops being
+    hit. Silence meaning 'busy' is indistinguishable from silence meaning 'dead'."""
+    assert fr.COALESCE_MAX_SEC == 30.0
+    assert fr.COALESCE_MAX_SEC > fr.FLUSH_SEC
+
+
+def test_a_repeating_event_is_still_written_while_it_repeats(rec, monkeypatch):
+    """Same key hit continuously; with the ceiling lowered for the test, a row
+    must appear WITHOUT the key ever going idle."""
+    monkeypatch.setattr(fr, "COALESCE_MAX_SEC", 1.0)
+    p = rec.start("t-stall")
+    stop = time.time() + 4.0
+    while time.time() < stop:
+        rec.event("pulse", {"where": "stuck.py:1:f", "t_end": fr._now()})
+        time.sleep(0.15)
+    rec.stop()
+    pulses = [r for r in _rows(p) if r.get("name") == "pulse"]
+    assert len(pulses) >= 2, (
+        f"only {len(pulses)} row(s) written while the same place was hit for four "
+        f"seconds — a stalled step would leave no trace at all")
+
+
+# ── 9. the report resolves _run labels to step names ─────────────────────────
+
+def test_the_report_matches_run_labels_to_their_step_names(tmp_path):
+    """The trace writes step:internet_agent; cycle_map knows internet_intelligence.
+    Matching by string made the report say '1 of 75' on a cycle where two steps
+    had left spans."""
+    from tools import trace_report as tr
+    assert tr._canonical("internet_agent") == "internet_intelligence"
+    assert tr._canonical("body_scanner") == "body_scan"
+    assert tr._canonical("daily_tier") == "daily_tier"
+
+    rows = [{"k": "head", "cycle_id": "x", "t0": "2026-09-13T00:00:00Z",
+             "trace_id": "c" * 32, "pid": 1, "py": "3", "channels": []},
+            {"k": "open", "sp": "s1", "pa": None, "name": "step:internet_agent",
+             "t": 0.0, "attr": {}},
+            {"k": "span", "sp": "s1", "pa": None, "name": "step:internet_agent",
+             "t": 0.0, "t_end": 100.0, "ms": 100000, "st": "OK", "attr": {}}]
+    p = tmp_path / "aliased.jsonl"
+    p.write_text(chr(10).join(json.dumps(r) for r in rows) + chr(10), encoding="utf-8")
+    f = tr.fold(tr.load(p))
+    assert f["ms_by_step"].get("internet_intelligence") == 100000, (
+        f"the label was not resolved: {dict(f['ms_by_step'])}")

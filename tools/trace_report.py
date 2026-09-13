@@ -76,6 +76,22 @@ def all_steps() -> list:
         return []
 
 
+def _canonical(label: str) -> str:
+    """The step name a _run() LABEL belongs to.
+
+    The trace writes step:<_run label> — "internet_agent". cycle_map knows the
+    STEP — "internet_intelligence". Matching the two by string made the report say
+    "1 of 75 steps left a span" on a cycle where two had: daily_tier matched
+    because its label happens to equal its name, cortex_strategist_agent did not.
+    core.cycle_map already owns this table; step_audit already goes through it.
+    """
+    try:
+        from core.cycle_map import _canon
+        return _canon(label) or label
+    except Exception:
+        return label
+
+
 def fold(rows: list) -> dict:
     head = next((r for r in rows if r.get("k") == "head"), {})
     opens, spans, evs = {}, [], []
@@ -115,7 +131,7 @@ def fold(rows: list) -> dict:
             seen.add(sp)
             n = name_of.get(sp, "")
             if n.startswith("step:"):
-                return n[5:]
+                return _canonical(n[5:])
             sp = parent.get(sp)
         return None
 
@@ -124,9 +140,10 @@ def fold(rows: list) -> dict:
     for s in spans:
         n = s.get("name", "")
         if n.startswith("step:"):
-            ms_by_step[n[5:]] += int(s.get("ms") or 0)
-            if s.get("st") == "ERROR" or n[5:] not in status_by_step:
-                status_by_step[n[5:]] = s.get("st", "UNSET")
+            canon = _canonical(n[5:])
+            ms_by_step[canon] += int(s.get("ms") or 0)
+            if s.get("st") == "ERROR" or canon not in status_by_step:
+                status_by_step[canon] = s.get("st", "UNSET")
 
     files_by_step = defaultdict(lambda: defaultdict(int))
     spawns_by_step = defaultdict(list)

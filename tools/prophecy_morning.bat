@@ -71,8 +71,21 @@ call :step "world_forecast --score"   "%PY% experiments\prophecy\world_forecast.
 call :step "world_forecast --predict" "%PY% experiments\prophecy\world_forecast.py --predict"   yes
 call :step "scoreboard --write"      "%PY% experiments\prophecy\scoreboard.py --write"          no
 rem The reader goes FIRST: six machines wrote their failure honestly on 13 Sep
+
 rem 2026 and nobody read one of them. A log nobody reads is a log that is not kept.
+
+rem THE PANTRY FILLER. The night stopped fetching on 13 Sep 2026 and the cycle
+
+rem was the only thing writing news/<day>/, so without this the system goes blind
+
+rem to news from the next morning. Same work, at an hour the machine can hold it.
+
+rem It asks the same survival gate the cycle asks and refuses when that refuses.
+
+call :step "fill_pantry"           "%PY% tools\fill_pantry.py"                              no
+
 call :step "morning_read"          "%PY% tools\morning_read.py"                              no
+
 call :step "card_intake"            "%PY% core\card_intake.py"                                no
 call :step "verified_corpus"        "%PY% training\verified_corpus.py"                       no
 REM --- E1 (11 Sep 2026): does knowing the other daily series help? transfer A->B and

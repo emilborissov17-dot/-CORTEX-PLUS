@@ -1,0 +1,637 @@
+[PANTRY] filling for 2026-09-13; before: {'news_files': 24, 'transcripts_today': 25, 'transcripts_total': 662}
+
+[INTERNET] -- SOCIAL_RELATIONS_REVIEW --
+  Query: social inequality conflict trust
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'social inequality loneliness epidemic community'
+    [YT-API] грешка: HTTP Error 429: Too Many Requests
+    [YT-PW] пауза 2.8s → 'social inequality loneliness epidemic community'
+    [YT-PW] 'social inequality loneliness epidemic community' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] m-6EiI3VCLA ⚡ cache hit (940 chars, playwright_web)
+    [TRANSCRIPT] lCwHWH8T2ck ⚡ cache hit (908 chars, playwright_web)
+    [TRANSCRIPT] I19btmIBhx0 ⚡ cache hit (933 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 454 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Последните данни показват нарастваща социална изолация, докато инициативи като х
+
+[INTERNET] -- GOAL_PROGRESS_REVIEW --
+  Query: sustainable development goals SDG
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'sustainable development goals SDG 2030 UN progress'
+    [YT-API] грешка: HTTP Error 429: Too Many Requests
+    [YT-PW] пауза 3.4s → 'sustainable development goals SDG 2030 UN progress'
+    [YT-PW] 'sustainable development goals SDG 2030 UN progress' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] JBI1SVLa75A ⚡ cache hit (879 chars, playwright_web)    [TRANSCRIPT] kGcrYkHwE80 ⚡ cache hit (1114 chars, playwright_web)
+
+    [TRANSCRIPT] enGJyhu6Xr0 ⚡ cache hit (692 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 486 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Последните данни показват спад в глобалната глад, но напредъкът е неравномерен м
+
+[INTERNET] -- WATER_REVIEW --
+  Query: water scarcity drinking water
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'water crisis drought freshwater scarcity'
+    [YT-API] грешка: HTTP Error 429: Too Many Requests
+    [YT-PW] пауза 2.3s → 'water crisis drought freshwater scarcity'
+    [YT-PW] 'water crisis drought freshwater scarcity' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] wZs9sKXuk8Q ⚡ cache hit (1 chars, whisper)    [TRANSCRIPT] J6R1Ek507Hk ⚡ cache hit (200 chars, playwright_web)    [TRANSCRIPT] ndjOWflLbVo ⚡ cache hit (726 chars, playwright_web)
+
+
+    [YT] Score: 0.64 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 414 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Достъпът до чиста вода остава критичен проблем, като се наблюдават протести в Пу
+
+[INTERNET] -- DEEP_TIME_RISKS_REVIEW --
+  Query: nuclear war pandemic existential risk
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'pandemic risk nuclear war asteroid impact supervolcano'
+    [YT-API] грешка: HTTP Error 429: Too Many Requests
+    [YT-PW] пауза 3.8s → 'pandemic risk nuclear war asteroid impact supervolcano'
+    [YT-PW] 'pandemic risk nuclear war asteroid impact supervolcano' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] ngL7izanizg ⚡ cache hit (908 chars, playwright_web)
+    [TRANSCRIPT] GEt0_ryjCj4 ⚡ cache hit (919 chars, playwright_web)
+    [YT] IP BLOCK (transcript-api) → останалите fetch-ове в този цикъл минават директно през Playwright (API се прескача)
+    [TRANSCRIPT-WHISPER] fXb02MQ78yQ: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] fXb02MQ78yQ ❌ няма транскрипция
+    [YT] Score: 0.48 (3 видеа)
+  YouTube: 3 видеа, 2 с транскрипция
+  Podcast: 414 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Дълбоките геофизични процеси и бъдещите изкуствени интелигентни системи представ
+
+[INTERNET] -- TECHNOLOGY_INFRA_REVIEW --
+  Query: technology internet digital access
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'internet access digital divide 2026'
+    [YT-PW] пауза 2.4s → 'internet access digital divide 2026'
+    [YT-PW] 'internet access digital divide 2026' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] JG1AEeqVQIs ⚡ cache hit (10 chars, whisper)
+    [TRANSCRIPT] ohKBJUZmLj4 ⚡ cache hit (660 chars, whisper)
+    [TRANSCRIPT-WHISPER] yvSqRTrIrrQ: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] yvSqRTrIrrQ ❌ няма транскрипция
+    [YT] Score: 0.43 (3 видеа)
+    [YT] Query: 'digital divide 5G semiconductor tech infrastructure'
+    [YT-PW] пауза 2.7s → 'digital divide 5G semiconductor tech infrastructure'
+    [YT-PW] 'digital divide 5G semiconductor tech infrastructure' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] 2U2KUNLB3KE ⚡ cache hit (529 chars, playwright_web)
+    [TRANSCRIPT] OZlQv0hVhwU ⚡ cache hit (786 chars, whisper)
+    [TRANSCRIPT] oRflrzbZU1w OK groq-whisper (14 chars)
+    [YT] Score: 0.66 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 225 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Текущото развитие на технологичната инфраструктура, включващо мащабируеми систем
+
+[INTERNET] -- MATERIALS_WASTE_REVIEW --
+  Query: plastic waste pollution recycling
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'plastic pollution circular economy recycling'
+    [YT-PW] пауза 3.3s → 'plastic pollution circular economy recycling'
+    [YT-PW] 'plastic pollution circular economy recycling' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] sDKKKQ0_IxU ⚡ cache hit (913 chars, playwright_web)    [TRANSCRIPT] n_3vSDOY7iU ⚡ cache hit (879 chars, playwright_web)
+
+    [TRANSCRIPT] caH_nYhKIAU ⚡ cache hit (872 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 465 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Въпросът за управлението на отпадъците получава нови импулси – обединяването на 
+
+[INTERNET] -- TECHNOLOGY_AI_REVIEW --
+  Query: artificial intelligence AI regulation
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'artificial intelligence AGI machine learning safety 2025'
+    [YT-PW] пауза 2.9s → 'artificial intelligence AGI machine learning safety 2025'
+    [YT-PW] 'artificial intelligence AGI machine learning safety 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] eU86ldfyyaA ⚡ cache hit (929 chars, playwright_web)
+    [TRANSCRIPT] 6AGOy8mA0ms ⚡ cache hit (921 chars, playwright_web)
+    [TRANSCRIPT] UclrVWafRAI ⚡ cache hit (926 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 503 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 60s (hit #1)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 60s (hit #1)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 60s (hit #1)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟡 HIGH | Аналитиката на AI-от въпросирана срещу инновацията и безопасността, а именно соф
+
+[INTERNET] -- GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL --
+  Query: human rights democracy freedom
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'human rights democracy civil liberties 2025'
+    [YT-PW] пауза 2.4s → 'human rights democracy civil liberties 2025'
+    [YT-PW] 'human rights democracy civil liberties 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] nDgIVseTkuE ⚡ cache hit (891 chars, playwright_web)
+    [TRANSCRIPT] lWDUzY8D0hQ ⚡ cache hit (803 chars, playwright_web)
+    [TRANSCRIPT] rtkXietG3U4 OK groq-whisper (417 chars)
+    [YT] Score: 0.69 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 464 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 120s (hit #2)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 120s (hit #2)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 120s (hit #2)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 MEDIUM | Правата на хора са включени в концепцията за хубаво живот и свободата, но това е
+
+[INTERNET] -- PLANETARY_POTENTIAL_REVIEW --
+  Query: earth resources sustainability
+[LLM] Gemini OK
+  GDELT: 3 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'geoengineering planetary boundaries 2026'
+    [YT-PW] пауза 3.9s → 'geoengineering planetary boundaries 2026'
+    [YT-PW] 'geoengineering planetary boundaries 2026' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT-WHISPER] w98YtrlLdso: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] w98YtrlLdso ❌ няма транскрипция
+    [TRANSCRIPT-WHISPER] dSu5sXmsur4: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] dSu5sXmsur4 ❌ няма транскрипция
+    [TRANSCRIPT-WHISPER] BnFv2YUVI-o: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] BnFv2YUVI-o ❌ няма транскрипция
+    [YT] Score: 0.00 (3 видеа)
+    [YT] Query: 'planetary boundaries geoengineering tipping points'
+    [YT-PW] пауза 2.7s → 'planetary boundaries geoengineering tipping points'
+    [YT-PW] 'planetary boundaries geoengineering tipping points' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] 6D1Lgt1mZ9I ⚡ cache hit (877 chars, playwright_web)
+    [TRANSCRIPT] zMqI0t0ipcg ⚡ cache hit (888 chars, playwright_web)
+    [TRANSCRIPT-WHISPER] AKhDgpuIhoM: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] AKhDgpuIhoM ❌ няма транскрипция
+    [YT] Score: 0.48 (3 видеа)
+  YouTube: 3 видеа, 2 с транскрипция
+  Podcast: 225 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟡 HIGH | Учените изречаха, че 60% световната земна планина вече превише безопасни екологи
+
+[INTERNET] -- LONG_TERM_FUTURE_REVIEW --
+  Query: existential risk future civilization
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'existential risk humanity future civilization'
+    [YT-PW] пауза 3.1s → 'existential risk humanity future civilization'
+    [YT-PW] 'existential risk humanity future civilization' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] WT_S6xPf0aM ⚡ cache hit (758 chars, whisper)    [TRANSCRIPT] su6jEG1nwBs ⚡ cache hit (883 chars, playwright_web)
+    [TRANSCRIPT] yguPPQNkDns ⚡ cache hit (627 chars, playwright_web)
+
+    [YT] Score: 0.70 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 196 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 180s (hit #3)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 180s (hit #3)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 180s (hit #3)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 MEDIUM | AI researcher from Anthropic expressed concerns about the future of humanity, su
+
+[INTERNET] -- INFRASTRUCTURE_CITIES_REVIEW --
+  Query: cities infrastructure urban development
+  RSS: 3 items
+[LLM] Gemini OK
+  GDELT: 3 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'latest smart cities research 2026'
+    [YT-PW] пауза 3.6s → 'latest smart cities research 2026'
+    [YT-PW] 'latest smart cities research 2026' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT-WHISPER] Xh-8LH0eUJk: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [YT-BREAKER] YouTube answered HTTP 429 5 times in a row (7 this process) - EVERY yt-dlp call (subtitles and Whisper audio) parked for 4 min on the wall clock (level 1/3); Playwright continues
+    [TRANSCRIPT] Xh-8LH0eUJk ❌ няма транскрипция
+    [TRANSCRIPT-WHISPER] wTR-yEiuOcE: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] wTR-yEiuOcE ❌ няма транскрипция
+    [TRANSCRIPT-WHISPER] brC4uEeTgEo: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] brC4uEeTgEo ❌ няма транскрипция
+    [YT] Score: 0.00 (3 видеа)
+    [YT] Query: 'smart cities urban planning infrastructure future'
+    [YT-PW] пауза 3.6s → 'smart cities urban planning infrastructure future'
+    [YT-PW] 'smart cities urban planning infrastructure future' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] d1DndVz9dAs ⚡ cache hit (937 chars, playwright_web)    [TRANSCRIPT] bANfnYDTzxE ⚡ cache hit (974 chars, playwright_web)    [TRANSCRIPT] Pj1vNBdQ2GA ⚡ cache hit (945 chars, playwright_web)
+
+
+    [YT] Score: 0.73 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 452 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+  🟡 HIGH | Бързото нарастване на градското население изисква колосални инвестиции в инфраст
+
+[INTERNET] -- HUMAN_WELL_BEING_REVIEW --
+  Query: mental health wellbeing global
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'global health WHO poverty inequality 2025'
+    [YT-PW] пауза 3.6s → 'global health WHO poverty inequality 2025'
+    [YT-PW] 'global health WHO poverty inequality 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] j7ysRCMNWlk ⚡ cache hit (922 chars, playwright_web)
+    [TRANSCRIPT] VuTgVD7KM6w ⚡ cache hit (891 chars, playwright_web)
+    [TRANSCRIPT] 3jBwZ7vDYUM ⚡ cache hit (897 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 488 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+  🔴 CRITICAL | Глобалното неравенство през 2025 г. продължава да се задълбочава, като най-богат
+
+[INTERNET] -- EDUCATION_CULTURE_REVIEW --
+  Query: education access schools literacy
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'global education UNESCO literacy 2025'
+    [YT-PW] пауза 2.6s → 'global education UNESCO literacy 2025'
+    [YT-PW] 'global education UNESCO literacy 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] -OOoFZVzNtc ⚡ cache hit (118 chars, whisper)    [TRANSCRIPT] -SG9a5M-KCI ⚡ cache hit (894 chars, playwright_web)
+
+    [TRANSCRIPT] C8OQIJUZR18 ⚡ cache hit (12 chars, whisper)
+    [YT] Score: 0.65 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 467 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 180s (hit #4)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 180s (hit #4)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 180s (hit #4)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 LOW | Церемония на премието за билигика от УНСЕУК се провежда в град Чу Фу, където е р
+
+[INTERNET] -- COSMIC_RESOURCES_REVIEW --
+  Query: asteroid mining space resources
+[LLM] Gemini OK
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'asteroid mining space resources investigation'
+    [YT-PW] пауза 2.5s → 'asteroid mining space resources investigation'
+    [YT-PW] 'asteroid mining space resources investigation' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] y8XvQNt26KI ⚡ cache hit (914 chars, playwright_web)
+    [TRANSCRIPT] p3hlnL2JN8E ⚡ cache hit (929 chars, playwright_web)
+    [TRANSCRIPT] D3eVaW4ytZA ⚡ cache hit (862 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 465 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+  🟡 HIGH | Усвояването на космически ресурси предлага чиста алтернатива на разрушителния и 
+
+[INTERNET] -- SPACE_INFRASTRUCTURE_REVIEW --
+  Query: space exploration NASA SpaceX
+  RSS: 0 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'space exploration SpaceX NASA satellite 2025'
+    [YT-PW] пауза 3.9s → 'space exploration SpaceX NASA satellite 2025'
+    [YT-PW] 'space exploration SpaceX NASA satellite 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] ZtQ5_lsPw5M ⚡ cache hit (3000 chars, youtube_transcript_api)
+    [TRANSCRIPT] Gt24_T56km8 ❌ няма транскрипция
+    [TRANSCRIPT] U-k_LyA1DQQ ❌ няма транскрипция
+    [YT] Score: 0.33 (3 видеа)
+  YouTube: 3 видеа, 1 с транскрипция
+  Podcast: 465 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+  🟢 MEDIUM | Развитието на космическата инфраструктура преминава през критична фаза с успешни
+
+[INTERNET] -- INEQUALITY_POVERTY_REVIEW --
+  Query: inequality poverty wealth gap
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'income inequality wealth gap poverty 2025'
+    [YT-PW] пауза 3.1s → 'income inequality wealth gap poverty 2025'
+    [YT-PW] 'income inequality wealth gap poverty 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] HDLfUrG1MHU ⚡ cache hit (959 chars, playwright_web)
+    [TRANSCRIPT] oqmF2hIs4es ⚡ cache hit (628 chars, youtube_transcript_api)
+    [TRANSCRIPT] 8_Vgdl-NqS4 OK groq-whisper (1027 chars)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 454 chars
+  [LLM] Groq openai/gpt-oss-120b...
+[LLM] Groq OK
+  🟡 HIGH | Нарастващото социално неравенство и бедността остават критичен проблем, както по
+
+[INTERNET] -- ENERGY_REVIEW --
+  Query: renewable energy solar wind
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'renewable energy transition solar wind 2025'
+    [YT-PW] пауза 2.1s → 'renewable energy transition solar wind 2025'
+    [YT-PW] 'renewable energy transition solar wind 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] Rs_NWwtBoks ⚡ cache hit (755 chars, playwright_web)
+    [TRANSCRIPT] spSOp5s_6_A ⚡ cache hit (797 chars, playwright_web)
+    [TRANSCRIPT] UVf2Yw7uFoE ⚡ cache hit (830 chars, playwright_web)
+    [YT] Score: 0.71 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 418 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 60s (hit #1)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 180s (hit #5)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 180s (hit #5)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 LOW | Чешкият солнечен планетарен проект е успешен, но още не достатъчен за решаване н
+
+[INTERNET] -- ECONOMY_WORK_REVIEW --
+  Query: economy unemployment poverty wages
+  RSS: 3 items
+[LLM] Gemini OK
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'global economy recession inflation unemployment 2025'
+    [YT-PW] пауза 3.8s → 'global economy recession inflation unemployment 2025'
+    [YT-PW] 'global economy recession inflation unemployment 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] hyNFVGa7k74 ⚡ cache hit (955 chars, playwright_web)
+    [TRANSCRIPT] lnANopdx1WI ⚡ cache hit (994 chars, whisper)
+    [TRANSCRIPT-WHISPER] c0JNmhxdxpI: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] c0JNmhxdxpI ❌ няма транскрипция
+    [YT] Score: 0.49 (3 видеа)
+  YouTube: 3 видеа, 2 с транскрипция
+  Podcast: 457 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 120s (hit #2)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟡 HIGH | Аналитиката на CORTEX++ показва, че целия сектор на работните места и инвестиран
+
+[INTERNET] -- GOVERNANCE_INSTITUTIONS_REVIEW --
+  Query: government corruption institutions
+  RSS: 0 items
+  GDELT: 3 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'geopolitics UN 2026'
+    [YT-PW] пауза 2.9s → 'geopolitics UN 2026'
+    [YT-PW] 'geopolitics UN 2026' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] uiUPD-z9DTg ⚡ cache hit (3000 chars, youtube_transcript_api)    [TRANSCRIPT] EVts3Ui_0AI ⚡ cache hit (3000 chars, youtube_transcript_api)
+
+    [TRANSCRIPT-WHISPER] dqVfnC_muaI: audio download failed (rc=1)          To suppress this warning, add --no-update to your command/config. | WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to | ERROR: unable to download video data: HTTP Error 403: Forbidden
+    [TRANSCRIPT] dqVfnC_muaI ❌ няма транскрипция
+    [YT] Score: 0.67 (3 видеа)
+  YouTube: 3 видеа, 2 с транскрипция
+  Podcast: 527 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+  🟡 HIGH | Анализът на институционалното управление разкрива преход от еднополюсен към по-с
+
+[INTERNET] -- FOOD_REVIEW --
+  Query: food security hunger famine
+  RSS: 3 items
+  GDELT: 3 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'food security global hunger agriculture 2025'
+    [YT-PW] пауза 3.7s → 'food security global hunger agriculture 2025'
+    [YT-PW] 'food security global hunger agriculture 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] jZwPIMk-HoM ⚡ cache hit (856 chars, playwright_web)
+    [TRANSCRIPT] icwY0Slg4D8 ⚡ cache hit (848 chars, playwright_web)    [TRANSCRIPT] 8awsHPEyP7A ⚡ cache hit (963 chars, playwright_web)
+
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 452 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 180s (hit #6)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 180s (hit #6)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 MEDIUM | Репортирането за гъстостта на храна показва, че процесът на уменцията е по-добар
+
+[INTERNET] -- ECOSYSTEMS_BIODIVERSITY_REVIEW --
+  Query: biodiversity species extinction
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'biodiversity loss deforestation species extinction'
+    [YT-PW] пауза 2.4s → 'biodiversity loss deforestation species extinction'
+    [YT-PW] 'biodiversity loss deforestation species extinction' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] JoMp7jHrrqA ⚡ cache hit (904 chars, playwright_web)
+    [TRANSCRIPT] qjCJhNAlsc4 OK groq-whisper (310 chars)
+    [TRANSCRIPT] 4H5Vk324xC8 OK groq-whisper (711 chars)
+    [YT] Score: 0.69 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 225 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 180s (hit #3)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟡 HIGH | Биологичната biodiversitет в растителността е ключова аспект от жизненото на пла
+
+[INTERNET] -- COGNITION_LEARNING_REVIEW --
+  Query: education learning children schools
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'education future AI learning skills 2025'
+    [YT-PW] пауза 3.2s → 'education future AI learning skills 2025'
+    [YT-PW] 'education future AI learning skills 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] k7PvscqGD24 ⚡ cache hit (984 chars, playwright_web)    [TRANSCRIPT] cHJ2CBXWas8 ⚡ cache hit (922 chars, playwright_web)
+
+    [TRANSCRIPT] mLkyqJTEpII ⚡ cache hit (941 chars, playwright_web)
+    [YT] Score: 0.73 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 464 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 LOW | Stanford ученци откръжват морск продукт, който може да поверне признаките на ста
+
+[INTERNET] -- CULTURE_MEDIA_REVIEW --
+  Query: media disinformation culture
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'media freedom misinformation social media impact'
+    [YT-PW] пауза 3.7s → 'media freedom misinformation social media impact'
+    [YT-PW] 'media freedom misinformation social media impact' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] z1tJaouDwVw ⚡ cache hit (942 chars, playwright_web)    [TRANSCRIPT] wwB0SdaWfBs ⚡ cache hit (945 chars, playwright_web)
+
+    [TRANSCRIPT] 4eVx7kb_8pA ⚡ cache hit (826 chars, playwright_web)
+    [YT] Score: 0.72 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 503 chars
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter nvidia/nemotron-3-super-120b-a12b:free...
+  [LLM] openrouter cooldown 180s (hit #7)
+  [LLM] OpenRouter failed (OpenRouter rate limit) -- next...
+  [LLM] NVIDIA moonshotai/kimi-k3...
+  [LLM] nvidia cooldown 180s (hit #7)
+  [LLM] NVIDIA-Kimi failed (NVIDIA NIM rate limit) -- next...
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 MEDIUM | Social media companies like Twitter, Facebook, and Google have been accused of a
+
+[INTERNET] -- CLIMATE_GLOBAL_RISK_REVIEW --
+  Query: climate change CO2 emissions
+  RSS: 3 items
+  GDELT: 0 items
+  arXiv: 0 papers
+  GitHub: 3 repos
+    [YT] Query: 'climate change extreme weather 2025'
+    [YT-PW] пауза 3.4s → 'climate change extreme weather 2025'
+    [YT-PW] 'climate change extreme weather 2025' → 5 видеа
+    [YT] 3 видеа, 3 паралелни контекста (BODY директива)
+    [TRANSCRIPT] Gh0xllDdFcA ⚡ cache hit (174 chars, playwright_web)    [TRANSCRIPT] uC_cKMQrnp4 ⚡ cache hit (26 chars, whisper)
+
+    [TRANSCRIPT] dKsQ_p0F6EI OK groq-whisper (201 chars)
+    [YT] Score: 0.62 (3 видеа)
+  YouTube: 3 видеа, 3 с транскрипция
+  Podcast: 454 chars
+  [LLM] Groq openai/gpt-oss-120b...
+  [LLM] groq cooldown 180s (hit #4)
+  [LLM] Groq failed (Groq rate limit) -- next...
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK
+[LLM] cloud abandoned -> local_3b qwen2.5:3b OK (DEGRADED)
+  🟢 LOW | Съветите за градиционния модел и Python пакета за анализ на данни от градиционни
+  [LLM] Groq in cooldown -- skipping
+  [LLM] OpenRouter in cooldown -- skipping
+  [LLM] NVIDIA-Kimi in cooldown -- skipping
+  [LLM] Gemini gemini-3.5-flash...
+[LLM] Gemini OK (finish_reason=length — ОТРЯЗАН отговор)
+  [LLM] DEGRADED: no tier produced a result within B=60s (cloud=TIMEOUT, local_3b=TIMEOUT, local_8b=SKIPPED); step marked DEGRADED, cycle continues
+[INTERNET] Синтез грешка: All LLM backends failed (Groq/OpenRouter/NVIDIA-Kimi/Gemini + local). Last error: None
+
+[INTERNET] SUMMARY:
+  🔴 CRITICAL:  ['HUMAN_WELL_BEING_REVIEW']
+  🟡 HIGH:      ['SOCIAL_RELATIONS_REVIEW', 'GOAL_PROGRESS_REVIEW', 'WATER_REVIEW', 'DEEP_TIME_RISKS_REVIEW', 'TECHNOLOGY_INFRA_REVIEW', 'MATERIALS_WASTE_REVIEW', 'TECHNOLOGY_AI_REVIEW', 'PLANETARY_POTENTIAL_REVIEW', 'INFRASTRUCTURE_CITIES_REVIEW', 'COSMIC_RESOURCES_REVIEW', 'INEQUALITY_POVERTY_REVIEW', 'ECONOMY_WORK_REVIEW', 'GOVERNANCE_INSTITUTIONS_REVIEW', 'ECOSYSTEMS_BIODIVERSITY_REVIEW']
+  Total: 24 axes
+[PANTRY] 1692.8s | news 24 -> 24 (+0) | transcripts today 25 -> 31 (+6)
+[PANTRY] memory: start 2398.6 MB free, low 202.0 MB, end 1644.6 MB, peak 98.6% used
+EXIT=0

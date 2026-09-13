@@ -146,6 +146,95 @@ def cleanup(apply: bool = False, base=None, now=None, log_path=None) -> dict:
     return rec
 
 
+def release_ollama(apply: bool = False, timeout: float = 10.0) -> dict:
+    """Ask ollama, through its own public door, to unload what it is holding.
+
+    NOT A KILL, and the distinction is the whole justification. release_working_set
+    above trims OUR memory and refuses to touch another process, which is right:
+    the machine belongs to a human and a cleaner that kills what it did not start
+    is not a cleaner. This is different — WE asked ollama to load the model, and
+    POST /api/generate {"keep_alive": 0} is the interface it publishes for asking
+    it to let go. Nothing is signalled, nothing is terminated.
+
+    WHAT IT ACTUALLY RETURNS, measured 13 Sep 2026 rather than assumed:
+
+        /api/ps  qwen2.5:3b   size 2208 MB   size_vram 2208 MB
+        ollama.exe  80 MB RSS  +  872 MB RSS
+
+    The model was entirely in VRAM. The survival gate reads
+    psutil.virtual_memory(), which cannot see VRAM at all — so this returns NOT
+    2.2 GB but whatever the server releases from its own RSS, bounded above by the
+    872 MB that process held, and in practice less because an allocator returning
+    pages to the OS is a hope rather than a guarantee. It is worth having and it is
+    not a rescue: on the night that mattered the machine had 138 MB free and the
+    hole was an order of magnitude bigger than this can fill.
+
+    THE MODEL WINDOW IS RESPECTED. core/model_window.py exists because unloading
+    and reloading around every step was measured to be the wrong trade, and
+    fast_cycle_runner._free_ollama already refuses to act while the window is open.
+    This refuses for the same reason: a cleanup that quietly reverses a decision
+    made with evidence is not a cleanup.
+
+    Never raises. Dry run by default.
+    """
+    rec = {"applied": bool(apply), "released": [], "skipped": None,
+           "ram_free_mb_before": _ram_free_mb(), "ram_free_mb_after": None}
+    try:
+        from core import model_window as mw
+        if mw.is_open():
+            rec["skipped"] = ("the 8b model window is open; releasing here would "
+                              "undo the alternation model_window exists to stop")
+            return rec
+    except Exception as exc:                                   # noqa: BLE001
+        rec["skipped"] = f"model_window unreadable ({type(exc).__name__}); not acting"
+        return rec
+
+    try:
+        import json as _json
+        import urllib.request as _rq
+        r = _rq.urlopen("http://127.0.0.1:11434/api/ps", timeout=timeout)
+        models = (_json.loads(r.read()) or {}).get("models") or []
+    except Exception as exc:                                   # noqa: BLE001
+        rec["skipped"] = f"ollama did not answer /api/ps ({type(exc).__name__})"
+        return rec
+
+    rec["resident"] = [{"name": m.get("name"),
+                        "size_mb": round((m.get("size") or 0) / 1048576.0, 1),
+                        "vram_mb": round((m.get("size_vram") or 0) / 1048576.0, 1)}
+                       for m in models]
+    if not models:
+        rec["skipped"] = "ollama holds no model; nothing to release"
+        return rec
+    if not apply:
+        return rec
+
+    for m in models:
+        name = m.get("name")
+        if not name:
+            continue
+        try:
+            import json as _json
+            import urllib.request as _rq
+            body = _json.dumps({"model": name, "keep_alive": 0}).encode("utf-8")
+            req = _rq.Request("http://127.0.0.1:11434/api/generate", data=body,
+                              headers={"Content-Type": "application/json"})
+            _rq.urlopen(req, timeout=timeout).read()
+            rec["released"].append(name)
+        except Exception as exc:                               # noqa: BLE001
+            rec.setdefault("errors", []).append(f"{name}: {type(exc).__name__}")
+    try:
+        import time as _t
+        _t.sleep(2.0)          # the server frees on its own clock, not on ours
+    except Exception:
+        pass
+    rec["ram_free_mb_after"] = _ram_free_mb()
+    before, after = rec["ram_free_mb_before"], rec["ram_free_mb_after"]
+    rec["ram_freed_mb"] = (round(after - before, 1)
+                           if isinstance(before, float) and isinstance(after, float)
+                           else None)
+    return rec
+
+
 def cure_refusal(check=None, apply: bool = False, base=None,
                  log_path=None) -> dict:
     """Clean, then ask the gate again. Never raises.
@@ -164,10 +253,15 @@ def cure_refusal(check=None, apply: bool = False, base=None,
                 "why": "the gate was not refusing; nothing to cure"}
 
     clean = cleanup(apply=apply, base=base, log_path=log_path)
+    # ONLY HERE, AND ONLY NOW. The gate is already refusing — this is a cure, not
+    # hygiene — and the model window is checked inside. Never on a schedule, never
+    # before a step, never while the window is deliberately held open.
+    ollama = release_ollama(apply=apply)
     after = check()
     cured = bool(after.get("allowed"))
     return {
         "cured": cured,
+        "ollama": ollama,
         # THE ONE LINE THE SUPERVISOR ACTS ON. A cured refusal is not charged
         # to the pool of three, because in the end nothing was refused.
         "counted": not cured,
