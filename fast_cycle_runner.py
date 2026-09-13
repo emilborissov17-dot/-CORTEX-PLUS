@@ -2976,8 +2976,14 @@ def main():
 
     # ── 4. Internet intelligence ──
     beat("internet_intelligence", "4")
+    # READS THE PANTRY. Does not fetch, does not open a browser, spawns nothing.
+    # run() used to be called here: 1441.7s, 32 child processes and 311 outbound
+    # connections inside the night of 12 Sep, on a machine that died of memory
+    # three times on 13 Sep. The fetching belongs to the day; the night reads what
+    # the day left, and an empty pantry is an answer it prints and walks past.
     _run("internet_agent", lambda: __import__(
-        "agents.internet.internet_agent", fromlist=["run"]).run(), free_after=True)
+        "agents.internet.internet_agent", fromlist=["read_pantry"]).read_pantry(),
+        free_after=True)
 
     # ── 5. Civilization snapshots ──
     beat("civilization_snapshots", "5")
