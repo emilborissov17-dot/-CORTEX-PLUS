@@ -135,6 +135,11 @@ def gather() -> dict:
     g["sandbox"] = (sbx.get("summary") or {}).get("verdict", {})
     g["country_bench"] = country_bench(REPO / "claude" / "reports" / "COUNTRY_BENCH.md")
     g["probe"] = _json(REPO / "memory" / "counterfactual_probe_latest.json", {}) or {}
+    _fp = _jsonl(REPO / "memory" / "feature_proposals.jsonl")
+    g["feature_proposals"] = {"judged": sum(1 for r in _fp if r.get("verdict") in ("ACCEPTED", "REJECTED")),
+                              "accepted": sum(1 for r in _fp if r.get("verdict") == "ACCEPTED"),
+                              "from_brain": sum(1 for r in _fp if r.get("source") == "brain"),
+                              "refused": sum(1 for r in _fp if r.get("verdict") == "REFUSED")}
     g["probe_by_model"] = (_json(REPO / "memory" / "counterfactual_probe_by_model.json", {}) or {}).get("by_model") or {}
     g["cross"] = (_json(REPO / "claude" / "reports" / "CROSS_SERIES_BENCH.json", {}) or {}).get("verdict") or {}
     g["alarm_indicators"] = (_json(REPO / "memory" / "alarm_bands_latest.json", {}) or {}).get("indicators", {}).get("counts", {})
@@ -231,9 +236,12 @@ def rows(g: dict) -> list[dict]:
     add(4, txt4, "CROSS_SERIES_BENCH.json (E2, morning step); memory/constancy_bands_latest.json",
         PARTIAL if (csurv or 0) >= 1 else (SEED if (cfound or cc) else NONE))
     dt = g["daily_tier"]
-    add(5, f"verified sensor cards accepted {g['verified']['accepted']}, refused {g['verified']['refused']}; daily tier {dt['indicators']} indicators",
-        "memory/verified_observations.jsonl, card_refusals.jsonl, daily_tier.jsonl",
-        PARTIAL if g["verified"]["accepted"] else NONE)
+    fpc = g.get("feature_proposals") or {}
+    add(5, f"verified sensor cards accepted {g['verified']['accepted']}, refused {g['verified']['refused']}; daily tier {dt['indicators']} indicators"
+           + (f"; E3 inputs the brain chose: {fpc.get('from_brain', 0)} proposed, {fpc.get('judged', 0)} judged, "
+              f"{fpc.get('accepted', 0)} kept by the exam" if fpc.get("judged") or fpc.get("from_brain") else ""),
+        "memory/verified_observations.jsonl, card_refusals.jsonl, daily_tier.jsonl; memory/feature_proposals.jsonl (E3)",
+        LIVE if (fpc.get("accepted") or 0) >= 1 and g["verified"]["accepted"] else (PARTIAL if g["verified"]["accepted"] or fpc.get("judged") else NONE))
     rv = g["reviews"]
     streak = 0
     for r in reversed(rv):

@@ -133,3 +133,35 @@ def test_points_1_and_3_read_the_cross_series_bench(tmp_path, monkeypatch):
     r = AS.rows(AS.gather())
     assert r[0]["verdict"] == AS.PARTIAL and "8/12 pairs" in r[0]["number"]
     assert r[2]["verdict"] == AS.PARTIAL and "k=20: 3/4" in r[2]["number"]
+
+
+def test_points_4_and_7_read_e2_and_e4(tmp_path, monkeypatch):
+    _gone(tmp_path, monkeypatch)
+    d = tmp_path / "claude" / "reports"; d.mkdir(parents=True)
+    (d / "CROSS_SERIES_BENCH.json").write_text(json.dumps({"verdict": {
+        "targets": 4, "concepts_found": 3, "concepts_survive": 1, "conformal_coverage": 0.79, "conformal_level": 0.8,
+        "transfer_pairs": 0, "transfer_beats_persistence": 0, "few_examples": {}}}), encoding="utf-8")
+    r = AS.rows(AS.gather())
+    assert r[3]["verdict"] == AS.PARTIAL and "found 3, surviving out of sample 1" in r[3]["number"]
+    assert "80% intervals covered 0.79" in r[6]["number"]
+
+
+def test_point_8_reads_stage_1_direction(tmp_path, monkeypatch):
+    _gone(tmp_path, monkeypatch)
+    g = AS.gather()
+    g["daily_tier"] = {"indicators": 5, "moving": 5}
+    g["cross"] = {"direction_wins": ["quakes@5d", "uup@20d"], "direction_cells": 12}
+    row = AS.rows(g)[7]
+    assert row["verdict"] == AS.LIVE and "2/12" in row["number"] and "quakes@5d" in row["number"]
+    g["cross"] = {"direction_wins": [], "direction_cells": 12}
+    assert AS.rows(g)[7]["verdict"] == AS.PARTIAL
+
+
+def test_point_5_reads_e3_proposals(tmp_path, monkeypatch):
+    _gone(tmp_path, monkeypatch)
+    m = tmp_path / "memory"; m.mkdir()
+    rows = [{"source": "brain", "verdict": "ACCEPTED"}, {"source": "brain", "verdict": "REJECTED"}, {"source": "brain", "verdict": "REFUSED"}]
+    (m / "feature_proposals.jsonl").write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+    row = AS.rows(AS.gather())[4]
+    assert "3 proposed, 2 judged, 1 kept by the exam" in row["number"] and row["verdict"] == AS.PARTIAL
+
