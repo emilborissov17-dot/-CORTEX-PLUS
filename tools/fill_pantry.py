@@ -64,7 +64,19 @@ def _count(day: str) -> dict:
                     fresh += 1
             except OSError:
                 pass
+    # THE FILE COUNT IS A LIE AND IT TOLD ONE. The first run reported
+    # "news 24 -> 24 (+0)" while every one of the 24 files had in fact been
+    # rewritten: the names never change, only the contents. A field whose name
+    # misleads is the exact thing this whole day is against, so what is recorded
+    # now is the newest mtime — freshness, not a headcount.
+    newest = 0.0
+    for f in (news.glob("*.json") if news.is_dir() else []):
+        try:
+            newest = max(newest, f.stat().st_mtime)
+        except OSError:
+            pass
     return {"news_files": len(list(news.glob("*.json"))) if news.is_dir() else 0,
+            "news_newest_mtime": newest,
             "transcripts_today": fresh,
             "transcripts_total": len(list(cache.glob("*.json"))) if cache.is_dir() else 0}
 
@@ -74,6 +86,9 @@ def main(argv) -> int:
     ap.add_argument("--force", action="store_true",
                     help="run even if the survival gate refuses")
     ap.add_argument("--axes", nargs="*", default=None)
+    ap.add_argument("--ignore-fresh", action="store_true",
+                    dest="ignore_fresh",
+                    help="refetch even what is still fresh (a human may; the schedule may not)")
     a = ap.parse_args(argv)
 
     day = dt.date.today().isoformat()
@@ -113,10 +128,11 @@ def main(argv) -> int:
 
     print(f"[PANTRY] filling for {day}; before: {before}")
     t0 = time.perf_counter()
+    t_start_wall = time.time()
     err = None
     try:
         from agents.internet.internet_agent import run
-        run(axes=a.axes)
+        run(axes=a.axes, ignore_fresh=a.ignore_fresh)
     except Exception as e:                           # noqa: BLE001
         err = f"{type(e).__name__}: {e}"
         print(f"[PANTRY] run() FAILED: {err}")
@@ -125,11 +141,22 @@ def main(argv) -> int:
     w.join(timeout=3)
 
     after = _count(day)
+    # How many files this run actually rewrote — the honest version of the number
+    # the first run got wrong.
+    news_dir = REPO / "news" / day
+    refreshed = 0
+    for f in (news_dir.glob("*.json") if news_dir.is_dir() else []):
+        try:
+            if f.stat().st_mtime >= t_start_wall:
+                refreshed += 1
+        except OSError:
+            pass
     avail1, pct1 = _mem()
     rec = {"ts": dt.datetime.now(dt.timezone.utc).isoformat(), "day": day,
            "seconds": round(took, 1), "error": err,
            "before": before, "after": after,
-           "news_added": after["news_files"] - before["news_files"],
+           "news_files_added": after["news_files"] - before["news_files"],
+           "news_refreshed": refreshed,
            "transcripts_added": after["transcripts_today"] - before["transcripts_today"],
            "avail_mb_start": avail0, "avail_mb_end": avail1,
            "avail_mb_low": peak["min_avail_mb"], "used_pct_peak": peak["used_pct"]}
@@ -140,8 +167,8 @@ def main(argv) -> int:
     except OSError:
         pass
 
-    print(f"[PANTRY] {took:.1f}s | news {before['news_files']} -> {after['news_files']} "
-          f"(+{rec['news_added']}) | transcripts today "
+    print(f"[PANTRY] {took:.1f}s | {refreshed} of {after['news_files']} news file(s) "
+          f"REWRITTEN (+{rec['news_files_added']} new name(s)) | transcripts today "
           f"{before['transcripts_today']} -> {after['transcripts_today']} "
           f"(+{rec['transcripts_added']})")
     print(f"[PANTRY] memory: start {avail0} MB free, low {peak['min_avail_mb']} MB, "

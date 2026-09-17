@@ -32,6 +32,23 @@ YOUTUBE_API_KEY      = os.environ.get("YOUTUBE_API_KEY", "")
 _YT_QUOTA_EXHAUSTED  = False   # True след първи 429 — важи за целия цикъл
 MAX_TRANSCRIPT_CHARS = 3000
 TRANSCRIPT_LANGUAGES = ["en", "bg", "de", "fr", "es"]
+# ── DO NOT REFETCH WHAT IS ALREADY IN THE PANTRY ─────────────────────────────
+# Measured 13 Sep 2026: the filler took 1692.8s and rewrote all 24 per-axis files,
+# including ones written at 03:52 and 11:33 the same day. Most of that run was
+# work already done. There was no freshness check here at all — the constant of
+# this name lives in web_intelligence_agent.py, a different file, and this one
+# refetched every axis on every call.
+#
+# SIX HOURS, the same figure its neighbour uses. Long enough that two fills a day
+# do not duplicate each other, short enough that a morning number is not served in
+# the evening.
+#
+# A SMALL FILE IS NOT FRESH. A previous run that failed can leave a stub behind,
+# and treating that as "already have it" would make one bad fetch permanent until
+# the age ran out. Size is a crude test and it is the right kind of crude: it can
+# only ever cause MORE fetching, never less.
+MAX_AGE_HOURS = 6
+MIN_FRESH_BYTES = 200
 TRANSCRIPT_TIMEOUT_SEC = 60
 YT_DLP_TIMEOUT_SEC     = 30
 
@@ -1248,7 +1265,20 @@ def read_pantry(day: str | None = None, base=None) -> dict:
     return rec
 
 
-def run(axes=None):
+def _news_age_hours(path) -> "float | None":
+    """Hours since this axis's news was written, or None when there is nothing
+    usable there. A stub from a failed fetch reads as absent, on purpose."""
+    import datetime as _d
+    try:
+        st = path.stat()
+    except OSError:
+        return None
+    if st.st_size < MIN_FRESH_BYTES:
+        return None
+    return (_d.datetime.now().timestamp() - st.st_mtime) / 3600.0
+
+
+def run(axes=None, ignore_fresh=False):
     # Нов цикъл → нулирай sticky флаговете (IP-block, YT quota). Иначе един
     # блок в 09:00 щеше да държи целия ден на Playwright.
     reset_cycle_state()
@@ -1266,7 +1296,18 @@ def run(axes=None):
     high_urgency = []
     unknown = []          # NOT ASSESSED. Counted apart from LOW, on purpose.
 
+    skipped_fresh = []
     for axis in axes:
+        _out = out_dir / f'{axis.lower()}_news_latest.json'
+        _age = _news_age_hours(_out)
+        if not ignore_fresh and _age is not None and _age < MAX_AGE_HOURS:
+            skipped_fresh.append(axis)
+            print(f'  [SKIP] {axis} — свеж ({_age:.1f}h < {MAX_AGE_HOURS}h)')
+            try:
+                all_results[axis] = json.loads(_out.read_text(encoding='utf-8'))
+            except Exception:
+                pass
+            continue
         snap_data = snapshots.get(axis, {})
         try:
             result = fetch_axis(axis, snap_data)
