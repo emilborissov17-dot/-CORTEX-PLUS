@@ -7,7 +7,8 @@ The twin of autonomous_scout. For a conceptual axis (dignity, justice, democrati
 health, authoritarian drift) there is no honest scalar, so the system reads several
 sources and produces a STRUCTURED, EVIDENCE-GROUNDED, MULTI-PERSPECTIVE assessment,
 tracked over time. It ASSESSES; it does not deliver a verdict on good/evil — the human
-and the moral core supervise. (See claude/SEMANTIC_MEASUREMENT_DESIGN_30JUL.md.)
+and the moral core supervise. (See claude/design/SEMANTIC_MEASUREMENT_DESIGN_30JUL.md — copied into the repo
+17 Sep 2026; this citation was the only trace of it here until then.)
 
 Two HARD guards, enforced in code (not left to the model's goodwill):
   1. GROUNDING: every evidence quote must appear VERBATIM in one of the fetched source
