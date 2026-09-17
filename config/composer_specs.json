@@ -444,17 +444,6 @@
             "unit": "millions_persons",
             "provenance": "UNHCR refugee stock. NOTE: target_config states the metric in PERSONS, this is MILLIONS — a scale difference the scorer must reconcile, not the composer.",
             "cadence": "annual"
-          },
-          {
-            "id": "promoted_96302",
-            "kind": "file",
-            "url": "local://snapshots/master/global_indicators_latest.json#conflicts.active_armed_conflicts",
-            "org": "UCDP/PRIO",
-            "extract": "conflicts.active_armed_conflicts",
-            "provenance": "UCDP/PRIO ACD via the cycle's global_indicators snapshot. ANNUAL cadence, correct for anchor_annual and wrong for any daily slot. Reads 65 for 2025 once the snapshot refreshes at fast_cycle step 2.5; the file on disk still holds the pre-fix 2816 until that run.",
-            "path": "snapshots/master/global_indicators_latest.json",
-            "unit": "active_conflicts",
-            "cadence": "annual"
           }
         ]
       },
@@ -508,6 +497,17 @@
             "extract": "displaced.asylum_seekers_millions",
             "org": "UNHCR",
             "unit": "millions_persons",
+            "cadence": "annual"
+          },
+          {
+            "id": "promoted_96302",
+            "kind": "file",
+            "url": "local://snapshots/master/global_indicators_latest.json#conflicts.active_armed_conflicts",
+            "org": "UCDP/PRIO",
+            "extract": "conflicts.active_armed_conflicts",
+            "provenance": "UCDP/PRIO ACD via the cycle's global_indicators snapshot. MOVED OUT OF anchor_annual 17 Sep 2026: a count of active armed conflicts is not a refugee population, and target_config declares this axis's primary_metric as refugee_population. Conflict count constrains and explains the refugee stock, which is what indirect_proxy is for. Reads 65 for 2025 once the snapshot refreshes at fast_cycle step 2.5; the file on disk still holds the pre-fix 2816 until that run.",
+            "path": "snapshots/master/global_indicators_latest.json",
+            "unit": "active_conflicts",
             "cadence": "annual"
           }
         ]

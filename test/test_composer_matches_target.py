@@ -162,6 +162,16 @@ ANCHOR_PINS = {
     "GOVERNANCE_INSTITUTIONS_REVIEW": ("governance_institutions_score_global",
                                        {"governance_institutions_score"},
                                        "the composed WGI+V-Dem institutions score; the metric name adds _global"),
+    "SOCIAL_RELATIONS_REVIEW": ("refugee_population",
+                                {"displaced.refugees_millions"},
+                                "UNHCR refugee stock. The composer records it in MILLIONS and "
+                                "target_config states the metric in PERSONS; the scale is "
+                                "reconciled in the scorer, not here — goal_score_calculator.py:214 "
+                                "multiplies by 1_000_000 before the comparison, verified against "
+                                "the live score on 17 Sep 2026 (1e6 / 29_429_000 = 0.034 -> 3.4, "
+                                "which is the score on record). See "
+                                "test_refugee_metric_reaches_the_scorer_in_persons below, which "
+                                "holds that conversion in place"),
     "CLIMATE_GLOBAL_RISK_REVIEW": ("co2_ppm_mauna_loa",
                                    {"co2.co2_ppm", "co2_ppm_current"},
                                    "atmospheric CO2 in ppm. OPEN: the metric names the Mauna Loa "
@@ -195,11 +205,6 @@ KNOWN_MISMATCH = {
                                   {"world_bank.poverty_190_pct"},
                                   "the $1.90/day line, against a metric whose unit declares "
                                   "$2.15/day — the World Bank's current extreme-poverty line"),
-    "SOCIAL_RELATIONS_REVIEW": ("refugee_population",
-                                {"displaced.refugees_millions", "conflicts.active_armed_conflicts"},
-                                "two faults in one slot: refugees are reported in MILLIONS against "
-                                "a target expressed in persons (1,000,000), and the second anchor "
-                                "source counts armed conflicts, which is not a refugee population"),
 }
 
 # Not mechanically checkable, and why. Each entry is re-qualified by the test
@@ -421,3 +426,85 @@ def test_deep_time_risks_declaration_is_still_in_the_canon():
     spec = tc["SAFETY"]["DEEP_TIME_RISKS_REVIEW"]
     assert spec.get("measured_by_indicator"), \
         "DEEP_TIME_RISKS_REVIEW no longer declares measured_by_indicator"
+
+
+# ── CHECK D — the refugee metric reaches the scorer in PERSONS ───────────────
+#
+# SOCIAL_RELATIONS_REVIEW is the one axis where the composer and target_config
+# state the same quantity in DIFFERENT UNITS: composed_indicators carries 29.429
+# with unit "millions_persons", target_config declares refugee_population in
+# persons with target_value 1_000_000. That looked like a live scoring bug on
+# 17 Sep 2026 and it is not — the scorer converts — but nothing held the
+# conversion in place, and the failure mode is silent and enormous: compared in
+# millions the axis scores 100.0 instead of 3.4.
+
+def _scorer():
+    import goal_score_calculator as G
+    return G
+
+
+def test_refugee_metric_reaches_the_scorer_in_persons():
+    """goal_score_calculator.py:214 multiplies refugees_millions by 1_000_000
+    before it lands in last_observations. Remove that and the axis silently
+    scores perfect."""
+    G = _scorer()
+    val, origin = G._resolve_metric_origin(
+        "refugee_population", trends={}, last_obs={"unhcr_refugees": 29_429_000.0})
+    assert val == 29_429_000.0, f"resolved {val!r}, not persons"
+    assert origin["key"] == "unhcr_refugees"
+
+
+def test_the_arithmetic_that_produced_the_score_on_record():
+    """The live score was 3.4 on the nights of 15, 16 and 17 Sep. This is the
+    sum that produced it, so a change to _normalize that moves this axis has to
+    move this number too."""
+    G = _scorer()
+    persons = G._normalize(29_429_000.0, 1_000_000.0, "lower_better", 120_000_000.0)
+    assert round(persons * 100, 1) == 3.4
+
+    millions = G._normalize(29.429, 1_000_000.0, "lower_better", 120_000_000.0)
+    assert millions == 1.0, "the wrong-unit branch no longer scores a perfect 100"
+    assert millions != persons, "the two units are indistinguishable — the guard is dead"
+
+
+def test_the_trends_path_would_bypass_the_conversion_and_is_empty():
+    """THE LATENT FORK, pinned rather than fixed.
+
+    _resolve_metric_origin consults trend_map BEFORE obs_map, and the trends
+    branch returns the stored value with NO conversion. trends['refugees'] is
+    empty today, so the fork cannot fire and the scorer takes the persons path.
+    The day something fills that series in millions, this axis jumps from 3.4 to
+    100 with nothing in the output to show why.
+
+    This test fails when the series becomes non-empty. That is the intended
+    alarm: fill it and the conversion must be applied on that path too. It is
+    not fixed here because changing the resolver changes what the axis scores,
+    and that is a decision with a diff of its own.
+    """
+    G = _scorer()
+    bypassed, origin = G._resolve_metric_origin(
+        "refugee_population", trends={"refugees": [29.429]},
+        last_obs={"unhcr_refugees": 29_429_000.0})
+    assert bypassed == 29.429 and origin["where"] == "trends", \
+        "the trends branch no longer wins — re-check whether this hazard still exists"
+
+    live = G.load_trends().get("refugees") or []
+    assert live == [], (
+        f"cortex_memory/abstractions/trends.json['refugees'] is no longer empty "
+        f"({live[:3]}...). The scorer now takes the trends branch for "
+        f"refugee_population, which does NOT multiply by 1_000_000 — "
+        f"SOCIAL_RELATIONS_REVIEW will score 100 instead of 3.4. Apply the "
+        f"conversion in _resolve_metric_origin's trends branch before this series "
+        f"is used.")
+
+
+def test_armed_conflicts_is_not_in_the_refugee_anchor(specs):
+    """A count of active armed conflicts is not a refugee population. It
+    constrains and explains one, which is what indirect_proxy is for."""
+    port = specs["SOCIAL_RELATIONS_REVIEW"]["portfolio"]
+    anchor_ids = {s["id"] for s in port["anchor_annual"]["sources"]}
+    proxy_ids = {s["id"] for s in port["indirect_proxy"]["sources"]}
+    assert "promoted_96302" not in anchor_ids, \
+        "the armed-conflict count is back in the anchor slot"
+    assert "promoted_96302" in proxy_ids, \
+        "the armed-conflict count was dropped instead of demoted — it is evidence, keep it"
