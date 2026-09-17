@@ -164,11 +164,13 @@
       "reference_worst": 60.0,
       "direction": "lower_better",
       "weight": 9,
-      "unit": "percent below $2.15/day",
-      "rationale": "SDG1: end extreme poverty; reference_worst=60% (World Bank est. ~60% poverty rate pre-1980 at $2.15/day threshold)",
+      "unit": "percent below $3.00/day (2021 PPP)",
+      "rationale": "SDG1: end extreme poverty. Measured on the World Bank's current international poverty line, SI.POV.DDAY = $3.00/day at 2021 PPP; current global 10.4% (2024). reference_worst=60% (World Bank est. ~60% poverty rate pre-1980). NOTE: the World Bank states that rates across PPP revisions are not comparable with earlier editions.",
       "legacy_domain": "CIVILIZATION",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/SI.POV.DDAY",
+      "changed": "2026-09-17: no series or value changed — SI.POV.DDAY was already the series being fetched. What was wrong was the LABEL. The World Bank has moved this line twice ($1.90 2011 PPP -> $2.15 2017 PPP -> $3.00 2021 PPP) and the API now returns 'Poverty headcount ratio at $3.00 a day (2021 PPP)'. This axis's unit said $2.15/day, the stored field was named poverty_190_pct, and core/global_indicators.py printed '<$1.90/day' to the brain over the $3.00 number — three different lines named for one series. The field is now poverty_intl_line_pct: it names the concept, and the line lives in the unit and provenance so the next revision does not make the name a lie again."
     },
     "INFRASTRUCTURE_CITIES_REVIEW": {
       "primary_metric": "urbanization_pct",

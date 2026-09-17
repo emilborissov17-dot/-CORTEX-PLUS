@@ -948,7 +948,7 @@
             "id": "gi_poverty_190",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "world_bank.poverty_190_pct",
+            "extract": "world_bank.poverty_intl_line_pct",
             "org": "World Bank",
             "unit": "pct_below_190",
             "provenance": "Poverty headcount at the $1.90/day line. target_config specifies the $2.15 line — same concept, different threshold; not interchangeable without restating.",

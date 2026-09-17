@@ -39,7 +39,7 @@ sys.path.insert(0, str(REPO))
 import initiative_tracker as it
 
 
-# A milestone whose text matches _METRIC_MAP ("бедност" -> world_bank.poverty_190_pct)
+# A milestone whose text matches _METRIC_MAP ("бедност" -> world_bank.poverty_intl_line_pct)
 MEASURABLE = {
     "id": "init_measurable",
     "status": "PROPOSED",
@@ -57,7 +57,7 @@ UNMEASURABLE = {
     "milestone": "По-добро разбиране",
     "created_at": "2026-07-01T00:00:00+00:00",
 }
-INDICATORS = {"world_bank": {"poverty_190_pct": 12.5}}
+INDICATORS = {"world_bank": {"poverty_intl_line_pct": 12.5}}
 
 
 @pytest.fixture

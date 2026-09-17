@@ -74,7 +74,7 @@ _ALLOWED_TRANSITIONS: dict[str, set[str]] = {
 # Ordered by specificity — first match wins.
 _METRIC_MAP: list[tuple[re.Pattern, str, str, str]] = [
     (re.compile(r"неравенство|gini|inequality",             re.I), "world_bank.gini_mean",                  "lower",  "Gini coefficient"),
-    (re.compile(r"бедност|poverty|беден",                   re.I), "world_bank.poverty_190_pct",            "lower",  "Poverty rate (%)"),
+    (re.compile(r"бедност|poverty|беден",                   re.I), "world_bank.poverty_intl_line_pct",            "lower",  "Poverty rate (%)"),
     (re.compile(r"CO2|въглероден|парников|emission",        re.I), "co2.co2_ppm",                           "lower",  "CO2 (ppm)"),
     (re.compile(r"температур|global.warm|климатична криза", re.I), "temperature.temp_anomaly_c",            "lower",  "Temp anomaly (°C)"),
     (re.compile(r"биоразнообразие|biodiversity|вид(?:ов)?", re.I), "biodiversity.species_observations_30d", "higher", "Species observations (30d)"),

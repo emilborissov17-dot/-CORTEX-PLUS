@@ -132,7 +132,7 @@ DEFAULT_DOMAIN = {
     "safe_water_access_pct": [0, 100],
     "forest_area_pct": [0, 100],
     "renewable_elec_pct": [0, 100],
-    "poverty_190_pct": [0, 100],
+    "poverty_intl_line_pct": [0, 100],
     "extreme_poverty_rate_pct": [0, 100],
     "urbanization_pct": [0, 100],
     "gini_mean": [0, 100],
@@ -185,7 +185,7 @@ PERIOD_DAILY = "daily"
 DEFAULT_PERIODS = {
     "gdp_growth_pct": PERIOD_ANNUAL, "gdp_growth_annual_pct": PERIOD_ANNUAL,
     "life_expectancy": PERIOD_ANNUAL, "literacy_rate_adult_pct": PERIOD_ANNUAL,
-    "poverty_190_pct": PERIOD_ANNUAL, "gini_mean": PERIOD_ANNUAL,
+    "poverty_intl_line_pct": PERIOD_ANNUAL, "gini_mean": PERIOD_ANNUAL,
     "forest_area_pct": PERIOD_ANNUAL, "unemployment_pct": PERIOD_ANNUAL,
     "active_armed_conflicts": PERIOD_ANNUAL, "nuclear_warheads_total": PERIOD_ANNUAL,
     "co2_ppm": PERIOD_DAILY, "co2_ppm_current": PERIOD_DAILY,

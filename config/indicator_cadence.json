@@ -41,7 +41,7 @@
     },
     "FOOD_REVIEW": {
       "cadence": "annual",
-      "last_observed_from": "world_bank._observed_years.poverty_190_pct",
+      "last_observed_from": "world_bank._observed_years.poverty_intl_line_pct",
       "source": "World Bank WDI / FAO — food and poverty series"
     },
     "GOVERNANCE_INSTITUTIONS_REVIEW": {
@@ -61,7 +61,7 @@
     },
     "INEQUALITY_POVERTY_REVIEW": {
       "cadence": "annual",
-      "last_observed_from": "world_bank._observed_years.poverty_190_pct",
+      "last_observed_from": "world_bank._observed_years.poverty_intl_line_pct",
       "source": "World Bank WDI — poverty headcount at $2.15/day"
     },
     "PLANETARY_POTENTIAL_REVIEW": {

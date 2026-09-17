@@ -277,7 +277,14 @@ def fetch_world_bank() -> dict:
     pop = _wb_world("SP.POP.TOTL")
     out = {
         "population_billions":       round(pop / 1e9, 3) if pop else None,
-        "poverty_190_pct":           _wb_world("SI.POV.DDAY"),
+        # SI.POV.DDAY is the World Bank's CURRENT international poverty line, and the
+        # line itself has moved twice: $1.90 (2011 PPP) -> $2.15 (2017 PPP) -> $3.00
+        # (2021 PPP). The key was named poverty_190_pct and the brain was told
+        # "<$1.90/day" while the API returned the $3.00 series. The key now names the
+        # CONCEPT and the line lives in the provenance, so the next revision does not
+        # make the field name a lie again. The World Bank states plainly that rates
+        # across PPP revisions are not comparable.  (17 Sep 2026)
+        "poverty_intl_line_pct":     _wb_world("SI.POV.DDAY"),
         "life_expectancy":           _wb_world("SP.DYN.LE00.IN"),
         "infant_mortality_per1k":    _wb_world("SP.DYN.IMRT.IN"),
         # HUMAN_WELL_BEING_REVIEW declares child_mortality_per_1000 with target 25,
@@ -316,7 +323,7 @@ def fetch_world_bank() -> dict:
     # Годината на ВСЯКО число, по показател — това, което дотук се губеше.
     out["_observed_years"] = {
         "population_billions":     _WB_YEARS.get("SP.POP.TOTL"),
-        "poverty_190_pct":         _WB_YEARS.get("SI.POV.DDAY"),
+        "poverty_intl_line_pct":         _WB_YEARS.get("SI.POV.DDAY"),
         "life_expectancy":         _WB_YEARS.get("SP.DYN.LE00.IN"),
         "infant_mortality_per1k":  _WB_YEARS.get("SP.DYN.IMRT.IN"),
         "under5_mortality_per1k":  _WB_YEARS.get("SH.DYN.MORT"),
@@ -1095,8 +1102,8 @@ def as_prompt_block(ind: dict) -> str:
     wb = ind.get("world_bank", {})
     if wb.get("population_billions"):
         lines.append(f"World population: {wb['population_billions']:.3f} B")
-    if wb.get("poverty_190_pct") is not None:
-        lines.append(f"Extreme poverty (<$1.90/day): {wb['poverty_190_pct']:.2f}%")
+    if wb.get("poverty_intl_line_pct") is not None:
+        lines.append(f"Extreme poverty (<$3.00/day, 2021 PPP): {wb['poverty_intl_line_pct']:.2f}%")
     if wb.get("life_expectancy"):
         lines.append(f"Life expectancy: {wb['life_expectancy']:.1f} yrs")
     if wb.get("gini_mean"):

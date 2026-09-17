@@ -150,6 +150,13 @@ ANCHOR_PINS = {
     "MATERIALS_WASTE_REVIEW": ("adjusted_net_savings_pct",
                                {"waste.adjusted_net_savings_pct"},
                                "same field name; World Bank NY.ADJ.SVNG.GN.ZS, set 17 Sep 2026"),
+    "INEQUALITY_POVERTY_REVIEW": ("extreme_poverty_rate_pct",
+                                  {"world_bank.poverty_intl_line_pct"},
+                                  "World Bank SI.POV.DDAY, the CURRENT international poverty "
+                                  "line. The series was always right; the label was not. "
+                                  "Relabelled 17 Sep 2026 after reading the API's own "
+                                  "definition: '$3.00 a day (2021 PPP)'. Value and score "
+                                  "unchanged at 10.4 / 82.7"),
     "COGNITION_LEARNING_REVIEW": ("literacy_rate_youth_pct",
                                   {"world_bank.literacy_rate_youth_pct"},
                                   "World Bank SE.ADT.1524.LT.ZS, youth literacy 15-24 — the "
@@ -208,10 +215,6 @@ ANCHOR_PINS = {
 # belongs to a human. Pinned so a mismatch cannot change, spread or be added
 # silently — and so the list shrinks only by a deliberate edit.
 KNOWN_MISMATCH = {
-    "INEQUALITY_POVERTY_REVIEW": ("extreme_poverty_rate_pct",
-                                  {"world_bank.poverty_190_pct"},
-                                  "the $1.90/day line, against a metric whose unit declares "
-                                  "$2.15/day — the World Bank's current extreme-poverty line"),
 }
 
 # Not mechanically checkable, and why. Each entry is re-qualified by the test

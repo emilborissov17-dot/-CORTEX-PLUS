@@ -406,11 +406,11 @@ REGISTRY: list[dict[str, Any]] = [
         "group":  "CIVILIZATION",
         "status": HAS_API,
         "gi_sources": [
-            "World Bank WDI — poverty_190_pct (SI.POV.DDAY), gini_mean (SI.POV.GINI)",
+            "World Bank WDI — poverty_intl_line_pct (SI.POV.DDAY), gini_mean (SI.POV.GINI)",
             "UNHCR          — refugees_millions, idps_millions (as forced displacement signal)",
         ],
         "gi_keys": [
-            "world_bank.poverty_190_pct",
+            "world_bank.poverty_intl_line_pct",
             "world_bank.gini_mean",
             "displaced.refugees_millions",
         ],
