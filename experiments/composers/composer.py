@@ -297,7 +297,13 @@ def fetch(src, return_payload: bool = False) -> tuple:
     if kind == "http_json_path":
         data = json.loads(_http(src["url"]))
         v = float(_dotted(data, src["extract"]))
-        return (v, None, data) if return_payload else (v, None)
+        # data_date_extract was honoured by "file" and "http_json_series" but NOT here, so
+        # data_max_age_days was dead code for every http_json_path source - a 2022 World
+        # Bank value could be served as current and nothing would say so (Kimi, 3 Sep 2026,
+        # brief 2026-09-03_worldbank_water_candidate: "freshness без data_date е мъртъв код").
+        if src.get("data_date_extract"):
+            data_date = _dotted(data, src["data_date_extract"])
+        return (v, data_date, data) if return_payload else (v, data_date)
     if kind == "http_csv":
         text = _http(src["url"])
         cells, data_date = _csv_select(src, text)
@@ -436,7 +442,15 @@ def _data_too_old(data_date: str, max_days: float):
     if not data_date:
         return False, None
     try:
-        d = datetime.fromisoformat(str(data_date)[:10]).replace(tzinfo=timezone.utc)
+        dd = str(data_date).strip()
+        # Annual series (World Bank, UN SDG) date a value as a bare "2022"; fromisoformat
+        # refused that and the except below returned (False, None) - i.e. "not too old",
+        # silently. A bare year is read as the END of that year, the most generous honest
+        # reading; a "YYYY-MM" as the end of that month is not attempted - month-precision
+        # sources declare a full date.
+        if len(dd) == 4 and dd.isdigit():
+            dd = f"{dd}-12-31"
+        d = datetime.fromisoformat(dd[:10]).replace(tzinfo=timezone.utc)
         age_d = (_now() - d).total_seconds() / 86400.0
         return age_d > max_days, round(age_d, 1)
     except Exception:
