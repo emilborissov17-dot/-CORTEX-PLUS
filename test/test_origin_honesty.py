@@ -371,4 +371,22 @@ check("nothing landed in unknown by accident of seeding — the queue is short a
 
 PROBE.unlink(missing_ok=True)
 print("\n" + ("ALL PASS" if not FAILS else f"{len(FAILS)} FAILED: {FAILS}"))
-sys.exit(1 if FAILS else 0)
+
+def test_origin_honesty():
+    """Every check above, reported to pytest as one result.
+
+    The checks themselves run at import, exactly as they did when this was a
+    script, and NOT ONE OF THEM CHANGED. This function only reads the FAILS list
+    they fill. Converting the file was about COLLECTION, not content: a
+    module-level sys.exit() is raised while pytest imports the module, which
+    aborted the whole run with INTERNALERROR and "no tests ran" — so naming this
+    file on a pytest command line silently took every file after it down too.
+
+    It may well be red. It is red for its own reason, and the message says which.
+    """
+    assert not FAILS, (
+        str(len(FAILS)) + " check(s) failed: " + "; ".join(FAILS))
+
+
+if __name__ == "__main__":
+    sys.exit(1 if FAILS else 0)
