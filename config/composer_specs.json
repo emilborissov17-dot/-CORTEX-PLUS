@@ -72,6 +72,16 @@
             "cadence": "daily"
           },
           {
+            "id": "gdacs_orange_red_current",
+            "kind": "http_json_count",
+            "url": "https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?fromDate=&toDate=&alertlevel=Orange;Red",
+            "org": "GDACS",
+            "extract": "features",
+            "unit": "current_orange_red_events",
+            "provenance": "GDACS current events at alert level Orange or Red, counted. Probed live 17 Sep 2026: HTTP 200, 1.58 s, 139 KB, features is a list of 98. A COUNT of current events, which is a real daily quantity; deliberately NOT `severity`, which claude/reports/L1_DAILY_GDACS_6SEP.md measured to be incomparable across event types and meaningless for floods and volcanoes. Also not `properties.iscurrent`, which is the STRING \"true\" and would read as a clean 1.0 indicator to any consumer that trusted its name. Weak and fast: an event count is not a measure of climate, which is why it sits in event_daily and not in a measurement slot.",
+            "cadence": "daily"
+          },
+          {
             "id": "promoted_54947",
             "kind": "http_json_count",
             "url": "https://eonet.gsfc.nasa.gov/api/v3/events?status=all&days=7&category=wildfires",
