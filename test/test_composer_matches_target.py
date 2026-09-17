@@ -150,6 +150,12 @@ ANCHOR_PINS = {
     "MATERIALS_WASTE_REVIEW": ("adjusted_net_savings_pct",
                                {"waste.adjusted_net_savings_pct"},
                                "same field name; World Bank NY.ADJ.SVNG.GN.ZS, set 17 Sep 2026"),
+    "FOOD_REVIEW": ("food_insecurity_pct",
+                    {"food.food_insecurity_severe_pct"},
+                    "World Bank SN.ITK.SVFI.ZS, FAO FIES severe food insecurity — the "
+                    "instrument the rationale names ('~10% severely food insecure'). "
+                    "Switched 17 Sep 2026 from SN.ITK.DEFC.ZS (undernourishment), which "
+                    "scored 29.4 against the new 24.6; break in config/series_breaks.json"),
     "ENERGY_REVIEW": ("renewable_energy_pct",
                       {"world_bank.renewable_energy_pct"},
                       "World Bank EG.FEC.RNEW.ZS, renewable share of TOTAL FINAL energy — "
@@ -190,11 +196,6 @@ ANCHOR_PINS = {
 # belongs to a human. Pinned so a mismatch cannot change, spread or be added
 # silently — and so the list shrinks only by a deliberate edit.
 KNOWN_MISMATCH = {
-    "FOOD_REVIEW": ("food_insecurity_pct",
-                    {"food.undernourishment_pct"},
-                    "FAO prevalence of undernourishment (PoU) is not the FIES "
-                    "food-insecurity rate the metric names; the two differ by a "
-                    "factor of roughly three at the global level"),
     "HUMAN_WELL_BEING_REVIEW": ("child_mortality_per_1000",
                                 {"world_bank.infant_mortality_per1k"},
                                 "infant mortality is under-1; SDG 3.2 and the axis target "

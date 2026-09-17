@@ -84,6 +84,19 @@
       "why": "target_config has always declared this axis's primary_metric as renewable_energy_pct with unit 'percent of total energy', and its rationale cites the IEA Net Zero 80% target, which the IEA states for total final energy. The number being scored was the electricity share: a different and larger quantity. Points before and after this date are not comparable — the series did not move, the instrument did.",
       "measured_effect": "World Bank WLD, verified against the live API on 17 Sep 2026: EG.ELC.RNEW.ZS latest 27.8357; EG.FEC.RNEW.ZS 2020 = 19.7355641050053. higher_better against target 80: score 34.8 -> 24.7, a fall of 10.1 points. The axis did not get worse; it stopped being measured by the wrong instrument.",
       "note": "EG.FEC.RNEW.ZS latest available year is 2020 against 2024 for the electricity series. The declared metric with a four-year lag is preferred over a different metric that is current: an axis measured on the wrong quantity cannot be made right by being fresh."
+    },
+    {
+      "id": "2026-09-17-food-fies-severe-not-undernourishment",
+      "date_utc": "2026-09-17",
+      "rule": "1.3",
+      "series": [
+        "memory/goal_score_history.json :: scores.FOOD_REVIEW",
+        "snapshots/master/goal_score_latest.json :: composite_score, coverage_of_goal",
+        "memory/composed_indicators.json :: FOOD_REVIEW.composed.anchor"
+      ],
+      "cause": "FOOD_REVIEW anchor and obs key moved from SN.ITK.DEFC.ZS (prevalence of undernourishment, PoU) to SN.ITK.SVFI.ZS (FIES prevalence of severe food insecurity)",
+      "why": "target_config declares food_insecurity_pct and its rationale cites '~10% severely food insecure' against a target of 2.5. PoU measures whether the dietary energy supply is adequate; FIES measures whether people report going without food. They are different instruments with different values and the axis was scored on the one it does not name.",
+      "measured_effect": "World Bank WLD, verified against the live API on 17 Sep 2026: SN.ITK.DEFC.ZS snapshot value 8.5; SN.ITK.SVFI.ZS 2024 = 10.1426518. lower_better against target 2.5: score 29.4 -> 24.6, a fall of 4.8 points."
     }
   ]
 }

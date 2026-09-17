@@ -79,10 +79,12 @@
       "direction": "lower_better",
       "weight": 9,
       "unit": "percent of population",
-      "rationale": "SDG2: near-zero hunger; current ~10% severely food insecure",
+      "rationale": "SDG2: near-zero hunger. Measured as FAO FIES prevalence of SEVERE food insecurity (World Bank SN.ITK.SVFI.ZS); current global ~10.1% (2024).",
       "legacy_domain": "PLANET",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/SN.ITK.SVFI.ZS",
+      "changed": "2026-09-17: the metric and its rationale always named severe food insecurity (~10%), but the number scored was SN.ITK.DEFC.ZS, the prevalence of undernourishment — a different FAO instrument measuring dietary energy supply rather than the lived experience of insecurity. Now scored on SN.ITK.SVFI.ZS. The score series breaks here: see config/series_breaks.json."
     },
     "MATERIALS_WASTE_REVIEW": {
       "primary_metric": "adjusted_net_savings_pct",

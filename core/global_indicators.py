@@ -737,6 +737,11 @@ def fetch_food() -> dict:
     return {
         "undernourishment_pct":          _wb_world("SN.ITK.DEFC.ZS"),
         "food_insecurity_moderate_severe_pct": _wb_world("SN.ITK.MSFI.ZS"),
+        # FOOD_REVIEW declares food_insecurity_pct with target 2.5 and a rationale
+        # citing "~10% severely food insecure" — that is FIES SEVERE, SN.ITK.SVFI.ZS,
+        # not the prevalence of undernourishment (PoU, SN.ITK.DEFC.ZS) the axis was
+        # scored on. PoU and FIES are two different FAO instruments.  (17 Sep 2026)
+        "food_insecurity_severe_pct":    _wb_world("SN.ITK.SVFI.ZS"),
         "food_production_index":         food_prod,
         "agriculture_pct_gdp":           gdp_food_pct,
         "cereal_yield_kg_per_ha":        _wb_world("AG.YLD.CREL.KG"),

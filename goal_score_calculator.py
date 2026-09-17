@@ -210,6 +210,8 @@ def load_global_indicators() -> dict:
     put("wb_SE.ADT.1524.LT.ZS", wb.get("literacy_rate_adult_pct"))    # APPROX: adult vs youth
     put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None,
         "World Bank WDI Food block carries no _observed_years; the source publishes annually but the fetch does not keep the year")
+    put("wb_SN.ITK.SVFI.ZS", food.get("food_insecurity_severe_pct"), None,
+        "FIES severe food insecurity, the axis's declared metric; the Food block carries no _observed_years")
     r = dsp.get("refugees_millions")
     _uy = dsp.get("unhcr_year")
     put("unhcr_refugees", r * 1_000_000 if r is not None else None,
@@ -336,7 +338,7 @@ def _resolve_metric_origin(metric_name: str, trends: dict,
         "protected_terrestrial_area_pct": "wb_ER.LND.PTLD.ZS",
         "urbanization_pct":           "wb_SP.URB.TOTL.IN.ZS",
         "gdp_growth_pct":             "wb_NY.GDP.MKTP.KD.ZG",
-        "food_insecurity_pct":        "wb_SN.ITK.DEFC.ZS",
+        "food_insecurity_pct":        "wb_SN.ITK.SVFI.ZS",
         "renewable_energy_pct":       "wb_EG.FEC.RNEW.ZS",
         "adjusted_net_savings_pct":   "wb_NY.ADJ.SVNG.GN.ZS",
     }

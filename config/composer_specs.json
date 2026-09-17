@@ -258,12 +258,13 @@
         "freshness_days": 45,
         "sources": [
           {
-            "id": "gi_undernourishment_pct",
+            "id": "gi_food_insecurity_severe_pct",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "food.undernourishment_pct",
+            "extract": "food.food_insecurity_severe_pct",
             "org": "FAO/WB",
             "unit": "pct_population",
+            "provenance": "World Bank SN.ITK.SVFI.ZS, FAO FIES prevalence of SEVERE food insecurity — the axis's primary_metric per target_config (food_insecurity_pct, target 2.5, rationale 'current ~10% severely food insecure'). Replaced SN.ITK.DEFC.ZS on 17 Sep 2026: prevalence of undernourishment is a separate FAO instrument measuring dietary energy supply, not the experience-based insecurity this axis declares.",
             "cadence": "annual"
           },
           {
