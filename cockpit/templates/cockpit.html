@@ -559,6 +559,15 @@ async function tabCycle(){
         <tr><td>outcome</td><td>${esc(sealed.outcome)}</td></tr></table>`:''}`, true)}
     ${degPanel}
     ${panel('Steps', `<table>${rows}</table>`, true)}
+    ${panel('Per-step trace', `
+      <div class="meta">Every step of core/cycle_map.STEPS with its own boundary
+        span: the seconds it took, its status, and whether a StepContract ran
+        inside it. A step with no contract is marked BOUNDARY ONLY — it ran and
+        was measured, which is not the same as zero.</div>
+      <div class="meta">Written each morning by tools/trace_report.py from the
+        night's flight recorder, because the trace only closes at process exit.</div>
+      <div style="margin-top:6px"><a href="/trace_latest.html" target="_blank"
+        rel="noopener">open TRACE_LATEST.html</a></div>`, true)}
   </div>`;
 }
 

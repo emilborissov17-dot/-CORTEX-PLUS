@@ -1174,6 +1174,28 @@ def brain_map_page():
                               mimetype="text/html")
 
 
+@app.get("/trace_latest.html")
+def trace_latest_page():
+    """The last cycle's per-step trace, served so the CYCLE tab can link it.
+
+    Same reason as /brain_map.html above: the file lives outside static/, and a
+    file:// link would not resolve for a viewer on another machine.
+
+    tools/trace_report.py writes it every morning from the night's flight
+    recorder — in the morning and not in the cycle, because the trace is only
+    closed at process exit, so a report built inside the cycle would miss its
+    own tail. When that has not run, say so in words: serving a stale page
+    under a name that promises "latest" is the failure this route avoids.
+    """
+    p = ds.BASE / "claude" / "reports" / "TRACE_LATEST.html"
+    if not p.exists():
+        return ("claude/reports/TRACE_LATEST.html is not on disk — "
+                "tools/trace_report.py has not written it yet.", 404,
+                {"Content-Type": "text/plain; charset=utf-8"})
+    return app.response_class(p.read_text(encoding="utf-8"),
+                              mimetype="text/html")
+
+
 @app.get("/api/glass")
 def api_glass():
     from cockpit import glass as gl
