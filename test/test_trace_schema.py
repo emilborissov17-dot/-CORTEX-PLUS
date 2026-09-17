@@ -108,7 +108,13 @@ def test_a_raising_step_is_recorded_as_error_and_the_exception_still_travels(rec
 # ── 3. the arithmetic, on numbers chosen so the answer is known ──────────────
 
 def test_the_arithmetic_closes_on_a_file_with_known_numbers(tmp_path):
-    """40s of steps + 10s unattributed against a 50s wall clock."""
+    """40s of boundary spans against a 55s wall clock.
+
+    This trace has NO stepb, so the step: spans ARE the outermost
+    boundary and are used as one. Unattributed is now the RESIDUAL:
+    the 10s coalesced pulse PLUS the 5s before the first step opened,
+    which used to be reported separately as a gap that did not close.
+    Neither of those two may vanish."""
     from tools import trace_report as tr
     rows = [
         {"k": "head", "trace_id": "a" * 32, "cycle_id": "known", "t0": "2026-09-13T00:00:00Z",
@@ -130,13 +136,18 @@ def test_the_arithmetic_closes_on_a_file_with_known_numbers(tmp_path):
     p = tmp_path / "known.jsonl"
     p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
     f = tr.fold(tr.load(p))
+    assert f["boundary_kind"] == "step", (
+        "a trace with no stepb must fall back to step: as the boundary")
     assert f["step_ms_total"] == 40000, "nested call: spans were counted twice"
-    assert f["unattributed_sec"] == pytest.approx(10.0)
     assert f["last_t"] == pytest.approx(55.0)
-    assert f["accounted"] == pytest.approx(50.0)
-    assert f["gap"] == pytest.approx(5.0), "the 5s before the first step must show"
+    assert f["unattributed_sec"] == pytest.approx(15.0), (
+        "the residual must hold the 10s pulse AND the 5s before step one")
+    assert f["accounted"] == pytest.approx(55.0)
+    assert f["gap"] == pytest.approx(0.0, abs=1e-6)
+    assert f["pulse_outside"] == pytest.approx(10.0), (
+        "the pulse that located 10 of those seconds was lost")
     text = tr.md(f, p)
-    assert "does not close" in text and "5s" in text
+    assert "15s" in text, "the unattributed residual is not in the report"
 
 
 def test_the_report_gives_every_step_a_row_even_when_it_never_ran(tmp_path):
@@ -376,3 +387,143 @@ def test_the_report_matches_run_labels_to_their_step_names(tmp_path):
     f = tr.fold(tr.load(p))
     assert f["ms_by_step"].get("internet_intelligence") == 100000, (
         f"the label was not resolved: {dict(f['ms_by_step'])}")
+
+
+# ── 10. the boundary is the step's time, and boundary-only is not "never ran" ─
+
+def _hd(cycle_id="b"):
+    return {"k": "head", "trace_id": "d" * 32, "cycle_id": cycle_id,
+            "t0": "2026-09-17T00:00:00Z", "pid": 1, "py": "3",
+            "channels": ["pulse", "audit"]}
+
+
+def _bspan(sp, step, t, dur, index="1", st="OK"):
+    """A boundary span, the way beat() writes it."""
+    return [{"k": "open", "sp": sp, "pa": None, "name": "stepb:" + step, "t": t,
+             "attr": {"step": step, "index": index, "source": "beat"}},
+            {"k": "span", "sp": sp, "pa": None, "name": "stepb:" + step, "t": t,
+             "t_end": t + dur, "ms": int(dur * 1000), "st": st,
+             "attr": {"step": step, "index": index, "source": "beat"}}]
+
+
+def _cspan(sp, pa, label, t, dur, st="OK"):
+    """A StepContract span, the way _run() writes it."""
+    return [{"k": "open", "sp": sp, "pa": pa, "name": "step:" + label, "t": t,
+             "attr": {"step": label, "source": "_run"}},
+            {"k": "span", "sp": sp, "pa": pa, "name": "step:" + label, "t": t,
+             "t_end": t + dur, "ms": int(dur * 1000), "st": st,
+             "attr": {"step": label, "source": "_run"}}]
+
+
+def _write(tmp_path, rows, name="b.jsonl"):
+    p = tmp_path / name
+    p.write_text(chr(10).join(json.dumps(r) for r in rows) + chr(10), encoding="utf-8")
+    return p
+
+
+def test_a_boundary_only_step_shows_its_seconds_and_is_not_never_ran(tmp_path):
+    """THE DEFECT THIS FILE EXISTS FOR. web_intelligence ran 906s on 2026-09-17,
+    left a stepb span saying so, goes through no _run(), and the report called it
+    "never ran" along with 30 others. A step that was measured must never read
+    as absent."""
+    from tools import trace_report as tr
+    rows = [_hd()] + _bspan("b1", "web_intelligence", 0.0, 906.0, index="1")
+    f = tr.fold(tr.load(_write(tmp_path, rows)))
+
+    assert f["ms_by_step"]["web_intelligence"] == 906000
+    assert "web_intelligence" in f["boundary_steps"]
+    assert "web_intelligence" in f["ran_boundary_only"]
+    assert "web_intelligence" not in f["never_ran"], (
+        "a step with a boundary span was reported as never having run")
+
+    text = tr.md(f, tmp_path / "b.jsonl")
+    row = [l for l in text.splitlines()
+           if l.startswith("|") and " web_intelligence " in l]
+    assert len(row) == 1, f"expected one row, got {row}"
+    assert "906.0" in row[0], f"the seconds are missing from the row: {row[0]}"
+    assert "BOUNDARY ONLY" in row[0], f"not labelled boundary-only: {row[0]}"
+    assert "never ran" not in row[0], f"still says never ran: {row[0]}"
+
+
+def test_a_nested_contract_span_is_not_added_on_top_of_its_boundary(tmp_path):
+    """The boundary already contains the contract's seconds. Adding them counts
+    the same time twice — which is how the report claimed 4089s unattributed on a
+    night whose boundaries summed to 7424s of a 7432s wall."""
+    from tools import trace_report as tr
+    rows = ([_hd()]
+            + _bspan("b1", "daily_tier", 0.0, 100.0, index="2.52")
+            + _cspan("c1", "b1", "daily_tier", 10.0, 60.0)
+            + _bspan("b2", "trend_tracker", 100.0, 50.0, index="3"))
+    p = _write(tmp_path, rows)
+    f = tr.fold(tr.load(p))
+
+    assert f["attributed"] == pytest.approx(150.0), "boundaries must sum to 150s"
+    assert f["contract_ms_total"] == 60000, "the contract span must still be seen"
+    assert f["step_ms_total"] == 150000, (
+        "the nested contract was added on top of its boundary")
+    assert f["accounted"] == pytest.approx(f["last_t"], abs=1.0), (
+        "the arithmetic must close within a second")
+    assert f["unattributed_sec"] == pytest.approx(0.0, abs=1.0)
+
+    assert "daily_tier" in f["ran_with_contract"]
+    assert "trend_tracker" in f["ran_boundary_only"]
+    text = tr.md(f, p)
+    dt = [l for l in text.splitlines() if l.startswith("|") and " daily_tier " in l][0]
+    assert "YES" in dt and "60.0s" in dt, f"contract column wrong: {dt}"
+
+
+def test_a_boundary_that_never_closed_is_died_inside_not_absent(tmp_path):
+    """An open with no span is the kill case the synchronous write exists for.
+    It must render as DIED INSIDE — reporting it as absent would delete the one
+    fact the recorder went out of its way to keep."""
+    from tools import trace_report as tr
+    rows = [_hd(),
+            {"k": "open", "sp": "b9", "pa": None, "name": "stepb:self_modifier",
+             "t": 5.0, "attr": {"step": "self_modifier", "index": "18",
+                                "source": "beat"}},
+            {"k": "ev", "sp": None, "name": "pulse", "t": 6.0,
+             "attr": {"where": "fast_cycle_runner.py:1:main", "n": 4, "t_end": 10.0}}]
+    p = _write(tmp_path, rows, "died.jsonl")
+    f = tr.fold(tr.load(p))
+
+    names = [o.get("name") for o in f["died_inside"]]
+    assert "stepb:self_modifier" in names, f"not recorded as died inside: {names}"
+
+    text = tr.md(f, p)
+    assert "DIED INSIDE" in text or "Died inside" in text
+    assert "stepb:self_modifier" in text, "the step that died is not named"
+    body = text.split("## Died inside", 1)[1]
+    assert "stepb:self_modifier" in body.split("##", 1)[0], (
+        "the dead step is not in the Died inside section")
+
+
+def test_the_three_counts_are_all_stated_in_the_header(tmp_path):
+    """ran / ran-without-contract / never-ran. One number alone invites the
+    reader to assume the other two are zero."""
+    from tools import trace_report as tr
+    rows = ([_hd()]
+            + _bspan("b1", "daily_tier", 0.0, 10.0, index="2.52")
+            + _cspan("c1", "b1", "daily_tier", 1.0, 5.0)
+            + _bspan("b2", "trend_tracker", 10.0, 10.0, index="3"))
+    p = _write(tmp_path, rows)
+    text = tr.md(tr.fold(tr.load(p)), p)
+    head = text.split("## Minutes per step", 1)[0]
+    assert "1 ran with a contract" in head, head[-400:]
+    assert "1 ran boundary-only" in head, head[-400:]
+    assert "never ran" in head, head[-400:]
+
+
+def test_the_contract_column_joins_by_time_and_not_by_name(tmp_path):
+    """There is no shared key: stepb carries attr.index and step: does not, and
+    16 of the 44 _run labels have no stepb of the same name
+    (civilization_snapshots_agent vs civilization_snapshots). Containment is the
+    only honest join."""
+    from tools import trace_report as tr
+    rows = ([_hd()]
+            + _bspan("b1", "civilization_snapshots", 0.0, 100.0, index="4")
+            + _cspan("c1", "b1", "civilization_snapshots_agent", 5.0, 30.0))
+    p = _write(tmp_path, rows)
+    f = tr.fold(tr.load(p))
+    assert "civilization_snapshots" in f["ran_with_contract"], (
+        "the differently-named contract span was not joined to its boundary")
+    assert not f["uncontained"], "the contract span was left unattached"

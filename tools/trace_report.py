@@ -4,19 +4,38 @@
 
 Writes claude/reports/TRACE_<date>.md and TRACE_<date>.html.
 
-THE ARITHMETIC IS THE POINT, and it is printed with words rather than left for
-the reader to attempt. Sum of the "step:*" spans, plus the unattributed seconds,
-against the wall clock. Nested "call:" spans are excluded from that sum on
-purpose: they run INSIDE their step and adding them would count the same seconds
-twice, which is how a report ends up claiming more time than the night had.
+A STEP'S TIME IS ITS BOUNDARY. The recorder writes two kinds of step span and
+they are NOT peers:
 
-When the sum does not close, the gap is stated in seconds and named. It is not
-distributed over the steps to make it disappear.
+    stepb:<step>   the boundary, opened by beat() around every step of
+                   core/cycle_map.STEPS. attr: step, index, source="beat".
+    step:<label>   the StepContract span, opened by _run() for the subset of
+                   steps that go through it. attr: step, source="_run".
 
-EVERY STEP OF core/cycle_map.STEPS GETS A ROW, including the ones that never ran.
-A step that produced nothing must read as 0, not as absent: absent is what 32
-steps looked like before this file existed, and it is indistinguishable from a
-step that does not exist.
+A step: span runs INSIDE its stepb: boundary — measured on the cycle of
+2026-09-17: 44 of 44, every one contained, no exceptions. So the two must never
+be added together; the boundary already contains the contract's seconds and
+adding them counts the same seconds twice.
+
+WHAT THIS FILE GOT WRONG, AND FOR HOW LONG. "stepb:" was added on 13 Sep 2026
+and this reporter was not taught about it. It summed "step:*" alone, so on the
+cycle of 17 Sep it announced 4089s unattributed and read 31 steps as having
+never run — among them web_intelligence, which had run for 906 seconds and left
+a perfectly good boundary span saying so. A reporter that turns a recorded step
+into "never ran" is worse than one that omits it: absent invites a look, 0
+closes the question.
+
+THE THREE OUTCOMES, KEPT APART. A step that produced no contract span is not a
+step that did not run, and neither is written as 0:
+
+    ran, with a contract      a stepb with a step: inside it
+    ran, boundary only        a stepb with no step: inside it
+    never ran                 NEITHER span, for a step of cycle_map.STEPS
+
+LEGACY TRACES. A trace written before 13 Sep has no stepb at all. There the
+step: spans ARE the outermost boundary available, so they are used as the
+boundary set and the report says which kind it used. The rule is one rule —
+sum the outermost step spans, never the nested ones.
 
     venv\\Scripts\\python.exe tools\\trace_report.py
     venv\\Scripts\\python.exe tools\\trace_report.py --trace memory\\cycle_trace\\X.jsonl
@@ -36,6 +55,10 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 TRACE_DIR = REPO / "memory" / "cycle_trace"
 OUT_DIR = REPO / "claude" / "reports"
+
+BOUNDARY_PREFIX = "stepb:"
+CONTRACT_PREFIX = "step:"
+EPS = 1e-9
 
 
 def _show(p: Path) -> str:
@@ -92,6 +115,25 @@ def _canonical(label: str) -> str:
         return label
 
 
+def _interval(s: dict) -> tuple:
+    t = float(s.get("t") or 0.0)
+    return t, t + (s.get("ms") or 0) / 1000.0
+
+
+def _step_name(s: dict) -> str:
+    """The cycle_map step a span belongs to.
+
+    stepb carries attr.step already canonical; step: carries a _run label, and
+    some fixtures carry no attr at all, so the name is the fallback. NEVER join
+    the two name spaces on attr.index: on 2026-09-17 body_scan left two boundary
+    spans whose indices were "0" and "13" while cycle_map says "13". The index
+    is a log ordinal, not a key.
+    """
+    attr = s.get("attr") or {}
+    raw = attr.get("step") or str(s.get("name", "")).split(":", 1)[-1]
+    return _canonical(raw)
+
+
 def fold(rows: list) -> dict:
     head = next((r for r in rows if r.get("k") == "head"), {})
     opens, spans, evs = {}, [], []
@@ -118,6 +160,17 @@ def fold(rows: list) -> dict:
         if isinstance(v, (int, float)):
             last_t = max(last_t, v)
 
+    # ── WHICH SPANS ARE THE BOUNDARY ───────────────────────────────────────
+    # stepb when the trace has it; the step: spans when it does not (a trace
+    # older than 13 Sep 2026). Exactly one of the two is summed, ever.
+    b_spans = [s for s in spans if str(s.get("name", "")).startswith(BOUNDARY_PREFIX)]
+    c_spans = [s for s in spans if str(s.get("name", "")).startswith(CONTRACT_PREFIX)]
+    if b_spans:
+        boundary_kind = "stepb"
+    else:
+        boundary_kind = "step"
+        b_spans, c_spans = c_spans, []
+
     # span id -> the step it belongs to, following parents up
     parent = {}
     name_of = {}
@@ -130,26 +183,48 @@ def fold(rows: list) -> dict:
         while sp and sp not in seen:
             seen.add(sp)
             n = name_of.get(sp, "")
-            if n.startswith("step:"):
-                return _canonical(n[5:])
+            if n.startswith(BOUNDARY_PREFIX) or n.startswith(CONTRACT_PREFIX):
+                return _canonical(n.split(":", 1)[1])
             sp = parent.get(sp)
         return None
 
     ms_by_step = defaultdict(int)
     status_by_step = {}
-    for s in spans:
-        n = s.get("name", "")
-        if n.startswith("step:"):
-            canon = _canonical(n[5:])
-            ms_by_step[canon] += int(s.get("ms") or 0)
-            if s.get("st") in ("ERROR", "HALTED") or canon not in status_by_step:
-                status_by_step[canon] = s.get("st", "UNSET")
+    boundary_steps = set()
+    for s in b_spans:
+        canon = _step_name(s)
+        boundary_steps.add(canon)
+        ms_by_step[canon] += int(s.get("ms") or 0)
+        if s.get("st") in ("ERROR", "HALTED") or canon not in status_by_step:
+            status_by_step[canon] = s.get("st", "UNSET")
+
+    # ── THE CONTRACT COLUMN, JOINED BY TIME AND NOT BY NAME ────────────────
+    # There is no shared key: stepb carries attr.index and step: does not, and
+    # 16 of the 44 _run labels have no stepb of the same name at all
+    # (civilization_snapshots_agent vs civilization_snapshots). Containment is
+    # the real relation, so containment is the join.
+    contract_by_step = defaultdict(list)
+    uncontained = []
+    for c in c_spans:
+        ca, cb = _interval(c)
+        host = None
+        for q in b_spans:
+            qa, qb = _interval(q)
+            if qa <= ca + EPS and cb <= qb + EPS:
+                host = q
+                break
+        if host is None:
+            uncontained.append(c)
+        else:
+            contract_by_step[_step_name(host)].append(c)
+
+    contract_steps = {_step_name(c) for c in c_spans}
 
     files_by_step = defaultdict(lambda: defaultdict(int))
     spawns_by_step = defaultdict(list)
     hosts_by_step = defaultdict(lambda: defaultdict(int))
-    unattributed_sec = 0.0
     pulse_where = defaultdict(float)
+    pulse_outside = 0.0
     for e in evs:
         a = e.get("attr") or {}
         st = step_of(e.get("sp")) or a.get("step_from_stack")
@@ -164,24 +239,58 @@ def fold(rows: list) -> dict:
         elif nm == "pulse":
             span = max(1.0, float(a.get("t_end", e.get("t", 0.0))) - float(e.get("t", 0.0)))
             if st is None:
-                unattributed_sec += span
+                pulse_outside += span
                 pulse_where[a.get("where") or "(unknown)"] += span
 
-    step_ms_total = sum(ms_by_step.values())
-    accounted = step_ms_total / 1000.0 + unattributed_sec
-    gap = last_t - accounted
+    # ── THE ARITHMETIC ─────────────────────────────────────────────────────
+    # The boundaries are disjoint (checked on 2026-09-17: 0 overlapping pairs),
+    # so their sum is the time the cycle spent inside a step. What is left of
+    # the wall clock is unattributed BY SUBTRACTION — not by counting pulses,
+    # which only ever explained where some of it went.
+    step_ms_total = sum(int(s.get("ms") or 0) for s in b_spans)
+    attributed = step_ms_total / 1000.0
+    unattributed_sec = max(0.0, last_t - attributed)
+    accounted = attributed + unattributed_sec
+    gap = last_t - accounted            # 0 normally; negative when boundaries overlap
+
+    steps = all_steps()
+    ran_with_contract = [n for n, _ in steps if n in boundary_steps and contract_by_step.get(n)]
+    ran_boundary_only = [n for n, _ in steps if n in boundary_steps and not contract_by_step.get(n)]
+    never_ran = [n for n, _ in steps if n not in boundary_steps and n not in contract_steps]
+
+    died_inside = [o for o in unclosed
+                   if str(o.get("name", "")).startswith((BOUNDARY_PREFIX, CONTRACT_PREFIX))]
 
     return {"head": head, "opens": opens, "spans": spans, "evs": evs,
-            "unclosed": unclosed, "last_t": last_t, "ms_by_step": ms_by_step,
-            "status_by_step": status_by_step, "files_by_step": files_by_step,
-            "spawns_by_step": spawns_by_step, "hosts_by_step": hosts_by_step,
-            "unattributed_sec": unattributed_sec, "pulse_where": pulse_where,
-            "step_ms_total": step_ms_total, "accounted": accounted, "gap": gap,
+            "unclosed": unclosed, "died_inside": died_inside, "last_t": last_t,
+            "ms_by_step": ms_by_step, "status_by_step": status_by_step,
+            "boundary_kind": boundary_kind, "boundary_steps": boundary_steps,
+            "contract_by_step": contract_by_step, "contract_steps": contract_steps,
+            "uncontained": uncontained,
+            "ran_with_contract": ran_with_contract,
+            "ran_boundary_only": ran_boundary_only, "never_ran": never_ran,
+            "files_by_step": files_by_step, "spawns_by_step": spawns_by_step,
+            "hosts_by_step": hosts_by_step, "unattributed_sec": unattributed_sec,
+            "pulse_where": pulse_where, "pulse_outside": pulse_outside,
+            "step_ms_total": step_ms_total, "attributed": attributed,
+            "contract_ms_total": sum(int(s.get("ms") or 0) for s in c_spans),
+            "accounted": accounted, "gap": gap,
             "step_of": step_of, "name_of": name_of, "parent": parent}
+
+
+def _contract_cell(f: dict, name: str) -> str:
+    cs = f["contract_by_step"].get(name) or []
+    if not cs:
+        return "NO — BOUNDARY ONLY"
+    secs = sum(int(c.get("ms") or 0) for c in cs) / 1000.0
+    sts = [c.get("st", "UNSET") for c in cs]
+    bad = [s for s in sts if s in ("ERROR", "HALTED")]
+    return f"YES {secs:.1f}s {(bad or sts)[0]}"
 
 
 def md(f: dict, trace: Path) -> str:
     steps = all_steps()
+    kind = f["boundary_kind"]
     L = ["# TRACE — " + str(f["head"].get("cycle_id", "(unnamed)")),
          "",
          f"From `{_show(trace)}`, {len(f['spans'])} spans, "
@@ -191,39 +300,72 @@ def md(f: dict, trace: Path) -> str:
          f"Recorded channels: {', '.join(f['head'].get('channels') or []) or '—'}. "
          f"pid {f['head'].get('pid')}, python {f['head'].get('py')}.",
          "",
+         f"**{len(f['ran_with_contract'])} ran with a contract · "
+         f"{len(f['ran_boundary_only'])} ran boundary-only · "
+         f"{len(f['never_ran'])} never ran**, of {len(steps)} steps in "
+         f"`core/cycle_map.STEPS`.",
+         "",
          "## Minutes per step", "",
-         "Every step in `core/cycle_map.STEPS` has a row. **A step that did not run "
-         "reads 0, not blank** — blank is what 32 of the 75 looked like before this "
-         "record existed, and blank is indistinguishable from a step that does not "
-         "exist.", "",
-         "| # | step | seconds | minutes | status |", "|---|---|--:|--:|---|"]
-    ran = 0
+         "A step's time is its BOUNDARY span (`stepb:*`), which is what `beat()` "
+         "opens around every step. The `step:*` contract span runs INSIDE that "
+         "boundary, so it is shown in its own column and never added on top — "
+         "adding it would count the same seconds twice.", "",
+         "**BOUNDARY ONLY is not 0 and it is not \"never ran\".** It means the step "
+         "ran and was measured, but does not go through `_run()`, so no "
+         "StepContract span exists for it. Reading those 31 steps as \"never ran\" "
+         "is the defect this table was rewritten to remove.", ""]
+    if kind == "step":
+        L += ["> This trace has no `stepb:*` spans — it predates 13 Sep 2026. The "
+              "`step:*` spans are the outermost boundary available and are used as "
+              "the boundary set.", ""]
+    L += ["| # | step | seconds | minutes | status | contract |",
+          "|---|---|--:|--:|---|---|"]
     for name, idx in steps:
         ms = f["ms_by_step"].get(name, 0)
-        if ms:
-            ran += 1
-        st = f["status_by_step"].get(name, "—" if not ms else "OK")
-        L.append(f"| {idx} | {name} | {ms / 1000.0:.1f} | {ms / 60000.0:.2f} | {st} |")
+        ran = name in f["boundary_steps"]
+        if not ran and name in f["never_ran"]:
+            L.append(f"| {idx} | {name} | — | — | **never ran** | — |")
+            continue
+        st = f["status_by_step"].get(name, "OK" if ran else "—")
+        L.append(f"| {idx} | {name} | {ms / 1000.0:.1f} | {ms / 60000.0:.2f} | "
+                 f"{st} | {_contract_cell(f, name)} |")
     L.append(f"| — | **(unattributed)** | **{f['unattributed_sec']:.1f}** "
-             f"| **{f['unattributed_sec'] / 60.0:.2f}** | — |")
-    L += ["", f"{ran} of {len(steps)} steps left a span.", ""]
+             f"| **{f['unattributed_sec'] / 60.0:.2f}** | — | — |")
+    L += ["",
+          f"{len(f['ran_with_contract']) + len(f['ran_boundary_only'])} of "
+          f"{len(steps)} steps left a boundary span "
+          f"({len(f['ran_boundary_only'])} of them boundary-only).", ""]
+    if f["never_ran"]:
+        L += [f"Never ran — neither a boundary nor a contract span: "
+              f"{', '.join(f['never_ran'])}.", ""]
 
-    if f["unclosed"]:
+    if f["died_inside"]:
         L += ["## Died inside", "",
-              "An `open` with no `span` after it. The process stopped while this was "
-              "running — which is exactly what the synchronous write of `open` is "
-              "for.", "",
+              "A step `open` with no `span` after it. The process stopped while "
+              "this was running — which is exactly what the synchronous write of "
+              "`open` is for. It is DIED INSIDE, never absent.", "",
               "| span | opened at | attributes |", "|---|--:|---|"]
-        for o in f["unclosed"]:
+        for o in f["died_inside"]:
             L.append(f"| `{o.get('name')}` | {o.get('t', 0):.1f}s | "
                      f"`{json.dumps(o.get('attr') or {}, ensure_ascii=False)[:120]}` |")
         L.append("")
     else:
-        L += ["## Died inside", "", "Nothing: every `open` has its `span`.", ""]
+        L += ["## Died inside", "", "Nothing: every step `open` has its `span`.", ""]
+
+    if f["uncontained"]:
+        L += ["## Contract spans outside every boundary", "",
+              "A `step:*` span that no `stepb:*` interval contains. It is reported "
+              "rather than attached to a nearby step by guesswork.", ""]
+        for c in f["uncontained"][:20]:
+            a, b = _interval(c)
+            L.append(f"- `{c.get('name')}` [{a:.1f}s, {b:.1f}s]")
+        L.append("")
 
     L += ["## Where the unattributed seconds went", ""]
     if f["pulse_where"]:
-        L += ["| location | seconds |", "|---|--:|"]
+        L += [f"Pulses that landed outside every step account for "
+              f"{f['pulse_outside']:.0f}s of the {f['unattributed_sec']:.0f}s.", "",
+              "| location | seconds |", "|---|--:|"]
         for w, s in sorted(f["pulse_where"].items(), key=lambda kv: -kv[1])[:25]:
             L.append(f"| `{w}` | {s:.0f} |")
     else:
@@ -266,29 +408,33 @@ def md(f: dict, trace: Path) -> str:
     L.append("")
 
     pct = (abs(f["gap"]) / f["last_t"] * 100.0) if f["last_t"] else 0.0
+    label = "stepb:*" if f["boundary_kind"] == "stepb" else "step:* (no stepb in this trace)"
     L += ["## The arithmetic", "",
-          f"- sum of `step:*` spans (nested `call:` excluded, so no second is counted "
-          f"twice): **{f['step_ms_total'] / 1000.0:.0f}s**",
-          f"- unattributed seconds (`ev` with `sp` null): **{f['unattributed_sec']:.0f}s**",
+          f"- sum of the BOUNDARY spans `{label}`: **{f['attributed']:.0f}s**",
+          f"- unattributed, the wall clock minus that: **{f['unattributed_sec']:.0f}s**",
           f"- the two together: **{f['accounted']:.0f}s**",
           f"- wall clock, t0 to the last timestamp seen: **{f['last_t']:.0f}s**",
           ""]
-    if abs(f["gap"]) < 1.0:
-        L.append("**It closes.** The difference is under a second.")
-    elif f["gap"] > 0:
-        L.append(f"**It does not close: {f['gap']:.0f}s ({pct:.1f}%) are missing** — "
-                 f"wall-clock time that neither a step nor an unattributed pulse "
-                 f"accounts for. The likely readings, in order of how ordinary they "
-                 f"are: seconds before the first step opened and after the last one "
-                 f"closed; a step that was killed, whose span was never written (see "
-                 f"*Died inside*); and pulses lost in the last two seconds before a "
-                 f"kill. The number is left as it is rather than spread over the "
+    if f["boundary_kind"] == "stepb":
+        L += [f"The nested `step:*` contract spans sum to "
+              f"**{f['contract_ms_total'] / 1000.0:.0f}s**. That number is NOT added "
+              f"to the total: those seconds are already inside the boundaries above. "
+              f"It is shown so the two columns can be compared.", ""]
+    if f["gap"] < -1.0:
+        L.append(f"**The boundaries over-count by {-f['gap']:.0f}s ({pct:.1f}%)** — "
+                 f"they sum to more than the wall clock, which means two `stepb:*` "
+                 f"spans were open at once. The first place to look is a step that "
+                 f"opened a boundary without closing the previous one.")
+    elif f["unattributed_sec"] > 0.05 * max(1.0, f["last_t"]):
+        L.append(f"**{f['unattributed_sec']:.0f}s ({f['unattributed_sec'] / f['last_t'] * 100:.1f}%) "
+                 f"sit outside every step** — time the cycle spent between "
+                 f"boundaries. It is left where it is rather than spread over the "
                  f"steps, because spread over the steps it would stop being visible.")
     else:
-        L.append(f"**It over-counts by {-f['gap']:.0f}s ({pct:.1f}%)** — the parts add "
-                 f"up to more than the whole, which means the same seconds are being "
-                 f"counted twice. The first place to look is two `step:*` spans open "
-                 f"at once.")
+        L.append(f"**It closes.** {f['unattributed_sec']:.0f}s "
+                 f"({f['unattributed_sec'] / max(1.0, f['last_t']) * 100:.1f}%) fall "
+                 f"outside every step boundary — the seconds before the first step "
+                 f"opened and after the last one closed.")
     L += ["", "---", "",
           f"Generated {time.strftime('%Y-%m-%d %H:%M:%S')} by `tools/trace_report.py`."]
     return "\n".join(L) + "\n"
@@ -296,7 +442,7 @@ def md(f: dict, trace: Path) -> str:
 
 HTML_CSS = """
 :root{--bg:#fbfbfa;--fg:#1d1d1b;--line:#d8d8d4;--ok:#4a7c59;--err:#a4383a;
---unset:#8a8a86;--halt:#3d6b8c;--ev:#c8a24a;--band:#eeeeea}
+--unset:#8a8a86;--halt:#3d6b8c;--ev:#c8a24a;--band:#eeeeea;--bnd:#5c6f8a}
 *{box-sizing:border-box}
 body{margin:0;padding:0 16px 48px;background:var(--bg);color:var(--fg);
 font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
@@ -306,6 +452,7 @@ h1{font-size:17px;margin:20px 0 4px}
 .bar{position:absolute;height:16px;border-radius:2px;color:#fff;font-size:11px;
 line-height:16px;padding:0 5px;overflow:hidden;white-space:nowrap}
 .OK{background:var(--ok)} .ERROR{background:var(--err)} .UNSET{background:var(--unset)} .HALTED{background:var(--halt)}
+.bnd{background:var(--bnd)}
 .open{background:repeating-linear-gradient(45deg,var(--err),var(--err) 5px,#c05a5c 5px,#c05a5c 10px)}
 .tick{position:absolute;width:2px;height:16px;background:var(--ev);opacity:.75;top:2px}
 .axis{position:relative;height:22px;border-bottom:1px solid var(--line);margin-bottom:6px}
@@ -316,6 +463,7 @@ vertical-align:-1px;border-radius:2px}
 table{border-collapse:collapse;margin:10px 0 26px;font-size:12px}
 th,td{border:1px solid var(--line);padding:3px 8px;text-align:left}
 th{background:var(--band)} td.n{text-align:right}
+td.only{color:#6a6a66} td.never{background:#f7e9e9;color:var(--err)}
 .sum{background:#fff;border:1px solid var(--line);padding:12px 14px;margin:18px 0}
 """
 
@@ -323,7 +471,7 @@ th{background:var(--band)} td.n{text-align:right}
 def html_page(f: dict, trace: Path) -> str:
     total = max(1.0, f["last_t"])
     spans = sorted([s for s in f["spans"]], key=lambda s: s.get("t", 0))
-    depth = {}
+    steps = all_steps()
 
     def d_of(sp):
         n, seen = 0, set()
@@ -344,9 +492,13 @@ def html_page(f: dict, trace: Path) -> str:
            "<h1>TRACE " + html.escape(str(f["head"].get("cycle_id", "(unnamed)"))) + "</h1>",
            f"<div class=meta>{html.escape(str(trace.name))} &middot; "
            f"{len(f['spans'])} spans &middot; {len(f['evs'])} events &middot; "
-           f"wall clock {f['last_t']:.0f}s</div>",
+           f"wall clock {f['last_t']:.0f}s &middot; "
+           f"{len(f['ran_with_contract'])} with contract, "
+           f"{len(f['ran_boundary_only'])} boundary-only, "
+           f"{len(f['never_ran'])} never ran</div>",
            "<div class=legend>"
-           "<i class=OK></i>OK<i class=ERROR></i>ERROR<i class=HALTED></i>HALTED (stopped on purpose)<i class=UNSET></i>UNSET"
+           "<i class=bnd></i>boundary (stepb)<i class=OK></i>contract OK<i class=ERROR></i>ERROR"
+           "<i class=HALTED></i>HALTED (stopped on purpose)<i class=UNSET></i>UNSET"
            "<i class=open></i>open with no span (died inside)"
            "<i style='background:var(--ev)'></i>event</div>",
            "<div class=axis>"]
@@ -358,41 +510,60 @@ def html_page(f: dict, trace: Path) -> str:
         left = 100.0 * s.get("t", 0) / total
         width = max(0.15, 100.0 * (s.get("ms", 0) / 1000.0) / total)
         dep = d_of(s.get("sp"))
-        st = s.get("st", "UNSET")
+        is_b = str(s.get("name", "")).startswith(BOUNDARY_PREFIX)
+        cls = "bnd" if is_b else s.get("st", "UNSET")
         label = html.escape(f"{s.get('name', '')}  {s.get('ms', 0) / 1000.0:.1f}s")
-        out.append(f"<div class=row><div class='bar {st}' style='left:{left:.3f}%;"
+        out.append(f"<div class=row><div class='bar {cls}' style='left:{left:.3f}%;"
                    f"width:{width:.3f}%;margin-left:{dep * 6}px'>{label}</div>")
         for t in ticks_by_span.get(s.get("sp"), [])[:400]:
             out.append(f"<div class=tick style='left:{100.0 * t / total:.3f}%'></div>")
         out.append("</div>")
 
-    for o in f["unclosed"]:
+    for o in f["died_inside"]:
         left = 100.0 * o.get("t", 0) / total
         width = max(0.4, 100.0 - left)
         out.append(f"<div class=row><div class='bar open' style='left:{left:.3f}%;"
                    f"width:{width:.3f}%'>"
-                   f"{html.escape(str(o.get('name')))} — never closed</div></div>")
+                   f"{html.escape(str(o.get('name')))} — DIED INSIDE</div></div>")
 
-    out.append("<h1>Minutes per step</h1><table><tr><th>#</th><th>step</th>"
-               "<th>seconds</th><th>status</th></tr>")
-    for name, idx in all_steps():
+    out.append("<h1>Minutes per step</h1>"
+               "<p>A step's time is its <b>boundary</b> span. The contract column is "
+               "the nested <code>step:*</code> span where one exists; BOUNDARY ONLY "
+               "means the step ran and was measured but does not go through "
+               "<code>_run()</code>. It is not 0 and not &quot;never ran&quot;.</p>"
+               "<table><tr><th>#</th><th>step</th>"
+               "<th>seconds</th><th>status</th><th>contract</th></tr>")
+    for name, idx in steps:
         ms = f["ms_by_step"].get(name, 0)
-        st = f["status_by_step"].get(name, "&mdash;" if not ms else "OK")
+        ran = name in f["boundary_steps"]
+        if not ran and name in f["never_ran"]:
+            out.append(f"<tr><td>{html.escape(idx)}</td><td>{html.escape(name)}</td>"
+                       f"<td class=n>&mdash;</td><td class=never>never ran</td>"
+                       f"<td class=never>&mdash;</td></tr>")
+            continue
+        st = f["status_by_step"].get(name, "OK" if ran else "&mdash;")
+        cell = _contract_cell(f, name)
+        cls = " class=only" if cell.startswith("NO") else ""
         out.append(f"<tr><td>{html.escape(idx)}</td><td>{html.escape(name)}</td>"
-                   f"<td class=n>{ms / 1000.0:.1f}</td><td>{st}</td></tr>")
+                   f"<td class=n>{ms / 1000.0:.1f}</td><td>{st}</td>"
+                   f"<td{cls}>{html.escape(cell)}</td></tr>")
     out.append(f"<tr><td>&mdash;</td><td><b>(unattributed)</b></td>"
-               f"<td class=n><b>{f['unattributed_sec']:.1f}</b></td><td>&mdash;</td></tr>")
+               f"<td class=n><b>{f['unattributed_sec']:.1f}</b></td>"
+               f"<td>&mdash;</td><td>&mdash;</td></tr>")
     out.append("</table>")
 
     gap = f["gap"]
-    verdict = ("it closes (under a second)" if abs(gap) < 1
-               else f"<b>{gap:.0f}s missing</b>" if gap > 0
-               else f"<b>{-gap:.0f}s counted twice</b>")
+    verdict = (f"<b>{-gap:.0f}s counted twice</b>" if gap < -1
+               else "it closes")
+    label = "stepb:*" if f["boundary_kind"] == "stepb" else "step:* (legacy trace)"
     out.append(f"<div class=sum><b>The arithmetic.</b><br>"
-               f"step spans {f['step_ms_total'] / 1000.0:.0f}s "
+               f"boundary spans ({label}) {f['attributed']:.0f}s "
                f"+ unattributed {f['unattributed_sec']:.0f}s "
                f"= {f['accounted']:.0f}s against a wall clock of "
-               f"{f['last_t']:.0f}s &rarr; {verdict}.</div>")
+               f"{f['last_t']:.0f}s &rarr; {verdict}.<br>"
+               f"The nested contract spans sum to "
+               f"{f['contract_ms_total'] / 1000.0:.0f}s and are NOT added: those "
+               f"seconds are already inside the boundaries.</div>")
     return "\n".join(out) + "\n"
 
 
@@ -418,14 +589,18 @@ def main(argv) -> int:
     html_path.write_text(html_page(f, trace), encoding="utf-8")
 
     steps = all_steps()
-    ran = sum(1 for n, _ in steps if f["ms_by_step"].get(n))
     print(f"trace            : {trace}")
-    print(f"steps with a span: {ran} of {len(steps)}")
+    print(f"boundary kind    : {f['boundary_kind']}")
+    print(f"ran with contract: {len(f['ran_with_contract'])} of {len(steps)}")
+    print(f"boundary only    : {len(f['ran_boundary_only'])}")
+    print(f"never ran        : {len(f['never_ran'])}"
+          f"{' -> ' + ', '.join(f['never_ran'][:6]) if f['never_ran'] else ''}")
+    print(f"died inside      : {[o.get('name') for o in f['died_inside']] or 'nothing'}")
     print(f"unattributed     : {f['unattributed_sec']:.0f}s")
-    print(f"died inside      : {[o.get('name') for o in f['unclosed']] or 'nothing'}")
-    print(f"arithmetic       : {f['step_ms_total'] / 1000.0:.0f}s steps + "
+    print(f"arithmetic       : {f['attributed']:.0f}s boundaries + "
           f"{f['unattributed_sec']:.0f}s unattributed = {f['accounted']:.0f}s "
-          f"vs {f['last_t']:.0f}s wall  -> gap {f['gap']:.0f}s")
+          f"vs {f['last_t']:.0f}s wall  -> gap {f['gap']:.0f}s "
+          f"(nested contracts {f['contract_ms_total'] / 1000.0:.0f}s, not added)")
     print(f"-> {_show(md_path)}")
     print(f"-> {_show(html_path)}")
     return 0
