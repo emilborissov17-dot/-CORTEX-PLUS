@@ -228,6 +228,41 @@ The second is the sharper failure: told to name a file, the model named the
     code = "SPEC_METRIC_UNGROUNDED"
 
 
+class SpecMetricNotATest(SpecInvalid):
+    """SPEC_METRIC_NOT_A_TEST — an INTERNAL metric that names no real test.
+
+    An internal fix is not measured by a world-data number. Nothing in this repo
+    records how often an LLM reply failed to parse, so the only honest metric
+    for a parser fix is a TEST that fails on the code as it is and passes after
+    the change. Measured 8 Sep 2026: told to name a real file and shown twelve
+    data files, five internal specs in five named a data file, and the one that
+    was accepted pointed at an SDG cache.
+
+    The forbidden fallback is accepting a data file "because it exists". That is
+    the same existence-is-not-correctness hole, one field over.
+    """
+    code = "SPEC_METRIC_NOT_A_TEST"
+
+
+class SpecMetricWrongKind(SpecInvalid):
+    """SPEC_METRIC_WRONG_KIND — real, and not about the thing being changed.
+
+    GROUNDED IN THE WRONG FILE IS WORSE THAN GROUNDED IN NOTHING, because it
+    passes. "The number of valid JSON outputs in memory/_sdg_resolved.json" names
+    a file that exists, is readable, and has no relationship whatever to an LLM
+    returning invalid JSON — so the number would be recomputed, would match, and
+    would prove nothing.
+
+    A tie has to be evidence, not vibes, so two mechanical ones are accepted:
+      * TOKEN — the file's path carries a word from a claimed category
+        (ECONOMY_WORK_REVIEW -> economy, work);
+      * REFERENCE — the code being changed actually names the file. If the patch
+        touches the module that reads it, the number moves when the patch works.
+    Either is a real relation. Neither, and the metric is refused by name.
+    """
+    code = "SPEC_METRIC_WRONG_KIND"
+
+
 class SpecPathNotFound(SpecInvalid):
     """REFUSED_PATH_NOT_FOUND — allowed_paths names something that is not there.
 
@@ -548,7 +583,7 @@ def validate(spec: dict, axes: set | None = None,
 
     _reject_code(spec)
     _require_paths_in_scope(spec, problem)
-    _require_grounded_metric(spec)
+    _require_grounded_metric(spec, problem, known)
     _require_grounded_axis(spec, problem)
     return spec
 
@@ -643,7 +678,16 @@ def _require_grounded_axis(spec: dict, problem: dict | None) -> None:
 # Anything that looks like a repo-relative data file. Deliberately narrow: the
 # point is to find a file the metric can be RECOMPUTED from, and core/earning.py
 # recomputes from JSON only.
+# DATA files only. A .py path deliberately does NOT match: an external metric
+# is a number read out of data, and letting code match here would let a spec
+# "measure" a source file.
 _METRIC_PATH = re.compile(r"[\w./\\-]+\.(?:json|jsonl|csv|txt|md)")
+
+# A pytest node id. Until this existed a test path was INVISIBLE to the
+# metric net — it matched json/jsonl/csv/txt/md and nothing else — so an
+# internal spec naming the right thing would have been refused for naming
+# nothing at all.
+_METRIC_TEST = re.compile(r"(test/[\w./\\-]+\.py)::([\w:]+)")
 
 
 def metric_files(metric: str) -> list:
@@ -656,25 +700,141 @@ def metric_files(metric: str) -> list:
     return out
 
 
-def _require_grounded_metric(spec: dict) -> None:
-    """SPEC_METRIC_UNGROUNDED unless the metric names a real, readable file.
+def metric_tests(metric: str) -> list:
+    """Every node id in the metric text that names a test THAT REALLY EXISTS.
 
-    Raised BEFORE the implementer, like the path net: a run whose success can
-    never be measured is not worth a cloud call.
+    Resolved by parsing the file, the same way candidate_tests() builds the list
+    the model is shown — so "offered" and "resolvable" cannot drift apart. A
+    node id whose function is not in the file returns nothing rather than being
+    trusted because it looks like a node id.
+    """
+    out = []
+    for path, name in _METRIC_TEST.findall(str(metric or "")):
+        rel = path.replace("\\", "/").strip("'\"` ")
+        nid = f"{rel}::{name}"
+        if nid in test_node_ids(REPO / rel) and nid not in out:
+            out.append(nid)
+    return out
+
+
+def metric_is_tied(rel: str, spec: dict, axes: set | None = None) -> tuple:
+    """(ok, why) — is this data file about the thing the spec is changing?
+
+    Two mechanical ties, either of which is real evidence. Deliberately NOT a
+    similarity score: a threshold nobody can recompute would be one more number
+    to argue with, and the point of this net is that the answer is checkable.
+    """
+    known = axes if axes is not None else real_axes()
+    low = rel.lower()
+
+    for cat in (spec.get("categories") or []):
+        if cat not in known:
+            continue
+        toks = [t.lower() for t in str(cat).split("_")
+                if t.lower() not in _AXIS_STOP and len(t) >= 4]
+        hit = [t for t in toks if t in low]
+        if hit:
+            return True, f"{rel} carries {hit} from the claimed category {cat}"
+
+    for code_rel in (spec.get("allowed_paths") or []):
+        path = REPO / str(code_rel)
+        if not path.is_file():
+            continue
+        try:
+            body = path.read_text(encoding="utf-8", errors="replace")
+        except Exception:                                        # noqa: BLE001
+            continue
+        if rel in body or Path(rel).name in body:
+            return True, f"{code_rel} names {rel}, so the patch moves that number"
+
+    return False, (f"{rel} exists and is readable, and nothing ties it to this "
+                   f"change: its path carries no word from "
+                   f"{spec.get('categories')} and none of "
+                   f"{spec.get('allowed_paths')} names it")
+
+
+def _require_grounded_metric(spec: dict, problem: dict | None = None,
+                             axes: set | None = None) -> None:
+    """The metric is checked against the standard for ITS OWN DOMAIN.
+
+    Raised BEFORE the implementer, like the path nets: a run whose success can
+    never be measured is not worth a cloud call. Three named refusals, because
+    three different things go wrong and a reader of the record must be able to
+    tell them apart without parsing prose:
+
+        SPEC_METRIC_NOT_A_TEST     internal, and it names no real test
+        SPEC_METRIC_UNGROUNDED     external, and it names no real data file
+        SPEC_METRIC_WRONG_KIND     real, and about something else entirely
     """
     metric = str(spec.get("success_metric", ""))
-    if metric_files(metric):
+    domain = spec.get("domain")
+
+    if domain == "internal":
+        named = metric_tests(metric)
+        if not named:
+            claimed = _METRIC_TEST.findall(metric) or _METRIC_PATH.findall(metric)
+            detail = (f"it names {claimed}, which does not resolve to a test "
+                      f"function that exists" if claimed
+                      else "it names no test at all")
+            raise SpecMetricNotATest(
+                f"{SpecMetricNotATest.code}: success_metric {metric!r} — "
+                f"{detail}. An INTERNAL fix is measured by a test that FAILS on "
+                f"the code as it is and PASSES after the change, named exactly "
+                f"as path::test_name from the list the prompt offered. Nothing "
+                f"in this repo records how often an LLM reply failed to parse, "
+                f"so a data-file number cannot measure a parser fix — and a "
+                f"data file that happens to exist is the wrong KIND of answer, "
+                f"not a near miss.")
+
+        # OFFERED, not merely real. candidate_tests() ranks by the component and
+        # by the problem's own words, so an offered test is one that has some
+        # claim to be about this fault; any other real test would satisfy
+        # "a test exists" while measuring something unrelated — the same
+        # wrong-file hole, in the test half.
+        if problem is not None:
+            # THE FILE IS THE UNIT OF RELEVANCE, not the individual id. The
+            # prompt shows a few ids from each relevant suite; a model that
+            # names a DIFFERENT test from a suite that was surfaced has chosen
+            # sensibly, and refusing that would punish the right instinct. The
+            # file is what earned its place by naming the component or the
+            # problem's own words.
+            offered = [f"test/{f.name}" for f in candidate_test_files(
+                str(problem.get("component", "unknown")), problem)]
+            stray = [n for n in named if n.partition("::")[0] not in offered]
+            if stray and offered:
+                raise SpecMetricWrongKind(
+                    f"{SpecMetricWrongKind.code}: {stray} "
+                    f"{'is a real test' if len(stray) == 1 else 'are real tests'} "
+                    f"in no suite this problem was offered. The prompt lists "
+                    f"the suites with some claim to be about this fault: "
+                    f"{offered[:4]}{' ...' if len(offered) > 4 else ''}. A test "
+                    f"that passes today proves nothing, because it never "
+                    f"reproduced the bug.")
         return
-    named = _METRIC_PATH.findall(metric)
-    detail = (f"it names {', '.join(repr(n) for n in named)}, which "
-              f"{'does' if len(named) == 1 else 'do'} not exist"
-              if named else "it names no file at all")
-    raise SpecMetricUngrounded(
-        f"{SpecMetricUngrounded.code}: success_metric {metric!r} cannot be "
-        f"recomputed — {detail}. Name a real file the number can be read from, "
-        f"e.g. 'the number of rows in memory/goal_score_history.json'. A metric "
-        f"nobody can recompute cannot be checked, and an unchecked claim is the "
-        f"FABRICATED verdict execute_patches already refuses.")
+
+    # EXTERNAL (and anything that reached here without a domain — validate()
+    # refuses those before this point, so this is the external standard).
+    files = metric_files(metric)
+    if not files:
+        named = _METRIC_PATH.findall(metric)
+        detail = (f"it names {', '.join(repr(n) for n in named)}, which "
+                  f"{'does' if len(named) == 1 else 'do'} not exist"
+                  if named else "it names no file at all")
+        raise SpecMetricUngrounded(
+            f"{SpecMetricUngrounded.code}: success_metric {metric!r} cannot be "
+            f"recomputed — {detail}. Name a real file the number can be read "
+            f"from, e.g. 'the number of rows in snapshots/civilization/economy_work/economy_work_snapshot_latest.json'. "
+            f"A metric nobody can recompute cannot be checked, and an unchecked "
+            f"claim is the FABRICATED verdict execute_patches already refuses.")
+
+    ties = [metric_is_tied(f, spec, axes) for f in files]
+    if not any(ok for ok, _why in ties):
+        raise SpecMetricWrongKind(
+            f"{SpecMetricWrongKind.code}: success_metric {metric!r} names "
+            f"{files}, and " + "; ".join(why for _ok, why in ties) + ". "
+            f"Grounded in the WRONG file is worse than grounded in nothing, "
+            f"because it passes: the number would be recomputed, would match, "
+            f"and would prove nothing about the change.")
 
 
 # ---------------------------------------------------------------------------
@@ -765,8 +925,8 @@ def test_node_ids(path: Path) -> list:
     return out
 
 
-def candidate_tests(component: str, problem: dict | None = None,
-                    limit: int = 12) -> list:
+def candidate_test_files(component: str, problem: dict | None = None,
+                         limit: int = 8) -> list:
     """REAL pytest node ids an INTERNAL success_metric may name.
 
     The mirror of candidate_paths() and metric_candidates(), and it exists for
@@ -798,8 +958,8 @@ def candidate_tests(component: str, problem: dict | None = None,
         except Exception:                                        # noqa: BLE001
             continue
         low = body.lower()
-        # OCCURRENCES, not distinct words: a suite that says "json" forty
-        # times is more about json than one that says it once.
+        # OCCURRENCES, not distinct words: a suite that says "json" forty times
+        # is more about json than one that says it once.
         hits = sum(len(re.findall(r"\b" + re.escape(w) + r"\b", low))
                    for w in words)
         in_name = [w for w in words if w in f.name.lower()]
@@ -813,16 +973,22 @@ def candidate_tests(component: str, problem: dict | None = None,
             rank = 3                      # mentions what the problem is about
         else:
             continue
-        # RANK, THEN OCCURRENCES. Ranking by category alone let the first file
-        # alphabetically fill every slot, and test_llm_json.py — the suite for
-        # the very module that parses LLM JSON — never appeared for a problem
-        # about parsing LLM JSON. A candidate block that does not surface the
-        # right candidate teaches the model to improvise, which is the
-        # behaviour the block exists to stop.
         scored.append((rank, -hits, f.name, f))
+    return [f for _r, _h, _n, f in sorted(scored)][:limit]
 
+
+def candidate_tests(component: str, problem: dict | None = None,
+                    limit: int = 12) -> list:
+    """The node ids shown in the prompt: a few from each relevant FILE.
+
+    A few per file rather than every id from the best file, because ranking by
+    category alone let one file fill all twelve slots and test_llm_json.py — the
+    suite for the very module that parses LLM JSON — never appeared for a
+    problem about parsing LLM JSON. A candidate block that does not surface the
+    right candidate teaches the model to improvise.
+    """
     out, per_file = [], max(1, limit // 5)
-    for _rank, _neg, _name, f in sorted(scored):
+    for f in candidate_test_files(component, problem):
         for nid in test_node_ids(f)[:per_file]:
             out.append(nid)
             if len(out) >= limit:
@@ -830,14 +996,30 @@ def candidate_tests(component: str, problem: dict | None = None,
     return out
 
 
-def metric_candidates(limit: int = 12) -> list:
-    """REAL data files a success_metric could be recomputed from.
+def metric_candidates(limit: int = 12, component: str = "") -> list:
+    """REAL data files an EXTERNAL success_metric could be recomputed from.
 
     Shown to the model for the same reason candidate_paths is: told to name a
     file without being shown any, it named the prompt's own placeholder
     ('memory/x.json'). An example in a prompt is an invitation to copy it.
+
+    THE PER-AXIS SNAPSHOTS COME FIRST (9 Sep 2026). The list was memory/*.json
+    and output/*.json — twelve files, none of them tied to any particular axis —
+    so an external spec could name a real file and still fail the tie the net
+    now requires. snapshots/<domain>/<axis>/ is where a world measurement
+    actually lands, so those are the files an external metric is usually about,
+    and a spec cannot be expected to name a tied file it was never shown.
     """
-    out = []
+    out, comp = [], str(component or "").lower()
+    snaps = REPO / "snapshots"
+    if snaps.is_dir():
+        hits = sorted(snaps.glob("*/*/*_latest.json"))
+        # the component's own snapshot first, when there is one
+        hits.sort(key=lambda p: (comp not in p.as_posix().lower(), p.as_posix()))
+        for p in hits:
+            out.append(p.relative_to(REPO).as_posix())
+            if len(out) >= max(1, limit // 2):
+                break
     for d in ("memory", "output"):
         root = REPO / d
         if not root.is_dir():
@@ -924,7 +1106,7 @@ def build_prompt(problem: dict, axes: set, grounded: bool = True) -> str:
     if code:
         ground += f"THE REAL CODE YOU ARE SPECIFYING AGAINST:\n{code[:1800]}\n\n"
     if grounded:
-        metrics = metric_candidates()
+        metrics = metric_candidates(component=component)
         if metrics:
             ground += ("REAL DATA FILES YOU MAY MEASURE — an EXTERNAL "
                        "success_metric MUST name one of these, copied exactly:\n"
@@ -1206,7 +1388,7 @@ def _selftest() -> int:
     good = {"problem": "the provider never resolves the series",
             "root_cause": "the observation map has no entry for the key",
             "desired_change": "the provider resolves the series",
-            "success_metric": "the number of rows in memory/goal_score_history.json",
+            "success_metric": "the number of rows in snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
             "domain": "external",
             "categories": ["ECONOMY_WORK_REVIEW"],
             "allowed_paths": ["data_providers/civilization/economy_work_provider.py"]}

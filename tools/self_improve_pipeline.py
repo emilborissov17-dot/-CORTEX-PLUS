@@ -408,7 +408,7 @@ def _fixture_models():
         "desired_change": "The provider resolves the series instead of defaulting.",
         # NAMES A REAL FILE — SPEC_METRIC_UNGROUNDED refuses anything else, and
         # a fixture the nets reject is a fixture that was fiction.
-        "success_metric": "the number of rows in memory/goal_score_history.json",
+        "success_metric": "the number of rows in snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
         # GROUNDED BY THE PATH. plausible_axes() derives the axis from the
         # target filename (economy_work_provider.py -> ECONOMY_WORK_REVIEW),
         # so this fixture passes the axis net for a real reason rather than

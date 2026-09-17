@@ -48,13 +48,29 @@ OBS_TEXT = "the economy work provider never resolves its series"
 # "unknown", for which the provider below is not offered.
 OBS = {"problem": OBS_TEXT, "component": "economy_work"}
 
+# THE TWO METRIC LANGUAGES (9 Sep 2026). An EXTERNAL metric is a number
+# from a data file TIED to the claimed category; an INTERNAL one is a
+# named test that fails now and passes after. A fixture using the wrong
+# language for its own domain is the failure STEP 2 exists to catch, so
+# the fixtures speak both rather than the net being loosened to accept
+# one.
+INTERNAL_METRIC = ("test/test_llm_json.py::test_strips_done_thinking_marker"
+                   " fails on the code as it is and passes after the change")
+
+# The same, for a spec whose COMPONENT is the provider: relevance is
+# component-specific, so the offered suites are too, and a metric naming
+# a suite offered for a different component is refused as WRONG_KIND —
+# correctly.
+INTERNAL_METRIC_EW = ("test/test_openclaw_axis_worker.py::test_a_path_that_walks_into_a_number_is_refused"
+                      " fails on the code as it is and passes after")
+
 GOOD_SPEC = {
     "problem": "WATER_REVIEW scores a default because a key is missing.",
     "root_cause": "The scorer's observation map has no entry for the series.",
     "desired_change": "The scorer resolves the series instead of defaulting.",
     # NAMES A REAL FILE. It said "read from the scores file" — no path, so
     # nothing could recompute it, and SPEC_METRIC_UNGROUNDED now refuses that.
-    "success_metric": "the number of rows in memory/goal_score_history.json",
+    "success_metric": "the number of rows in snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
     # THE TAXONOMY (8 Sep 2026). This was a single goal_axis, which asked a
     # malformed question of every internal problem. A domain, then
     # categories from that domain.
@@ -65,6 +81,21 @@ GOOD_SPEC = {
     # a directory allowlist hands the implementer nothing.
     "allowed_paths": ["data_providers/civilization/economy_work_provider.py"],
 }
+
+
+def _internal_metric_for(obs: dict) -> str:
+    """An internal metric the net will accept FOR THIS PROBLEM.
+
+    Derived rather than hardcoded, because relevance is per-problem: the offered
+    suites are ranked by the component AND by the problem's own words, so a
+    constant that suits one fixture is WRONG_KIND for the next — which is the
+    net working, not the fixture being awkward. Deriving it also means these
+    tests keep testing consensus and domain rather than quietly becoming tests
+    of which suite happens to rank first.
+    """
+    offered = R.candidate_tests(str(obs.get("component", "unknown")), obs)
+    assert offered, f"no test candidates for {obs}"
+    return f"{offered[0]} fails on the code as it is and passes after the change"
 
 
 def _brain(payload) -> callable:
@@ -205,6 +236,7 @@ def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
     # A spec whose own allowed_paths ground nothing either — the file is real,
     # so it clears REFUSED_PATH_NOT_FOUND, and no axis is named by its domain.
     bad = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"],
+               success_metric="the number of rows in snapshots/civilization/technology_ai/technology_ai_snapshot_latest.json",
                allowed_paths=["agents/core/self_observer.py"])
     with pytest.raises(R.SpecAxisUngrounded) as exc:
         R.validate(bad, AXES, problem=llm_problem)
@@ -213,7 +245,8 @@ def test_SPEC_AXIS_UNGROUNDED_when_nothing_ties_an_axis_to_the_problem():
 
     # And the OTHER branch: an axis that IS real and IS available, but is not
     # the one the evidence supports, is refused just as hard.
-    wrong = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"])
+    wrong = dict(GOOD_SPEC, categories=["TECHNOLOGY_AI_REVIEW"],
+                 success_metric="the number of rows in snapshots/civilization/technology_ai/technology_ai_snapshot_latest.json")
     with pytest.raises(R.SpecAxisUngrounded) as exc2:
         R.validate(wrong, AXES, problem=dict(OBS))
     assert "ECONOMY_WORK_REVIEW" in str(exc2.value)
@@ -276,14 +309,17 @@ def test_categories_may_differ_between_asks_without_breaking_consensus():
     sets = [["reliability"], ["reliability", "correctness"], ["correctness"]]
     seen = {"n": 0}
 
+    obs = {"problem": "the parser breaks on invalid JSON",
+           "component": "economy_work"}
+    metric = _internal_metric_for(obs)
+
     def _vary(prompt, max_tokens=700):
         cats = sets[seen["n"] % 3]
         seen["n"] += 1
-        return json.dumps(dict(GOOD_SPEC, domain="internal", categories=cats))
+        return json.dumps(dict(GOOD_SPEC, domain="internal", categories=cats,
+                               success_metric=metric))
 
-    spec = R.require({"problem": "the parser breaks on invalid JSON",
-                      "component": "economy_work"},
-                     brain=_vary, axes=AXES, consensus=3)
+    spec = R.require(obs, brain=_vary, axes=AXES, consensus=3)
     assert spec["domain"] == "internal"
     assert spec["_consensus"]["votes"] == 3
     assert spec["_consensus"]["categories_seen"] == ["correctness", "reliability"]
@@ -297,13 +333,23 @@ def test_a_wandering_DOMAIN_is_REFUSED_as_unstable():
                ("external", ["WATER_REVIEW"]),
                ("internal", ["correctness"])]
 
+    obs = {"problem": "the water provider parser never resolves",
+           "component": "economy_work"}
+    internal_metric = _internal_metric_for(obs)
+
     def _wander(prompt, max_tokens=700):
         d, c = answers[seen["n"] % 3]
         seen["n"] += 1
-        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
+        # The EXTERNAL ask must be valid too, or it is refused on its metric
+        # and never gets a vote — and the test would then be measuring the
+        # metric net rather than domain stability. WATER_REVIEW needs a
+        # water-tied file.
+        metric = (internal_metric if d == "internal" else
+                  "the number of rows in "
+                  "snapshots/planet/water/water_snapshot_latest.json")
+        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c,
+                               success_metric=metric))
 
-    obs = {"problem": "the water provider parser never resolves",
-           "component": "economy_work"}
     with pytest.raises(R.SpecAxisUnstable) as exc:
         R.require(obs, brain=_wander, axes=AXES, consensus=3)
     assert R.SpecAxisUnstable.code == "SPEC_AXIS_UNSTABLE"
@@ -325,15 +371,25 @@ def test_a_majority_is_not_enough_because_the_domain_is_a_binary():
                ("internal", ["correctness"])]
     seen = {"n": 0}
 
+    obs2 = {"problem": "the water provider parser never resolves",
+            "component": "economy_work"}
+    internal_metric = _internal_metric_for(obs2)
+
     def _two_of_three(prompt, max_tokens=700):
         d, c = answers[seen["n"] % 3]
         seen["n"] += 1
-        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c))
+        # The EXTERNAL ask must be valid too, or it is refused on its metric
+        # and never gets a vote — and the test would then be measuring the
+        # metric net rather than domain stability. WATER_REVIEW needs a
+        # water-tied file.
+        metric = (internal_metric if d == "internal" else
+                  "the number of rows in "
+                  "snapshots/planet/water/water_snapshot_latest.json")
+        return json.dumps(dict(GOOD_SPEC, domain=d, categories=c,
+                               success_metric=metric))
 
     with pytest.raises(R.SpecAxisUnstable) as exc:
-        R.require({"problem": "the water provider parser never resolves",
-                   "component": "economy_work"},
-                  brain=_two_of_three, axes=AXES, consensus=3)
+        R.require(obs2, brain=_two_of_three, axes=AXES, consensus=3)
     assert "2 vote(s)" in str(exc.value), str(exc.value)
 
 
@@ -376,9 +432,10 @@ def test_a_metric_naming_a_real_file_passes():
     """THE NEGATIVE CONTROL. A net that refuses every metric stops the pipeline
     dead and the failure looks like caution."""
     ok = dict(GOOD_SPEC,
-              success_metric="the number of rows in memory/goal_score_history.json")
+              success_metric="the number of rows in snapshots/civilization/economy_work/economy_work_snapshot_latest.json")
     assert R.validate(ok, AXES) is ok
-    assert R.metric_files(ok["success_metric"]) == ["memory/goal_score_history.json"]
+    assert R.metric_files(ok["success_metric"]) == [
+        "snapshots/civilization/economy_work/economy_work_snapshot_latest.json"]
 
 
 def test_the_refusal_happens_before_the_implementer():
@@ -740,6 +797,7 @@ def test_earning_does_not_read_the_spec_at_all():
 # ---------------------------------------------------------------------------
 
 INTERNAL_SPEC = dict(GOOD_SPEC, domain="internal", categories=["reliability"],
+                     success_metric=INTERNAL_METRIC,
                      allowed_paths=["agents/core/self_observer.py"])
 
 JSON_PARSER_PROBLEM = {"problem": "ESCALATION: LLM returns invalid JSON 3 times",
@@ -772,7 +830,8 @@ def test_external_plus_two_real_world_axes_PASSES_multi_select():
     obs = {"problem": "the water and food providers never resolve their series",
            "component": "economy_work"}
     spec = dict(GOOD_SPEC, domain="external",
-                categories=["WATER_REVIEW", "FOOD_REVIEW"])
+                categories=["WATER_REVIEW", "FOOD_REVIEW"],
+                success_metric="the number of rows in snapshots/planet/water/water_snapshot_latest.json")
     out = R.validate(spec, AXES, problem=obs)
     assert out["categories"] == ["WATER_REVIEW", "FOOD_REVIEW"]
 
@@ -802,6 +861,7 @@ def test_the_same_problem_forced_to_a_climate_axis_is_REFUSED():
     failure: a real axis, a real path, and no connection to the problem."""
     forced = dict(GOOD_SPEC, domain="external",
                   categories=["CLIMATE_GLOBAL_RISK_REVIEW"],
+                  success_metric="rows in snapshots/planet/climate_global_risk/climate_global_risk_snapshot_latest.json",
                   allowed_paths=["agents/core/self_observer.py"])
     with pytest.raises(R.SpecInvalid) as exc:
         R.require(JSON_PARSER_PROBLEM, brain=_brain(forced), axes=AXES,
@@ -1008,6 +1068,7 @@ SELF_OBS = {"problem": "ESCALATION: LLM returns invalid JSON 3 times",
             "component": "self_observer"}
 
 IN_SCOPE = dict(GOOD_SPEC, domain="internal", categories=["reliability"],
+                success_metric=INTERNAL_METRIC,
                 allowed_paths=["agents/core/self_observer.py"])
 
 
@@ -1257,3 +1318,182 @@ def test_a_pinned_path_is_refused_as_PINNED_even_when_it_does_not_exist():
     with pytest.raises(R.SpecPathNotFound):
         R.validate(dict(IN_SCOPE, allowed_paths=["agents/core/not_a_module.py"]),
                    AXES, problem=SELF_OBS)
+
+
+# ---------------------------------------------------------------------------
+# (l) THE METRIC NET IS DOMAIN-AWARE, and asks KIND rather than existence
+# ---------------------------------------------------------------------------
+
+TIED_EXTERNAL = ("the number of rows in "
+                 "snapshots/civilization/economy_work/economy_work_snapshot_latest.json")
+
+
+def test_internal_plus_a_real_offered_test_PASSES():
+    """THE HONEST METRIC FOR AN INTERNAL FIX. Nothing in this repo records how
+    often an LLM reply failed to parse, so the only thing that can measure a
+    parser fix is a test that fails now and passes after."""
+    spec = dict(IN_SCOPE, success_metric=_internal_metric_for(SELF_OBS))
+    assert R.validate(spec, AXES, problem=SELF_OBS) is spec
+    assert R.metric_tests(spec["success_metric"]), "the id does not resolve"
+
+
+def test_internal_plus_an_invented_data_file_is_SPEC_METRIC_NOT_A_TEST():
+    bad = dict(IN_SCOPE, success_metric="rows in memory/_llm_failures.json")
+    with pytest.raises(R.SpecMetricNotATest) as exc:
+        R.validate(bad, AXES, problem=SELF_OBS)
+    assert R.SpecMetricNotATest.code == "SPEC_METRIC_NOT_A_TEST"
+    # It names a FILE, so the message says which one and that it does not
+    # resolve to a test — "no test at all" is the message for a metric that
+    # names nothing path-like whatever.
+    assert "does not resolve to a test" in str(exc.value)
+    assert "memory/_llm_failures.json" in str(exc.value)
+
+    prose = dict(IN_SCOPE, success_metric="fewer parse failures")
+    with pytest.raises(R.SpecMetricNotATest) as exc2:
+        R.validate(prose, AXES, problem=SELF_OBS)
+    assert "names no test at all" in str(exc2.value)
+
+
+def test_internal_plus_a_REAL_data_file_is_still_NOT_A_TEST():
+    """THE 8 SEP FALSE PASS, in the metric field. memory/_sdg_resolved.json is
+    real, readable, and has nothing to do with an LLM returning invalid JSON.
+    Existence was the only question asked, and it answered yes."""
+    bad = dict(IN_SCOPE,
+               success_metric="valid JSON outputs in memory/_sdg_resolved.json")
+    with pytest.raises(R.SpecMetricNotATest):
+        R.validate(bad, AXES, problem=SELF_OBS)
+
+
+def test_internal_plus_a_real_but_UNOFFERED_test_is_WRONG_KIND():
+    """A test that exists is not the same as a test about this fault. The file
+    is the unit of relevance: it earned its place by naming the component or
+    the problem's own words."""
+    offered = {f"test/{f.name}" for f in
+               R.candidate_test_files("self_observer", SELF_OBS)}
+    stray = None
+    for f in sorted((REPO / "test").glob("test_*.py")):
+        if f"test/{f.name}" in offered:
+            continue
+        ids = R.test_node_ids(f)
+        if ids:
+            stray = ids[0]
+            break
+    assert stray, "every test file was offered; the check cannot be exercised"
+
+    bad = dict(IN_SCOPE, success_metric=f"{stray} fails now and passes after")
+    with pytest.raises(R.SpecMetricWrongKind) as exc:
+        R.validate(bad, AXES, problem=SELF_OBS)
+    assert "never reproduced the bug" in str(exc.value)
+
+
+def test_external_plus_a_TIED_real_file_PASSES():
+    spec = dict(GOOD_SPEC, success_metric=TIED_EXTERNAL)
+    assert R.validate(spec, AXES, problem=dict(OBS)) is spec
+
+
+def test_external_plus_a_real_but_UNRELATED_file_is_SPEC_METRIC_WRONG_KIND():
+    """GROUNDED IN THE WRONG FILE IS WORSE THAN GROUNDED IN NOTHING, because it
+    passes: the number would be recomputed, would match, and would prove
+    nothing. memory/goal_score_history.json is real and readable and carries no
+    word from ECONOMY_WORK_REVIEW, and the provider being patched never names
+    it."""
+    bad = dict(GOOD_SPEC,
+               success_metric="the number of rows in memory/goal_score_history.json")
+    assert (REPO / "memory" / "goal_score_history.json").is_file()
+
+    with pytest.raises(R.SpecMetricWrongKind) as exc:
+        R.validate(bad, AXES, problem=dict(OBS))
+    assert R.SpecMetricWrongKind.code == "SPEC_METRIC_WRONG_KIND"
+    assert "worse than grounded in nothing" in str(exc.value)
+
+
+def test_external_plus_a_TEST_instead_of_a_file_is_UNGROUNDED():
+    """The mirror of the internal case: a node id is not a number anyone can
+    recompute from data."""
+    bad = dict(GOOD_SPEC, success_metric=_internal_metric_for(SELF_OBS))
+    with pytest.raises(R.SpecMetricUngrounded):
+        R.validate(bad, AXES, problem=dict(OBS))
+
+
+def test_the_tie_is_evidence_and_says_which_kind_it_found():
+    """Two mechanical ties, and the refusal names which one was looked for.
+    Deliberately not a similarity score: a threshold nobody can recompute is
+    one more number to argue with."""
+    by_token, why = R.metric_is_tied(
+        "snapshots/civilization/economy_work/economy_work_snapshot_latest.json",
+        GOOD_SPEC, AXES)
+    assert by_token and "ECONOMY_WORK_REVIEW" in why
+
+    # REFERENCE TIE: the code being changed actually names the file, so the
+    # number moves when the patch works.
+    target = "core/self_improve/requirer.py"
+    named = "config/internal_axes.json"
+    assert named in (REPO / target).read_text(encoding="utf-8")
+    ok, why2 = R.metric_is_tied(named,
+                                dict(GOOD_SPEC, categories=["WATER_REVIEW"],
+                                     allowed_paths=[target]), AXES)
+    assert ok and "names" in why2
+
+    no_tie, why3 = R.metric_is_tied("memory/goal_score_history.json",
+                                    GOOD_SPEC, AXES)
+    assert not no_tie and "nothing ties it" in why3
+
+
+def test_a_py_path_is_not_a_data_file_and_a_node_id_is_not_invisible():
+    """_METRIC_PATH matches data files only, so a source file cannot be
+    'measured'; _METRIC_TEST sees node ids, which were INVISIBLE to the metric
+    net before — an internal spec naming exactly the right thing would have
+    been refused for naming nothing at all."""
+    assert R.metric_files("rows in core/self_improve/requirer.py") == []
+    assert R.metric_tests("test/test_llm_json.py::test_strips_markdown_fence")
+    assert R.metric_tests("test/test_llm_json.py::test_no_such_function") == []
+    assert R.metric_files(TIED_EXTERNAL)
+
+
+def test_every_metric_refusal_has_its_own_code():
+    codes = [R.SpecMetricUngrounded.code, R.SpecMetricNotATest.code,
+             R.SpecMetricWrongKind.code]
+    assert codes == ["SPEC_METRIC_UNGROUNDED", "SPEC_METRIC_NOT_A_TEST",
+                     "SPEC_METRIC_WRONG_KIND"]
+    assert len(set(codes)) == 3
+    for cls in (R.SpecMetricNotATest, R.SpecMetricWrongKind):
+        assert issubclass(cls, R.SpecInvalid)
+
+
+def test_the_token_tie_ignores_the_words_every_axis_shares():
+    """"REVIEW" is in twenty-three of the twenty-four axis names, so a file with
+    "review" in its path would tie to almost any category — a net that fires on
+    a word every axis shares is the substring-coincidence failure again, one
+    field over. Short words go the same way: "at" from
+    GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL would match half the repo.
+    """
+    spec = dict(GOOD_SPEC, categories=["ECONOMY_WORK_REVIEW"], allowed_paths=[])
+
+    for hypothetical in ("memory/review_of_the_day.json",
+                         "memory/at_a_glance.json",
+                         "output/level_summary.json"):
+        ok, why = R.metric_is_tied(hypothetical, spec, AXES)
+        assert not ok, f"{hypothetical} tied to ECONOMY_WORK_REVIEW: {why}"
+
+    # while the words that actually name the axis still tie
+    ok, _why = R.metric_is_tied("snapshots/civilization/economy_work/x.json",
+                                spec, AXES)
+    assert ok
+
+
+def test_the_prompt_offers_files_that_CAN_tie_not_just_files_that_exist():
+    """A net the prompt cannot satisfy is a net that only ever refuses. The
+    metric list was memory/*.json and output/*.json — twelve real files, none
+    of them tied to any particular axis — so once the tie was required, an
+    external spec could not have named a passing metric from anything it was
+    shown."""
+    offered = R.metric_candidates(component="economy_work")
+    assert offered[0].startswith("snapshots/"), offered[:2]
+
+    tied = [f for f in offered
+            if R.metric_is_tied(f, GOOD_SPEC, AXES)[0]]
+    assert tied, f"nothing in the offered list can tie: {offered}"
+    assert "snapshots/civilization/economy_work/economy_work_snapshot_latest.json" in offered
+
+    prompt = R.build_prompt(dict(OBS), AXES)
+    assert tied[0] in prompt, "the tie-able file is not shown to the model"
