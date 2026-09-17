@@ -89,6 +89,58 @@ def fetch_count(day: date, min_mag: float = MIN_MAG, timeout: int = 60) -> int:
     return parse_count(r.text)
 
 
+CHUNK_DAYS = 120            # ~2,500 M4.5+ events per chunk, far under maxAllowed 20,000
+
+
+def query_url(start: date, end: date, min_mag: float = MIN_MAG) -> str:
+    """[start, end) as one CSV event query — for long backfills, one call per chunk
+    instead of one per day (730 days = 7 calls, not 730)."""
+    return QUERY_URL + "?" + urlencode(
+        {"format": "csv", "starttime": f"{start.isoformat()}T00:00:00",
+         "endtime": f"{end.isoformat()}T00:00:00", "minmagnitude": min_mag, "orderby": "time-asc"})
+
+
+def counts_from_csv(text: str, days: list) -> list:
+    """[(day, count)] for every day in `days` (zero where no event), from a USGS CSV body.
+    The first column is `time` (ISO, UTC). A day outside `days` is ignored."""
+    want = {d: 0 for d in days}
+    lines = text.splitlines()
+    if not lines or not lines[0].lower().startswith("time"):
+        raise ValueError(f"not a USGS CSV body: {text[:80]!r}")
+    for line in lines[1:]:
+        if not line.strip():
+            continue
+        try:
+            d = datetime.fromisoformat(line.split(",", 1)[0].replace("Z", "+00:00")).date()
+        except ValueError:
+            continue
+        if d in want:
+            want[d] += 1
+    return sorted(want.items())
+
+
+def series_range(days: list, text_fetcher=None, min_mag: float = MIN_MAG) -> list:
+    """Same result as series(), for many days: chunked CSV queries. `text_fetcher(url)`
+    injectable so the tests never touch the network."""
+    import requests
+    if not days:
+        return []
+    get = text_fetcher or (lambda u: requests.get(u, timeout=120,
+                                                  headers={"User-Agent": "CORTEX++/1.0 (research)"}).text)
+    days = sorted(days)
+    out = []
+    i = 0
+    while i < len(days):
+        chunk = days[i:i + CHUNK_DAYS]
+        body = get(query_url(chunk[0], chunk[-1] + timedelta(days=1), min_mag))
+        rows = counts_from_csv(body, chunk)
+        if sum(c for _, c in rows) >= 20000:
+            raise ValueError("chunk hit maxAllowed — truncated, not a count")
+        out.extend(rows)
+        i += CHUNK_DAYS
+    return out
+
+
 def series(days: list, fetcher=None, min_mag: float = MIN_MAG) -> list:
     """[(day, count)] — `fetcher` injectable so the tests never touch the network."""
     get = fetcher or (lambda d: fetch_count(d, min_mag))

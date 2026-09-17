@@ -138,8 +138,11 @@ def record(snapshot_path: Path = SNAPSHOT, tier_path: Path = TIER, dry: bool = F
     return counts
 
 
+LONG_BACKFILL_DAYS = 92     # above this, one chunked USGS query and a longer Yahoo range
+
+
 def backfill(days: int = 60, tier_path: Path = TIER, usgs_fetch=None, market_fetch=None,
-             dry: bool = False) -> dict:
+             dry: bool = False, usgs_text_fetch=None) -> dict:
     """USGS per-UTC-day counts and Yahoo daily closes from the source's own record.
     Fetchers injectable so the tests never touch the network."""
     from core import usgs_quakes as uq
@@ -148,14 +151,17 @@ def backfill(days: int = 60, tier_path: Path = TIER, usgs_fetch=None, market_fet
     rows = []
     errors = {}
     try:
-        for d, c in uq.series(uq.complete_days(days), fetcher=usgs_fetch):
+        _days = uq.complete_days(days)
+        _pairs = (uq.series_range(_days, text_fetcher=usgs_text_fetch)
+                  if days > LONG_BACKFILL_DAYS and usgs_fetch is None else uq.series(_days, fetcher=usgs_fetch))
+        for d, c in _pairs:
             rows.append({"date": d.isoformat(), "indicator": "quakes.quake_m45_count", "value": float(c),
                          "date_basis": "source", "cycle_ts": ts, "backfill": True})
     except Exception as exc:  # noqa: BLE001
         errors["usgs"] = str(exc)
     for sym in md.ASSETS:
         try:
-            payload = (market_fetch or md.fetch_chart)(sym)
+            payload = market_fetch(sym) if market_fetch else md.fetch_chart(sym, rng=md.range_for_days(days))
             for d, px in md.parse_chart(payload):
                 rows.append({"date": d.isoformat(), "indicator": f"markets.{sym.lower()}_adjclose",
                              "value": float(px), "date_basis": "source", "cycle_ts": ts, "backfill": True})

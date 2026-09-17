@@ -193,3 +193,47 @@ def test_the_step_is_declared_everywhere_it_has_to_be():
     assert d, "not in config/step_inputs.json"
     assert "snapshots/master/global_indicators_latest.json" in d["inputs"]
     assert d.get("derived_from"), "step_inputs requires derived_from, not a guess"
+
+
+# ── long backfill (11 Sep 2026): E1 needs years of daily data, not weeks ─────
+
+def test_market_range_covers_the_days_asked():
+    from core import market_daily as md
+    assert md.range_for_days(60) == "3mo" and md.range_for_days(120) == "6mo"
+    assert md.range_for_days(700) == "2y" and md.range_for_days(1500) == "5y" and md.range_for_days(5000) == "10y"
+
+
+def test_usgs_counts_from_csv_fill_zero_days_and_ignore_others():
+    from datetime import date
+    from core import usgs_quakes as uq
+    body = ("time,latitude,longitude,depth,mag\n"
+            "2026-01-01T03:00:00.000Z,1,2,3,4.6\n2026-01-01T23:59:59.000Z,1,2,3,5.0\n"
+            "2026-01-03T00:00:01.000Z,1,2,3,4.5\n2025-12-31T12:00:00.000Z,1,2,3,4.9\n")
+    days = [date(2026, 1, 1), date(2026, 1, 2), date(2026, 1, 3)]
+    assert uq.counts_from_csv(body, days) == [(days[0], 2), (days[1], 0), (days[2], 1)]
+    import pytest
+    with pytest.raises(ValueError):
+        uq.counts_from_csv("<html>error</html>", days)
+
+
+def test_usgs_series_range_chunks_the_calls(monkeypatch):
+    from datetime import date, timedelta
+    from core import usgs_quakes as uq
+    monkeypatch.setattr(uq, "CHUNK_DAYS", 10)
+    days = [date(2025, 1, 1) + timedelta(days=i) for i in range(25)]
+    urls = []
+
+    def fetch(u):
+        urls.append(u)
+        return "time,mag\n2025-01-05T01:00:00Z,4.7\n"
+    out = uq.series_range(days, text_fetcher=fetch)
+    assert len(urls) == 3 and len(out) == 25 and dict(out)[date(2025, 1, 5)] == 1
+    assert "format=csv" in urls[0] and "starttime=2025-01-01" in urls[0] and "endtime=2025-01-11" in urls[0]
+
+
+def test_a_long_backfill_uses_the_chunked_query_and_the_long_range(tmp_path, monkeypatch):
+    from core import daily_tier as dt, market_daily as md
+    seen = {}
+    monkeypatch.setattr(md, "fetch_chart", lambda sym, rng="3mo": seen.setdefault(sym, rng) and {"chart": {"result": []}})
+    r = dt.backfill(400, tier_path=tmp_path / "t.jsonl", usgs_text_fetch=lambda u: "time,mag\n", dry=True)
+    assert set(seen.values()) == {"2y"} and "usgs" not in r["errors"] and r["fetched"] >= 400

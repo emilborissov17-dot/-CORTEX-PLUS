@@ -87,10 +87,24 @@ def momentum_sign(bars: list, days: int = MOMENTUM_DAYS) -> dict:
             "to_date": bars[-1][0].isoformat()}
 
 
-def fetch_chart(sym: str, timeout: int = 60) -> dict:
+RANGES = ("3mo", "6mo", "1y", "2y", "5y", "10y")
+
+
+def range_for_days(days: int) -> str:
+    """The smallest Yahoo range that covers `days` calendar days (11 Sep 2026: the tier
+    backfill asked for 90 days and got 3 months; E1 needs years, not weeks)."""
+    for r, d in (("3mo", 92), ("6mo", 183), ("1y", 366), ("2y", 731), ("5y", 1827)):
+        if days <= d:
+            return r
+    return "10y"
+
+
+def fetch_chart(sym: str, timeout: int = 60, rng: str = "3mo") -> dict:
     """Network; never called by the tests."""
     import requests
-    r = requests.get(CHART_URL.format(sym=sym), timeout=timeout,
+    if rng not in RANGES:
+        raise ValueError(f"range {rng!r} not in {RANGES}")
+    r = requests.get(CHART_URL.format(sym=sym).replace("range=3mo", f"range={rng}"), timeout=timeout,
                      headers={"User-Agent": "Mozilla/5.0 (compatible; CORTEX++/1.0; research)"})
     r.raise_for_status()
     body = r.json()
