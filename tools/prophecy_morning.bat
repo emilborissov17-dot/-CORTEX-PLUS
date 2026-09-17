@@ -104,6 +104,31 @@ REM --- LAST: the 14 AGI points as numbers, read from everything above (11 Sep 2
 REM --- Claude accountable). A number that cannot be read is "-" with a reason.
 call :step "agi_scoreboard"         "%PY% scripts\agi_scoreboard.py --write"                  no
 
+REM --- THE PER-STEP TRACE PAGE, and why it is rendered HERE and not in the
+REM --- cycle: the trace is only closed at process exit (recorder_stop), so a
+REM --- report built INSIDE the cycle would miss its own tail -- the last step's
+REM --- span and every event after it. The next morning is the earliest moment a
+REM --- COMPLETE trace exists. Recorded every night since 13 Sep 2026 and
+REM --- rendered exactly once, because tools\trace_report.py had no caller.
+REM --- TODAY comes from python, not %DATE%: %DATE% is locale-formatted and would
+REM --- disagree with the filename trace_report.py picks for itself. One variable
+REM --- feeds both the --date flag and the copy, so the two cannot diverge.
+for /f "usebackq delims=" %%d in (`%PY% -c "import datetime;print(datetime.date.today().isoformat())"`) do set TODAY=%%d
+echo.
+echo [PROPHECY_MORNING] --- trace_report ---
+%PY% tools\trace_report.py --date !TODAY!
+set RC=!ERRORLEVEL!
+if "!RC!"=="0" goto :trace_ok
+echo [PROPHECY_MORNING] trace_report FAILED rc=!RC!
+set FAILED=!FAILED! trace_report
+call :night_event "trace_report FAILED" "tools/trace_report.py exited !RC!; no TRACE page written for !TODAY!"
+goto :trace_done
+:trace_ok
+copy /y "claude\reports\TRACE_!TODAY!.html" "claude\reports\TRACE_LATEST.html" >nul
+if errorlevel 1 echo [PROPHECY_MORNING] trace_report: copy to TRACE_LATEST.html FAILED & set FAILED=!FAILED! trace_latest_copy
+echo [PROPHECY_MORNING] trace_report OK
+:trace_done
+
 echo.
 if defined FAILED (
   echo [PROPHECY_MORNING] FAILED:!FAILED!
@@ -129,4 +154,22 @@ if "!RC!"=="2" if /i "%~3"=="yes" (
 )
 echo [PROPHECY_MORNING] %~1 FAILED rc=!RC!
 set FAILED=!FAILED! %~1
+goto :eof
+
+REM --- :night_event SUBJECT DETAIL -------------------------------------------
+REM This bat had NO helper that writes memory\night_events.jsonl. :step only
+REM echoes and appends to !FAILED!, which Task Scheduler's Last Result shows but
+REM the morning report (core\cycle_report.py) never reads -- it reads
+REM night_events.jsonl. So a 09:00 failure was invisible to the one document a
+REM human actually opens. This is the smallest helper that puts a morning
+REM failure where the night's failures already live, in the same three-key shape
+REM supervisor.note_night_event writes:
+REM   {"ts": <ISO-8601 UTC>, "subject": ..., "detail": ...}
+REM supervisor.py is NOT imported (importing it would run a supervisor module's
+REM top-level code); only its record shape is reused.
+REM It PRINTS when the write itself fails -- a recorder that fails silently is
+REM the same defect one level up.
+:night_event
+%PY% -c "import json,sys,datetime,pathlib;p=pathlib.Path('memory/night_events.jsonl');p.parent.mkdir(parents=True,exist_ok=True);open(p,'a',encoding='utf-8').write(json.dumps({'ts':datetime.datetime.now(datetime.timezone.utc).isoformat(),'subject':sys.argv[1],'detail':sys.argv[2]},ensure_ascii=False)+chr(10))" %1 %2
+if errorlevel 1 echo [PROPHECY_MORNING] night_event write FAILED for %~1
 goto :eof
