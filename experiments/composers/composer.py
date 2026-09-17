@@ -304,6 +304,89 @@ def fetch(src, return_payload: bool = False) -> tuple:
         if src.get("data_date_extract"):
             data_date = _dotted(data, src["data_date_extract"])
         return (v, data_date, data) if return_payload else (v, data_date)
+    if kind == "http_json_datemap":
+        # {"2026-01-01": 12.376, "2026-01-02": 12.399, ...} — the shape NSIDC's
+        # sea-ice service answers with. A date-keyed OBJECT, which no other kind
+        # reads: _dotted's negative index walks lists, and a dict has no last
+        # element to take. The value is the entry with the LATEST date, and that
+        # date becomes the observation date, so freshness is checked against the
+        # measurement rather than against the request.
+        #
+        # EVERY REFUSAL IS NAMED. A key that is not an ISO date and a value that is
+        # not a number are both errors here, never skipped: silently dropping the
+        # keys that do not parse would turn a changed payload into a quietly older
+        # reading, which is the failure this whole file argues against.
+        data = json.loads(_http(src["url"], timeout=int(src.get("timeout", 30))))
+        if not isinstance(data, dict):
+            raise ValueError(f"json_datemap: {src.get('id')} — payload is "
+                             f"{type(data).__name__}, not an object of date -> number")
+        body = {k: v for k, v in data.items() if not str(k).startswith("_")}
+        if not body:
+            raise ValueError(f"json_datemap: {src.get('id')} — payload has no entries")
+        bad_keys, dated = [], {}
+        for k, v in body.items():
+            try:
+                d = datetime.fromisoformat(str(k)[:10]).date()
+            except (TypeError, ValueError):
+                bad_keys.append(str(k))
+                continue
+            dated[d] = (str(k), v)
+        if bad_keys:
+            raise ValueError(
+                f"json_datemap: {src.get('id')} — {len(bad_keys)} key(s) are not ISO "
+                f"dates: {bad_keys[:5]}. The payload shape changed; a reader that "
+                f"skipped them would serve an older value as current")
+        if not dated:
+            raise ValueError(f"json_datemap: {src.get('id')} — no ISO-dated entry")
+        latest = max(dated)
+        key, raw = dated[latest]
+        if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+            raise ValueError(
+                f"json_datemap: {src.get('id')} — value at the latest date {key!r} is "
+                f"{raw!r} ({type(raw).__name__}), not a number")
+        return (float(raw), key, data) if return_payload else (float(raw), key)
+    if kind == "http_json_daily_agg":
+        # A list of sub-daily records reduced to ONE value per UTC day. SWPC's
+        # planetary Kp is 3-hourly: eight rows a day, and a source whose declared
+        # cadence is "daily" must BE daily at ingest rather than carry the truth in
+        # a provenance note.
+        #
+        # A PARTIAL DAY IS NOT A DAY. agg_min_count declares how many records a
+        # complete day has (8 for Kp), and a day with fewer is skipped — the max of
+        # three intervals is a lower bound on the day's max, and publishing it as
+        # the day's max would be a smaller number wearing a finished day's name.
+        data = json.loads(_http(src["url"], timeout=int(src.get("timeout", 30))))
+        if not isinstance(data, list):
+            raise ValueError(f"json_daily_agg: {src.get('id')} — payload is "
+                             f"{type(data).__name__}, not a list of records")
+        dfield, vfield = src.get("group_by"), src.get("extract")
+        if not dfield or not vfield:
+            raise ValueError(f"json_daily_agg: {src.get('id')} needs 'group_by' "
+                             f"(the date field) and 'extract' (the value field)")
+        how = str(src.get("agg", "max"))
+        if how not in _AGG:
+            raise ValueError(f"json_daily_agg: agg {how!r} is not one of {sorted(_AGG)}")
+        need = int(src.get("agg_min_count", 1))
+        days: dict = {}
+        for row in data:
+            if not isinstance(row, dict) or dfield not in row or vfield not in row:
+                continue
+            try:
+                day = str(row[dfield])[:10]
+                datetime.fromisoformat(day)
+                val = float(row[vfield])
+            except (TypeError, ValueError):
+                continue
+            days.setdefault(day, []).append(val)
+        complete = {d: vs for d, vs in days.items() if len(vs) >= need}
+        if not complete:
+            raise ValueError(
+                f"json_daily_agg: {src.get('id')} — no UTC day has the "
+                f"{need} record(s) a complete day needs (saw "
+                f"{ {d: len(v) for d, v in sorted(days.items())[-3:]} })")
+        day = max(complete)
+        return ((_AGG[how](complete[day]), day, data) if return_payload
+                else (_AGG[how](complete[day]), day))
     if kind == "http_csv":
         text = _http(src["url"])
         cells, data_date = _csv_select(src, text)
@@ -437,24 +520,59 @@ def check_schema(src: dict, payload) -> str:
     return schema_diff(src.get("schema") or {}, schema_fingerprint(src.get("kind"), payload))
 
 
-def _data_too_old(data_date: str, max_days: float):
-    """True if the source's OWN measurement date is older than max_days."""
+# The reductions a source may declare for http_json_daily_agg. A CLOSED set: an
+# unknown word is refused by name rather than defaulted to mean(), because which
+# reduction a day gets is the measurement, not a formatting choice. Kp uses max —
+# a day's geomagnetic disturbance is its worst interval, not its average.
+_AGG = {"max": max, "min": min, "mean": lambda v: sum(v) / len(v), "sum": sum,
+        "last": lambda v: v[-1]}
+
+
+class DateUnparseable(ValueError):
+    """A declared data_date_format did not parse the string the source sent.
+
+    Raised, never swallowed. Wikimedia's pageviews API dates a point "2026091600"
+    — YYYYMMDDHH — which fromisoformat refuses. Before this existed the except
+    below returned (False, None): "not too old", silently, for every reading. A
+    source whose date cannot be read is not a fresh source; it is a source whose
+    freshness is unknown, and storing the value undated lets it pass as current
+    forever. NO GUESSING: the format is declared on the source or the date is
+    parsed as ISO. A mismatch is refused BY NAME.
+    """
+
+
+def _parse_data_date(data_date, fmt: str | None):
+    """-> date. Raises DateUnparseable, naming the string and the format tried."""
+    dd = str(data_date).strip()
+    if fmt:
+        try:
+            return datetime.strptime(dd, fmt).replace(tzinfo=timezone.utc)
+        except (TypeError, ValueError) as e:
+            raise DateUnparseable(
+                f"data_date {dd!r} does not parse with the declared "
+                f"data_date_format {fmt!r}: {e}") from None
+    # Annual series (World Bank, UN SDG) date a value as a bare "2022".
+    if len(dd) == 4 and dd.isdigit():
+        dd = f"{dd}-12-31"
+    try:
+        return datetime.fromisoformat(dd[:10]).replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError) as e:
+        raise DateUnparseable(
+            f"data_date {dd!r} is not ISO and the source declares no "
+            f"data_date_format: {e}") from None
+
+
+def _data_too_old(data_date: str, max_days: float, fmt: str | None = None):
+    """True if the source's OWN measurement date is older than max_days.
+
+    A date that cannot be parsed RAISES. The caller refuses the reading; it is not
+    stored undated and it is not treated as fresh.
+    """
     if not data_date:
         return False, None
-    try:
-        dd = str(data_date).strip()
-        # Annual series (World Bank, UN SDG) date a value as a bare "2022"; fromisoformat
-        # refused that and the except below returned (False, None) - i.e. "not too old",
-        # silently. A bare year is read as the END of that year, the most generous honest
-        # reading; a "YYYY-MM" as the end of that month is not attempted - month-precision
-        # sources declare a full date.
-        if len(dd) == 4 and dd.isdigit():
-            dd = f"{dd}-12-31"
-        d = datetime.fromisoformat(dd[:10]).replace(tzinfo=timezone.utc)
-        age_d = (_now() - d).total_seconds() / 86400.0
-        return age_d > max_days, round(age_d, 1)
-    except Exception:
-        return False, None
+    d = _parse_data_date(data_date, fmt)
+    age_d = (_now() - d).total_seconds() / 86400.0
+    return age_d > max_days, round(age_d, 1)
 
 
 # ── compose one axis ──────────────────────────────────────────────────────────
@@ -514,7 +632,20 @@ def compose(axis: str, force: bool = False) -> dict:
                             continue
                     else:
                         v, data_date = fetch(src)
-                    too_old, dd_age = _data_too_old(data_date, float(src.get("data_max_age_days", 3650)))
+                    try:
+                        too_old, dd_age = _data_too_old(
+                            data_date, float(src.get("data_max_age_days", 3650)),
+                            src.get("data_date_format"))
+                    except DateUnparseable as de:
+                        # NEVER STORED UNDATED. Before data_date_format existed this
+                        # path returned "not too old" for any string fromisoformat
+                        # refused, so a source with an unreadable date served as fresh
+                        # forever. A date we cannot read is not a pass.
+                        st["consecutive_fails"] = 0
+                        st["last_error"] = f"{de}"
+                        needs.append({"slot": slot_name, "kind": "unparseable_data_date",
+                                      "detail": f"{sid}: {de}"})
+                        continue
                     if too_old:
                         # the source ANSWERED but its own data is outdated —
                         # refuse it as fresh; do not poison last-known-good
@@ -898,7 +1029,16 @@ def smoke_fetch(entry: dict):
     if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:  # v!=v -> NaN
         raise SmokeFetchEmpty(f"smoke fetch returned no usable value ({v!r}) — "
                               f"promotion rejected")
-    too_old, dd_age = _data_too_old(dd, float(entry.get("data_max_age_days", 3650)))
+    try:
+        too_old, dd_age = _data_too_old(dd, float(entry.get("data_max_age_days", 3650)),
+                                        entry.get("data_date_format"))
+    except DateUnparseable as de:
+        # Same rule as the composer, at promotion time: a date we cannot read is not
+        # a pass. Raising here keeps a source out of the spec rather than letting it
+        # in undated and refusing every value afterwards.
+        raise StaleData(
+            f"smoke fetch read {v}, and its own data date could not be read: {de} — "
+            f"promotion rejected") from None
     if too_old:
         raise StaleData(f"smoke fetch read {v}, but its own data date {dd} is {dd_age}d old "
                         f"(limit {entry.get('data_max_age_days')}d) — promotion rejected")
