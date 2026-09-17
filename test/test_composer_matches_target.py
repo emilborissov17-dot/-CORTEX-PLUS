@@ -9,6 +9,11 @@ NOT changed with it. For six more nights the composer kept filling the axis's
 anchor from NOAA co2.co2_ppm, R7_SENSOR_REUSE kept reporting the pair, and the
 config said one thing while the sensor did another.
 
+The same day DEEP_TIME_RISKS_REVIEW was given "measured_by_indicator":
+["usgs_m5plus_7d_count"] — it is a qualitative axis, watched through indicator
+bands rather than a metric. core/deduction.py R5 reads levels and scores only, so
+it called the axis a blind spot every night regardless.
+
 WHAT THIS FILE REFUSES TO SAY. It does not claim every anchor is the right
 instrument. Three of its registries below are lists of axes where correspondence
 is NOT affirmed — five recorded mismatches and a set that cannot be checked
@@ -23,6 +28,9 @@ THE CHECKS
      affirmed (ANCHOR_PINS), correspondence denied and recorded (KNOWN_MISMATCH),
      or not mechanically checkable and why (KNOWN_UNCHECKED). An unclassified
      source fails — a new anchor is a human decision, not a default.
+  C  R5 does not fire for an axis whose declared indicator has a value; R5 fires
+     AND names the indicator when it does not. Including when the bands file is
+     absent: an unreadable measurement must never read as a present one.
 """
 import json
 import pathlib
@@ -32,6 +40,8 @@ import pytest
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+
+from core import deduction as D    # noqa: E402
 
 SPECS = REPO / "config" / "composer_specs.json"
 TARGET = REPO / "config" / "target_config.json"
@@ -294,3 +304,120 @@ def test_generic_addresses_are_still_generic(specs):
         if ex in GENERIC_ADDRESSES:
             assert "." not in ex.strip(".") or ex == "1.0.value", \
                 f"{ax}: {ex!r} is in GENERIC_ADDRESSES but looks like a field path"
+
+
+# ── CHECK C — a declared indicator is not a measurement ──────────────────────
+
+def _facts(axis="DEEP_TIME_RISKS_REVIEW", declared=("usgs_m5plus_7d_count",),
+           values=None):
+    """A minimal fact set: one canonical axis, no level, no score — the shape
+    that reaches R5."""
+    return {
+        "levels": {}, "trends": {}, "scores": {}, "sources": {},
+        "config_axes": {axis}, "composed": {},
+        "measured_by": {axis: list(declared)} if declared else {},
+        "indicator_values": dict(values or {}),
+    }
+
+
+def _r5(conclusions):
+    return [c for c in conclusions if c["rule_id"] == "R5_BLIND_SPOT"]
+
+
+def test_r5_silent_when_the_declared_indicator_has_a_value():
+    fired = _r5(D.run_rules(_facts(values={"usgs_m5plus_7d_count": 38.0})))
+    assert fired == [], f"R5 fired on a measured axis: {fired}"
+
+
+def test_r5_silent_on_a_zero_value():
+    """0.0 is a reading. Testing truthiness instead of None would make a quiet
+    week look like a dead sensor."""
+    assert _r5(D.run_rules(_facts(values={"usgs_m5plus_7d_count": 0.0}))) == []
+
+
+def test_r5_fires_and_names_the_indicator_when_it_has_no_value():
+    fired = _r5(D.run_rules(_facts(values={})))
+    assert len(fired) == 1, "an axis measured by nothing is still a blind spot"
+    c = fired[0]
+    assert "usgs_m5plus_7d_count" in c["conclusion"], \
+        f"R5 fired without naming the missing indicator: {c['conclusion']}"
+    assert any(p.get("file") == "memory/alarm_bands_latest.json" and p.get("value") is None
+               for p in c["premises"]), \
+        "the conclusion does not carry the empty band as a premise a human can check"
+
+
+def test_r5_fires_when_the_indicator_row_exists_but_carries_null():
+    """A row with value None is the bands file saying NO_VALUE. It must read as
+    missing, not as present-because-the-row-is-there."""
+    fired = _r5(D.run_rules(_facts(values={"usgs_m5plus_7d_count": None})))
+    assert len(fired) == 1 and "usgs_m5plus_7d_count" in fired[0]["conclusion"]
+
+
+def test_r5_names_only_the_indicators_that_are_missing():
+    facts = _facts(declared=("usgs_m5plus_7d_count", "some_other_indicator"),
+                   values={"usgs_m5plus_7d_count": None, "some_other_indicator": None})
+    c = _r5(D.run_rules(facts))[0]
+    assert "usgs_m5plus_7d_count" in c["conclusion"]
+    assert "some_other_indicator" in c["conclusion"]
+
+
+def test_one_live_indicator_is_enough():
+    facts = _facts(declared=("usgs_m5plus_7d_count", "some_other_indicator"),
+                   values={"usgs_m5plus_7d_count": 38.0})
+    assert _r5(D.run_rules(facts)) == []
+
+
+def test_r5_still_fires_for_an_axis_that_declares_nothing():
+    """The mutation guard for the original rule: an axis with no level, no score
+    and no declaration is the blind spot R5 was written for, and the new branch
+    must not swallow it."""
+    fired = _r5(D.run_rules(_facts(declared=())))
+    assert len(fired) == 1
+    assert "usgs" not in fired[0]["conclusion"]
+
+
+def test_a_declaration_alone_does_not_excuse_an_axis(tmp_path, monkeypatch):
+    """End to end through gather_facts with a repo whose alarm_bands file does
+    not exist. The declaration is present, the measurement is not, and the
+    absence must fire R5 rather than be read as agreement."""
+    (tmp_path / "config").mkdir()
+    (tmp_path / "memory").mkdir()
+    (tmp_path / "config" / "target_config.json").write_text(json.dumps({
+        "SAFETY": {"DEEP_TIME_RISKS_REVIEW": {"primary_metric": None,
+                                              "measured_by_indicator": ["usgs_m5plus_7d_count"]}}
+    }), encoding="utf-8")
+    monkeypatch.setattr(D, "BASE", tmp_path)
+
+    fired = _r5(D.run_rules(D.gather_facts()))
+    assert len(fired) == 1, "a missing alarm_bands file silenced R5"
+    assert "usgs_m5plus_7d_count" in fired[0]["conclusion"]
+
+
+def test_gather_facts_reads_the_value_out_of_the_real_bands_shape(tmp_path, monkeypatch):
+    """The reader is pinned to the shape the bands step actually writes:
+    indicators.rows[].indicator / .value. A rename there must fail here, not
+    degrade into 'no indicator has a value'."""
+    (tmp_path / "config").mkdir()
+    (tmp_path / "memory").mkdir()
+    (tmp_path / "config" / "target_config.json").write_text(json.dumps({
+        "SAFETY": {"DEEP_TIME_RISKS_REVIEW": {"measured_by_indicator": ["usgs_m5plus_7d_count"]}}
+    }), encoding="utf-8")
+    (tmp_path / "memory" / "alarm_bands_latest.json").write_text(json.dumps({
+        "indicators": {"rows": [{"indicator": "usgs_m5plus_7d_count",
+                                 "axis": "DEEP_TIME_RISKS_REVIEW", "value": 38.0}]}
+    }), encoding="utf-8")
+    monkeypatch.setattr(D, "BASE", tmp_path)
+
+    f = D.gather_facts()
+    assert f["measured_by"] == {"DEEP_TIME_RISKS_REVIEW": ["usgs_m5plus_7d_count"]}
+    assert f["indicator_values"]["usgs_m5plus_7d_count"] == 38.0
+    assert _r5(D.run_rules(f)) == []
+
+
+def test_deep_time_risks_declaration_is_still_in_the_canon():
+    """If the declaration is removed from target_config, the checks above keep
+    passing against a fiction. This is the tie to the live file."""
+    tc = json.loads(TARGET.read_text(encoding="utf-8"))
+    spec = tc["SAFETY"]["DEEP_TIME_RISKS_REVIEW"]
+    assert spec.get("measured_by_indicator"), \
+        "DEEP_TIME_RISKS_REVIEW no longer declares measured_by_indicator"

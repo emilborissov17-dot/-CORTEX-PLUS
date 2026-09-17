@@ -17,7 +17,11 @@ Facts come only from files the cycle already writes:
   memory/auto_levels.json          — LLM level per axis (LOW/MEDIUM/HIGH)
   memory/trends_latest.json        — direction per axis (IMPROVING/STABLE/DETERIORATING)
   memory/goal_score_history.json   — last entry: numeric scores + score_sources
-  config/target_config.json        — the canonical axis list
+  config/target_config.json        — the canonical axis list, and which axes declare
+                                     they are measured_by_indicator instead of by a metric
+  memory/composed_indicators.json  — the SENSES: anchor/daily readings per axis (R6, R7)
+  memory/alarm_bands_latest.json   — indicators.rows: does a declared indicator have a
+                                     value tonight (R5)
 
 Consumers (wire-first, no orphan output):
   notes/next_actions.txt           — via daily_analysis_agent (human)
@@ -53,6 +57,32 @@ def gather_facts() -> dict:
     last   = hist[-1] if isinstance(hist, list) and hist else {}
     tc     = _load(BASE / "config" / "target_config.json", {})
     axes   = {ax for dom, a in tc.items() if not str(dom).startswith("_") for ax in a}
+    # An axis may declare that it is measured by INDICATOR BANDS instead of by a
+    # primary metric (target_config "measured_by_indicator", 11 Sep 2026). Such an
+    # axis has no level and no score by design, and R5 called it a blind spot every
+    # night. Read the declaration here so R5 can check it against a real value —
+    # the declaration alone excuses nothing.
+    measured_by = {}
+    for dom, a in tc.items():
+        if str(dom).startswith("_") or not isinstance(a, dict):
+            continue
+        for ax, spec in a.items():
+            decl = (spec or {}).get("measured_by_indicator") if isinstance(spec, dict) else None
+            if isinstance(decl, str):
+                decl = [decl]
+            if decl:
+                measured_by[ax] = [str(i) for i in decl]
+    # The values those indicators carry TONIGHT. memory/alarm_bands_latest.json is
+    # written by the bands step; its indicator rows live under indicators.rows.
+    # An unreadable or absent file yields {} — and {} makes R5 FIRE, naming the
+    # indicator. A missing measurement must never read as a present one.
+    bands = _load(BASE / "memory" / "alarm_bands_latest.json", {})
+    ind_rows = ((bands.get("indicators") or {}).get("rows")
+                if isinstance(bands, dict) else None) or []
+    indicator_values = {}
+    for r in ind_rows:
+        if isinstance(r, dict) and r.get("indicator") is not None:
+            indicator_values[str(r["indicator"])] = r.get("value")
     # composer readings (the SENSES: anchor vs daily, browser_scout feeds among them) —
     # added same day at Emil's push: senses stay dumb, but their numbers MUST reach
     # the reasoning floor, not only indirectly through scores.
@@ -73,6 +103,8 @@ def gather_facts() -> dict:
         "sources": last.get("score_sources", {}),
         "config_axes": axes,
         "composed": composed,
+        "measured_by": measured_by,
+        "indicator_values": indicator_values,
     }
 
 
@@ -160,12 +192,42 @@ def run_rules(f: dict) -> list:
                             "value": div}]))
 
         # R5 — an axis the canon says exists but NOTHING measures or grades: a blind spot.
+        #
+        # A third way to be measured (11 Sep 2026): an axis may declare
+        # "measured_by_indicator" in target_config and be watched through indicator
+        # bands rather than a primary metric. DEEP_TIME_RISKS_REVIEW is the case —
+        # qualitative on purpose, no primary_metric, watched via usgs_m5plus_7d_count.
+        #
+        # The DECLARATION is not the measurement. The excuse holds only while the
+        # indicator carries a value in memory/alarm_bands_latest.json tonight. An
+        # indicator that is declared and empty is a blind spot WITH A NAME, which is
+        # strictly more useful than the old anonymous one — so R5 still fires, and
+        # says which indicator went dark. There is no third outcome: no default that
+        # assumes a value, and no silent skip when the bands file cannot be read.
         if ax in f["config_axes"] and lv is None and sc is None:
-            out.append(_c("R5_BLIND_SPOT", ax,
-                          f"{ax} е в канона, но нито ниво, нито измерване съществуват — сляпо петно",
-                          "medium",
-                          [{"file": "config/target_config.json", "key": ax, "value": "declared"},
-                           p_lv, p_sc]))
+            declared = f.get("measured_by", {}).get(ax) or []
+            vals = f.get("indicator_values", {})
+            live = [i for i in declared if vals.get(i) is not None]
+            if declared and live:
+                pass   # measured by indicator band — not a blind spot
+            elif declared:
+                missing = [i for i in declared if vals.get(i) is None]
+                out.append(_c("R5_BLIND_SPOT", ax,
+                              f"{ax} е измервана САМО чрез индикатор(и) {', '.join(missing)}, "
+                              f"а те нямат стойност тази вечер — сляпо петно с име",
+                              "medium",
+                              [{"file": "config/target_config.json",
+                                "key": f"{ax}.measured_by_indicator", "value": declared},
+                               *[{"file": "memory/alarm_bands_latest.json",
+                                  "key": f"indicators.rows[{i}].value", "value": None}
+                                 for i in missing],
+                               p_lv, p_sc]))
+            else:
+                out.append(_c("R5_BLIND_SPOT", ax,
+                              f"{ax} е в канона, но нито ниво, нито измерване съществуват — сляпо петно",
+                              "medium",
+                              [{"file": "config/target_config.json", "key": ax, "value": "declared"},
+                               p_lv, p_sc]))
     return out
 
 
@@ -194,7 +256,8 @@ def run() -> dict:
         "n_conclusions": len(conclusions),
         "conclusions": conclusions,
         "fact_files": ["memory/auto_levels.json", "memory/trends_latest.json",
-                       "memory/goal_score_history.json", "config/target_config.json"],
+                       "memory/goal_score_history.json", "config/target_config.json",
+                       "memory/composed_indicators.json", "memory/alarm_bands_latest.json"],
     }
     try:
         OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
