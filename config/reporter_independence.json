@@ -284,6 +284,69 @@
     }
   },
   "proposed": {
-    "_doc": "The system may append here when it meets an org or host that is in neither map. NOTHING here is ever applied — reporter_class() does not read this object. It exists so a human has a queue to confirm from, with the rule that suggested each entry stated next to it. Deliberately left empty at seeding: arXiv and GitHub (technology axes) are genuinely ambiguous — a third-party index of what researchers themselves publish — and they stay `unknown` until a human decides, rather than being flattered into `independent`."
+    "_doc": "The system may append here when it meets an org or host that is in neither map. NOTHING here is ever applied — reporter_class() does not read this object. It exists so a human has a queue to confirm from, with the rule that suggested each entry stated next to it. Deliberately left empty at seeding: arXiv and GitHub (technology axes) are genuinely ambiguous — a third-party index of what researchers themselves publish — and they stay `unknown` until a human decides, rather than being flattered into `independent`.",
+    "org:WHO": {
+      "class": "self_reported",
+      "why": "WHO compiles what member states report about their own health systems; an aggregator of national reporting is not the measurer.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "org:World Health Organization (WHO) Global Health Observatory": {
+      "class": "self_reported",
+      "why": "The same body under its full name; GHO is WHO's publication surface for member-state submissions.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "host:ghoapi.azureedge.net": {
+      "class": "self_reported",
+      "why": "The WHO GHO API endpoint — same reporting chain as org:WHO, reached by host instead of by name.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "org:Our World in Data (OWID) – data sourced from WHO and national health ministries": {
+      "class": "self_reported",
+      "why": "The org string states its own upstream: WHO and national health ministries. OWID re-publishes; it does not measure.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "org:Nobel Foundation": {
+      "class": "self_reported",
+      "why": "The Foundation awards the prizes and then reports on them: the measured entity produces the statistic.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "host:api.nobelprize.org": {
+      "class": "self_reported",
+      "why": "The Nobel Foundation's own API, same body as org:Nobel Foundation.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "host:raw.githubusercontent.com": {
+      "class": "unknown",
+      "why": "A file host, not a measurer. It serves any repository's contents, so the host says nothing about who took the measurement — this stays unknown ON PURPOSE, and the entry exists so it is a documented unknown rather than one that landed there by accident of seeding.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "org:GitHub": {
+      "class": "self_reported",
+      "why": "GitHub counts activity that happens ON GitHub, so the platform is inside the quantity it reports. NOTE: this file's own _doc reserves GitHub and arXiv for a human as 'genuinely ambiguous — a third-party index of what researchers themselves publish'. This is the argument, not the decision.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    },
+    "org:arXiv": {
+      "class": "self_reported",
+      "why": "arXiv counts submissions to arXiv: the venue is part of the research activity being measured, and researchers choose what to deposit. Same reservation as org:GitHub — this file's _doc leaves it to a human, and the honest alternative is to leave it unknown.",
+      "proposed_by": "Claude",
+      "proposed_at": "2026-09-17",
+      "status": "[proposed by Claude, unconfirmed]"
+    }
   }
 }
