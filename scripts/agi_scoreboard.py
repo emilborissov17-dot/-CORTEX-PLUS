@@ -254,7 +254,16 @@ def rows(g: dict) -> list[dict]:
         "memory/brain_cycle_reviews.jsonl; SANDBOX_BENCH.json",
         PARTIAL if rv or sx else NONE)
     sf = _kind(g, "self_failure"); sv = _kind(g, "self_survive")
-    add(7, f"Brier self_failure {sf.get('learner_mean_err')} vs {sf.get('baseline_mean_err')} ({sf.get('scored', 0)} scored); "
+    # MAE, NOT BRIER. learner_mean_err comes from prophecy_ledger._abs_err, which is
+    # abs(pred - actual). A Brier score is the MEAN SQUARED error, and
+    # experiments/prophecy/scoreboard.py:103 computes that one. Both were printed for
+    # the same quantity under the same word: 0.26 vs 0.5351 here, 0.176 vs 0.3202
+    # there, n=60 in both. Verified against the ledger on 17 Sep 2026 by recomputing
+    # both statistics from the sealed predictions — each reproduced its own report
+    # exactly. Only the LABEL was wrong; the finding (the learner beats the control by
+    # a wide margin) holds on either metric. Switching this row to the real Brier is a
+    # separate decision and a separate diff.
+    add(7, f"MAE self_failure {sf.get('learner_mean_err')} vs {sf.get('baseline_mean_err')} ({sf.get('scored', 0)} scored); "
            f"self_survive scored {sv.get('scored', 0)}"
            + (f"; world {int((cx.get('conformal_level') or 0.8) * 100)}% intervals covered {cx.get('conformal_coverage')}"
               if cx.get("conformal_coverage") is not None else ""),
