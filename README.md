@@ -1,13 +1,50 @@
 # CORTEX++
 
-A personal research system that tries to measure how a civilization is doing,
-and to be honest about how badly it can do that. It runs once a night on one
-Windows laptop. It reads public data — World Bank, NASA, national statistics,
-RSS, YouTube transcripts — scores 24 axes grouped into 5 goal dimensions
-(`config/target_config.json`), keeps a per-country well-being table for 217
-countries (`output/wellbeing_all_countries.json`), and writes a report a human
-reads in the morning. It is not a product, it has one user, and most of what is
-interesting in it is the machinery for catching itself being wrong.
+**The goal** is the one in [`VISION.md`](VISION.md): a sustainable, shared human
+civilization in which every person has a dignified life — and an AI that helps
+build it while staying human-centric, transparent and correctable. That is the
+direction of the project. It is not a claim about what the code can do today.
+
+**AGI is a parallel horizon inside that goal**: something we want to happen, and
+the means by which the goal is pursued. Alignment, corrigibility and
+interpretability are not part of our definition of AGI — an unaligned AGI is
+still an AGI — they are requirements this project imposes on anything it builds,
+and they are not negotiable here. Greater autonomy has to be earned through
+demonstrated accuracy, always inside a boundary a human drew
+(`BOUNDARIES.md`, `config/passage_rules.json`).
+
+**What actually exists** is one Windows laptop with a 4 GB GPU, running two loops:
+
+1. **The instrument.** Once a night the system reads public data — World Bank,
+   NASA, national statistics, RSS, YouTube transcripts — scores 24 axes
+   (`config/target_config.json`), keeps a per-country well-being table for 217
+   countries, seals its own history in a hash-chained ledger
+   (`memory/existence_ledger.jsonl`), and publishes a daily report to
+   [cortex-civilization-watch](https://github.com/emilborissov17-dot/cortex-civilization-watch).
+   An AI's first duty is to see reality truthfully; this loop is how that is
+   practised, and the measuring, the calibration and the audit trail are how the
+   goal is pursued honestly — not a smaller goal that replaces it.
+2. **The learning module.** A local 3B model (Qwen2.5-3B, 4-bit, LoRA) and a set
+   of small learners that seal predictions before the outcome is known and are
+   scored against a naive baseline afterwards
+   (`claude/reports/PROPHECY_SCOREBOARD.md`).
+
+**Where we honestly stand.** We track AGI as 14 points
+(`PROGRESS/AGI_14_SCOPE_2026-09-13.md`): 12 testable, 2 that no behavioural test
+can settle. **None of the 12 is demonstrated.** The scoreboard in
+`claude/reports/AGI_14_SCOREBOARD.md` is rewritten mechanically every morning,
+and its labels mean less than they sound: LIVE means only "a number exists and
+beats its control". As of 16 Sep 2026:
+
+- The self-model predicts the system's own failures better than the control
+  (Brier 0.176 vs 0.321, 59 sealed predictions).
+- Direction of change is learned on exactly one daily series (earthquake counts);
+  on the three market series it is not, at any horizon.
+- Transfer between series: 0 of 12 pairs beat persistence. Learning from few
+  examples: 0 of 4 targets at any k. ARC-AGI-1: 0 hits on the
+  few tasks run so far.
+- The unit that matters for the main goal — the institution, with a
+  counterfactual addressed to someone who can act on it — has not been started.
 
 The organising idea is verification over assertion. A number that nobody
 checked, presented next to a number that somebody did, teaches the reader that
@@ -16,11 +53,12 @@ whose score comes from a live series are marked MEASURED and the rest ASSERTED
 (`memory/measurement_honesty_latest.json`); a source earns trust by behaving and
 loses it by drifting, in a ledger (`core/source_lifecycle.py`); every phase of
 the nightly cycle must debrief itself citing a number from its own data, and
-debriefs that fail are kept as failures rather than discarded; and the system's
-own existence — started, killed, died, restarted — is an append-only hash-chained
-file (`memory/existence_ledger.py`). Several of those mechanisms exist because
-the thing they catch actually happened here first. That is the pattern to expect
-from the commit history: a defect, then the instrument that would have found it.
+debriefs that fail are kept as failures rather than discarded. Several of those
+mechanisms exist because the thing they catch actually happened here first. That
+is the pattern to expect from the commit history: a defect, then the instrument
+that would have found it.
+
+It is not a product and it has one user.
 
 ## Running it on Windows
 
