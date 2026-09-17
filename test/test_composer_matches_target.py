@@ -150,6 +150,12 @@ ANCHOR_PINS = {
     "MATERIALS_WASTE_REVIEW": ("adjusted_net_savings_pct",
                                {"waste.adjusted_net_savings_pct"},
                                "same field name; World Bank NY.ADJ.SVNG.GN.ZS, set 17 Sep 2026"),
+    "ENERGY_REVIEW": ("renewable_energy_pct",
+                      {"world_bank.renewable_energy_pct"},
+                      "World Bank EG.FEC.RNEW.ZS, renewable share of TOTAL FINAL energy — "
+                      "the denominator target_config's unit declares. Switched 17 Sep 2026 "
+                      "from EG.ELC.RNEW.ZS (electricity only), which scored 34.8 against "
+                      "the new 24.7; break recorded in config/series_breaks.json"),
     "ECONOMY_WORK_REVIEW": ("gdp_growth_pct",
                             {"economy.gdp_growth_annual_pct"},
                             "annual GDP growth; the field spells out the period"),
@@ -189,11 +195,6 @@ KNOWN_MISMATCH = {
                     "FAO prevalence of undernourishment (PoU) is not the FIES "
                     "food-insecurity rate the metric names; the two differ by a "
                     "factor of roughly three at the global level"),
-    "ENERGY_REVIEW": ("renewable_energy_pct",
-                      {"world_bank.renewable_elec_pct"},
-                      "renewable share of ELECTRICITY, against a metric whose unit is "
-                      "'percent of total energy' — a different denominator, and the "
-                      "IEA 80% target the rationale cites is for total energy"),
     "HUMAN_WELL_BEING_REVIEW": ("child_mortality_per_1000",
                                 {"world_bank.infant_mortality_per1k"},
                                 "infant mortality is under-1; SDG 3.2 and the axis target "

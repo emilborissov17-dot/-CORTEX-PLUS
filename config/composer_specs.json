@@ -368,12 +368,13 @@
         "freshness_days": 45,
         "sources": [
           {
-            "id": "gi_renewable_elec_pct",
+            "id": "gi_renewable_energy_pct",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "world_bank.renewable_elec_pct",
+            "extract": "world_bank.renewable_energy_pct",
             "org": "World Bank",
-            "unit": "pct_electricity",
+            "unit": "pct_total_final_energy",
+            "provenance": "World Bank EG.FEC.RNEW.ZS, renewable energy consumption as % of TOTAL FINAL energy consumption — the axis's primary_metric per target_config (renewable_energy_pct, unit 'percent of total energy'). Replaced EG.ELC.RNEW.ZS on 17 Sep 2026: that is the ELECTRICITY share, a different and larger number, and the IEA Net Zero 80% target this axis scores against is for total final energy.",
             "cadence": "annual"
           }
         ]

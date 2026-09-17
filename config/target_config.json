@@ -55,10 +55,12 @@
       "direction": "higher_better",
       "weight": 8,
       "unit": "percent of total energy",
-      "rationale": "IEA Net Zero 2050 requires 80%+ renewables by 2050",
+      "rationale": "IEA Net Zero 2050 requires 80%+ renewables by 2050, measured as a share of TOTAL FINAL ENERGY CONSUMPTION. World Bank EG.FEC.RNEW.ZS; current global ~19.7% (2020).",
       "legacy_domain": "PLANET",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/EG.FEC.RNEW.ZS",
+      "changed": "2026-09-17: the metric name and unit were always 'renewable_energy_pct' / 'percent of total energy', but the number scored against them came from EG.ELC.RNEW.ZS — the renewable share of ELECTRICITY, a different and larger quantity, against a target the IEA states for total final energy. The axis was flattered by roughly 8 percentage points. Now scored on EG.FEC.RNEW.ZS. The score series for this axis breaks here: see config/series_breaks.json."
     },
     "WATER_REVIEW": {
       "primary_metric": "safe_water_access_pct",

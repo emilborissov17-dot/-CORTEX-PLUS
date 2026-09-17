@@ -283,6 +283,12 @@ def fetch_world_bank() -> dict:
         "gini_mean":                 _wb_global_mean("SI.POV.GINI"),
         "forest_area_pct":           _wb_world("AG.LND.FRST.ZS"),
         "renewable_elec_pct":        _wb_world("EG.ELC.RNEW.ZS"),
+        # ENERGY_REVIEW declares renewable_energy_pct with unit "percent of total
+        # energy" and cites the IEA Net Zero 80% target, which is for TOTAL FINAL
+        # energy. EG.ELC.RNEW.ZS is the ELECTRICITY share and a different, larger
+        # number; scoring the axis on it flattered it. Both are kept: electricity
+        # is a real quantity and other readers use it.  (17 Sep 2026)
+        "renewable_energy_pct":      _wb_world("EG.FEC.RNEW.ZS"),
         "safe_water_access_pct":     _wb_world("SH.H2O.SMDW.ZS"),
         "literacy_rate_adult_pct":   _wb_world("SE.ADT.LITR.ZS"),
         "threatened_mammals_no":     _wb_world("EN.MAM.THRD.NO"),
@@ -305,6 +311,7 @@ def fetch_world_bank() -> dict:
         "infant_mortality_per1k":  _WB_YEARS.get("SP.DYN.IMRT.IN"),
         "forest_area_pct":         _WB_YEARS.get("AG.LND.FRST.ZS"),
         "renewable_elec_pct":      _WB_YEARS.get("EG.ELC.RNEW.ZS"),
+        "renewable_energy_pct":    _WB_YEARS.get("EG.FEC.RNEW.ZS"),
         "safe_water_access_pct":   _WB_YEARS.get("SH.H2O.SMDW.ZS"),
         "literacy_rate_adult_pct": _WB_YEARS.get("SE.ADT.LITR.ZS"),
         "threatened_mammals_no":   _WB_YEARS.get("EN.MAM.THRD.NO"),

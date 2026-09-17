@@ -31,18 +31,59 @@
       "config_fingerprint_after": "4a79df6c631359b7",
       "measured_effect": {
         "how": "goal_score_calculator.compute_goal_score() run twice on the SAME live trends/observations, once against each config. No file was written.",
-        "axes": {"before": 25, "after": 24},
-        "total_weight": {"before": 173.0, "after": 167.0},
-        "composite_score": {"before": 0.6282, "after": 0.6282},
-        "coverage_of_goal": {"before": 0.578, "after": 0.5988},
-        "coverage_of_measurable": {"before": 0.8772, "after": 0.8772},
-        "measured_weight": {"before": 100.0, "after": 100.0},
-        "measurable_weight": {"before": 114.0, "after": 114.0},
-        "semantic_weight": {"before": 59.0, "after": 53.0},
-        "semantic_share_of_goal": {"before": 0.341, "after": 0.3174},
+        "axes": {
+          "before": 25,
+          "after": 24
+        },
+        "total_weight": {
+          "before": 173.0,
+          "after": 167.0
+        },
+        "composite_score": {
+          "before": 0.6282,
+          "after": 0.6282
+        },
+        "coverage_of_goal": {
+          "before": 0.578,
+          "after": 0.5988
+        },
+        "coverage_of_measurable": {
+          "before": 0.8772,
+          "after": 0.8772
+        },
+        "measured_weight": {
+          "before": 100.0,
+          "after": 100.0
+        },
+        "measurable_weight": {
+          "before": 114.0,
+          "after": 114.0
+        },
+        "semantic_weight": {
+          "before": 59.0,
+          "after": 53.0
+        },
+        "semantic_share_of_goal": {
+          "before": 0.341,
+          "after": 0.3174
+        },
         "note": "composite_score did NOT move: GENERAL_SELF_REVIEW was a semantic axis with no primary_metric, so it was never in the numerator. What moved is the DENOMINATOR of the goal — 6 of the 59 weight that had no live source left the tree, so coverage_of_goal rose from 57.8% to 59.9% WITHOUT a single new measurement. That rise is bookkeeping, not progress, and it is exactly why the break has to be declared: a reader of the coverage series who does not know about this entry would read +2.1 points as a sensor that came online."
       },
       "comparable_across_break": false
+    },
+    {
+      "id": "2026-09-17-energy-total-final-not-electricity",
+      "date_utc": "2026-09-17",
+      "rule": "1.3",
+      "series": [
+        "memory/goal_score_history.json :: scores.ENERGY_REVIEW",
+        "snapshots/master/goal_score_latest.json :: composite_score, coverage_of_goal",
+        "memory/composed_indicators.json :: ENERGY_REVIEW.composed.anchor"
+      ],
+      "cause": "ENERGY_REVIEW anchor and obs key moved from World Bank EG.ELC.RNEW.ZS (renewable share of ELECTRICITY) to EG.FEC.RNEW.ZS (renewable share of TOTAL FINAL ENERGY)",
+      "why": "target_config has always declared this axis's primary_metric as renewable_energy_pct with unit 'percent of total energy', and its rationale cites the IEA Net Zero 80% target, which the IEA states for total final energy. The number being scored was the electricity share: a different and larger quantity. Points before and after this date are not comparable — the series did not move, the instrument did.",
+      "measured_effect": "World Bank WLD, verified against the live API on 17 Sep 2026: EG.ELC.RNEW.ZS latest 27.8357; EG.FEC.RNEW.ZS 2020 = 19.7355641050053. higher_better against target 80: score 34.8 -> 24.7, a fall of 10.1 points. The axis did not get worse; it stopped being measured by the wrong instrument.",
+      "note": "EG.FEC.RNEW.ZS latest available year is 2020 against 2024 for the electricity series. The declared metric with a four-year lag is preferred over a different metric that is current: an axis measured on the wrong quantity cannot be made right by being fresh."
     }
   ]
 }

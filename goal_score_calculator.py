@@ -203,6 +203,7 @@ def load_global_indicators() -> dict:
         f"NOAA Mauna Loa co2_date = {co2.get('co2_date')}")
     wb_put("wb_AG.LND.FRST.ZS", "forest_area_pct")
     wb_put("wb_EG.ELC.RNEW.ZS", "renewable_elec_pct")
+    wb_put("wb_EG.FEC.RNEW.ZS", "renewable_energy_pct")   # total final energy, the declared metric
     wb_put("wb_SH.H2O.SMDW.ZS", "safe_water_access_pct")
     put("wb_SH.DYN.MORT",       wb.get("infant_mortality_per1k"))     # APPROX: infant vs under-5
     wb_put("wb_SI.POV.DDAY", "poverty_190_pct")
@@ -336,7 +337,7 @@ def _resolve_metric_origin(metric_name: str, trends: dict,
         "urbanization_pct":           "wb_SP.URB.TOTL.IN.ZS",
         "gdp_growth_pct":             "wb_NY.GDP.MKTP.KD.ZG",
         "food_insecurity_pct":        "wb_SN.ITK.DEFC.ZS",
-        "renewable_energy_pct":       "wb_EG.ELC.RNEW.ZS",
+        "renewable_energy_pct":       "wb_EG.FEC.RNEW.ZS",
         "adjusted_net_savings_pct":   "wb_NY.ADJ.SVNG.GN.ZS",
     }
     obs_key = obs_map.get(metric_name, metric_name)
