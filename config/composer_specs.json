@@ -745,10 +745,9 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.under5_mortality_per1k",
-            "provenance": "World Bank SH.DYN.MORT, mortality rate under-5 per 1,000 live births — the axis's primary_metric per target_config (child_mortality_per_1000, target 25, which is SDG 3.2's under-5 figure). Replaced SP.DYN.IMRT.IN on 17 Sep 2026: infant mortality counts deaths before age one only, a strictly smaller number scored against a target set for under-5 deaths.",
+            "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing.",
             "org": "World Bank",
             "unit": "deaths_per_1000_live_births_under5",
-            "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing.",
             "cadence": "annual"
           },
           {
@@ -1092,10 +1091,9 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.literacy_rate_youth_pct",
-            "provenance": "World Bank SE.ADT.1524.LT.ZS, youth literacy ages 15-24 — the axis's primary_metric per target_config (literacy_rate_youth_pct, target 100). Replaced SE.ADT.LITR.ZS on 17 Sep 2026: adult literacy (15+) includes cohorts schooled decades ago and answers a different question from whether education is reaching people now.",
+            "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named.",
             "org": "World Bank",
             "unit": "pct_literate",
-            "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named.",
             "cadence": "annual"
           }
         ]
@@ -1610,6 +1608,26 @@
             "org": "CelesTrak",
             "unit": "geostationary_objects",
             "note": "verified live 2026-08-04: 568 objects. Standing GEO infrastructure.",
+            "cadence": "daily"
+          }
+        ]
+      },
+      "event_daily": {
+        "min": 1,
+        "freshness_days": 3,
+        "sources": [
+          {
+            "id": "swpc_kp_daily_max",
+            "kind": "http_json_daily_agg",
+            "url": "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json",
+            "org": "NOAA SWPC",
+            "group_by": "time_tag",
+            "extract": "Kp",
+            "agg": "max",
+            "agg_min_count": 8,
+            "unit": "kp_index_daily_max",
+            "data_max_age_days": 3,
+            "provenance": "NOAA SWPC planetary K-index. THE FEED IS 3-HOURLY — eight UT intervals a day — and this axis declares cadence 'daily', so the reduction happens AT INGEST: max(Kp) per UTC day, via http_json_daily_agg with agg_min_count=8. A day with fewer than eight intervals is skipped, because the max of a partial day is a lower bound wearing a finished day's name. MAX and not mean: a day's geomagnetic disturbance is its worst interval. Probed live 17 Sep 2026 — HTTP 200, 0.31 s, 59 rows = 7 complete days + 3 intervals of today; composed to 3.67 for 2026-09-16 with the partial day correctly skipped. The feed lags ~5.5 h, so the most recent interval is not the current one. DOES NOT FEED A SCORE: event_daily is the indirect/weak/fast slot, this axis has no anchor and no primary_metric, and Kp measures a HAZARD TO infrastructure, not the state of it.",
             "cadence": "daily"
           }
         ]

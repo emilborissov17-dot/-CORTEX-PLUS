@@ -104,6 +104,13 @@
       "last_observed_from": "markets.last_date",
       "source": "Yahoo chart API — UUP dividend-adjusted daily close",
       "note": "TRADING days, not calendar days: gaps of 1, 3 and 4 days are normal (weekends and holidays). PREDICTION ONLY, never a trade."
+    },
+    "SPACE_INFRASTRUCTURE_REVIEW": {
+      "cadence": "daily",
+      "last_observed_from": "composed_indicators.SPACE_INFRASTRUCTURE_REVIEW.slots.event_daily",
+      "source": "NOAA SWPC planetary K-index, reduced to a daily max at ingest",
+      "decided": "2026-09-17: the axis had no cadence declaration and no daily source. Kp is published 3-hourly and 'three-hourly' is NOT one of the five allowed cadence words in this file, so the feed is aggregated to one value per UTC day at ingest and 'daily' is then true of what is stored rather than true of a note. Decided by Claude under Emil's delegation of 17 Sep 2026.",
+      "note": "event_daily only. Kp feeds no score: the axis declares no primary_metric and this slot is the weak/fast one by definition."
     }
   },
   "org_cadence": {
