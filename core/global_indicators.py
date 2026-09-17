@@ -296,6 +296,11 @@ def fetch_world_bank() -> dict:
         "renewable_energy_pct":      _wb_world("EG.FEC.RNEW.ZS"),
         "safe_water_access_pct":     _wb_world("SH.H2O.SMDW.ZS"),
         "literacy_rate_adult_pct":   _wb_world("SE.ADT.LITR.ZS"),
+        # COGNITION_LEARNING_REVIEW declares literacy_rate_youth_pct. SE.ADT.LITR.ZS
+        # is ADULT literacy (15+), which carries cohorts schooled decades ago; youth
+        # literacy (15-24) is the one that answers whether education is working NOW,
+        # and it is the one the axis names.  (17 Sep 2026)
+        "literacy_rate_youth_pct":   _wb_world("SE.ADT.1524.LT.ZS"),
         "threatened_mammals_no":     _wb_world("EN.MAM.THRD.NO"),
         "co2_emissions_kt":          _wb_world("EN.ATM.CO2E.KT"),
         # THE TWO AXES THAT HAD A METRIC AND NO NUMBER. PLANETARY_POTENTIAL and
@@ -320,6 +325,7 @@ def fetch_world_bank() -> dict:
         "renewable_energy_pct":    _WB_YEARS.get("EG.FEC.RNEW.ZS"),
         "safe_water_access_pct":   _WB_YEARS.get("SH.H2O.SMDW.ZS"),
         "literacy_rate_adult_pct": _WB_YEARS.get("SE.ADT.LITR.ZS"),
+        "literacy_rate_youth_pct": _WB_YEARS.get("SE.ADT.1524.LT.ZS"),
         "threatened_mammals_no":   _WB_YEARS.get("EN.MAM.THRD.NO"),
         "co2_emissions_kt":        _WB_YEARS.get("EN.ATM.CO2E.KT"),
         "protected_terrestrial_area_pct": _WB_YEARS.get("ER.LND.PTLD.ZS"),

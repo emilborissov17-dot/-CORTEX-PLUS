@@ -207,7 +207,7 @@ def load_global_indicators() -> dict:
     wb_put("wb_SH.H2O.SMDW.ZS", "safe_water_access_pct")
     wb_put("wb_SH.DYN.MORT", "under5_mortality_per1k")   # SDG 3.2 under-5, the declared metric
     wb_put("wb_SI.POV.DDAY", "poverty_190_pct")
-    put("wb_SE.ADT.1524.LT.ZS", wb.get("literacy_rate_adult_pct"))    # APPROX: adult vs youth
+    wb_put("wb_SE.ADT.1524.LT.ZS", "literacy_rate_youth_pct")   # 15-24, the declared metric
     put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None,
         "World Bank WDI Food block carries no _observed_years; the source publishes annually but the fetch does not keep the year")
     put("wb_SN.ITK.SVFI.ZS", food.get("food_insecurity_severe_pct"), None,

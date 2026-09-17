@@ -273,7 +273,9 @@
       "rationale": "Universal literacy as foundation for human autonomy (SDG4)",
       "legacy_domain": "HUMAN",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/SE.ADT.1524.LT.ZS",
+      "changed": "2026-09-17: the metric has always been literacy_rate_youth_pct, but the number scored was SE.ADT.LITR.ZS — adult literacy, ages 15 and over, which carries cohorts schooled decades ago and moves only as they age out. Now scored on SE.ADT.1524.LT.ZS (15-24). The score series breaks here: see config/series_breaks.json."
     }
   },
   "SAFETY": {

@@ -150,6 +150,12 @@ ANCHOR_PINS = {
     "MATERIALS_WASTE_REVIEW": ("adjusted_net_savings_pct",
                                {"waste.adjusted_net_savings_pct"},
                                "same field name; World Bank NY.ADJ.SVNG.GN.ZS, set 17 Sep 2026"),
+    "COGNITION_LEARNING_REVIEW": ("literacy_rate_youth_pct",
+                                  {"world_bank.literacy_rate_youth_pct"},
+                                  "World Bank SE.ADT.1524.LT.ZS, youth literacy 15-24 — the "
+                                  "metric's own name. Switched 17 Sep 2026 from SE.ADT.LITR.ZS "
+                                  "(adult 15+), which scored 87.7 against the new 93.1; break "
+                                  "in config/series_breaks.json"),
     "HUMAN_WELL_BEING_REVIEW": ("child_mortality_per_1000",
                                 {"world_bank.under5_mortality_per1k"},
                                 "World Bank SH.DYN.MORT, under-5 mortality — the figure SDG 3.2 "
@@ -202,9 +208,6 @@ ANCHOR_PINS = {
 # belongs to a human. Pinned so a mismatch cannot change, spread or be added
 # silently — and so the list shrinks only by a deliberate edit.
 KNOWN_MISMATCH = {
-    "COGNITION_LEARNING_REVIEW": ("literacy_rate_youth_pct",
-                                  {"world_bank.literacy_rate_adult_pct"},
-                                  "adult literacy against a metric that names youth literacy"),
     "INEQUALITY_POVERTY_REVIEW": ("extreme_poverty_rate_pct",
                                   {"world_bank.poverty_190_pct"},
                                   "the $1.90/day line, against a metric whose unit declares "

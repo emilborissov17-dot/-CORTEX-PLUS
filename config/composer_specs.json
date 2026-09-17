@@ -1078,10 +1078,11 @@
         "freshness_days": 45,
         "sources": [
           {
-            "id": "gi_literacy_adult",
+            "id": "gi_literacy_youth",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "world_bank.literacy_rate_adult_pct",
+            "extract": "world_bank.literacy_rate_youth_pct",
+            "provenance": "World Bank SE.ADT.1524.LT.ZS, youth literacy ages 15-24 — the axis's primary_metric per target_config (literacy_rate_youth_pct, target 100). Replaced SE.ADT.LITR.ZS on 17 Sep 2026: adult literacy (15+) includes cohorts schooled decades ago and answers a different question from whether education is reaching people now.",
             "org": "World Bank",
             "unit": "pct_literate",
             "provenance": "ADULT literacy. The axis's primary_metric is YOUTH literacy — the youth series is not in the snapshot, so this stands in and the gap stays named.",
