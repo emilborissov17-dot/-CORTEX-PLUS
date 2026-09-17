@@ -46,6 +46,20 @@ memory/embed_index was written on 22 Aug and its own --selftest reported
 "NOT BUILT" and "NOT WIRED — nothing searches this index". This fills it. No second
 index implementation is written here.
 
+OPEN DEBT, RECORDED RATHER THAN FIXED (17 Sep 2026, Emil's decision)
+--------------------------------------------------------------------
+The embedder is generative qwen2.5:3b (dim 2048), not an embedding model; retrieval
+quality unmeasured.
+
+nomic-embed-text was NOT pulled: statements work is paused until T1 returns a result,
+and re-embedding 2,626 vectors under a paused workstream would be work spent on a
+layer whose consumer is exactly what T1 is testing. The line above is the debt marker.
+Whoever measures retrieval quality should read it first — "indexed by meaning" is
+carrying weight that a 3B generative model's embeddings have not been shown to earn.
+
+INGEST STATUS: PARTIAL. 331 of 712 files, 2,626 statements. The run was stopped by low
+system memory, not by a defect, and no further ingestion happens until T1 has a result.
+
 A FALLBACK RUN IS NAMED. interval_head.embed() returns ("hashed_fallback", ...)
 when Ollama is unreachable, and in that case EVERY text is re-hashed so the space
 stays coherent. That source string is stored on every record of the run: a hashed
