@@ -336,3 +336,13 @@ memory/cycle_trace/
 # it is downloaded, not authored here. data/arc_eval_400.json is untracked today
 # and this line is what keeps a future `git add data/` from changing that.
 data/arc_eval_400.json
+
+# Throwaway probes. Each of these three says "THROWAWAY" in its own docstring:
+# they were written to answer one question on one day (does the vector query kill
+# the process, does the full beat() brain path die, what does the machine's memory
+# column look like over four hours) and their answers live in the reports that
+# quote them. Ignored rather than committed because a scratch probe that looks
+# like a tool is worse than no tool: the next reader cannot tell which of these is
+# load-bearing. Written 2026-09-17; delete the pattern if one of them earns a name.
+scripts/_probe_*.py
+scripts/_mem_sampler.py
