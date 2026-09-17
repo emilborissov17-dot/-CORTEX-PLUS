@@ -206,8 +206,38 @@ def scoreboard() -> dict:
     wins = sum(1 for o in scored if o["learner_wins"])
     l_mae = round(sum(o["learner_err"] for o in scored) / n, 4) if n else None
     b_mae = round(sum(o["baseline_err"] for o in scored) / n, 4) if n else None
+    # 2026-09-10: the pooled numbers below hid the answer. 609 degenerate axis_next
+    # rows (learner == baseline == 50.0) drowned 52 real self_failure calls, so
+    # "learner_beats_control" said False about everything and nothing. by_kind
+    # keeps the head-to-head per target_kind, degenerate rows counted but not
+    # compared. The full board (Brier, climatology, last-30) is scoreboard.py.
+    sealed = {e["hash"]: e for e in read_all() if e.get("event") == PREDICTION}
+    by_kind: dict = {}
+    for o in scored:
+        s = sealed.get(o.get("ref_hash"))
+        kind = o.get("target_kind") or (s or {}).get("target_kind") or "?"
+        row = by_kind.setdefault(kind, {"scored": 0, "degenerate": 0, "compared": 0, "learner_wins": 0,
+                                        "learner_err_sum": 0.0, "baseline_err_sum": 0.0})
+        row["scored"] += 1
+        degenerate = bool(s and (s.get("degenerate") is True or s.get("learner") == s.get("baseline")))
+        if degenerate:
+            row["degenerate"] += 1
+            continue
+        row["compared"] += 1
+        row["learner_wins"] += 1 if o["learner_wins"] else 0
+        row["learner_err_sum"] += o["learner_err"]
+        row["baseline_err_sum"] += o["baseline_err"]
+    for kind, row in by_kind.items():
+        c = row.pop("compared") or 0
+        row["compared"] = c
+        le, be = row.pop("learner_err_sum"), row.pop("baseline_err_sum")
+        row["learner_mean_err"] = round(le / c, 4) if c else None
+        row["baseline_mean_err"] = round(be / c, 4) if c else None
+        row["learner_beats_control"] = (c > 0 and row["learner_mean_err"] < row["baseline_mean_err"]
+                                        and row["learner_wins"] / c > 0.5)
     return {
         "chain_valid": verify()["valid"],
+        "by_kind": by_kind,
         "sealed_predictions": sum(1 for e in read_all() if e.get("event") == PREDICTION),
         "scored_outcomes": n,
         "learner_win_rate": round(wins / n, 3) if n else None,

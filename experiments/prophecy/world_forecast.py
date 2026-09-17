@@ -227,9 +227,19 @@ def cmd_predict(series: Optional[dict] = None) -> list[dict]:
         raise Refused("no indicator moves >= %d times — nothing to predict; the daily tier is the fix" % MIN_CHANGES)
     state = _state()
     sealed = []
+    # IDEMPOTENT (11 Sep 2026): the night now learns (core/learn_world.py, step 25.43) and
+    # the morning task stays as a catch-up. A prediction already sealed for the same
+    # indicator and the same last observation is not sealed twice.
+    try:
+        have = {r.get("target_id") for r in pl.read_all()
+                if r.get("event") == pl.PREDICTION and r.get("target_kind") == KIND}
+    except Exception:
+        have = set()
     for name, pts in sorted(series.items()):
         vals = [v for _, v in pts]
         last_date = pts[-1][0]
+        if f"{name}::after::{last_date}" in have:
+            continue
         alpha = state.get(name, {}).get("alpha") or fit_alpha(vals)
         sealed.append(pl.seal_prediction(
             target_kind=KIND, target_id=f"{name}::after::{last_date}",

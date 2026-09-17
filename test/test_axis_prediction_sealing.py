@@ -85,8 +85,14 @@ def test_single_axis_seal_then_score(tmp_ledger, monkeypatch):
 
     sealed = prophecy.cmd_predict_axes(one_axis="WATER_REVIEW")
     assert len(sealed) == 1 and pl.is_sealed(sealed[0])
-    # learner = last-step trend: 48 + (48-45) = 51 ; baseline = persistence 48
-    assert sealed[0]["learner"] == 51.0 and sealed[0]["baseline"] == 48.0
+    # 2026-09-10: the last-step learner (48 + (48-45) = 51) was RETIRED — it lost to
+    # persistence 0/6 on the indicators that move (WORLD_FORECAST_BENCH.md). The
+    # learner is now an EWMA over the axis's own history: it stays INSIDE the range
+    # the axis has actually visited, and it is not the baseline.
+    assert sealed[0]["baseline"] == 48.0
+    assert min(series) <= sealed[0]["learner"] <= max(series), "an EWMA never extrapolates past what was seen"
+    assert sealed[0]["learner"] != 51.0, "last-step extrapolation is retired"
+    assert sealed[0]["learner"] != sealed[0]["baseline"]
 
     prophecy.cmd_score_axes()                       # not matured yet (len unchanged)
     assert pl.scoreboard()["scored_outcomes"] == 0
@@ -96,8 +102,11 @@ def test_single_axis_seal_then_score(tmp_ledger, monkeypatch):
     sb = pl.scoreboard()
     assert sb["scored_outcomes"] == 1
     assert sb["chain_valid"] is True
-    # baseline 48 (|48-46|=2) beats learner 51 (|51-46|=5) here — recorded head-to-head
-    assert sb["learner_mae"] == 5.0 and sb["baseline_mae"] == 2.0
+    # baseline 48 -> |48-46| = 2; the learner's error is whatever the EWMA earned —
+    # recorded head-to-head, never assumed. (Before 10 Sep the pinned value was the
+    # retired last-step learner's 5.0.)
+    assert sb["baseline_mae"] == 2.0
+    assert sb["learner_mae"] == round(abs(sealed[0]["learner"] - 46.0), 4)
 
 
 def test_only_live_axes_are_sealed(tmp_ledger, monkeypatch):
