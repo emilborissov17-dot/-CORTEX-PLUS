@@ -1,0 +1,755 @@
+{
+  "ts": "2026-09-17T19:28:29.947031+00:00",
+  "method_version": "brain_probe/1",
+  "model": "models/Qwen2.5-3B-Instruct (4-bit NF4, fp16 compute)",
+  "probe_seed": 20260918,
+  "n_states": 900,
+  "n_layers": 37,
+  "n_train": 600,
+  "n_test": 300,
+  "A_primitive_by_layer": [
+    {
+      "layer": 0,
+      "real": 0.15,
+      "control": 0.15,
+      "selectivity": 0.0,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 1,
+      "real": 0.2567,
+      "control": 0.15,
+      "selectivity": 0.1067,
+      "chance": 0.1667,
+      "wd": 1.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 2,
+      "real": 0.2633,
+      "control": 0.1467,
+      "selectivity": 0.1166,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 3,
+      "real": 0.3,
+      "control": 0.1667,
+      "selectivity": 0.1333,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 4,
+      "real": 0.2933,
+      "control": 0.2067,
+      "selectivity": 0.0866,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 5,
+      "real": 0.51,
+      "control": 0.1733,
+      "selectivity": 0.3367,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 6,
+      "real": 0.6767,
+      "control": 0.1833,
+      "selectivity": 0.4934,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 7,
+      "real": 0.7733,
+      "control": 0.16,
+      "selectivity": 0.6133,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 8,
+      "real": 0.77,
+      "control": 0.1567,
+      "selectivity": 0.6133,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 9,
+      "real": 0.8,
+      "control": 0.12,
+      "selectivity": 0.68,
+      "chance": 0.1667,
+      "wd": 10.0,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 10,
+      "real": 0.81,
+      "control": 0.1267,
+      "selectivity": 0.6833,
+      "chance": 0.1667,
+      "wd": 1.0,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 11,
+      "real": 0.8033,
+      "control": 0.17,
+      "selectivity": 0.6333,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 12,
+      "real": 0.8133,
+      "control": 0.1267,
+      "selectivity": 0.6866,
+      "chance": 0.1667,
+      "wd": 10.0,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 13,
+      "real": 0.8367,
+      "control": 0.1833,
+      "selectivity": 0.6534,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 14,
+      "real": 0.8333,
+      "control": 0.14,
+      "selectivity": 0.6933,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 15,
+      "real": 0.82,
+      "control": 0.1567,
+      "selectivity": 0.6633,
+      "chance": 0.1667,
+      "wd": 10.0,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 16,
+      "real": 0.8433,
+      "control": 0.1867,
+      "selectivity": 0.6566,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 17,
+      "real": 0.89,
+      "control": 0.1733,
+      "selectivity": 0.7167,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 18,
+      "real": 0.8933,
+      "control": 0.18,
+      "selectivity": 0.7133,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 19,
+      "real": 0.9133,
+      "control": 0.1833,
+      "selectivity": 0.73,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 20,
+      "real": 0.9433,
+      "control": 0.2033,
+      "selectivity": 0.74,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 21,
+      "real": 0.9633,
+      "control": 0.1767,
+      "selectivity": 0.7866,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 22,
+      "real": 0.9767,
+      "control": 0.1767,
+      "selectivity": 0.8,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 23,
+      "real": 0.98,
+      "control": 0.1733,
+      "selectivity": 0.8067,
+      "chance": 0.1667,
+      "wd": 100.0,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 24,
+      "real": 0.9867,
+      "control": 0.1733,
+      "selectivity": 0.8134,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 25,
+      "real": 0.9967,
+      "control": 0.1867,
+      "selectivity": 0.81,
+      "chance": 0.1667,
+      "wd": 0.1,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 26,
+      "real": 1.0,
+      "control": 0.16,
+      "selectivity": 0.84,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 27,
+      "real": 1.0,
+      "control": 0.16,
+      "selectivity": 0.84,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 28,
+      "real": 1.0,
+      "control": 0.17,
+      "selectivity": 0.83,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 29,
+      "real": 1.0,
+      "control": 0.1867,
+      "selectivity": 0.8133,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 30,
+      "real": 1.0,
+      "control": 0.17,
+      "selectivity": 0.83,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 31,
+      "real": 1.0,
+      "control": 0.1567,
+      "selectivity": 0.8433,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 32,
+      "real": 1.0,
+      "control": 0.1467,
+      "selectivity": 0.8533,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 33,
+      "real": 1.0,
+      "control": 0.1667,
+      "selectivity": 0.8333,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 34,
+      "real": 1.0,
+      "control": 0.1433,
+      "selectivity": 0.8567,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 35,
+      "real": 1.0,
+      "control": 0.15,
+      "selectivity": 0.85,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 36,
+      "real": 1.0,
+      "control": 0.1733,
+      "selectivity": 0.8267,
+      "chance": 0.1667,
+      "wd": 0.01,
+      "wd_control": 10.0
+    }
+  ],
+  "A_best_layer": {
+    "layer": 34,
+    "real": 1.0,
+    "control": 0.1433,
+    "selectivity": 0.8567,
+    "chance": 0.1667,
+    "wd": 0.01,
+    "wd_control": 1000.0
+  },
+  "B_direction_by_layer": [
+    {
+      "layer": 0,
+      "real": 0.4933,
+      "control": 0.4933,
+      "selectivity": 0.0,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 1,
+      "real": 0.5833,
+      "control": 0.49,
+      "selectivity": 0.0933,
+      "chance": 0.5,
+      "wd": 1.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 2,
+      "real": 0.6033,
+      "control": 0.4967,
+      "selectivity": 0.1066,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 3,
+      "real": 0.64,
+      "control": 0.52,
+      "selectivity": 0.12,
+      "chance": 0.5,
+      "wd": 100.0,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 4,
+      "real": 0.6133,
+      "control": 0.5033,
+      "selectivity": 0.11,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 5,
+      "real": 0.63,
+      "control": 0.48,
+      "selectivity": 0.15,
+      "chance": 0.5,
+      "wd": 100.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 6,
+      "real": 0.75,
+      "control": 0.5033,
+      "selectivity": 0.2467,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 7,
+      "real": 0.77,
+      "control": 0.4367,
+      "selectivity": 0.3333,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 8,
+      "real": 0.78,
+      "control": 0.47,
+      "selectivity": 0.31,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 9,
+      "real": 0.8133,
+      "control": 0.4533,
+      "selectivity": 0.36,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 10,
+      "real": 0.82,
+      "control": 0.46,
+      "selectivity": 0.36,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 11,
+      "real": 0.7933,
+      "control": 0.46,
+      "selectivity": 0.3333,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 12,
+      "real": 0.8333,
+      "control": 0.4567,
+      "selectivity": 0.3766,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 13,
+      "real": 0.8233,
+      "control": 0.46,
+      "selectivity": 0.3633,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 14,
+      "real": 0.85,
+      "control": 0.44,
+      "selectivity": 0.41,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 15,
+      "real": 0.8667,
+      "control": 0.4733,
+      "selectivity": 0.3934,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 16,
+      "real": 0.87,
+      "control": 0.46,
+      "selectivity": 0.41,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 100.0
+    },
+    {
+      "layer": 17,
+      "real": 0.8567,
+      "control": 0.4367,
+      "selectivity": 0.42,
+      "chance": 0.5,
+      "wd": 0.1,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 18,
+      "real": 0.8733,
+      "control": 0.4133,
+      "selectivity": 0.46,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 19,
+      "real": 0.8833,
+      "control": 0.3967,
+      "selectivity": 0.4866,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 20,
+      "real": 0.9133,
+      "control": 0.41,
+      "selectivity": 0.5033,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 21,
+      "real": 0.9467,
+      "control": 0.4467,
+      "selectivity": 0.5,
+      "chance": 0.5,
+      "wd": 1.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 22,
+      "real": 0.9667,
+      "control": 0.5033,
+      "selectivity": 0.4634,
+      "chance": 0.5,
+      "wd": 1.0,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 23,
+      "real": 0.9733,
+      "control": 0.5033,
+      "selectivity": 0.47,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 24,
+      "real": 0.9833,
+      "control": 0.4333,
+      "selectivity": 0.55,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 25,
+      "real": 0.9733,
+      "control": 0.4367,
+      "selectivity": 0.5366,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 26,
+      "real": 0.9767,
+      "control": 0.4833,
+      "selectivity": 0.4934,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 0.1
+    },
+    {
+      "layer": 27,
+      "real": 0.9933,
+      "control": 0.5233,
+      "selectivity": 0.47,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 28,
+      "real": 0.9833,
+      "control": 0.5167,
+      "selectivity": 0.4666,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 29,
+      "real": 0.98,
+      "control": 0.5033,
+      "selectivity": 0.4767,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 30,
+      "real": 0.9767,
+      "control": 0.55,
+      "selectivity": 0.4267,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1.0
+    },
+    {
+      "layer": 31,
+      "real": 0.98,
+      "control": 0.4767,
+      "selectivity": 0.5033,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 10.0
+    },
+    {
+      "layer": 32,
+      "real": 0.98,
+      "control": 0.4133,
+      "selectivity": 0.5667,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 33,
+      "real": 0.97,
+      "control": 0.42,
+      "selectivity": 0.55,
+      "chance": 0.5,
+      "wd": 10.0,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 34,
+      "real": 0.9833,
+      "control": 0.5267,
+      "selectivity": 0.4566,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 0.01
+    },
+    {
+      "layer": 35,
+      "real": 0.99,
+      "control": 0.4067,
+      "selectivity": 0.5833,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 1000.0
+    },
+    {
+      "layer": 36,
+      "real": 0.9867,
+      "control": 0.52,
+      "selectivity": 0.4667,
+      "chance": 0.5,
+      "wd": 0.01,
+      "wd_control": 0.1
+    }
+  ],
+  "B_best_layer": {
+    "layer": 35,
+    "real": 0.99,
+    "control": 0.4067,
+    "selectivity": 0.5833,
+    "chance": 0.5,
+    "wd": 0.01,
+    "wd_control": 1000.0
+  },
+  "B_raw_input_baseline": {
+    "real": 0.9367,
+    "control": 0.5067,
+    "selectivity": 0.43,
+    "chance": 0.5,
+    "wd": 0.01,
+    "wd_control": 0.01
+  },
+  "B_spoken": {
+    "n": 200,
+    "refusals": 0,
+    "accuracy": 0.995,
+    "up_rate": 0.53,
+    "true_up_rate": 0.525
+  },
+  "B_probe_on_spoken_errors": {
+    "n_wrong": 1,
+    "layer": 35,
+    "probe_correct": 1.0,
+    "chance": 0.5
+  },
+  "C_conditions": {
+    "filler": {
+      "n": 200,
+      "refusals": 0,
+      "spoken_up_rate": 0.53,
+      "spoken_accuracy": 0.995
+    },
+    "true": {
+      "n": 200,
+      "refusals": 0,
+      "spoken_up_rate": 0.27,
+      "spoken_accuracy": 0.735,
+      "probe_up_rate": 0.0,
+      "probe_accuracy": 0.475,
+      "probe_n": 200
+    },
+    "all_up": {
+      "n": 200,
+      "refusals": 0,
+      "spoken_up_rate": 0.995,
+      "spoken_accuracy": 0.53,
+      "probe_up_rate": 0.0,
+      "probe_accuracy": 0.475,
+      "probe_n": 200
+    },
+    "all_down": {
+      "n": 200,
+      "refusals": 0,
+      "spoken_up_rate": 0.135,
+      "spoken_accuracy": 0.61,
+      "probe_up_rate": 0.0,
+      "probe_accuracy": 0.475,
+      "probe_n": 200
+    }
+  },
+  "C_probe_layer": 35
+}
