@@ -1304,32 +1304,22 @@
         "freshness_days": 45,
         "sources": [
           {
-            "id": "gi_co2_materials",
+            "id": "gi_adjusted_net_savings",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "co2.co2_ppm",
-            "org": "NOAA",
-            "unit": "ppm_co2",
-            "provenance": "CO2 as the axis's declared proxy for material throughput (target_config sets primary_metric=co2_ppm_mauna_loa for this axis).",
-            "cadence": "daily"
+            "extract": "waste.adjusted_net_savings_pct",
+            "org": "World Bank",
+            "unit": "pct_gni",
+            "provenance": "World Bank adjusted net savings, NY.ADJ.SVNG.GN.ZS — the axis's primary_metric per config/target_config.json (adjusted_net_savings_pct, set 11 Sep 2026). Promoted from indirect_proxy to anchor on 17 Sep 2026: until then this axis anchored on NOAA co2.co2_ppm, the identical reading CLIMATE_GLOBAL_RISK_REVIEW anchors on, and R7_SENSOR_REUSE fired on the pair every night from 7 Sep. An axis wearing another axis's sensor is not measured.",
+            "cadence": "annual"
           }
         ]
       },
       "measurement_daily": {
         "min": 1,
         "freshness_days": 7,
-        "sources": [
-          {
-            "id": "noaa_gml_daily_materials",
-            "kind": "http_csv",
-            "org": "NOAA-GML",
-            "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_trend_gl.csv",
-            "col": 3,
-            "unit": "ppm_co2",
-            "provenance": "NOAA GML global daily CO2 trend, column 3 (smoothed) to MATCH the column CLIMATE already reads — two axes declaring the same primary metric must not report different numbers. NOTE: col 4 is the de-seasonalised trend; which column belongs in a daily slot is an open question for review, not settled here.",
-            "cadence": "daily"
-          }
-        ]
+        "sources": [],
+        "empty_because": "No daily measurement of material throughput or waste exists that this system can read. The slot held noaa_gml_daily_materials (NOAA GML co2_trend_gl.csv) until 17 Sep 2026, which measured CO2, not waste. An empty slot is the honest state: it reports the axis has no daily sensor rather than reporting a foreign one. Do not fill it with a CO2 series to make a minimum pass."
       },
       "event_daily": {
         "min": 1,
@@ -1345,15 +1335,6 @@
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "waste.resource_depletion_pct_gni",
-            "org": "World Bank",
-            "unit": "pct_gni",
-            "cadence": "annual"
-          },
-          {
-            "id": "gi_adjusted_net_savings",
-            "kind": "file",
-            "path": "snapshots/master/global_indicators_latest.json",
-            "extract": "waste.adjusted_net_savings_pct",
             "org": "World Bank",
             "unit": "pct_gni",
             "cadence": "annual"
