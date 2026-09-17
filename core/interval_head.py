@@ -119,6 +119,10 @@ CURVE = BASE / "memory" / "interval_head_curve.json"
 
 EMBED_MODEL = "qwen2.5:3b"
 EMBED_URL = "http://localhost:11434/api/embed"
+# Texts per request. 100 measured at 226 ms/sentence; larger batches gain little
+# and make one failure cost more work, since a failed batch falls back wholesale.
+EMBED_BATCH = 100
+EMBED_TIMEOUT = 600
 FALLBACK_DIM = 256
 
 ALPHA = 0.2               # 80% central interval
@@ -181,26 +185,46 @@ def embed(texts, model: str = EMBED_MODEL) -> tuple:
     except Exception:
         requests = None
 
-    for text in texts:
-        key = hashlib.sha256(f"{model}|{text}".encode("utf-8")).hexdigest()
+    # ONE HTTP CALL PER TEXT WAS THE WHOLE COST. /api/embed accepts a LIST and
+    # returns one vector per element; this loop sent them one at a time. Measured
+    # on this box, 17 Sep 2026, qwen2.5:3b, dim 2048:
+    #     one at a time   8401 ms/sentence   -> 6051 sentences = 14.1 hours
+    #     batched by 100    226 ms/sentence   -> 6051 sentences = 22.8 minutes
+    # Same model, same cache keys, same vectors — 37x, purely from not paying the
+    # per-request overhead 6051 times. It went unnoticed because the cache held 89
+    # entries and nothing had ever asked for thousands.
+    keys = [hashlib.sha256(f"{model}|{t}".encode("utf-8")).hexdigest() for t in texts]
+    missing = [(i, t, k) for i, (t, k) in enumerate(zip(texts, keys)) if k not in cache]
+
+    if missing and requests is not None:
+        for b0 in range(0, len(missing), EMBED_BATCH):
+            chunk = missing[b0:b0 + EMBED_BATCH]
+            try:
+                r = requests.post(EMBED_URL, timeout=EMBED_TIMEOUT,
+                                  json={"model": model,
+                                        "input": [t for _i, t, _k in chunk]})
+                r.raise_for_status()
+                vecs = r.json()["embeddings"]
+                # A short reply is NOT silently padded or zipped: a vector landing
+                # against the wrong text would be undetectable afterwards.
+                if len(vecs) != len(chunk):
+                    raise ValueError(
+                        f"asked for {len(chunk)} embeddings, got {len(vecs)}")
+                for (_i, _t, k), v in zip(chunk, vecs):
+                    cache[k] = v
+                    fresh += 1
+            except Exception:
+                source = "hashed_fallback"
+                break
+
+    for text, key in zip(texts, keys):
         if key in cache:
             out.append(cache[key])
-            continue
-        vec = None
-        if requests is not None:
-            try:
-                r = requests.post(EMBED_URL, timeout=120,
-                                  json={"model": model, "input": text})
-                r.raise_for_status()
-                vec = r.json()["embeddings"][0]
-                fresh += 1
-            except Exception:
-                vec = None
-        if vec is None:
+        else:
             source = "hashed_fallback"
             vec = _hashed(text)
-        cache[key] = vec
-        out.append(vec)
+            cache[key] = vec
+            out.append(vec)
 
     if fresh:
         _save_cache(cache)
