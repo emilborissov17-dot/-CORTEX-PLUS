@@ -737,7 +737,7 @@
             "extract": "world_bank.under5_mortality_per1k",
             "provenance": "World Bank SH.DYN.MORT, mortality rate under-5 per 1,000 live births — the axis's primary_metric per target_config (child_mortality_per_1000, target 25, which is SDG 3.2's under-5 figure). Replaced SP.DYN.IMRT.IN on 17 Sep 2026: infant mortality counts deaths before age one only, a strictly smaller number scored against a target set for under-5 deaths.",
             "org": "World Bank",
-            "unit": "deaths_per_1000_infant",
+            "unit": "deaths_per_1000_live_births_under5",
             "provenance": "INFANT mortality. The axis's primary_metric is UNDER-5 (child) mortality — related but not identical; the real under-5 series is still missing.",
             "cadence": "annual"
           },
@@ -945,12 +945,12 @@
         "freshness_days": 45,
         "sources": [
           {
-            "id": "gi_poverty_190",
+            "id": "gi_poverty_intl_line",
             "kind": "file",
             "path": "snapshots/master/global_indicators_latest.json",
             "extract": "world_bank.poverty_intl_line_pct",
             "org": "World Bank",
-            "unit": "pct_below_190",
+            "unit": "pct_below_intl_line_3usd_2021ppp",
             "provenance": "Poverty headcount at the $1.90/day line. target_config specifies the $2.15 line — same concept, different threshold; not interchangeable without restating.",
             "cadence": "annual"
           }
