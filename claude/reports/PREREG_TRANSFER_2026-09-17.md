@@ -197,3 +197,81 @@ So that nothing below can be re-described afterwards as expected:
 Long runs go through `tools/launch_detached.ps1`, outside the 03:04 cycle window.
 
 **A pass on synthetic tasks demonstrates the mechanism only.**
+
+---
+
+# ADDENDUM — 17 September 2026, embedder selection
+
+**Appended after the text above was frozen and committed (`0061c68`). Nothing above is
+edited.** Written BEFORE any T1 arm has run, so the choice below is made on retrieval
+numbers alone and cannot be tuning on the outcome.
+
+## The rule, as instructed
+
+- The memory arm uses the embedder with the higher **hold-out recall@1** (n = 16).
+- A tie, or a difference under **0.0625** (one task of sixteen), keeps the current
+  embedder — no change without evidence.
+- The void rule stands: a fallback to hashed vectors voids the run.
+- The stored statement shards are not re-embedded, whichever model wins.
+
+## Result table A — current embedder
+
+`qwen2.5:3b` (generative, dim 2048), 56 episodes / 64 tests, ledger
+`cd574b575f855c055e1ea473a46aae654bbfab58f31d5417d365cc8a2bd660fa`:
+
+| metric | value | chance |
+|---|---:|---:|
+| recall@1 | **0.7344** | 0.2969 |
+| recall@5 | 1.0 | 0.8594 |
+| **hold-out recall@1 (n=16)** | **0.625** | — |
+| hold-out recall@5 | 1.0 | — |
+| mean latent similarity @1 | 0.5494 | — |
+| mean surface similarity @1 | 0.0804 | — |
+
+## Result table B — nomic-embed-text
+
+**NOT MEASURED. The model could not be installed on this machine.**
+
+The pull was approved and attempted. It failed:
+
+```
+pull model manifest: Get "https://registry.ollama.ai/v2/library/nomic-embed-text/manifests/latest":
+dial tcp 104.21.75.227:443: connectex: An attempt was made to access a socket in a way
+forbidden by its access permissions.
+```
+
+Diagnosed rather than assumed. From this repo's Python, in the same shell, at the same
+moment:
+
+```
+404  https://registry.ollama.ai/v2/          <- reachable; 404 is the bare-path answer
+200  https://api.worldbank.org/v2/...        <- general outbound is fine
+200  https://ollama.com                      <- ollama's own domain is fine
+```
+
+So the network is not blocked and the registry is not down. The **ollama server process**
+is being denied outbound access — a host firewall rule on the ollama binary. That is not
+something this session can change, and no amount of retrying will move it.
+
+## Decision
+
+**The memory arm uses `qwen2.5:3b`**, by the rule's own second clause: a difference under
+0.0625 keeps the current embedder, and an *unmeasurable* alternative provides less
+evidence than a small difference does. Substituting a model that cannot be loaded, or
+guessing at its numbers, would be worse than proceeding with a measured one.
+
+This is a limitation of the result, not a fix for one. It goes in the report as such:
+the memory arm was retrieved by a generative model pressed into embedding duty, at a
+measured hold-out recall@1 of 0.625, and the comparison against a purpose-built embedder
+is **outstanding, not declined**.
+
+To close it, one command, run where the ollama daemon is permitted outbound — in this
+session the `!` prefix runs it in the user's own shell:
+
+```
+ollama pull nomic-embed-text
+venv\Scripts\python.exe tools/retrieval_at_k.py --run --model nomic-embed-text
+```
+
+If that number beats 0.625 by at least 0.0625, the rule requires re-running T1 with it,
+and this addendum is the pre-registration of that re-run.
