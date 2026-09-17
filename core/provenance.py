@@ -256,6 +256,37 @@ def _section(name: str, body: dict, fetched: datetime) -> dict:
     return rec
 
 
+def _report_catalog_missing(exc: BaseException) -> None:
+    """core/catalog.py could not be imported. Say so, by name, in the ledger.
+
+    The stub in build() keeps the cycle running, and that is exactly why the loss
+    has to be written down. Without the catalog every upstream_key becomes
+    НЕРАЗПОЗНАТ, every section lands in one bucket, and the provenance report
+    still comes out looking complete — the concentration numbers would read as a
+    finding about the world instead of a missing module. A degradation nobody is
+    told about is the failure this whole file was written to stop.
+
+    Two sinks, because they fail differently: stdout reaches the cycle log a human
+    scrolls, memory/blackbox.jsonl reaches the record a query can find. If the
+    blackbox write itself fails, that is printed too and swallowed — a broken
+    logger must not take the cycle down with it.
+    """
+    detail = f"{type(exc).__name__}: {exc}"
+    print(f"[PROVENANCE] core/catalog.py MISSING ({detail}) — upstream_key "
+          f"degrades to НЕРАЗПОЗНАТ for every section this cycle")
+    try:
+        from core import blackbox
+        blackbox.record("provenance", phase="degraded",
+                        missing_module="core/catalog.py",
+                        missing_symbol="normalize_upstream",
+                        error=detail,
+                        effect="every upstream_key becomes НЕРАЗПОЗНАТ; origin "
+                               "concentration and witness counts are not trustworthy")
+    except Exception as e:
+        print(f"[PROVENANCE] ...and blackbox could not record it: "
+              f"{type(e).__name__}: {e}")
+
+
 def build(snapshot: dict | None = None) -> dict:
     if snapshot is None:
         try:
@@ -278,8 +309,9 @@ def build(snapshot: dict | None = None) -> dict:
     # каноничният ключ идва от каталога — един и същ навсякъде
     try:
         from core.catalog import normalize_upstream
-    except Exception:
+    except Exception as exc:
         def normalize_upstream(x): return x or "НЕРАЗПОЗНАТ"
+        _report_catalog_missing(exc)
     hosts, ups = {}, {}
     for name, r in sections.items():
         r["upstream_key"] = normalize_upstream(r.get("upstream", ""))
