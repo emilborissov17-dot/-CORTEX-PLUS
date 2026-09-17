@@ -504,6 +504,53 @@ def awaiting_decision(limit: int = 10) -> list[dict]:
             for r in load_active() if r.get("status") in ("PROPOSED", "OVERDUE")][:limit]
 
 
+def _stagnation_map() -> dict[str, dict]:
+    """axis -> constancy row for the stagnant axes, plus the axis's primary metric
+    from target_config so a proposal can be matched by either name."""
+    try:
+        from core.alarm_bands import stagnant_axes
+        rows = {r["axis"]: dict(r) for r in stagnant_axes()}
+    except Exception:
+        return {}
+    if not rows:
+        return {}
+    try:
+        cfg = json.loads((pathlib.Path(__file__).resolve().parent / "config" / "target_config.json").read_text(encoding="utf-8"))
+        for axis, spec in cfg.items():
+            if axis in rows and isinstance(spec, dict):
+                rows[axis]["metric"] = spec.get("primary_metric") or ""
+    except Exception:
+        pass
+    return rows
+
+
+def _stagnation_axis(proposal: dict, stagnant: dict[str, dict]) -> str | None:
+    """The stagnant axis a proposal is about, by axis name or primary metric, else None."""
+    if not stagnant:
+        return None
+    text = " ".join(str(proposal.get(k) or "") for k in
+                    ("axis", "component", "measurable_goal", "problem", "solution")).lower()
+    for axis, row in stagnant.items():
+        names = [axis.lower(), axis.lower().replace("_review", ""), (row.get("metric") or "").lower()]
+        if any(n and n in text for n in names):
+            return axis
+    return None
+
+
+def prioritise_for_stagnation(proposals: list, stagnant: dict[str, dict]) -> tuple[list, int]:
+    """#59: proposals about a stagnant axis go FIRST (admitted before the cap) and are
+    raised to HIGH with `stagnation_axis` set. Stable order otherwise. Returns (list, n_raised)."""
+    first, rest, raised = [], [], 0
+    for p in proposals:
+        axis = _stagnation_axis(p, stagnant) if isinstance(p, dict) else None
+        if axis:
+            q = dict(p, priority="HIGH", stagnation_axis=axis)
+            first.append(q); raised += 1
+        else:
+            rest.append(p)
+    return first + rest, raised
+
+
 def run() -> list[dict]:
     """
     Process improvement_proposals.json:
@@ -526,6 +573,11 @@ def run() -> list[dict]:
 
     now     = datetime.now(timezone.utc)
     created = updated = skipped = duplicates = capped = 0
+    stagnant = _stagnation_map()
+    proposals, raised = prioritise_for_stagnation(list(proposals), stagnant)
+    if raised:
+        print(f"[INITIATIVE_TRACKER] #59 stagnation: {raised} proposal(s) about "
+              f"{', '.join(sorted(stagnant))} moved first and raised to HIGH")
     # A-3: ключовете на вече активните — нова инициатива за същия показател е дубликат
     active_keys = {_dedup_key(r.get("milestone", ""), r.get("problem", ""), r.get("solution", "")): r["id"]
                    for r in load_active()}
@@ -580,6 +632,7 @@ def run() -> list[dict]:
             "id":                 init_id,
             "status":             "PROPOSED",
             "priority":           proposal.get("priority", "MEDIUM"),
+            "stagnation_axis":    proposal.get("stagnation_axis"),
             "component":          proposal.get("component", "unknown"),
             "agi_characteristic": proposal.get("agi_characteristic", ""),
             "problem":            proposal.get("problem", ""),
