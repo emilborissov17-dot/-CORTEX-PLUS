@@ -136,6 +136,34 @@ def classify(source) -> str:
 # число, което не може да бъде прочетено само
 # --------------------------------------------------------------------------- #
 
+# ── K1_FRESH: WEIGHT WHOSE OBSERVATION ACTUALLY MOVED (ITEM B, 4 Sep 2026) ───
+# K1 answers "how much of the goal is measured". It cannot answer "how much of it
+# was measured RECENTLY", and until observed_at existed nothing could. Measured on
+# 4 Sep: K1 = 0.6287, and 95 of those 105 weight had not changed once in 30 cycles
+# — ENERGY publishing a 2021 number nightly, UNHCR a 2022 one, five axes 2024.
+#
+# THE HORIZON IS 30 DAYS, and the choice is not arbitrary: it is the window
+# core/consolidation.py already reads to look for drift. An observation older than
+# the window the system claims to learn over cannot have taught it anything.
+FRESH_WINDOW_DAYS = 30
+
+
+def observation_age_days(observed_at, today=None) -> float | None:
+    """Age in days of an ISO date, or None when there is no date to age.
+
+    None is not zero. An axis with no observation date is not fresh and is not
+    stale — it is unaudited, and it is counted as its own thing.
+    """
+    if not observed_at:
+        return None
+    try:
+        d = datetime.fromisoformat(str(observed_at)[:10]).date()
+    except (TypeError, ValueError):
+        return None
+    now = today or datetime.now(timezone.utc).date()
+    return float((now - d).days)
+
+
 @dataclass(frozen=True)
 class Reading:
     """
@@ -229,6 +257,9 @@ def read_provenance(path: pathlib.Path | None = None) -> tuple[dict, str | None]
             "observation_where": d.get("observation_where"),
             "observed_value":    d.get("observed_value"),
             "metric":            d.get("metric"),
+            # WHEN, not just WHAT (ITEM B, 4 Sep 2026)
+            "observed_at":       d.get("observed_at"),
+            "observed_at_why":   d.get("observed_at_why"),
         } for axis, d in obs.items()
             if isinstance(d, dict) and d.get("observation_key")}
         if prov:
@@ -276,6 +307,12 @@ class Assessment:
     measured_weight: float | None = None
     carried_weight: float = 0.0
     k1: float | None = None
+    k1_fresh: float | None = None
+    k1_fresh_why: str = ""
+    fresh_weight: float = 0.0
+    undated_weight: float = 0.0
+    max_observation_age_days: float | None = None
+    oldest_axis: str | None = None
     k1_why: str = ""
     basis_ts: str | None = None
 
@@ -289,6 +326,13 @@ class Assessment:
             # how the numerator was arrived at, or why there is no number.
             "measured_weight": self.measured_weight,
             "k1": self.k1,
+            "k1_fresh": self.k1_fresh,
+            "k1_fresh_why": self.k1_fresh_why,
+            "fresh_weight": self.fresh_weight,
+            "undated_weight": self.undated_weight,
+            "max_observation_age_days": self.max_observation_age_days,
+            "oldest_axis": self.oldest_axis,
+            "fresh_window_days": FRESH_WINDOW_DAYS,
             "k1_why": self.k1_why,
             # Carried-forward weight, published separately and deliberately NOT
             # inside measured_weight: a value carried from an earlier real
@@ -336,6 +380,9 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
 
     prov = provenance if isinstance(provenance, dict) else None
     k1_weight = 0.0
+    fresh_w = 0.0
+    undated_w = 0.0
+    ages: list = []
     carried_w = 0.0
 
     total_w = 0.0
@@ -384,15 +431,27 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
             measured_by = (prov or {}).get(axis)
             counts = (kind == MEASURED and bool(measured_by)) \
                 if prov is not None else None
+            age = observation_age_days((measured_by or {}).get("observed_at"))
             if counts:
                 k1_weight += w
+                # FRESH means the observation moved inside the window the system
+                # claims to learn over. An undated observation is not fresh and is
+                # counted separately: unaudited is its own state, not a pass.
+                if age is None:
+                    undated_w += w
+                elif age <= FRESH_WINDOW_DAYS:
+                    fresh_w += w
+                if age is not None:
+                    ages.append((age, axis))
             if kind == CARRIED:
                 carried_w += w
 
             a.by_axis[axis] = {"branch": branch, "weight": w, "kind": kind,
                                "score": raw, "source": sources.get(axis),
                                "measured_by": measured_by,
-                               "counts_toward_k1": counts}
+                               "counts_toward_k1": counts,
+                               "observed_at": (measured_by or {}).get("observed_at"),
+                               "observation_age_days": age}
             if forfeited:
                 a.by_axis[axis]["ground_truth_forfeited"] = True
                 a.by_axis[axis]["forfeit_why"] = (
@@ -439,6 +498,24 @@ def assess(scores: dict, sources: dict, targets: dict, ts: str | None = None,
         named = sum(1 for v in a.by_axis.values() if v.get("counts_toward_k1"))
         a.measured_weight = round(k1_weight, 1)
         a.k1 = round(k1_weight / total_w, 4)
+        # ── THE OTHER TWO NUMBERS (ITEM B) ──────────────────────────────────
+        a.fresh_weight = round(fresh_w, 1)
+        a.undated_weight = round(undated_w, 1)
+        a.k1_fresh = round(fresh_w / total_w, 4)
+        if ages:
+            oldest, ax = max(ages)
+            a.max_observation_age_days = oldest
+            a.oldest_axis = ax
+        a.k1_fresh_why = (
+            f"{fresh_w:.1f} of {total_w:.1f} weight rests on an observation no "
+            f"older than {FRESH_WINDOW_DAYS} days — the window consolidation reads "
+            f"for drift. {undated_w:.1f} weight counts toward K1 but carries NO "
+            f"observation date and is neither fresh nor stale, only unaudited. "
+            + (f"The oldest dated observation in the measured set is "
+               f"{a.oldest_axis} at {a.max_observation_age_days:.0f} days."
+               if a.oldest_axis else "No axis carries a date at all.")
+            + " K1 says how much of the goal is measured; k1_fresh says how much "
+              "of it was measured recently enough to have taught anything.")
         forfeits = [ax for ax, v in a.by_axis.items()
                     if v.get("ground_truth_forfeited")]
         a.k1_why = (f"{named} of {len(a.by_axis)} axes were MEASURED and named the "
