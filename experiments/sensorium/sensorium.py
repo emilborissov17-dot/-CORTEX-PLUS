@@ -57,7 +57,13 @@ GOALIMP_IN  = REPO / "memory" / "goal_impact_inbox"     # goal_impact -> brain (
 # The kinds a collector may deposit. "goal_impact" is Emil's unified measure (30 Jul 2026):
 # ONE signed, weighted composite relative to the goal/vision that carries BOTH the moving
 # scalar (for statistics/scoring) AND the rationale/dimensions/counterviews (for the brain).
-_KINDS = ("numeric", "semantic", "goal_impact")
+_KINDS = ("numeric", "semantic", "goal_impact", "audit")
+# "audit" (3 Sep 2026, Kimi ruling on brief 2026-09-03_sensorium_audit_leaves): a leaf
+# that is EVIDENCE for the chain and nothing else - a section hash from
+# source_trust.commit_sections(), a buried rejection - and has no inbox to be routed to.
+# Kimi: 'структурата трябва да носи семантиката си, а не да се налага чрез парсинг на
+# string' - so the producer now says it in the kind field, and "/" in axis is only the
+# legacy criterion for the 792 leaves already in the immutable chain from before today.
 
 
 def _now():
@@ -366,6 +372,38 @@ def expire(today: str = None) -> dict:
     return {"moved": moved, "n_moved": len(moved), "cold_dir": str(COLD_DIR.relative_to(REPO))}
 
 
+def _is_namespace_axis(axis) -> bool:
+    """LEGACY criterion only. Before 3 Sep 2026 source_trust dropped audit leaves as
+    kind="numeric" with a path-shaped axis ('indicators/co2', 'indicator/gini'); those
+    leaves are in the immutable chain and can only be recognised by shape. New audit
+    leaves carry kind="audit" (see _is_audit_leaf). Real axes are bare identifiers."""
+    return "/" in str(axis or "")
+
+
+def _is_audit_leaf(lf: dict) -> bool:
+    """Explicit kind first (the schema carries the semantics); path-shaped axis second
+    (legacy leaves that predate the kind)."""
+    return lf.get("kind") == "audit" or _is_namespace_axis(lf.get("axis"))
+
+
+DEAD_LETTER = SENS_DIR / "_dead_letter.jsonl"
+
+
+def _dead_letter(lf: dict, exc: BaseException) -> None:
+    """A leaf ingest() could not route goes HERE, structured, with the reason - not only
+    into a log line nobody reads (Kimi, 3 Sep). It is still marked consumed so one bad
+    leaf cannot re-crash the step every night; the queue is the place to re-drive it."""
+    try:
+        DEAD_LETTER.parent.mkdir(parents=True, exist_ok=True)
+        with open(DEAD_LETTER, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"ts": _now(), "id": lf.get("id"), "axis": lf.get("axis"),
+                                 "kind": lf.get("kind"), "path": lf.get("path"),
+                                 "error": f"{type(exc).__name__}: {exc}"[:300]},
+                                ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 def ingest() -> dict:
     """The cycle's light step: route each axis's newest unconsumed drop to where it's used —
 
@@ -378,55 +416,78 @@ def ingest() -> dict:
     "weighted-down" shadow data leaking into a score. The exit from the penumbra is
     promote(), by explicit human action, and nothing else."""
     if not LEAVES.exists():
-        return {"ingested": 0, "axes": {}}
+        return {"ingested": 0, "axes": {}, "audit_only": 0, "dead_letter": 0}
     leaves = [json.loads(l) for l in LEAVES.read_text(encoding="utf-8").splitlines() if l.strip()]
     consumed = set(_load(CONSUMED, {"ids": []}).get("ids", []))
     fresh = [lf for lf in leaves if lf["id"] not in consumed]
+    # AUDIT-ONLY LEAVES ARE NOT ROUTED (found 2026-09-03). core/source_trust.commit_sections
+    # (Kimi's batch commit, 15 Aug) drops one leaf per global_indicators SECTION under the
+    # namespace axis "indicators/<section>", and source_trust.bury() under "indicator/<metric>".
+    # Those are chain evidence — a section hash and its composition — not a composer scalar,
+    # and their axis is not an axis: routing one meant writing
+    # memory/browse_sources/indicators/co2.json into a directory that did not exist.
+    # That FileNotFoundError killed ingest() every night from 16 Aug to 3 Sep (18 nights),
+    # BEFORE the consumed-set was written, so 798 fresh leaves — including the real
+    # goal_impact drops for ECONOMY_WORK_REVIEW and INEQUALITY_POVERTY_REVIEW — were
+    # re-crashed on and never reached the composer or the brain. The leaf stays in the
+    # chain (verify() still covers it); it is simply marked consumed without a destination.
+    audit_only = [lf for lf in fresh if _is_audit_leaf(lf)]
+    routable   = [lf for lf in fresh if not _is_audit_leaf(lf)]
     # newest drop per (axis, kind)
     latest = {}
-    for lf in fresh:
+    for lf in routable:
         latest[(lf["axis"], lf["kind"])] = lf  # leaves are append-order = chronological
-    out = {"ingested": 0, "axes": {}}
+    out = {"ingested": 0, "axes": {}, "audit_only": len(audit_only), "dead_letter": 0}
     for (axis, kind), lf in latest.items():
-        rec = _load(REPO / lf["path"], {})
-        payload = rec.get("payload", {})
-        if kind == "goal_impact":
-            # Emil's unified measure reaches BOTH consumers from one committed drop:
-            #  (a) full vector -> goal_impact_inbox/<axis>.json  (the brain reads dimensions,
-            #      disagreements, rationale, counterviews — the meaning),
-            #  (b) the moving scalar -> browse_sources/<axis>.json shaped so the composer's
-            #      existing "file" kind reads overall_signed_weighted (the number for scoring).
-            GOALIMP_IN.mkdir(parents=True, exist_ok=True)
-            (GOALIMP_IN / f"{axis}.json").write_text(
-                json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-            COMPOSER_IN.mkdir(parents=True, exist_ok=True)
-            scalar = {
-                "metric": "goal_impact_signed_weighted",
-                "value": payload.get("overall_signed_weighted", 0.0),
-                "orientation": "higher = better",   # positive = toward the goal, by design
-                "data_date": payload.get("data_date", rec.get("ts", "")[:10]),
-                "n_components": payload.get("n", 0),
-                "source": "sensorium goal_impact drop",
-                "axis": axis,
-            }
-            (COMPOSER_IN / f"{axis}.json").write_text(
-                json.dumps(scalar, ensure_ascii=False, indent=2), encoding="utf-8")
-            a = out["axes"].setdefault(axis, {})
-            a["goal_impact"] = str((GOALIMP_IN / f"{axis}.json").relative_to(REPO))
-            a["numeric"] = str((COMPOSER_IN / f"{axis}.json").relative_to(REPO))
-            out["ingested"] += 1
-            continue
-        dest_dir = COMPOSER_IN if kind == "numeric" else SEMANTIC_IN
-        dest_dir.mkdir(parents=True, exist_ok=True)
-        (dest_dir / f"{axis}.json").write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-        out["axes"].setdefault(axis, {})[kind] = str((dest_dir / f"{axis}.json").relative_to(REPO))
-        out["ingested"] += 1
-    # mark ALL fresh drops consumed (we routed the newest; older ones are superseded)
+        try:
+            _route_one(axis, kind, lf, out)
+        except Exception as e:      # one leaf must never take the whole batch down again
+            _dead_letter(lf, e)
+            out["dead_letter"] += 1
+    # mark ALL fresh drops consumed (we routed the newest; older ones are superseded;
+    # a dead-lettered one is in the queue, not in tomorrow's crash)
     consumed |= {lf["id"] for lf in fresh}
     CONSUMED.write_text(json.dumps({"ids": sorted(consumed), "ts": _now()}, ensure_ascii=False),
                         encoding="utf-8")
     return out
+
+
+def _route_one(axis: str, kind: str, lf: dict, out: dict) -> None:
+    """Route ONE routable leaf to its consumer(s). Raises on failure; ingest() catches."""
+    rec = _load(REPO / lf["path"], {})
+    payload = rec.get("payload", {})
+    if kind == "goal_impact":
+        # Emil's unified measure reaches BOTH consumers from one committed drop:
+        #  (a) full vector -> goal_impact_inbox/<axis>.json  (the brain reads dimensions,
+        #      disagreements, rationale, counterviews — the meaning),
+        #  (b) the moving scalar -> browse_sources/<axis>.json shaped so the composer's
+        #      existing "file" kind reads overall_signed_weighted (the number for scoring).
+        GOALIMP_IN.mkdir(parents=True, exist_ok=True)
+        (GOALIMP_IN / f"{axis}.json").write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        COMPOSER_IN.mkdir(parents=True, exist_ok=True)
+        scalar = {
+            "metric": "goal_impact_signed_weighted",
+            "value": payload.get("overall_signed_weighted", 0.0),
+            "orientation": "higher = better",   # positive = toward the goal, by design
+            "data_date": payload.get("data_date", rec.get("ts", "")[:10]),
+            "n_components": payload.get("n", 0),
+            "source": "sensorium goal_impact drop",
+            "axis": axis,
+        }
+        (COMPOSER_IN / f"{axis}.json").write_text(
+            json.dumps(scalar, ensure_ascii=False, indent=2), encoding="utf-8")
+        a = out["axes"].setdefault(axis, {})
+        a["goal_impact"] = str((GOALIMP_IN / f"{axis}.json").relative_to(REPO))
+        a["numeric"] = str((COMPOSER_IN / f"{axis}.json").relative_to(REPO))
+        out["ingested"] += 1
+        return
+    dest_dir = COMPOSER_IN if kind == "numeric" else SEMANTIC_IN
+    dest = dest_dir / f"{axis}.json"
+    dest.parent.mkdir(parents=True, exist_ok=True)   # the FILE's parent, not the root
+    dest.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    out["axes"].setdefault(axis, {})[kind] = str(dest.relative_to(REPO))
+    out["ingested"] += 1
 
 
 if __name__ == "__main__":

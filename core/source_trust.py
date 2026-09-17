@@ -698,7 +698,10 @@ def commit_sections(snapshot: dict) -> dict:
                    "values": values,        # съставът, за да е проверим листът
                    "cycle_ts": snapshot.get("timestamp")}
         try:
-            ids.append(_drop(axis=f"indicators/{section}", kind="numeric",
+            # kind="audit" (3 Sep 2026): this leaf is chain evidence, not a composer
+            # scalar. ingest() used to route it like an axis drop and crashed on the
+            # path-shaped axis for 18 nights; now the kind says what it is.
+            ids.append(_drop(axis=f"indicators/{section}", kind="audit",
                              payload=payload, collector="global_indicators"))
             n += 1
         except Exception:
