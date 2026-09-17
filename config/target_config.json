@@ -202,7 +202,9 @@
       "rationale": "SDG 3.2 official target: ≤25/1,000 under-5 mortality by 2030 (WHO SDG metadata); reference_worst=100 (conservative floor; pre-industrial rates were 200-300/1,000)",
       "legacy_domain": "HUMAN",
       "score_meaning": "goodness",
-      "alarm_threshold": null
+      "alarm_threshold": null,
+      "source_url": "https://data.worldbank.org/indicator/SH.DYN.MORT",
+      "changed": "2026-09-17: the metric, its unit and its target of 25 have always been SDG 3.2's UNDER-5 mortality, but the number scored was SP.DYN.IMRT.IN — infant mortality, deaths before age one. A strictly smaller count judged against a target set for a larger one, so the axis scored about 23 points higher than the goal it declares. Now scored on SH.DYN.MORT. The score series breaks here: see config/series_breaks.json."
     },
     "SOCIAL_RELATIONS_REVIEW": {
       "primary_metric": "refugee_population",

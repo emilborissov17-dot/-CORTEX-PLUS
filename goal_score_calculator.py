@@ -205,7 +205,7 @@ def load_global_indicators() -> dict:
     wb_put("wb_EG.ELC.RNEW.ZS", "renewable_elec_pct")
     wb_put("wb_EG.FEC.RNEW.ZS", "renewable_energy_pct")   # total final energy, the declared metric
     wb_put("wb_SH.H2O.SMDW.ZS", "safe_water_access_pct")
-    put("wb_SH.DYN.MORT",       wb.get("infant_mortality_per1k"))     # APPROX: infant vs under-5
+    wb_put("wb_SH.DYN.MORT", "under5_mortality_per1k")   # SDG 3.2 under-5, the declared metric
     wb_put("wb_SI.POV.DDAY", "poverty_190_pct")
     put("wb_SE.ADT.1524.LT.ZS", wb.get("literacy_rate_adult_pct"))    # APPROX: adult vs youth
     put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None,

@@ -280,6 +280,11 @@ def fetch_world_bank() -> dict:
         "poverty_190_pct":           _wb_world("SI.POV.DDAY"),
         "life_expectancy":           _wb_world("SP.DYN.LE00.IN"),
         "infant_mortality_per1k":    _wb_world("SP.DYN.IMRT.IN"),
+        # HUMAN_WELL_BEING_REVIEW declares child_mortality_per_1000 with target 25,
+        # which is SDG 3.2's UNDER-5 figure. SP.DYN.IMRT.IN is INFANT mortality —
+        # deaths before age one — a strictly smaller number against a target set for
+        # a larger population of deaths.  (17 Sep 2026)
+        "under5_mortality_per1k":    _wb_world("SH.DYN.MORT"),
         "gini_mean":                 _wb_global_mean("SI.POV.GINI"),
         "forest_area_pct":           _wb_world("AG.LND.FRST.ZS"),
         "renewable_elec_pct":        _wb_world("EG.ELC.RNEW.ZS"),
@@ -309,6 +314,7 @@ def fetch_world_bank() -> dict:
         "poverty_190_pct":         _WB_YEARS.get("SI.POV.DDAY"),
         "life_expectancy":         _WB_YEARS.get("SP.DYN.LE00.IN"),
         "infant_mortality_per1k":  _WB_YEARS.get("SP.DYN.IMRT.IN"),
+        "under5_mortality_per1k":  _WB_YEARS.get("SH.DYN.MORT"),
         "forest_area_pct":         _WB_YEARS.get("AG.LND.FRST.ZS"),
         "renewable_elec_pct":      _WB_YEARS.get("EG.ELC.RNEW.ZS"),
         "renewable_energy_pct":    _WB_YEARS.get("EG.FEC.RNEW.ZS"),

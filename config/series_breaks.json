@@ -97,6 +97,20 @@
       "cause": "FOOD_REVIEW anchor and obs key moved from SN.ITK.DEFC.ZS (prevalence of undernourishment, PoU) to SN.ITK.SVFI.ZS (FIES prevalence of severe food insecurity)",
       "why": "target_config declares food_insecurity_pct and its rationale cites '~10% severely food insecure' against a target of 2.5. PoU measures whether the dietary energy supply is adequate; FIES measures whether people report going without food. They are different instruments with different values and the axis was scored on the one it does not name.",
       "measured_effect": "World Bank WLD, verified against the live API on 17 Sep 2026: SN.ITK.DEFC.ZS snapshot value 8.5; SN.ITK.SVFI.ZS 2024 = 10.1426518. lower_better against target 2.5: score 29.4 -> 24.6, a fall of 4.8 points."
+    },
+    {
+      "id": "2026-09-17-wellbeing-under5-not-infant",
+      "date_utc": "2026-09-17",
+      "rule": "1.3",
+      "series": [
+        "memory/goal_score_history.json :: scores.HUMAN_WELL_BEING_REVIEW",
+        "snapshots/master/goal_score_latest.json :: composite_score, coverage_of_goal",
+        "memory/composed_indicators.json :: HUMAN_WELL_BEING_REVIEW.composed.anchor"
+      ],
+      "cause": "HUMAN_WELL_BEING_REVIEW anchor and obs key moved from SP.DYN.IMRT.IN (infant mortality, deaths before age 1) to SH.DYN.MORT (under-5 mortality)",
+      "why": "target_config declares child_mortality_per_1000 with unit 'deaths per 1000 live births' and target 25, citing SDG 3.2, whose official target is under-5 mortality <=25 by 2030. Infant mortality counts a strict SUBSET of under-5 deaths, so it is always the smaller number. Scoring the subset against the superset's target made the axis look closer to the goal than it is.",
+      "measured_effect": "World Bank WLD, verified against the live API on 17 Sep 2026: SP.DYN.IMRT.IN snapshot value 27.7; SH.DYN.MORT 2024 = 37.4 (2023 = 38.3, 2022 = 40). lower_better against target 25: score 90.3 -> 66.8, a fall of 23.4 points.",
+      "over_twenty_points": "Yes, and the size is the defect rather than a surprise: under-5 mortality exceeds infant mortality by construction — it counts the same deaths plus every death between ages one and five. 37.4 against 27.7 is that gap, roughly 35% more deaths, and the axis had been graded against the smaller count while claiming the SDG 3.2 target. Nothing about child survival changed on 17 Sep 2026; the axis stopped being scored against an easier number than the one it declares."
     }
   ]
 }

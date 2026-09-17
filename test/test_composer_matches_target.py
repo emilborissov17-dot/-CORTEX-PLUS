@@ -150,6 +150,12 @@ ANCHOR_PINS = {
     "MATERIALS_WASTE_REVIEW": ("adjusted_net_savings_pct",
                                {"waste.adjusted_net_savings_pct"},
                                "same field name; World Bank NY.ADJ.SVNG.GN.ZS, set 17 Sep 2026"),
+    "HUMAN_WELL_BEING_REVIEW": ("child_mortality_per_1000",
+                                {"world_bank.under5_mortality_per1k"},
+                                "World Bank SH.DYN.MORT, under-5 mortality — the figure SDG 3.2 "
+                                "and this axis's target of 25 are stated for. Switched "
+                                "17 Sep 2026 from SP.DYN.IMRT.IN (infant, under-1), which scored "
+                                "90.3 against the new 66.8; break in config/series_breaks.json"),
     "FOOD_REVIEW": ("food_insecurity_pct",
                     {"food.food_insecurity_severe_pct"},
                     "World Bank SN.ITK.SVFI.ZS, FAO FIES severe food insecurity — the "
@@ -196,10 +202,6 @@ ANCHOR_PINS = {
 # belongs to a human. Pinned so a mismatch cannot change, spread or be added
 # silently — and so the list shrinks only by a deliberate edit.
 KNOWN_MISMATCH = {
-    "HUMAN_WELL_BEING_REVIEW": ("child_mortality_per_1000",
-                                {"world_bank.infant_mortality_per1k"},
-                                "infant mortality is under-1; SDG 3.2 and the axis target "
-                                "of 25 are under-5. Different denominators, different series"),
     "COGNITION_LEARNING_REVIEW": ("literacy_rate_youth_pct",
                                   {"world_bank.literacy_rate_adult_pct"},
                                   "adult literacy against a metric that names youth literacy"),
