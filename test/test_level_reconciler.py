@@ -183,10 +183,39 @@ def test_the_score_meaning_migration_moved_no_weight():
 
     breaks = json.loads((REPO / "config" / "series_breaks.json")
                         .read_text(encoding="utf-8"))["breaks"]
-    latest = breaks[-1]["measured_effect"]["total_weight"]
+
+    # WHY NOT breaks[-1]. It used to be, and on 17 Sep 2026 that raised
+    # `TypeError: string indices must be integers`: five instrument breaks landed
+    # after the last tree break, and an instrument break records its
+    # measured_effect as prose because it moved no weight to tabulate. The last
+    # ENTRY and the last entry that moved the WEIGHT are not the same thing, and
+    # only the second one can answer this question. Asking the newest entry was
+    # asking whichever record happened to be written most recently.
+    weighted = [b for b in breaks
+                if isinstance(b.get("measured_effect"), dict)
+                and isinstance(b["measured_effect"].get("total_weight"), dict)]
+    assert weighted, (
+        "no declared break records a total_weight before/after, so nothing on "
+        "file says how the tree reached the weight it carries")
+    latest = weighted[-1]["measured_effect"]["total_weight"]
     assert latest["after"] == TOTAL_WEIGHT, (
-        "the newest declared break does not end at the weight the tree actually "
-        f"carries ({latest['after']} vs {TOTAL_WEIGHT})")
+        "the newest weight-moving break does not end at the weight the tree "
+        f"actually carries ({latest['after']} vs {TOTAL_WEIGHT})")
+
+    # And the converse, which is the part that makes the selection above safe:
+    # a break that moved no weight must not claim one. Without this, a tree break
+    # mislabelled `instrument` would simply be skipped by the filter and its
+    # weight change would go unchecked.
+    for b in breaks:
+        if b.get("break_kind") != "instrument":
+            continue
+        eff = b.get("measured_effect")
+        moved = (isinstance(eff, dict) and isinstance(eff.get("total_weight"), dict)
+                 and eff["total_weight"].get("before") != eff["total_weight"].get("after"))
+        assert not moved, (
+            f"{b.get('id')}: declared an instrument break but records a total_weight "
+            "change. Weight moving is a tree break and rule 1.3 wants it declared "
+            "as one.")
 
 
 # 4 ---------------------------------------------------------------------------
