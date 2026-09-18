@@ -4934,3 +4934,40 @@ that made them, and a human decides whether they are baselined or repaired.
 
 TO PUSH: `git push origin experimental/self-mod` once the five are repaired or
 deliberately baselined by a human.
+
+#### RESOLVED 2026-09-18T07:55Z — four of the five repaired, pushed with the fifth still red
+
+The block above stands as written; this is its outcome. Three repair commits,
+`590c201`, `a4befb8`, `7732a91`, one concern each, and a second VALID suite run
+(07:29:07Z -> 07:55:24Z, no cycle in the window).
+
+    47 failed  ->  43 failed
+    LEFT: test_axis_tree_contract::test_every_break_names_the_fingerprint_on_both_sides
+          test_axis_tree_contract::test_the_declared_after_fingerprint_is_the_one_the_live_config_produces
+          test_level_reconciler::test_the_score_meaning_migration_moved_no_weight
+          test_script_suite[test/test_promotion_seam.py]
+    NEW:  none.
+
+Against the 14 September run — 43 failures, the same count — the list differs by
+exactly one pair: `test_origin_honesty::test_origin_honesty` is in and
+`test_script_suite[test/test_origin_honesty.py]` is out. That is one red moving
+rows, not a regression: `7628211` made the file collectable, so it now reports
+under its own name instead of through the script-style runner.
+
+PUSHED with that one failure still red, on Emil's instruction of this session:
+"push if clean except for item 4". Conditions 2 and 3 hold — no data, CSV, media
+or .env in the diff; branch `experimental/self-mod`, not master.
+
+ITEM 4 IS NOT CLOSED AND NO BASELINE ENTRY WAS ADDED FOR IT. The test is doing
+its job: 13 live sources reach the composer with no confirmed reporter class, and
+the guard's limit is 4. Emil rules per key; the assignments land in one commit
+tagged "[confirmed by Emil]". The nine in `proposed` were queued by `7ea8e84`;
+the other four — `org:GDACS`, `host:www.gdacs.org`, `org:NOAA SWPC`,
+`host:services.swpc.noaa.gov` — were registered on 16 September and never queued
+at all, so they carry no proposal to rule on.
+
+ALSO OPEN, found while checking every live source against both halves of the
+schema wall and deliberately not fixed here: `celestrak_launched_last_30d` and
+`celestrak_geostationary` are live in SPACE_INFRASTRUCTURE_REVIEW, are
+`http_json_count`, and declare no `extract`. Both fail `validate_rule`, so
+neither could be re-promoted today. It predates this batch.
