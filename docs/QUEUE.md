@@ -4880,3 +4880,57 @@ so the evidence is the control run, stated here rather than summarised.
   pending proposal is now 41.1 days. Nothing changed but the date; it will not
   self-clear, and the honest fix is to resolve or retire that proposal rather
   than widen the window.
+
+### PUSH ATTEMPT BLOCKED — 2026-09-18T06:53Z, recorded per the PUSH RULE
+
+Batch: the DAILY BOARD, four commits `5c356e4`, `991ff7c`, `ff3041b`, `f39bbdd`
+on `experimental/self-mod`. **NOTHING WAS PUSHED.** The four commits stay local.
+
+Suite VALID (lock absent at 06:25:58Z and 06:53:13Z, no cycle in the window).
+`-m "not live_state and not network and not render_sweep"`, 47 failed. Against
+the last recorded run (2026-09-14, 43 failed) **five failures are new and none
+of them is in the recorded baseline with a named cause**, so condition 1 fails.
+Conditions 2 (no data/CSV/media/.env in the diff) and 3 (branch is not master)
+both hold.
+
+NEW (5). None is caused by this batch, and the proof is mechanical rather than
+an opinion: the batch changes eight files —
+`tools/daily_board.py`, `tools/prophecy_morning.bat`, `cockpit/server.py`,
+`cockpit/templates/cockpit.html`, two new test files and two report `.md` files —
+and **not one of the five failing tests reads any of them**. None does a
+repo-wide walk; the two `ast.walk` calls in `test_axis_tree_contract.py` and
+`test_origin_honesty.py` parse named modules under `core/`. A test cannot fail
+differently because of a file it never opens.
+
+  test_axis_tree_contract::test_every_break_names_the_fingerprint_on_both_sides
+  test_axis_tree_contract::test_the_declared_after_fingerprint_is_the_one_the_live_config_produces
+    `2026-09-17-energy-total-final-not-electricity: missing a fingerprint`, and
+    the latest break record has no `config_fingerprint_after` key at all. A break
+    written on 17 Sep without the two fingerprints the contract requires.
+
+  test_level_reconciler::test_the_score_meaning_migration_moved_no_weight
+    `TypeError: string indices must be integers` summing TOTAL_WEIGHT — a weight
+    field in the live config is a string where the test expects a mapping.
+
+  test_origin_honesty::test_origin_honesty
+    One check of many: "nothing landed in unknown by accident of seeding — the
+    queue is short and named". `config/reporter_independence.json`, the nine
+    unknown reporter keys proposed in `7ea8e84`.
+    NOT NEW AS A FAILURE, ONLY AS A ROW: `test_script_suite[test/test_origin_
+    honesty.py]` LEFT the list in the same run. `7628211` made this file
+    collectable, so the same red moved from the script-style bucket into direct
+    collection. It is one failure wearing a new name, counted once.
+
+  test_script_suite[test/test_promotion_seam.py]
+    `FAIL every kind fetch() handles declares a location (11 kinds)` and
+    `...and no kind declares a location fetch() cannot read`. A source-kind
+    registry gained kinds without locations — the GDACS/SWPC registrations of
+    16 Sep are the candidates. 18 of its 20 checks PASS.
+
+NOT AMENDED INTO THE BASELINE. Every one of these has a cause worth fixing, and
+writing five entries into the baseline to clear my own push is precisely the
+routing-around the 28 August amendment warns about. They belong to the batches
+that made them, and a human decides whether they are baselined or repaired.
+
+TO PUSH: `git push origin experimental/self-mod` once the five are repaired or
+deliberately baselined by a human.
