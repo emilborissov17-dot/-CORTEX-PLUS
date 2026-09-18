@@ -80,6 +80,8 @@ SOURCES: dict[str, list[str]] = {
     "fresh": ["memory/measurement_honesty_latest.json",
               "memory/daily_tier.jsonl"],
     "local": ["memory/llm_provenance.jsonl"],
+    "institution0": ["experiments/institution/ledger.jsonl",
+                     "config/commitments.json"],
 }
 
 # ---------------------------------------------------------------------------
@@ -562,6 +564,94 @@ def row_local(repo: Path, now: datetime) -> dict:
     }
 
 
+def row_institution0(repo: Path, now: datetime) -> dict:
+    """Row 7 — institution #0 (witness stage).
+
+    Days running, the UCDP release the numbers are as_of, commitments tracked,
+    forecasts scored, and the witness bits WITH THEIR REASONS. The reasons are on
+    the board and not merely in the ledger on purpose: a bit saying a human used
+    something, with no record of what for, is a tally rather than evidence.
+    """
+    led = repo / SOURCES["institution0"][0]
+    reg_path = repo / SOURCES["institution0"][1]
+    rows = _jsonl(led)
+    reg = _json(reg_path)
+    if "commitments" not in reg:
+        raise SourceMissing(reg_path, "no commitments key in the register")
+
+    days = sorted({str(r.get("ts", ""))[:10] for r in rows if r.get("ts")})
+    commitments = [r for r in rows if r.get("kind") == "commitment"]
+    if not commitments:
+        raise SourceMissing(led, "no commitment line on the ledger")
+    as_of = commitments[-1].get("as_of", "unknown")
+    anchor = commitments[-1].get("anchor_month", "unknown")
+
+    scored = hits = 0
+    for r in commitments:
+        for a in r.get("actors", []):
+            if a.get("realized"):
+                scored += 1
+                if a.get("forecast") == a.get("realized"):
+                    hits += 1
+    hit_rate = round(hits / scored, 4) if scored else None
+
+    reasons = []
+    for r in rows:
+        if not r.get("witness"):
+            continue
+        line = "%s %s%s" % (str(r.get("ts", ""))[:10], r["witness"],
+                            (" - " + r["witness_reason"]) if r.get("witness_reason") else "")
+        if line not in reasons:
+            reasons.append(line)
+
+    today_ts = days[-1] if days else ""
+    rises = [(r["commitment_id"], a["side_a"], a["ratio"], a["null_p90"])
+             for r in commitments if str(r.get("ts", ""))[:10] == today_ts
+             for a in r.get("actors", []) if a.get("verdict") == "ABOVE_OWN_P90"]
+
+    head = ("day %d - as_of %s - month %s - %d commitments tracked - %d forecasts scored "
+            "(hit-rate %s vs persistence) - %d witness bit(s)"
+            % (len(days), as_of, anchor, len(reg["commitments"]), scored,
+               "n/a" if hit_rate is None else hit_rate, len(reasons)))
+    detail = [
+        "- source UCDP GED one-sided violence (type_of_violence=3), reporter class %s. "
+        "Counts, not causes; the attribution is UCDP's, not ours."
+        % commitments[-1].get("reporter_class"),
+        "- register: %d commitment(s), status %s - Emil confirms each"
+        % (len(reg["commitments"]),
+           "/".join(sorted({c["status"] for c in reg["commitments"]})) or "n/a"),
+        "- forecasts scored: %d, hit-rate vs persistence %s. v0 IS persistence, so a tie "
+        "there is by construction; the shuffled control is the informative comparison."
+        % (scored, "n/a - nothing matured yet, UCDP releases a month about six weeks late"
+           if hit_rate is None else hit_rate),
+        "- above its own p90 this month: %s" % (", ".join(
+            "%s/%s ratio %s vs p90 %s" % (c, a, r, p) for c, a, r, p in rises) or "none"),
+    ]
+    if reasons:
+        detail.append("- witness bits and reasons:")
+        detail += ["    " + x for x in reasons]
+    else:
+        detail.append("- witness bits and reasons: NONE YET. The bit a machine cannot "
+                      "produce is the one this experiment exists for, so its absence is "
+                      "the headline and not a footnote.")
+
+    why = []
+    if not reasons:
+        why.append("no witness bit returned yet, so nothing shows the numbers were used")
+    if rises:
+        why.append("%d actor(s) above their own p90 this month" % len(rises))
+    return {
+        "id": "institution0", "name": "institution #0 (witness stage)",
+        "ran": "ledger has %d line(s) over %d day(s); newest as_of %s"
+               % (len(rows), len(days), as_of),
+        "headline": head, "detail": detail,
+        "correction": "yes" if why else "no",
+        "why": "; ".join(why) if why else "witness bits returned and nothing above its own p90",
+        "sources": [led.relative_to(repo).as_posix(), reg_path.relative_to(repo).as_posix()],
+    }
+
+
+
 BUILDERS = [
     ("t1", "T1 transfer test", row_t1),
     ("probe", "Brain probe (scanner)", row_probe),
@@ -569,6 +659,7 @@ BUILDERS = [
     ("world", "World forecasts", row_world),
     ("fresh", "Data freshness", row_fresh),
     ("local", "Local brain alive", row_local),
+    ("institution0", "institution #0 (witness stage)", row_institution0),
 ]
 
 

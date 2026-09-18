@@ -114,6 +114,18 @@ REM --- self-predictions as still open.
 REM --- IT NEVER EXITS 2. A row whose source is unusable prints MISSING and the
 REM --- path; that is the row's correct output for the morning, not a refusal of
 REM --- the step, so REFUSAL_OK stays `no` and any non-zero here is a real failure.
+REM --- INSTITUTION #0 (WITNESS STAGE), 18 Sep 2026. Counts UCDP one-sided
+REM --- violence against civilians per commitment in config\commitments.json,
+REM --- appends to experiments\institution\ledger.jsonl, scores what matured.
+REM --- BEFORE daily_board, because board row 7 reads the ledger this writes.
+REM --- NEVER in the 03:04 cycle: this fetches ~280 MB of UCDP files on refresh
+REM --- and the cycle's memory budget is the thing that kills it.
+REM --- Exit 2 is not used here; a source it cannot read is a MISSING row, not a
+REM --- refusal of the step, so REFUSAL_OK stays `no`.
+call :step "institution0"          "%PY% tools\institution0_morning.py --write"              no
+REM --- The reply to last morning's message. Its own offset file, its own parser;
+REM --- it never touches approve_reader's, whose refusal boundary is a feature.
+call :step "institution0_witness"  "%PY% experiments\institution\witness_reader.py"          no
 call :step "daily_board"           "%PY% tools\daily_board.py --write"                       no
 
 REM --- THE PER-STEP TRACE PAGE, and why it is rendered HERE and not in the

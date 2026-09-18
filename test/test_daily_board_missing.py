@@ -53,6 +53,8 @@ ROW_SOURCES = [
     ("fresh", "memory/measurement_honesty_latest.json"),
     ("fresh", "memory/daily_tier.jsonl"),
     ("local", "memory/llm_provenance.jsonl"),
+    ("institution0", "experiments/institution/ledger.jsonl"),
+    ("institution0", "config/commitments.json"),
 ]
 
 
@@ -142,6 +144,21 @@ def repo(tmp_path: Path) -> Path:
         {"ts": TODAY + "T00:20:00+00:00", "backend": "Groq"},
         {"ts": YDAY + "T23:00:00+00:00", "backend": "local:qwen3:8b"},
     ]))
+
+    # institution #0 (witness stage): one ledger line and a one-entry register.
+    _write(tmp_path / "experiments/institution/ledger.jsonl", _lines([
+        {"ts": TODAY + "T09:00:00+00:00", "kind": "commitment",
+         "experiment": "institution #0 (witness stage)", "commitment_id": "x_2025",
+         "place": "X", "ucdp_country": "X", "commitment_title": "T", "commitment_date": "2025-01-01",
+         "register_status": "proposed_by_claude_2026-09-18", "anchor_month": "2026-07",
+         "as_of": "ucdp:26.0.7", "source": "ucdp", "reporter_class": "independent",
+         "actors": [{"side_a": "A", "ratio": 4.0, "null_p90": 2.0, "verdict": "ABOVE_OWN_P90",
+                     "forecast": "SAME", "realized": None}],
+         "actor_unknown": {"side_a": "actor_unknown (UCDP XXXnnn)"},
+         "witness": None, "witness_reason": None},
+    ]))
+    _write(tmp_path / "config/commitments.json", json.dumps(
+        {"commitments": [{"id": "x_2025", "status": "proposed_by_claude_2026-09-18"}]}))
     return tmp_path
 
 
