@@ -103,6 +103,18 @@ call :step "backend_league"         "%PY% scripts\backend_league.py --write"    
 REM --- LAST: the 14 AGI points as numbers, read from everything above (11 Sep 2026,
 REM --- Claude accountable). A number that cannot be read is "-" with a reason.
 call :step "agi_scoreboard"         "%PY% scripts\agi_scoreboard.py --write"                  no
+REM --- THE DAILY BOARD (18 Sep 2026). Emil, 17 Sep: "an experiment that does not
+REM --- show a number every day is built wrong. Long horizons are for the verdict,
+REM --- not for visibility." One row per running experiment, rewritten every
+REM --- morning into claude\reports\DAILY_BOARD.md plus a dated copy under
+REM --- claude\reports\daily_board\ that tomorrow reads for its "yesterday" column.
+REM --- AFTER agi_scoreboard, and after both --score steps, on purpose: the board
+REM --- reads what those wrote, and a board built first would show last night's
+REM --- self-predictions as still open.
+REM --- IT NEVER EXITS 2. A row whose source is unusable prints MISSING and the
+REM --- path; that is the row's correct output for the morning, not a refusal of
+REM --- the step, so REFUSAL_OK stays `no` and any non-zero here is a real failure.
+call :step "daily_board"           "%PY% tools\daily_board.py --write"                       no
 
 REM --- THE PER-STEP TRACE PAGE, and why it is rendered HERE and not in the
 REM --- cycle: the trace is only closed at process exit (recorder_stop), so a
