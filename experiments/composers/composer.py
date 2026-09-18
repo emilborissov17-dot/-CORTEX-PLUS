@@ -887,12 +887,32 @@ KIND_LOCATION = {
     "http_json_rows":    "url",
     "http_jsonstat":     "url",
     "http_sdmx":         "url",
+    # Added 18 Sep 2026, and they should have been added with the fetch() branches
+    # that read them (http_json_datemap in 1ea56ac, http_json_daily_agg in d1d9fd6).
+    # Until then validate_entry answered `unknown kind` for two kinds the composer
+    # fetches every night, so an NSIDC date-map or an SWPC daily aggregate could be
+    # read but never PROMOTED — and the refusal blamed the kind rather than our
+    # record of it.
+    "http_json_datemap":   "url",
+    "http_json_daily_agg": "url",
 }
 
 
 # The PARSING RULE each kind needs on top of its location. A source that declares where
 # it lives but not how to read it fails identically on every fetch — which is a fact about
 # OUR record, not about the provider, and must never be charged to the provider.
+#
+# HOW TO READ AN ENTRY. The value is a tuple of ALTERNATIVES, and an entry satisfies the
+# rule by satisfying ANY ONE of them:
+#   "field"                a single field carries the address
+#   ("field_a", "field_b") ALL of these are needed together — added 18 Sep 2026 for
+#                          http_json_daily_agg, which needs the date field AND the value
+#                          field and is unreadable with either one alone.
+# Before the nested form existed, a kind needing two fields could only be written as two
+# any-of alternatives, which would have accepted an entry carrying one of them — the
+# schema wall waving through a record that fetch() then refuses. That refusal arrives as
+# FAILURE_FETCH, blamed on the provider, which is precisely the defect the class split
+# below was created to stop.
 KIND_PARSE_RULE = {
     "file":              ("extract",),
     "http_json_path":    ("extract",),
@@ -907,6 +927,12 @@ KIND_PARSE_RULE = {
     "http_json_rows":    ("extract",),
     "http_jsonstat":     ("cell",),
     "http_sdmx":         ("series_key",),
+    # The whole payload IS the date -> number map, so there is no address to declare —
+    # the same situation as http_gdelt_tone, and stated rather than left absent.
+    "http_json_datemap": (),
+    # group_by names the date field and extract names the value field; fetch() raises
+    # without EITHER, so both are required together and neither alone will do.
+    "http_json_daily_agg": (("group_by", "extract"),),
 }
 
 # WHY A REFUSAL NEEDS A CLASS.
@@ -969,18 +995,25 @@ def validate_rule(entry: dict) -> bool:
     kind = entry.get("kind")
     if kind not in KIND_PARSE_RULE:
         raise PromotionRejected(f"unknown kind {kind!r} — promotion rejected")
-    fields = KIND_PARSE_RULE[kind]
-    if not fields:
+    alternatives = KIND_PARSE_RULE[kind]
+    if not alternatives:
         return True
-    for field in fields:
+
+    def declared(field: str) -> bool:
         val = entry.get(field)
         if isinstance(val, int) and not isinstance(val, bool):
             return True                  # column 0 is a real column
-        if str(val or "").strip():
+        return bool(str(val or "").strip())
+
+    named = []
+    for alt in alternatives:
+        fields = (alt,) if isinstance(alt, str) else tuple(alt)
+        if all(declared(f) for f in fields):
             return True
-    named = " or ".join(repr(f) for f in fields)
-    raise PromotionRejected(f"kind={kind} requires {named} (the parsing rule) — "
-                            f"promotion rejected")
+        named.append(repr(fields[0]) if len(fields) == 1
+                     else "(" + " and ".join(repr(f) for f in fields) + ")")
+    raise PromotionRejected(f"kind={kind} requires {' or '.join(named)} (the parsing "
+                            f"rule) — promotion rejected")
 
 
 def validate_entry(entry: dict) -> bool:

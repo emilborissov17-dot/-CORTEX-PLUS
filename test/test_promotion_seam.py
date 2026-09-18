@@ -93,6 +93,45 @@ check(f"every kind fetch() handles declares a location ({len(_HANDLED)} kinds)",
       _HANDLED and _HANDLED <= set(C.KIND_LOCATION))
 check("...and no kind declares a location fetch() cannot read",
       set(C.KIND_LOCATION) == _HANDLED)
+# THE SECOND TABLE, asked the same way and for the same reason — added 18 Sep 2026.
+# http_json_datemap and http_json_daily_agg were missing from BOTH tables and only one
+# of them was guarded, so a repair driven by the red test alone would have registered
+# the location, moved the refusal from validate_entry to validate_rule, and left the
+# two kinds exactly as unpromotable while the suite went green.
+check(f"every kind fetch() handles declares a parsing rule ({len(_HANDLED)} kinds)",
+      _HANDLED and _HANDLED <= set(C.KIND_PARSE_RULE))
+check("...and no kind declares a parsing rule fetch() cannot read",
+      set(C.KIND_PARSE_RULE) == _HANDLED)
+
+# An alternative that names two fields means BOTH, and one of them alone is not enough.
+# Without this, the nested form would read as two any-of alternatives to the next person
+# and the wall would wave through a record fetch() refuses.
+def rejected_rule(entry):
+    """validate_RULE, not validate_entry — the two halves of the wall are separate
+    functions and asserting one says nothing about the other."""
+    try:
+        C.validate_rule(entry)
+        return None
+    except C.PromotionRejected as e:
+        return str(e)
+
+
+_agg = {"kind": "http_json_daily_agg", "url": "https://x/y.json"}
+check("a rule needing two fields refuses an entry carrying only the first",
+      rejected_rule(dict(_agg, group_by="time_tag")) is not None)
+check("...and only the second",
+      rejected_rule(dict(_agg, extract="Kp")) is not None)
+check("...and accepts the entry carrying both",
+      rejected_rule(dict(_agg, group_by="time_tag", extract="Kp")) is None)
+check("...naming both in the refusal, joined by 'and', not 'or'",
+      "('group_by' and 'extract')" in (rejected_rule(dict(_agg, extract="Kp")) or ""))
+check("an any-of rule is untouched by the nested form: either column field still passes",
+      rejected_rule({"kind": "http_csv", "url": "u", "col": 0}) is None
+      and rejected_rule({"kind": "http_csv", "url": "u", "column_name": "x"}) is None
+      and rejected_rule({"kind": "http_csv", "url": "u"}) is not None)
+check("a kind with nothing to declare passes both halves on location alone",
+      rejected({"kind": "http_json_datemap", "url": "https://x/y.json"}) is None
+      and rejected_rule({"kind": "http_json_datemap", "url": "https://x/y.json"}) is None)
 
 # ---------- SMOKE TEST ----------
 ok_entry = {"id": "t", "kind": "file", "path": REL, "extract": "block.value"}
