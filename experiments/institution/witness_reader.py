@@ -14,8 +14,15 @@ WHY NOT experiments/needs/approve_reader.py. That reader exists and works, and i
 parses exactly "OK <id>" and applies exactly two action types; its docstring calls
 that a HARD BOUNDARY. Widening it so this experiment could share it would trade a
 security property for a convenience, and the property is the more valuable of the
-two. So this is a second reader with its OWN offset file — sharing
-memory/telegram_offset.json would make each reader consume the other's updates.
+two. So the dispatcher routes to it instead of widening it.
+
+AN EARLIER VERSION OF THIS FILE POLLED getUpdates ITSELF, and that was wrong.
+Giving it its own offset file aimed at the wrong mechanism: getUpdates
+acknowledges SERVER-SIDE PER BOT TOKEN, so the offset FILE was never the shared
+thing and two readers on one token cannot both work. CORTEX_Approvals runs every
+minute; it won every race and dropped the reply unrecorded. poll() now raises and
+names experiments/institution/telegram_dispatcher.py, which makes the one fetch.
+parse_reply() and apply_to_latest() below are what it calls.
 
 WHAT IS NEVER GUESSED. A reply that does not begin with one of the three words is
 recorded as `unparsed` with its text and changes no ledger line. "Yes", "did it",
@@ -132,6 +139,29 @@ def apply_to_latest(verdict: str, reason: Optional[str], ledger: Path = LEDGER) 
 
 
 def poll() -> dict:
+    """REFUSED. There must be exactly one reader of this bot token.
+
+    This function polled getUpdates with its own offset file, and on
+    18 Sep 2026 it lost every race to CORTEX_Approvals, which runs every
+    minute. getUpdates ACKs SERVER-SIDE PER TOKEN: whichever reader polls
+    first deletes the other's messages. A separate offset file does not help,
+    because the offset file was never the shared thing.
+
+    Emil's "NOTHING" was consumed and dropped within sixty seconds, because
+    approve_reader matches only OK/NO and records nothing else.
+
+    It raises rather than returning an empty result, because an empty result
+    is exactly what the broken version returned and it read as "no reply yet".
+    parse_reply() and apply_to_latest() remain and are what the dispatcher
+    calls."""
+    raise RuntimeError(
+        "witness_reader.poll() is retired: two readers cannot share one bot "
+        "token, because getUpdates acknowledges server-side per token. Use "
+        "experiments/institution/telegram_dispatcher.py, which makes ONE fetch "
+        "and routes OK/NO to approve_reader and USED/NOTHING/COUNTERMANDED here.")
+
+
+def _poll_retired_body() -> dict:
     cfg = _cfg()
     token, chat_id = cfg["token"], str(cfg["chat_id"])
     offset = _read_offset()

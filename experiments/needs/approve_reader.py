@@ -445,6 +445,23 @@ def run():
     updates = data.get("result", [])
     _mark_channel("alive", f"200 OK, {len(updates)} нови съобщения",
                   human_msgs=len(updates))
+    return apply_updates(updates, token, chat_id, offset)
+
+
+def apply_updates(updates, token, chat_id, offset=0):
+    """Apply already-FETCHED updates. Split out of run() on 18 Sep 2026.
+
+    WHY: getUpdates ACKs server-side PER BOT TOKEN. Two readers on one token
+    cannot both work however many offset files they have — whichever polls
+    first deletes the other's messages. This task runs every minute, so it won
+    every race and silently dropped every message that was not 'OK <id>'.
+    experiments/institution/telegram_dispatcher.py now owns the single fetch
+    and hands the updates here.
+
+    NOT ONE LINE OF THE DECISION LOGIC BELOW CHANGED. Only chat_id may approve,
+    only OK/NO are matched, only the three action types are applied, and
+    everything else still falls through untouched. The refusal boundary is the
+    reason this function exists rather than a widened parser."""
     max_id = offset
     applied = 0
     for u in updates:
