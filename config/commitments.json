@@ -1,0 +1,152 @@
+{
+  "_doc": [
+    "INSTITUTION #0 (WITNESS STAGE) — THE REGISTER OF COMMITMENTS BEING WATCHED.",
+    "",
+    "Nothing here is confirmed. Every entry carries status 'proposed_by_claude_2026-09-18'",
+    "and Emil confirms each one individually; until then the register is a proposal about",
+    "what to watch, not a finding about anybody.",
+    "",
+    "THE RULE FOR ENTERING (C4). A commitment enters this file only if ALL FIVE hold:",
+    "  (i)   it has a public, dated text;",
+    "  (ii)  it was signed or declared BY THE ACTOR ITSELF. A demand made ON an actor does",
+    "        not qualify — this is why UNSC 2735 is NOT here: the Security Council is not a",
+    "        party, and watching a party against somebody else's resolution measures",
+    "        compliance with a demand, not the keeping of a promise;",
+    "  (iii) it concerns civilians or a ceasefire;",
+    "  (iv)  it names actors that appear in UCDP GED `side_a`, verified against the actual",
+    "        strings in the data and recorded below EXACTLY as UCDP spells them;",
+    "  (v)   it has not been formally terminated.",
+    "",
+    "WHY (iv) IS A LIST WITH DATES AND NOT A NAME — the finding that shaped this file.",
+    "Verifying (iv) against GEDEvent_v26_1 + the 2026 candidates on 18 Sep 2026 showed",
+    "that UCDP RE-CODES actors mid-series, and two of the three entries here are affected:",
+    "",
+    "    Sudan     'RSF'  has one-sided events in 2023, 2024, 2025 and NONE in 2026.",
+    "              'SFA'  appears only from 2025 (187 events by Jul 2026).",
+    "    DR Congo  'M23'  has one-sided events in 2023 ONLY (33).",
+    "              'AFC'  runs 2023-2026 (231) — M23 joined the AFC coalition in Dec 2023.",
+    "",
+    "A register that wrote 'RSF' and watched it fall to zero in 2026 would publish the",
+    "cleanest imaginable signal that the Jeddah Declaration is being honoured, and the",
+    "signal would be an artefact of a coding decision in Uppsala. So each entry lists every",
+    "string, with the window it covers, and the ledger records WHICH string produced each",
+    "count. Where the link between two strings is our inference and not UCDP's statement,",
+    "it is marked `link: unverified` and the counts are kept SEPARATE, never summed.",
+    "",
+    "actor_unknown: UCDP codes an unidentified perpetrator as XXXnnn. Those events are",
+    "counted and reported on their own line and are NEVER charged to a party that signed",
+    "anything.",
+    "",
+    "Source names are locked so that a swap back to ACLED is one config line: the field is",
+    "`actor_strings`, and the key inside it is the source id ('ucdp' today)."
+  ],
+
+  "_register_rule_version": "c4/2026-09-18",
+  "_source": "ucdp",
+  "_verified_against": "GEDEvent_v26_1.csv + GEDEvent_v26_01_26_06.csv + GEDEvent_v26_0_7.csv, merged by id, 18 Sep 2026",
+
+  "commitments": [
+    {
+      "id": "sudan_jeddah_2023",
+      "place": "Sudan",
+      "ucdp_country": "Sudan",
+      "title": "Jeddah Declaration of Commitment to Protect the Civilians of Sudan",
+      "date": "2023-05-11",
+      "commitment_text": "The Parties commit to... ensure the protection of civilians at all times, to allow and facilitate the rapid and unimpeded passage of humanitarian relief, and to refrain from any attack that may cause civilian casualties or damage to civilian objects.",
+      "parties": ["Sudanese Armed Forces (SAF)", "Rapid Support Forces (RSF)"],
+      "guarantors": ["United States of America", "Kingdom of Saudi Arabia"],
+      "place_signed": "Jeddah, Saudi Arabia",
+      "source_url": "https://www.state.gov/jeddah-declaration-of-commitment-to-protect-the-civilians-of-sudan/",
+      "actor_strings": {
+        "ucdp": [
+          {"side_a": "Government of Sudan", "party": "Sudanese Armed Forces (SAF)",
+           "from": "2023-05-11", "to": null, "link": "verified",
+           "note": "UCDP has no 'SAF' string; the state party is 'Government of Sudan'. 53 one-sided events 2023-2026."},
+          {"side_a": "RSF", "party": "Rapid Support Forces (RSF)",
+           "from": "2023-05-11", "to": "2025-12-31", "link": "verified",
+           "note": "311 one-sided events 2023-2025 and NONE in 2026. The absence is what must not be read as compliance without the next line being settled."},
+          {"side_a": "SFA", "party": "UNRESOLVED",
+           "from": "2025-01-01", "to": null, "link": "unverified",
+           "note": "187 one-sided events 2025-2026, dyad 'SFA - Civilians'. It appears exactly as RSF's counts stop. WHETHER THIS IS THE RSF UNDER A NEW CODING IS OUR GUESS AND NOT UCDP'S STATEMENT. Counted on its own line, never summed into RSF. Emil or UCDP settles it."}
+        ]
+      },
+      "status": "proposed_by_claude_2026-09-18"
+    },
+
+    {
+      "id": "drc_washington_2025",
+      "place": "DR Congo",
+      "ucdp_country": "DR Congo (Zaire)",
+      "title": "Washington Accord — Peace Agreement between the DRC and the Republic of Rwanda",
+      "date": "2025-06-27",
+      "commitment_text": "The Parties shall cease hostilities and refrain from acts of aggression, and shall not provide support to non-state armed groups.",
+      "parties": ["Democratic Republic of the Congo", "Republic of Rwanda"],
+      "guarantors": ["United States of America", "State of Qatar", "African Union"],
+      "place_signed": "Washington, D.C., United States",
+      "source_url": "https://www.state.gov/peace-agreement-between-the-democratic-republic-of-the-congo-and-the-republic-of-rwanda/",
+      "actor_strings": {
+        "ucdp": [
+          {"side_a": "Government of DR Congo (Zaire)", "party": "Democratic Republic of the Congo",
+           "from": "2025-06-27", "to": null, "link": "verified",
+           "note": "153 one-sided events 2023-2026."},
+          {"side_a": "Government of Rwanda", "party": "Republic of Rwanda",
+           "from": "2025-06-27", "to": null, "link": "verified",
+           "note": "40 one-sided events 2023-2025, coded in DR Congo (Zaire)."}
+        ]
+      },
+      "status": "proposed_by_claude_2026-09-18"
+    },
+
+    {
+      "id": "drc_doha_2025",
+      "place": "DR Congo",
+      "ucdp_country": "DR Congo (Zaire)",
+      "title": "Doha Declaration of Principles — Government of the DRC and the AFC/M23",
+      "date": "2025-07-19",
+      "commitment_text": "The Parties commit to an immediate and permanent ceasefire, to refrain from attacks against civilians and from hate propaganda, and to the restoration of State authority.",
+      "parties": ["Democratic Republic of the Congo", "AFC/M23"],
+      "guarantors": ["State of Qatar"],
+      "place_signed": "Doha, Qatar",
+      "source_url": "https://www.mofa.gov.qa/en/all-mofa-news/details/1447/01/24/state-of-qatar-announces-signing-of-declaration-of-principles-between-drc-and-afc-m23",
+      "actor_strings": {
+        "ucdp": [
+          {"side_a": "Government of DR Congo (Zaire)", "party": "Democratic Republic of the Congo",
+           "from": "2025-07-19", "to": null, "link": "verified",
+           "note": "153 one-sided events 2023-2026."},
+          {"side_a": "AFC", "party": "AFC/M23",
+           "from": "2025-07-19", "to": null, "link": "verified",
+           "note": "231 one-sided events 2023-2026. The AFC is the coalition M23 joined in Dec 2023 and is the string UCDP uses now."},
+          {"side_a": "M23", "party": "AFC/M23",
+           "from": "2025-07-19", "to": "2023-12-31", "link": "verified",
+           "note": "33 one-sided events in 2023 ONLY. Kept so that a reader of the history sees why the M23 line stops, and NOT because events are expected under it after the commitment date."}
+        ]
+      },
+      "status": "proposed_by_claude_2026-09-18"
+    },
+
+    {
+      "id": "gaza_ceasefire_2025_01",
+      "place": "Gaza / Israel",
+      "ucdp_country": "Israel",
+      "title": "Gaza ceasefire and hostage-release agreement accepted by the parties",
+      "date": "2025-01-19",
+      "commitment_text": "A complete ceasefire, the release of hostages and detainees, the withdrawal of forces from populated areas, and the entry of humanitarian assistance at scale.",
+      "parties": ["Government of Israel", "Hamas"],
+      "guarantors": ["State of Qatar", "Arab Republic of Egypt", "United States of America"],
+      "place_signed": "Doha / Cairo (mediated)",
+      "source_url": "https://www.mofa.gov.qa/en/all-mofa-news/details/1446/07/15/joint-statement-by-the-state-of-qatar-the-arab-republic-of-egypt-and-the-united-states-of-america",
+      "not_unsc_2735_because": "UNSC 2735 (2024-06-10) is a demand made ON the parties by a body that is not a party. Rule (ii) excludes it. This entry is the agreement the parties themselves accepted.",
+      "actor_strings": {
+        "ucdp": [
+          {"side_a": "Government of Israel", "party": "Government of Israel",
+           "from": "2025-01-19", "to": null, "link": "verified",
+           "note": "150 one-sided events 2023-2026, coded under country 'Israel'."},
+          {"side_a": "Hamas", "party": "Hamas",
+           "from": "2025-01-19", "to": null, "link": "verified",
+           "note": "18 one-sided events, 2023 and 2026. UCDP codes Gaza events under country 'Israel'; there is no 'Palestine' country string in GED 26.1."}
+        ]
+      },
+      "status": "proposed_by_claude_2026-09-18"
+    }
+  ]
+}
