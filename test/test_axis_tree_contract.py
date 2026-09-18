@@ -305,9 +305,81 @@ def test_every_break_names_the_fingerprint_on_both_sides():
         before = b.get("config_fingerprint_before")
         after = b.get("config_fingerprint_after")
         assert before and after, f"{b.get('id')}: missing a fingerprint"
-        assert before != after, (
-            f"{b.get('id')}: identical fingerprints -- nothing actually broke, or "
-            "the record was copied without being updated.")
+
+
+def test_every_break_names_what_actually_changed():
+    """The assertion this replaces was `before != after`, and it was too narrow.
+
+    It encoded "every break moves the config fingerprint", which is false by
+    construction: goal_score_calculator.config_fingerprint hashes axis|weight|kind
+    and is deliberately blind to WHICH series feeds an axis. The five records of
+    17 Sep moved the instrument behind five axes and not one axis, weight or kind,
+    so their fingerprints are legitimately identical -- and rather than say so,
+    they were written with no fingerprint fields at all. A guard a true record
+    cannot satisfy is a guard that gets left empty.
+
+    So the question is asked properly instead, per break_kind, and it is STRICTER
+    than before: a record must name a CHANGE, not merely two fingerprints.
+
+      tree        the fingerprint must differ -- the tree is what moved.
+      instrument  the fingerprint must be IDENTICAL (if it moved, the tree moved
+                  too and this is not an instrument break), and the record must
+                  name a different instrument on each side.
+
+    A record that names neither a fingerprint change nor an instrument change
+    says nothing broke, and fails here whichever kind it claims.
+    """
+    for b in _breaks():
+        bid = b.get("id")
+        kind = b.get("break_kind")
+        before, after = b.get("config_fingerprint_before"), b.get("config_fingerprint_after")
+        assert kind in ("tree", "instrument"), (
+            f"{bid}: break_kind is {kind!r} -- a break must say which of the two "
+            "kinds it is, because the two are checked differently and an "
+            "instrument break is the one the mechanical guard cannot see.")
+        if kind == "tree":
+            assert before != after, (
+                f"{bid}: declared a tree break with identical fingerprints -- "
+                "nothing actually broke, or the record was copied without being "
+                "updated. If the SERIES changed and the tree did not, this is "
+                "break_kind 'instrument'.")
+        else:
+            assert before == after, (
+                f"{bid}: declared an instrument break, but the config fingerprint "
+                f"moved {before} -> {after}. A moved fingerprint means the axis "
+                "set, a weight or a kind changed, which is a tree break.")
+            ib, ia = b.get("instrument_before"), b.get("instrument_after")
+            assert ib and ia, (
+                f"{bid}: an instrument break must name the instrument on both "
+                "sides -- the fingerprint cannot, which is the whole reason this "
+                "kind exists.")
+            assert ib != ia, (
+                f"{bid}: identical instruments on both sides -- nothing broke.")
+
+
+def test_an_instrument_break_is_the_kind_nothing_in_the_code_refuses():
+    """The reason the record has to carry its weight: there is no mechanical half.
+
+    goal_score_calculator refuses to compare two composites across different
+    config_fingerprints. An instrument break leaves the fingerprint untouched, so
+    that refusal never fires and two incomparable points look comparable to every
+    consumer. This test fails if config_fingerprint ever starts covering the
+    instrument -- at which point the mechanical guard DOES see it and this file's
+    instrument kind should be revisited rather than quietly kept.
+    """
+    import goal_score_calculator as gsc
+
+    cfg = _cfg()
+    fp = gsc.config_fingerprint(cfg)
+    instrument_breaks = [b for b in _breaks() if b.get("break_kind") == "instrument"]
+    assert instrument_breaks, "no instrument break on file to check this against"
+    for b in instrument_breaks:
+        assert b["config_fingerprint_after"] == fp, (
+            f"{b['id']}: an instrument break must leave the live fingerprint where "
+            f"it was; the record says {b['config_fingerprint_after']} and the live "
+            f"config produces {fp}. Either a tree change went unrecorded, or "
+            "config_fingerprint now covers the instrument -- in which case this "
+            "break is a tree break and the record should say so.")
 
 
 def test_the_declared_after_fingerprint_is_the_one_the_live_config_produces():
