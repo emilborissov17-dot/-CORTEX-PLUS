@@ -567,7 +567,15 @@ async function tabCycle(){
       <div class="meta">Written each morning by tools/trace_report.py from the
         night's flight recorder, because the trace only closes at process exit.</div>
       <div style="margin-top:6px"><a href="/trace_latest.html" target="_blank"
-        rel="noopener">open TRACE_LATEST.html</a></div>`, true)}
+        rel="noopener">open TRACE_LATEST.html</a>
+        &nbsp;·&nbsp;
+        <a href="/daily_board.md" target="_blank"
+        rel="noopener">open DAILY_BOARD.md</a></div>
+      <div class="meta">The daily board is one row per running experiment — what ran
+        last night, today's number under the name of the statistic that produced it,
+        yesterday's copied off the previous board on disk, and whether the row needs
+        correcting. A row whose source is unusable says MISSING and names the path;
+        it never shows yesterday's number in today's column.</div>`, true)}
   </div>`;
 }
 

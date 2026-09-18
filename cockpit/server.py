@@ -1196,6 +1196,34 @@ def trace_latest_page():
                               mimetype="text/html")
 
 
+@app.get("/daily_board.md")
+def daily_board_page():
+    """One number per running experiment, as of this morning.
+
+    Served for the same reason as /trace_latest.html above: the file lives
+    outside static/ and a file:// link would not resolve for a viewer on another
+    machine.
+
+    tools/daily_board.py writes it every morning from tools/prophecy_morning.bat,
+    after agi_scoreboard. When that has not run, say so in words and name the
+    generator — serving nothing, or serving an older board under a name that
+    promises today, is the failure this route avoids. The board itself never
+    carries a stale row forward: a row whose source is unusable prints MISSING.
+
+    text/plain, not text/markdown: a browser downloads text/markdown instead of
+    showing it, and a board nobody opens is a board that is not kept.
+    """
+    p = ds.BASE / "claude" / "reports" / "DAILY_BOARD.md"
+    if not p.exists():
+        return ("claude/reports/DAILY_BOARD.md is not on disk — tools/daily_board.py "
+                "has not written it yet. Run: venv\\Scripts\\python.exe "
+                "tools/daily_board.py --write", 404,
+                {"Content-Type": "text/plain; charset=utf-8"})
+    # mimetype=, not content_type=: Flask appends its own charset to a mimetype,
+    # and spelling one here produced `text/plain; charset=utf-8; charset=utf-8`.
+    return app.response_class(p.read_text(encoding="utf-8"), mimetype="text/plain")
+
+
 @app.get("/api/glass")
 def api_glass():
     from cockpit import glass as gl
