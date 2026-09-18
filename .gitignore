@@ -346,3 +346,19 @@ data/arc_eval_400.json
 # load-bearing. Written 2026-09-17; delete the pattern if one of them earns a name.
 scripts/_probe_*.py
 scripts/_mem_sampler.py
+
+# ── ACLED CREDENTIALS, 18 Sep 2026 ───────────────────────────────────────────
+# memory/acled_credentials.txt existed UNIGNORED and UNTRACKED on a repo whose
+# origin is public (github.com/emilborissov17-dot/-CORTEX-PLUS). It was never
+# committed — `git ls-files | grep -i acled` is empty — but nothing stood between
+# it and the next `git add -A`. memory/ is not ignored wholesale here; it is
+# ignored file by file, and 366 untracked files under it were in the same
+# position, this one carrying a password.
+#
+# The second pattern is the one that matters: it covers the file that has not
+# been created yet. A rule written only for the name that bit us once is a rule
+# that waits for the next name.
+memory/acled_credentials.txt
+memory/*credential*
+memory/*secret*
+memory/acled_token.json
