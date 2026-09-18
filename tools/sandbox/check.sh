@@ -19,7 +19,11 @@ OMEGA_HOME=/home/omega
 OMEGA_DIR=$OMEGA_HOME/omega
 SCRATCH=$OMEGA_HOME/scratch
 VENV=$OMEGA_HOME/venv/bin/python
-OLLAMA=127.0.0.1:11434
+# omega talks to the PROXY, never to Ollama. The real port is named separately
+# because P12 has to prove it is now unreachable, which needs its address.
+PROXY=127.0.0.1:11435
+REAL_OLLAMA=127.0.0.1:11434
+PROXY_LOG=/var/log/omega-proxy.jsonl
 MARKER=$SCRATCH/P9_MARKER_MUST_NOT_EXIST
 FAILED=""
 
@@ -72,8 +76,8 @@ esac
 
 # --------------------------------------------------------------------- P2
 say "P2  the one allowed destination must WORK"
-R=$(asomega "curl -sS -m 10 http://$OLLAMA/api/tags")
-out "$ curl -m 10 http://$OLLAMA/api/tags" "$(echo "$R" | head -c 240)"
+R=$(asomega "curl -sS -m 10 http://$PROXY/api/tags")
+out "$ curl -m 10 http://$PROXY/api/tags   (through the proxy)" "$(echo "$R" | head -c 240)"
 case "$R" in
     *'"models"'*) ;;
     *) fail P2 "Ollama did not answer through the fence: $R" ;;
@@ -190,6 +194,14 @@ LAST=$(asomega "tail -1 $SCRATCH/turns.jsonl")
 out "turns.jsonl last line:" "$LAST"
 case "$LAST" in *'"provider": "OpenAIAPI"'*) ;; *) fail P8 "the turn was not recorded as OpenAIAPI" ;; esac
 case "$LAST" in *'"model": "qwen2.5:3b"'*) ;; *) fail P8 "the turn did not record qwen2.5:3b" ;; esac
+# The proxy saw the same call from the other side. Quoting both is what shows the
+# turn log and the proxy log are describing one request and not two.
+PL=$(tail -1 "$PROXY_LOG" 2>/dev/null)
+out "proxy log last line:" "$PL"
+case "$PL" in
+    *'"path": "/v1/chat/completions"'*) ;;
+    *) fail P8 "the proxy did not record a /v1/chat/completions call: $PL" ;;
+esac
 
 # --------------------------------------------------------------------- P9
 say "P9  the shell skill must refuse, by name, and execute nothing"
@@ -224,10 +236,79 @@ case "$R" in
 esac
 # ...and the allowed port on the SAME address still works, which is what makes
 # this a scoping proof rather than a proof that loopback is simply broken.
-R=$(asomega "curl -sS -m 10 -o /dev/null -w 'HTTP %{http_code}' http://$OLLAMA/api/tags")
-out "$ curl -m 10 http://$OLLAMA/api/tags -> $R   (same address, allowed port)"
+R=$(asomega "curl -sS -m 10 -o /dev/null -w 'HTTP %{http_code}' http://$PROXY/api/tags")
+out "$ curl -m 10 http://$PROXY/api/tags -> $R   (same address, allowed port)"
 case "$R" in HTTP\ 200*) ;; *) fail P10 "the allowed port stopped working: $R" ;; esac
 
-say "ALL TEN PROBES BEHAVED AS REQUIRED"
+# --------------------------------------------------------------------- P11
+say "P11 /api/pull must be REFUSED, and nothing may be pulled"
+# THE REASON THIS SANDBOX HAS A PROXY AT ALL. Before it, the single allowed
+# destination was a full Ollama API, and /api/pull reaches the public registry
+# through a process the fence does not see, because Ollama runs as uid 999 and
+# the fence is keyed on uid 1001.
+BEFORE=$(/usr/local/bin/ollama list | sort)
+out "ollama list BEFORE:" "$(echo "$BEFORE" | tail -n +2 | awk '{print "      " $1}')"
+R=$(asomega "curl -sS -m 10 -X POST http://$PROXY/api/pull -d '{\"name\":\"qwen3:1.7b\"}'")
+out "$ curl -X POST http://$PROXY/api/pull -d '{\"name\":\"qwen3:1.7b\"}'" "$R"
+case "$R" in
+    SANDBOX-PROXY-REFUSED*) ;;
+    *) fail P11 "the pull was not refused by the proxy: $R" ;;
+esac
+CODE=$(asomega "curl -sS -m 10 -o /dev/null -w '%{http_code}' -X POST http://$PROXY/api/pull -d '{\"name\":\"qwen3:1.7b\"}'")
+out "HTTP status: $CODE"
+[ "$CODE" = "403" ] || fail P11 "expected 403, got $CODE"
+# THE REFUSAL STRING IS NOT THE PROOF. A proxy could print it and forward anyway.
+# The model store being byte-identical is the proof.
+AFTER=$(/usr/local/bin/ollama list | sort)
+out "ollama list AFTER:" "$(echo "$AFTER" | tail -n +2 | awk '{print "      " $1}')"
+if [ "$BEFORE" = "$AFTER" ]; then
+    out "model store identical before and after: NOTHING WAS PULLED"
+else
+    fail P11 "THE MODEL STORE CHANGED — something was pulled despite the 403"
+fi
+out "proxy log:" "$(tail -2 "$PROXY_LOG")"
+
+# --------------------------------------------------------------------- P12
+say "P12 the real Ollama port must now be unreachable to omega"
+R=$(asomega "curl -sS -m 5 http://$REAL_OLLAMA/api/tags")
+out "$ curl -m 5 http://$REAL_OLLAMA/api/tags   (bypassing the proxy)" "$R"
+case "$R" in
+    *'"models"'*) fail P12 "omega reached Ollama DIRECTLY — the proxy can be bypassed" ;;
+    *"Failed to connect"*|*"Connection refused"*|*"not permitted"*) ;;
+    *) fail P12 "unexpected answer from the direct port: $R" ;;
+esac
+# ...and root still reaches it, so P12 proves the FENCE and not a dead Ollama.
+RC=$(curl -sS -m 5 -o /dev/null -w 'HTTP %{http_code}' http://$REAL_OLLAMA/api/tags 2>&1)
+out "$ (control, as ROOT) curl http://$REAL_OLLAMA/api/tags -> $RC"
+case "$RC" in
+    HTTP\ 200*) ;;
+    *) fail P12-control "Ollama is not up, so P12 proves nothing: $RC" ;;
+esac
+
+# --------------------------------------------------------------------- P13
+say "P13 the other store-changing endpoints must be REFUSED too"
+# /api/pull is the loud one. These two change the store without fetching, and an
+# allowlist that only remembered the famous endpoint would let them through.
+for SPEC in "DELETE /api/delete" "POST /api/create" "POST /api/push" "POST /api/copy"; do
+    M=${SPEC%% *}; PATHP=${SPEC#* }
+    R=$(asomega "curl -sS -m 10 -X $M http://$PROXY$PATHP -d '{\"name\":\"x\"}'")
+    C=$(asomega "curl -sS -m 10 -o /dev/null -w '%{http_code}' -X $M http://$PROXY$PATHP -d '{\"name\":\"x\"}'")
+    out "$ curl -X $M http://$PROXY$PATHP -> $C" "$R"
+    case "$R" in
+        SANDBOX-PROXY-REFUSED*) ;;
+        *) fail P13 "$M $PATHP was not refused: $R" ;;
+    esac
+    [ "$C" = "403" ] || fail P13 "$M $PATHP returned $C, not 403"
+done
+# And the traversal, because an allowlist compared against a raw string is not an
+# allowlist. /api/generate/../pull is /api/pull after normalisation.
+R=$(asomega "curl -sS -m 10 --path-as-is -X POST 'http://$PROXY/api/generate/../pull' -d '{\"name\":\"x\"}'")
+out "$ curl --path-as-is -X POST http://$PROXY/api/generate/../pull" "$R"
+case "$R" in
+    SANDBOX-PROXY-REFUSED*) ;;
+    *) fail P13 "the traversal was not refused: $R" ;;
+esac
+
+say "ALL THIRTEEN PROBES BEHAVED AS REQUIRED"
 printf 'Each printed the line the system actually produced. Nothing above is a\n'
 printf 'claim; every refusal is quoted from the process that refused.\n'

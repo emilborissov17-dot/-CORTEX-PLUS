@@ -30,7 +30,7 @@ $rc = $LASTEXITCODE
 
 Write-Host ""
 switch ($rc) {
-    0 { Write-Host "sandbox_check: all ten probes behaved as required (exit 0)" -ForegroundColor Green }
+    0 { Write-Host "sandbox_check: all thirteen probes behaved as required (exit 0)" -ForegroundColor Green }
     1 { Write-Host "sandbox_check: A PROBE FAILED (exit 1). The named probe is above. Do not weaken the fence to make it pass." -ForegroundColor Red }
     2 { Write-Host "sandbox_check: the sandbox is not built in this distro (exit 2). See tools/sandbox/README.md." -ForegroundColor Yellow }
     default { Write-Host "sandbox_check: check.sh exited $rc" -ForegroundColor Red }

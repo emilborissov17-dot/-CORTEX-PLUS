@@ -1,0 +1,49 @@
+[Unit]
+# The allowlisting proxy in front of Ollama. Installed at
+# /etc/systemd/system/omega-proxy.service; the script it runs is
+# /usr/local/sbin/omega-ollama-proxy.py (from tools/sandbox/ollama_proxy.py).
+#
+# IT MUST BE UP BEFORE THE FENCE LETS omega OUT. The fence is installed at boot
+# by /etc/wsl.conf [boot] command=, which WSL runs after systemd has started its
+# units, so ordering is satisfied by that alone. This unit does not depend on the
+# fence and the fence does not depend on this unit, deliberately: if the proxy is
+# down, omega's connections to 11435 are REFUSED and the sandbox is closed rather
+# than open. Fail-closed is the only acceptable direction for a coupling that
+# cannot be made atomic.
+Description=Omega sandbox — allowlisting proxy in front of Ollama (11435 -> 11434)
+Documentation=file:///home/emilborissov/…/tools/sandbox/README.md
+After=network.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/sbin/omega-ollama-proxy.py
+Restart=always
+RestartSec=2
+
+# Runs as root ONLY to write /var/log/omega-proxy.jsonl and to bind a port the
+# omega user must not be able to bind itself — if omega could bind 11435 it could
+# replace the proxy with something that forwards everything.
+User=root
+Group=root
+
+# It needs one outbound connection to 127.0.0.1:11434 and one log file. Nothing
+# else, so nothing else is granted.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

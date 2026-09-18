@@ -23,7 +23,8 @@ network destination.
 | guard | how |
 |---|---|
 | own OS user, no credentials, no sudo | `useradd -m -s /bin/bash omega`, `passwd -l omega`, not in group `sudo` |
-| no network except local Ollama | `fence.sh` — iptables OUTPUT, `-m owner --uid-owner omega`, ACCEPT only `127.0.0.1:11434` |
+| no network except the allowlisted Ollama endpoints | `fence.sh` — iptables OUTPUT, `-m owner --uid-owner omega`, ACCEPT only `127.0.0.1:11435`, the proxy. 11434 is REJECTED |
+| no `/api/pull` | `ollama_proxy.py` — six endpoints forwarded, everything else 403 |
 | read-only filesystem, one scratch | tree copied `root:root` 755/644; `/home/omega/scratch` `omega:omega` 700 |
 | Windows tree unreachable | `/etc/wsl.conf` `[automount] options="metadata,umask=077"` |
 | no shell skill, no file-write skill | `src/skills.pl` `shell/2` replaced by a loud refusal; the writers removed from `src/helper.py` |
@@ -54,8 +55,11 @@ nothing is exposed past WSL's own loopback. `qwen2.5:3b` was pulled into it:
 ollama pull qwen2.5:3b
 ```
 
-It is mostly CPU here — `ollama ps` reports `78%/22% CPU/GPU`, because the GPU
-has ~520 MiB free of 4096 MiB while Windows holds the rest.
+How much runs on the GPU **varies between runs and is not a property of this
+setup**: `ollama ps` reported `78%/22% CPU/GPU` once and `100% GPU` an hour
+later. The split is decided by free VRAM when the model loads, and the
+Windows-side Ollama holds most of the 4096 MiB card whenever it has a model
+resident. Do not read a timing from this box as a property of this box.
 
 ### 1. RAM, before anything else
 
@@ -67,7 +71,22 @@ oom-kill:constraint=CONSTRAINT_NONE,...,task=ollama,pid=10198,uid=999
 Out of memory: Killed process 10198 (ollama) total-vm:23467012kB
 ```
 
-`memory=3GB` → `memory=6GB` in `.wslconfig` (backup at `.wslconfig.bak.2026-09-18`).
+`memory=3GB` → `memory=6GB` in `.wslconfig`. **6 GB was then too much** and is not
+what to rebuild with: WSL2 holds host RAM up to its cap, the VM sat on 5924 MB of
+a 14188 MB machine, and the gating suite was killed by the host's low-memory
+watchdog before it wrote a byte. **Rebuild with:**
+
+```ini
+[wsl2]
+memory=5GB
+
+[experimental]
+autoMemoryReclaim=gradual
+```
+
+`autoMemoryReclaim` is what makes the cap a ceiling instead of a high-water mark
+held until the next shutdown. WSL accepted it without an unknown-key warning.
+Backups at `.wslconfig.bak.2026-09-18` and `.wslconfig.bak.2026-09-18b`.
 
 ### 2. The user and the filesystem
 
@@ -157,11 +176,44 @@ python3 -m venv --system-site-packages /home/omega/venv
 `repos/petta_lib_chromadb/lib_chromadb.py` builds a `PersistentClient` at module
 scope. `torch`, `transformers`, `sentence-transformers` and the `e5-large-v2`
 model are deliberately **not** installed — nothing the probes exercise imports
-them, and they are ~3 GB against a 6 GB VM.
+them, and they are ~3 GB against a 5 GB VM.
 
 The module is `py_landlock` (underscore); the distribution is `py-landlock`.
 
-### 6. The fence
+### 6. The proxy in front of Ollama
+
+Added 18 September 2026, after the first report named the hole. The single
+allowed destination used to be the real Ollama, which is a full API: `/api/pull`
+fetches from the public registry, and it does so as uid 999 while the fence is
+keyed on uid 1001 — so the fence would never see the packet. The agent could not
+open a socket, but it could ask Ollama to open one.
+
+```
+cp tools/sandbox/ollama_proxy.py /usr/local/sbin/omega-ollama-proxy.py
+sed -i 's/\r$//' /usr/local/sbin/omega-ollama-proxy.py && chmod 755 /usr/local/sbin/omega-ollama-proxy.py
+cp tools/sandbox/omega-proxy.service /etc/systemd/system/
+sed -i 's/\r$//' /etc/systemd/system/omega-proxy.service
+systemctl daemon-reload && systemctl enable --now omega-proxy.service
+```
+
+Six endpoints are forwarded and everything else is 403:
+`POST /v1/chat/completions`, `POST /api/chat`, `POST /api/generate`,
+`GET /api/tags`, `GET /api/version`, `GET /`. Every request, allowed or refused,
+appends one line to `/var/log/omega-proxy.jsonl`.
+
+Check it before trusting it — `python3 ollama_proxy.py --selftest` exercises the
+path normaliser, which is the guard the allowlist rests on. **It found two real
+bugs on the day it was written**, both failing closed but both wrong:
+`urlsplit('//api//generate')` reads `//api` as an authority and returns the path
+`//generate`, and `posixpath.normpath` preserves exactly two leading slashes, so
+`//api//generate` stayed `//api/generate`. The query is now split with
+`partition('?')` and leading slashes are collapsed before `normpath`.
+
+The coupling is deliberately fail-closed: stop the proxy and omega gets
+`Failed to connect to 127.0.0.1 port 11435`, not a fallback to the real API.
+Verified by stopping the unit.
+
+### 7. The fence
 
 ```
 cp tools/sandbox/fence.sh /usr/local/sbin/omega-fence.sh
@@ -197,7 +249,7 @@ After it: `free -m` shows 5924 MB, `ollama.service` comes back with a new pid,
 it takes ~30 s to bind, so a check immediately after the restart sees nothing),
 and the fence is reinstalled by `[boot] command`.
 
-### 7. The skill fence
+### 8. The skill fence
 
 Three places had to change for `shell`, because each does a different job:
 
@@ -216,14 +268,14 @@ is **kept** — it reports the policy and writes nothing.
 `/home/omega/omega` and `/home/omega/venv`, read-write `/home/omega/scratch` and
 `/dev/null`. `/tmp` is deliberately not writable.
 
-### 8. Provider and turn log
+### 9. Provider and turn log
 
 `config/config.yaml` (original at `config.yaml.orig`):
 
 ```yaml
 provider: OpenAIAPI
 commchannel: test
-openaiapi_url: "http://127.0.0.1:11434/v1/"
+openaiapi_url: "http://127.0.0.1:11435/v1/"
 openaiapi_model: "qwen2.5:3b"
 chromaDbPath: "/home/omega/scratch/chroma_db"
 memoryDirectory: "/home/omega/scratch/memory"
@@ -241,7 +293,7 @@ that raised is still a turn.
 
 ## Rebuilding on a fresh distro
 
-Run sections 1–8 in order. Section 6 must come after section 2 (the fence refuses
+Run sections 1–9 in order. Section 7 (the fence) must come after section 2 (the fence refuses
 to install for a user that does not exist, rather than looking installed and
-guarding nothing). Then `tools\sandbox_check.ps1` — ten probes, and any failure
+guarding nothing). Then `tools\sandbox_check.ps1` — thirteen probes, and any failure
 stops the run and names itself.
