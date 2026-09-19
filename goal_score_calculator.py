@@ -55,12 +55,49 @@ def _load(path: Path, default: Any = None) -> Any:
         return default if default is not None else {}
 
 
+# WHICH FILE ACTUALLY SUPPLIED A KEY (19 Sep 2026).
+#
+# last_obs is a MERGE of four files, later wins:
+#     {**load_last_obs(), **load_governance_globals(),
+#      **load_global_indicators(), **load_probed_signals()}
+# and _resolve_metric_origin reported `where: "last_observations"` for every key
+# that came out of it — the name of the VARIABLE, not of any file.
+#
+# That was a lie rather than a gap, and it was checkable: on 19 Sep 2026 all
+# sixteen axis_observations said "last_observations", while
+# data/last_observations.json was written 2026-06-17, held eight BARE SCALARS
+# with no date in it anywhere, and did not contain four of the sixteen keys at
+# all. A reader following the provenance to that file found the wrong file.
+#
+# So each loader now records the file it read, in the same order as the merge,
+# and the last writer wins exactly as the value does. A key no loader claimed
+# reports UNCLAIMED rather than inheriting a plausible-looking filename.
+_OBS_ORIGIN: dict = {}
+_OBS_ORIGIN_FIELD: dict = {}
+
+UNCLAIMED = "UNCLAIMED (no loader recorded a file for this key)"
+
+
+def _claim(key: str, file_rel: str, field: str) -> None:
+    """Record that `file_rel` supplied `key`, and which field inside it."""
+    _OBS_ORIGIN[key] = file_rel
+    _OBS_ORIGIN_FIELD[key] = field
+
+
+def observation_origins() -> tuple:
+    """(file per key, field per key) for the keys the loaders last produced."""
+    return dict(_OBS_ORIGIN), dict(_OBS_ORIGIN_FIELD)
+
+
 def load_trends() -> dict:
     return _load(TRENDS_FILE, {})
 
 
 def load_last_obs() -> dict:
-    return _load(LAST_OBS_FILE, {})
+    data = _load(LAST_OBS_FILE, {})
+    for k in data:
+        _claim(k, "data/last_observations.json", k)
+    return data
 
 
 def load_targets() -> dict:
@@ -116,6 +153,7 @@ def load_governance_globals() -> dict:
     for k in ("governance_rights_score_global", "governance_institutions_score_global"):
         _OBS_DATES[k] = when
         _OBS_DATE_WHY[k] = why
+        _claim(k, "output/wellbeing_globe.json", k.replace("_global", ""))
     return {
         "governance_rights_score_global":       data.get("governance_rights_score"),
         "governance_institutions_score_global": data.get("governance_institutions_score"),
@@ -178,7 +216,7 @@ def load_global_indicators() -> dict:
     out: dict = {}
     wb_years = wb.get("_observed_years") or {}
 
-    def put(k, v, when=None, why=None):
+    def put(k, v, when=None, why=None, field=None):
         """Record the value AND when the world was observed for it.
 
         `when` is an ISO date or None. `why` says where the date came from, or why
@@ -191,16 +229,23 @@ def load_global_indicators() -> dict:
         _OBS_DATES[k] = when
         _OBS_DATE_WHY[k] = why or (
             "the source publishes no observation date for this indicator")
+        # THE FIELD PATH INSIDE THE FILE, not the adapted key. `k` is what this
+        # function CALLS the value (wb_SE.ADT.1524.LT.ZS); `field` is where it was
+        # read from (world_bank.literacy_rate_youth_pct). Recording `k` made the
+        # provenance unfollowable — a check that opened the named file and looked
+        # for the named key found nothing, sixteen times out of sixteen.
+        _claim(k, "snapshots/master/global_indicators_latest.json", field or k)
 
     def wb_put(k, field):
         """A World Bank indicator, dated from _observed_years (a bare year)."""
         yr = wb_years.get(field)
-        put(k, wb.get(field), _year_to_date(yr),
+        put(k, wb.get(field), _year_to_date(yr), field="world_bank.%s" % field,
+            why=
             (f"World Bank _observed_years[{field}] = {yr}; a bare year is read as "
              f"31 Dec, so the age is a LOWER BOUND" if yr else
              f"World Bank returned no year for {field}"))
-    put("noaa_co2_ppm", co2.get("co2_ppm"), co2.get("co2_date"),
-        f"NOAA Mauna Loa co2_date = {co2.get('co2_date')}")
+    put("noaa_co2_ppm", co2.get("co2_ppm"), co2.get("co2_date"), field="co2.co2_ppm",
+        why=f"NOAA Mauna Loa co2_date = {co2.get('co2_date')}")
     wb_put("wb_AG.LND.FRST.ZS", "forest_area_pct")
     wb_put("wb_EG.ELC.RNEW.ZS", "renewable_elec_pct")
     wb_put("wb_EG.FEC.RNEW.ZS", "renewable_energy_pct")   # total final energy, the declared metric
@@ -208,20 +253,21 @@ def load_global_indicators() -> dict:
     wb_put("wb_SH.DYN.MORT", "under5_mortality_per1k")   # SDG 3.2 under-5, the declared metric
     wb_put("wb_SI.POV.DDAY", "poverty_intl_line_pct")
     wb_put("wb_SE.ADT.1524.LT.ZS", "literacy_rate_youth_pct")   # 15-24, the declared metric
-    put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None,
-        "World Bank WDI Food block carries no _observed_years; the source publishes annually but the fetch does not keep the year")
-    put("wb_SN.ITK.SVFI.ZS", food.get("food_insecurity_severe_pct"), None,
-        "FIES severe food insecurity, the axis's declared metric; the Food block carries no _observed_years")
+    put("wb_SN.ITK.DEFC.ZS", food.get("undernourishment_pct"), None, field="food.undernourishment_pct",
+        why="World Bank WDI Food block carries no _observed_years; the source publishes annually but the fetch does not keep the year")
+    put("wb_SN.ITK.SVFI.ZS", food.get("food_insecurity_severe_pct"), None, field="food.food_insecurity_severe_pct",
+        why="FIES severe food insecurity, the axis's declared metric; the Food block carries no _observed_years")
     r = dsp.get("refugees_millions")
     _uy = dsp.get("unhcr_year")
     put("unhcr_refugees", r * 1_000_000 if r is not None else None,
-        _year_to_date(_uy),
+        _year_to_date(_uy), field="displaced.refugees_millions",
+        why=
         (f"UNHCR unhcr_year = {_uy}; a bare year is read as 31 Dec, so the age is "
          f"a LOWER BOUND" if _uy else "UNHCR returned no year"))
-    put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"), None,
-        "World Bank WDI Economy block carries no _observed_years")
-    put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"), None,
-        "World Bank WDI Cities block carries no _observed_years")
+    put("wb_NY.GDP.MKTP.KD.ZG", econ.get("gdp_growth_annual_pct"), None, field="economy.gdp_growth_annual_pct",
+        why="World Bank WDI Economy block carries no _observed_years")
+    put("wb_SP.URB.TOTL.IN.ZS", cty.get("urban_population_pct"), None, field="cities.urban_population_pct",
+        why="World Bank WDI Cities block carries no _observed_years")
     # THE LAST TWO UNRESOLVED METRICS. _resolve_metric has mapped
     # protected_terrestrial_area_pct -> wb_ER.LND.PTLD.ZS and
     # primary_completion_rate -> wb_SE.PRM.CMPT.ZS since it was written; nothing
@@ -239,8 +285,8 @@ def load_global_indicators() -> dict:
     # whether a society is eating its future — the closest published number to
     # "materials and waste, sustainably". The Waste block carries no
     # _observed_years, so the age is unknown and said so.
-    put("wb_NY.ADJ.SVNG.GN.ZS", waste.get("adjusted_net_savings_pct"), None,
-        "World Bank WDI Waste block carries no _observed_years")
+    put("wb_NY.ADJ.SVNG.GN.ZS", waste.get("adjusted_net_savings_pct"), None, field="waste.adjusted_net_savings_pct",
+        why="World Bank WDI Waste block carries no _observed_years")
     return out
 
 
@@ -251,7 +297,10 @@ def load_probed_signals() -> dict:
     number can never move the goal. This is probe -> scoring, closed and gated."""
     data = _load(PROBED_FILE, {})
     obs = data.get("validated_obs", {}) if isinstance(data, dict) else {}
-    return {k: v for k, v in obs.items() if isinstance(v, (int, float))}
+    out = {k: v for k, v in obs.items() if isinstance(v, (int, float))}
+    for k in out:
+        _claim(k, "memory/probed_signals.json", "validated_obs.%s" % k)
+    return out
 
 
 # ── metric resolution ─────────────────────────────────────────────────────────
@@ -321,7 +370,8 @@ def _resolve_metric_origin(metric_name: str, trends: dict,
     trend_key = trend_map.get(metric_name)
     if trend_key and trends.get(trend_key):
         return float(trends[trend_key][-1]), {
-            "where": "trends", "key": trend_key,
+            "where": "cortex_memory/abstractions/trends.json", "key": trend_key,
+            "where_field": "%s[-1]" % trend_key,
             "source_id": _source_id_for(trend_key), "metric": metric_name}
 
     # last_observations keys
@@ -348,7 +398,12 @@ def _resolve_metric_origin(metric_name: str, trends: dict,
         if metric_name == "refugee_population" and float(val) == 0.0:
             return None, None  # sentinel zero, not a real count
         return float(val), {
-            "where": "last_observations", "key": obs_key,
+            # NOT "last_observations". That was the name of this dict, and this
+            # dict is a merge of four files; the one that supplied THIS key is
+            # recorded by the loader that put it there.
+            "where": _OBS_ORIGIN.get(obs_key, UNCLAIMED),
+            "where_field": _OBS_ORIGIN_FIELD.get(obs_key),
+            "key": obs_key,
             "source_id": _source_id_for(obs_key), "metric": metric_name}
 
     return None, None
@@ -642,6 +697,8 @@ def compute_goal_score(
         # two governance axes on the first attempt.
         _OBS_DATES.clear()
         _OBS_DATE_WHY.clear()
+        _OBS_ORIGIN.clear()
+        _OBS_ORIGIN_FIELD.clear()
         last_obs = {**load_last_obs(), **load_governance_globals(),
                     **load_global_indicators(), **load_probed_signals()}
     if targets is None:
@@ -770,6 +827,9 @@ def compute_goal_score(
                     "metric":            metric,
                     "observation_key":   origin["key"],
                     "observation_where": origin["where"],
+                    # WHICH FIELD INSIDE THAT FILE. "the file holds this key" is
+                    # checkable; "last_observations" was not.
+                    "observation_where_field": origin.get("where_field"),
                     "source_id":         origin["source_id"],
                     "observed_value":    current_val,
                     # WHEN THE WORLD WAS OBSERVED (ITEM B, 4 Sep 2026). Without
@@ -807,6 +867,7 @@ def compute_goal_score(
                     # measured whatever its score says.
                     "observation_key":   (origin or {}).get("key"),
                     "observation_where": (origin or {}).get("where"),
+                    "observation_where_field": (origin or {}).get("where_field"),
                     "source_id":         (origin or {}).get("source_id"),
                 }
 

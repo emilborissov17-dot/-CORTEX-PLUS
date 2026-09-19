@@ -495,8 +495,16 @@ def test_the_trends_path_would_bypass_the_conversion_and_is_empty():
     bypassed, origin = G._resolve_metric_origin(
         "refugee_population", trends={"refugees": [29.429]},
         last_obs={"unhcr_refugees": 29_429_000.0})
-    assert bypassed == 29.429 and origin["where"] == "trends", \
+    # `where` became a FILE PATH on 19 Sep 2026. It used to be the literal
+    # "trends", which named a variable rather than anything a reader could open —
+    # the same defect that had all sixteen axes claiming "last_observations".
+    # The hazard this test guards is unchanged: the trends branch winning for
+    # refugee_population and skipping the x1_000_000 conversion. So the assertion
+    # follows the new contract instead of pinning the old string.
+    assert bypassed == 29.429, \
         "the trends branch no longer wins — re-check whether this hazard still exists"
+    assert origin["where"].endswith("trends.json"), \
+        "the winning branch is no longer trends: %r" % origin["where"]
 
     live = G.load_trends().get("refugees") or []
     assert live == [], (
