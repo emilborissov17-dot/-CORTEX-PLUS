@@ -186,7 +186,7 @@ def test_a_killed_pytest_is_still_incomplete_not_clean(tmp_path):
                    write_record=False, **_isolated(tmp_path))
     assert entry["summary"] == ""
     assert entry["failed"] == []
-    assert entry["outcome"] == "INCOMPLETE", (
+    assert entry["outcome"] == sg.DID_NOT_RUN, (
         "a run that printed no summary was recorded as %r" % entry["outcome"])
 
 
@@ -261,7 +261,9 @@ def test_the_real_command_asks_pytest_where_the_time_went():
     assert "--durations=25" in cmd, (
         "the gate no longer asks pytest for its slowest tests: %r" % cmd)
     # and the flags that decide WHAT runs are untouched
-    assert "-q" in cmd and "-rf" in cmd
+    # -rA, not -rf: the baseline check needs the PASSED ids too, or a listed
+    # test that has gone green cannot be told from one that never ran.
+    assert "-q" in cmd and "-rA" in cmd
     # NOT cmd.index("-m"): the first -m is `python -m pytest`. The marker
     # selector is the LAST one, and conflating them is how this assertion
     # first read "pytest" and went red.

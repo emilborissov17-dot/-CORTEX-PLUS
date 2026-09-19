@@ -206,13 +206,16 @@ def test_record_is_dry_by_default(tmp_path):
 # Narrowing a check is exactly when it must be re-proved against the defect it
 # was built for, so all three cases are pinned here.
 
-def test_a_pytest_that_never_ran_is_INCOMPLETE_not_valid(tmp_path):
+def test_a_pytest_that_never_ran_is_DID_NOT_RUN_not_valid(tmp_path):
     """THE DEFECT THE BRANCH EXISTS FOR. A pytest that dies before printing a
     summary must not be recorded as a clean suite with zero failures."""
     p = _paths(tmp_path)
     entry = sg.run(command=[sys.executable, "-m", "pytest", "--no-such-flag"], **p)
     assert entry["summary"] == "", "this command must not produce a summary line"
-    assert entry["outcome"] == "INCOMPLETE", entry["outcome"]
+    # RENAMED 19 Sep 2026 with the outcome: "INCOMPLETE" described the run,
+    # DID_NOT_RUN describes what the reader needs to know - that the failed
+    # list means nothing. The assertion is unchanged in substance.
+    assert entry["outcome"] == sg.DID_NOT_RUN, entry["outcome"]
     assert any("NOTHING WAS MEASURED" in r for r in entry["reasons"])
 
 

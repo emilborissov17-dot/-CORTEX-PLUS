@@ -80,6 +80,20 @@ REFUSED = "REFUSED"
 INVALID = "INVALID"
 VALID = "VALID"
 
+# ── THE VERDICT NAMES ANSWER THE QUESTION THEY ARE USED FOR (19 Sep 2026) ────
+# VALID meant only "the suite executed and no cycle touched the window". It was
+# READ as "safe to push", every day, by me among others. Those are different
+# claims and the name did not distinguish them, so a run with thirty new
+# failures came back VALID and looked like a pass.
+#
+# VALID is now strictly: it ran, AND nothing failed outside test/known_failures.txt.
+RAN_CLEAN = VALID
+RAN_WITH_NEW_FAILURES = "RAN_WITH_NEW_FAILURES"
+DID_NOT_RUN = "DID_NOT_RUN"
+
+# THE BASELINE IS A COMMITTED FILE, and the only one.
+KNOWN_FAILURES = BASE / "test" / "known_failures.txt"
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -161,6 +175,34 @@ def cycle_is_live(state: dict) -> bool:
     return False
 
 
+def load_known_failures(path: pathlib.Path | None = None) -> dict:
+    """The committed baseline: node id -> the reason someone wrote beside it.
+
+    WHY A FILE AND NOT THE LAST RUN. Until today run() compared its failed set to
+    the PREVIOUS record in memory/suite_runs.jsonl, so the baseline was written by
+    the run it judged. A failure was "new" exactly once and known forever after,
+    with no human in the loop. Over the 58 recorded runs, 57 VALID, TWENTY of them
+    admitted ids the previous run did not: +19 on 09-03, +23 on 09-06, +30 on
+    09-08, +18 on 09-14, +5 on 09-18. A ratchet, not a baseline.
+
+    Nothing in this module writes this file. It is edited by a person, in a commit,
+    with the reason on the line.
+    """
+    p = path or KNOWN_FAILURES
+    out = {}
+    if not p.exists():
+        return out
+    for line in p.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        node, _, why = line.partition("#")
+        node = node.strip()
+        if node:
+            out[node] = why.strip()
+    return out
+
+
 def verdict(before: dict, after: dict) -> dict:
     """Compare two readings. The reason is a sentence, not a flag, because the
     next reader needs to know WHICH change happened."""
@@ -228,13 +270,36 @@ def format_verdict(v: dict) -> str:
             f"  alive={s.get('pid_alive')}"
             f"  hb_cycle={s.get('heartbeat_cycle_id')!r}"
             f"  hb_step={s.get('heartbeat_step')!r}")
-    if v["outcome"] == VALID:
-        lines.append("  no cycle touched this window. NOTE: scheduled tasks "
-                     "(CORTEX_Approvals every 1 min, CORTEX_Pulse every 5) still "
-                     "write under memory/ — VALID means no CYCLE, not no writer.")
+    nf = v.get("new_failures")
+    if nf:
+        lines.append("  NEW FAILURES, not in %s (%d):" % (
+            v.get("baseline_file") or "the baseline file", len(nf)))
+        for n in nf[:25]:
+            lines.append("    + %s" % n)
+        if len(nf) > 25:
+            lines.append("    ... and %d more" % (len(nf) - 25))
+    for n in (v.get("baseline_now_green") or [])[:25]:
+        lines.append("    - %s  GREEN: remove this line from the baseline" % n)
+    for n in (v.get("baseline_vanished") or [])[:25]:
+        lines.append("    ? %s  no longer exists: the line protects nothing" % n)
+
+    if v["outcome"] == RAN_CLEAN:
+        lines.append("  ran, and every failure is listed in %s (%s entries). "
+                     "NOTE: scheduled tasks (CORTEX_Approvals every 1 min, "
+                     "CORTEX_Pulse every 5) still write under memory/ — this "
+                     "says no CYCLE, not no writer."
+                     % (v.get("baseline_file"), v.get("baseline_size")))
+    elif v["outcome"] == RAN_WITH_NEW_FAILURES:
+        lines.append("  the suite ran and produced failures nobody has accepted. "
+                     "DO NOT push. Fix them, or add each id to %s with a reason "
+                     "in the same commit."
+                     % (v.get("baseline_file") or "the baseline file"))
+    elif v["outcome"] == DID_NOT_RUN:
+        lines.append("  the suite did not finish. failed=[] here means NOTHING "
+                     "WAS MEASURED, not that nothing failed.")
     else:
-        lines.append("  DO NOT compare this run to the baseline and DO NOT let "
-                     "it gate a commit.")
+        lines.append("  DO NOT let this gate a commit: the window was not clean, "
+                     "so the numbers cannot be trusted whatever pytest printed.")
     return "\n".join(lines)
 
 
@@ -321,7 +386,8 @@ def run(pytest_args=None, write_record: bool = True,
         heartbeat: pathlib.Path | None = None,
         last_sealed: pathlib.Path | None = None,
         runs_path: pathlib.Path | None = None,
-        command=None) -> dict:
+        command=None,
+        known_path: pathlib.Path | None = None) -> dict:
     """Read, run, read, judge, record. Returns the full run record.
 
     `command` is injectable so a fixture can substitute something that writes a
@@ -346,7 +412,9 @@ def run(pytest_args=None, write_record: bool = True,
     # that goes red because a cycle refused overnight is not a gate, and a
     # baseline amended after every cycle is a tolerance log.
     # --durations=25: 37 minutes went somewhere and nothing recorded where.
-    cmd = command or [sys.executable, "-m", "pytest", "-q", "-rf",
+    # -rA, not -rf: the short summary must list the PASSED ids too, or a baseline
+    # entry that has gone green is indistinguishable from one that never ran.
+    cmd = command or [sys.executable, "-m", "pytest", "-q", "-rA",
                       "--durations=25",
                       "-m", "not live_state",
                       *(pytest_args or [])]
@@ -361,6 +429,14 @@ def run(pytest_args=None, write_record: bool = True,
             break
     failed = sorted(l.split(" ")[1] for l in (proc.stdout or "").splitlines()
                     if l.startswith("FAILED ") and len(l.split(" ")) > 1)
+    # Every node id this run actually reached, from the -rA short summary. Needed
+    # to tell "a baseline entry passed" from "a baseline entry was not run at
+    # all" -- silently treating the second as the first is how a deleted test
+    # keeps protecting nothing.
+    ran_ids = {l.split(" ")[1] for l in (proc.stdout or "").splitlines()
+               if l.split(" ")[0] in ("PASSED", "FAILED", "ERROR", "XFAIL",
+                                      "XPASS", "SKIPPED")
+               and len(l.split(" ")) > 1}
 
     # ── A COLLECTION ERROR IS NOT A RED COUNT (6 Sep 2026) ──────────────────
     # Broker-bot, a separate project vendored into the tree, appeared at 11:57
@@ -409,11 +485,11 @@ def run(pytest_args=None, write_record: bool = True,
     ran_pytest = any("pytest" in str(c) for c in (cmd if isinstance(cmd, list) else [cmd]))
     if ran_pytest and not summary:
         reasons.append(
-            f"INCOMPLETE: pytest printed no summary line (returncode "
+            f"DID_NOT_RUN: pytest printed no summary line (returncode "
             f"{proc.returncode}), so the run did not finish. failed=[] here "
             f"means NOTHING WAS MEASURED, not that nothing failed.")
         if outcome == VALID:
-            outcome = "INCOMPLETE"
+            outcome = DID_NOT_RUN
 
     if collect_errors or interrupted:
         outcome = "COLLECTION_FAILED"
@@ -423,10 +499,50 @@ def run(pytest_args=None, write_record: bool = True,
             + ", ".join(collect_errors[:6])
             + (" ..." if len(collect_errors) > 6 else ""))
 
+    # ── THE BASELINE COMPARISON, AGAINST THE COMMITTED FILE AND NOTHING ELSE ──
+    known = load_known_failures(known_path)
+    failed_set = set(failed)
+    new_failures = sorted(failed_set - set(known))
+    # A listed test that PASSES is not a quiet win. The line is a debt someone
+    # took on; when it is paid the line must go, or the file rots into a list of
+    # things that used to be broken and the next real failure hides among them.
+    now_green = sorted(n for n in known if n not in failed_set and n in ran_ids) if ran_ids else []
+    # An id in the file that pytest no longer knows about: renamed, deleted, or
+    # misspelled. Either way it is protecting nothing.
+    vanished = sorted(n for n in known if ran_ids and n not in ran_ids) if ran_ids else []
+
+    if ran_pytest and summary:
+        if new_failures:
+            outcome = RAN_WITH_NEW_FAILURES
+            reasons.append(
+                "%d failure(s) are NOT in %s: %s"
+                % (len(new_failures), KNOWN_FAILURES.name,
+                   ", ".join(new_failures[:10])
+                   + (" ..." if len(new_failures) > 10 else "")))
+        elif outcome == VALID:
+            outcome = RAN_CLEAN
+    if now_green:
+        reasons.append(
+            "%d baseline entr%s GREEN — remove from %s: %s"
+            % (len(now_green), "y is" if len(now_green) == 1 else "ies are",
+               KNOWN_FAILURES.name, ", ".join(now_green[:10])
+               + (" ..." if len(now_green) > 10 else "")))
+    if vanished:
+        reasons.append(
+            "%d id(s) in %s no longer exist (renamed or deleted) and protect "
+            "nothing: %s"
+            % (len(vanished), KNOWN_FAILURES.name, ", ".join(vanished[:10])
+               + (" ..." if len(vanished) > 10 else "")))
+
     entry = {"ts": _now(), "outcome": outcome, "reasons": reasons,
              "before": before, "after": after,
              "returncode": proc.returncode, "summary": summary,
              "failed": failed, "collection_errors": collect_errors,
+             "new_failures": new_failures,
+             "baseline_now_green": now_green,
+             "baseline_vanished": vanished,
+             "baseline_file": str(KNOWN_FAILURES.relative_to(BASE)).replace("\\", "/"),
+             "baseline_size": len(known),
              "command": cmd}
     record(entry, write=write_record, path=runs_path)
     entry["_stdout"] = proc.stdout
