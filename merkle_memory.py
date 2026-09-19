@@ -153,9 +153,18 @@ class MerkleMemory:
         signals: list,
         decisions: list,
         results: list,
-        goal_score: float = 0.0,
+        goal_score: float | None = 0.0,
     ):
-        """Главна точка — извиква се в края на всеки цикъл."""
+        """Главна точка — извиква се в края на всеки цикъл.
+
+        goal_score=None означава ЗАДЪРЖАН композит (19 септ 2026): покритието е
+        под прага и goal_score_calculator отказва да публикува число. Тогава
+        цикълът СЕ ЗАПЕЧАТВА — веригата е одит и мълчанието в нея е по-лошо от
+        празен ред — но числото НЕ влиза нито в тренда, нито в средното, нито в
+        рекорда. Нула на негово място би била измислена ниска оценка в
+        собствената история на системата, тоест точно измаменото число, заради
+        което композитът започна да отказва.
+        """
         ts = datetime.now(timezone.utc).isoformat()
 
         # 1. Архивирай цикъла
@@ -203,7 +212,8 @@ class MerkleMemory:
         self._save_json(STATE_FILE, self._state)
         MERKLE_ROOT.write_text(new_root, encoding="utf-8")
 
-        log.info(f"MerkleMemory: cycle={cycle_num} | root={new_root[:12]}... | goal={goal_score:.3f}")
+        _g = f"{goal_score:.3f}" if goal_score is not None else "WITHHELD"
+        log.info(f"MerkleMemory: cycle={cycle_num} | root={new_root[:12]}... | goal={_g}")
 
     # ── archive ───────────────────────────────────────────────────────────────
 
@@ -239,7 +249,10 @@ class MerkleMemory:
         })
         self._save_json(cycle_dir / "results.json", {
             "cycle_id": cycle_id,
+            # null here MEANS withheld, and the flag beside it says so in a word
+            # a reader cannot mistake for a missing key or a failed write.
             "goal_score": goal_score,
+            "goal_withheld": goal_score is None,
             "count": len(results),
             "results": results if isinstance(results, list) else [],
         })
@@ -303,8 +316,14 @@ class MerkleMemory:
 
         self._trends["cycle_count"] += 1
 
-        # goal_score — date-keyed: overwrite same-day, append new day
-        if dates.get("goal_score") == today and self._trends["goal_score"]:
+        # goal_score — date-keyed: overwrite same-day, append new day.
+        # A WITHHELD COMPOSITE LEAVES NO ROW. There is no goal score for this
+        # cycle, so the series must not gain a point; a 0.0 here would read
+        # forever after as "the world scored zero that day" and would drag every
+        # average and every forecast baseline computed from this series.
+        if goal_score is None:
+            log.info("MerkleMemory: goal composite WITHHELD — no trend row written")
+        elif dates.get("goal_score") == today and self._trends["goal_score"]:
             self._trends["goal_score"][-1] = round(goal_score, 4)
         else:
             self._trends["goal_score"].append(round(goal_score, 4))
@@ -353,13 +372,21 @@ class MerkleMemory:
         p = self._profile
         p["total_cycles"] = cycle_num
 
-        # Rolling avg goal score
+        # Rolling avg goal score. Withheld means the cycle contributes NOTHING
+        # to it — not zero. The count of cycles that did contribute is kept
+        # separately, because a rolling average whose denominator silently
+        # includes cycles that had no number is not an average of anything.
         n = cycle_num
-        p["avg_goal_score"] = round(
-            (p.get("avg_goal_score", 0.0) * (n - 1) + goal_score) / n, 4
-        )
-        if goal_score > p.get("best_goal_score", 0.0):
-            p["best_goal_score"] = round(goal_score, 4)
+        if goal_score is None:
+            p["goal_withheld_cycles"] = int(p.get("goal_withheld_cycles", 0)) + 1
+        else:
+            k = int(p.get("goal_scored_cycles", max(0, n - 1))) + 1
+            p["avg_goal_score"] = round(
+                (p.get("avg_goal_score", 0.0) * (k - 1) + goal_score) / k, 4
+            )
+            p["goal_scored_cycles"] = k
+            if goal_score > p.get("best_goal_score", 0.0):
+                p["best_goal_score"] = round(goal_score, 4)
 
         # Sensor reliability — брой сигнали по source
         source_counts: dict = p.get("sensor_reliability", {})
@@ -428,7 +455,9 @@ class MerkleMemory:
 
         lines = [
             "# CORTEX STATE ESSENCE",
-            f"> {ts_short} | цикъл: {cycle_id} | goal: {goal_score:.3f}",
+            f"> {ts_short} | цикъл: {cycle_id} | goal: "
+            + (f"{goal_score:.3f}" if goal_score is not None
+               else "ЗАДЪРЖАН (покритието под прага)"),
             "",
             "## СИСТЕМА",
             f"- Цикли: {p['total_cycles']} | avg goal: {p['avg_goal_score']:.3f} | best: {p['best_goal_score']:.3f}",

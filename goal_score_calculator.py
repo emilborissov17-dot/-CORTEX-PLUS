@@ -674,6 +674,40 @@ def format_headline(res: dict) -> str:
     n_sem = len(res.get("semantic_axes") or {})
     n_unassessed = sum(1 for v in (res.get("semantic_axes") or {}).values()
                        if not (v.get("reading") or {}).get("assessed"))
+
+    # ── A WITHHELD COMPOSITE IS NOT A CRASH AND NOT A NUMBER (19 Sep 2026) ────
+    # Earlier today composite_score began returning None below the coverage
+    # threshold, and this line went on formatting it with :.4f. At 14:10:27 the
+    # live cycle died here -- step 35, TypeError: unsupported format string
+    # passed to NoneType.__format__ -- and because `composite` had already been
+    # assigned None in the runner, the Merkle commitment at step 61 failed too.
+    # The refusal was tested; not one test called its only formatter.
+    #
+    # So the headline SAYS SO. It prints WITHHELD, the value that was withheld,
+    # and the coverage that caused it. That is strictly more information than the
+    # number was carrying, and it cannot be mistaken for a score by anything that
+    # reads it -- including a human skimming a log.
+    #
+    # The forbidden repair is printing 0.0, the withheld value bare, or the last
+    # known composite. A consumer that wants a number when there is none must
+    # refuse in turn, never substitute.
+    _c = res.get("composite_score")
+    if _c is None:
+        _w = res.get("composite_score_withheld")
+        _wtxt = f"{_w:.4f}" if isinstance(_w, (int, float)) else "n/a"
+        # COVERAGE_MIN is local to compute_goal_score; the package carries the
+        # value. If it is absent the threshold is UNKNOWN and says so -- it is
+        # not re-guessed here, because a second copy of a threshold is how two
+        # thresholds start disagreeing.
+        _cm = res.get("coverage_min")
+        _min = f"{_cm:.0%}" if isinstance(_cm, (int, float)) else "n/a"
+        return (f"композит WITHHELD (изчислен {_wtxt}, не се публикува) "
+                f"| {res['coverage_of_measurable']:.0%} от измеримото "
+                f"(сетива {'ОК' if res['sensors_ok'] else 'НЕ'}) "
+                f"| {res['coverage_of_goal']:.0%} от целта < {_min} праг "
+                f"(покрита НЕ) "
+                f"| {n_sem} семантични оси извън числото, {n_unassessed} от тях неоценени")
+
     return (f"композит {res['composite_score']:.4f} "
             f"| {res['coverage_of_measurable']:.0%} от измеримото "
             f"(сетива {'ОК' if res['sensors_ok'] else 'НЕ'}) "
@@ -926,10 +960,15 @@ def compute_goal_score(
     unassessed = sorted(a for a, v in semantic_axes.items()
                         if not (v.get("reading") or {}).get("assessed"))
 
-    # ЗА СЪВМЕСТИМОСТ: composite_score остава ЧИСЛО, защото цикълът, Merkle
-    # ангажиментът и отчетите го четат — но вече е средно САМО от измереното, а не
-    # разредено с константи и без семантичните оси. Дали бива да се чете като
-    # истина, казват ДВАТА флага, и то само заедно.
+    # БЕЛЕЖКАТА ОТ 15 АВГ Е ВЕЧЕ НЕВЯРНА, 19 септ 2026. Тя гласеше:
+    # „composite_score остава ЧИСЛО, защото цикълът, Merkle ангажиментът и
+    # отчетите го четат." Днес числото се ЗАДЪРЖА под прага и точно тези трима
+    # консуматора се счупиха — цикълът на стъпка 35, Merkle на стъпка 61.
+    # Коментарът остана да стои над променено поведение цял един цикъл; това е
+    # същата остаряла проза, която този файл махна другаде в същия ден.
+    # Композитът е средно САМО от измереното, а дали бива да се чете като истина
+    # казват ДВАТА флага, и то само заедно. Кой какво прави, когато е WITHHELD,
+    # е изброено в docstring-а на format_headline.
     composite = measured_composite if measured_composite is not None else 0.0
 
     return {

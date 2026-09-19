@@ -3182,7 +3182,10 @@ def main():
     _run("axis_history", lambda: _axis_history_step())
 
     beat("goal_score_calculator", "12.6")
-    composite = 0.0  # initialized here so MerkleMemory commit can read it at step 24
+    # None, not 0.0. The old initialiser meant that a goal_score_calculator which
+    # never ran still handed MerkleMemory a number at step 24, and 0.0 is a score.
+    # None is the honest starting value: nothing has been computed yet.
+    composite = None
     def _goal_score_calculator():
         nonlocal composite
         from goal_score_calculator import compute_goal_score, format_headline
@@ -3687,10 +3690,17 @@ def main():
             signals   = _signals,
             decisions = _decisions,
             results   = _patch_results + _quarantine_events + _existence_anchor,
-            goal_score = float(composite),
+            # WITHHELD PASSES THROUGH AS None, NOT AS A NUMBER (19 Sep 2026).
+            # float(None) raised here at 14:10 and the whole commit was lost to
+            # the surrounding except -- the night sealed nothing. float(composite
+            # or 0.0) would have been worse: a fabricated 0.0 in the trend series
+            # and in avg_goal_score, which is the invented number the composite
+            # started refusing in order to prevent.
+            goal_score = (None if composite is None else float(composite)),
         ))
+        _goal_txt = "WITHHELD" if composite is None else f"{composite:.4f}"
         print(f"[FAST_CYCLE] MerkleMemory -> committed | signals={len(_signals)} decisions={len(_decisions)} "
-              f"results={len(_patch_results)} quarantined={len(_quarantine_events)} goal={composite:.4f}")
+              f"results={len(_patch_results)} quarantined={len(_quarantine_events)} goal={_goal_txt}")
         if _existence_anchor:
             print(f"[FAST_CYCLE] existence anchored | head={_existence_anchor[0]['ledger_head_hash'][:12]}... "
                   f"| events={_existence_anchor[0]['ledger_events']}")

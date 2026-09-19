@@ -679,6 +679,25 @@ def cmd_self() -> dict:
     """One autonomous pass the scheduler runs each cycle. No external stepping."""
     composite, axis_scores, weights, ctx = _live_goal()
 
+    # ── A FORECAST OF A NUMBER THAT DOES NOT EXIST IS NOT A FORECAST ─────────
+    # 19 Sep 2026. goal_score_calculator withholds composite_score when coverage
+    # is below the threshold, and every path below treats it as a float:
+    # _log_goal_vector rounds it, _react and _seal_next feed it to
+    # forecast_baselines as the current value. Each would raise TypeError, and
+    # the tempting repairs are both wrong -- `composite or 0.0` seals a
+    # prediction against a fabricated zero, and carrying yesterday's composite
+    # forward seals one against a number that is not today's.
+    #
+    # So this REFUSES, loudly, and seals nothing. A night with no publishable
+    # composite is a night with nothing to predict about it, and the scoreboard
+    # must show a gap rather than a guess.
+    if composite is None:
+        why = (f"composite WITHHELD: coverage_of_goal "
+               f"{ctx.get('coverage_of_goal')} below threshold — nothing to "
+               f"forecast and nothing to grade against")
+        print(json.dumps({"REFUSED": why, "sealed": 0}, ensure_ascii=False, indent=2))
+        return {"refused": why, "sealed": 0, "graded": 0}
+
     grading = _score_matured(ctx)         # 1. grade ONLY what is comparable to today
     graded = grading["scored"]
     best = best_baseline(fingerprint=ctx.get("config_fingerprint"))   # 2. pick the best baseline — from THIS world's evidence only
