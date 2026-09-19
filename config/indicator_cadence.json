@@ -111,6 +111,12 @@
       "source": "NOAA SWPC planetary K-index, reduced to a daily max at ingest",
       "decided": "2026-09-17: the axis had no cadence declaration and no daily source. Kp is published 3-hourly and 'three-hourly' is NOT one of the five allowed cadence words in this file, so the feed is aggregated to one value per UTC day at ingest and 'daily' is then true of what is stored rather than true of a note. Decided by Claude under Emil's delegation of 17 Sep 2026.",
       "note": "event_daily only. Kp feeds no score: the axis declares no primary_metric and this slot is the weak/fast one by definition."
+    },
+    "MATERIALS_WASTE_REVIEW": {
+      "cadence": "annual",
+      "last_observed_from": "world_bank._observed_years.adjusted_net_savings_pct",
+      "source": "World Bank WDI — adjusted net savings, percent of GNI (NY.ADJ.SVNG.GN.ZS)",
+      "note": "Declared 19 Sep 2026. Same World Bank WDI annual series as the eleven axes above it; goal_score_calculator reads it as wb_NY.ADJ.SVNG.GN.ZS. Its _observed_years entry is currently absent, so last_observed reads None and the series shows as overdue — which is the honest state, not a default."
     }
   },
   "org_cadence": {

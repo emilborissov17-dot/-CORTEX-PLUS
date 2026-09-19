@@ -262,3 +262,67 @@ def test_how_many_of_the_thirteen_are_usable_tonight():
             usable.append(k)
     assert sorted(usable) == ["CLIMATE_GLOBAL_RISK_REVIEW",
                               "PLANETARY_POTENTIAL_REVIEW"], sorted(usable)
+
+
+# ── THE GUARD IS WIRED, not merely present (19 Sep 2026) ────────────────────
+
+def test_the_composer_loads_specs_through_the_cadence_gate(tmp_path, monkeypatch):
+    """THE ONE THAT FAILS AGAINST THE OLD CODE.
+
+    The assertion below is the claim; this note is only the history. Until
+    today `grep -rn "load_specs"` found exactly ONE
+    caller in the repo: this test file. experiments/composers/composer.py read
+    SPEC_FILE directly, so a source promoted without a cadence loaded normally
+    and nothing could judge whether its number was current.
+
+    That is how WATER_REVIEW/anchor_annual/promoted_27965 got in:
+    core/source_lifecycle.py promotes on a clean streak and never asks for a
+    cadence, and the one function that would have refused it was not called.
+    """
+    from experiments.composers import composer as C
+
+    bad = tmp_path / "composer_specs.json"
+    bad.write_text(json.dumps({
+        "WATER_REVIEW": {"portfolio": {"anchor_annual": {"sources": [
+            {"id": "no_cadence_here", "kind": "http_json_path",
+             "url": "https://example.invalid/x", "org": "World Bank"}]}}}
+    }), encoding="utf-8")
+    monkeypatch.setattr(C, "SPEC_FILE", bad)
+
+    with pytest.raises(cd.CadenceError) as exc:
+        C.compose("WATER_REVIEW")
+    assert "no_cadence_here" in str(exc.value), exc.value
+
+
+def test_a_fully_declared_spec_file_still_composes(tmp_path, monkeypatch):
+    """Mutation guard: the refusal must be conditional. If compose() raised for
+    every spec file, the gate would be a wall and the axis would never build."""
+    from experiments.composers import composer as C
+
+    good = tmp_path / "composer_specs.json"
+    good.write_text(json.dumps({
+        "WATER_REVIEW": {"portfolio": {"anchor_annual": {"sources": [
+            {"id": "declared", "kind": "http_json_path", "cadence": "annual",
+             "url": "https://example.invalid/x", "org": "World Bank"}]}}}
+    }), encoding="utf-8")
+    monkeypatch.setattr(C, "SPEC_FILE", good)
+    # The GATE, not a full compose(). The first draft called compose() and the
+    # suite's _no_live_writes fixture failed it, naming memory/composer_needs.json
+    # and memory/composed_indicators.json - correctly, and that is why this calls
+    # the narrower function instead.
+    out = C._specs_or_refuse()
+    assert "WATER_REVIEW" in out, out
+    src = out["WATER_REVIEW"]["portfolio"]["anchor_annual"]["sources"][0]
+    assert src["id"] == "declared"
+
+
+def test_every_indicator_the_scorer_grades_has_a_cadence():
+    """MATERIALS_WASTE_REVIEW was gradeable and undeclared, so for_indicator()
+    raised CadenceError on it and the two tests above went red. A gradeable
+    indicator with no cadence is a number whose freshness nobody can judge."""
+    from core.gate_contract import gradeable_indicators
+    declared = set(cd.declared())
+    missing = sorted(set(gradeable_indicators()) - declared)
+    assert not missing, (
+        "these indicators are graded but declare no cadence in "
+        "config/indicator_cadence.json: " + ", ".join(missing))

@@ -174,6 +174,26 @@
         "memory/counterfactual_probe_by_model.json"
       ],
       "derived_from": "read core/learn_world.py on 11 Sep 2026: run() loads four siblings by path (_load) and calls their own readers — daily_tier for the tier, world_forecast for scoring and the alpha refit (which reads the prophecy ledger and learner_state), and backend_league.league(_rows(PROVENANCE), _reads(PROBE)) for the order of the cloud minds. It WRITES memory/learn_world_latest.json and memory/backend_order_measured.json."
+    },
+    "browser_scout": {
+      "entry_point": "experiments.browser_scout.scout.run_all() - fast_cycle_runner.py:2931, step 2.55.",
+      "inputs": [],
+      "_inputs_why": "EMPTY ON PURPOSE, AND THIS IS A FINDING RATHER THAN A DECLARATION. Read on 19 Sep 2026: run_all() loops the module-level SOURCES dict and calls scout(key), which fetches SOURCES[key]['url'] over HTTP. The only repo path in scout.py is OUT_DIR = memory/browse_sources, which it WRITES, and the only read_text() is a CLI debug path behind sys.argv. It opens no repo file on the cycle's path.\n\nSo this step has no artifact whose age could grade its output, and [] scores UNKNOWN(0) - which is honest, not a gap to be filled. Naming memory/browse_sources here would be a lie about what it reads.\n\nTHE REAL QUESTION IS ONE I CANNOT SETTLE: core/notary.VERIFIERS (from config/passage_rules.json) means 'steps that verify against a LIVE EXTERNAL SOURCE', which browser_scout genuinely does. Either the provenance model grows a way to age a live fetch by its fetch timestamp, or the name comes out of passage_rules.json. Both are Emil's call; passage_rules.json is a file this work is instructed never to touch.",
+      "derived_from": "experiments/browser_scout/scout.py read in full on 19 Sep 2026; grep for repo-relative paths returns only memory/browse_sources, written not read."
+    },
+    "internet_intelligence": {
+      "entry_point": "agents.internet.internet_agent.read_pantry() - fast_cycle_runner.py:3019, step 4. Since 13 Sep 2026 the cycle READS what the day left and never fetches: run() still exists and is simply no longer called from inside the night.",
+      "inputs": [
+        "openclaw_queue/cards",
+        "news",
+        "memory/transcript_cache"
+      ],
+      "_inputs_why": {
+        "openclaw_queue/cards": "read_pantry() reads <day>_cards.jsonl - judged observations",
+        "news": "per-axis news the out-of-cycle fetcher wrote, as news/<day>/*.json",
+        "memory/transcript_cache": "transcripts, kept across cycles"
+      },
+      "derived_from": "read_pantry()'s docstring at agents/internet/internet_agent.py:1204-1206 names the three paths, and the body was read to confirm them on 19 Sep 2026. Directories, because each is globbed per day."
     }
   }
 }

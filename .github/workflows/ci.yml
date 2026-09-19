@@ -89,7 +89,7 @@ jobs:
         # be about the runner rather than about requirements.txt. Full-suite
         # collection stays on the machine, where it can mean something.
         env: {PYTHONIOENCODING: utf-8}
-        run: python -m pytest --collect-only -q $CONTRACT_TESTS
+        run: python -m pytest --collect-only -q -m "not network" $CONTRACT_TESTS
         shell: bash
 
   contracts:
@@ -105,9 +105,15 @@ jobs:
         with: {python-version: "3.12"}
       - run: python -m pip install -r requirements.txt
       - name: the contracts that hold on any machine
+        # -m "not network" (19 Sep 2026). pytest.ini registers the `network`
+        # marker and test_ci_contract.py counts the tests carrying it precisely
+        # so the flag cannot drift back to selecting nothing. CI never passed it:
+        # both pytest lines here ran unfiltered, so a networked test entering the
+        # contract set would have made the hard gate depend on GitHub's egress.
+        # Two test files carry the marker today.
         env: {PYTHONIOENCODING: utf-8}
         shell: bash
-        run: python -m pytest -q -rf $CONTRACT_TESTS
+        run: python -m pytest -q -rf -m "not network" $CONTRACT_TESTS
 
   ruff:
     name: ruff (informational)

@@ -174,7 +174,9 @@
             "data_date_extract": "1.0.date",
             "data_max_age_days": 1500,
             "unit": "m3_per_capita",
-            "provenance": "self-discovered, human-promoted"
+            "provenance": "self-discovered, human-promoted",
+            "cadence": "annual",
+            "cadence_note": "World Bank ER.H2O.INTR.PC (internal renewable freshwater per capita) is a WDI annual series, like every other World Bank source in this file; its own data_max_age_days is 1500. Declared 19 Sep 2026 — it was promoted without one because nothing on the promotion path asked."
           }
         ]
       },

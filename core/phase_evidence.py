@@ -329,16 +329,22 @@ def _d_score(base=None) -> dict:
     rows = hist.get("history") if isinstance(hist, dict) else hist
     if isinstance(rows, list) and rows:
         ev["score_history_rows"] = len(rows)
-        try:
-            def _c(r):
-                return (r.get("composite_score") if isinstance(r, dict)
-                        else None)
-            last = _c(rows[-1])
-            prev = _c(rows[-2]) if len(rows) > 1 else None
-            if last is not None and prev is not None:
-                ev["composite_delta"] = round(float(last) - float(prev), 4)
-        except Exception:
-            pass
+        # composite_delta WAS COMPUTED HERE AND NEVER ONCE PRODUCED A NUMBER.
+        # Measured 19 Sep 2026 on the live file: 0 of 72 rows in
+        # memory/goal_score_history.json carry a composite_score key at all. The
+        # keys they do carry are timestamp, scores, score_sources and one legacy
+        # `score`. So _c() returned None for every row, the guard below it never
+        # passed, and the delta was dead code reading a key from the wrong file.
+        #
+        # It also broke the 15 Aug rule twice over: it read a bare composite with
+        # no coverage package, and it SUBTRACTED two of them with no
+        # config_fingerprint check — the same "a difference between two worlds is
+        # not a difference" that dream.py:293-307 refuses by name. Had the key
+        # ever existed, this would have reported a repair as news.
+        #
+        # Deleted rather than repaired here. A delta between two composites must
+        # only be taken where their config_fingerprints can be compared, and a
+        # row count is not that place.
 
     scores = _json("output/cortex_scores_latest.json", base)
     if isinstance(scores, dict):

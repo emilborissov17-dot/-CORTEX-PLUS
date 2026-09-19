@@ -170,3 +170,48 @@ def test_quarantined_code_is_never_executed():
     src = (REPO / "scripts" / "triage_quarantine.py").read_text(encoding="utf-8")
     for forbidden in ("subprocess.run", "subprocess.Popen", "exec(", "eval("):
         assert forbidden not in src, f"triage must never execute a quarantined patch: {forbidden}"
+
+
+# ── A LOADER IS CODE, AND A NAME IS A WHOLE NAME (19 Sep 2026) ──────────────
+
+def test_a_docstring_naming_an_artifact_is_not_a_loader():
+    """THE ONE THAT FAILS AGAINST THE OLD SCANNER.
+
+    _wiring searched the RAW source, so a module docstring naming a file made
+    that file look wired. Measured on the live tree: core/feature_proposals.py
+    describes memory/feature_registry.json in its header and loads nothing of
+    the sort — and that single prose mention was the only "reader" the scanner
+    could find for agents/registry.json, the one artifact this whole tool was
+    written about.
+    """
+    assert not T._mentions_as_code(
+        '"""It writes memory/feature_registry.json every night."""\nx = 1',
+        "feature_registry.json")
+    assert not T._mentions_as_code(
+        "# see agents/registry.json for the shape\nx = 1", "registry.json")
+
+
+def test_a_string_literal_still_counts_because_that_is_what_a_loader_looks_like():
+    """Mutation guard. Stripping string literals along with the prose would make
+    EVERY artifact an orphan, and the scanner would be unanimous and useless."""
+    assert T._mentions_as_code('open("memory/feature_registry.json")',
+                               "feature_registry.json")
+    assert T._mentions_as_code("P = pathlib.Path('agents/registry.json')",
+                               "registry.json")
+
+
+def test_a_longer_name_is_not_a_match_for_a_shorter_one():
+    """The second defect, on its own. `"registry.json" in text` is true of
+    "feature_registry.json", so an artifact looked read because a DIFFERENT file
+    was mentioned."""
+    assert not T._mentions_as_code('open("memory/feature_registry.json")',
+                                   "registry.json")
+    assert T._mentions_as_code('open("agents/registry.json")', "registry.json")
+
+
+def test_the_artifact_this_tool_was_written_about_is_still_an_orphan():
+    """agents/registry.json: written by a model-authored patch, read by nothing.
+    It came back WIRED while both defects stood."""
+    w = T._wiring('P = "registry.json"', "probe.py")
+    assert w["orphan_artifacts"] == ["registry.json"], w
+    assert w["wires_into_nothing"] is True

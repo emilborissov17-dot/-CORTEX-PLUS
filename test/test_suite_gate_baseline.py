@@ -222,7 +222,13 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # 26 that were never code defects — 15 marked live_state, 2 ENVIRONMENT (one
     # skipped by name, one green after ), 3 OBSOLETE, 4
     # BROKEN_TEST fixed, 2 FLAKY de-coupled from suite residue.
-    assert len(known) == 13, "the baseline changed size, got %d" % len(known)
+    # 42 at seeding; 41, 39, then 13 when Half A settled the 26 that were never
+    # code defects; 6 after Half B verified the thirteen REAL_DEFECT claims one
+    # at a time. Seven left the list - three cadence, the quarantine scanner, the
+    # blind-producer ratchet, the composite package, the CI network flag. Four
+    # CLAIMS TURNED OUT FALSE and were deliberately NOT fixed; two hold but need
+    # a decision that is not this sweep's to make.
+    assert len(known) == 6, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "
@@ -230,7 +236,11 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
 
 
 def test_every_committed_baseline_entry_names_a_triage_bucket():
-    buckets = {"REAL_DEFECT", "OBSOLETE", "LIVE_STATE",
+    # CLAIM_FALSE added 19 Sep 2026 by Half B of the sweep: an entry whose
+    # triage claim was checked against the code and did not hold. It stays in the
+    # baseline because the test is still red, but the line records that the
+    # DIAGNOSIS was wrong rather than carrying an unexamined bucket.
+    buckets = {"REAL_DEFECT", "OBSOLETE", "LIVE_STATE", "CLAIM_FALSE",
                "BROKEN_TEST", "ENVIRONMENT", "FLAKY", "UNKNOWN"}
     bad = [n for n, why in sg.load_known_failures().items()
            if why.split(":")[0].strip() not in buckets]

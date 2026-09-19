@@ -602,8 +602,28 @@ def _data_too_old(data_date: str, max_days: float, fmt: str | None = None):
 
 # ── compose one axis ──────────────────────────────────────────────────────────
 
+def _specs_or_refuse() -> dict:
+    """config/composer_specs.json, through the cadence gate.
+
+    THE GUARD EXISTED AND WAS NEVER CALLED (19 Sep 2026). core/cadence.py has
+    load_specs(), which refuses the file when any source declares no cadence —
+    and `grep -rn "load_specs"` found exactly one caller in the whole repo:
+    test_cadence_gate.py. The composer read SPEC_FILE directly, here, so a
+    source promoted without a cadence loaded normally and its freshness could
+    not be judged. WATER_REVIEW/anchor_annual/promoted_27965 sat like that until
+    today, promoted by core/source_lifecycle.py, which asks for a clean streak
+    and never for a cadence.
+
+    Fail-open is NOT available here. The whole point of a cadence is deciding
+    whether a number is current; loading a source that cannot answer that is the
+    thing being prevented, so this raises and the axis does not compose.
+    """
+    from core import cadence as _cd
+    return _cd.load_specs(SPEC_FILE)
+
+
 def compose(axis: str, force: bool = False) -> dict:
-    spec = _load(SPEC_FILE, {}).get(axis)
+    spec = _specs_or_refuse().get(axis)
     if not spec:
         return {"error": f"no composer spec for {axis}"}
 

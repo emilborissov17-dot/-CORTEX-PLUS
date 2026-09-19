@@ -90,13 +90,26 @@ def is_ambiguous(axis: str, spec: dict) -> str | None:
     return None
 
 
-def composite() -> float | None:
+def composite() -> dict | None:
+    """The composite WITH its coverage package, or None.
+
+    Returned the bare number until 19 Sep 2026, which is the one thing the 15 Aug
+    rule forbids: "a number without its semantics is theatre (or a dark figure —
+    the same thing); a consumer that wants only the number gets the package or
+    nothing." A caller holding 0.6251 with no coverage cannot tell a real score
+    from one withheld below the threshold, and since b7bdc0f composite_score is
+    None exactly when that happens.
+    """
     try:
         goal = json.loads((BASE / "snapshots" / "master" /
                            "goal_score_latest.json").read_text(encoding="utf-8"))
-        return goal.get("composite_score")
     except Exception:
         return None
+    return {"composite_score": goal.get("composite_score"),
+            "composite_score_withheld": goal.get("composite_score_withheld"),
+            "coverage_of_goal": goal.get("coverage_of_goal"),
+            "coverage_of_measurable": goal.get("coverage_of_measurable"),
+            "config_fingerprint": goal.get("config_fingerprint")}
 
 
 def plan() -> tuple[list, list]:

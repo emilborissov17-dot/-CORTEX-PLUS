@@ -161,6 +161,74 @@ def _referenced_artifacts_and_modules(source: str) -> tuple[list, list]:
     return sorted(set(artifacts)), sorted(set(modules))
 
 
+_DOCSTRING_LINES_CACHE: dict = {}
+
+
+def _code_only(text: str) -> str:
+    """The source with COMMENTS and DOCSTRINGS removed, string literals kept.
+
+    A loader names its artifact inside a string literal — open("x/y.json") — so
+    literals must stay. Prose must not: a docstring naming a file is describing
+    it, not loading it, which is the whole distinction this scanner exists to
+    make and the one it was failing.
+    """
+    import ast as _ast
+    import io as _io
+    import tokenize as _tok
+
+    try:
+        tree = _ast.parse(text)
+    except Exception:                                        # noqa: BLE001
+        return text
+    doc_lines = set()
+    for node in _ast.walk(tree):
+        if isinstance(node, (_ast.Module, _ast.ClassDef, _ast.FunctionDef,
+                             _ast.AsyncFunctionDef)):
+            body = getattr(node, "body", None) or []
+            if body and isinstance(body[0], _ast.Expr) and                     isinstance(getattr(body[0], "value", None), _ast.Constant) and                     isinstance(body[0].value.value, str):
+                s = body[0]
+                doc_lines.update(range(s.lineno, (s.end_lineno or s.lineno) + 1))
+
+    out = []
+    try:
+        toks = list(_tok.generate_tokens(_io.StringIO(text).readline))
+    except Exception:                                        # noqa: BLE001
+        toks = []
+    dropped_comment_lines = {t.start[0] for t in toks if t.type == _tok.COMMENT}
+
+    for i, line in enumerate(text.splitlines(), 1):
+        if i in doc_lines:
+            continue
+        if i in dropped_comment_lines:
+            line = line.split("#", 1)[0]
+        out.append(line)
+    return chr(10).join(out)
+
+
+def _mentions_as_code(text: str, base: str) -> bool:
+    """Does this file name `base` in CODE, as a whole name?
+
+    TWO DEFECTS, both measured 19 Sep 2026 on the live tree.
+
+    (1) PROSE COUNTED. The scanner searched the raw source, so a module
+        DOCSTRING naming a file made that file look wired. core/feature_proposals
+        .py describes memory/feature_registry.json in its header and loads
+        nothing of the sort.
+
+    (2) SUBSTRING MATCHING CONFLATED DIFFERENT FILES. `"registry.json" in text`
+        is true of "feature_registry.json", so an artifact looked read because a
+        DIFFERENT file with a longer name was mentioned. Between them, the one
+        artifact this tool was written about — agents/registry.json, which
+        nothing reads — came back wired.
+
+    A name is now required to appear in code, bounded: not preceded by a word
+    character, a dot or a hyphen.
+    """
+    import re as _re
+    pattern = _re.compile(r"(?<![" + chr(92) + "w." + chr(92) + "-])" + _re.escape(base))
+    return bool(pattern.search(_code_only(text)))
+
+
 def _wiring(source: str, self_name: str) -> dict:
     """Is anything in this repo actually going to LOAD what the patch produces?
 
@@ -206,7 +274,7 @@ def _wiring(source: str, self_name: str) -> dict:
             if p.name == self_name:
                 continue
             try:
-                if base in p.read_text(encoding="utf-8", errors="replace"):
+                if _mentions_as_code(p.read_text(encoding="utf-8", errors="replace"), base):
                     readers += 1
                     break
             except OSError:

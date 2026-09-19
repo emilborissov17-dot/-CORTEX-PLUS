@@ -100,8 +100,24 @@ from core.notary import VERIFIERS, _age_state, _inputs_for   # noqa: E402
 # with no local provenance cannot honestly hold the right to BREAK inherited
 # provenance. Not decided here.
 KNOWN_UNDECLARED = {
+    # internet_intelligence LEFT on 19 Sep 2026: read_pantry() names its three
+    # inputs in its own docstring (openclaw_queue/cards, news,
+    # memory/transcript_cache) and they are now in config/step_inputs.json.
+    #
+    # browser_scout STAYS, and the reason is a finding rather than a backlog
+    # item. It opens NO repo file: run_all() loops SOURCES and fetches each URL
+    # over HTTP, OUT_DIR = memory/browse_sources is written and never read, and
+    # the only read_text() is a CLI debug path behind sys.argv. So there is no
+    # artifact whose age could grade its output, and an empty list is the honest
+    # answer rather than a gap to be filled — naming memory/browse_sources here
+    # would be a lie about what it reads.
+    #
+    # VERIFIERS means "verifies against a LIVE EXTERNAL SOURCE", which this step
+    # genuinely does. Either the provenance model grows a way to age a live fetch
+    # by its fetch timestamp, or the name comes out of config/passage_rules.json.
+    # That file is one this work is instructed never to touch, so the choice is
+    # Emil's and the debt stays visible here until he makes it.
     "browser_scout",
-    "internet_intelligence",
 }
 
 REMEDY = (

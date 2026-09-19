@@ -148,7 +148,11 @@ def test_the_workflow_names_the_directory_that_exists():
 # No drive letters outside the code that refuses them
 # --------------------------------------------------------------------------- #
 
-DRIVE = re.compile(r"""['"][A-Za-z]:[/\\]""")
+# The negative lookahead excludes a URL: a one-letter scheme like "u://x"
+# matched a drive-letter pattern and was reported as one. Measured 19 Sep
+# 2026 on test_statements_segmentation.py:135, url="u://x". A real Windows
+# path is "C:/" or "C:" + backslash, never "C://".
+DRIVE = re.compile("['\"]" "[A-Za-z]:[/" '\\\\' "]" "(?![/" '\\\\' "])")
 
 # The files whose SUBJECT is drive-absolute paths. They must contain them.
 DRIVE_LETTERS_ARE_THE_POINT = {
@@ -157,6 +161,11 @@ DRIVE_LETTERS_ARE_THE_POINT = {
     "test/test_safe_path.py",
     "test/test_protected_paths.py",
     "test/test_guardian_diagnosis.py",       # a captured Windows traceback
+    # A Windows-only SENSOR: the Windows Firewall log is at exactly this path
+    # and nowhere else, and read_firewall_drops() takes an override for tests.
+    "core/receptors.py",
+    # Launches Chrome by its Windows install paths; both candidates are tried.
+    "test/cdp.py",
     "experiments/pulse/pulse_daemon.py",     # psutil.disk_usage(REPO.anchor or "C:\\")
     "test/test_ci_contract.py",              # this file
     # The drive letter is the ATTACK, not a path this code uses: the schema gate
@@ -165,8 +174,12 @@ DRIVE_LETTERS_ARE_THE_POINT = {
     "test/test_openclaw_schema_gate.py",
 }
 
-SKIP_PARTS = {"venv", "venv312_metta", "__pycache__", ".git", ".claude",
-              "OLD", "LEGACY", "_to_delete_gitlock", "quarantine"}
+# Aligned with pytest.ini norecursedirs on 19 Sep 2026. venv_train, Broker-bot
+# and _ARCHIVE were missing, so this scanned a vendored virtualenv and reported
+# numpy's own build paths as OUR hardcoded drive letters.
+SKIP_PARTS = {"venv", "venv_train", "venv312_metta", "__pycache__", ".git",
+              ".claude", "OLD", "LEGACY", "_to_delete_gitlock", "quarantine",
+              "Broker-bot", "_ARCHIVE", "node_modules"}
 
 
 def test_no_hardcoded_drive_letters_in_code():

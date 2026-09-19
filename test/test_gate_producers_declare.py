@@ -56,7 +56,13 @@ GATED = ("self_modifier", "execute_patches", "github_publish")
 # config/step_inputs.json. It is the last remaining blind producer at either
 # F_SELF gate; hyperclaw_plan came off this list on 2026-09-08 (b8c1c07) and
 # auto_levels immediately after.
-KNOWN_BLIND = {"self_observer"}
+# EMPTY, 19 Sep 2026. self_observer was the last name here and it is now declared
+# in config/step_inputs.json — blind_producers_for() finds nothing for any gated
+# step. The list shrank the way this file says it may: by removing a name once
+# the step declares. An empty set is the intended end state, not a disabled
+# check: test_no_new_blind_producer_feeds_a_notary_gated_decision still fails by
+# name the moment a blind producer appears, and now with no exemptions at all.
+KNOWN_BLIND: set = set()
 
 
 def _blind_producers() -> dict:
@@ -178,3 +184,27 @@ def test_the_declaration_carries_no_trust_level():
 
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-v"]))
+
+
+def test_the_exemption_list_is_empty_and_the_ratchet_still_bites():
+    """FAILS AGAINST THE OLD CODE, where KNOWN_BLIND carried a name that had
+    already been declared — a ratchet with slack in it.
+
+    Two halves, because emptying a list is only progress if the check it guards
+    still fires: the list is empty, AND a fabricated blind producer is still
+    caught by name.
+    """
+    assert KNOWN_BLIND == set(), (
+        "KNOWN_BLIND has names again: %s. Each is an exemption, and this file's "
+        "own rule is that it may shrink freely and may not grow." % sorted(KNOWN_BLIND))
+
+    found = _blind_producers()
+    assert not found, (
+        "a blind producer feeds a gate and there are no exemptions left to "
+        "absorb it: %s" % {k: sorted(v) for k, v in found.items()})
+
+    # the ratchet itself: a name that is not in found must still be reported
+    fake = set(found) | {"a_step_that_cannot_declare"}
+    assert fake - KNOWN_BLIND, (
+        "with KNOWN_BLIND empty, any blind producer must appear as new; if this "
+        "is ever false the check has stopped subtracting anything")
