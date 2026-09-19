@@ -62,6 +62,39 @@ AND a mechanical net. When writing any code or tests:
  - Structural tests check code (identifiers/behaviour), never prose (no grep/docstrings).
  - Put a mechanical net (raise-not-return, no-live-writes, refuse-loud) behind the instruction, not just the instruction.
 
+## Prose that asserts behaviour needs an assertion behind it
+
+Added 2026-09-19, after a docstring sentence sent a whole command down a false trail.
+test_heartbeat_coverage said "the watchdog's per-step ceiling is keyed on that id, so a
+slow step reporting a fast step's number gets killed early". Every identifier in it was
+real. The RELATION was invented: supervisor.ceiling_for() keys on the step NAME, and
+config/scheduler.json carries seventeen ceiling keys, all names, zero ids. The sentence
+was copied into a triage report as rank-1 evidence and planned against.
+
+THE RULE. A docstring, comment or report may record a DECISION or a RULE freely — what
+we chose, why, what is forbidden, what happened on which date. But a sentence that
+asserts how the code BEHAVES — what keys on what, what reads what, what a module
+guarantees, what a grep returns, how many of a thing there are — is allowed ONLY if an
+assertion exists that FAILS when it stops being true.
+
+No test behind it: the sentence is DELETED. Not softened, not hedged, not moved into the
+passive voice. A vaguer claim is the same defect at lower resolution, and it is harder to
+falsify, which makes it worse rather than better.
+
+WHAT THIS DOES NOT COVER, and it is the larger half. A mechanical scanner can check that
+every identifier, path and line number in a sentence EXISTS. It cannot check that the
+relation between them is true — which is exactly what the watchdog sentence got wrong.
+Measured on this repo the same day: an automated pass over the claims produced 17 flags
+and essentially all of them were false positives, while the four genuinely false
+sentences were found only by reading the code. Do not report a scanner as verification.
+
+TWO SHAPES THAT ROT FASTEST, from the 2026-09-19 sweep:
+  * a line-number citation (`supervisor.py:642-643`) — 2 of the 9 in the repo were
+    already pointing at different code;
+  * a present-tense COUNT ("the quarantine holds 38 patches" — it holds 5).
+Prefer naming the symbol over citing the line, and prefer a test that counts to a
+sentence that does.
+
 ## Where module paths actually are (verified 2026-08-03, correct these if they move)
 
 - symbolic oracle: `experiments/symbolic_duel/metta_oracle.py` — **not** `core/metta_oracle.py`.

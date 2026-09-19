@@ -5,9 +5,13 @@ test/test_axon_roles.py — A ROLE FILE IS DATA, AND DATA DOES NOT GIVE ORDERS.
 
 Role files under config/axon_roles/ are read-only data. Today a human writes
 them. The moment data_scout, a patch, or anything else can propose one, the text
-inside is untrusted input — and this repo's own quarantine holds 38 patches
-written by a model that invented whatever it needed to, so "nothing untrusted
-will ever write one" is not a claim worth resting on.
+inside is untrusted input, and this repo quarantines model-written patches for
+exactly that reason, so "nothing untrusted will ever write one" is not a claim
+worth resting on.
+
+(The count "38 patches" was DELETED on 19 Sep 2026: patches/quarantine held 5.
+A present-tense count with no test behind it is the second-fastest-rotting shape
+the sweep found.)
 
 TWO INDEPENDENT DEFENCES, TESTED SEPARATELY
 --------------------------------------------

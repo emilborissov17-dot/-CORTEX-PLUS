@@ -9,7 +9,7 @@ test.
 
 The gate is NOT reimplemented here. `core.proposal_intake.judge` is the per-proposal
 decision that `admit` applies to every proposal, and `admit` is what
-fast_cycle_runner.py:1600 calls. test_the_gate_is_the_live_one pins that equivalence, so
+fast_cycle_runner calls. test_the_gate_is_the_live_one pins that equivalence, so
 if the live door ever stops using this decision the claim "same gate" fails loudly
 instead of quietly becoming false.
 """
@@ -190,7 +190,7 @@ def test_exactly_one_candidate_is_sealed_and_the_sha_covers_the_three_fields(tmp
 
 # ── the gate is the live one, not a copy ────────────────────────────────────
 def test_the_gate_is_the_live_one():
-    """fast_cycle_runner.py:1600 calls proposal_intake.admit; admit applies judge to
+    """fast_cycle_runner calls proposal_intake.admit; admit applies judge to
     every proposal; first_bet calls judge. If that chain is ever broken, "same gate"
     stops being true and this fails."""
     import inspect

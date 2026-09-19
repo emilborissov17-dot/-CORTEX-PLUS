@@ -22,7 +22,8 @@ WHY THE FIX IS NOT "PRINT THE MARKER LATER"
 --------------------------------------------
 Checked rather than assumed. The supervisor does NOT read this line — its staleness
 check reads `heartbeat.get("step")` and `heartbeat.get("updated_utc")` from
-memory/heartbeat.json (supervisor.py:642-643), so the marker is not the watchdog's
+memory/heartbeat.json — pinned by test_behaviour_claims_are_backed.py::
+test_the_supervisor_staleness_check_reads_step_and_updated_utc — so the marker is not the watchdog's
 signal and delaying it would not make a slow step look stale.
 
 The real reason is different, and it is in beat()'s own comment: the marker exists so

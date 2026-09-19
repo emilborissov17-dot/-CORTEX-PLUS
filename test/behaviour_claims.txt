@@ -1,0 +1,627 @@
+# test/behaviour_claims.txt — the behaviour claims this repo has ACCEPTED.
+#
+# One per line: <file> <sha1-12 of the sentence>, then the sentence.
+# Produced by tools/claim_scan.py --write-baseline and checked by
+# test/test_behaviour_claims_are_backed.py.
+#
+# A LINE HERE IS A DEBT, NOT A CERTIFICATE. It does not say the sentence is
+# true; it says nobody has yet pointed at an assertion that would fail if it
+# stopped being true. Four of these were found FALSE on 19 Sep by reading the
+# code, and no scanner found them.
+#
+# Adding a behaviour sentence without a test means adding a line here, in the
+# same commit, on purpose. Removing one because it now has a test, or because
+# it was deleted, is the direction this file is supposed to move.
+
+core/aggressive_cleanup.py 73ace05db298  # The survival gate reads psutil.virtual_memory(), which cannot see VRAM at all — so this returns NOT 2.2 GB but whatever the server releases from its o
+core/alarm_bands.py e300676edb87  # Every ALARM carries its baseline; nothing here raises.
+core/alarm_bands.py f5d192a40573  # Without them the caller has only the whole series' endpoints, and pairing those with a 10-year slope produces a sentence that reads as a contradiction
+core/answered_by.py e89303525d88  # A step that makes twelve model calls and degrades on one is degraded; a REAL_DATA payload fetched over HTTP inside that same step will carry degraded=
+core/axis_history.py 85cb6242fb65  # {"n", "min", "max", "range", "days"} over the last `days` CALENDAR DAYS. n counts DISTINCT DAYS, not rows.
+core/axis_task_executor.py 0421b9507648  # 21 Aug 2026 — this read: BASE_DIR = r"C:\Users\emilb\Desktop\AGI\CORTEX++" a hardcoded absolute path to one machine, and not even to THIS repo: the di
+core/axis_task_executor.py 1ece8d7780de  # Repo-relative, with CORTEX_BASE as the override the supervisor already sets at spawn.
+core/axon_agents.py 21d6b525e31b  # TWO RULES, BECAUSE FEEDS HAVE TWO HABITS: dated item new iff its pubDate is strictly after last_sweep_ts.
+core/axon_agents.py 2b85baf7b219  # That is a gap in coverage, not an alarm, so it maps to NORMAL and an axis nobody has classified maps there too.
+core/axon_agents.py 4034aa0c0227  # Today a human writes them; the moment data_scout or a patch can propose one, the text in it is untrusted input.
+core/axon_agents.py 610be2e9fbc2  # With per-request timeouts at STREAM_TIMEOUT_SEC and MAX_CONNECTIONS sockets, the worst overrun is one agent's feeds, which is bounded and small.
+core/axon_agents.py 663d91d8e6ce  # The sink is injected and defaults to print rather than to memory.heartbeat.beat(), and that is not timidity. beat() writes memory/heartbeat.json, whic
+core/axon_agents.py 878bf119b99f  # Concurrency lives in exactly one place — the async GET inside a single sweep, bounded to MAX_CONNECTIONS sockets on ONE shared session.
+core/axon_agents.py a307d5c5539d  # ONE SEMAPHORE FOR EVERYTHING HEAVY ----------------------------------- `HEAVY` gates every CPU-heavy or model-touching step across ALL agents, so the 
+core/axon_agents.py b637e9f77262  # GET the agent's feeds, keep what is new, write CANDIDATE rows.
+core/axon_agents.py d91f01b121a1  # THREAT / WATCH / NORMAL for one axis. core/orchestrator_grounded.py emits THREAT / OPPORTUNITY / WATCH.
+core/backend_policy.py 13c14652ffc8  # SELF-DIRECTED CALLS NEVER TOUCH THE CLOUD ------------------------------------------ phase_debrief, brain_stance, autopsy, step_prediction — the syste
+core/backend_policy.py 6bdb9dcbdf89  # Called from memory.heartbeat.beat(), which is the one path every step passes through.
+core/backend_policy.py 8a3d6d30b666  # Matched on the text because the chain raises plain RuntimeError/ValueError with the provider's message inside; there is no typed error to switch on.
+core/belief_revision.py 52868c097354  # That is what stops this being another producer nobody reads — a revision here changes what gets predicted tomorrow. venv\Scripts\python.exe -m core.be
+core/blind_producers.py 7129e5e7d9da  # So this module answers one question, mechanically, at any time: which steps feed `step` an artifact whose producer cannot say what it reads? and the r
+core/blind_producers.py b23d59c1f216  # So the fact "hyperclaw_plan is blind and its output gates step 18" existed exactly once a night, inside a string, inside a log nobody reads, and only 
+core/body_sensorium.py 4978ce9df759  # Two ticks back to back are ~0.35 s apart (cpu_percent blocks for 0.3 s), which is under the 0.5 s floor the rate guard imposes.
+core/body_sensorium.py ac8a90e88915  # ── REQUIRES ──────────────────────────────────────────────────────────────── What this module reads to do its job, declared rather than left to be inf
+core/body_sensorium.py f4ea20072a77  # ── FOOTPRINT ─────────────────────────────────────────────────────────────── What tick() writes. core/step_contract.py measures a step by the files it
+core/brain.py 0398f2900ef3  # READS THE ENGLISH LAW NOW (23 Aug 2026), and the labels around it are English too.
+core/brain.py 439d8d134aa9  # BATCHED (23 Aug 2026). 63 step-log writes on the last sealed cycle.
+core/brain.py 4e1013755066  # BATCHED (23 Aug 2026). 143 writes on the last sealed cycle.
+core/brain.py 68d9648d119b  # So below MIN_POOL clean entries the block falls back to hand-written English format anchors from config/few_shot_seed.json, and SAYS SO in the block.
+core/brain.py d05b19d65eca  # The tempting way to wire that in is to retag it "cortex-l1b:3b" so _fast_model() picks it — and that is exactly wrong: that function returns the small
+core/brain.py f542537b7341  # ── THE FULL DICT GOES INTO payload, NOT ONLY INTO A TRUNCATED SUMMARY ── summary is capped at 400 chars for the human-readable memory recall (_memory(
+core/brain_relay.py 7766607837ec  # THE ESCALATION FLAG IS ALREADY THE ANSWER. asks_for_a_human() returns true for halt_and_call_human and its siblings; that is an ALARM by the definitio
+core/brain_relay.py b0d360a4f9e5  # So a structured verdict survived on disk as JSON cut off mid-string: ..."remedy": "Провери статуса на локалния qwen3:8b и опреде salvage_fields() pars
+core/cadence.py 4e4567e016d5  # AN OVERDUE SERIES RETURNS None (Emil, 6 Sep 2026).
+core/cadence.py a928f99f5753  # {"cadence", "tier", "last_observed", "next_expected", "source"} or raises.
+core/canon.py 26cde4328a0a  # Nothing in this module writes to BOUNDARIES.md, and nothing may: the document is human-owned, and a system that can edit its own boundary has none.
+core/canon.py a4b1b9836c19  # Falls back to whatever load_canon() found — Bulgarian included — when there is no English rendering to serve.
+core/canon.py e81a6d1d2366  # It sat in memory/active_canon_frame.txt as "Consolidated invariants (learned, stable): c" and core/brain.py reads that file into the SPIRIT block of E
+core/card_intake.py c6c3936e2f9a  # The corpus for the local student (training/verified_corpus.py) reads verified_observations.jsonl and nothing else — so what the student learns is, by 
+core/consolidation.py 1b1588156bdd  # This module reads the archive as a TIME SERIES and asks a different question: what has been moving all along that no single night could show?
+core/consolidation.py 7abdc62647f6  # The DAILY layer, in the same shape read_cycles returns, so it merges untouched.
+core/consolidation.py aa38f928161f  # A test points the queue at a tmp dir, and relative_to() raises there.
+core/consolidation.py ef81612c9a66  # core/consolidation.py — THE SYSTEM READS ITS OWN MEMORY (3 Sep 2026).
+core/continents.py a341e1618819  # The code keeps region_id because that is the join key; every string a human reads says КОНТИНЕНТ.
+core/cortex_llm_resource.py 846be742fed7  # Caller-ите не правят json.loads след него.
+core/counterfactual_probe.py 206fa6f19bdb  # Writes memory/counterfactual_probe_by_model.json; the nightly summary (LATEST) is not touched.
+core/counterfactual_probe.py 834b803e1065  # Outputs: memory/counterfactual_probe.jsonl one row per case per run (append) memory/counterfactual_probe_latest.json summary of the last run Reads by 
+core/counterfactual_probe.py 98e0f87a441e  # Cases come from two places the cycle already writes: * fixed indicator bands (config/alarm_indicators.json) with an ACCEPTED value; * measurable targe
+core/cycle_checkpoint.py 2e8eddad08b3  # THE GAP THIS FILLS ------------------ Nothing in this repo records a step COMPLETING. * memory/existence_ledger.py records cycle-scoped events only — 
+core/cycle_checkpoint.py 313413f190a7  # Every declining path returns start_index 0.
+core/cycle_checkpoint.py 5665f7558e4b  # A step that finishes normally leaves NO ledger trace. * memory/heartbeat.json holds the step CURRENTLY running and is overwritten in place (tmp + os.r
+core/cycle_checkpoint.py 5a1f41674ae1  # Resuming is a claim that earlier steps left their work behind, and that claim can be false in a way that is worse than re-running: scoring reads yeste
+core/cycle_checkpoint.py 63603c258d44  # RESUME IS OFF UNTIL SOMEONE TYPES --resume ------------------------------------------- decide_resume() defaults `enabled=False` and returns start_inde
+core/cycle_checkpoint.py 9164962ec895  # Called AFTER a step returns without raising.
+core/cycle_graph.py 8b8f7e07644a  # ФАКТИТЕ НЕ СА ИЗМИСЛЕНИ. `produces` идва от core/cycle_map.py; `requires` се ИЗВЕЖДА МЕХАНИЧНО от кода: за всяка стъпка се намират модулите, които тя 
+core/cycle_integrity.py 716da5666a67  # Returns the REASON, not just the verdict, because "42% integrity" with no account of the other 58% is a number a reader can only believe or ignore.
+core/cycle_integrity.py 88cef0a121a0  # UNKNOWN — the warmup verdict, returned for a step's first three runs — NO LONGER COUNTS AS FULL.
+core/cycle_map.py 3e4241ed01bd  # This row promised memory/runtime_experiences.json, and self_observer has never written it: agents/core/self_observer.py writes memory/development_jour
+core/cycle_map.py 4648edcf3cdc  # И трите карти наведнъж, по урока от ITEM 7.1: fast_cycle_runner, config/cycle_phases.json и тази. `produces` е СТАТУС файлът, а не resolved.json — eva
+core/cycle_map.py 5b1971c08605  # PRODUCES CORRECTED AGAIN 8 сеп 2026, AND THE CONDITIONALITY IS THE POINT.
+core/cycle_map.py bb0aa2cbe078  # Колоната `produces` се пълни само където е ПРОВЕРЕНА (ред 21) — а непълна е също толкова неточна, колкото измислена: kept_promise() съди стъпката по т
+core/cycle_map.py cd170fea2088  # This row carried [] — "не знаем" — and an empty produces makes cycle_map.kept_promise() return "НЕ ЗНАЕМ", which the notary reads as UNKNOWN(0) for th
+core/cycle_profile.py 618c7f24c685  # The FIRST day cycle calls this; the rest find it empty.
+core/cycle_report.py 448e4db8e37e  # THE "Пиши на български" INSTRUCTION IS GONE (23 Aug 2026), and it is the one deletion in COMMAND 25 that changes something Emil reads.
+core/cycle_report.py 6428c5610f86  # ABSENT, and it says WHOSE log is absent. "няма лог на цикъл" over a directory full of other cycles' logs reads as a broken reporter; this reads as the
+core/cycle_vector.py 00257de751a6  # What fast_cycle_runner calls.
+core/cycle_vector.py 8f02fd991d57  # The ledger holds duration_sec, but it is written by CYCLE_FINISHED and the vector is assembled BEFORE the seal — so at this moment the ledger does not
+core/cycle_vector.py abd69b5955fb  # WHAT IS NOT WRITTEN --------------------- A cycle the survival gate REFUSED writes nothing.
+core/daily_tier.py 06d8f90d804b  # BACKFILL FROM THE SOURCE'S OWN RECORD ------------------------------------- USGS (fdsnws count with explicit UTC day bounds — core/usgs_quakes.py) and
+core/daily_tier.py 2d6fc8e4cd4a  # It does not invent a history for anything else: a source with no record starts tonight. world_forecast.load_series() reads this tier alongside axis_hi
+core/daily_tier.py 2e6f0c5c81fd  # Listed in NOT_OBSERVATIONS, by name. * idempotent: an (indicator, date) already on file is skipped, so running twice in a morning writes nothing twice
+core/data_scout.py 79b16aa8c882  # Tests a URL: returns (is_valid, reason, payload).
+core/death_bell.py 501e02125ecb  # Returns a record of what happened; raises NOTHING. `with_postmortem` defaults to True for CYCLE_KILLED and False for everything else: a kill is the ev
+core/death_bell.py 612ef0de019c  # Never raises, never waits past `budget_sec`. core.brain.think() carries a 300 s cold-load timeout of its own, which is five times this budget: waiting
+core/death_bell.py 7d3f5cea28c1  # The send therefore passes trigger="MANUAL", which is the one value alarm_human() honours as "past the quiet window".
+core/death_bell.py e9f8bfe48a96  # Every path here is wrapped; ring() returns a record saying what happened and RAISES NOTHING.
+core/declared_inputs.py 2c334fe5f32d  # And a declaration that is absent, unreadable or malformed degrades to exactly today's behaviour rather than to trust — every failure path below return
+core/declared_inputs.py 911605f6e140  # Since 17 Aug an empty list correctly means UNKNOWN rather than FULL, so the gate refuses `github_publish` every night — for ignorance, not for a fault
+core/declared_inputs.py d851b5056e1d  # core/declared_inputs.py — WHAT A STEP READS, WRITTEN DOWN INSTEAD OF GUESSED.
+core/declared_inputs.py e26a1d5ed80e  # The two paths the step really reads are built at runtime — `_find_latest_web_intel_dir()` walks `memory/web_intelligence` and picks the newest dated f
+core/declared_inputs.py f8beaefe9e66  # THE HOLE THIS CLOSES (18 August 2026) ------------------------------------- `core/notary.py:_age_state` grades a step by the age of the files it reads
+core/deduction.py 00569a20aa69  # The excuse holds only while the indicator carries a value in memory/alarm_bands_latest.json tonight.
+core/deduction.py a6a99c1b0f88  # The values those indicators carry TONIGHT. memory/alarm_bands_latest.json is written by the bands step; its indicator rows live under indicators.rows.
+core/disk_actuator.py 338dfb565b69  # If git cannot be reached the sweep REFUSES rather than proceeding without that protection: losing a cleanup is a missed opportunity, losing a tracked 
+core/disk_actuator.py cbafb108e7f4  # DRY RUN IS THE DEFAULT ------------------------ sweep() does nothing unless it is passed apply=True.
+core/durable.py 12df1ad1eeb3  # WHAT A KILL ACTUALLY COSTS ---------------------------- `fh.write(...)` returns as soon as the bytes are in the OS page cache.
+core/durable.py 15e631ea0db8  # Kept as PATHS, not handles: each append still opens, writes and closes, so there is no descriptor to leak and no half-written state if the process die
+core/durable.py a7a56f1e3972  # This module is the one place every JSONL append passes through, so the net goes here rather than as an instruction repeated at 143 writers.
+core/earning.py 19834706246f  # Two sinks, because they fail differently: memory/blackbox.jsonl is fsync'd per line and survives a hard kill, and memory/earning_revocations.jsonl is 
+core/earning.py d7a5df7101d9  # Neither is memory/development_journal.json — this module appends nothing there.
+core/event_bus.py 7e4422e50655  # BACKPRESSURE: THE SLOW SUBSCRIBER PAYS, NOBODY ELSE ----------------------------------------------------- Delivery is pull, not push. `publish()` appe
+core/event_bus.py 9c172d9dd6cc  # See test/test_glass.py, which counts probes with the tab shut and with it open.
+core/event_bus.py b817bf15aee2  # Anything `fn` does that reaches a guarded sensor raises SensorProbeInSubscriber instead of quietly producing a second, disagreeing reading.
+core/event_bus.py f1bc9257f8b3  # Enforcement is a thread-local depth counter. `Subscription.consume()` raises it around the consumer callback; every guarded sensor calls `assert_not_i
+core/extra_calls.py 672fff2bd53f  # The state lives in this process and never on disk: a breaker that persists is a switch, and the switches are Emil's, in a file no code may write. venv
+core/extra_calls.py 7fe504388a3e  # Two consecutive FAILED/TIMEOUT outcomes disable extra calls FOR THE REMAINDER OF THIS CYCLE ONLY.
+core/extra_calls.py aca0a32e416b  # See core/extra_calls_ledger.py: a cycle that cost more than the ceiling allows writes memory/extra_calls_suspended.flag, and this is where it bites.
+core/extra_calls.py b403059f5006  # Never raises. outcome is one of COMPLETED, TIMEOUT, FAILED, SKIPPED_RESOURCES, SKIPPED_BUSY, BREAKER_OFF, SKIPPED_SUSPENDED.
+core/extra_calls_ledger.py 4ff3abf80ab6  # It raises a PENDING item naming the numbers and writes memory/extra_calls_suspended.flag so the NEXT cycle skips all extra calls.
+core/extra_calls_ledger.py b35b6589b57f  # EVERY attempt, including SKIPPED_RESOURCES and SKIPPED_BUSY: a skip that spent five seconds polling /api/ps cost the phase five seconds, and a ledger 
+core/feature_proposals.py 24fb10c9f663  # The brain is never told what to propose; if it is silent the night records SILENT, and no code proposes in its place.
+core/flight_recorder.py 2b32d24bee08  # The other 31 have none, for a structural reason rather than a neglectful one: they are inline blocks in fast_cycle_runner, so _run() never wraps them,
+core/flight_recorder.py b9de01c80407  # A span is attributed through a ContextVar that _run() sets.
+core/flight_recorder.py d229eea44f47  # An exception closes the span ERROR and re-raises.
+core/flight_recorder.py dd3546d9e67e  # A READ IS AN INPUT, AND ONLY WRITES WERE RECORDED UNTIL NOW.
+core/flow_score.py 3b98eaf507b2  # Every cycle now computes a score at seal time: core.cycle_vector.cycle_metrics() calls compute() and the result reaches both memory/state_vectors.json
+core/flow_score.py e74c66672fc1  # This says where to go: core.cycle_integrity.scalars() returns five independent scalars, and the red/amber/green thresholds now live in the cockpit, wh
+core/gate_contract.py f9c382f0b765  # NOTHING HERE CALLS A MODEL.
+core/gdelt_daily.py 7da4041392df  # THE ONE LINE FOR TOMORROW, and this module does not write it. evaluator.ground_truth reads trends.json[axis] and takes values[-1], so the entry is a L
+core/global_indicators.py 8c23a7c09a27  # arXiv: total cs.AI papers (Atom XML); max_results=1 required — 0 returns 500
+core/global_indicators.py 9539f8648287  # The key now names the CONCEPT and the line lives in the provenance, so the next revision does not make the field name a lie again.
+core/global_indicators.py db12d9a6c323  # Prefers the explicit UCDP_LOCAL_CSV path; otherwise globs UCDP_LOCAL_DIR for any *.csv whose name starts with 'ucdpprioconflict' (case-insensitively) 
+core/groq_backend.py 48b578f7cb76  # THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads memory/llm_provenance.jsonl (success, truncation, 429s, latency) an
+core/groq_backend.py 5e5719938599  # It served 440 calls 15-18 Aug with the best median reply of the four, then returned 402 payment_required on every completion from ~22 Aug.
+core/groq_backend.py 839ffecaf45d  # The cloud half of the same 143-writes-a-night provenance stream as core/brain.py.
+core/groq_backend.py ac896e674891  # This file only READS it, only accepts known keys, and falls back to the default below if the file is absent, stale, or malformed.
+core/groq_backend.py e544b7c18496  # Outside it, handing step_budget a callable that loads 8b would evict the pinned 3b mid-step — the exact churn core/model_window.py exists to stop — an
+core/groq_backend.py e76dd691e2a1  # That is the shape of all six internet_intelligence kills in the existence ledger. core/step_budget.py spends the step's budget B in thirds and never b
+core/groq_backend.py ff43da0f60e1  # A one-message completion against BOTH models returns 402 with {"type":"payment_required_error","param":"quota"}.
+core/halt.py 0478d43aedaa  # So this asks core/survival_gate.check(), which delegates straight to homeostasis.evaluate(): the same module, the same thresholds, no writes, no subpr
+core/halt.py 1307abba4bee  # A halt writes CYCLE_HALTED_SELF and exits with HALT_EXIT_CODE, which is neither zero nor the code of a crash. venv\Scripts\python.exe core\halt.py --s
+core/halt.py 3d5400e3924e  # Raises VoluntaryHalt, or returns and the cycle walks on.
+core/halt.py 4eae4c1c8335  # It is also the oracle aggressive_cleanup already uses, so a halt refuses on the same line that triggers the cleaning.
+core/halt.py 81a485109af4  # Worth stating plainly rather than hiding: survival_gate's own header records that homeostasis.assess has a STRICTER threshold than evaluate.
+core/homeostasis.py 71e6e0f3cfa7  # So the sampling has to happen on a cadence the layer can actually measure against, and there is already one: the step boundary. fast_cycle_runner.beat
+core/homeostasis.py 7d6c060b4b03  # Returns {name, vram_total_mb, vram_free_mb} or None.
+core/homeostasis.py decfe3054a11  # Everything above is the ADAPTIVE layer: it reads the body once at boot and decides what kind of night to have — FULL, MINIMAL, which steps to skip.
+core/hypothesis_intake.py defed5594025  # This module writes pending.json and NEVER resolved.json; core/hypothesis_resolution.py writes neither — it calls the evaluator, which owns both.
+core/hypothesis_resolution.py 17e867415063  # The generator lives in hypothesis_generator.py and is deliberately not imported here. - "0 due" IS A RESULT, NOT SILENCE.
+core/hypothesis_resolution.py 5254e717a240  # evaluator.py holds its paths as repo-relative strings and depends on the CWD.
+core/hypothesis_resolution.py 5bf179146856  # A night where nothing has reached its prediction_date reports `due=0` and writes the artifact anyway.
+core/hypothesis_resolution.py 69973ca1746a  # Now the evaluator marks it `status: "unresolvable"` with the lookup trail that came up empty and moves it to resolved.json; this module counts it as `
+core/hypothesis_search.py b18c650ca739  # Returns a list of {source, query, url, skipped_reason}.
+core/hypothesis_search.py e58c40c9a6fa  # WHAT IT REPLACES ----------------- Collection today is recall-shaped: for each axis, hit the same feeds and keep whatever arrives.
+core/interoception.py 33fe9bbe3f24  # Writes memory/mirror_read_latest.json: what the brain said, which mirror numbers it actually quoted (verified against the mirror, not taken on trust),
+core/interval_head.py 2b971a3622e9  # ONE HTTP CALL PER TEXT WAS THE WHOLE COST. /api/embed accepts a LIST and returns one vector per element; this loop sent them one at a time.
+core/kill_policy.py b000ea938828  # Never raises. io_idle_sec CANNOT BE MEASURED IN ONE SAMPLE.
+core/language_gate.py 18fc8f7cb307  # HONEST LIMIT: a model that answers in fluent French or German passes this gate.
+core/language_gate.py 58a50c4dc5df  # NEVER RAISES. `sender(subject, detail)` is the seam the tests hold.
+core/language_gate.py 9eb42d1bd99a  # Read the previous stamp BEFORE overwriting it, or the rate limit resets itself every time it fires.
+core/language_gate.py eaf2b0e25887  # Text with no letters at all passes with NO_LETTERS: a summary that is pure numbers has no language to be wrong about, and rejecting it would quietly e
+core/language_gate.py eca72354be5b  # Today nothing routes free-stream text into the journal — core/reaction.py writes memory/reactions.jsonl, and this census reads memory/brain_journal.js
+core/learn_world.py 6f3cab825597  # Writes memory/learn_world_latest.json (the step's promised artifact).
+core/level_reconciler.py 6f5a9583f65b  # WHAT IT FIXES -------------- auto_levels writes a level word per axis from its own thresholds. goal_score_calculator writes a 0..1 score per axis from
+core/level_reconciler.py b66f0de41242  # Which is correct and reads backwards to a person, because the axis is NAMED for risk.
+core/level_reconciler.py ef91481c6624  # On an ordinary axis this is the word itself; on a _RISK_ axis it carries the translation, because "ниво HIGH" on an axis called GLOBAL_RISK reads as d
+core/level_reconciler.py f31a060fa8e3  # Chosen to match how auto_levels already speaks, so a correction reads as the same vocabulary rather than a new one.
+core/market_news.py 08ab4cc354dd  # Every failure raises `NewsUnavailable` with the reason named.
+core/measurement_honesty.py ffd6fd00f750  # THE HORIZON IS 30 DAYS, and the choice is not arbitrary: it is the window core/consolidation.py already reads to look for drift.
+core/merit.py f8a8729252fe  # IT DOES NOT REPLACE IT. ----------------------------------------------- Part 0.7 found two records that already pair a claim with a later outcome, and
+core/metta_check.py a066dd132965  # Връща: needs_missing — входове, които стъпката чете, но ги няма/стари са feeds — кой надолу чака нейния продукт prev_promise — удържала ли е предишнат
+core/model_window.py 29da25f4a097  # Asking for the big model outside the window returns the small one and RECORDS the downgrade — the caller is not told it got what it asked for.
+core/model_window.py 734f45048c4f  # When the caller knows WHICH occurrence it is at, it passes the index and the ambiguity disappears.
+core/model_window.py 91762a4db81d  # Runner LABEL -> cycle_map STEP NAME. fast_cycle_runner calls _run() with labels (`internet_agent`), while cycle_map and this window's config speak ste
+core/model_window.py ad16f4af2eb6  # Scans FORWARD from the last matched position, so a repeated step name resolves to the occurrence the cycle is actually at.
+core/model_window.py fb14d414c008  # A plain names.index() returns the FIRST match, so the second body_scan read as "outside", the window slammed shut at step 35 and reopened at 36 — a sp
+core/needs_auth.py 10fa806f61de  # The message carries exactly what the person needs: where to register the real URL, from the registry what to do there one line which variable the .env
+core/needs_auth.py 1c746cb3b14b  # WHAT THIS IS FOR ----------------- config/dead_sources.json already records sources that are gated behind a credential, and the cycle already skips th
+core/notary.py 2861b7ec9753  # An invariant worth holding is worth writing down. execute_patches is capped at MINIMAL, which is BELOW IRREVERSIBLE_MIN, so may_act() refuses.
+core/notary.py 4950b7092f76  # FAIL CLOSED: if the file cannot be read, passage_rules.load() returns irreversible_min = UNREACHABLE(99) and may_act() then refuses every irreversible
+core/notary.py 7ae005bf95c2  # They now live in config/passage_rules.json; this module READS them to judge and every gated actor is SHOWN the same file's actor_block.
+core/notary.py 944e78c1bbd2  # It held only because the step's declared inputs harvested a phantom filename - memory/last_attempt.txt, a truncation of memory/last_attempted_cycle_id
+core/orchestrator_grounded.py d1d4c17cfe5f  # IT MAY NOT REORDER. ------------------------------------------ Step 12.7 reads this file as its INPUT and may attach prose to any row.
+core/orchestrator_grounded.py e93e5987669b  # THREAT / OPPORTUNITY / WATCH as disjoint sets, by construction.
+core/passage_rules.py dd1ff780e833  # FAIL CLOSED ----------- If the file is missing, unparseable or fails validation, load() returns FAILSAFE: irreversible_min = UNREACHABLE, so may_act()
+core/passage_rules.py f8e5ccd365b7  # So the rules move into config/passage_rules.json, notary READS them to judge, and the SAME actor_block text is injected into every gated actor's instr
+core/perplexity.py fedf74e1dc7e  # WHAT IS ACTUALLY MEASURED, AND WHAT IS NOT -------------------------------------------- Ollama 0.24.0 returns `logprobs` for the tokens it GENERATED.
+core/phase_debrief.py 22ec16700a73  # Uses core/language_gate.py so the tag and the 24-hour purity ratio cannot disagree about the same text — two independent judgements of "is this Englis
+core/phase_debrief.py 3a603a17bd01  # Never raises. `own_numbers` are the numbers unique to this phase (see core/phase_evidence.own_numbers).
+core/phase_debrief.py 5d2dbac44320  # Applies only when a caller passes must_cite; every other phase is unaffected.
+core/phase_debrief.py 70c6555cc8cd  # COMMAND 25 made everything the model READS English: the law, the canon frame, every label, every schema description, every role and question, and the 
+core/phase_debrief.py 7bc3f1f0c96c  # Both attempts are kept in `attempt_log`, so a judge that only ever passes on the second try is visible. venv\Scripts\python.exe core/phase_debrief.py 
+core/phase_debrief.py 943189e9486e  # Returns (accepted, reasons_for_rejection).
+core/phase_debrief.py a7d742798bd6  # THE VALIDATOR FEEDS THE PROMPT ------------------------------- A rejection whose reason never reaches the model is a scorecard, not a loop.
+core/phase_debrief.py aa4a1c6ee33e  # What the model WRITES follows what it reads, and the language pin in core/brain.py says so in as many words.
+core/phase_debrief.py f61c5c42286b  # A gate that refuses everything teaches the operator to stop reading it, so two things changed and neither weakens the gate: * THE MODEL. brain.think(f
+core/phase_evidence.py 39fdd7ca2762  # Two numbers are structural and cheap (`phase_artifacts_bytes` and `phase_artifacts_present` are read from that phase's own `produces` list), so the fl
+core/phase_report.py 0075d3dad7a2  # A refusal exempts only what cycle_map says THAT step produces, intersected with what THIS phase promised.
+core/phase_report.py 3b6f81443e61  # NOT append-always (ITEM 21c, 29 Aug 2026). core/phase_tracker.py calls step_ok() from on_step(), which fires at beat() time — BEFORE the step runs — s
+core/phase_report.py 5d95b96013ff  # It needs a refusal recorded for THIS phase (PhaseReport.step_refused, wired from the runner's gate), and it covers only the paths cycle_map says that 
+core/phase_report.py 677eb41aa448  # This module writes down what it actually left: memory/phase_reports/<cycle_id>/<PHASE>.json The verdict is not a summary of whether the steps raised.
+core/phase_report.py 9b633093cba1  # Called from core.phase_tracker.note_refusal(), which the runner's _witness_or_refuse() calls at each of its three refusal returns.
+core/phase_report.py a9916d399cc5  # Earlier it rendered one as "5326.0s AFTER", which handled the defect instead of removing it; now produces_check emits null for anything not older than
+core/phase_tracker.py 8df5ad9d98e3  # The runner already records who started the cycle in memory/cycle_origin.json; ask it instead of asserting.
+core/prediction_resolutions.py 32546651cf7d  # THE RISK IS REAL AND IS NAMED HERE RATHER THAN DISCOVERED LATER: two records of what the system predicted about an axis can drift apart.
+core/prediction_resolutions.py 821dde902ef0  # Per CLAUDE.md, a module that writes a ledger needs an explicit --write. record_prediction() and record_resolution() return the row they WOULD append u
+core/proposal_intake.py b6e699529b22  # ── SCALE: is this a POSSIBLE number for this indicator? (3b, 6 Sep 2026) ──── A delta that parses is not yet a delta that could happen.
+core/proposal_sla.py cac917427426  # The full list goes to memory/proposal_sla_queue.json, which is where a cockpit reads it — the phone gets the headline, the screen gets the table.
+core/provenance_pairs.py a8549aed518c  # Raises NotAPair with the reason, never a silent False.
+core/provider_catalog.py 97bb3ac2ec4f  # None when no UNIQUE all-totals breakdown exists. `rows` are the payload's records, as fetched — this reads what is actually there rather than assuming
+core/reaction.py 0d1d7883fd44  # NEVER RAISES and never returns a template in place of an answer.
+core/reaction.py 72e0c6e01901  # The switch is `reaction.enabled` in config/reactions.json — human-written, unstamped, on the protected-path denylist, so the system cannot switch its 
+core/reaction.py 772ada2135eb  # With the flag off NO PATH here reaches a model, and a test asserts that by counting calls. venv/Scripts/python.exe core/reaction.py --selftest venv/Sc
+core/reaction.py 7b5b1e8e1401  # THE LANGUAGE GATE DECIDES THE EXEMPLAR POOL, NEVER THE DISPLAY ---------------------------------------------------------------- core/language_gate.py 
+core/receptors.py bc215555e701  # One ETW disk callback can produce 10,000 events a second under load and each callback is a kernel-to-user context switch; past roughly twelve threads 
+core/receptors.py f76c84518b79  # Emits CHANGE, not value. base <- (1 - alpha) * base + alpha * x signal <- x - base emit only if |signal| > eps CHANNEL S — the set-point.
+core/receptors.py ff01296ad44f  # The ramp tests in test/test_receptors.py are the proof and they are the point of the file: a ramp under d/alpha <= eps emits NOTHING on R while S cros
+core/reconsider.py 7f4f2a22328c  # ENGLISH, because this row is JOURNALED. brain.remember() writes into memory/brain_journal.jsonl, which core/language_gate.py scores as model output — 
+core/request_signing.py 8f05a12d4bce  # Now approve_reader SIGNS the request with a key it holds, and the supervisor verifies.
+core/request_signing.py 958d1c1bc6b0  # WHAT HAS SINCE BEEN BUILT, AND WHAT HAS NOT ------------------------------------------- Trigger computation now lives OUTSIDE the component that benef
+core/scorer_self_check.py 1cc9e078b363  # The planet *normalizer* layer (`planet_normalization.py`, which sets the snapshot `level` the LLM synthesis reads) is a separate surface with the same
+core/scorer_self_check.py 56b5a1e86d2e  # The set of metric keys a scorer reads via literal metrics.get("...").
+core/scorer_self_check.py b7ea01ddefcb  # Keyed on whether read keys EXIST (not their value), so a transient all-None cycle reads as STALE, not DEAD.
+core/self_experiment.py 66ff7f302686  # A cycle_id IS its start time, and it is the only start a manually launched cycle has — supervisor.py writes CYCLE_STARTED, the runner does not.
+core/self_read_probe.py 461ad7bb8b6a  # Usage: venv\Scripts\python.exe core\self_read_probe.py --models qwen2.5:3b cortex-l1-3b qwen3:8b venv\Scripts\python.exe core\self_read_probe.py --dry
+core/source_lifecycle.py 648d44cbb90a  # CHAOS BLOCKS PROMOTION ----------------------- A source can return a number every single time and still be worthless: if its own readings swing wildly
+core/source_registration.py 567ff098068f  # The only gates here are MECHANICAL: can this be fetched, and can it be parsed.
+core/source_registration.py 93c0e53609e5  # A flat row is not an empty defect — it passes five clean observations with CV 0, becomes TRUSTED, and then the April revision lands and the machine ca
+core/source_registration.py c6e427de7c5b  # Deterministic and offline: it reads the payload data_scout ALREADY fetched.
+core/source_registration.py e3adf0772dd5  # Used by the un-blacklist migration and by scripts/cortex_ingest.py; data_scout already holds the payload from its own validation fetch and passes it s
+core/stale_inputs.py df4a63ceba47  # Reads core.notary._inputs_for, imported rather than reimplemented, so this sees exactly the list the gate grades.
+core/statements.py 1ea708048eea  # Returns ([], "sentence") for empty input, which the caller reports as NO_SENTENCES.
+core/statements.py 759a48dd16df  # If a single character is missing, it raises SegmentationLostText naming the count and the neighbourhood.
+core/statements.py 835b828c963c  # Reuses the same psutil path core/blackbox.py uses, and returns None rather than guessing when psutil is absent.
+core/statements.py 88127c9b9eb6  # So a text that punctuates too little is cut BY WINDOW instead, and says so on every record it produces.
+core/statements.py 9765223c223b  # A FALLBACK RUN IS NAMED. interval_head.embed() returns ("hashed_fallback", ...) when Ollama is unreachable, and in that case EVERY text is re-hashed s
+core/statements.py 9f0893f25ba0  # Returns a report; writes nothing. origin is the PROVENANCE OF THE WORDS — "transcript", "article", "podcast".
+core/statements.py e5bcca1c4d2e  # A SHARD ACCUMULATES. embed_index.build() writes keys.json and vectors.npy FRESH from what it is handed, so passing only this batch silently replaced t
+core/step_budget.py 0483f692a08d  # Returns (outcome, value, error, elapsed_sec).
+core/step_budget.py 3fa9e1ce71e9  # No MIN_BUDGET_SEC floor here, and that is the whole point: the floor belongs to budget_for(), which sets the STEP's budget, and applying it again per 
+core/step_budget.py 6a133bf6031c  # The existence ledger shows what that costs — 11 kills, concentrated on two steps: kills_by_step internet_intelligence 6, daily_analysis 5 Both are LLM
+core/step_budget.py a339f0bae2d0  # Below this a step's account counts as empty — see run_call().
+core/step_budget.py ba943d37f4df  # A worker killed by a BaseException — a client library that calls sys.exit() on a hard error — leaves `done` unset, so it is reported RAISED instead of
+core/step_budget.py f638f7bf603e  # Told by core/groq_backend whenever it sets a cooldown.
+core/step_budget.py fd6e555c8053  # B = learned p95 x factor, CLAMPED to the human ceiling, or the ceiling itself when there is no history. p95 needs at least two runs (core/step_contrac
+core/step_contract.py 5065bd6de30d  # OK it wrote what it normally writes NO_EFFECT it returned without raising and touched nothing it usually touches — the quiet failure SLOW past its lea
+core/survival_gate.py 00c8a16f9808  # If this module raises — a missing config, an unreadable sensor, an import that is not there — the cycle STARTS.
+core/survival_gate.py 4a0906e87a51  # The ledger event is CYCLE_REFUSED_SURVIVAL_GATE and it counts as an END record in core.unclean_stop, because a deliberate refusal is the cleanest stop
+core/survival_gate.py 8df4858d59dd  # NO ACTUATOR IS FIRED FROM HERE YET, and the constant that claimed otherwise has been removed rather than left to read as wiring. core/disk_actuator.py
+core/survival_gate.py d0b67b452f03  # When it refuses it has ALREADY written the ledger line and fired the siren; `on_refuse` (default sys.exit) then stops the process.
+core/survival_gate.py ec6ac2ec0875  # The third mechanical effect of the homeostatic layer. notice is recorded and nothing else happens. action fires an actuator that tries to move the val
+core/survival_mode.py 7c5f199e58ef  # Two independent triggers, either sufficient: * restarts for `today` have reached max_restarts_per_day * a `failure` block is recorded for `today` The 
+core/survival_mode.py cf32d9613c67  # WHAT CLEARS IT IS EVIDENCE, NOT TIME. fast_cycle_runner calls clear() when a cycle reaches its last step.
+core/three_columns.py 464eb049c6fb  # NEVER raises, never hides.
+core/three_columns.py 6204d6b91213  # No voice is ever deleted, and falsified_by_physical keeps writing track records either way.
+core/training_log.py 09b103e61942  # The counter-example, recorded ON PURPOSE. memory/goal_score_history.json holds axis scores whose score_source is `llm_level` — a model's word.
+core/ucdp_client.py 270be98ba392  # A row missing `type_of_violence` or `side_a` raises KeyError.
+core/ucdp_client.py da39b42265f3  # So the file path is what runs today, the API path is written beside it, and THE NAMES ARE IDENTICAL IN BOTH — `load_events()` returns the same rows wh
+core/unclean_stop.py 0773c9c5a028  # Says what it WOULD record, and records nothing.
+core/unclean_stop.py 23ab1675f3e0  # IT RUNS ONCE, AT THE TOP OF BOOT, AND NEVER RAISES. venv/Scripts/python.exe core/unclean_stop.py # report, writes nothing venv/Scripts/python.exe core
+core/usgs_quakes.py 16b1fd735149  # THE REGISTRATION. evaluator.ground_truth reads trends.json[axis] and takes values[-1], so this is a LIST with the newest value last.
+test/cdp.py 195921979abd  # suppress_origin: Chrome refuses a WS handshake carrying an Origin unless --remote-allow-origins is passed.
+test/cockpit_surface.py 30d1f9f1aab6  # Import this from a test; it holds no assertions of its own. venv/Scripts/python.exe test/cockpit_surface.py # print the inventory
+test/conftest.py 32266345abf1  # ADDED 13 Sep 2026 with core/halt.py. beat() now asks the survival gate and raises VoluntaryHalt when the machine is starved.
+test/conftest.py 323ffcf99186  # ADDED 12 Sep 2026, in the same hour as the fixture below and for the same reason — which is the point worth recording. core/consolidation.py gained re
+test/conftest.py 647e59b826f5  # ADDED 5 Sep 2026 with core/blackbox.py. _run() now records one line per step, so ANY test that exercises _run() writes memory/blackbox.jsonl and trips
+test/conftest.py ebb555f77a1c  # The canon is not just another artifact: core/canon.as_frame() renders it into memory/active_canon_frame.txt and core/brain.py:227 loads that file as t
+test/sweep_server.py 7d1426efb55c  # A cockpit whose WRITES land in a sandbox, for the render sweep to drive.
+test/test_alarm_indicators.py 8e37ff60e5a9  # MUTATION NET on the contract. sweep_indicators promises 'Never raises' and is wired as a cycle step.
+test/test_alarm_indicators.py f173dacbe3a7  # So exists() said True, read_text raised PermissionError, and it escaped through sweep_indicators, whose docstring promises "Never raises".
+test/test_alarm_levels.py ddf2416aeaf1  # The real call four hundred lines below passes level=supervisor.ALARM.
+test/test_alarm_levels.py fc49928387db  # Line numbers of real supervisor.alarm_human(...) calls with no level=.
+test/test_answered_by_stamp.py 301bda87f52d  # groq_backend emits a second reason shape ('no tier answered within B=...').
+test/test_answered_by_stamp.py cdab321e69f8  # A test that reads only the ORIGINAL name cannot see an aliased import; the binding is a PAIR, (original, local), and the local name is what appears at
+test/test_assessment_guards.py 9e1a73d7fc26  # Fake local model: impact read -> impact_json; relevance gate -> always relevant here (it has its own suite); sign-skeptic -> holds verdict.
+test/test_axis_feed.py 3f2178006bc0  # Remove the isinstance check in check_number and it passes silently, which is the whole defect. venv\Scripts\python.exe -m pytest test/test_axis_feed.p
+test/test_axis_feed.py 53482d74717e  # THE NEGATIVE CONTROL --------------------- test_a_text_value_is_rejected feeds "HIGH" — the exact shape of a level word a model would produce — and de
+test/test_axis_history_preserves_unmeasured.py 18aad1b4c1fc  # No consumer of axis_history.json reads any flag — verified across all eight readers — so nothing downstream will honour "measured": false on its own.
+test/test_axis_prediction_sealing.py 19218fbc8366  # The fix seals axis predictions under the existing prophecy apparatus (target_kind 'axis_next') and quarantines the legacy records as non-authoritative
+test/test_axis_prediction_sealing.py 1cb86291fde4  # All ledger writes go to a tmp file — the real prophecy_ledger.jsonl is untouched.
+test/test_axis_score_total.py 06b1611261f5  # Feed a master snapshot whose current_level is a dict: the OTHER axes still score, the offender is named, and nothing raises.
+test/test_axis_snapshot_carry.py 723801bc096d  # GOVERNANCE_INSTITUTIONS_REVIEW went from 18 metrics to zero in one cycle; core.scorer_self_check moved it from "degraded" to DEAD — "reads 10 keys, no
+test/test_axis_tree_contract.py 32cbf4706ac4  # The reason the record has to carry its weight: there is no mechanical half. goal_score_calculator refuses to compare two composites across different c
+test/test_axis_tree_contract.py 6a121adb9f7d  # It encoded "every break moves the config fingerprint", which is false by construction: goal_score_calculator.config_fingerprint hashes axis|weight|kin
+test/test_axis_tree_contract.py 96f3c2aa4eaf  # Adding one axis to CIVILIZATIONAL_STABILITY raises that branch's share without anyone deciding to.
+test/test_axis_tree_contract.py f8af7f1ae1de  # It now lives in core/self_mirror.py and feeds no number.
+test/test_axon_agents.py 324eb2583b02  # orchestrator_grounded emits THREAT / OPPORTUNITY / WATCH — three buckets, but not these three.
+test/test_axon_agents.py 41ced73d6516  # beat() writes memory/heartbeat.json, which a LIVE cycle owns and the supervisor reads to decide whether that cycle is wedged.
+test/test_axon_agents.py 91f62cc9c88b  # emit_heartbeat() takes its sink as an argument and defaults to print.
+test/test_axon_roles.py 7fee615cb3a1  # WHAT THIS TEST DOES NOT CLAIM ------------------------------ It does not claim the words are harmless. `injected_role_flat.json` renders to a TOPICS l
+test/test_backend_policy.py 95eeab495f52  # THE PROOF THAT MATTERS ----------------------- test_a_step_with_all_four_backends_broken_finishes_fast breaks all four cloud backends and runs a step'
+test/test_backend_policy.py cdbb867c3f39  # Returns (elapsed, cloud_attempts, local_calls).
+test/test_beat_id_resolves_to_its_step.py 0daa3ec65f24  # It keys on beat["step"] — the NAME — so this walks every beat in the runner, hands the recorded heartbeat shape to ceiling_for, and requires the ceili
+test/test_beat_id_resolves_to_its_step.py 6f8fdfdf7cf9  # The triage report that ranked this first said otherwise; it repeated the old test's docstring instead of reading ceiling_for, and this file records th
+test/test_belief_revision.py 4ccf8f914ca9  # A resolved record as the evaluator writes it since H1 (4 Sep 2026). skill is the authoritative field: 1 - model_error / persistence_error.
+test/test_belief_revision.py c561106728d7  # The archive matters: is_unscoreable() reads the sealed cycles to decide whether an axis can carry signal at all, and ENERGY_REVIEW is genuinely UNSCOR
+test/test_blind_producer_provenance.py 16cf9ed6098c  # The snapshot it writes at line ~335 is on the AllBackendsFailedError path ONLY, so promising it would mark a healthy night as a broken promise.
+test/test_blind_producer_provenance.py 8060dc62ad45  # A gate that refuses for the right reason is the deliverable. venv\Scripts\python.exe -m pytest test/test_blind_producer_provenance.py -v
+test/test_blind_producer_provenance.py 8d1f33accaff  # config/step_inputs.json says what a step READS.
+test/test_blind_producer_provenance.py c0248321c968  # If this still reads KNOWN, the declaration is not what made the fix.
+test/test_blind_producer_provenance.py c76aaa1b912b  # Delete the config/step_inputs.json entry — simulated here by making the written lookup answer None, which is exactly what _inputs_for sees when the en
+test/test_body_sensorium.py 0535f6a5323e  # memory/sensorium/ holds experiments/sensorium/sensorium.py's Merkle-committed drop chain (_merkle_leaves.jsonl, _merkle_root.json).
+test/test_body_sensorium.py 3136b1d75479  # The REQUIRES declaration lives in the module instead.
+test/test_body_sensorium.py 91795ff76f79  # A sensor that can be turned on by editing a config can be turned on by a patch. * A reading that cannot be taken is NAMED, never zeroed. "no per-core 
+test/test_brain_reviews.py 0a5f522b42b5  # ── the next briefing reads it FIRST ──────────────────────────────────────────
+test/test_brain_scan.py 73a372beba2c  # dim AND hidden are 16 on purpose. top_dims is a fixed 10 in the contract, and layer2 reads from W2 which is hidden x hidden — so a fixture with 4 hidd
+test/test_canon_boundaries.py 8749d382aa0b  # It reads canon; it writes only the machine lane (memory/canon_invariants.json).
+test/test_canon_floor_and_lesson_key.py 8878b94cf302  # This is the guard that would have stopped the real incident: the length floor only refuses a DEGENERATE lesson, and a test promoting a plausible one t
+test/test_checkpoint_wiring.py 1f856fa19ec2  # The coverage hole is only safe while nothing READS the log to skip steps.
+test/test_checkpoint_wiring.py 727b7a93727d  # The steps are NAMED, not counted, because when this fires the reader needs to know WHICH step stopped recording — and because the count can also move 
+test/test_checkpoint_wiring.py ab24935ef66a  # The test above asks whether every MAPPED step records a checkpoint.
+test/test_climate_normalization.py c763f85ce8cc  # THE FIX ------- `normalize_climate()` now scores from the keys the provider actually emits, led by CO₂ concentration (the globally-valid signal).
+test/test_climate_normalization.py ca1bf740572d  # Missing data maps to None → UNKNOWN, never a silent LOW.
+test/test_climate_normalization.py ef2e1dccb1a6  # THE BUG ------- `normalize_climate()` computed its risk_score from three metric keys — `temperature_trend`, `extreme_days_share`, `precipitation_chang
+test/test_cloud_demotion_expiry.py 062d27ff8761  # So this drives the real counter and checks WHERE it trips: at the fifth empty tier, not the third.
+test/test_cloud_demotion_expiry.py 30fcb610f62e  # If it comes back EMPTY the demotion returns with a longer floor each time, so a provider whose real window exceeded its declared one is not asked agai
+test/test_cockpit.py 0c9015b73004  # The order matters: these ids are also the digit-key shortcuts, so inserting one renumbers every tab after it, and TERMINAL stays last because it is th
+test/test_cockpit.py 2443122472a7  # The very first probe emits "first reading" for every key - a different branch of why_emit, and not what this test is about.
+test/test_cockpit_cycle_reads.py 7028390d3a32  # The CYCLE tab reads like a document, not like a spreadsheet cell.
+test/test_cockpit_daily_board_link.py 3d178080be2d  # The board reads what agi_scoreboard and the two --score steps wrote.
+test/test_cockpit_daily_board_link.py 7dd4e45efac5  # Serving claude/reports/daily_board/<older>.md under a name that promises today is precisely the stale-number failure the board itself refuses to commi
+test/test_cockpit_legend.py 1a56662105a3  # The legend is derived from cockpit/timeline.SOURCES, which is the same table sources_status() already reads.
+test/test_cockpit_render_sweep.py 89edc7023be9  # The checklist comes from test/cockpit_surface.py, which PARSES the page and the server.
+test/test_cockpit_render_sweep.py de0d093d6864  # Where no browser exists it SKIPS LOUDLY with the reason named — a sweep that passes for lack of a renderer is worse than no sweep at all.
+test/test_cockpit_sweep_coverage.py f2484ff53f3e  # Names are taken from the CONTROLS table's keys and from any selector the file mentions, so a control asserted by hand in a bespoke test counts too.
+test/test_cockpit_trace_link.py 97ae11b15724  # A page written on a schedule that no door opens is indistinguishable from a page nobody writes, and it rots the same way: tools/trace_report.py itself
+test/test_cockpit_transmits_unmeasured.py 2a27c8f5a5d1  # the endpoint reads scores_blob["scores"], not the top level
+test/test_cockpit_transmits_unmeasured.py 9fdec1698d4d  # history_len counts what is transmitted; a reader needs the measured count to know how much of it is real.
+test/test_cockpit_wiring.py 72a28816032a  # THAT WAS NOT IT, and the harness is what proved it: the overlay is static markup in the page body (cockpit.html:272), CLOSE is bound to the live node,
+test/test_cockpit_world.py 83e6f9712f51  # cortex_scores_latest.json holds 0..1 and axis_history.json holds 0..100 for the same axis on the same day.
+test/test_collector_loop.py fcb7820f8eaa  # THE FIXED POINT (memory/collector_runs.jsonl, 31 Jul - 3 Aug 2026): 12 scheduled runs, 3 days, ONE axis every time, TWO distinct queries (one used 10 
+test/test_compass_wired.py 407db4e0efc7  # Kimi ruled: "A transition to TRUSTED that no consumer reads is not a source earning trust - it is a source receiving a word." So K2 reports NOT_WIRED 
+test/test_compass_wired.py 689859bff737  # K1's source is written by measurement_honesty at 20.1.
+test/test_compass_wired.py a3d3a70a6969  # K2 counts promotions to TRUSTED in memory/source_lifecycle_ledger.jsonl.
+test/test_composer_matches_target.py 020fecaccf65  # The reader is pinned to the shape the bands step actually writes: indicators.rows[].indicator / .value.
+test/test_composer_matches_target.py 0c000dc11b2e  # ── CHECK B — the anchor reads what the axis says it measures ──────────────── Correspondence affirmed: the extracted field is the quantity target_conf
+test/test_composer_matches_target.py 2e18cc76e226  # WHAT THIS FILE REFUSES TO SAY.
+test/test_composer_matches_target.py 360200c9a31e  # THE LATENT FORK, pinned rather than fixed. _resolve_metric_origin consults trend_map BEFORE obs_map, and the trends branch returns the stored value wi
+test/test_composer_new_kinds.py 746c66c147ef  # Wikimedia https://wikimedia.org/api/rest_v1/metrics/pageviews/.../daily/... -> items[].timestamp == "2026091600", which is YYYYMMDDHH. datetime.fromis
+test/test_composite_refuses.py 431c305d7300  # THE DEFECT, measured 19 September 2026. wellbeing_globe.py run without --governance-only nulls governance_computed_at, and load_governance_globals the
+test/test_composite_refuses.py 8f8f9b6281a5  # When it refuses, composite_score is None — not a number, not a zero.
+test/test_consolidation.py 7af46cf34685  # core/consolidation.py — the system reads its own memory (H, 3 Sep 2026).
+test/test_constancy_bands.py a1c22ab68a67  # Printed together they read as a contradiction — a 4.3-point improvement labelled WORSENING — and a correct alarm that reads as a broken one gets the N
+test/test_consult_free_only.py 2a36896a8faf  # Затова: * заявките вече са NVIDIA + Groq + всички слъгове, не Groq + слъгове; * calls[0] е моделът на NVIDIA, не GROQ_KIMI; * платеният двойник вече Н
+test/test_consult_paid_refusal_is_named.py 38e1013159b5  # Unanswerable from the record, and that is its own finding: consult.py wrote NO provenance at all. memory/llm_provenance.jsonl holds 9120 rows and not 
+test/test_continents.py 6a8ab280bbb4  # The 16 Aug 2026 incident it exists for is exactly this shape. to_markdown only reads, which is what the section under test needs.
+test/test_continents.py 74e6f7c31be7  # The code keeps region_id as the join key; every string a human reads says continent, in Bulgarian. venv\Scripts\python.exe -m pytest test/test_contine
+test/test_continents.py df9767b2265e  # NOT build(): that walks the cycle and WRITES into memory/ and output/, and test/conftest.py's write-surface guard rejects it — correctly.
+test/test_corpus_contract_one_reader.py 140dfd40cdbb  # test/test_corpus_contract_one_reader.py — one key contract, and every consumer of it reads it the same way.
+test/test_cortex_query.py 0111a94f2a23  # The load-bearing test here is test_imports_nothing_from_the_project: cortex_query's whole claim is that it reads the same bytes the system reads throu
+test/test_cortex_query.py dbe2392c78ef  # The human's write-command (proposing a source) lives in scripts/cortex_ingest.py, which is free to import whatever it needs precisely because it is no
+test/test_counterfactual_probe.py b099a4e7688b  # RETARGETED 12 Sep 2026, and both of its old faults are worth naming. (1) It stubbed `_model` as "cortex-l1-3b" — a shape brain.think never returns; co
+test/test_counterfactual_probe.py c84972cabe1c  # SILENT 8 which reads as a mind that would not speak, and a 1.0 rate over ONE answered case reads as perfect understanding.
+test/test_crash_leaves_a_trace.py 2010d007c059  # The runner calls sys.stdout.reconfigure(encoding=...) at line 11.
+test/test_crash_leaves_a_trace.py 2185776290c7  # os.abort() raises a genuine SIGABRT: the process dies below Python, exactly like a fault inside a C extension.
+test/test_crash_leaves_a_trace.py 9a5f8b569e63  # That is evidence about WHERE the process stopped, and it only holds because the log is genuinely unbuffered, which test_the_log_survives_an_abrupt_dea
+test/test_csv_row_key.py 8c5452750eaf  # The map's own _coverage_summary records what that produced: "returned_the_wrong_row": { "...": "Zimbabwe", "owid_mean_years_schooling": "Zimbabwe (202
+test/test_cycle_block_is_measured.py 1ea51e53b4ff  # The vector is assembled BEFORE _seal_cycle_record() writes the seal, so the ledger has no duration for this cycle at this moment.
+test/test_cycle_block_is_measured.py 8803b1c3f894  # Two causes, neither of which announced itself: * fast_cycle_runner calls write() with a cycle_id and a store path.
+test/test_cycle_checkpoint_resume.py 8758895e24ac  # The harness below walks a list of fake step names and writes only under tmp_path.
+test/test_cycle_checkpoint_resume.py 9af633bc5ec3  # A checkpoint on disk changes NOTHING unless --resume is passed.
+test/test_cycle_log_survives_kill.py 4f5cf726a93c  # Spawn a REAL child through spawn_cycle, watch its lines reach disk WHILE IT IS STILL ALIVE (which only happens because the env forces unbuffered write
+test/test_cycle_logs.py b0668d6e6c09  # A 70-minute run that hit dozens of LLM calls left NO record of any of it: no traceback if it died, no backend fallback lines, no "finish_reason=length
+test/test_cycle_logs.py fca3e865c793  # spawn_cycle also starts a detached reaper, which writes the child's exit code to CYCLE_EXIT_PATH and appends to NIGHT_LOG.
+test/test_cycle_phases_cover_every_step.py f2b16e73dc52  # 53 beat() calls carrying 52 distinct names — the duplicate is body_scan, which genuinely runs twice.
+test/test_cycle_profile.py 20329e140943  # A filter that excludes nothing reads in a log exactly like a filter that is working. venv\Scripts\python.exe -m pytest test/test_cycle_profile.py -v
+test/test_cycle_profile.py ece3f4e14360  # The nightly cycle runs at 03:00, which this module calls NIGHT with big_model_allowed False.
+test/test_cycle_reaper.py 243fbcc0485e  # What spawn_cycle actually passes to CreateProcess.
+test/test_cycle_reaper.py 56a509d3fc8e  # Sink 2 — the night log, in the shape core/cycle_report.py reads.
+test/test_cycle_reaper.py 8395fde9b6de  # The kill is only distinguishable because the watchdog SIGNS the heartbeat; the reaper reads that signature after the process is gone.
+test/test_cycle_reaper.py df9ea753c3f5  # Write a heartbeat directly, without beat(). beat() also calls core.brain.attend(), which makes a real HTTP call to a local model.
+test/test_cycle_vector.py 84807b85bbf1  # This is the wire, and these are the assertions that keep it honest: * one line per cycle end, 29 measurable keys; * a dimension that could not be meas
+test/test_daily_board_missing.py 6f7a95ade57b  # ROW_SOURCES is what the tests delete; db.SOURCES is what the board reads.
+test/test_daily_board_missing.py 75741145efad  # Every path here is also in db.SOURCES, and test_the_source_table_and_this_table_agree holds the two together.
+test/test_daily_index_reads_the_analysis.py a5c67d1b0e42  # THE FIXTURES ARE THE REAL FILES -------------------------------- Every assertion below loads memory/web_intelligence/<date>/*.json off disk.
+test/test_daily_tier.py 8eb22b1a2e67  # A step records its checkpoint only by going through _run(); the first version of this step used its own try/except and test_checkpoint_wiring caught t
+test/test_dashboard_freshness.py e8fb64d53985  # They asserted what a grep returns — it returns something else — and named cortex_dashboard_generator.py, which does not exist in this repo.
+test/test_death_bell.py 341a9a4ef1f7  # THE BUG THIS HOLDS ------------------- 21 Aug 2026, 14:24:02Z: CYCLE_KILLED written to the existence ledger. 21 Aug 2026, 14:39: CYCLE_DIED written to
+test/test_death_bell.py 35f8d54eaf47  # It calls the seam the kill path calls, with the object the kill path passes, and asserts the facts arrive. `test_the_mutation_breaking_the_send_turns_
+test/test_death_bell.py 6bf200162fa7  # Read the source of act() and require the call to sit in the CYCLE_KILLED branch — an import that nothing calls is the failure mode this repo is aimed 
+test/test_debrief_language_tag.py 7dce2bf32964  # That stopped being the design when COMMAND 25 made everything the model reads English.
+test/test_declared_provenance.py 46fd0c82de3e  # self_modifier reads web_intelligence/latest.json inside a branch.
+test/test_declared_provenance.py 90e6e3046344  # If the gate passes that, the declarations have not made it smarter, they have blindfolded it. venv\Scripts\python.exe -m pytest test/test_declared_pro
+test/test_declared_provenance.py c07e4ae530d5  # There is no such file, and the only producer-shaped reference in the repo is fast_cycle_runner's LAST_ATTEMPT, which points at memory/last_attempted_c
+test/test_declared_step_inputs.py 1e91cd1c5788  # core/notary.py loaded under a private name. conftest.py's autouse `_no_live_side_effects` replaces `core.notary.attest` with a recorder returning None
+test/test_declared_step_inputs.py 2674b7958c8e  # THE STAKE: this is the step that writes to a PUBLIC GitHub repository.
+test/test_declared_step_inputs.py 3eed59da6249  # Cross-checked against docs/MODULE_MAP.json, whose AST pass lists the module's resolvable reads.
+test/test_declared_step_inputs.py 56519cbb1d12  # --------------------------------------------------------------------------- DIRECTION 2 — declaration gone / broken -> the gate refuses --------------
+test/test_declared_step_inputs.py 768ebf000721  # If the overlay is ever dropped from `core/cycle_graph.scan_requires()`, `core/declared_inputs.py` keeps parsing perfectly and every test above it that
+test/test_declared_step_inputs.py b1e29af57f67  # THE STAKE: `self_modifier` writes generated Python into this repo.
+test/test_declared_step_inputs.py b9316023bcfa  # The record names WHERE the list came from, so a night the gate opened can be traced to the declaration that opened it. * removed / unreadable / malfor
+test/test_deterministic_intake.py 59c12378f490  # test/test_deterministic_intake.py — feeds that need no model, and a door the system does not control.
+test/test_deterministic_intake.py fcd0f6055bc2  # DETERMINISTIC FEEDS (D1).
+test/test_divergence_ledger_recorder.py 02e0fcd2f3d0  # Without the rehash the content check fires first and this would not be testing what it claims — prev_hash is part of the hashed body, so any naive reo
+test/test_divergence_ledger_recorder.py 5eee1ac6d418  # It records; source_trust judges.
+test/test_divergence_ledger_recorder.py 9465b8d7f7ec  # THE CONTRACT IS THE ONE 53 RECORDS ALREADY USE, read off memory/grounding_ledger.jsonl rather than chosen here: divergence_blocked is a SENTENCE and i
+test/test_dry_run_never_falls_back.py 3d0353f505f3  # --out normally names a file that is not there yet, and os.path.samefile raises on that.
+test/test_dry_run_never_falls_back.py 50c68fe0ba63  # ── guard 1: a fixture with no completions REFUSES, never generates ─────────
+test/test_durable_writes.py 3d75d97c482c  # The child signals readiness on stdout and then blocks forever; the parent kills it with SIGKILL/TerminateProcess, which runs no finally, no atexit and
+test/test_earning_verifier.py 38d19fa0b8dd  # The docstring says "appends NOTHING to memory/development_journal.json", which is the opposite of a violation, so a text search on this file finds the
+test/test_education_scorer.py a725ac1c4349  # The provider emits `literacy_rate_adult_pct`, `secondary_enrollment_pct`, `govt_education_spend_pct_gdp`, `internet_users_pct`.
+test/test_enum_migration.py 4808d3a5911c  # Read from the FILE, not from inspect.getsource(brain.attend): conftest neutralises that attribute suite-wide, so getsource returns the stub.
+test/test_escalation_evidence.py 744ed6f4f397  # ---------- approve_reader refuses to sign incomplete evidence ----------
+test/test_escalation_evidence.py aa1b86abc7b8  # ---------- the raw signal carries the numbers; nothing can propose without them ---------- (since the split, the pulse only EMITS — the watchdog propo
+test/test_eval_harness.py fab7d1c3d79f  # Records whether the adapter is on, so a stubbed example_nll can return a different number for base and adapted.
+test/test_exit_log_is_durable.py 11192218bb45  # Adding EXIT_LOG made four existing tests append fabricated records ('test-cycle', 'CYCLE-B', ended_by=death) to the real memory/cycle_exits.jsonl, bec
+test/test_exit_log_is_durable.py 71696c2bfeb4  # The exit code survives the next cycle. memory/cycle_exit.json is a single slot: every reaped cycle overwrites the last.
+test/test_extraordinary_cycle.py 9f42d5ddee86  # So the chain is: pulse PROPOSES -> needs report surfaces "OK <id>" -> Emil replies -> approve_reader (the ONLY authorised writer) writes the superviso
+test/test_extraordinary_cycle.py b20174940a35  # PULSE PROPOSES, never writes the supervisor's file ---------- Since the split the PULSE cannot propose at all — the watchdog does, from the raw signal
+test/test_f1_self_grading_retired.py d17bd20c4a18  # ── 1. make_predictions is a no-op: writes nothing, grades nothing ───────────
+test/test_f1_self_grading_retired.py fe5bb95fa9a6  # This suite is the permanent guard that the retired grader can never re-enter a cycle path: 1. feedback_loop.make_predictions is a no-op — it writes no
+test/test_first_bet.py 10460d71285b  # fast_cycle_runner calls proposal_intake.admit; admit applies judge to every proposal; first_bet calls judge.
+test/test_flow_score.py 038bc4228eb0  # The ARITHMETIC still holds; compute() survives as an input to core.cycle_integrity.
+test/test_flow_score.py bb3577dec74e  # Renamed with the band. core.cycle_integrity is stricter still: an empty cycle returns integrity None with a reason, because measuring nothing is not t
+test/test_fork_advances.py db0cf55bb2c4  # So this suite also pins the three safety limits, behaviourally and structurally: * the pipeline NEVER commits to main or master; * it NEVER writes pro
+test/test_free_stream.py 30aa6844ccc2  # One writer, one reader, and the module itself. core/reaction.py writes it at the moment of the answer; cockpit/server.py reads it.
+test/test_free_stream.py a3bb0e6211c8  # ast: nothing in free_stream.py calls the language gate.
+test/test_gate_producers_declare.py 1c2199caf401  # Shrink this in the commit that declares the step. self_observer -> memory/development_journal.json -> self_modifier, execute_patches It writes that fi
+test/test_gate_producers_declare.py 658157d5fde5  # A declaration nobody checks is a second copy free to drift from the code. memory/auto_level.py holds its paths as module-level constants; this asserts
+test/test_gate_producers_declare.py 8d1f33accaff  # config/step_inputs.json says what a step READS.
+test/test_gdelt_daily.py 69fe3e4c1ffb  # The chain is judge -> _default_resolver -> _resolves -> evaluator.ground_truth, which reads cortex_memory/abstractions/trends.json[axis] and takes val
+test/test_gemini_budget_and_usage.py 5634183e619a  # WHAT WAS MEASURED (cycle 2026-08-28T08:05:00) --------------------------------------------- gemini-3.5-flash counts thinking INSIDE maxOutputTokens.
+test/test_gemini_budget_and_usage.py aef33934f8ac  # Whoever asks next reads the number. venv/Scripts/python.exe -m pytest test/test_gemini_budget_and_usage.py -v
+test/test_glass.py cf0371168e06  # The command is explicit: "with the tab open, assert the number of sensor probes per minute is unchanged from with it closed." So it is a MEASUREMENT, 
+test/test_goal_score_package.py 7605abd0d021  # So it lives here instead: this test walks every module in the repository, finds every scope that reads `composite_score`, and fails the build if that 
+test/test_governance_freshness_gate.py 2db0f5751ca3  # If this test ever passes while test_stale_inputs... also passes, the two have stopped disagreeing and the gate has been neutered.
+test/test_governance_freshness_gate.py bd25eb7861d6  # The daily pass reads output/wb_cache/, does no network, and writes governance_computed_at = now.
+test/test_human_channel_grading.py 41f67806d346  # The channel can NEVER show this — consent is per-action and lives in pending_approvals / declined_approvals, not in a liveness probe.
+test/test_human_channel_grading.py add4530257c0  # Returns a writer. `None` means NO RECORD AT ALL — the never-checked case, which is the whole subject of this file.
+test/test_human_planet_empty_fetch_guard.py 15b0066c4175  # So the search is whole-file again and the docstring is excluded properly: ast.Dict literals whose source_type is exactly "REAL_DATA" are the writes th
+test/test_hypothesis_intake.py 30976621d472  # And it is written as DECLARED, not calibrated, so nobody reads it as measured.
+test/test_hypothesis_intake.py cd432d1ed7b0  # Names the module calls .write_text() on — the actual writes, not the docstring.
+test/test_hypothesis_search.py b4cb40877a98  # Three things are held here, and the canned model outputs below are the shapes a 3b model actually produces rather than the shape a contract wishes it 
+test/test_hypothesis_search.py f38de559e6a4  # GDELT themes are a controlled vocabulary, and a wrong-but-well-formed code returns an empty result set that reads exactly like "nothing is happening".
+test/test_initiative_hygiene.py add4943daa1c  # Measured 7–11 Sep: 117 -> 133 PROPOSED, 0 IN_PROGRESS, twenty for one indicator, three Groq calls a night for plans nobody could advance.
+test/test_initiative_measurable_flag.py 1ed0b51a3f9a  # POSITIVE CONTROL. `rec["measurable"] = True` written unconditionally passes the test above and is the same defect mirrored: 36 of the 89 genuinely hav
+test/test_institution0.py 9a631164c0de  # Nothing here reads data/ucdp/ or reaches ucdp.uu.se, so the outcome moves with the code and not with the world — which is the `live_state` line this r
+test/test_internet_truncation.py 73530d2624cd  # ── the aggregate counts UNKNOWN apart from LOW ────────────────────────────
+test/test_internet_truncation.py 807a620f9397  # call_llm_json raises TruncatedJSONError, as it does after its own retry.
+test/test_internet_truncation.py a92bb96ec130  # HONEST GAP, stated rather than papered over: conftest's _no_live_writes covers _GUARDED_TREES = ("memory", "config"). news/ is NOT among them, so writ
+test/test_interoception.py 415a171b5adb  # After self_mirror, because it reads what self_mirror just wrote.
+test/test_irreversible_boundary_holds.py 10335f7aadaf  # Stamp every artifact self_observer produces at FULL — the best its new declaration could ever yield — and execute_patches is still refused.
+test/test_irreversible_boundary_holds.py 21e56b335ceb  # Change the parametrize above to [N.FULL] — or to anything >= IRREVERSIBLE_MIN — and this test goes RED: with a raised ceiling and perfect provenance, 
+test/test_irreversible_boundary_holds.py def7a83d7491  # This test runs the REAL vector, so on a machine where the MeTTa sidecar is down the weakest link is the witness and the refusal is attributed to it — 
+test/test_journal_language.py 4684860461f8  # A remember() call whose text is a hardcoded Bulgarian f-string therefore lands in the purity window as "the model answered in the wrong language" — an
+test/test_k1_metrics_resolve.py 1b6ee893c38e  # WHAT THIS SUITE HOLDS --------------------- That the two indicators are fetched, that they reach last_obs under the keys _resolve_metric already expec
+test/test_k1_metrics_resolve.py 585d114652a9  # Uses an injected last_obs so the test never writes live state and never depends on when the last cycle ran.
+test/test_k3_supporting_sources.py 3f99b9529221  # The count therefore rides beside the claims, keyed by the hash the file already stores, never by list position: an index alignment nobody can see is e
+test/test_k3_supporting_sources.py 494aac431960  # after_llm_call imports semantic_memory inside the call and that writes a real store; stub it so the fixture cannot reach live memory.
+test/test_kill_policy.py 8a7af1962cab  # The invariant fires on CRITICAL only, so a mis-set priority table cannot silently turn a NORMAL step into a killable one.
+test/test_kill_policy.py b42051391b35  # The existence ledger holds ten more of the same shape. test_yesterdays_kill_would_not_happen_now replays exactly that observation.
+test/test_ladder_wiring.py 8e1d19bfec7b  # The degradation is recorded on the contract BEFORE the exception is raised. * ONE BUDGET PER STEP, NOT PER CALL. daily_analysis made 24 model calls in
+test/test_language_pin.py 310202dd5b42  # What it returns is not what is under test; what it SENT is. venv/Scripts/python.exe -m pytest test/test_language_pin.py -v
+test/test_language_pin.py d7f740b5db0d  # NO MODEL IS CONTACTED. `requests` is replaced in sys.modules by a recorder whose post() stores the request body and then raises, so think() falls thro
+test/test_language_pin.py dfa952df1e26  # attend() records its own silence to memory/brain_step_log.jsonl when the call fails, and the recorder above makes it fail on purpose.
+test/test_learner_bridge.py 50f9a44c236a  # test/test_learner_bridge.py — the brain reads what the learner learned (Emil, 11 Sep 2026).
+test/test_level_reconciler.py 74cb55272678  # HIGH on an axis named GLOBAL_RISK reads as danger and means the opposite.
+test/test_level_reconciler.py e5c64c9fc13c  # WHAT WENT WRONG ---------------- auto_levels writes a level word from its own thresholds. goal_score_calculator writes a 0..1 score from the measured 
+test/test_llm_models_exist.py 0cbd86b70eba  # --------------------------------------------------------------------------- Reading the configuration — as text, never by importing ------------------
+test/test_llm_models_exist.py a303e9bd5131  # Both ids sat in core/groq_backend.py as string literals, and the calls 404'd inside the retry path — three nights running, eating the 45-minute step c
+test/test_machine_guard.py 2ea86f9d39ba  # THE GUARD WAS NEVER REACHED FROM market_bet.py, which imports only MODEL_PIN and generate_completions and never calls first_bet.main().
+test/test_machine_guard.py 7f539caed9e1  # NOT a subprocess writing a real memory/cycle.lock: conftest's live-write guard refuses that, and it is right to.
+test/test_measured_flag_seam.py 8fcc7ddd34f7  # It does not prove the two agree about what the flag MEANS — and every other test on both sides hand-writes the flag, so both could drift together and 
+test/test_measured_flag_seam.py a3ee95175f78  # It takes raw history in the shape trend_tracker actually receives, passes it through retain(), and feeds THAT — the writer's real output — to the read
+test/test_merkle_integrity.py cf9b9f36bc81  # The invariant is relative and holds on any night: the next write is one past the highest directory that exists, and state.json agrees with how many th
+test/test_merkle_integrity.py ee9be403ddee  # WIRE_FIRST: a verifier nothing calls is the state this task existed to end.
+test/test_metta_parallel.py bc889438bb3a  # THE SECOND NEGATIVE CONTROL. hyperon returns nothing; the reference fires.
+test/test_model_window.py 620ffbbc5cb9  # The residency calls themselves are exercised by --selftest against the live daemon. venv\Scripts\python.exe -m pytest test/test_model_window.py -v
+test/test_needs_auth.py 4726bff8ac24  # WHAT WAS WRONG --------------- config/dead_sources.json records sources gated behind a credential, and the cycle skips them quietly — deliberately, so
+test/test_needs_auth.py a85a317b7bd4  # The UCDP precedent, on this machine: its token is in .env, so it reads ACTIVE with nothing having been switched.
+test/test_no_bare_except.py 2939f575f3f3  # Read as plain utf-8 it raises SyntaxError at line 1 on the BOM character, and a scanner that treats a parse failure as 'nothing to see' would skip the
+test/test_no_exit_on_import.py 75d76a163591  # The files whose module-level sys.exit() is the DOCUMENTED convention. test/_script_style.py calls itself "the single source of the split" and computes
+test/test_no_ollama_in_live_path.py 53c9f6879801  # Keeps an axis alive instead of dying with LLM_FAILED. - core/data_scout.py: local model as a SOVEREIGN fallback for source discovery — it tries a clou
+test/test_no_ollama_in_live_path.py efd58273bad6  # Deliberately NOT flagged: - agents/body/body_scanner._ollama_status() — misleading name, but it reads API keys and makes no Ollama call. - core/cortex
+test/test_notary_gate.py 2ce56e925072  # Populating it from the real `core.cycle_graph.scan_requires()` means this test tracks whatever the harvester actually produces today — including any c
+test/test_notary_gate.py 32cbe76fa90f  # Defaulting it to FULL means the gate asks the question and accepts silence as a yes — on github_publish, which writes to a public repository, and self
+test/test_notary_gate.py 33c25006d358  # The flip landed and the marker came off: `_age_state([])` now returns UNKNOWN.
+test/test_notary_gate.py 5f0b067d7455  # The truncated name has NO WRITER ANYWHERE in the repo — the only two occurrences are the one inside `_IGNORE` itself and a tmp fixture name in test/te
+test/test_notary_gate.py 60869f7dffcb  # But `may_act()` calls `attest()` through the module global, so through the patched module there is no way to reach the real arithmetic at all.
+test/test_notary_gate.py 68b20a99a38e  # Feed attest() the requires that the REAL harvester derives right now. `core.metta_check._REQ` is a lazily-built cache and is empty in a fresh process;
+test/test_notary_gate.py 7acba41d500b  # What holds the gate now is core/notary.MAX_LEVEL: a STATED ceiling.
+test/test_notary_gate.py c7ddfd19951b  # That fail-open is now closed: an empty list returns UNKNOWN, and the promise dimension no longer defaults to FULL when nobody states a predecessor.
+test/test_notary_gate.py cf8c77c3c809  # The capped attestations above stamped this step's own products at the capped level, and execute_patches writes memory/development_journal.json - which
+test/test_notify_awaits_a_decision.py a6c428296e75  # awaiting_decision() only READS.
+test/test_numeric_judge.py a03b68f37783  # The numeric-judge ROLE: chosen by name in a config, never by renaming a model. core/brain.numeric_judge() returns the model config/model_roles.json na
+test/test_openclaw_axis_worker.py 90c9a992c8a8  # --------------------------------------------------------------------------- (a) THE NEGATIVE CONTROL — a broken path refuses, with a reason ----------
+test/test_openclaw_bridge.py 00adb3bda9c1  # and after submit_action returns, the same record has been updated to a terminal status — the log is never left stale.
+test/test_openclaw_bridge.py 88269c329cc1  # Every test passes explicit tmp_path-derived policy_path/audit_path/ pending_path arguments — none of them touch the real repo's config/openclaw_action
+test/test_openclaw_schema_gate.py c4d3197e78ff  # Asserted by counting calls to classify, not by inspecting the verdict — a verdict can be corrected after the fact, a call cannot be un-made. * that th
+test/test_orchestrator_grounded.py 0027ae97ce54  # It has maximum penalty, so a naive threshold would call it a THREAT and it would sit in both sets.
+test/test_orchestrator_grounded.py 326670b4568a  # POSITIVE CONTROL — a gate that refuses everything is not a gate.
+test/test_origin_honesty.py 0bf1808140c2  # This function only reads the FAILS list they fill.
+test/test_origin_honesty.py 10d1bd2a2005  # EXACTLY the live shape: the first source's key has gone away (the snapshot published None), so every fetch raises and it lives on last-known-good; the
+test/test_origin_honesty.py b084f5c85280  # ── C1: origin is what a source RESOLVES to ─────────────────────────────────
+test/test_parse_plan_steps.py 4eb761af46a0  # Because no STEP line creates a new `current`, every INDICATOR/EXPECTED_DELTA/ DEADLINE line in a section writes into that section's OBJECTIVE dict.
+test/test_passage_rules.py 80b016d828b9  # core/notary.vector() returns five dimensions.
+test/test_patch_must_apply.py 9f4b75cb062c  # Every field the model emits has a mechanical net behind it, and this is the net for the diff BODY — the only one that can catch confabulated CONTENT r
+test/test_patch_must_apply.py a7bcaa8ee9e9  # --------------------------------------------------------------------------- (b) IT NEVER WRITES, AND IT NEVER LIES ABOUT NOT RUNNING -----------------
+test/test_phase_debrief.py 3de70dc613a1  # THE REJECTION PATH IS WHAT IS UNDER TEST ----------------------------------------- test_the_real_chinese_stance_from_tonight_is_rejected feeds the EXA
+test/test_phase_debrief.py f16f3b30b77f  # Every test writes to tmp_path.
+test/test_phase_report.py 2eb9ab74569b  # Without this, a verdict() hardcoded to PARTIAL passes.
+test/test_phase_report.py b15769442f51  # Regression: st_mtime and datetime.now() are different clock reads, so a file written immediately can stamp a fraction of a second BEFORE the phase sta
+test/test_phase_report.py d894de4ad9ff  # The first version of this test slept 0.05 s and read DONE — correctly, because a file written the instant the phase began still counts. 36 minutes mir
+test/test_phase_report.py e47c66c679af  # THE DEFECT THIS GUARDS ----------------------- "No step raised" is the weakest evidence a cycle produces.
+test/test_phase_report_refusal_is_not_partial.py ba8c093d8c29  # The artifact as it really is: present, and last touched days ago. memory/runtime_experiences.json has carried mtime 2026-08-28T15:09:22Z since the gat
+test/test_phase_report_refusal_is_not_partial.py c1b4e84d62e9  # THE NARROWNESS. self_modifier's refusal covers what cycle_map says self_modifier produces - and nothing else in the phase.
+test/test_prev_step_is_not_the_current_step.py 77bf248767f9  # So the marker stays where it is, and the PREDECESSOR IS CAPTURED BEFORE IT IS OVERWRITTEN: beat() reads the last marker, keeps it, then prints.
+test/test_produces_has_a_reader.py 1940c83dcf93  # Even writer detection failed - memory/belief_state.json reads as "nothing writes it" because the write goes through a module constant far from the lit
+test/test_promotion_seam.py e28d5a9dc3e7  # A source missing its location raises on every fetch, dies against DEATH_AT three cycles later, and the slot looks FILLED the whole time — silence that
+test/test_prophecy_one_per_night.py 61b84cd2e6ed  # The path is passed EXPLICITLY. _cycle_outcomes' default binds the real existence ledger at definition time, and with that default this test read live 
+test/test_proposal_scale.py 3c97bbd5fef1  # A number that parses is not yet a number that could happen. 3b, 6 Sep 2026. proposal_intake admitted WATER_REVIEW +1.2 because "1.2" is a float.
+test/test_proposal_scale.py eb17d2ee3c13  # One observation per DAY, so daily_range counts them as separate days.
+test/test_proprioception.py 435b89989ad0  # This repo's ladder (cockpit/timeline.py:79) counts MODEL PASSES, and 1 means 'one model pass over a state the system just read'.
+test/test_proprioception.py f90e13250cd9  # Amplitude 2, not 4, and the difference is worth knowing: against an ADAPTING baseline an alternating jitter of amplitude A produces a residual LARGER 
+test/test_provenance_model_id.py 2a1cc03fd064  # A row that records only what ANSWERED hides the degradation that made it answer, which is the class of defect this repo exists to catch.
+test/test_provenance_model_id.py ea69078193fd  # THE SCAR, and it is measured rather than remembered. memory/cycle_logs/ holds 471 lines reading [LLM] Groq failed (404 Client Error: Not Found for url
+test/test_provenance_names_the_real_file.py 68c9d25db0dc  # Marked live_state: it reads snapshots/ and output/, which the nightly cycle rewrites, so its outcome moves with the world rather than with the code an
+test/test_provenance_names_the_real_file.py f5095969b768  # The loaders recorded the ADAPTED key (wb_SE.ADT.1524.LT.ZS) as the field, and that key appears nowhere in the file — the payload holds world_bank.lite
+test/test_provenance_pairs.py 51abae20b4d7  # Scan the OBSERVATION RECORDS, not the whole file: the prose that PROMISES nothing is computed necessarily contains the words "difference", "ratio" and
+test/test_pulse.py 71b1e98ef45c  # Given "#GLOBAL-TARGET.md" that returns the EMPTY STRING, and REPO / "" is the repo root, which exists — so the check passed.
+test/test_pulse.py 8492910e7fa0  # It emits the raw signal and a separate process decides. (test_trigger_watchdog.py owns that contract.)
+test/test_pulse_cycle_sense.py 1f3ff86c847a  # A heartbeat file the pulse reads and heartbeat.py writes — never the real one.
+test/test_pulse_lock.py c735060dd9b9  # Two daemons appending to one stream interleave samples from two pids. analyze.py can DETECT that (it counts writers) but cannot repair it, and a senso
+test/test_quarantine_integration.py a48da54c01b7  # Benign patch still passes through self_modifier._write_python() normally.
+test/test_quarantine_triage.py 55dab8026ac3  # 14 of 17 came out DEAD_WEIGHT because they write files nothing reads.
+test/test_quarantine_triage.py 684302bfe147  # That patch writes agents/registry.json, which no file in this repo reads, and registers agents.water.water_review_agent, which does not exist.
+test/test_rank_runner.py c82c0f0c1d91  # ════════════════════════════════════════════════════════════════════════════ FAILURE MODE 4 — OOM falls back to unbatched, never to a shorter sequence
+test/test_reaction.py 9ac0f228601d  # The three the command names: * a fixture stream produces a stored record containing BOTH lines and answer; * a non-English answer is DISPLAYED and is 
+test/test_reaction.py e5c04f56f7fc  # AND THE FREE STREAM GOES SOMEWHERE ELSE. react() writes one file per answer (COMMAND 33 part 8), so without this every test in this file writes fabric
+test/test_reaper_records_its_own_death.py 407a72c0b58e  # Everything here writes to tmp_path via --exit-record, --exit-log and --night-log.
+test/test_receptors.py f8fb6e9e9908  # 3 calibration ticks: the 1st sets the baseline and the 2nd is suppressed as warmup; by the 3rd, ticks >= calibration_ticks and it is live.
+test/test_redact.py 376bea2222e5  # WHAT NO OUTPUT MEANS: redact() returning the text unchanged with {} hits is the normal answer for almost every line the system ever writes.
+test/test_redact.py c300a1d453d3  # FAIL-OPEN. core/durable.py exists so a record is not lost; a guard that raises inside it would defeat the file it is protecting.
+test/test_refusal_leaves_an_experience.py 000802ce8503  # body_scan reads data["experiences"] (a list); existence_model reads data["summary"]["error_count"]; phase_evidence counts the same list.
+test/test_refusal_leaves_an_experience.py 0609e4404d29  # psutil.open_files() raises PermissionError routinely on Windows.
+test/test_refusal_leaves_an_experience.py 1aac9e0d42cc  # THE FAILURE PATH, ASKED FOR FIRST. memory/existence_model.py adds summary.error_count straight into pain_score and get_self_feeling() reads success_ra
+test/test_refusal_leaves_an_experience.py 6bc1655cc6e6  # Three modules read it: memory/body_scan.py:162 (counts data["experiences"]), memory/existence_model.py:72 (reads data["summary"]["error_count"] into p
+test/test_refusal_leaves_an_experience.py 74cee0587f9a  # Count a refusal as an ERROR and containment working reads as the system breaking — one point of pain per night for doing the right thing, and a succes
+test/test_refusal_leaves_an_experience.py d05dd3d252a8  # Verified in the code: agents/core/self_observer.py writes development_journal.json and improvement_proposals.json, and nothing else.
+test/test_registration_contract.py 7ff7900160aa  # A flat row passes five clean observations with CV 0, is promoted to TRUSTED, and then the April revision lands and the machine reads a correct number 
+test/test_repeated_failure_alert.py 56d11f9dd15e  # No test reads or writes the real memory/cycle_logs/ or the real needs files.
+test/test_resolve_ideas_wired.py f105af1cff59  # It grades ideas against memory/axis_history.json, which trend_tracker writes at index 3.
+test/test_resume_flag.py 71b4e55eb977  # Only a supervisor RESTART passes the flag. * a resume needs to be TOLD which cycle it continues.
+test/test_resume_flag.py abe56de83288  # StepContract takes two snapshots of 4853 files and writes memory/step_contract_*.json — live state, which test/conftest.py rightly fails on.
+test/test_safe_path.py 295054551847  # If that name is a symlink pointing outside the repo, write_text() follows it. normalise() cannot catch this and is not at fault: it never touches the 
+test/test_safe_path.py 392ee9582d8b  # The notary computes the five-state trust vector and may_act() reads its scalar to permit or refuse irreversible steps.
+test/test_safe_path.py 65091eb3c9e7  # THE HOLE THIS CLOSES (measured 17 Aug 2026, against the live guardian) ----------------------------------------------------------------------- agents/
+test/test_safe_path.py 73c5d8ebff86  # THE STAKE: apply_patch() writes generated code to the file named by a proposal.
+test/test_safe_path.py e185e265906f  # THE STAKE: the return value of this function is passed straight to write_text().
+test/test_safe_path.py e2892b64fb26  # THE STAKE: agents/core/self_modifier._write_python writes model-generated Python to any path under WRITE_ALLOWLIST. safe_path() is the containment che
+test/test_safe_path.py e3b29c328dcf  # The taint in this repo is specific and worth naming rather than generalising: PatchGuardian.apply_patch(filename, new_code) takes `filename` from a pr
+test/test_scorer_self_check.py 219e164de473  # Verdicts are keyed on whether read keys EXIST in the payload, so a transient all-None data outage reads as STALE, never as a bug.
+test/test_scorer_self_check.py 3f9044e279d4  # The check exists to make the CLIMATE-LOW / EDUCATION-0.50 bug class LOUD: a scorer that reads metric keys the provider never emits silently defaults t
+test/test_script_suite.py c8f8855e35cf  # That is a fine way to write them — each is runnable on its own — but pytest cannot collect them: importing one raises SystemExit and aborts the entire
+test/test_seal_path_per_day.py b3d129a16ada  # From 8 September onward a bare --live would either die on FileExistsError or, with --allow-overwrite, DESTROY THE SEALED R48 BET — the only live groun
+test/test_self_experiment.py 36264be7fe4a  # CYCLE_STARTED is written by supervisor.py, not by the runner.
+test/test_self_experiment.py 564eadfd5862  # The heart of the honesty here: the experiment reads what the file ACTUALLY said, and refuses to count a cycle that ran the other setting.
+test/test_self_experiment.py e36bd601293c  # THE named negative control. core/canon.py holds the goal, the boundary hash and the frame injected into every prompt.
+test/test_self_experiment.py f0ab6806290f  # A manually launched cycle has no CYCLE_STARTED — supervisor.py writes that, the runner does not — so the only event carrying its id can be its own kil
+test/test_self_improve_implementer.py 32600b4f3129  # Measured with git itself, on a bare marker versus a ranged one: bare @@ -> error: No valid patches in input ranged @@ -1,1 +1,1 @@ -> error: patch doe
+test/test_self_improve_pipeline.py 1a0a50100b89  # This writes, asks git whether the diff applies to the real file, and on a no is handed git's ACTUAL error — the lines it expected — and tries again.
+test/test_self_improve_pipeline.py 6fd8e011570c  # core.earning records a FAIL.
+test/test_self_improve_pipeline.py f2cc77b72beb  # So this reads the argv list core/self_improve/applies.py builds, on the AST, rather than grepping the pipeline for the string "git apply" — which now 
+test/test_self_improve_pipeline.py f5b1cd92b595  # Now a good patch PASSES on merits while production stays locked, and this test fails if those two are ever wired back together.
+test/test_self_improve_requirer.py 031844e8b1be  # self_observer writes measurable_goal on every proposal; build_prompt read problem, root_cause and component and dropped it.
+test/test_self_improve_requirer.py 0c2156e9aebc  # "REVIEW" is in twenty-three of the twenty-four axis names, so a file with "review" in its path would tie to almost any category — a net that fires on 
+test/test_self_improve_requirer.py 26c099916351  # An observation whose TEXT grounds the axis, so require() passes the SPEC_AXIS_UNGROUNDED net for a real reason. "p" grounded nothing and every test us
+test/test_self_improve_requirer.py 3650a8fbdea4  # Ranking by category alone let the first file alphabetically fill all twelve slots, and test_llm_json.py — the suite for the very module that parses LL
+test/test_self_improve_requirer.py 6ac68decf94b  # The two sets are DISJOINT.
+test/test_self_improve_requirer.py aa5906580323  # test/test_self_improve_requirer.py — THE BRAIN EMITS A SPEC AND NEVER CODE.
+test/test_self_improve_requirer.py b591e8ec6625  # --------------------------------------------------------------------------- (d) IT WRITES ONLY UNDER THE EXPERIMENTAL TREE ---------------------------
+test/test_self_improve_requirer.py c40de68fff6e  # An EXTERNAL metric is a number from a data file TIED to the claimed category; an INTERNAL one is a named test that fails now and passes after.
+test/test_self_improve_requirer.py da0800fc02d3  # It said "read from the scores file" — no path, so nothing could recompute it, and SPEC_METRIC_UNGROUNDED now refuses that.
+test/test_self_improve_requirer.py de95322e336e  # --------------------------------------------------------------------------- (g) THE OLD QUESTION IS GONE — nothing still reads a single goal_axis ----
+test/test_self_improve_requirer.py ef5033670b0e  # The actor is shown the measure it is judged by — the SAME object core/notary.py reads, byte for byte, not a paraphrase.
+test/test_self_improve_requirer.py f4f7dd7b32d6  # Every test mocks the model; none reaches Ollama or a cloud API, and none writes outside tmp_path.
+test/test_self_mirror.py 218eccc236eb  # THE CALIBRATION IS CORRECT ON REAL, CAPTURED EVIDENCE. test/fixtures/mirror_cycle_2026-08-21/ holds the VERBATIM slice of memory/brain_step_log.jsonl 
+test/test_self_sense_model_pick.py 674fd1ee1316  # The shape ollama_models() returns.
+test/test_sensorium_ingest_namespace.py 82de3875a5f0  # Hermetic: every path the module writes is redirected to tmp_path.
+test/test_signed_schedule.py 559ac0918447  # the hook loads tools/signed_schedule.py by path; point its LOG at ours through the module it will build
+test/test_signed_schedule.py a8bd7304ffef  # The band lives in code, so a signature — even a valid one — can only choose AMONG values a human already bounded.
+test/test_source_lifecycle.py a0b85bc5bfe8  # Every test above reads life.DEMOTE_AFTER rather than the literal 3, which keeps them from being brittle — and means none of them notices if the consta
+test/test_source_lifecycle.py d00ad737914a  # Every test writes its evidence to tmp_path, never memory/.
+test/test_stale_input_is_named.py 5ae077cb2d11  # The blast radius of this commit, pinned. self_modifier WRITES patches; execute_patches APPLIES them and stays capped below the line.
+test/test_state_vectors_marker_row.py 46fe521607a9  # test/test_state_vectors_marker_row.py — the phase voice died on a schema marker (11 Sep 2026). memory/state_vectors.jsonl holds one row per cycle end 
+test/test_statements_segmentation.py d330b3fe0113  # THE PARAPHRASE QUESTION, which this file answers structurally rather than by assertion: there is no text field anywhere for a model to fill. ingest_te
+test/test_step_boundary.py 68e3259a55dd  # The other 31 have none, and not through neglect: they are inline blocks in fast_cycle_runner, so _run() never wraps them and StepContract is never ope
+test/test_step_budget_ladder.py 31cf33a7426d  # Matches core/step_contract.p95, which returns None below two samples.
+test/test_step_contract.py e4ce8a8f5e46  # Reads the capture of 21 Aug 2026 (test/fixtures/step_callmap_2026-08-21.json, VERBATIM from memory/step_callmap.json, producer scripts/step_callmap.py
+test/test_step_contracts.py 0e8eb5405b90  # --also-latest writes into a file four other modules read, and cycle_integrity.is_full() counts any verdict that is not OK as a failed step.
+test/test_step_contracts.py a7e69d71dce9  # IN THE ORDER A REAL TRACE WRITES THEM.
+test/test_step_contracts.py dd48083808c8  # THE ONE THAT MATTERS. facade_self_check reads scorers and prints.
+test/test_suite_gate.py 41ea7e281ff6  # So the guard records ABSENT as a state and compares against it.
+test/test_supervisor.py 01c1e4bd9e3a  # The autopsy is MOCKED, not removed (Kimi: „Мокнете, не заглушавайте") — the branch still calls it, and the call is asserted below.
+test/test_supervisor.py 0c214b8b9d49  # The capability is removed rather than the call stubbed. 2. test_the_sandbox_covers_every_writable_path_in_the_supervisor below reads the module's own 
+test/test_supervisor.py 10aaa24d1c65  # Backdate the heartbeat on disk so the cycle reads as SILENT.
+test/test_supervisor.py 27a008961aa0  # tick() appends one telemetry row per call (core/body_sensorium.py).
+test/test_supervisor.py 7c73eb1921a7  # 21 Aug 2026: tick() now appends a telemetry row per call (core/body_sensorium.py).
+test/test_supervisor.py 7fc80c4d5185  # NOTIFY_CHANNEL and ALARM_STAMP are module constants, so this fixture can redirect them — and once NOTIFY_CHANNEL points at an empty temp dir there is 
+test/test_supervisor.py 82956534c586  # os.replace(tmp, NAME) / os.rename / shutil.move — the DESTINATION is a write, and it is how every atomic write in this codebase is performed (memory/h
+test/test_supervisor.py b2c84a73ad3c  # NOTE, and this detail is the whole lesson of the day in miniature: a poisoned requests.post that merely RAISES proves nothing here, because alarm_huma
+test/test_supervisor.py f6a95e118dcf  # Вместо да премахвате _autopsy от пътя, заменете я в тестовата среда." So it is RECORDED, not deleted: the branch still calls it, the call lands in _AU
+test/test_supervisor_log_not_poisoned.py c1c6bb67c008  # The line the watchdog writes when it consults core/kill_policy.
+test/test_survival_gate.py 47e4a2c15bd6  # guard() records p_survive_next_cycle, and the default path is the REAL memory/p_survive_history.jsonl.
+test/test_survival_gate.py 7067bb82b020  # the fail-open lives in fast_cycle_runner, which wraps the call
+test/test_survival_mode.py 6fb84e1e1892  # A later process: the supervisor state is now CLEAN, but the latch holds.
+test/test_survival_mode.py df47789384cc  # Every test writes only under tmp_path and injects its own scheduler state, priority table and notifier.
+test/test_survival_wiring.py 1cc65dbed1fc  # _run also drives the model window, which persists memory/model_window.json.
+test/test_survival_wiring.py bdaa8a1b8e8a  # This holds the three joins that make it real: * the supervisor LATCHES the flag when the restart budget runs out, instead of only failing loudly.
+test/test_three_columns.py 80cb989c69c7  # The load-bearing claim of this module is negative: there are things it REFUSES to produce.
+test/test_timeline.py 14b9106c6160  # core/brain.remember() stores summary[:600], so long verdicts never parse.
+test/test_trace_schema.py 0dc7f260ada1  # fr.REPO is pointed at tmp_path so the hook counts tmp_path as ours.
+test/test_trace_schema.py 12ef1f115075  # A StepContract span, the way _run() writes it.
+test/test_trace_schema.py 1b21ec91939d  # An exception in an audit hook fails the OPERATION, not the hook — any open(), anywhere in the process, including the supervisor's own writes.
+test/test_trace_schema.py 28d7abb9646d  # Nothing writes to the live memory/cycle_trace.
+test/test_trace_schema.py 5b29d0bdb969  # The trace writes step:internet_agent; cycle_map knows internet_intelligence.
+test/test_trace_schema.py 8de87af27c6d  # THE DEFECT: a ContextVar is per-context, so a worker thread reads the default.
+test/test_transcript_fetch.py c1939cd87c40  # --------------------------------------------------------------------------- (c) Cross-cycle cache — SANITY: cached video = zero network calls --------
+test/test_transcript_fetch.py cd1659ac0141  # SANITY: a cached video costs ZERO network calls.
+test/test_transcript_ytdlp_invocation.py 6e4a9e4618e9  # Stands in for subprocess.run: records argv, runs nothing.
+test/test_trigger_watchdog.py 598271bd73ac  # ---------- 1. the pulse emits a SIGNAL, never a qualification ----------
+test/test_trigger_watchdog.py 6a30f53a4c4e  # After: the pulse emits raw numbers and stops. trigger_watchdog reads them, applies thresholds it never computes, RE-DERIVES any cited penumbra leaf ha
+test/test_truncation_budgets.py d466a02717e1  # utf-8-sig: agents/internet/internet_agent.py carries a UTF-8 BOM, and ast.parse refuses U+FEFF as a non-printable character.
+test/test_usgs_quakes.py 131aa49603e2  # Registered in this same commit, so this reads the LIVE trends.json — no temp file, no injection.
+test/test_verifier_inputs.py 1dd49f65e9fb  # It reads NOTHING locally on the cycle path. internet_intelligence agents/internet/internet_agent.py reads only its own outputs and caches — memory/you
+test/test_verifier_inputs.py 359f10f31ad8  # Verifiers that cannot say what they read. for_step() returns None for 'nobody wrote a declaration' and [] for 'a declaration exists and is empty or br
+test/test_verifier_inputs.py 8b0620ab254b  # Neither reads any local file whose age means anything: browser_scout AST census of experiments/browser_scout/scout.py: one write_text (its own output)
+test/test_voluntary_halt.py 5d8824bf63eb  # If that clause goes, a halt becomes an unhandled BaseException and the supervisor reads a corpse.
+test/test_withheld_composite_consumers.py 11e653703af3  # ── 4. goal_prophecy refuses rather than forecasting nothing ─────────────────
+test/test_withheld_composite_consumers.py fbc96175080e  # The defect this guards: 0.0 in the goal_score series reads forever after as 'the world scored zero that day', and drags every average and every foreca
+test/test_worked_example.py 1f7d5dbc45a8  # 'SECTOR:' is a bucket with a stray colon and it REFUSES rather than being cleaned up.
+test/test_youtube_breaker_refusals.py 91ffe89f6555  # Everything is driven through the public surface (record / parked / reset / clear_park) and writes only to tmp_path: a test that parks the live breaker

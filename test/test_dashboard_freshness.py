@@ -8,10 +8,13 @@ WHAT WENT WRONG (measured 20 August 2026)
 `cortex_approval_server.py` served `output/cortex_dashboard_live.html` at route "/",
 injecting the approval panel into it, with no check of any kind on the file's age.
 
-That file is not a live render. Nothing in the cycle writes it — grepping the tree for
-"dashboard_generator" across *.py returns only that module's own docstring, and
-hypercortex_runner.py / fast_cycle_runner.py / run_daily.py never mention a dashboard.
-It is produced by hand, by running cortex_dashboard_generator.py as __main__.
+That file is not a live render: no cycle step declares it and nothing schedules it.
+
+(Two sentences were DELETED here on 19 Sep 2026 under the new CLAUDE.md rule. They
+asserted what a grep returns — it returns something else — and named
+cortex_dashboard_generator.py, which does not exist in this repo. Nothing tested
+either claim. Deleted rather than reworded: a vaguer version would be the same
+defect at lower resolution.)
 
 So it drifts:
 
@@ -44,9 +47,15 @@ and the serve test still passes.
 
 WHAT THIS FILE DOES NOT DO
 ---------------------------
-It does not test cortex_dashboard_generator.py, whose arithmetic is knowingly broken
-and deliberately untouched (a separate decision). It asserts only which page the
-approval server hands back, given two files with known mtimes.
+It asserts only which page the approval server hands back, given two files with
+known mtimes.
+
+(A sentence describing cortex_dashboard_generator.py's arithmetic in the present
+tense was DELETED on 19 Sep 2026: that module was removed on 2026-08-21 in
+208e2cf, "sixteen megabytes that nothing has imported since March", so the claim
+had been false for a month. The regexes below still name the string on purpose —
+they assert the served page must not point an operator at it — and the test
+itself is what holds that up.)
 
     venv\\Scripts\\python.exe -m pytest test/test_dashboard_freshness.py -v
 """
@@ -187,10 +196,14 @@ def test_a_missing_scores_file_does_not_open_the_gate(client, tmp_path):
 #
 # The first version of this file asserted the opposite: that the withheld page NAMED
 # cortex_dashboard_generator.py as the entry point to run. That was replaced once the
-# generator was looked at properly. It has no caller, and the number an operator reads
-# first is fabricated four ways (its lines 148/150/151 and a DOMAIN_MAP that groups by
-# a taxonomy config/target_config.json no longer has). Pointing someone at it produced
-# a page that looks authoritative and is not — worse than no page at all.
+# generator was looked at properly, and the module was deleted outright on 2026-08-21
+# (208e2cf). Pointing an operator at a file that does not exist is worse than no page
+# at all, which is what the two patterns below refuse to let the page do.
+#
+# (The description of that generator's internals — "fabricated four ways", specific
+# line numbers, a DOMAIN_MAP — was DELETED on 19 Sep 2026 under the CLAUDE.md rule:
+# it asserted the behaviour of a file that has not existed for a month, and nothing
+# tested it.)
 #
 # So the page now explains why there is nothing to show, and offers no command.
 
