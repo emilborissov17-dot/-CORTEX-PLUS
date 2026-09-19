@@ -215,6 +215,11 @@ def test_the_fixtures_are_the_six_accepted_debriefs_of_21_august():
         assert "0.6282" in rec["debrief"]["what"], f.name
 
 
+# LIVE_STATE (19 Sep 2026): which phase survives depends on the night's debriefs.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test():
     """The measured result, kept as a test so a later loosening of the gate is
     visible as a change in this number rather than as nothing at all.
@@ -238,6 +243,11 @@ def test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test():
     assert len(rejected) == 5
 
 
+# LIVE_STATE (19 Sep 2026): same live dependency as its sibling.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_replay_script_reports_the_same_number():
     """The script is the thing a human runs; if it and the library disagree, the
     human is reading a different gate from the one that runs."""

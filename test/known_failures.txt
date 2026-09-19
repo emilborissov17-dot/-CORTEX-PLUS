@@ -37,38 +37,3 @@ test/test_ci_contract.py::test_the_test_job_uses_the_network_flag  # REAL_DEFECT
 test/test_ci_contract.py::test_no_hardcoded_drive_letters_in_code  # REAL_DEFECT: One production hit: a hardcoded C:\Windows\System32 firewall log path
 test/test_script_suite.py::test_script_style_suite[test/test_needs_approvals.py]  # REAL_DEFECT: 'the inline hint stays in the brief (extras are an addition, not a move)' - the hint was moved out instead ...
 
-# --- OBSOLETE (3) ---
-test/test_axis_history.py::test_todays_coverage_is_still_thirteen  # OBSOLETE: measured_axes() returns 14, was 13 on 6 Sep
-test/test_phase_resume.py::test_the_cli_refuses_without_claiming_the_cycle_lock  # OBSOLETE: Asserts the literal string 'REFUSING --from'
-test/test_script_suite.py::test_script_style_suite[experiments/dreams/test_dream.py]  # OBSOLETE: '[FAIL] delta computed = None'
-
-# --- LIVE_STATE (15) ---
-test/test_belief_revision.py::test_the_two_june_hypotheses_are_skipped_rather_than_mislearned  # LIVE_STATE: assert 11 == 0 - counts hypotheses in the live store, which has grown since June.
-test/test_corrections_27.py::test_the_annotation_comes_after_what_it_annotates  # LIVE_STATE: assert None == 'ANNOTATION' - ordering assertion over the same live history file.
-test/test_corrections_27.py::test_the_five_test_rows_are_still_there  # LIVE_STATE: Pins memory/p_survive_history.jsonl to exactly 5 non-ANNOTATION rows; the live append-only file now holds 41
-test/test_level_reconciler.py::test_climate_global_risk_is_corrected_to_high_under_the_ruling  # LIVE_STATE: Asserts a correction over today's scored levels
-test/test_level_reconciler.py::test_social_relations_is_corrected_to_low_on_live_data  # LIVE_STATE: Name says it: 'on_live_data'
-test/test_metta_parallel.py::test_the_disagreement_states_both_readings  # LIVE_STATE: KeyError: 'level' - reads today's level output, which no longer carries the key for that axis.
-test/test_metta_parallel.py::test_the_live_climate_fact_is_what_we_think_it_is  # LIVE_STATE: 'auto_levels no longer says LOW: HIGH' - asserts today's computed level
-test/test_needs_auth.py::test_the_live_registry_shows_ucdp_active_and_eia_waiting  # LIVE_STATE: KeyError: 'eia_api' - asserts the contents of the live source registry, which changed when the source set c...
-test/test_needs_auth.py::test_the_waiting_sources_reach_the_cycle_report  # LIVE_STATE: assert False over the same live registry.
-test/test_phase_evidence_swap.py::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test  # LIVE_STATE: survived=['B_SENSE'] rejected=[...] - expected D_SCORE alone
-test/test_phase_evidence_swap.py::test_the_replay_script_reports_the_same_number  # LIVE_STATE: assert 'B_SENSE' == 'D_SCORE' - same live dependency as its sibling.
-test/test_proposal_sla.py::test_there_are_no_patches_from_13_july  # LIVE_STATE: 'oldest is 52.3 days'
-test/test_self_experiment.py::test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees  # LIVE_STATE: 'but the guarded arm is whatever the file holds' - reads the live guarded file.
-test/test_self_experiment.py::test_a_guarded_file_holding_neither_arm_still_refuses  # LIVE_STATE: The failure names it outright: 'config/scheduler.json was edited at 2026-09-18T23:50:01, after this cycle e...
-test/test_self_experiment.py::test_the_other_ordinal_reads_the_same_guarded_arm  # LIVE_STATE: assert (None == 'b') - same live guarded file.
-
-# --- BROKEN_TEST (4) ---
-test/test_cycle_seals_its_own_completion.py::test_sealing_a_cycle_here_leaves_the_real_ledgers_alone  # BROKEN_TEST: Asserts memory/extra_calls_log.jsonl does not exist 'and no real cycle has run: a test wrote it'
-test/test_p_survive.py::test_nothing_outside_the_allowed_files_mentions_it_in_code  # BROKEN_TEST: Every hit is documentation, not code: claude/reports/HANDOFF_5SEP_0115.md, claude/reports/TRACE_2026-09-17....
-test/test_p_survive.py::test_the_recorded_line_is_not_written_where_a_prompt_reads  # BROKEN_TEST: Same shape: hits are claude/reports/SUITE_*.log and TRACE_*.md - a log that RECORDS the guard firing is cou...
-test/test_script_suite.py::test_script_style_suite[test/test_no_exit_on_import.py]  # BROKEN_TEST: Fails only on Broker-bot/_ARCHIVE/* files
-
-# --- ENVIRONMENT (2) ---
-test/test_self_improve_pipeline.py::test_the_ceiling_does_not_decide_the_merits  # ENVIRONMENT: 'did not pass on merits: failed on tests_pass'
-test/test_self_improve_pipeline.py::test_the_patch_is_applied_outside_the_repository_and_nothing_survives  # ENVIRONMENT: 'a sandbox worktree survived'
-
-# --- FLAKY (2) ---
-test/test_durable_writes.py::test_a_batched_append_is_only_guaranteed_after_the_barrier  # FLAKY: PASSES alone 3/3 and 13/13 with its own file; fails only inside the full suite
-test/test_durable_writes.py::test_the_barrier_uses_a_writable_handle  # FLAKY: PASSES alone 3/3 and 13/13 with its own file; fails only inside the full suite

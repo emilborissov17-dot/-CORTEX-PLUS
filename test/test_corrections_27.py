@@ -10,6 +10,7 @@ The tests are written against the actual failing input where one exists.
 """
 from __future__ import annotations
 
+import pytest
 import json
 import pathlib
 import sys
@@ -142,6 +143,11 @@ def test_the_manifest_hash_still_matches_after_the_amendment():
 
 # ── 2.3  history is annotated, never edited ─────────────────────────────────
 
+# LIVE_STATE (19 Sep 2026): pins that same live file to exactly 5 rows; it holds 41.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_five_test_rows_are_still_there():
     p = REPO / "memory" / "p_survive_history.jsonl"
     rows = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines()
@@ -164,6 +170,11 @@ def test_an_annotation_explains_them():
     assert "KEPT" in n["disposition"]
 
 
+# LIVE_STATE (19 Sep 2026): ordering over memory/p_survive_history.jsonl, a live append-only file.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_annotation_comes_after_what_it_annotates():
     p = REPO / "memory" / "p_survive_history.jsonl"
     lines = [l for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]

@@ -28,8 +28,14 @@ import sys
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
+# Broker-bot and _ARCHIVE are here for the reason pytest.ini gives for excluding
+# them by name: Broker-bot is a SEPARATE PROJECT vendored into this tree, with its
+# own .git and its own dependencies. This script walks the tree itself and so did
+# not inherit that exclusion, and every failure it reported was
+# Broker-bot/_ARCHIVE/broker-bot-v2/*.py exiting at import — which is that
+# project's business, not this one's. (19 Sep 2026.)
 SKIP_PARTS = {"__pycache__", ".git", "venv", "venv312_metta", "snapshots",
-              "node_modules", "site-packages"}
+              "node_modules", "site-packages", "Broker-bot", "_ARCHIVE"}
 
 
 def _is_exit(node: ast.AST) -> bool:

@@ -1,6 +1,35 @@
 # Test triage — the 42 known-failing tests, 2026-09-19
 
-Read-only. Nothing was fixed and no test or module was edited.
+> ## STATUS: THE BUCKETS AND THE "LETS THROUGH" COLUMN ARE UNVERIFIED HYPOTHESES
+>
+> **Added 19 Sep 2026, later the same day, at Emil's instruction.**
+>
+> This report was produced in **12m51s for 42 tests — about 18 seconds each**. That
+> is enough to read a failure message. It is not enough to verify what a defect
+> lets through, or whether a test still means anything. The "lets through" column
+> in particular was written from the tests' own docstrings, which the sweep of
+> that same day measured as **~12% wrong** (4 false in 33 hand-verified sentences).
+>
+> **Every entry below is a HYPOTHESIS until it carries a VERIFIED mark.**
+>
+> **The rate so far: of the five entries examined closely since, THREE did not
+> hold.**
+>
+> | entry | claimed | verification showed |
+> |---|---|---|
+> | `test_heartbeat_coverage` (REAL_DEFECT #1) | the watchdog's ceiling is keyed on the beat id, so steps are killed early | **FALSE.** `supervisor.ceiling_for()` keys on the step NAME; `step_ceilings_sec` has 17 keys, all names, zero ids. Nothing was ever killed by this. The real defect was six misplaced boundary comments. |
+> | `test_todays_coverage_is_still_thirteen` (OBSOLETE) | asserts a count we moved past; delete it | **BUCKET WRONG.** Its own docstring designates it a tripwire to be read and updated. Constant moved 13 → 14 (MATERIALS_WASTE_REVIEW became gradeable); test kept. |
+> | `test_the_cli_refuses_without_claiming_the_cycle_lock` (OBSOLETE) | asserts prose for a refusal that was reworded; delete it | **BUCKET WRONG.** Five assertions, four of them behavioural (lock untouched, no trace, no boot block, exit 2). Only the fifth checked prose. Prose assertion deleted; the test kept. |
+> | `test_consult_free_only` ×2 (REAL_DEFECT #2) | a paid model is not refused; doubled prefix | **HELD**, and was worse: the NVIDIA path added 11 Sep sits ABOVE both guarded paths and had no guard at all. |
+> | `test_the_patch_is_applied_outside...` (ENVIRONMENT) | a stale worktree makes it red | **HELD.** `git worktree prune` turned it green with no product change. |
+>
+> Two of the three OBSOLETE calls were wrong in the same direction: I read a
+> failing assertion and inferred the whole test was stale, when in each case the
+> test was doing its job and one line inside it had rotted. Treat every remaining
+> UNVERIFIED bucket with that in mind.
+
+Read-only. Nothing was fixed and no test or module was edited **in the command that
+produced this file**; later commits, marked per entry below, changed that.
 
 **Source of the 42 node ids:** `memory/suite_runs.jsonl` — the `failed` list of the
 last VALID run (ts `2026-09-19T12:51:30Z`). `tools/suite_gate.py` keeps no baseline
@@ -19,6 +48,71 @@ carrying no marker. That is the bucket's whole point.
 **Born red vs rotted**, over 49 recorded full-suite runs (2026-08-29 … 2026-09-19):
 **18 have never been green**, **24 have been green at least once**. The rotted ones
 cluster hard: 6 last green on 2026-09-03 and 18 on 2026-09-08.
+
+## Disposition after the 19 Sep sweep — VERIFIED or UNVERIFIED, per entry
+
+Added at Emil's instruction. A bucket is **VERIFIED** only where this sweep read
+the code and settled it. Where the action taken did not require settling the
+bucket, it says **UNVERIFIED** and stays that way. Nothing here is tidied into
+confidence.
+
+### VERIFIED — the sweep read the code and settled it (11)
+
+| entry | triage said | verification showed | action |
+|---|---|---|---|
+| `test_heartbeat_coverage::test_each_beat_reports_the_step_it_is_actually_in` | REAL_DEFECT #1 — beats are killed early because the ceiling keys on the id | **"lets through" FALSE.** `supervisor.ceiling_for()` keys on the step NAME; `step_ceilings_sec` has 17 keys, all names. Nothing was killed by this. The defect was real but different: six boundary comments did not sit above their own beat, which also let `test_every_step_boundary_beats` pass falsely for two headings with no beat. | fixed, `a57ea77` |
+| `test_consult_free_only::…paid_model…` | REAL_DEFECT #2 — a paid model is not refused | **HELD, and worse.** `_ask_nvidia_kimi`, added 11 Sep, sits ABOVE both guarded paths, is tried first, and had no guard at all. | fixed, `131ef66` |
+| `test_consult_free_only::…free_model…` | REAL_DEFECT — doubled provider prefix | **HELD**, and it is a label defect only: `backend` is branched on twice, both `!= "local"`. | fixed, `131ef66` |
+| `test_axis_history::test_todays_coverage_is_still_thirteen` | OBSOLETE — delete it | **BUCKET WRONG.** Its own docstring designates it a tripwire: "read it, then update the constant." It fired correctly; coverage moved 13 → 14 (`MATERIALS_WASTE_REVIEW` became gradeable). | constant updated, test KEPT |
+| `test_phase_resume::test_the_cli_refuses_without_claiming_the_cycle_lock` | OBSOLETE — delete it | **BUCKET WRONG.** Five assertions; four are behavioural (lock byte-identical, no trace written, no boot block, exit 2). Only the fifth checked prose. | prose assertion deleted, test KEPT |
+| `test_script_suite::…[experiments/dreams/test_dream.py]` | OBSOLETE | **HELD.** The assertion demanded a delta from a prior record with no `config_fingerprint`; that behaviour was removed on purpose 15 Aug (`dream.py:293-307`). The fixture predates the rule. | obsolete assertion replaced by the refusal that replaced it |
+| `test_self_improve_pipeline::test_the_patch_is_applied…nothing_survives` | ENVIRONMENT | **HELD.** One PRUNABLE leftover worktree from an earlier session. `git worktree prune` turned it green with no product change. | test hardened to assert its OWN sandbox, not a global worktree count |
+| `test_self_improve_pipeline::test_the_ceiling_does_not_decide_the_merits` | ENVIRONMENT — "circular, the suite has reds" | **HELD, WRONG CAUSE.** Measured: `test_self_improve_requirer.py` is 104-green in the working tree and 2-red in a pristine `git worktree add --detach HEAD`. A worktree carries only TRACKED files. Not ordering — `pytest_randomly` is not installed and `-p no:randomly` changes nothing. | explicit `skipif` naming the two tests and the reason |
+| `test_durable_writes` ×2 | FLAKY | **HELD, and the cause is not a polluter.** `durable._pending` is a module-global set — correct in production, one process one buffer, flushed at every `beat()`. The test asserted on the GLOBAL, so it measured the suite's residue. | buffer isolated per test; proven by seeding residue |
+| `test_script_suite::…[test/test_no_exit_on_import.py]` | BROKEN_TEST | **HELD.** Every failure was `Broker-bot/_ARCHIVE/**` — a separate vendored project that `pytest.ini` excludes by name; this script walks the tree itself and did not inherit it. | `SKIP_PARTS` now matches `pytest.ini` |
+| `test_p_survive` ×2 | BROKEN_TEST | **HELD.** Offenders were `claude/reports/*.md`, `docs/*.md` and `config/attention_map.json` — records, not prompts. Verified before narrowing: nothing under `core/` or `agents/` reads those trees into a prompt. Two genuine consumers surfaced (`experiments/prophecy/self_forecast.py` and its test) which seal the metric into the prophecy LEDGER. | scan scoped to prompts; consumers added to `ALLOWED` |
+| `test_cycle_seals_its_own_completion::test_sealing_a_cycle_here…` | BROKEN_TEST | **HELD.** It asserted `memory/extra_calls_log.jsonl` does not exist "and no real cycle has run". A real cycle runs nightly; the file is 13841 bytes, written 15:11 on 19 Sep by the manual cycle. | replaced with a before/after fingerprint of the real files |
+
+### UNVERIFIED — action taken did not require settling the bucket (15)
+
+The fifteen LIVE_STATE entries were bucketed from the failure message alone, in
+the ~18 seconds per test this report was produced at. This sweep gave each the
+`@pytest.mark.live_state` marker, which removes them from a code gate — and that
+action is safe whether or not the bucket is exactly right, because `pytest.ini`
+already rules that a test whose outcome varies with live state is an operational
+monitor rather than a correctness gate, and `tools/live_monitor.py` runs exactly
+this complement.
+
+**It does not verify them.** None was re-read against the code in this sweep.
+Each remains an unverified hypothesis about WHY it moves with the world:
+
+`test_belief_revision::test_the_two_june_hypotheses_are_skipped_rather_than_mislearned` ·
+`test_corrections_27::test_the_annotation_comes_after_what_it_annotates` ·
+`test_corrections_27::test_the_five_test_rows_are_still_there` ·
+`test_level_reconciler::test_climate_global_risk_is_corrected_to_high_under_the_ruling` ·
+`test_level_reconciler::test_social_relations_is_corrected_to_low_on_live_data` ·
+`test_metta_parallel::test_the_disagreement_states_both_readings` ·
+`test_metta_parallel::test_the_live_climate_fact_is_what_we_think_it_is` ·
+`test_needs_auth::test_the_live_registry_shows_ucdp_active_and_eia_waiting` ·
+`test_needs_auth::test_the_waiting_sources_reach_the_cycle_report` ·
+`test_phase_evidence_swap::test_five_of_the_six_accepted_debriefs_do_not_survive_the_swap_test` ·
+`test_phase_evidence_swap::test_the_replay_script_reports_the_same_number` ·
+`test_proposal_sla::test_there_are_no_patches_from_13_july` ·
+`test_self_experiment::test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees` ·
+`test_self_experiment::test_a_guarded_file_holding_neither_arm_still_refuses` ·
+`test_self_experiment::test_the_other_ordinal_reads_the_same_guarded_arm`
+
+A marker is a routing decision, not a finding. If any of these is in fact a real
+defect wearing live-state clothes, the marker hides it, and only reading the code
+will say. That is an open debt.
+
+### UNVERIFIED — the remaining REAL_DEFECT entries (11 of 13)
+
+Two of the thirteen have been verified (`test_heartbeat_coverage`,
+`test_consult_free_only` ×2 count as one entry each). The other eleven carry
+UNVERIFIED buckets and UNVERIFIED "lets through" claims, and Half B settles them
+one at a time. Given the rate above — three of the first five examined did not
+hold — expect roughly a third of what follows to change on contact.
 
 ## Counts
 

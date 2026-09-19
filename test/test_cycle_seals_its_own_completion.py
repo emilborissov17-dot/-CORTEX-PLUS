@@ -173,14 +173,44 @@ def test_no_backfill_of_history():
 
 # ── THE GUARD THAT WOULD HAVE CAUGHT IT (28 Aug 2026) ──────────────────────
 
-def test_sealing_a_cycle_here_leaves_the_real_ledgers_alone():
+def test_sealing_a_cycle_here_leaves_the_real_ledgers_alone(sandbox):
     """Every path _seal_cycle_record touches, checked on disk.
 
     A redirect that covers three of a function's four write surfaces is not a
     sandbox. This asserts the real files by name rather than trusting that the
     fixture kept up with the code.
+
+    THE PREMISE WAS FALSE (19 Sep 2026). It used to assert those files DO NOT
+    EXIST, on the grounds that "no real cycle has run: a test wrote it". This
+    machine runs a real cycle every night. memory/extra_calls_log.jsonl is 13841
+    bytes, last written 15:11 on 19 Sep by the manual cycle whose own log says
+    "extra calls: 0 attempt(s)". So the test asked whether the file exists when
+    it meant whether THIS TEST wrote it, and the answer to the first question
+    had been yes for weeks.
+
+    Now it measures what it means: the real files are fingerprinted before and
+    after, and the assertion is that sealing here did not CHANGE them. That also
+    catches the case the old form could not — a test that appends to a file
+    which already exists.
     """
-    for rel in ("memory/extra_calls_log.jsonl",
-                "memory/extra_calls_suspended.flag"):
-        assert not (REPO / rel).exists(), (
-            "%s exists, and no real cycle has run: a test wrote it" % rel)
+    watched = ("memory/extra_calls_log.jsonl",
+               "memory/extra_calls_suspended.flag")
+
+    def _fp():
+        out = {}
+        for rel in watched:
+            p = REPO / rel
+            out[rel] = (p.stat().st_mtime_ns, p.stat().st_size) if p.exists() else None
+        return out
+
+    before = _fp()
+    # The `sandbox` fixture is the redirect under test: it points every ledger at
+    # tmp_path. Seal a real cycle through it, exactly as the six tests above do.
+    _write_lock(sandbox, os.getpid())
+    fcr._seal_cycle_record()
+    after = _fp()
+
+    changed = [rel for rel in watched if before[rel] != after[rel]]
+    assert not changed, (
+        "sealing a cycle in this test changed the REAL %s — the redirect does not "
+        "cover every write surface of _seal_cycle_record" % ", ".join(changed))

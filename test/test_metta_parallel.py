@@ -55,6 +55,11 @@ def _fact(axis, **kw):
 # (a) THE LIVE PROOF
 # ---------------------------------------------------------------------------
 
+# LIVE_STATE (19 Sep 2026): asserts today's computed level (auto_levels now says HIGH, not LOW).
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_live_climate_fact_is_what_we_think_it_is():
     """Guard the premise. If auto_levels or goal_score changes shape, the proof
     below would pass or fail for reasons unrelated to the rule."""
@@ -81,6 +86,11 @@ def test_r3_fires_on_the_live_climate_contradiction():
     )
 
 
+# LIVE_STATE (19 Sep 2026): reads today's level output; the key it wants is absent for that axis today.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_disagreement_states_both_readings():
     """An operator must not have to open two files to see the contradiction."""
     facts = mp.gather_facts()

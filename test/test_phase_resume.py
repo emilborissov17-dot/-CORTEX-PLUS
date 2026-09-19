@@ -214,4 +214,11 @@ def test_the_cli_refuses_without_claiming_the_cycle_lock():
         "the gate ran the boot block, which claims the lock"
     )
     assert result.returncode == 2, f"expected refusal exit 2, got {result.returncode}"
-    assert "REFUSING --from" in result.stdout
+    # The prose assertion `"REFUSING --from" in result.stdout` was DELETED on
+    # 19 Sep 2026, because the wording had moved to "no cycle_id: neither
+    # CORTEX_CYCLE_ID nor a readable memory/cycle.lock. There is no cycle to
+    # resume". CLAUDE.md: structural tests check behaviour, never prose.
+    #
+    # A sentence restating that the refusal still happens was deleted too — the
+    # claims net flagged it, correctly: the four assertions above ARE that
+    # evidence, so saying it again in prose added a claim and no proof.

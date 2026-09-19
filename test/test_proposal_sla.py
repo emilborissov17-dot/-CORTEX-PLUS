@@ -177,6 +177,11 @@ def test_the_age_comes_from_the_patch_own_timestamp_not_mtime(tmp_path):
     assert row["age_basis"] == "timestamp in filename"
 
 
+# LIVE_STATE (19 Sep 2026): an SLA clock: the age grows every day with no code change (52.3 days and rising).
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_there_are_no_patches_from_13_july():
     """The citation named 13 July. The earliest on disk is later, and saying so
     is the point of counting rather than quoting."""

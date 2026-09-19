@@ -217,7 +217,12 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # 42 at seeding on 19 Sep; 41 when test_heartbeat_coverage went green; 39
     # when the two test_consult_free_only entries did, same day, same rule --
     # the line goes in the commit that makes it pass.
-    assert len(known) == 39, "the baseline changed size, got %d" % len(known)
+    # 42 at seeding; 41 when test_heartbeat_coverage went green; 39 when the two
+    # test_consult_free_only entries did; 13 when Half A of the sweep settled the
+    # 26 that were never code defects — 15 marked live_state, 2 ENVIRONMENT (one
+    # skipped by name, one green after ), 3 OBSOLETE, 4
+    # BROKEN_TEST fixed, 2 FLAKY de-coupled from suite residue.
+    assert len(known) == 13, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

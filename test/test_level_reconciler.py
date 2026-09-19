@@ -71,6 +71,11 @@ def _fixture(tmp_path, levels: dict, scores: dict, pinned: list[str]):
 
 # 1 ---------------------------------------------------------------------------
 
+# LIVE_STATE (19 Sep 2026): the name says it: on_live_data.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_social_relations_is_corrected_to_low_on_live_data():
     """THE FIRST PROOF, against the real files on this machine."""
     result = lr.reconcile()
@@ -87,6 +92,11 @@ def test_social_relations_is_corrected_to_low_on_live_data():
 
 # 2 ---------------------------------------------------------------------------
 
+# LIVE_STATE (19 Sep 2026): asserts a correction over TODAY's scored levels.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_climate_global_risk_is_corrected_to_high_under_the_ruling():
     """THE SECOND PROOF, rewritten by Emil's polarity ruling of 21 August.
 

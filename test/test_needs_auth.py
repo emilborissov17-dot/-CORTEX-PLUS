@@ -220,6 +220,11 @@ def test_a_gated_source_without_an_env_key_is_ignored(tmp_path, empty_env):
 # (e) The live machine
 # ---------------------------------------------------------------------------
 
+# LIVE_STATE (19 Sep 2026): asserts the contents of the live source registry.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_live_registry_shows_ucdp_active_and_eia_waiting():
     """The UCDP precedent, on this machine: its token is in .env, so it reads
     ACTIVE with nothing having been switched."""
@@ -229,6 +234,11 @@ def test_the_live_registry_shows_ucdp_active_and_eia_waiting():
     assert rows["eia_api"]["age_days"] and rows["eia_api"]["age_days"] > 5
 
 
+# LIVE_STATE (19 Sep 2026): same live registry.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_waiting_sources_reach_the_cycle_report():
     waiting = na.for_cycle_report()
     assert any(r["source"] == "eia_api" for r in waiting)

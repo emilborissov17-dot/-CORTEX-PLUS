@@ -29,6 +29,36 @@ if str(REPO) not in sys.path:
 from core import durable  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def _own_buffer_only():
+    """This file must measure what IT writes, not what the suite left behind.
+
+    durable._pending is a module-level set, and that is CORRECT in production:
+    one process, one cycle, one buffer, flushed at every beat(). A test suite has
+    no beats, so any earlier test that made a batched write — core/brain.py:643,
+    1167, 1312 and core/groq_backend.py:767 all do — leaves an entry in it, and
+    `assert durable.pending() == ["b.jsonl"]` then fails on a name this file
+    never wrote.
+
+    That made these two tests report the SUITE'S residue: green alone (3/3) and
+    green as a file (13/13), red only inside the full run. Hunting the specific
+    polluter would fix nothing durable — the next batched write anywhere breaks
+    it again — and the global is not the defect.
+
+    So the buffer is swapped for an empty one around each test and restored
+    afterwards. No I/O, nothing flushed, no other test's pending write touched or
+    dropped: the assertions below stay exact (synced == 1 still means ONE file)
+    and this file stops depending on execution order in both directions.
+    """
+    saved = set(durable._pending)
+    durable._pending.clear()
+    try:
+        yield
+    finally:
+        durable._pending.clear()
+        durable._pending.update(saved)
+
+
 def _read_from_another_process(path):
     """Line count, obtained by a process that shares no buffers with this one."""
     out = subprocess.run(

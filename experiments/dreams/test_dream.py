@@ -128,7 +128,22 @@ def test_facts(src: dream.Sources) -> bool:
                  "the previous day's CYCLE_FINISHED did NOT leak into today")
     ok &= _check(f["goal_score"] == 0.5459, f"goal composite read = {f['goal_score']}")
     ok &= _check(f["goal_score_prev"] == 0.52, f"previous goal from sidecar = {f['goal_score_prev']}")
-    ok &= _check(f["goal_delta"] == round(0.5459 - 0.52, 4), f"delta computed = {f['goal_delta']}")
+    # OBSOLETE ASSERTION DELETED, 19 Sep 2026. This line demanded
+    #     f["goal_delta"] == round(0.5459 - 0.52, 4)
+    # i.e. that dream.py subtract two composites whose prior record carries NO
+    # config_fingerprint. That behaviour was removed ON PURPOSE on 15 Aug 2026
+    # (Kimi's rule, dream.py:293-307): a difference between two composites is
+    # only a difference if both are averages of the SAME axis set, so when the
+    # prior has no fingerprint the delta is None with a NAMED reason rather than
+    # a number with a label. The fixture above predates the rule and supplies no
+    # fingerprint, so the refusal is correct and the assertion was wrong.
+    #
+    # Replaced by the behaviour that replaced it — refusing, and SAYING WHY —
+    # because deleting the line without this would leave the refusal untested.
+    ok &= _check(f["goal_delta"] is None,
+                 f"delta refused for a fingerprint-less prior = {f['goal_delta']}")
+    ok &= _check(bool(f.get("goal_delta_blocked")),
+                 f"the refusal names its reason = {f.get('goal_delta_blocked')!r}")
     ok &= _check(bool(f["cycle_log_tail"]) and any("web_intel" in ln for ln in f["cycle_log_tail"]),
                  "cycle log tail read (and mentions the failing step)")
     ok &= _check(f["pulse"] is not None and f["pulse"]["C1_continuity"]["verdict"] == "PASS",

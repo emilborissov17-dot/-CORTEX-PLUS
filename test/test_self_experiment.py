@@ -565,6 +565,11 @@ def _observe_with_file(tmp_path, ceiling, ordinal, monkeypatch):
                       store=store), sched
 
 
+# LIVE_STATE (19 Sep 2026): reads the live guarded file.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees(tmp_path, monkeypatch):
     """THE STEP 6a DEFECT. The file reads 1500 (arm b). Ordinal 0 alternates to
     arm a. Before the fix that row was recorded 'NOT counted: arm not applied' —
@@ -578,6 +583,11 @@ def test_a_guarded_arm_counts_from_the_file_even_when_the_ordinal_disagrees(tmp_
     assert "human" in row["arm_source"]
 
 
+# LIVE_STATE (19 Sep 2026): same live guarded file.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_the_other_ordinal_reads_the_same_guarded_arm(tmp_path, monkeypatch):
     """Negative control on the alternation: the ordinal must not matter at all
     for a guarded knob. Ordinal 1 alternates to b and would have 'counted' by
@@ -590,6 +600,11 @@ def test_the_other_ordinal_reads_the_same_guarded_arm(tmp_path, monkeypatch):
     assert row900["counts"] is True
 
 
+# LIVE_STATE (19 Sep 2026): depends on when config/scheduler.json was last edited.
+# pytest.ini: a gating test must be deterministic; this is an
+# operational monitor, so tools/live_monitor.py runs it and the
+# gate (-m "not live_state") does not.
+@pytest.mark.live_state
 def test_a_guarded_file_holding_neither_arm_still_refuses(tmp_path, monkeypatch):
     """The fix must not turn into 'everything counts'. A ceiling that is neither
     900 nor 1500 belongs to no arm and must NOT be counted."""

@@ -25,7 +25,12 @@ from core import axis_history as ah          # noqa: E402
 # TODAY'S COVERAGE, recorded 6 Sep 2026. The test asserts against the LIVE count
 # so a real change in what the cycle measures reads as a change; this number is
 # here to say what it was when the test was written.
-INDICATORS_ON_6_SEP = 13
+# 13 on 6 Sep 2026; 14 since. The tripwire fired and this is the reading it
+# asked for, not a silenced test. The fourteenth is MATERIALS_WASTE_REVIEW,
+# which became gradeable when its scorer stopped defaulting. Kept as a constant
+# with a date rather than deleted: an axis LEAVING this set is the finding that
+# matters, and only a pinned number can catch it.
+INDICATORS_ON_6_SEP = 14
 
 
 def test_a_cycle_writes_one_line_per_gradeable_indicator(tmp_path):
