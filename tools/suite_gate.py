@@ -238,6 +238,84 @@ def format_verdict(v: dict) -> str:
     return "\n".join(lines)
 
 
+def _stream_command(cmd, cwd):
+    """Run `cmd`, echoing its stdout LINE BY LINE as it arrives.
+
+    WHY (19 Sep 2026). This was subprocess.run(..., capture_output=True), which
+    buffers the whole run in a pipe and hands it over only at exit. For a suite
+    that takes 37 minutes that means claude/reports/SUITE_GATE_*.out.log sits at
+    0 bytes the entire time, and a run that is killed - by the harness, by the
+    low-memory reaper, by a reboot - loses EVERY line it had produced. The one
+    question worth asking of a killed suite, "which test was it on", was
+    unanswerable by construction.
+
+    THE STREAMS STAY SEPARATE, and that is a measurement, not a preference. The
+    obvious form is stderr=STDOUT, one pipe, no second reader. But nothing here
+    has ever read proc.stderr, so merging would feed the parser text it has never
+    seen, and the parser is not indifferent to it:
+
+        stdout only     summary='42 failed, 5284 passed in 2227.24s'  errors=[]
+        stderr merged   summary='some warning: 0 failed to initialise'
+                        errors=['conftest']
+
+    A stderr line beginning "ERROR " becomes a collection error and the outcome
+    turns COLLECTION_FAILED; a stderr line containing " failed" hijacks the
+    summary, because that scan runs in reverse and the LAST match wins. Either
+    one silently changes a verdict. So stdout is streamed and parsed exactly as
+    before, and stderr is drained on its own thread - drained, because a full
+    stderr pipe deadlocks a child that nobody is reading.
+
+    Returns an object with .stdout, .stderr and .returncode, so every line of the
+    parsing below is untouched.
+    """
+    import threading
+    import types
+
+    proc = subprocess.Popen(
+        cmd, cwd=cwd,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        text=True, bufsize=1, encoding="utf-8", errors="replace")
+
+    err_chunks: list = []
+
+    def _drain_err():
+        try:
+            for line in proc.stderr:
+                err_chunks.append(line)
+        except Exception:                                    # noqa: BLE001
+            pass
+
+    t = threading.Thread(target=_drain_err, daemon=True)
+    t.start()
+
+    out_lines: list = []
+    try:
+        for line in proc.stdout:
+            line = line.rstrip(chr(10))
+            out_lines.append(line)
+            # Flushed per line: an unflushed echo is the same invisibility this
+            # function exists to remove.
+            sys.stdout.write(line + chr(10))
+            sys.stdout.flush()
+    finally:
+        try:
+            proc.stdout.close()
+        except Exception:                                    # noqa: BLE001
+            pass
+        rc = proc.wait()
+        t.join(timeout=10)
+        try:
+            proc.stderr.close()
+        except Exception:                                    # noqa: BLE001
+            pass
+
+    return types.SimpleNamespace(
+        stdout=chr(10).join(out_lines),
+        stderr="".join(err_chunks),
+        returncode=rc,
+    )
+
+
 def run(pytest_args=None, write_record: bool = True,
         lock: pathlib.Path | None = None,
         heartbeat: pathlib.Path | None = None,
@@ -267,11 +345,12 @@ def run(pytest_args=None, write_record: bool = True,
     # not weakened; tools/live_monitor.py runs exactly this complement. A gate
     # that goes red because a cycle refused overnight is not a gate, and a
     # baseline amended after every cycle is a tolerance log.
+    # --durations=25: 37 minutes went somewhere and nothing recorded where.
     cmd = command or [sys.executable, "-m", "pytest", "-q", "-rf",
+                      "--durations=25",
                       "-m", "not live_state",
                       *(pytest_args or [])]
-    proc = subprocess.run(cmd, cwd=str(BASE), capture_output=True, text=True,
-                          encoding="utf-8", errors="replace")
+    proc = _stream_command(cmd, str(BASE))
     after = read_state(lock, heartbeat, last_sealed)
 
     v = verdict(before, after)
