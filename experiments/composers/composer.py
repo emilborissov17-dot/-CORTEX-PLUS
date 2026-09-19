@@ -173,6 +173,15 @@ def _http(url, timeout=15):
 # turn "the entity I asked for is gone" into "here is a number", which is the exact shape
 # of the failure this whole pack exists to remove.
 
+class CsvRowKeyMissing(readers.RowNotFound):
+    """row_key_column was declared and row_key was not.
+
+    A different fact from CsvRowNotFound: there the address was given and the
+    payload did not hold it; here the address was never finished. Kept apart so a
+    reader of a refusal can tell "the provider dropped the row I wanted" from
+    "our record never said which row we wanted"."""
+
+
 class CsvRowNotFound(readers.RowNotFound):
     """A named row was asked for and the payload does not contain it.
 
@@ -221,8 +230,24 @@ def _csv_select(src: dict, text: str) -> tuple:
     body = rows[1:] if header else rows
 
     key = src.get("row_key")
+    if key is None and src.get("row_key_column"):
+        # HALF AN ADDRESS IS NOT AN ADDRESS. Measured 19 Sep 2026: 14 http_csv
+        # candidates in config/axis_source_map.json declare row_key_column and
+        # ZERO declare row_key, so every one of them fell through to rows[-1] --
+        # Zimbabwe, the alphabetically last entity in an OWID panel. The map's own
+        # _coverage_summary records the result: returned_the_wrong_row, Zimbabwe
+        # for six sources and "Yemen (2010)" for a seventh.
+        #
+        # Declaring the key COLUMN is a statement that this payload is a panel and
+        # that a bare last row means nothing in it. Reading the last row anyway is
+        # the silent fallback this whole file was written against, one field over.
+        raise CsvRowKeyMissing(
+            "csv: row_key_column %r is declared and row_key is not. This payload was" 
+            " declared to be a panel, so the last row is whichever entity sorts last" 
+            " -- not an answer. Name the row (e.g. row_key: \"World\") or remove" 
+            " row_key_column." % src.get("row_key_column"))
     if key is None:
-        cells = _csv_cells(rows[-1])          # unchanged behaviour for single-series feeds
+        cells = _csv_cells(rows[-1])          # unchanged for genuine single-series feeds
     else:
         key_col_name = src.get("row_key_column", "entity")
         if not header:
