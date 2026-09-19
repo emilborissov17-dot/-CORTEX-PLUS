@@ -84,7 +84,13 @@
           "verified_header": "entity,code,year,emissions_total",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 1393 rows, entities are countries only (e.g. ['Brazil', 'China', 'France'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         }
       ],
       "sdg_series_keys": [
@@ -188,7 +194,15 @@
           "verified_header": "entity,code,year,renewable_share_of_electricity__pct",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 192 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          },
+          "data_date_column": "renewable_share_of_electricity__pct__original_year",
+          "data_date_note": "the year column is the PUBLICATION row year; renewable_share_of_electricity__pct__original_year carries the real observation year. Using `year` would report an old survey as current."
         },
         {
           "id": "owid_primary_energy_twh",
@@ -205,7 +219,16 @@
           "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 196 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          },
+          "data_date_column": "total_energy_supply_twh__original_year",
+          "data_date_note": "the year column is the PUBLICATION row year; total_energy_supply_twh__original_year carries the real observation year. Using `year` would report an old survey as current.",
+          "column_name_broken": "2026-09-19: declared column_name 'primary_energy_consumption__twh' is NOT in the payload header. The candidate cannot be read until the real column is named."
         }
       ],
       "sdg_series_keys": [
@@ -242,7 +265,9 @@
           "independence_note": "FAO models from national food balance sheets supplied by states",
           "verified": "WORLD_VALUE_2026_08_03",
           "verified_value": 8.2,
-          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03.",
+          "row_key": "World",
+          "row_key_verified": "2026-09-19: a row with entity=='World' is present, latest year 2024. Without this key composer._csv_select refuses (CsvRowKeyMissing); before 2026-09-19 it silently read the last row."
         },
         {
           "id": "fews_net_ipc_phase",
@@ -390,7 +415,13 @@
           "value_for_the_starved_axis": "WATER_REVIEW has 0 sources in measurement_daily and 0 in event_daily; this fills anchor_annual with a real 195-country panel",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 180 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         },
         {
           "id": "worldbank_safely_managed_water",
@@ -443,7 +474,13 @@
           "class_was_mixed": true,
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 172 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         }
       ],
       "sdg_series_keys": [
@@ -485,7 +522,13 @@
           "verified_sample": "Afghanistan,AFG,2021,40.19",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 177 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         },
         {
           "id": "owid_vdem_freedom_of_expression",
@@ -504,7 +547,13 @@
           "verified_sample": "Albania,ALB,2025,0.673,Europe",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 174 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         }
       ],
       "sdg_series_keys": [
@@ -585,7 +634,9 @@
           "class_was_mixed": true,
           "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified_value": 73.1694,
-          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03."
+          "verified_note": "Read through composer.fetch and it returned a genuine world-level value on 2026-08-03.",
+          "row_key": "World",
+          "row_key_verified": "2026-09-19: a row with entity=='World' is present, latest year 2023. Without this key composer._csv_select refuses (CsvRowKeyMissing); before 2026-09-19 it silently read the last row."
         },
         {
           "id": "owid_child_mortality",
@@ -647,7 +698,15 @@
           "class_was_mixed": true,
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 140 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          },
+          "data_date_column": "value__category_total__sex_total__age_total__unit_of_measurement_rate_per_100_000_population__original_year",
+          "data_date_note": "the year column is the PUBLICATION row year; value__category_total__sex_total__age_total__unit_of_measurement_rate_per_100_000_population__original_year carries the real observation year. Using `year` would report an old survey as current."
         },
         {
           "id": "unhcr_population_statistics",
@@ -778,7 +837,13 @@
           "verified_header": "entity,code,year,electdem_vdem__estimate_best,owid_region",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 174 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         }
       ],
       "sdg_series_keys": [
@@ -823,7 +888,15 @@
           "independence_note": "[third-party standardised, underlying counts supplied by the measured entity; live taxonomy has no mixed class, so the weaker guess self_reported applies per config/providers.json]",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 115 rows, entities are countries only (e.g. ['Albania', 'Armenia', 'Australia'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          },
+          "data_date_column": "gini__welfare_type_income_or_consumption__table_income_or_consumption_consolidated__survey_comparability_no_spells__original_year",
+          "data_date_note": "the year column is the PUBLICATION row year; gini__welfare_type_income_or_consumption__table_income_or_consumption_consolidated__survey_comparability_no_spells__original_year carries the real observation year. Using `year` would report an old survey as current."
         },
         {
           "id": "wid_top10_income_share",
@@ -919,7 +992,13 @@
           "verified_sample": "Algeria,DZA,2024,1228",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 180 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          }
         },
         {
           "id": "epoch_ai_training_compute",
@@ -977,7 +1056,15 @@
           "IMPORTANT": "again an __original_year column - the 2025 row is 2024 data. Use __original_year as data_date.",
           "verified_note": "Fetched and parsed live, and it has NO World row. The earlier live_verified marker meant 'the URL answered and the header was read', not 'it produces a global value' — the fetch was verified, the ADDRESS was not.",
           "correct_use": "This is a ~180-country panel and it is genuinely useful AS one: it is what wellbeing_country.py wants, one fetch instead of 195. Set row_key to a country name to read it. It is NOT a global anchor and must not be promoted into one.",
-          "not_a_global_anchor": true
+          "not_a_global_anchor": true,
+          "no_world_row": {
+            "measured": "2026-09-19",
+            "finding": "this OWID payload has NO entity=='World' row; 186 rows, entities are countries only (e.g. ['Afghanistan', 'Albania', 'Algeria'])",
+            "consequence": "the candidate stays half-addressed ON PURPOSE and composer.fetch REFUSES it with CsvRowKeyMissing. It is a per-country source and belongs to the per-country layer, not to a world axis.",
+            "forbidden": "Do NOT invent a world aggregate by averaging the countries. A mean of 195 country values is not a world value and nothing here may publish one as if it were."
+          },
+          "data_date_column": "it_net_user_zs__original_year",
+          "data_date_note": "the year column is the PUBLICATION row year; it_net_user_zs__original_year carries the real observation year. Using `year` would report an old survey as current."
         },
         {
           "id": "ioda_internet_outages",

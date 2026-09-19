@@ -113,17 +113,24 @@ def test_without_data_date_column_the_date_is_none_not_the_year_column():
     assert dd is None
 
 
-def test_the_live_map_has_no_half_addressed_candidate_left():
-    """The map and the code must agree. Any http_csv candidate that declares a
-    key column must now declare a key, or the composer refuses it at fetch time
-    and the axis silently has no source.
+def test_every_half_addressed_candidate_declares_why_it_has_no_world_row():
+    """The map and the code must agree, and "it refuses" must be a DECISION.
 
-    This is the test that will go red the moment somebody adds a candidate the
-    old way, which is how the 14 got there in the first place.
+    Probed 2026-09-19: only 2 of the 14 OWID candidates have an entity=='World'
+    row — owid_undernourishment (2024) and owid_life_expectancy (2023). The other
+    12 are per-country sources with no world aggregate at all, which is exactly
+    what the map's own _coverage_summary recorded on 3 Aug as
+    "fetch_but_have_no_World_row" (12 entries, the same twelve).
+
+    So a candidate may stay half-addressed — and therefore refusing — ONLY if it
+    records that it was probed and has no World row. Silence is not allowed:
+    silence is how the original fourteen got there.
+
+    This still goes red the moment somebody adds a candidate the old way.
     """
     import json
     m = json.loads((REPO / "config" / "axis_source_map.json").read_text(encoding="utf-8"))
-    half = []
+    undeclared = []
     for branch, axes in m.items():
         if str(branch).startswith("_"):
             continue
@@ -131,8 +138,67 @@ def test_the_live_map_has_no_half_addressed_candidate_left():
             for c in (body.get("numeric_candidates") or []):
                 if c.get("kind") != "http_csv":
                     continue
-                if c.get("row_key_column") and not c.get("row_key"):
-                    half.append((axis, c["id"]))
-    assert not half, (
-        "%d candidate(s) declare row_key_column and no row_key, so composer.fetch "
-        "refuses them: %s" % (len(half), half))
+                if c.get("row_key_column") and not c.get("row_key") and not c.get("no_world_row"):
+                    undeclared.append((axis, c["id"]))
+    assert not undeclared, (
+        "%d candidate(s) declare row_key_column, no row_key, and no no_world_row "
+        "explaining it. composer.fetch refuses them and nothing says that was "
+        "intended: %s" % (len(undeclared), undeclared))
+
+
+def test_a_no_world_row_note_forbids_inventing_an_aggregate():
+    """The tempting wrong fix is to average 195 countries and call it the world.
+
+    A population-unweighted mean of country values is not a world value, and the
+    note on every one of these candidates says so in as many words. The test pins
+    the prohibition because it is the thing a later reader will most want to undo.
+    """
+    import json
+    m = json.loads((REPO / "config" / "axis_source_map.json").read_text(encoding="utf-8"))
+    seen = 0
+    for branch, axes in m.items():
+        if str(branch).startswith("_"):
+            continue
+        for _axis, body in axes.items():
+            for c in (body.get("numeric_candidates") or []):
+                nwr = c.get("no_world_row")
+                if not nwr:
+                    continue
+                seen += 1
+                assert "measured" in nwr and nwr["measured"], c["id"]
+                assert "Do NOT invent" in nwr.get("forbidden", ""), c["id"]
+    assert seen >= 12, "expected at least the twelve probed per-country sources, saw %d" % seen
+
+
+def test_the_two_world_capable_candidates_carry_the_key():
+    import json
+    m = json.loads((REPO / "config" / "axis_source_map.json").read_text(encoding="utf-8"))
+    keyed = {}
+    for branch, axes in m.items():
+        if str(branch).startswith("_"):
+            continue
+        for _axis, body in axes.items():
+            for c in (body.get("numeric_candidates") or []):
+                if c.get("row_key"):
+                    keyed[c["id"]] = c["row_key"]
+    assert keyed.get("owid_life_expectancy") == "World", keyed
+    assert keyed.get("owid_undernourishment") == "World", keyed
+
+
+def test_a_candidate_whose_column_is_gone_is_marked_not_left_looking_fine():
+    """owid_primary_energy_twh declares column_name 'primary_energy_consumption__twh'
+    and the payload's header does not contain it — the provider renamed it to
+    'total_energy_supply_twh'. Recorded rather than silently fixed: renaming it
+    here would be guessing that the two columns mean the same quantity."""
+    import json
+    m = json.loads((REPO / "config" / "axis_source_map.json").read_text(encoding="utf-8"))
+    for branch, axes in m.items():
+        if str(branch).startswith("_"):
+            continue
+        for _axis, body in axes.items():
+            for c in (body.get("numeric_candidates") or []):
+                if c.get("id") == "owid_primary_energy_twh":
+                    assert c.get("column_name_broken"), (
+                        "the broken column_name is not recorded on the candidate")
+                    return
+    raise AssertionError("owid_primary_energy_twh is not in the map")
