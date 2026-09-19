@@ -55,6 +55,9 @@ ROW_SOURCES = [
     ("local", "memory/llm_provenance.jsonl"),
     ("institution0", "experiments/institution/ledger.jsonl"),
     ("institution0", "config/commitments.json"),
+    ("axesfed", "snapshots/master/goal_score_latest.json"),
+    ("axesfed", "config/target_config.json"),
+    ("axesfed", "output/wellbeing_all_countries.json"),
 ]
 
 
@@ -159,6 +162,25 @@ def repo(tmp_path: Path) -> Path:
     ]))
     _write(tmp_path / "config/commitments.json", json.dumps(
         {"commitments": [{"id": "x_2025", "status": "proposed_by_claude_2026-09-18"}]}))
+
+    # axes fed: two dated axes (one fresh, one stale), one with a value and NO
+    # date, and a per-country file whose computed_at is deliberately old.
+    _write(tmp_path / "snapshots/master/goal_score_latest.json", json.dumps({
+        "computed_at": TODAY + "T03:42:00+00:00",
+        "axis_observations": {
+            "FRESH_AXIS": {"observed_value": 1.0, "observed_at": TODAY, "source_id": "X"},
+            "STALE_AXIS": {"observed_value": 2.0, "observed_at": "2020-12-31", "source_id": "Y"},
+            "NODATE_AXIS": {"observed_value": 3.0, "observed_at": None, "source_id": "Z"},
+        }}))
+    _write(tmp_path / "config/target_config.json", json.dumps({
+        "_doc": "x",
+        "BRANCH": {"FRESH_AXIS": {"weight": 1}, "STALE_AXIS": {"weight": 1},
+                   "NODATE_AXIS": {"weight": 1}, "UNFED_AXIS": {"weight": 1}}}))
+    _write(tmp_path / "output/wellbeing_all_countries.json", json.dumps({
+        "computed_at": "2026-07-02T07:14:39+00:00", "total": 3,
+        "countries": [{"iso2": "AA", "completeness": "16/17 real, 1 null, 0 suspect"},
+                      {"iso2": "BB", "completeness": "3/17 real, 14 null, 0 suspect"},
+                      {"iso2": "CC", "completeness": "2/17 real, 15 null, 0 suspect"}]}))
     return tmp_path
 
 
@@ -325,3 +347,55 @@ def test_no_local_answer_today_says_local_brain_silent(repo: Path):
     r = _by_id(db.build_rows(repo, NOW))["local"]
     assert r["headline"].startswith("LOCAL BRAIN SILENT")
     assert r["correction"] == "yes"
+
+
+# -- row 8, axes fed --------------------------------------------------------
+def test_a_value_with_no_date_is_not_counted_as_fed(repo: Path):
+    """The headline must not be inflated by numbers of unknown age.
+
+    Three axes carry a value: one dated today, one dated 2020, one undated. Only
+    the two DATED ones are "fed"; the undated one is reported on its own line.
+    Folding it in would print 3/4 for a state where a third of the evidence has
+    no age at all.
+    """
+    row = _by_id(db.build_rows(repo, NOW))["axesfed"]
+    assert row.get("status") != "MISSING", row["headline"]
+    assert "axes fed 2/4" in row["headline"], row["headline"]
+    assert "1 fed with NO date" in row["headline"], row["headline"]
+    assert "NODATE_AXIS" in chr(10).join(row["detail"])
+
+
+def test_a_stale_observation_is_named_not_just_counted(repo: Path):
+    row = _by_id(db.build_rows(repo, NOW))["axesfed"]
+    assert "of which 1 stale >30d" in row["headline"], row["headline"]
+    joined = chr(10).join(row["detail"])
+    assert "STALE_AXIS" in joined
+    assert "STALE" in joined, "the per-axis line does not mark which one is stale"
+
+
+def test_the_country_as_of_date_is_on_the_face_of_the_row(repo: Path):
+    """2026-07-02 must be in the HEADLINE, not in a footnote.
+
+    A count of 217 countries with no date beside it reads as 217 countries
+    measured today. On 19 Sep 2026 that file was 79 days old and two axes were
+    being scored from it into every night's composite.
+    """
+    row = _by_id(db.build_rows(repo, NOW))["axesfed"]
+    assert "2026-07-02" in row["headline"], row["headline"]
+    assert "d old" in row["headline"], row["headline"]
+    assert "2/3" in row["headline"], row["headline"]
+
+
+def test_the_denominator_is_every_axis_not_every_observation(repo: Path):
+    """Four axes exist and only three carry any value. The denominator stays 4."""
+    row = _by_id(db.build_rows(repo, NOW))["axesfed"]
+    assert "/4 (world value AND obs date)" in row["headline"], row["headline"]
+
+
+def test_an_unreadable_countries_shape_refuses_rather_than_counting_zero(repo: Path):
+    (repo / "output/wellbeing_all_countries.json").write_text(
+        json.dumps({"computed_at": "2026-07-02T00:00:00+00:00", "countries": "nope"}),
+        encoding="utf-8")
+    row = _by_id(db.build_rows(repo, NOW))["axesfed"]
+    assert row["status"] == "MISSING"
+    assert "not a list or an object" in row["why"], row["why"]

@@ -82,6 +82,9 @@ SOURCES: dict[str, list[str]] = {
     "local": ["memory/llm_provenance.jsonl"],
     "institution0": ["experiments/institution/ledger.jsonl",
                      "config/commitments.json"],
+    "axesfed": ["snapshots/master/goal_score_latest.json",
+                "config/target_config.json",
+                "output/wellbeing_all_countries.json"],
 }
 
 # ---------------------------------------------------------------------------
@@ -94,6 +97,7 @@ MOVED_SHARE_FLOOR = 0.10       # share of dated daily indicators that changed va
 LOCAL_SHARE_FLOOR = 0.25       # local:* share of the day's logged answers
 SELECTIVITY_FLOOR = 0.10       # probe real minus control; below this the probe reads noise
 EQ_DECIMALS = 3                # "equals the baseline to N decimals"
+STALE_DAYS = 30                # an observation older than this is named stale, not fed
 
 MACHINE_OPEN = "```json machine"
 MACHINE_CLOSE = "```"
@@ -652,6 +656,151 @@ def row_institution0(repo: Path, now: datetime) -> dict:
 
 
 
+def row_axes_fed(repo: Path, now: datetime) -> dict:
+    """Row 8 — axes fed.
+
+    How many of the goal's axes carry a world number that is dated, how many are
+    dated but old, and how many carry a number with no date at all. Then the
+    per-country layer, with the as-of date of the file it was read from ON THE
+    FACE OF THE ROW.
+
+    THE AS-OF DATE IS NOT A FOOTNOTE, and this row exists because of what it
+    showed on 19 Sep 2026: output/wellbeing_all_countries.json was computed on
+    2026-07-02 and nothing had recomputed it in 79 days, while two axes —
+    GOVERNANCE_INSTITUTIONS and GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL — were being
+    scored from it into every night's composite as if it were current. A count of
+    217 countries with no date beside it reads as 217 countries measured today.
+
+    THE THREE BUCKETS ARE DISJOINT AND THE ARITHMETIC IS PRINTED, because "fed"
+    is exactly the word that hides this:
+        fed_dated    a world value AND an observation date
+        fed_no_date  a world value and NO date — counted apart, never as fed
+        stale        a subset of fed_dated whose date is older than STALE_DAYS
+    A number whose age is unknown is not a fresh number, so fed_no_date is not
+    folded into fed_dated to make the headline larger.
+    """
+    goal_path = repo / SOURCES["axesfed"][0]
+    targets_path = repo / SOURCES["axesfed"][1]
+    countries_path = repo / SOURCES["axesfed"][2]
+
+    goal = _json(goal_path)
+    targets = _json(targets_path)
+    countries = _json(countries_path)
+
+    obs = goal.get("axis_observations")
+    if not isinstance(obs, dict) or not obs:
+        raise SourceMissing(goal_path, "no axis_observations in the goal score")
+
+    all_axes = sorted({a for branch, axes in targets.items()
+                       if not str(branch).startswith("_") and isinstance(axes, dict)
+                       for a in axes})
+    if not all_axes:
+        raise SourceMissing(targets_path, "no axes in the target config")
+
+    today = now.date()
+    fed_dated, fed_no_date, stale, per_axis = [], [], [], []
+    for axis in sorted(obs):
+        o = obs[axis]
+        if not isinstance(o, dict):
+            continue
+        value = o.get("observed_value")
+        date = o.get("observed_at")
+        if value is None:
+            continue
+        if not date:
+            fed_no_date.append(axis)
+            per_axis.append("%s = %s, obs date MISSING (%s)"
+                            % (axis, value, o.get("source_id")))
+            continue
+        fed_dated.append(axis)
+        age = None
+        try:
+            age = (today - datetime.fromisoformat(str(date)[:10]).date()).days
+        except (TypeError, ValueError):
+            pass
+        mark = ""
+        if age is not None and age > STALE_DAYS:
+            stale.append(axis)
+            mark = "  STALE %d d" % age
+        per_axis.append("%s = %s, obs %s (%s)%s"
+                        % (axis, value, date, o.get("source_id"), mark))
+
+    holder = countries.get("countries")
+    # The file ships `countries` as a LIST of row dicts; an older shape keyed them
+    # by iso2. Both are accepted, anything else refuses — a per-country count is
+    # only meaningful if we know what we counted.
+    if isinstance(holder, dict):
+        rows = list(holder.values())
+    elif isinstance(holder, list):
+        rows = holder
+    else:
+        raise SourceMissing(countries_path, "countries is %s, not a list or an object"
+                            % type(holder).__name__)
+    if not rows:
+        raise SourceMissing(countries_path, "the countries collection is empty")
+    as_of = countries.get("computed_at") or "UNDATED"
+    c_age = None
+    try:
+        c_age = (today - datetime.fromisoformat(str(as_of)[:10]).date()).days
+    except (TypeError, ValueError):
+        pass
+    measured = []
+    for row in rows:
+        hit = re.match(r"(\d+)\s*/\s*\d+\s+real", str((row or {}).get("completeness", "")))
+        measured.append(int(hit.group(1)) if hit else 0)
+    ge3 = sum(1 for m in measured if m >= 3)
+
+    head = ("axes fed %d/%d (world value AND obs date), of which %d stale >%dd; "
+            "%d fed with NO date; countries with >=3 measured axes %d/%d as of %s%s"
+            % (len(fed_dated), len(all_axes), len(stale), STALE_DAYS,
+               len(fed_no_date), ge3, len(rows), str(as_of)[:10],
+               "" if c_age is None else " (%d d old)" % c_age))
+
+    detail = [
+        "- denominator %d: every axis in config/target_config.json, not the number "
+        "that happens to have an observation" % len(all_axes),
+        "- fed_dated %d + fed_no_date %d = %d axes carrying a world value; the other "
+        "%d carry none and are semantic-only"
+        % (len(fed_dated), len(fed_no_date), len(fed_dated) + len(fed_no_date),
+           len(all_axes) - len(fed_dated) - len(fed_no_date)),
+        "- a value with no date is NOT counted as fed: its age is unknown, and an "
+        "unknown age is not freshness",
+        "- fed with NO observation date: %s" % (", ".join(fed_no_date) or "none"),
+        "- stale (>%d d): %s" % (STALE_DAYS, ", ".join(stale) or "none"),
+        "- per-country file %s, computed_at %s%s"
+        % (countries_path.relative_to(repo).as_posix(), as_of,
+           "" if c_age is None else " — %d days old" % c_age),
+        "- countries with >=3 measured axes: %d of %d" % (ge3, len(rows)),
+        "- every fed axis, value and observation date:",
+    ]
+    detail += ["    " + x for x in per_axis]
+
+    why = []
+    if stale:
+        why.append("%d axis/axes are scored from an observation older than %d days"
+                   % (len(stale), STALE_DAYS))
+    if fed_no_date:
+        why.append("%d axis/axes carry a value whose observation date is MISSING"
+                   % len(fed_no_date))
+    if c_age is not None and c_age > STALE_DAYS:
+        why.append("the per-country file is %d days old and nothing recomputes it "
+                   "nightly" % c_age)
+    return {
+        "id": "axesfed", "name": "axes fed",
+        "ran": "goal score written %s; per-country file computed %s"
+               % (str(goal.get("computed_at") or goal.get("ts") or "?")[:19], str(as_of)[:19]),
+        "headline": head, "detail": detail,
+        "correction": "yes" if why else "no",
+        "why": "; ".join(why) if why else
+               "every fed axis carries a dated observation inside %d days and the "
+               "per-country file is current" % STALE_DAYS,
+        "sources": [goal_path.relative_to(repo).as_posix(),
+                    targets_path.relative_to(repo).as_posix(),
+                    countries_path.relative_to(repo).as_posix()],
+    }
+
+
+
 BUILDERS = [
     ("t1", "T1 transfer test", row_t1),
     ("probe", "Brain probe (scanner)", row_probe),
@@ -660,6 +809,7 @@ BUILDERS = [
     ("fresh", "Data freshness", row_fresh),
     ("local", "Local brain alive", row_local),
     ("institution0", "institution #0 (witness stage)", row_institution0),
+    ("axesfed", "axes fed", row_axes_fed),
 ]
 
 
