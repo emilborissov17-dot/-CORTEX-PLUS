@@ -108,7 +108,15 @@ def _fingerprint() -> dict:
     try:
         g = json.loads((BASE / "snapshots" / "master" / "goal_score_latest.json")
                        .read_text(encoding="utf-8"))
-        fp["composite"] = round(float(g.get("composite_score", 0.0)), 6)
+        # composite_score is None when the goal-coverage threshold is not met
+        # (19 Sep 2026): the scorer refuses rather than publishing a number it
+        # has already marked invalid. float(None) would raise here and the whole
+        # block is wrapped in `except Exception`, so the fingerprint would have
+        # gone silently blind to the coverage fields too — a refusal upstream
+        # turning into a silent gap three files away. None stays None.
+        _c = g.get("composite_score")
+        fp["composite"] = round(float(_c), 6) if _c is not None else None
+        fp["composite_withheld"] = g.get("composite_score_withheld")
         fp["coverage_of_goal"] = g.get("coverage_of_goal", g.get("coverage"))
         fp["coverage_of_measurable"] = g.get("coverage_of_measurable")
         # ОТ КОГА Е ЧИСЛОТО. Отпечатъкът чете ЗАПИСАНОТО състояние, не пресмята
@@ -118,6 +126,7 @@ def _fingerprint() -> dict:
         fp["composite_ts"] = str(g.get("timestamp"))[:19] or None
     except Exception:
         fp["composite"] = None
+        fp["composite_withheld"] = None
         fp["coverage_of_goal"] = None
         fp["coverage_of_measurable"] = None
         fp["composite_ts"] = None

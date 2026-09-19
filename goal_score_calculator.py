@@ -109,7 +109,8 @@ def load_governance_globals() -> dict:
     Load the two governance axis globals from output/wellbeing_globe.json,
     gated by a freshness check on governance_computed_at.
 
-    Returns {} (axes fall back to qualitative 0.5) if the file is missing,
+    Returns {} — and the two axes then score None, NOT 0.5 — if the file is
+    missing,
     has no timestamp, or the timestamp is older than GOVERNANCE_FRESHNESS_DAYS —
     always with a loud stderr warning, never a silent stale "real" score.
     """
@@ -118,7 +119,7 @@ def load_governance_globals() -> dict:
     if not ts_str:
         print(
             "[goal_score] WARNING: output/wellbeing_globe.json has no governance_computed_at "
-            "— GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL / GOVERNANCE_INSTITUTIONS_REVIEW falling back to 0.5. "
+            "— GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL / GOVERNANCE_INSTITUTIONS_REVIEW score None. "
             "Run: python wellbeing_globe.py --governance-only",
             file=sys.stderr,
         )
@@ -128,7 +129,7 @@ def load_governance_globals() -> dict:
     except ValueError:
         print(
             f"[goal_score] WARNING: unparsable governance_computed_at={ts_str!r} "
-            "— governance axes falling back to 0.5.",
+            "— governance axes score None.",
             file=sys.stderr,
         )
         return {}
@@ -137,7 +138,7 @@ def load_governance_globals() -> dict:
     if age_days > GOVERNANCE_FRESHNESS_DAYS:
         print(
             f"[goal_score] WARNING: governance globals are {age_days:.0f} days old "
-            f"(> {GOVERNANCE_FRESHNESS_DAYS}d freshness threshold) — falling back to 0.5. "
+            f"(> {GOVERNANCE_FRESHNESS_DAYS}d freshness threshold) — both axes score None. "
             f"Run: python wellbeing_globe.py --governance-only",
             file=sys.stderr,
         )
@@ -198,7 +199,7 @@ def load_global_indicators() -> dict:
     Freshness-gated; loud stderr + {} if missing or too old."""
     data = _load(GLOBAL_IND_FILE, {})
     if not data:
-        print("[goal_score] WARNING: global_indicators_latest.json missing — dead axes stay 0.5.", file=sys.stderr)
+        print("[goal_score] WARNING: global_indicators_latest.json missing — dead axes score None.", file=sys.stderr)
         return {}
     ts_str = data.get("timestamp")
     if ts_str:
@@ -909,7 +910,9 @@ def compute_goal_score(
     composite = measured_composite if measured_composite is not None else 0.0
 
     return {
-        "composite_score": composite,
+        # None when the coverage threshold is not met — see composite_score_withheld
+        # below for the value and the reason it is not published here.
+        "composite_score": (composite if goal_covered else None),
         # ── пакетът, без който числото е тъмна цифра ───────────────────────
         "sensors_ok":   sensors_ok,
         "goal_covered": goal_covered,
@@ -930,6 +933,23 @@ def compute_goal_score(
         # „Прагът composite_valid се съди срещу целта (58%), не срещу измеримото
         #  (81%). Иначе плащаш пране на незнание."
         "composite_valid": goal_covered,
+        # ── THE COMPOSITE REFUSES (19 Sep 2026) ──────────────────────────────
+        # Until today composite_score was emitted as a number whatever
+        # composite_valid said, and every consumer but core/cycle_report.py read
+        # the number without the flag.
+        #
+        # MEASURED, and this is the defect: with the two governance axes missing
+        # the composite ROSE, 0.6251 -> 0.6508. Dropping two below-average axes
+        # takes their weight out of the numerator AND out of the denominator, so
+        # LOSING DATA MAKES THE SCORE LOOK BETTER. That is the same failure as the
+        # 0.5 default this file removed in August, one level up: a number that
+        # answers when it should refuse.
+        #
+        # So composite_score is None when the coverage threshold is not met. The
+        # computed value is kept under a name that cannot be mistaken for a valid
+        # score, because a consumer reaching for it has to type the word
+        # "withheld" and a reader of the JSON sees it.
+        "composite_score_withheld": (None if goal_covered else composite),
         "coverage": coverage_of_goal,
         "measured_weight":   round(measured_weight, 1),
         "measurable_weight": round(measurable_weight, 1),
