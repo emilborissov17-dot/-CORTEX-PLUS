@@ -209,7 +209,12 @@ def test_no_writer_of_the_baseline_exists_in_the_module():
 def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     known = sg.load_known_failures()
     assert known, "test/known_failures.txt is empty or missing"
-    assert len(known) == 42, "expected the 42 triaged ids, got %d" % len(known)
+    # THE COUNT IS A TRIPWIRE, not bookkeeping. It moves only in a commit that
+    # says why, which is the whole difference between this file and the ledger
+    # it replaced: 42 at seeding on 19 Sep, 41 once
+    # test_heartbeat_coverage::test_each_beat_reports_the_step_it_is_actually_in
+    # went green the same day and its line was removed in the same commit.
+    assert len(known) == 41, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

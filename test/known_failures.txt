@@ -22,8 +22,7 @@
 # evidence for every bucket below.
 
 
-# --- REAL_DEFECT (16) ---
-test/test_heartbeat_coverage.py::test_each_beat_reports_the_step_it_is_actually_in  # REAL_DEFECT: Six beats report a step id that is not their boundary: step 2 beats as '2.5', 12.45 as '12.42', 12.6 as '12...
+# --- REAL_DEFECT (15) ---
 test/test_consult_free_only.py::PaidSubstitutionIsRefused::test_a_paid_model_serving_the_request_is_not_an_answer  # REAL_DEFECT: 'a paid model answer was accepted - the guard is not there'
 test/test_cycle_reaper.py::test_end_to_end_a_spawned_cycle_leaves_its_exit_code_on_disk  # REAL_DEFECT: KeyError: 'exit_code' - the reaper does not leave the spawned cycle's exit code on disk, so how a cycle die...
 test/test_script_suite.py::test_script_style_suite[test/test_goal_score_package.py]  # REAL_DEFECT: 2 of 12397 files read composite_score WITHOUT its coverage package, which the 15 Aug rule forbids: a bare c...

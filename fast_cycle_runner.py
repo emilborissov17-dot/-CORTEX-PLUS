@@ -2665,6 +2665,7 @@ def main():
     #    a source you approved is live for this cycle's scoring. Sensing-source
     #    promotions + accepted goals only — never a world-action, and only from the
     #    configured chat_id. FAIL-OPEN: a failure here never blocks the cycle.
+    # ── 0.1. Прилага човешките отговори OK/NO преди плана ──
     beat("telegram_approvals", "0.1")
     try:
         from experiments.needs.approve_reader import run as _approve_run
@@ -2679,6 +2680,7 @@ def main():
     # себе си, и тест за успех, който сама си задава. Планът се пише в
     # memory/brain_cycle_plan.json и всяка стъпка може да го чете
     # (core.brain.current_plan()). FAIL-OPEN: мълчащ мозък не спира цикъла.
+    # ── 0.2. Мозъкът пише плана на деня — вече знаейки тялото и човешкат... ──
     beat("brain_briefing", "0.2")
     try:
         from core.brain import brief_cycle as _brief
@@ -2697,6 +2699,7 @@ def main():
     # докато днешните не са стигнали до него."
     # Тоест забавката не беше една нощ, а две: нужда, родена от днешния план,
     # изчакваше следващото известяване, преди изобщо да бъде показана.
+    # ── 0.25. Известява какво чака одобрение — СЛЕД плана, за да излязат... ──
     beat("notify_patches_and_initiatives", "0.25")
     _notify_patches_and_initiatives()
 
@@ -2777,7 +2780,11 @@ def main():
     else:
         print("[FAST_CYCLE] Step 1: web_intelligence SKIPPED (offline)")
 
-    # ── 2. LLM self-review оси ──
+    # NOTE (not a step boundary): step 2 USED to be here. It moved to 2.75 and
+    # there is no beat(..., "2") anywhere — the header stayed behind and, because
+    # the next boundary follows immediately, test_each_beat_reports_the_step_it_
+    # is_actually_in read 2.5's beat as step 2's. Kept as prose, deliberately not
+    # in the `# ── <id>. ──` form, because that form means "a step begins here".
     # 15 авг 2026 — ПРЕМЕСТЕНА (възражение на Kimi, проверено в кода):
     # „llm_self_review_axes е ОЦЕНКА, не сетиво, и тича преди суровите данни
     #  (2.5–2.55). Преглежда оси с ВЧЕРАШНИ стойности; мястото ѝ е след 2.7."
@@ -2985,6 +2992,7 @@ def main():
         except Exception as e:
             print(f"[FAST_CYCLE] grounding_verdicts -> FAILED: {type(e).__name__}: {e}")
 
+    # ── 2.75. LLM self-review оси — оценка СЛЕД сетивата (преместена от 2) ──
     beat("llm_self_review_axes", "2.75")
     refresh_llm_axes()
     update_master()
@@ -3112,8 +3120,6 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
 
-    # ── 12.45. Facade self-check — did each real scorer consume real data, or
-    #           default to a constant? Fails LOUD instead of silent. FAIL-OPEN. ──
     # ── 12.42. ЧЕРВЕНИТЕ ЛИНИИ ────────────────────────────────────────────
     # Веднага след скоринга, защото аларма, която чака сутрешния дайджест, е
     # доклад, а не аларма. Пресичане ЗВЪНИ веднага и минава през тихите часове.
@@ -3125,6 +3131,8 @@ def main():
         _sweep()
     _run("alarm_bands", _alarm_bands)
 
+    # ── 12.45. Facade self-check — did each real scorer consume real data, or
+    #           default to a constant? Fails LOUD instead of silent. FAIL-OPEN. ──
     beat("facade_self_check", "12.45")
     try:
         from core.scorer_self_check import run_from_snapshots as _facade_check, format_report as _facade_fmt
@@ -3170,7 +3178,6 @@ def main():
         _reconcile()
     _run("level_reconcile", _level_reconcile)
 
-    # ── 12.6. Goal score calculator ──
     # ── 12.56. THE INDICATOR HISTORY STARTS TONIGHT (6 Sep 2026) ──────────
     # proposal_intake admitted "WATER_REVIEW +1.2 by 2026-09-10" because the
     # number parsed, and nothing could say whether +1.2 is a routine week or a
@@ -3181,6 +3188,7 @@ def main():
     beat("axis_history", "12.56")
     _run("axis_history", lambda: _axis_history_step())
 
+    # ── 12.6. Goal score calculator ──
     beat("goal_score_calculator", "12.6")
     # None, not 0.0. The old initialiser meant that a goal_score_calculator which
     # never ran still handed MerkleMemory a number at step 24, and 0.0 is a score.
@@ -3225,7 +3233,6 @@ def main():
         _persist_goal(gs_result)
     _run("goal_score_calculator", _goal_score_calculator)
 
-    # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     # ── 12.65. Deduction layer v1 (14 Aug 2026) — symbolic conclusions with premises
     #    from auto_levels + trends + measured scores. Read by daily_analysis (human),
     #    needs_report (Telegram) and available to the orchestrator. FAIL-OPEN.
@@ -3269,6 +3276,7 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] axis_feed -> FAILED: {type(e).__name__}: {e}")
 
+    # ── 12.7. Cognitive Orchestrator — Attentional Meta Protocol ──
     beat("cognitive_orchestrator", "12.7")
     # Runs BEFORE HyperClaw so it can use its priority_axes assessment.
     # (CortexStrategist was moved to step 3.5 to run before token budget is depleted.)
@@ -3790,27 +3798,28 @@ def main():
     # Той сам съди сбъднал ли се е ТЕСТЪТ, който сам си зададе сутринта, и какво
     # да носи напред. Това затваря кръга ум→действие→памет: следващият план се
     # пише върху тази присъда, не върху чиста дъска. FAIL-OPEN.
-    # ── 25.4. СИМВОЛНАТА КОЛОНА И РЕЛЕТО ──────────────────────────────────
+    # SECTION (not a step boundary): 25.4 covers the two steps below, 25.35 and
+    # 25.36, each of which beats for itself. There is no beat(..., "25.4"), and
+    # writing it in the `# ── <id>. ──` form made the test pair this heading with
+    # 25.35's beat — which ALSO hid the fact that 25.35 and 25.36 had no headings.
+    # СИМВОЛНАТА КОЛОНА И РЕЛЕТО────────────────────────────────
     # metta_parallel гледа фийдовете с 5 правила и записва несъгласията, които
     # влизат в доклада на D_SCORE. brain_relay изнася на телефона онова, което
     # мозъкът е казал — на 20 авг той поиска човек и никой не разбра.
+    # ── 25.35. Символната колона — 5 правила върху фийдовете ──
     beat("metta_column", "25.35")
     def _metta_column():
         from core.metta_parallel import run as _metta
         _metta()
     _run("metta_column", _metta_column)
 
+    # ── 25.36. Релето — изнася на телефона каквото мозъкът е казал ──
     beat("brain_relay", "25.36")
     def _brain_relay():
         from core.brain_relay import run as _relay
         _relay()
     _run("brain_relay", _brain_relay)
 
-    # ── 25.37. ИЗТОЧНИЦИ, КОИТО ЧАКАТ КЛЮЧ ────────────────────────────────
-    # Тихото прескачане е правилно (липсващ ключ не бива да вали цикъла) и
-    # точно затова е невидимо: EIA стои от 15 авг, а energy секцията беше
-    # празна и въпреки това броена сред „20 източника". Веднъж СЕДМИЧНО, с
-    # линка и името на променливата. Ключът тръгва сам — нула код.
     # ── 25.38. ЧАСОВНИКЪТ НА ПРЕДЛОЖЕНИЯТА ────────────────────────────────
     # Обещание за отговор до 24 часа е механизъм, не намерение. Просрочено
     # предложение ескалира ВЕДНЪЖ, поименно; после натискът се носи от брояча
@@ -3821,6 +3830,11 @@ def main():
         _sla_run()
     _run("proposal_sla", _proposal_sla)
 
+    # ── 25.37. ИЗТОЧНИЦИ, КОИТО ЧАКАТ КЛЮЧ ────────────────────────────────
+    # Тихото прескачане е правилно (липсващ ключ не бива да вали цикъла) и
+    # точно затова е невидимо: EIA стои от 15 авг, а energy секцията беше
+    # празна и въпреки това броена сред „20 източника". Веднъж СЕДМИЧНО, с
+    # линка и името на променливата. Ключът тръгва сам — нула код.
     beat("needs_auth", "25.37")
     def _needs_auth():
         from core.needs_auth import run as _ask
@@ -3868,6 +3882,7 @@ def main():
     # приемат на доверие) и влизат в менюто на G_LEARN, а дебрифът на фазата е
     # длъжен да цитира поне две от тях.
     # Стои СЛЕД self_mirror, защото чете каквото то току-що е написало.
+    # ── 25.46. Мозъкът получава ЦЯЛОТО огледало и казва какво вижда ──
     beat("read_the_mirror", "25.46")
     def _read_the_mirror():
         from core.interoception import read_the_mirror as _rtm
@@ -3879,6 +3894,7 @@ def main():
             print(f"[FAST_CYCLE] огледалото каза -> {str(rec['said'].get('saw'))[:200]}")
     _run("read_the_mirror", _read_the_mirror)
 
+    # ── 25.5. Мозъкът съди собствения си план: сбъдна ли се тестът му ──
     beat("brain_debrief", "25.5")
     try:
         from core.brain import debrief_cycle as _debrief
@@ -3896,6 +3912,7 @@ def main():
     # Стъпка по стъпка: за какво служи, какво каза самата тя, удържа ли обещания
     # си файл (механична проверка по core/cycle_map.py) и какво е видял мозъкът.
     # Уводът и заключението са негови думи, не мои. FAIL-OPEN.
+    # ── 25.6. Отчетът пред човека, написан от самата система ──
     beat("cycle_report", "25.6")
     try:
         from core.cycle_report import build as _rep_build, to_markdown as _rep_md, \
