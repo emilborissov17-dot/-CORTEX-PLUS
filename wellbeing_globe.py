@@ -275,9 +275,22 @@ def compute_governance_globals() -> dict:
     per_country: dict[str, dict[str, float]] = {}
     pops: dict[str, float] = {}
     skipped: list[dict[str, str]] = []
+    # AGE OF THE INPUTS (19 Sep 2026). The only writer of output/wb_cache/ is
+    # wellbeing_country.py, driven by wellbeing_batch.py. From today that batch
+    # runs WEEKLY and this governance pass runs DAILY, so on six mornings in
+    # seven this recomputes identical numbers from an unchanged cache -- and
+    # update_governance_output stamps governance_computed_at = now regardless.
+    # A "computed today" that is true of the arithmetic and false of the data is
+    # the freshness lie this repo keeps finding; the 79-day stale file was the
+    # same shape. So carry the newest mtime of the files actually read.
+    newest_source = 0.0
 
     for f in sorted(WB_CACHE_DIR.glob("*.json")):
         iso2 = f.stem
+        try:
+            newest_source = max(newest_source, f.stat().st_mtime)
+        except OSError:
+            pass
         try:
             data = json.loads(f.read_text(encoding="utf-8"))
         except Exception as e:
@@ -320,6 +333,9 @@ def compute_governance_globals() -> dict:
         "per_country": per_country,
         "country_count": len(per_country),
         "skipped": skipped,
+        "source_newest_at": (
+            datetime.fromtimestamp(newest_source, timezone.utc).isoformat()
+            if newest_source else None),
     }
 
 
@@ -339,6 +355,18 @@ def update_governance_output(result: dict) -> dict:
     globe_data["governance_country_count"]        = result["country_count"]
     globe_data["governance_skipped_countries"]    = result["skipped"]
     globe_data["governance_computed_at"]          = now
+    # WHEN THE DATA IS FROM, next to when the sum was done. A reader comparing
+    # these two sees the gap; a staleness check reading only the first never
+    # fires, because this pass restamps it every morning from an unchanged cache.
+    src = result.get("source_newest_at")
+    globe_data["governance_source_newest_at"] = src
+    if src:
+        age = (datetime.now(timezone.utc) - datetime.fromisoformat(src)).total_seconds()
+        globe_data["governance_source_age_days"] = round(age / 86400.0, 2)
+    else:
+        # No readable cache file at all. MISSING, never 0 -- a zero here reads as
+        # "the inputs are fresh today", the exact opposite of what it means.
+        globe_data["governance_source_age_days"] = None
 
     OUT_GLOBE.parent.mkdir(parents=True, exist_ok=True)
     OUT_GLOBE.write_text(json.dumps(globe_data, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -406,7 +434,9 @@ def _run_governance_only():
 
     merged = update_governance_output(result)
     print(f"\nSaved governance fields to {OUT_GLOBE}")
-    print(f"  governance_computed_at: {merged['governance_computed_at']}")
+    print(f"  governance_computed_at:      {merged['governance_computed_at']}")
+    print(f"  governance_source_newest_at: {merged.get('governance_source_newest_at')}")
+    print(f"  governance_source_age_days:  {merged.get('governance_source_age_days')}")
 
 
 def main():

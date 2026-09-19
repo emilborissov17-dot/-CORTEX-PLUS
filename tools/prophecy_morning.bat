@@ -53,6 +53,65 @@ set FAILED=
 
 echo [PROPHECY_MORNING] start %DATE% %TIME%  cwd=%CD%
 
+REM --- THE WEEKLY BATCH, LAUNCHED FIRST AND DETACHED (19 Sep 2026) -------------
+REM --- Sunday only. weekday() is 6 for Sunday and comes from python, not %DATE%,
+REM --- which is locale-formatted and would have to be parsed to be trusted.
+REM ---
+REM --- WHY FIRST, having first written it last. The obvious placement is the end:
+REM --- wellbeing_batch.py replaces output\wellbeing_all_countries.json and
+REM --- daily_board row 8 reads that file, so launching late keeps the writer away
+REM --- from its readers. Then the reachability was measured, and the end of this
+REM --- chain is not a place that reliably happens: this script runs ~2h45m, and
+REM --- claude\reports\ holds TRACE pages - rendered at the very last step - for
+REM --- 13, 17 and 18 September but not for the 14th, 15th or 16th. Today's run
+REM --- was terminated at 12:30:35 (LastTaskResult 0xC000013A) thirty minutes in,
+REM --- during cross_series_bench, having never reached the wellbeing steps at all.
+REM ---
+REM --- A WEEKLY job hung on the end of a chain that ends about half the time is
+REM --- not weekly. It is "most Sundays", and a missed Sunday means the governance
+REM --- axes are fed fourteen-day-old inputs, not seven.
+REM ---
+REM --- So the reader-collision was removed instead of dodged: _save now writes a
+REM --- .tmp and os.replace()s it, which is atomic, so a reader sees the whole old
+REM --- file or the whole new one and never a truncated prefix. With that gone,
+REM --- FIRST is strictly better than LAST - it is the one point in this script
+REM --- that is reached every single time it starts.
+REM ---
+REM --- DETACHED via tools\launch_detached.ps1, so this script does not wait for
+REM --- the half hour and the batch is not killed when the chain is. Its exit code
+REM --- is therefore NOT this script's exit code: it reports itself into the log
+REM --- named below, and a failure shows up as a wellbeing file a week older. The
+REM --- LAUNCH failing - as opposed to the batch failing - is recorded loudly here.
+REM --- AN UNKNOWN WEEKDAY IS NOT "NOT SUNDAY". If %PY% is missing or the -c call
+REM --- fails, the for /f body never runs and DOW stays empty; `if "!DOW!"=="6"`
+REM --- is then false and the else branch prints "skipped by design". That is a
+REM --- missing value taking the do-nothing path behind a reassuring message, on
+REM --- the one morning of the week that matters. Observed while testing this
+REM --- block from the wrong directory: "weekday=" and a cheerful skip.
+REM --- So DOW is cleared first and its emptiness is a FAILURE, announced.
+set DOW=
+for /f "usebackq delims=" %%w in (`%PY% -c "import datetime;print(datetime.date.today().weekday())"`) do set DOW=%%w
+if "!DOW!"=="" (
+  echo [PROPHECY_MORNING] wellbeing_weekly: COULD NOT DETERMINE THE WEEKDAY
+  echo [PROPHECY_MORNING]   %PY% -c failed; refusing to guess whether today is Sunday
+  set FAILED=!FAILED! wellbeing_weekly_weekday
+  call :night_event "wellbeing_weekly weekday UNKNOWN" "%PY% could not report today's weekday, so prophecy_morning could not tell whether to fire the weekly 217-country batch. It did NOT fire. If today is Sunday, output/wellbeing_all_countries.json is now a week older than it should be."
+) else if "!DOW!"=="6" (
+  echo.
+  echo [PROPHECY_MORNING] --- wellbeing_weekly ^(Sunday^): launching detached ---
+  powershell -NoProfile -ExecutionPolicy Bypass -File "tools\launch_detached.ps1" -Exe "%ComSpec%" -Arguments "/c tools\wellbeing_weekly.bat" -Log "claude\reports\WELLBEING_WEEKLY.log"
+  if errorlevel 1 (
+    echo [PROPHECY_MORNING] wellbeing_weekly LAUNCH FAILED
+    set FAILED=!FAILED! wellbeing_weekly_launch
+    call :night_event "wellbeing_weekly LAUNCH FAILED" "tools/launch_detached.ps1 could not start tools/wellbeing_weekly.bat; the 217-country batch did not run this Sunday, so output/wellbeing_all_countries.json stays a week older"
+  ) else (
+    echo [PROPHECY_MORNING] wellbeing_weekly launched; see claude\reports\WELLBEING_WEEKLY.log
+  )
+) else (
+  echo.
+  echo [PROPHECY_MORNING] wellbeing_weekly: not Sunday ^(weekday=!DOW!^), skipped by design
+)
+
 REM --- SCORE BEFORE PREDICT, both pairs: a morning closes last night before it
 REM --- opens the next one. Predicting first would leave last night's sealed
 REM --- forecast unscored for a day and let two open forecasts exist at once.
@@ -139,12 +198,27 @@ REM --- then drops both governance axes to 0.5 with a warning nobody reads.
 REM --- --governance-only restores them. Running the first without the second is
 REM --- strictly worse than not running either.
 REM ---
-REM --- ~30 MINUTES, CPU ONLY, NO GPU: 217 countries of World Bank fetches
-REM --- (measured 1817 s at 6 workers). NEVER in the 03:04 cycle - the cycle dies
-REM --- of memory and this is a long many-request fetch. REFUSAL_OK stays `no`:
-REM --- the batch has no refusal path, so a non-zero exit is a real failure.
-call :step "wellbeing_batch"       "%PY% wellbeing_batch.py --workers 6"                    no
-call :step "wellbeing_globe"       "%PY% wellbeing_globe.py"                                no
+REM --- SPLIT WEEKLY / DAILY (19 Sep 2026, Emil's ruling). All three ran here in
+REM --- line, every morning, for exactly one day. The batch is ~30 minutes of CPU:
+REM --- 217 countries of World Bank fetches, measured 1817 s at 6 workers,
+REM --- re-fetching annual indicators that change a few times a YEAR. Half an hour
+REM --- of the 09:00 chain, every day, for data that moves annually.
+REM ---
+REM --- So the batch and the globe pair moved to tools\wellbeing_weekly.bat, fired
+REM --- ONCE A WEEK on Sunday, DETACHED, from the TOP of this script - see the
+REM --- launch block near the start, and the reasoning in that file's header.
+REM ---
+REM --- WHAT STAYS DAILY is this one pass. It reads output\wb_cache\, does no
+REM --- network, and takes seconds. It is what keeps governance_rights_score and
+REM --- governance_institutions_score present in output\wellbeing_globe.json, and
+REM --- since b7bdc0f their absence makes the composite REFUSE rather than
+REM --- substitute 0.5. REFUSAL_OK stays `no`: it has no refusal path.
+REM ---
+REM --- AND IT RESTAMPS governance_computed_at = now from an unchanged cache on six
+REM --- mornings in seven. goal_score_calculator's 90-day freshness gate therefore
+REM --- no longer reads that field - it reads governance_source_newest_at, the age
+REM --- of the INPUTS. Gating on the restamped field would have left a guard that
+REM --- cannot fire.
 call :step "wellbeing_governance"  "%PY% wellbeing_globe.py --governance-only"              no
 call :step "institution0"          "%PY% tools\institution0_morning.py --write"              no
 REM --- The reply to last morning's message. Its own offset file, its own parser;

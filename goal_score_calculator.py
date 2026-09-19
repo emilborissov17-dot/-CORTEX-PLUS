@@ -113,9 +113,28 @@ def load_governance_globals() -> dict:
     missing,
     has no timestamp, or the timestamp is older than GOVERNANCE_FRESHNESS_DAYS —
     always with a loud stderr warning, never a silent stale "real" score.
+
+    The timestamp is governance_source_newest_at (when the wb_cache inputs were
+    last refreshed), NOT governance_computed_at (when the arithmetic last ran).
+    See the comment in the body: the daily governance pass restamps the latter
+    every morning and would pin age_days at ~0 forever.
     """
     data = _load(WELLBEING_GLOBE_FILE, {})
-    ts_str = data.get("governance_computed_at")
+    # WHICH TIMESTAMP THIS GATE MUST READ (19 September 2026).
+    #
+    # governance_computed_at is when the ARITHMETIC ran. From today the batch
+    # that refreshes output/wb_cache/ runs weekly (Sunday) while
+    # wellbeing_globe.py --governance-only runs every morning at 09:00 - and
+    # that pass restamps governance_computed_at = now from an unchanged cache.
+    # Gate on it and age_days is ~0 every single day: a 90-day freshness check
+    # that CANNOT FIRE, however old the underlying WGI/V-Dem data gets. The
+    # weekly schedule would have converted this guard into decoration.
+    #
+    # So prefer governance_source_newest_at - the newest mtime among the
+    # wb_cache files the governance pass actually read. Fall back to
+    # governance_computed_at only for a globe file written before that field
+    # existed, where it is the best available answer.
+    ts_str = data.get("governance_source_newest_at") or data.get("governance_computed_at")
     if not ts_str:
         print(
             "[goal_score] WARNING: output/wellbeing_globe.json has no governance_computed_at "
@@ -137,7 +156,7 @@ def load_governance_globals() -> dict:
     age_days = (datetime.now(timezone.utc) - ts).total_seconds() / 86400
     if age_days > GOVERNANCE_FRESHNESS_DAYS:
         print(
-            f"[goal_score] WARNING: governance globals are {age_days:.0f} days old "
+            f"[goal_score] WARNING: governance INPUTS are {age_days:.0f} days old "
             f"(> {GOVERNANCE_FRESHNESS_DAYS}d freshness threshold) — both axes score None. "
             f"Run: python wellbeing_globe.py --governance-only",
             file=sys.stderr,
@@ -145,12 +164,16 @@ def load_governance_globals() -> dict:
         return {}
 
     # The two governance globals are DERIVED, not fetched: wellbeing_globe computes
-    # them from WGI+VDEM. The honest observation date is when that computation ran —
-    # 57 days before this line was written — not tonight's cycle timestamp.
+    # them from WGI+VDEM. The honest observation date is when the INPUTS were last
+    # refreshed, not when the sum was last taken. Those were the same thing while
+    # the batch and the governance pass ran together every morning; from 19 Sep
+    # 2026 the batch is weekly and they are up to six days apart.
     when = str(ts_str)[:10] if ts_str else None
-    why = (f"wellbeing_globe governance_computed_at = {when} (derived from "
+    _field = ("governance_source_newest_at"
+              if data.get("governance_source_newest_at") else "governance_computed_at")
+    why = (f"wellbeing_globe {_field} = {when} (derived from "
            f"WGI+VDEM, both annual); the value has not been recomputed since"
-           if when else "output/wellbeing_globe.json carries no governance_computed_at")
+           if when else "output/wellbeing_globe.json carries no governance timestamp")
     for k in ("governance_rights_score_global", "governance_institutions_score_global"):
         _OBS_DATES[k] = when
         _OBS_DATE_WHY[k] = why

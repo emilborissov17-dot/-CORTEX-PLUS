@@ -10,7 +10,7 @@ Output:
 """
 from __future__ import annotations
 
-import io, json, sys, time, contextlib
+import io, json, os, sys, time, contextlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -167,13 +167,32 @@ def run_batch(countries: list[dict], resume: bool = False) -> list[dict]:
 
 
 def _save(results: list[dict]) -> None:
+    """Write the batch output ATOMICALLY (19 Sep 2026).
+
+    write_text truncates the file and then fills it, so for the length of a
+    294 KB write there is a wellbeing_all_countries.json on disk that is a
+    truncated JSON document. daily_board row 8 reads that file, cockpit/server.py
+    reads it, experiments/meadow reads it -- a reader landing in that window gets
+    a JSONDecodeError, or worse, is written to tolerate one and silently reports
+    MISSING for a file that is perfectly good a second later.
+
+    That hazard is the only reason this batch had to be sequenced last in the
+    morning chain, away from its readers. It is also why it could not simply be
+    fired first: a crash mid-write left the file destroyed rather than merely
+    old. os.replace is atomic on Windows for a same-directory rename, so a reader
+    now sees either the whole previous file or the whole new one, never a prefix
+    of either, and a crash leaves the previous file intact.
+    """
     OUTPUT_FILE.parent.mkdir(exist_ok=True)
     out = {
         "computed_at": datetime.now(timezone.utc).isoformat(),
         "total":       len(results),
         "countries":   sorted(results, key=lambda r: r.get("iso2", "")),
     }
-    OUTPUT_FILE.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
+    payload = json.dumps(out, indent=2, ensure_ascii=False)
+    tmp = OUTPUT_FILE.with_suffix(OUTPUT_FILE.suffix + ".tmp")
+    tmp.write_text(payload, encoding="utf-8")
+    os.replace(tmp, OUTPUT_FILE)   # atomic; never a truncated file under a reader
 
 
 # ── Summary ───────────────────────────────────────────────────────────────────
