@@ -98,6 +98,106 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 # едновременно и първата проверка дали безплатният лимит стига за 4000 токена.
 GROQ_FREE_MODELS = {GROQ_KIMI}
 
+# ── 19 SEPT. 2026: THE THIRD PATH HAD NO GUARD AT ALL ────────────────────────
+# _ask_nvidia_kimi was added on 11 Sep (5693e23) ABOVE the two guarded paths and
+# is tried FIRST. Groq refuses anything outside GROQ_FREE_MODELS; the OpenRouter
+# router refuses anything without ':free'. NVIDIA checked nothing: it took
+# whatever `model` the endpoint named and returned ok=True with cost_usd=0.0.
+# The guard was not removed, it was OVERTAKEN — the same way the Groq path
+# overtook it on 10 Sep, which this file's own header already records.
+#
+# DECLARED FROM THE CATALOGUE, NOT GUESSED. Read from the live NIM account on
+# 19 Sep 2026: 82 models offered, exactly two Kimi ids —
+#   moonshotai/kimi-k3      (what _nvidia_model resolves to today)
+#   moonshotai/kimi-k2.6
+# Both are served on the free developer tier, same key as the cycle's NVIDIA leg.
+#
+# AND THIS IS WHY FREEDOM IS PER PATH, NOT PER SLUG. moonshotai/kimi-k2.6 is
+# FREE here and PAID on OpenRouter, where every moonshot slug lost its :free on
+# 10 Sep. A single global "is this model free" table would have to be wrong for
+# one of them. The question is only ever answerable as (endpoint, plan, model).
+NVIDIA_FREE_MODELS = {"moonshotai/kimi-k3", "moonshotai/kimi-k2.6"}
+
+FREE_BY_PATH = {"nvidia": NVIDIA_FREE_MODELS, "groq": GROQ_FREE_MODELS}
+
+# Module-level so a test can redirect it. The suite's _no_live_writes fixture
+# fails any test that touches the real file, and it is right to: on 16 Aug 2026
+# this class of leak sent a fabricated alarm to the human's phone.
+PROVENANCE = Path(__file__).resolve().parents[2] / "memory" / "llm_provenance.jsonl"
+
+
+class UnknownModelFreedom(Exception):
+    """Raised when nothing DECLARES whether a served model is free on this path.
+
+    It is an exception and not a False on purpose. A boolean has a comfortable
+    default and somebody eventually takes it; an unraised question cannot be
+    defaulted into "probably fine". Callers catch this and refuse BY NAME, so an
+    undeclared model produces a recorded refusal rather than a silent answer.
+    """
+
+    def __init__(self, path: str, served: str):
+        self.path, self.served = path, served
+        super().__init__(
+            f"{path}: nothing declares whether {served!r} is free on this path — "
+            f"add it to FREE_BY_PATH[{path!r}] after checking, or it stays refused")
+
+
+def classify_freedom(path: str, served: str) -> str:
+    """'free' or 'paid'. NEVER a default: an undeclared model RAISES.
+
+    openrouter is the one path whose slug carries the vendor's own declaration,
+    so ':free' answers it. Everywhere else the answer comes from a table a human
+    wrote, and a model in no table is a question nobody has answered yet.
+    """
+    served = str(served or "")
+    if path == "openrouter":
+        return "free" if ":free" in served else "paid"
+    table = FREE_BY_PATH.get(path)
+    if table is None:
+        raise UnknownModelFreedom(path, served)
+    if served in table:
+        return "free"
+    raise UnknownModelFreedom(path, served)
+
+
+def _label(path: str, served: str) -> str:
+    """The backend label, built ONCE.
+
+    _ask_nvidia_kimi returned f"nvidia:{served}" where served already begins
+    "nvidia/", giving 'nvidia:nvidia/nemotron-3-super-120b-a12b:free'. The label
+    is what a human reads to know who answered, and it is compared against the
+    slug, so a doubled vendor breaks both.
+    """
+    served = str(served or "")
+    head = served.split("/", 1)[0].split(":", 1)[0].lower()
+    return served if head == path.lower() else f"{path}:{served}"
+
+
+def _record_refusal(path: str, served: str, reason: str) -> None:
+    """A refusal is a result and goes on the record beside the answers.
+
+    consult.py wrote NO provenance at all: memory/llm_provenance.jsonl holds
+    9120 rows and not one names this caller, so "has a paid model ever served a
+    free-only consult" was unanswerable from the record on 19 Sep 2026.
+    Fail-open — a log that cannot be written must not cost the refusal.
+    """
+    try:
+        import json as _json
+        from datetime import datetime as _dt, timezone as _tz
+        _pf = PROVENANCE
+        _pf.parent.mkdir(parents=True, exist_ok=True)
+        with open(_pf, "a", encoding="utf-8") as fh:
+            fh.write(_json.dumps({
+                "ts": _dt.now(_tz.utc).isoformat(),
+                "backend": f"{path}:REFUSED",
+                "model": served,
+                "caller": "consult:free_only",
+                "refused": True,
+                "reason": reason,
+            }, ensure_ascii=False) + chr(10))
+    except Exception as e:  # noqa: BLE001
+        print(f"[consult] provenance for refusal not written: {type(e).__name__}: {e}")
+
 
 def _ask_groq_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
     import requests
@@ -130,11 +230,18 @@ def _ask_groq_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
     # слъг: обслужилият модел трябва да е в GROQ_FREE_MODELS. Текстът съдържа
     # „НЕ е безплатният", защото това е изречението, по което тестът и човекът
     # разпознават този отказ, независимо през кой път е дошъл.
-    if served not in GROQ_FREE_MODELS:
-        tried.append(f"groq:{GROQ_KIMI}: обслужен от {served} — НЕ е безплатният "
-                     f"по декларация (GROQ_FREE_MODELS), отказваме")
+    try:
+        _verdict = classify_freedom("groq", served)
+    except UnknownModelFreedom as e:
+        _verdict = "paid"
+        _record_refusal("groq", served, str(e))
+    if _verdict != "free":
+        why = (f"обслужен от {served} — НЕ е безплатният по декларация "
+               f"(GROQ_FREE_MODELS), отказваме")
+        tried.append(f"groq:{GROQ_KIMI}: {why}")
+        _record_refusal("groq", served, why)
         return None
-    return {"ok": True, "text": txt, "backend": f"groq:{served}", "latency_s": round(time.monotonic() - t0, 1),
+    return {"ok": True, "text": txt, "backend": _label("groq", served), "latency_s": round(time.monotonic() - t0, 1),
             "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried,
             "is_kimi": "kimi" in served.lower()}
 
@@ -190,7 +297,23 @@ def _ask_nvidia_kimi(brief: str, max_tokens: int, tried: list) -> dict | None:
         tried.append(f"nvidia:{model}: празен отговор")
         return None
     served = str(d.get("model") or model)
-    return {"ok": True, "text": txt, "backend": f"nvidia:{served}", "latency_s": round(time.monotonic() - t0, 1),
+    # THE GUARD THIS PATH NEVER HAD. Same shape as Groq's below: the model that
+    # ACTUALLY served the request must be declared free on THIS path. An
+    # undeclared one raises rather than defaulting, and either way the answer is
+    # refused by name instead of returned as a free consult.
+    try:
+        verdict = classify_freedom("nvidia", served)
+    except UnknownModelFreedom as e:
+        tried.append(f"nvidia:{model}: {e}")
+        _record_refusal("nvidia", served, str(e))
+        return None
+    if verdict != "free":
+        why = (f"обслужен от {served} — НЕ е безплатният по декларация "
+               f"(NVIDIA_FREE_MODELS), отказваме")
+        tried.append(f"nvidia:{model}: {why}")
+        _record_refusal("nvidia", served, why)
+        return None
+    return {"ok": True, "text": txt, "backend": _label("nvidia", served), "latency_s": round(time.monotonic() - t0, 1),
             "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried,
             "is_kimi": "kimi" in served.lower()}
 
@@ -239,8 +362,14 @@ def ask_kimi(brief: str, max_tokens: int = 4000) -> dict:
         # Единственият критерий е ':free'. Ако OpenRouter е пренасочил заявката
         # към платен вариант, това НЕ е отговор: по-добре никакъв консулт,
         # отколкото консулт, за който Емил плаща без да е казал.
-        if ":free" not in served:
-            tried.append(f"{slug}: обслужен от {served} — НЕ е безплатният, отказваме")
+        # Through the same classifier as the other two paths, so there is ONE
+        # way to ask the question. Here ':free' IS the declaration -- it is the
+        # vendor's own marking on the slug -- which is why openrouter is the one
+        # path classify_freedom can answer without a table.
+        if classify_freedom("openrouter", served) != "free":
+            why = f"обслужен от {served} — НЕ е безплатният, отказваме"
+            tried.append(f"{slug}: {why}")
+            _record_refusal("openrouter", served, why)
             continue
         return {"ok": True, "text": txt, "backend": served, "latency_s": lat,
                 "usage": d.get("usage") or {}, "cost_usd": 0.0, "tried": tried,

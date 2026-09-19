@@ -214,7 +214,10 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # it replaced: 42 at seeding on 19 Sep, 41 once
     # test_heartbeat_coverage::test_each_beat_reports_the_step_it_is_actually_in
     # went green the same day and its line was removed in the same commit.
-    assert len(known) == 41, "the baseline changed size, got %d" % len(known)
+    # 42 at seeding on 19 Sep; 41 when test_heartbeat_coverage went green; 39
+    # when the two test_consult_free_only entries did, same day, same rule --
+    # the line goes in the commit that makes it pass.
+    assert len(known) == 39, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

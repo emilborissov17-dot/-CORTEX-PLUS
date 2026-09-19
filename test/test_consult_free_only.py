@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import json
 import sys
+import pytest
 import unittest
 from pathlib import Path
 
@@ -32,6 +33,17 @@ BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
 from experiments.kimi_duel import consult  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _consult_provenance_to_tmp(tmp_path, monkeypatch):
+    """Refusals are RECORDED, and a test must not record into the live file.
+
+    consult._record_refusal appends to memory/llm_provenance.jsonl. The suite's
+    _no_live_writes fixture fails any test that writes there, correctly, so every
+    test in this module gets its own copy and can still assert the row.
+    """
+    monkeypatch.setattr(consult, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
 
 
 class _Resp:
@@ -70,34 +82,49 @@ class RosterIsFreeOnly(unittest.TestCase):
 
 
 class PaidSubstitutionIsRefused(unittest.TestCase):
-    """МУТАЦИОНЕН: махни проверката `if ':free' not in served` и този тест пада."""
+    """МУТАЦИОНЕН: махни проверката в който и да е от ТРИТЕ пътя и това пада.
+
+    19 септ. 2026 — ОБНОВЕН ЗА ТРЕТИЯ ПЪТ. Когато този клас беше написан, пътищата
+    бяха два: Groq, после роустърът. На 11 септ. _ask_nvidia_kimi беше добавен
+    НАД тях и се пробва ПРЪВ — без никакъв пазач. Затова:
+
+      * заявките вече са NVIDIA + Groq + всички слъгове, не Groq + слъгове;
+      * calls[0] е моделът на NVIDIA, не GROQ_KIMI;
+      * платеният двойник вече НЕ Е moonshotai/kimi-k2.6. Прочетено от живия
+        NIM каталог на 19 септ.: акаунтът сервира moonshotai/kimi-k3 и
+        moonshotai/kimi-k2.6 на безплатния developer tier. Същият слъг е ПЛАТЕН
+        в OpenRouter и БЕЗПЛАТЕН тук — затова свободата се декларира ПО ПЪТ, а
+        един и същ модел не може да служи за „платения" навсякъде.
+    """
+
+    PAID = "moonshotai/kimi-k2-0711-preview"   # в ничия декларация, никъде :free
 
     def test_a_paid_model_serving_the_request_is_not_an_answer(self):
         calls = []
 
         def fake_post(url, **kw):
             calls.append(kw["json"]["model"])
-            # OpenRouter приема заявката, но я обслужва с ПЛАТЕНИЯ вариант.
-            return _Resp(200, _served("moonshotai/kimi-k2.6"))
+            # Всеки endpoint приема заявката, но я обслужва с ПЛАТЕН вариант.
+            return _Resp(200, _served(self.PAID))
 
         res = self._run_with(fake_post)
         self.assertFalse(res["ok"],
                          "отговор от платен модел беше приет — пазачът го няма")
         self.assertEqual(res["backend"], "none")
-        self.assertTrue(any("НЕ е безплатният" in t for t in res["tried"]),
+        self.assertTrue(any("НЕ е безплатният" in t or "nothing declares" in t
+                            for t in res["tried"]),
                         f"причината не е записана: {res['tried']}")
-        # +1 ЗА GROQ ПЪТЯ, и този +1 е история, не аритметика. Пътят през Groq
-        # беше добавен на 10 септ. ПРЕДИ роустъра и връщаше ok=True за каквото и
-        # да е обслужено, защото Groq не слага ':free' в слъга — така този тест
-        # падна на 11 септ. с „отговор от платен модел беше приет". Пазачът не
-        # беше махнат, беше заобиколен. Сега Groq пътят също отказва, по
-        # GROQ_FREE_MODELS, затова заявките са: 1 към Groq + всички слъгове.
-        self.assertEqual(len(calls), len(consult.OPPONENTS) + 1,
-                         "не всички безплатни варианти са пробвани (Groq + роустъра)")
-        self.assertEqual(calls[0], consult.GROQ_KIMI,
-                         "Groq-Kimi трябва да е ПЪРВИЯТ опит")
+        # ТРИТЕ ПЪТЯ, всеки отказал поотделно.
+        self.assertEqual(len(calls), len(consult.OPPONENTS) + 2,
+                         f"не всички пътища са пробвани: {calls}")
+        self.assertEqual(calls[0], self.NVIDIA_MODEL,
+                         "NVIDIA трябва да е ПЪРВИЯТ опит")
+        self.assertEqual(calls[1], consult.GROQ_KIMI,
+                         "Groq трябва да е ВТОРИЯТ опит")
         self.assertTrue(any("GROQ_FREE_MODELS" in t for t in res["tried"]),
                         f"Groq пътят не е отказал по декларация: {res['tried']}")
+        self.assertTrue(any(t.startswith("nvidia:") for t in res["tried"]),
+                        f"NVIDIA пътят не е отказал: {res['tried']}")
 
     def test_a_free_model_serving_the_request_is_an_answer(self):
         # Негативен контрол: пазачът не трябва да блокира ЛЕГИТИМЕН безплатен
@@ -109,17 +136,26 @@ class PaidSubstitutionIsRefused(unittest.TestCase):
 
         res = self._run_with(fake_post)
         self.assertTrue(res["ok"], res)
+        # Етикетът се гради ВЕДНЪЖ: преди поправката това беше
+        # 'nvidia:nvidia/nemotron-...', защото served вече започва с 'nvidia/'.
         self.assertEqual(res["backend"], free)
         self.assertEqual(res["cost_usd"], 0.0)
 
+    NVIDIA_MODEL = "moonshotai/kimi-k3"
+
     def _run_with(self, fake_post):
         import requests
-        real = requests.post
+        import core.groq_backend as gb
+        real_post, real_model = requests.post, gb._nvidia_model
         requests.post = fake_post
+        # ХЕРМЕТИЧНО: _nvidia_model прави истински GET към NIM и кешира в
+        # глобална. Без този дубъл тестът зависи от мрежата и от реда, в който
+        # тестовете са се изпълнили.
+        gb._nvidia_model = lambda key: self.NVIDIA_MODEL
         try:
             return consult.ask_kimi("бриф", max_tokens=10)
         finally:
-            requests.post = real
+            requests.post, gb._nvidia_model = real_post, real_model
 
 
 class ForeignOpponentIsNotLabelledKimi(unittest.TestCase):
