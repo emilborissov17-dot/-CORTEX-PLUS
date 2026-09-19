@@ -122,6 +122,30 @@ REM --- NEVER in the 03:04 cycle: this fetches ~280 MB of UCDP files on refresh
 REM --- and the cycle's memory budget is the thing that kills it.
 REM --- Exit 2 is not used here; a source it cannot read is a MISSING row, not a
 REM --- refusal of the step, so REFUSAL_OK stays `no`.
+REM --- THE PER-COUNTRY LAYER (19 Sep 2026). Until today output\wellbeing_all_
+REM --- countries.json was computed 2026-07-02 and nothing recomputed it, while
+REM --- GOVERNANCE_INSTITUTIONS and GOVERNANCE_RIGHTS were scored FROM it into
+REM --- every night's composite as if it were current. 79 days.
+REM ---
+REM --- THE CHAIN IS THREE SCRIPTS, NOT TWO. wellbeing_country.py is a SINGLE-
+REM --- COUNTRY CLI; the batch driver is wellbeing_batch.py, which is what
+REM --- wellbeing_globe.py names in its own error path ("run wellbeing_batch.py
+REM --- first"). An earlier recommendation of mine named the wrong entry point.
+REM ---
+REM --- AND THE GLOBE MUST RUN TWICE. A plain wellbeing_globe.py run WIPES
+REM --- governance_computed_at, governance_rights_score and governance_
+REM --- institutions_score to null - measured today - and goal_score_calculator
+REM --- then drops both governance axes to 0.5 with a warning nobody reads.
+REM --- --governance-only restores them. Running the first without the second is
+REM --- strictly worse than not running either.
+REM ---
+REM --- ~30 MINUTES, CPU ONLY, NO GPU: 217 countries of World Bank fetches
+REM --- (measured 1817 s at 6 workers). NEVER in the 03:04 cycle - the cycle dies
+REM --- of memory and this is a long many-request fetch. REFUSAL_OK stays `no`:
+REM --- the batch has no refusal path, so a non-zero exit is a real failure.
+call :step "wellbeing_batch"       "%PY% wellbeing_batch.py --workers 6"                    no
+call :step "wellbeing_globe"       "%PY% wellbeing_globe.py"                                no
+call :step "wellbeing_governance"  "%PY% wellbeing_globe.py --governance-only"              no
 call :step "institution0"          "%PY% tools\institution0_morning.py --write"              no
 REM --- The reply to last morning's message. Its own offset file, its own parser;
 REM --- it never touches approve_reader's, whose refusal boundary is a feature.
