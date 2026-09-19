@@ -74,6 +74,24 @@ def _run_one(c: dict) -> dict:
             "completeness":dq["summary"],
             "null_axes":   dq["null_axes"],
             "suspect_axes":[ax for ax, _ in dq["suspect_axes"]],
+            # ── PER-AXIS VALUES (19 Sep 2026) ────────────────────────────────
+            # country_wellbeing already computes these 17 and this function threw
+            # them away, keeping only dep/str/flo and the null/suspect lists. So
+            # a diff of two runs could say "198 of 217 countries moved" and never
+            # which AXIS moved in any of them.
+            #
+            # On 19 Sep the July-to-September diff was only attributable at all
+            # because output/wb_cache/ happens to be tracked in git, so the old
+            # INPUTS were recoverable. Auditability by luck. Ecuador's 0.11 strain
+            # drop took a `git show HEAD:output/wb_cache/EC.json` to explain, and
+            # would have been unexplainable if that directory had ever been added
+            # to .gitignore for being large.
+            #
+            # 17 floats per country, ~3,700 for the batch: the file goes from
+            # 128 KB to ~250 KB, which is small enough to stay in git and is the
+            # difference between a diff that names an axis and one that does not.
+            "axis_scores": {ax: (round(v, 4) if isinstance(v, (int, float)) else None)
+                            for ax, v in (result.get("axis_scores") or {}).items()},
             "computed_at": result["computed_at"],
             "status":      "ok",
         }
