@@ -2,9 +2,15 @@
   "_doc": [
     "INSTITUTION #0 (WITNESS STAGE) — THE REGISTER OF COMMITMENTS BEING WATCHED.",
     "",
-    "Nothing here is confirmed. Every entry carries status 'proposed_by_claude_2026-09-18'",
-    "and Emil confirms each one individually; until then the register is a proposal about",
-    "what to watch, not a finding about anybody.",
+    "CONFIRMED BY EMIL, 18 September 2026 (evening). All four entries carry status",
+    "'confirmed_by_emil_2026-09-18'. They were drafted as proposals by Claude and each",
+    "was ruled on individually; a status is the one field a model may not set for",
+    "itself, and publish_table.py reads it as the first of its two gates.",
+    "",
+    "THE SFA LINK STAYS UNVERIFIED under the same ruling. Confirming the commitment is",
+    "not confirming a guess about who an actor is: SFA appears exactly as RSF's counts",
+    "stop, and that is a coincidence of dates, not UCDP joining them. Its counts are",
+    "still kept separate and it still never reaches the public table.",
     "",
     "THE RULE FOR ENTERING (C4). A commitment enters this file only if ALL FIVE hold:",
     "  (i)   it has a public, dated text;",
@@ -70,7 +76,7 @@
            "note": "187 one-sided events 2025-2026, dyad 'SFA - Civilians'. It appears exactly as RSF's counts stop. WHETHER THIS IS THE RSF UNDER A NEW CODING IS OUR GUESS AND NOT UCDP'S STATEMENT. Counted on its own line, never summed into RSF. Emil or UCDP settles it."}
         ]
       },
-      "status": "proposed_by_claude_2026-09-18"
+      "status": "confirmed_by_emil_2026-09-18"
     },
 
     {
@@ -94,7 +100,7 @@
            "note": "40 one-sided events 2023-2025, coded in DR Congo (Zaire)."}
         ]
       },
-      "status": "proposed_by_claude_2026-09-18"
+      "status": "confirmed_by_emil_2026-09-18"
     },
 
     {
@@ -121,7 +127,7 @@
            "note": "33 one-sided events in 2023 ONLY. Kept so that a reader of the history sees why the M23 line stops, and NOT because events are expected under it after the commitment date."}
         ]
       },
-      "status": "proposed_by_claude_2026-09-18"
+      "status": "confirmed_by_emil_2026-09-18"
     },
 
     {
@@ -146,7 +152,7 @@
            "note": "18 one-sided events, 2023 and 2026. UCDP codes Gaza events under country 'Israel'; there is no 'Palestine' country string in GED 26.1."}
         ]
       },
-      "status": "proposed_by_claude_2026-09-18"
+      "status": "confirmed_by_emil_2026-09-18"
     }
   ]
 }

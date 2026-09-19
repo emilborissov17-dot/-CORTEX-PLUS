@@ -7,9 +7,11 @@ INSTITUTION #0 (WITNESS STAGE) publishes counts about named armed actors. That i
 a thing to be careful with, so what reaches cortex-civilization-watch is filtered
 twice and neither filter is a matter of taste:
 
-  1. ONLY register entries whose `status` == "confirmed" appear. Everything in
-     config/commitments.json today reads "proposed_by_claude_2026-09-18", which
-     means a model drafted it from commitment texts it had not opened. Publishing
+  1. ONLY register entries whose `status` begins "confirmed_by_" appear — the
+     shape a HUMAN ruling leaves. On 18 Sep 2026 (evening) Emil confirmed all
+     four, so this gate now OPENS. Before that they read
+     "proposed_by_claude_2026-09-18", meaning a model had drafted them from
+     commitment texts it had not opened. Publishing
      an unconfirmed attribution about the Sudanese Armed Forces, the RSF, the
      Government of Rwanda, the Government of Israel or Hamas — under this
      project's name, on a public repository — is not something a machine decides.
@@ -46,7 +48,11 @@ REPO = Path(__file__).resolve().parents[2]
 REGISTER = REPO / "config" / "commitments.json"
 LEDGER = REPO / "experiments" / "institution" / "ledger.jsonl"
 
-PUBLISHABLE_STATUS = "confirmed"
+# A status is publishable when a HUMAN set it. The shape is
+# "confirmed_by_<person>_<date>", so the prefix is what is matched and the rest is
+# kept as a record of who ruled and when. A bare "confirmed" would let a model write
+# the one field it must not write.
+PUBLISHABLE_PREFIX = "confirmed_by_"
 
 # Placeholder wording, drafted from the citation convention in UCDP's codebooks
 # and NOT read off their terms page, which is account-gated. While the flag below
@@ -66,7 +72,7 @@ def confirmed_entries(register: Optional[dict] = None) -> list[dict]:
     reg = register if register is not None else json.loads(
         REGISTER.read_text(encoding="utf-8"))
     return [c for c in reg.get("commitments", [])
-            if c.get("status") == PUBLISHABLE_STATUS]
+            if str(c.get("status", "")).startswith(PUBLISHABLE_PREFIX)]
 
 
 def latest_lines(ledger: Path = LEDGER) -> list[dict]:
@@ -97,8 +103,8 @@ def render(register: Optional[dict] = None,
                          "publishes until it is verbatim.")
         return None, why
     if not ok:
-        why["reason"] = ("no register entry has status %r — every entry is a proposal a "
-                         "human has not confirmed" % PUBLISHABLE_STATUS)
+        why["reason"] = ("no register entry has a status beginning %r — every entry is a "
+                         "proposal a human has not confirmed" % PUBLISHABLE_PREFIX)
         return None, why
 
     rows = lines if lines is not None else latest_lines()
@@ -138,7 +144,7 @@ def selftest() -> dict:
     # The gate, exercised rather than described: a confirmed entry still does not
     # publish while the citation is unverified.
     fake = {"commitments": [{"id": "x", "title": "T", "date": "2025-01-01",
-                             "status": "confirmed"}]}
+                             "status": "confirmed_by_emil_2026-09-18"}]}
     md2, why2 = render(fake, [])
     out["confirmed_entry_with_unverified_citation_publishes"] = md2 is not None
     out["expected"] = False

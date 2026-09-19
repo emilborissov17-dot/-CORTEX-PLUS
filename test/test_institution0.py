@@ -23,6 +23,7 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -172,8 +173,14 @@ def test_every_register_actor_is_an_exact_string_with_a_window():
     reg = json.loads((REPO / "config" / "commitments.json").read_text(encoding="utf-8"))
     assert reg["commitments"], "the register is empty"
     for c in reg["commitments"]:
-        assert c["status"] == "proposed_by_claude_2026-09-18", (
-            "%s is not marked proposed — only Emil may change a status" % c["id"])
+        # A status is either a model's proposal or a human's ruling, and nothing
+        # else. Emil confirmed all four on 18 Sep 2026; the test pins the SHAPE so
+        # that a model cannot invent a third kind and so that "confirmed" alone —
+        # which names nobody — never passes.
+        assert re.match(r"^(proposed_by_claude|confirmed_by_[a-z]+)_\d{4}-\d{2}-\d{2}$",
+                        c["status"]), (
+            "%s has status %r, which names neither a proposer nor a confirming human"
+            % (c["id"], c["status"]))
         for a in c["actor_strings"]["ucdp"]:
             assert a["side_a"] == a["side_a"].strip() and a["side_a"]
             assert a["link"] in ("verified", "unverified")
