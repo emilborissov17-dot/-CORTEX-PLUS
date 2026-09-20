@@ -741,6 +741,37 @@ def print_readers(res: dict) -> None:
 
 # ── callers ─────────────────────────────────────────────────────────────────
 
+def _bindings(tree, module: str, func: str) -> tuple:
+    """(aliases bound to `module`, bare names imported FROM it).
+
+    WHY A NAME IS NOT ENOUGH, measured 20 Sep 2026. Asked for the callers of
+    scripts.openclaw_axis_worker.run, the first version of this matched every
+    call node named `run` and answered "188 live caller(s) outside test/" —
+    subprocess.run, youtube_worker.run, a dozen unrelated run()s. An answer that
+    large is not an answer, and it is worse than an empty one because it looks
+    like evidence. `run`, `main`, `load`, `judge` are all common; the dotted path
+    the caller typed is the whole point and it has to be honoured.
+
+    A call counts only when the FILE ITSELF binds the name to this module.
+    Everything else is a namesake and is reported as one, not dropped silently.
+    """
+    tail = module.split(".")[-1]
+    aliases, bare = set(), set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for a in node.names:
+                if a.name == module or a.name.split(".")[-1] == tail:
+                    aliases.add(a.asname or a.name.split(".")[-1])
+        elif isinstance(node, ast.ImportFrom):
+            src = node.module or ""
+            for a in node.names:
+                if a.name == func and (src == module or src.endswith(tail)):
+                    bare.add(a.asname or a.name)
+                elif a.name == tail and module.startswith(src or "\0"):
+                    aliases.add(a.asname or a.name)
+    return aliases, bare
+
+
 def callers(dotted: str, base: Path | None = None) -> dict:
     base = base or BASE
     *mod_parts, func = dotted.split(".")
@@ -759,26 +790,42 @@ def callers(dotted: str, base: Path | None = None) -> dict:
             pass
 
     files = list(_py_files(base))
-    hits = []
+    hits, namesakes = [], []
     for py in files:
         try:
             tree = ast.parse(_read(py))
         except Exception:
             continue
         rel = _rel(py, base)
+        mod_aliases, bare = _bindings(tree, module, func)
+        is_home = rel == (defined or "").split(":")[0]
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call):
                 continue
             f = node.func
             name = (f.attr if isinstance(f, ast.Attribute)
                     else f.id if isinstance(f, ast.Name) else None)
-            if name != func:
+            # AN ALIAS IS STILL THE FUNCTION. test/test_openclaw_axis_worker.py
+            # imports `run as _run_raw` and calls _run_raw(...), so filtering on
+            # the call's spelling alone loses every call the file makes — and
+            # loses them SILENTLY, which reads as "nobody calls it".
+            if name != func and name not in bare:
                 continue
             qual = (f"{f.value.id}.{f.attr}" if isinstance(f, ast.Attribute)
                     and isinstance(f.value, ast.Name) else name)
-            hits.append({"file": rel, "line": node.lineno, "as": qual,
-                         "in_test": rel.startswith("test/") or
-                                    Path(rel).name.startswith("test_")})
+            # IS THIS THE SAME FUNCTION, or only the same word? Resolved through
+            # the file's own imports: an attribute call must be on an alias bound
+            # to THIS module, a bare call must be a `from <module> import <func>`,
+            # and a bare call inside the defining module is itself.
+            if isinstance(f, ast.Attribute):
+                bound = (isinstance(f.value, ast.Name)
+                         and f.value.id in mod_aliases)
+            else:
+                bound = name in bare or (is_home and name == func)
+            row = {"file": rel, "line": node.lineno, "as": qual,
+                   "in_test": rel.startswith("test/")
+                              or Path(rel).name.startswith("test_")}
+            (hits if bound else namesakes).append(row)
     # THREE GROUPS, NOT TWO, and the third one produced a false verdict before it
     # existed. `callers core.cadence.audit_specs` answered "every call site is a
     # test, so this function enforces nothing in the running system" while
@@ -792,7 +839,7 @@ def callers(dotted: str, base: Path | None = None) -> dict:
     return {"dotted": dotted, "module": module, "function": func,
             "defined_at": defined, "files_searched": len(files),
             "hits": hits, "live_outside_test": live,
-            "live_inside_own_module": internal}
+            "live_inside_own_module": internal, "namesakes": namesakes}
 
 
 def print_callers(res: dict) -> None:
@@ -802,6 +849,11 @@ def print_callers(res: dict) -> None:
     print(f"          definition: {where}")
     print(f"EXAMINED: {res['files_searched']} parsed module(s), "
           f"{len(res['hits'])} matching call site(s)")
+    n_ns = len(res.get("namesakes") or [])
+    if n_ns:
+        print(f"          {n_ns} call(s) named {res['function']!r} belong to "
+              f"another module and are NOT counted; the file did not import "
+              f"{res['module']}")
     print()
     for h in res["hits"]:
         tag = "test" if h["in_test"] else "LIVE"

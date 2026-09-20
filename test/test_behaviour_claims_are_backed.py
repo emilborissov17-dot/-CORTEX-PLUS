@@ -109,7 +109,9 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
         % len(unbacked))
     # 630 on 20 Sep, later the same day: the baseline reconciliation added five
     # more, all backed, while the UNBACKED count above did not move at all.
-    assert len(accepted) <= 630, (
+    # 631 on 20 Sep: the OpenClaw wire added one more, backed by the test its
+    # docstring belongs to. The UNBACKED count above is still the debt.
+    assert len(accepted) <= 631, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

@@ -320,6 +320,45 @@ def test_a_call_from_inside_the_defining_module_is_neither_live_nor_a_test(tmp_p
     assert [h["file"] for h in res["live_inside_own_module"]] == ["core/cadence.py"]
 
 
+def test_a_namesake_in_another_module_is_not_counted(tmp_path):
+    """THE ANSWER THAT WAS TOO BIG TO BE ONE, measured 20 Sep 2026.
+
+    Asked for the callers of scripts.openclaw_axis_worker.run, the first version
+    matched every call node named `run` and answered "188 live caller(s) outside
+    test/" — subprocess.run and a dozen unrelated run()s. A count that large
+    reads as evidence and is noise. The dotted path is honoured: a call counts
+    only when the file itself binds that name to that module."""
+    root = _callers_repo(tmp_path)
+    # its OWN load_specs, same word, different function — which is exactly the
+    # shape `run` had 445 times across this repo
+    (root / "core" / "other.py").write_text(
+        "class Config:\n"
+        "    def load_specs(self):\n"
+        "        return {}\n"
+        "def go(cfg):\n"
+        "    return cfg.load_specs()\n", encoding="utf-8")
+    res = ask.callers("core.cadence.load_specs", base=root)
+    assert "core/other.py" not in [h["file"] for h in res["hits"]]
+    assert "core/other.py" in [h["file"] for h in res["namesakes"]], (
+        "a namesake must be reported as one, not dropped silently")
+
+
+def test_an_aliased_import_is_still_the_same_function(tmp_path):
+    """`from m import f as _f` then `_f(...)`. Filtering on the call's spelling
+    loses every one of those calls, and loses them silently, which reads as
+    'nobody calls it' — the worst shape of wrong answer this tool can give.
+    test/test_openclaw_axis_worker.py does exactly this with `run as _run_raw`."""
+    root = _callers_repo(tmp_path, live=False)
+    (root / "core" / "aliased.py").write_text(
+        "from core.cadence import load_specs as _ls\n"
+        "def go():\n"
+        "    return _ls()\n", encoding="utf-8")
+    res = ask.callers("core.cadence.load_specs", base=root)
+    hit = [h for h in res["hits"] if h["file"] == "core/aliased.py"]
+    assert hit, f"the aliased call was lost: {[h['file'] for h in res['hits']]}"
+    assert hit[0]["as"] == "_ls"
+
+
 def test_callers_says_when_every_call_site_is_a_test(tmp_path):
     """MUTATION, and the question the subcommand exists for. Remove the one live
     caller and the answer must change from 'called' to 'enforces nothing' —
