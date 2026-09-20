@@ -145,7 +145,16 @@ call :step "fill_pantry"           "%PY% tools\fill_pantry.py"                  
 
 call :step "morning_read"          "%PY% tools\morning_read.py"                              no
 
-call :step "card_intake"            "%PY% core\card_intake.py"                                no
+rem card_intake MOVED OUT, 20 Sep 2026, and it is a REMOVAL not a relocation of
+rem a duplicate: there may be exactly one owner of the judge. judge_inbox builds
+rem its `seen` set once, at the top, from the card_keys already accepted or
+rem refused, so two judges running together both read it before either writes and
+rem both append the same card_key to memory/verified_observations.jsonl - the very
+rem duplicate the key exists to prevent, in a file four modules count rows from.
+rem CORTEX_OpenClaw fires at 11:50, ten minutes before this task, and the judge
+rem fetches every unjudged card with a 30-second timeout each, so ten minutes is
+rem not a distance. The judge now runs as step 2 of tools/openclaw_chain.bat,
+rem immediately after the fetch, four times a day instead of once.
 call :step "verified_corpus"        "%PY% training\verified_corpus.py"                       no
 REM --- E1 (11 Sep 2026): does knowing the other daily series help? transfer A->B and
 REM --- the learning curve k=10/20/40/80, walk-forward, against persistence (points 1, 3).

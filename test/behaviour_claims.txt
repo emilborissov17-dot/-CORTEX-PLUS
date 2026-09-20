@@ -655,3 +655,9 @@ test/test_phase_evidence_swap.py 723be6ebab28  # BACKED: test_phase_evidence_swa
 test/test_phase_evidence_swap.py ab30ad29d248  # BACKED: test_phase_evidence_swap.test_no_phase_but_d_score_may_hold_the_composite, the test this docstring belongs to; the live half it describes is the skip in test_d_score_carries_the_composite_when_one_was_published
 test/test_redact.py 9d52125f6ece  # BACKED: test_redact.test_barrier_reopens_every_path_left_in_the_shared_buffer proves the mechanism on a tmp path; test_the_shared_buffer_is_empty_inside_every_test_in_this_file proves the fixture removes it
 test/test_ask.py 0cc0455497d6  # BACKED: test_ask.test_an_aliased_import_is_still_the_same_function builds a repo whose only call is `_ls()` from `import load_specs as _ls` and fails if that call is not found
+
+# ── 20 Sep 2026, the fetch/judge chain. Backed, each naming its test.
+core/card_intake.py 164d8ffeb784  # BACKED: test_openclaw_wire_to_the_gate.test_a_chain_whose_judge_dies_is_still_reported_unfinished builds exactly that row set and asserts only card_intake comes back
+core/card_intake.py 6e69b0e03022  # BACKED: test_openclaw_wire_to_the_gate.test_a_chain_whose_judge_dies_is_still_reported_unfinished drives both tasks through core.task_runs and asserts the pairing
+core/card_intake.py fe17b46cdf9b  # BACKED: test_openclaw_wire_to_the_gate.test_exactly_one_caller_owns_the_judge counts the callers in every .bat and fails at two; test_the_chain_exports_the_shared_id_before_it_runs_anything pins the export
+test/test_openclaw_wire_to_the_gate.py 33898245d8e1  # BACKED: test_openclaw_wire_to_the_gate.test_a_number_inside_a_longer_number_is_not_a_quote and test_the_worker_never_emits_a_quote_the_gate_would_refuse both fail if the colon rule stops holding

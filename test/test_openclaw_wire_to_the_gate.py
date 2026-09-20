@@ -412,3 +412,176 @@ def test_a_torn_final_line_does_not_hide_an_open_run(tmp_path):
 def test_a_missing_log_is_no_unfinished_runs_not_a_crash(tmp_path):
     assert W.unfinished_runs(path=tmp_path / "never_written.jsonl") == []
 
+
+# ── the chain: fetch then judge, as one event with one owner ────────────────
+# Added 20 Sep 2026. Before this the judge ran once a day at 12:00 while the
+# fetch ran four times, so three batches a day waited up to twenty hours.
+
+from core import task_runs as TR        # noqa: E402
+from core import card_intake as CI      # noqa: E402
+
+CHAIN = REPO / "tools" / "openclaw_chain.bat"
+
+
+def test_the_chain_runs_the_fetch_then_the_judge_in_that_order():
+    """Order is the whole point: judging before fetching judges yesterday."""
+    # COMMANDS ONLY. The rem header explains the race and names card_intake.py
+    # in prose long before either step runs; an index over the raw text finds
+    # that sentence and answers a question about a comment.
+    cmds = [ln for ln in CHAIN.read_text(encoding="utf-8", errors="replace").splitlines()
+            if not ln.strip().lower().startswith(("rem", "::"))]
+    body = "\n".join(cmds)
+    i = body.index("openclaw_axis_worker.py")
+    j = body.index("card_intake.py")
+    assert i < j, "the judge is invoked before the fetch"
+
+
+def test_exactly_one_caller_owns_the_judge():
+    """THE RACE, as an assertion. judge_inbox builds `seen` once, at the top,
+    from the card_keys already accepted or refused; two judges running together
+    both read it before either writes and both append the same card_key to
+    memory/verified_observations.jsonl — the duplicate the key exists to
+    prevent, in a file four modules count rows from.
+
+    So there may be exactly one caller. If a second one is ever added, this
+    names it rather than leaving the two to overlap on whatever gap the
+    schedule happens to give them."""
+    callers = []
+    for bat in sorted((REPO / "tools").glob("*.bat")) + sorted(REPO.glob("*.bat")):
+        text = bat.read_text(encoding="utf-8", errors="replace")
+        for line in text.splitlines():
+            stripped = line.strip().lower()
+            if stripped.startswith("rem") or stripped.startswith("::"):
+                continue
+            if "card_intake.py" in line:
+                callers.append(f"{bat.name}: {line.strip()[:70]}")
+    assert len(callers) == 1, (
+        f"{len(callers)} callers of card_intake.py; there must be exactly one "
+        f"because judge_inbox is not safe to run concurrently:\n  "
+        + "\n  ".join(callers))
+    assert "openclaw_chain" in callers[0], callers[0]
+
+
+def test_judge_inbox_skips_a_card_it_has_already_judged(tmp_path):
+    """IDEMPOTENT ACROSS RUNS, which is what makes four runs a day free.
+
+    Asserted rather than read off the source: the same inbox is judged twice and
+    the second pass must skip what the first accepted."""
+    inbox = tmp_path / "cards"
+    inbox.mkdir()
+    # A SPACED QUOTE, because quote_gate._NUM refuses a number whose preceding
+    # character is a colon — the same trap that made the worker's first live
+    # cards VALUE_MISMATCH. The card here has to be one the gate accepts, or
+    # this test measures the trap instead of the idempotence.
+    card = {"axis": "A", "key": "k", "value": 38.0, "unit": "u",
+            "url": "https://x/y", "quote": '"count": 38'}
+    (inbox / "a_cards.jsonl").write_text(json.dumps(card) + "\n",
+                                         encoding="utf-8")
+    acc, ref = tmp_path / "acc.jsonl", tmp_path / "ref.jsonl"
+
+    page = '{"count": 38, "maxAllowed": 20000}'
+    first = CI.judge_inbox(inbox=inbox, fetch=lambda u: page,
+                           accepted_path=acc, refused_path=ref)
+    assert first["accepted"] == 1 and first["skipped"] == 0
+
+    second = CI.judge_inbox(inbox=inbox, fetch=lambda u: page,
+                            accepted_path=acc, refused_path=ref)
+    assert second["accepted"] == 0 and second["skipped"] == 1, second
+    rows = [l for l in acc.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert len(rows) == 1, "the second pass appended a duplicate"
+
+
+def test_a_chain_whose_judge_dies_is_still_reported_unfinished(tmp_path):
+    """THE REASON THE KEY IS (task, run_id) AND NOT run_id ALONE.
+
+    The chain gives both halves ONE id on purpose. Keyed on the id alone, a
+    chain whose fetch finished and whose judge died shows a start and a finish
+    for that id and reads as complete — the half-dead chain hidden by the very
+    field meant to make it legible."""
+    log = tmp_path / "task_runs.jsonl"
+    rid = "chain-20260920-145000"
+    TR.row("openclaw_axis_worker", "start", rid, path=log)
+    TR.row("openclaw_axis_worker", "finish", rid, path=log, ok=True)
+    TR.row("card_intake", "start", rid, path=log)
+    # ...and then the judge is killed: no finish row for it.
+
+    open_runs = TR.unfinished(path=log)
+    assert [r["task"] for r in open_runs] == ["card_intake"], open_runs
+    assert TR.unfinished("openclaw_axis_worker", path=log) == []
+
+
+def test_both_halves_of_a_chain_carry_the_same_run_id(monkeypatch):
+    """The id is shared through the environment, which is how a .bat hands one
+    value to two processes."""
+    monkeypatch.setenv(TR.RUN_ID_ENV, "chain-abc123")
+    assert TR.run_id("openclaw_axis_worker") == "chain-abc123"
+    assert TR.run_id("card_intake") == "chain-abc123"
+
+
+def test_a_step_run_alone_mints_its_own_id(monkeypatch):
+    """Not in a chain, so it IS its own event. Two calls must not collide."""
+    monkeypatch.delenv(TR.RUN_ID_ENV, raising=False)
+    a = TR.run_id("openclaw_axis_worker")
+    b = TR.run_id("card_intake")
+    assert a and b and a != b
+    assert not a.startswith("chain-")
+
+
+def test_the_chain_exports_the_shared_id_before_it_runs_anything():
+    body = CHAIN.read_text(encoding="utf-8", errors="replace")
+    set_at = body.index("CORTEX_RUN_ID=")
+    first_step = body.index("openclaw_axis_worker.py")
+    assert set_at < first_step, "the id is set after the first step starts"
+
+
+def test_the_chain_id_is_not_sliced_out_of_the_locale_date():
+    """FOUND ON THE FIRST CHAIN RUN, 20 Sep 2026.
+
+    The id was built as %DATE:~-4%%DATE:~3,2%%DATE:~0,2%, which assumes one
+    locale's short-date layout. On this machine it produced
+
+        chain-202600Su-193031
+
+    the weekday where the month should be. The pairing still worked, because
+    only equality matters to it, so nothing went red — the id was simply
+    unreadable to the human it exists for. Get-Date with an explicit format
+    string does not care what the short date looks like."""
+    body = CHAIN.read_text(encoding="utf-8", errors="replace")
+    cmds = "\n".join(ln for ln in body.splitlines()
+                     if not ln.strip().lower().startswith(("rem", "::")))
+    assert "%DATE:~" not in cmds, (
+        "the chain id is being sliced out of %DATE% by character position again")
+    assert "yyyyMMdd-HHmmss" in cmds, (
+        "the id is not minted with an explicit date format")
+
+
+def test_the_live_log_carries_a_readable_chain_id():
+    """The live file, not a fixture: whatever the last chain wrote must be
+    readable as a date. LIVE_STATE-free because it asserts only about rows that
+    exist; a log with no chain row yet skips."""
+    rows = []
+    log = REPO / "memory" / "task_runs.jsonl"
+    if not log.exists():
+        pytest.skip("no task_runs.jsonl on this machine yet")
+    for line in log.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            rows.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    chain_ids = [r["run_id"] for r in rows
+                 if str(r.get("run_id", "")).startswith("chain-")]
+    if not chain_ids:
+        pytest.skip("no chain has run on this machine yet")
+
+    # THE NEWEST ONE, not all of them, and that is deliberate. The log still
+    # carries chain-202600Su-193031 from the run that FOUND the defect, and it
+    # stays: it is a true record of a real run, and rewriting history to make a
+    # test green is the opposite of what this file is for. The assertion is
+    # about what the chain writes NOW.
+    import re
+    newest = chain_ids[-1]
+    assert re.fullmatch(r"chain-\d{8}-\d{6}", newest), (
+        f"the last chain id is not a readable timestamp: {newest!r}")
+

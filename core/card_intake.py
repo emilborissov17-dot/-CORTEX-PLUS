@@ -38,6 +38,9 @@ REPO = Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 from core import quote_gate as qg  # noqa: E402
+from core import task_runs as tr  # noqa: E402
+
+TASK_NAME = "card_intake"
 
 INBOX = REPO / "openclaw_queue" / "cards"
 ACCEPTED = REPO / "memory" / "verified_observations.jsonl"
@@ -114,5 +117,23 @@ def judge_inbox(inbox: Path = INBOX, fetch: Callable[[str], Optional[str]] = qg.
 
 
 if __name__ == "__main__":
-    c = judge_inbox(dry="--dry" in sys.argv)
+    # TWO ROWS, THE SAME TWO THE WORKER WRITES (20 Sep 2026). This step now runs
+    # as the second half of tools/openclaw_chain.bat, which exports CORTEX_RUN_ID
+    # so both halves carry one id and the pair reads as one event. A chain whose
+    # fetch finished and whose judge died leaves ("card_intake", <id>) with a
+    # start and no finish, which is exactly the shape core.task_runs.unfinished
+    # keys on.
+    tr.announce(TASK_NAME)
+    _rid = tr.run_id(TASK_NAME)
+    tr.row(TASK_NAME, "start", _rid, dry="--dry" in sys.argv)
+    try:
+        c = judge_inbox(dry="--dry" in sys.argv)
+    except BaseException as exc:                                  # noqa: BLE001
+        # A crash IS a finish and is recorded with its reason. What stays
+        # unrecorded is a process that never reached here — killed or rebooted —
+        # and that is the row this clause deliberately does not write for it.
+        tr.row(TASK_NAME, "finish", _rid, ok=False,
+               error=f"{type(exc).__name__}: {str(exc)[:300]}")
+        raise
+    tr.row(TASK_NAME, "finish", _rid, ok=True, **c)
     print(json.dumps(c, ensure_ascii=False))

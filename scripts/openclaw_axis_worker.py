@@ -121,47 +121,34 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+# ONE IMPLEMENTATION, TWO CALLERS (20 Sep 2026). core/card_intake.py needed the
+# same two rows ten minutes after this one grew them, and a second copy of a
+# run-log is how two logs drift into disagreeing about the same night. The
+# behaviour moved to core/task_runs.py; these two keep their names so the tests
+# that ask the questions go on asking them in the same words.
 def _task_row(row: dict, path: pathlib.Path | None = None) -> None:
     """Append one run row. Fail-open: a log that cannot be written must not
     cost the run it is describing."""
-    try:
-        p = path or TASK_RUNS
-        p.parent.mkdir(parents=True, exist_ok=True)
-        with open(p, "a", encoding="utf-8") as fh:
-            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
-    except OSError:
-        pass
+    from core import task_runs as _tr
+    rec = dict(row)
+    task = rec.pop("task", TASK_NAME)
+    event = rec.pop("event", "start")
+    rid = rec.pop("run_id", "")
+    rec.pop("pid", None)
+    rec.pop("ts", None)
+    _tr.row(task, event, rid, path=path, **rec)
 
 
 def unfinished_runs(path: pathlib.Path | None = None, task: str = TASK_NAME) -> list:
     """Runs that wrote a start and never a finish.
 
-    THE READER OF TASK_RUNS, in the same commit that starts writing it, because
+    THE READER OF TASK_RUNS, in the same commit that started writing it, because
     a file nobody reads is the thing this repo spent yesterday removing. It is
     read at the top of every run, so the FIRST thing a run says is whether the
     last one came back.
     """
-    p = path or TASK_RUNS
-    started, finished = {}, set()
-    try:
-        text = p.read_text(encoding="utf-8")
-    except OSError:
-        return []
-    for line in text.splitlines():
-        if not line.strip():
-            continue
-        try:
-            row = json.loads(line)
-        except json.JSONDecodeError:
-            continue                      # a torn final line is not a lost run
-        if row.get("task") != task:
-            continue
-        rid = row.get("run_id")
-        if row.get("event") == "start":
-            started[rid] = row
-        elif row.get("event") == "finish":
-            finished.add(rid)
-    return [r for rid, r in started.items() if rid not in finished]
+    from core import task_runs as _tr
+    return _tr.unfinished(task, path)
 
 
 DISCOVERED = BASE / "memory" / "discovered_data_sources.json"
@@ -658,8 +645,12 @@ def main() -> int:
               f"(run_id {stale.get('run_id')}) — killed, rebooted or crashed "
               f"before it could write a finish row")
 
-    run_id = hashlib.sha256(
-        f"{TASK_NAME}|{_now()}|{os.getpid()}".encode("utf-8")).hexdigest()[:12]
+    # THE CHAIN'S ID IF WE ARE IN ONE. tools/openclaw_chain.bat exports
+    # CORTEX_RUN_ID so the fetch and the judge that follows it read as one
+    # event; run alone, this mints its own, which is correct — it IS its own
+    # event then.
+    from core import task_runs as _tr
+    run_id = _tr.run_id(TASK_NAME)
     started = time.time()
     _task_row({"task": TASK_NAME, "event": "start", "run_id": run_id,
                "ts": _now(), "pid": os.getpid(), "dry_run": bool(a.dry_run)})
