@@ -625,3 +625,24 @@ test/test_withheld_composite_consumers.py 11e653703af3  # ── 4. goal_prophec
 test/test_withheld_composite_consumers.py fbc96175080e  # The defect this guards: 0.0 in the goal_score series reads forever after as 'the world scored zero that day', and drags every average and every foreca
 test/test_worked_example.py 1f7d5dbc45a8  # 'SECTOR:' is a bucket with a stray colon and it REFUSES rather than being cleaned up.
 test/test_youtube_breaker_refusals.py 91ffe89f6555  # Everything is driven through the public surface (record / parked / reset / clear_park) and writes only to tmp_path: a test that parks the live breaker
+
+# ── ADDED 20 SEP 2026, AND A DIFFERENT KIND OF ENTRY FROM THE 612 ABOVE ──
+# Every line below NAMES the assertion that goes red when the sentence stops
+# being true. The 612 seeded on 19 Sep name none; that is the debt this file
+# was created to hold. These thirteen are not that debt, and are recorded
+# here only because this file is the one place the scanner reads. The
+# scanner cannot tell a backed sentence from an unbacked one - it finds
+# sentences, not proofs - so the distinction is written down instead.
+core/declared_inputs.py 5a17dfce7adb  # BACKED: test_verifier_inputs.test_a_live_fetch_is_aged_by_the_recorded_timestamp_and_not_by_mtime fails if the age stops coming from the recorded field
+core/declared_inputs.py 9ef90253fb8f  # BACKED: test_verifier_inputs.test_browser_scout_is_aged_by_its_fetch_and_is_not_called_blind reads the shape back through live_fetch_for()
+core/declared_inputs.py b32f01c39b7d  # BACKED: test_verifier_inputs.test_a_broken_live_declaration_is_no_declaration_at_all walks all eight malformed shapes
+core/declared_inputs.py ce6981facdd3  # BACKED: test_verifier_inputs.test_a_live_fetch_declaration_does_not_open_the_inputs_door fails if memory/browse_sources appears under 'inputs'
+test/test_ci_contract.py d83650c8f19e  # BACKED: test_ci_contract.test_a_marker_without_a_reason_is_not_an_exemption + test_every_marker_in_the_repo_sits_on_a_real_drive_letter
+test/test_verifier_inputs.py 36adbc7bc448  # BACKED: a section heading over the two tests that do the binding: test_the_declared_fetch_records_are_the_ones_the_scout_writes and test_the_declared_timestamp_field_is_one_the_scout_writes
+test/test_verifier_inputs.py 5160cb8f9712  # BACKED: the assertion is in the body of the test this docstring belongs to: test_the_declared_fetch_records_are_the_ones_the_scout_writes, which imports scout.SOURCES and compares it to the declaration
+test/test_verifier_inputs.py 596f106def69  # BACKED: HISTORY, same case artifact ('WERE'). The live half is asserted by test_every_verifier_declares_what_it_reads, which is green only while all four declare something
+test/test_verifier_inputs.py 62a3ae391c20  # BACKED: HISTORY, not a present-tense claim - the scanner's past-tense filter is case-sensitive and 'Before' begins the sentence. The present half is asserted by test_browser_scout_is_aged_by_its_fetch_and_is_not_called_blind
+test/test_verifier_inputs.py b44368372981  # BACKED: test_verifier_inputs.test_every_verifier_declares_what_it_reads exercises _undeclared() live; test_a_broken_live_declaration_is_no_declaration_at_all pins live_fetch_for() returning None on every malformed shape
+test/test_verifier_inputs.py b598e5ac7a5f  # BACKED: test_verifier_inputs.test_an_undeclared_verifier_really_does_score_unknown asks the notary and asserts UNKNOWN(0)
+test/test_verifier_inputs.py bc62b4c83f6d  # BACKED: test_verifier_inputs.test_the_gate_asks_the_fetch_path_and_not_the_file_path fails if vector() stops consulting _fetch_age_state
+test/test_verifier_inputs.py fae9fb02e822  # BACKED: the assertion is in the body of the test this docstring belongs to: test_an_undeclared_verifier_really_does_score_unknown

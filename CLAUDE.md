@@ -62,6 +62,46 @@ AND a mechanical net. When writing any code or tests:
  - Structural tests check code (identifiers/behaviour), never prose (no grep/docstrings).
  - Put a mechanical net (raise-not-return, no-live-writes, refuse-loud) behind the instruction, not just the instruction.
 
+## Three questions are answered by tools/ask.py, never by a grep
+
+Added 2026-09-20, after the same mistake twice in one day: a question about the
+repo was answered with an ad-hoc grep for ONE literal string, and the empty
+result was reported as the answer to a BROADER question. "Does this file contain
+the string extracted_at" is not "does this record carry an observation date" —
+memory/browse_sources/*.json carry `data_date`, and config/field_names.json now
+registers thirteen spellings of that one concept, including a whole per-indicator
+year map under `_observed_years`.
+
+A GREP FOR ONE SPELLING IS WRONG WHENEVER THE CONCEPT HAS TWO. It is wrong in the
+worst direction, too: it returns nothing, and nothing reads exactly like a
+negative answer.
+
+So these three questions have ONE implementation each, and it is the only allowed
+source for the answer:
+
+```
+PYTHONIOENCODING=utf-8 venv/Scripts/python.exe tools/ask.py observation-date <path>
+PYTHONIOENCODING=utf-8 venv/Scripts/python.exe tools/ask.py readers <path>
+PYTHONIOENCODING=utf-8 venv/Scripts/python.exe tools/ask.py callers <dotted.name>
+```
+
+  * **observation-date** — per record, whether an observation date is present
+    under ANY registered spelling, which spelling, its value and its age. It
+    never falls back to the file's mtime, and says so when there is none.
+  * **readers** — which code READS a file. A mention in a docstring or a comment
+    is not a reader. Segments match whole, so `registry.json` never matches
+    `feature_registry.json`.
+  * **callers** — every call site, and whether any LIVE caller exists outside
+    `test/`. A function whose only callers are tests enforces nothing.
+
+Every subcommand prints WHAT IT SEARCHED and HOW MANY candidates it examined, so
+an empty answer can be told apart from a question that could never have returned
+anything. Quote that preamble when reporting the answer.
+
+A NEW SPELLING GOES IN config/field_names.json, with where it was found. Do not
+invent one, and do not add a spelling to the tool — it holds none, which is what
+makes the registry the single place a concept is named.
+
 ## Prose that asserts behaviour needs an assertion behind it
 
 Added 2026-09-19, after a docstring sentence sent a whole command down a false trail.

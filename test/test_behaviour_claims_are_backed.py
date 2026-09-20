@@ -92,10 +92,24 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     612 on 19 Sep 2026, the day the rule landed. This number moves DOWN as
     sentences get tests or get deleted; it moves up only in a commit that says
     why, exactly like test/known_failures.txt.
+
+    625 on 20 Sep 2026, and the thirteen added are a different kind of entry:
+    each NAMES the assertion that goes red when its sentence stops being true.
+    The scanner cannot tell a backed sentence from an unbacked one - it finds
+    sentences, not proofs - so the two are counted separately below. THE DEBT is
+    the unbacked count, and that one still only shrinks.
     """
-    assert len(_accepted()) <= 612, (
+    accepted = _accepted()
+    unbacked = {k: why for k, why in accepted.items()
+                if not why.startswith("BACKED:")}
+    assert len(unbacked) <= 612, (
+        "the UNBACKED claim count grew to %d. A sentence with no assertion "
+        "behind it is the debt this file holds; more of them is the population "
+        "growing in silence, which is what the net exists to stop."
+        % len(unbacked))
+    assert len(accepted) <= 625, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
-        "is not evidence; a bigger number here means more of it." % len(_accepted()))
+        "is not evidence; a bigger number here means more of it." % len(accepted))
 
 
 def test_every_baseline_line_is_a_real_fingerprint():
