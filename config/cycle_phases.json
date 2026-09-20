@@ -457,7 +457,6 @@
         "memory/self_mirror_latest.json",
         "memory/self_mirror_log.jsonl",
         "memory/self_experiments.json",
-        "memory/learn_world_latest.json",
         "memory/backend_order_measured.json"
       ]
     }

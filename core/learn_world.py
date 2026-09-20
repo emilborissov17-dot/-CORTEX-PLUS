@@ -21,7 +21,16 @@ failed before this step. Self-forecast scoring stays in the morning on purpose: 
 scores the night itself, which cannot be judged from inside it.
 
 Fail-open per part: one part failing is written down and the others still run.
-Writes memory/learn_world_latest.json (the step's promised artifact).
+
+NO RECEIPT FILE, since 20 Sep 2026. run() used to write memory/learn_world_latest.json
+— a per-part ok/error summary created with this step on 11 Sep 2026 and read by nothing:
+no module, no report, no scheduled task, no page of the cockpit, and no glob over memory/
+(experiments/pulse/pulse_daemon.py walks memory/ for mtimes only, never contents). The
+learning this step does IS persisted, by the parts themselves and into files that do have
+named readers: memory/learner_state.json (core/brain.py), memory/daily_tier.jsonl
+(core/consolidation.py) and memory/backend_order_measured.json (core/groq_backend.py).
+The receipt duplicated, on disk, a dict the caller already has in hand and prints —
+fast_cycle_runner.py step 25.43 logs ok_parts and failed_parts from the return value.
 """
 from __future__ import annotations
 
@@ -32,7 +41,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
-LATEST = BASE / "memory" / "learn_world_latest.json"
 
 
 def _load(name: str, rel: str):
@@ -49,7 +57,7 @@ def _part(out: dict, key: str, fn):
         out[key] = {"ok": False, "error": f"{type(exc).__name__}: {str(exc)[:200]}"}
 
 
-def run(latest: Path | None = None) -> dict:
+def run() -> dict:
     out: dict = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
     def _tier():
@@ -96,12 +104,6 @@ def run(latest: Path | None = None) -> dict:
 
     out["ok_parts"] = sum(1 for v in out.values() if isinstance(v, dict) and v.get("ok"))
     out["failed_parts"] = [k for k, v in out.items() if isinstance(v, dict) and v.get("ok") is False]
-    try:
-        p = latest or LATEST
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(out, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
-    except OSError as exc:
-        out["write_error"] = str(exc)
     return out
 
 

@@ -3,13 +3,12 @@
 
 Pinned:
   * every part runs; one failing part is recorded and the others still run
-  * the artifact memory/learn_world_latest.json is written
+  * the step leaves NO receipt on disk: the return value is the report (20 Sep 2026)
   * world_forecast.cmd_predict is idempotent: the morning catch-up does not seal twice
   * the step is registered in cycle_map and beaten in the runner before self_experiment
 """
 from __future__ import annotations
 
-import json
 import sys
 from pathlib import Path
 
@@ -56,7 +55,7 @@ class _Tier:
         return self._result
 
 
-def test_all_parts_run_and_one_failure_does_not_stop_the_rest(tmp_path, monkeypatch):
+def test_all_parts_run_and_one_failure_does_not_stop_the_rest(monkeypatch):
     def fake_load(name, rel):
         if name == "world_forecast":
             return _WF()
@@ -64,17 +63,17 @@ def test_all_parts_run_and_one_failure_does_not_stop_the_rest(tmp_path, monkeypa
             return _Tier({"error": "snapshot unreadable: x", "written": 0})
         raise ImportError("league missing")
     monkeypatch.setattr(LW, "_load", fake_load)
-    out = LW.run(latest=tmp_path / "lw.json")
+    out = LW.run()
     assert out["daily_tier"]["ok"] is False and "snapshot unreadable" in out["daily_tier"]["error"]
     assert out["world_score"]["result"] == {"newly_scored": 3}
     assert out["world_predict"]["result"] == {"sealed": 2}
     assert out["learner"]["result"] == {"indicators": 2}
     assert out["backend_league"]["ok"] is False
     assert set(out["failed_parts"]) == {"daily_tier", "backend_league"}
-    assert json.loads((tmp_path / "lw.json").read_text(encoding="utf-8"))["ok_parts"] == 3
+    assert out["ok_parts"] == 3
 
 
-def test_a_refusal_to_predict_is_a_result_not_a_failure(tmp_path, monkeypatch):
+def test_a_refusal_to_predict_is_a_result_not_a_failure(monkeypatch):
     def fake_load(name, rel):
         if name == "world_forecast":
             return _WF(refuse=True)
@@ -82,7 +81,7 @@ def test_a_refusal_to_predict_is_a_result_not_a_failure(tmp_path, monkeypatch):
             return _Tier({"written": 5, "already_on_file": 10})
         raise ImportError()
     monkeypatch.setattr(LW, "_load", fake_load)
-    out = LW.run(latest=tmp_path / "lw.json")
+    out = LW.run()
     assert out["daily_tier"]["result"] == {"written": 5, "already_on_file": 10}
     assert out["world_predict"]["ok"] and out["world_predict"]["result"] == {"refused": "nothing moves"}
 
@@ -146,16 +145,18 @@ def test_no_part_imports_a_sibling_as_a_package():
           "and does not depend on sys.path.")
 
 
-def _real_tier_only(monkeypatch, tmp_path):
-    """The REAL daily_tier against the REAL snapshot, with every writer redirected
-    into tmp_path.
+def _real_tier_only(monkeypatch):
+    """The REAL daily_tier against the REAL snapshot, with the one remaining live
+    writer stubbed away.
 
     The first version of these two tests called lw.run() outright and the repo's
     own _no_live_writes fixture failed them for writing
     memory/learn_world_latest.json and memory/backend_order_measured.json. That
     guard is right and its message says what to do: fix the fixture. So the tier —
-    the part under test — stays real, and the league (the other live writer) is
-    stubbed away."""
+    the part under test — stays real, and the league is stubbed. Since 20 Sep 2026
+    the receipt is not written at all, so the league is the only writer left to
+    stub; the guard still watches, which is why nothing here redirects it by
+    hand."""
     real_load = LW._load
 
     def load(name, rel):
@@ -163,23 +164,62 @@ def _real_tier_only(monkeypatch, tmp_path):
             raise ImportError("stubbed: writes memory/backend_order_measured.json")
         return real_load(name, rel)
     monkeypatch.setattr(LW, "_load", load)
-    return LW.run(latest=tmp_path / "lw.json")
+    return LW.run()
 
 
-def test_the_tier_part_actually_answers_on_this_repo(tmp_path, monkeypatch):
+def test_the_tier_part_actually_answers_on_this_repo(monkeypatch):
     """Not a mock: the real record() against the real snapshot. It must report the
     keys learn_world forwards, and must NOT come back as a failed part — which is
     what it did before the by-path fix."""
-    r = _real_tier_only(monkeypatch, tmp_path)
+    r = _real_tier_only(monkeypatch)
     tier = r.get("daily_tier")
     assert tier and tier.get("ok") is True, f"the tier part failed: {tier}"
     assert set(tier["result"]) <= {"written", "already_on_file"}
     assert "daily_tier" not in (r.get("failed_parts") or [])
 
 
-def test_a_second_run_writes_no_new_tier_rows(tmp_path, monkeypatch):
+def test_a_second_run_writes_no_new_tier_rows(monkeypatch):
     """Idempotent, which is what makes it safe as a nightly step AND as a rehearsal
     by hand: the same snapshot must not append the same (indicator, date) twice."""
-    _real_tier_only(monkeypatch, tmp_path)
-    again = _real_tier_only(monkeypatch, tmp_path)
+    _real_tier_only(monkeypatch)
+    again = _real_tier_only(monkeypatch)
     assert again["daily_tier"]["result"].get("written") == 0
+
+
+# ── the receipt that nobody read ────────────────────────────────────────────
+
+def test_the_step_leaves_no_receipt_on_disk(monkeypatch):
+    """MUTATION NET for the 20 Sep 2026 decision.
+
+    memory/learn_world_latest.json was created with this step on 11 Sep 2026 and
+    read by nothing — no module, no report, no scheduled task, no cockpit page, no
+    glob over memory/ that touches contents. run() stopped writing it. If the write
+    comes back, as a module constant, a default argument or a helper, the live
+    file's mtime moves while run() executes and this goes red.
+
+    Doubled by test/conftest.py::_no_live_writes, which fails any test whose call
+    wrote under memory/. Two nets, because a receipt is the most plausible-looking
+    thing a step can write: it stayed invisible for nine days by looking exactly
+    like the artifacts around it that do have readers."""
+    receipt = REPO / "memory" / "learn_world_latest.json"
+    before = receipt.stat().st_mtime if receipt.exists() else None
+
+    def fake_load(name, rel):
+        if name == "world_forecast":
+            return _WF()
+        if name == "daily_tier":
+            return _Tier({"written": 0, "already_on_file": 1})
+        raise ImportError("backend_league is a live writer, stubbed")
+    monkeypatch.setattr(LW, "_load", fake_load)
+    out = LW.run()
+
+    assert out["ok_parts"] == 4 and out["failed_parts"] == ["backend_league"]
+    after = receipt.stat().st_mtime if receipt.exists() else None
+    assert after == before, (
+        "core/learn_world.run() wrote memory/learn_world_latest.json again. The file "
+        "has no reader. Name one in config/produces_readers.json and declare the path "
+        "in config/cycle_phases.json, or leave the receipt in the return value, where "
+        "fast_cycle_runner.py already reads ok_parts and failed_parts from it.")
+    assert not hasattr(LW, "LATEST"), (
+        "the module-level path to the receipt is back; a constant is how the write "
+        "returns without the call site looking like one.")

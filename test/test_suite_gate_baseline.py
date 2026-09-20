@@ -228,7 +228,13 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # blind-producer ratchet, the composite package, the CI network flag. Four
     # CLAIMS TURNED OUT FALSE and were deliberately NOT fixed; two hold but need
     # a decision that is not this sweep's to make.
-    assert len(known) == 6, "the baseline changed size, got %d" % len(known)
+    # 5 on 20 Sep: test_produces_has_a_reader::test_every_promised_path_has_an_entry
+    # was one of the two awaiting a decision. Emil took it. memory/learn_world_latest.json
+    # had no reader in the repo, none outside it (training/, cockpit/, every .bat and
+    # .vbs, all twelve Task Scheduler actions, the whole of Desktop/AGI), so the step
+    # stopped writing it and the path left config/cycle_phases.json. Nothing was
+    # declared that is not read.
+    assert len(known) == 5, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

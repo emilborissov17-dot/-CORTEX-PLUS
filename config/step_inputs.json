@@ -173,7 +173,7 @@
         "memory/llm_provenance.jsonl",
         "memory/counterfactual_probe_by_model.json"
       ],
-      "derived_from": "read core/learn_world.py on 11 Sep 2026: run() loads four siblings by path (_load) and calls their own readers — daily_tier for the tier, world_forecast for scoring and the alpha refit (which reads the prophecy ledger and learner_state), and backend_league.league(_rows(PROVENANCE), _reads(PROBE)) for the order of the cloud minds. It WRITES memory/learn_world_latest.json and memory/backend_order_measured.json."
+      "derived_from": "read core/learn_world.py on 11 Sep 2026: run() loads four siblings by path (_load) and calls their own readers — daily_tier for the tier, world_forecast for scoring and the alpha refit (which reads the prophecy ledger and learner_state), and backend_league.league(_rows(PROVENANCE), _reads(PROBE)) for the order of the cloud minds. It WRITES memory/backend_order_measured.json. Re-read 20 Sep 2026: it also USED to write memory/learn_world_latest.json, a per-part receipt no module, report, task or cockpit page ever read; run() no longer writes it and the step's promise is the league order alone."
     },
     "browser_scout": {
       "entry_point": "experiments.browser_scout.scout.run_all() - fast_cycle_runner.py:2931, step 2.55.",
