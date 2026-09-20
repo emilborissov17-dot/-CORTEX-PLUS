@@ -104,6 +104,55 @@ def test_the_quote_is_cut_from_the_body_and_not_rebuilt_from_the_parsed_value():
     assert "verbatim" in row2["quote_missing"]
 
 
+def test_a_number_inside_a_longer_number_is_not_a_quote():
+    """FOUND IN THE FIRST LIVE RUN, 20 Sep 2026, before card_intake ever saw it.
+
+    The worker quoted "46.0016162, 169.0727185], [-46.0009526, 169.076" as
+    evidence that there were 46 floods. That is a LATITUDE. The guard rejected a
+    digit either side of the match and nothing else, so "46" followed by a dot
+    passed — and the quote was genuinely on the page, which is what makes this
+    the dangerous shape: the gate would have ACCEPTED it and a coordinate would
+    have entered memory/verified_observations.jsonl as a flood count."""
+    body = '{"events":[{"geometry":[{"coordinates":[46.0016162, 169.0727185]}]}]}'
+    assert W.quote_from_body(body, 46.0) is None
+    assert W.quote_from_body('{"a":1.2,"b":9}', 2.0) is None, (
+        "the 2 of 1.2 is not a standalone 2")
+
+
+def test_a_counted_value_is_never_quoted():
+    """'#len' does not read a number off the body — it counts the body's own
+    structure. The number appears nowhere in the bytes, so every match is an
+    accident of decimal digits, and the honest answer is no card.
+
+    celestrak escaped this on the live run only because no '250' happened to be
+    in its 105 KB of orbital elements. Three EONET counts did not escape it."""
+    body = '{"events":[{"id":"a"},{"id":"b"}]}'
+
+    def getter(url, timeout):
+        return 200, json.loads(body), None, body
+
+    src = dict(SOURCE, path="events.#len")
+    row = W.fetch_one(src, timeout=5, getter=getter)
+    assert row["value"] == 2.0
+    assert row["quote"] is None
+    assert "COUNTED from the body's structure" in row["quote_missing"]
+    assert W.card_from_row(row) is None
+
+
+def test_the_worker_never_emits_a_quote_the_gate_would_refuse():
+    """The last guard, asked through the gate's own regex rather than a copy of
+    it: whatever quote comes back must satisfy the very test judge() applies."""
+    for body, value in (('{"count":38,"maxAllowed":20000}', 38.0),
+                        ('{"count": 38, "maxAllowed": 20000}', 38.0),
+                        ('{"current":{"time":"2026-09-20T12:15","temperature_2m":27.3}}',
+                         27.3)):
+        q = W.quote_from_body(body, value)
+        assert q is not None, (body, value)
+        card = {"axis": "A", "key": "k", "value": value, "unit": "u",
+                "url": "https://x/y", "quote": q}
+        assert qg.judge(card, body)["verdict"] == "ACCEPTED", (q, body)
+
+
 def test_a_row_with_no_raw_body_gets_no_card():
     """A getter that hands back only a parsed object leaves nothing to quote.
     The row is still written to the feed; the card is not invented."""
@@ -292,3 +341,74 @@ def test_a_shadow_row_never_becomes_a_card(tmp_path):
     # half the test above passes on a worker that never writes a card at all.
     _state, promoted = _promote(tmp_path)
     assert promoted["feeds"] and len(promoted["cards"]) == len(promoted["feeds"])
+
+
+# ── a run that starts and never finishes ────────────────────────────────────
+# Added 20 Sep 2026 with the schedule. A worker nobody can see stop is the
+# defect this repo keeps finding; two rows per run is what makes stopping
+# visible, and these are the assertions that keep the second row honest.
+
+def _rows(path):
+    return [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines()
+            if l.strip()]
+
+
+def test_a_start_without_a_finish_is_reported_as_unfinished(tmp_path):
+    """KNOWN TRUE. This is the whole point of the file: the row that is ABSENT
+    is the signal."""
+    log = tmp_path / "task_runs.jsonl"
+    W._task_row({"task": W.TASK_NAME, "event": "start", "run_id": "aaa",
+                 "ts": "2026-09-20T05:50:00+00:00"}, path=log)
+    open_runs = W.unfinished_runs(path=log)
+    assert [r["run_id"] for r in open_runs] == ["aaa"]
+
+
+def test_a_finished_run_is_not_reported(tmp_path):
+    """KNOWN EMPTY, so the test above is not passing on everything."""
+    log = tmp_path / "task_runs.jsonl"
+    for ev in ("start", "finish"):
+        W._task_row({"task": W.TASK_NAME, "event": ev, "run_id": "bbb",
+                     "ts": "2026-09-20T05:50:00+00:00"}, path=log)
+    assert W.unfinished_runs(path=log) == []
+
+
+def test_removing_the_finish_row_makes_the_run_unfinished_again(tmp_path):
+    """MUTATION. Delete the second row and the run must reappear as open —
+    the net against a reader that decides by counting rows or by trusting the
+    last one."""
+    log = tmp_path / "task_runs.jsonl"
+    for ev in ("start", "finish"):
+        W._task_row({"task": W.TASK_NAME, "event": ev, "run_id": "ccc",
+                     "ts": "2026-09-20T05:50:00+00:00"}, path=log)
+    assert W.unfinished_runs(path=log) == []
+
+    kept = [r for r in _rows(log) if r["event"] != "finish"]
+    log.write_text("\n".join(json.dumps(r) for r in kept) + "\n",
+                   encoding="utf-8")
+    assert [r["run_id"] for r in W.unfinished_runs(path=log)] == ["ccc"]
+
+
+def test_another_task_in_the_same_file_is_not_mistaken_for_this_one(tmp_path):
+    """The file is named task_runs, not worker_runs: a second task writing here
+    must not make this worker look like it never came back."""
+    log = tmp_path / "task_runs.jsonl"
+    W._task_row({"task": "somebody_else", "event": "start", "run_id": "ddd",
+                 "ts": "x"}, path=log)
+    assert W.unfinished_runs(path=log) == []
+
+
+def test_a_torn_final_line_does_not_hide_an_open_run(tmp_path):
+    """A process killed mid-write leaves half a line. That is exactly the case
+    this file exists to catch, so the reader must skip the broken line and still
+    report the run it belongs to."""
+    log = tmp_path / "task_runs.jsonl"
+    W._task_row({"task": W.TASK_NAME, "event": "start", "run_id": "eee",
+                 "ts": "2026-09-20T05:50:00+00:00"}, path=log)
+    with open(log, "a", encoding="utf-8") as fh:
+        fh.write('{"task": "openclaw_axis_worker", "event": "fin')
+    assert [r["run_id"] for r in W.unfinished_runs(path=log)] == ["eee"]
+
+
+def test_a_missing_log_is_no_unfinished_runs_not_a_crash(tmp_path):
+    assert W.unfinished_runs(path=tmp_path / "never_written.jsonl") == []
+

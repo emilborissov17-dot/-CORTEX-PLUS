@@ -13,6 +13,19 @@
     "list, a bool — all refused, by name, into external_refusals.jsonl. The",
     "number is what crosses the boundary; nothing else does."
   ],
+  "_data_date_path": [
+    "OPTIONAL, and only where the payload REALLY carries the reading's own date.",
+    "It is walked with the same dotted syntax as `path` and goes onto the card as",
+    "`data_date`, the spelling config/field_names.json already registers for this",
+    "concept. A source without one produces a card whose data_date is null and",
+    "which says why: the fetch time is the date of the REQUEST, not of the",
+    "reading, and a card carrying it would claim a month-old figure was observed",
+    "this morning.",
+    "",
+    "MEASURED 20 September 2026 by fetching all four bodies once, read-only.",
+    "Exactly one carries a date for the number being read. The other three say",
+    "so in `_data_date_why` rather than being given an invented path."
+  ],
   "_path_syntax": [
     "Dotted keys walk objects. Integer segments index lists.",
     "'#len' takes the length of the list at that point.",
@@ -30,7 +43,8 @@
       "path": "count",
       "unit": "events_24h",
       "org": "USGS",
-      "why": "seismometer network — instrument record, no interested party"
+      "why": "seismometer network — instrument record, no interested party",
+      "_data_date_why": "NONE, measured 20 Sep 2026. The whole body is {\"count\":13,\"maxAllowed\":20000} — 31 bytes, no date anywhere. The observation window lives in the URL (starttime=now-1days) and not in the answer, so there is nothing to walk to. The card's data_date stays null with its reason."
     },
     {
       "id": "open_meteo_surface_temp",
@@ -40,7 +54,9 @@
       "path": "current.temperature_2m",
       "unit": "celsius",
       "org": "Open-Meteo",
-      "why": "weather model over instrument inputs"
+      "why": "weather model over instrument inputs",
+      "data_date_path": "current.time",
+      "_data_date_why": "MEASURED 20 Sep 2026: the body carries {\"current\":{\"time\":\"2026-09-20T12:15\",\"interval\":900,\"temperature_2m\":27.3}}. `current.time` sits in the SAME object as the value `path` reads and is the timestamp OF that reading — current_units.time says iso8601 and current.interval says the reading covers 900 seconds. This is the one seed source whose payload dates its own number."
     },
     {
       "id": "celestrak_launched_30d",
@@ -50,7 +66,8 @@
       "path": "#len",
       "unit": "objects_30d",
       "org": "CelesTrak",
-      "why": "catalogue of tracked objects"
+      "why": "catalogue of tracked objects",
+      "_data_date_why": "NONE THAT FITS THE VALUE, measured 20 Sep 2026. Every element carries its own EPOCH (e.g. '2026-09-19T20:52:34.435200'), but `path` here is '#len' — the value is the COUNT of objects over the window the URL names (GROUP=last-30-days), and a count has no single observation date. Declaring .0.EPOCH would date the count by whichever object happens to be first in the list, which is a different fact wearing the right shape. Null with a reason is the honest card."
     },
     {
       "id": "deliberately_broken_path",
@@ -60,6 +77,7 @@
       "path": "count.total.missing",
       "unit": "none",
       "org": "USGS",
+      "_data_date_why": "NOT APPLICABLE: this source is meant to refuse, so it never produces a value to date.",
       "why": "DELIBERATELY BROKEN. The endpoint is real and answers 200; the path walks into a number as if it were an object. Kept in the allowlist on purpose so the refusal path is exercised on every run instead of only in a test."
     }
   ]

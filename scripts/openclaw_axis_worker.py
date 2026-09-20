@@ -15,6 +15,30 @@ was a model writing prose where a measurement belonged; here it is a remote
 service answering with a string, a null, an error object or an HTML maintenance
 page, and that landing in the queue as if somebody had measured it.
 
+HOW IT RUNS (recorded 20 September 2026, the day it first ran at all)
+---------------------------------------------------------------------
+For a month nothing ran this. It was registered that day as the Windows task
+CORTEX_OpenClaw:
+
+    venv/Scripts/python.exe scripts/openclaw_axis_worker.py
+    daily 05:50 local, repeating every 6h for 1 day -> 05:50 / 11:50 / 17:50 / 23:50
+
+05:50 IS NOT AN ARBITRARY HOUR. The nightly cycle starts at 03:04 and took 103,
+108 and 100 minutes on 18, 19 and 20 Sep, so 05:50 clears its worst observed end
+by about an hour. 11:50 is ten minutes before CORTEX_Prophecy at 12:00, whose
+step 148 is core/card_intake.py — the gate that judges what this writes — so the
+morning run reads cards fetched minutes earlier rather than six hours earlier.
+
+THE TASK LIVES IN WINDOWS TASK SCHEDULER AND NOWHERE IN THIS REPO, like every
+other CORTEX_* task. config/scheduler.json is the supervisor's ceilings and
+budgets, not a task registry, so this paragraph is the only place in the source
+tree that says what runs this file. To check it rather than believe it:
+
+    schtasks /Query /TN CORTEX_OpenClaw /V /FO LIST
+
+and memory/task_runs.jsonl carries two rows per run, so a run that started and
+never came back is visible without asking Windows anything.
+
 THE ALLOWLIST IS GONE, ON PURPOSE
 ----------------------------------
 It used to be that a human wrote four URLs into a config and only those were
@@ -45,6 +69,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import pathlib
 import re
 import sys
@@ -73,6 +98,18 @@ SHADOWS = QUEUE / "external_shadow.jsonl"
 # readers; this is an addition, not a redirection.
 CARDS = QUEUE / "cards"
 
+# ── A RUN THAT STARTS AND NEVER FINISHES MUST BE VISIBLE ───────────────────
+# Two rows per run, start and finish. A worker killed by a reboot, an OOM or a
+# closed laptop writes the first and never the second, and the gap is the whole
+# signal: a silent worker that simply stops is the defect this repo keeps
+# finding, and it is invisible in a log that only records successes.
+#
+# NOT A DUPLICATE OF THE FEED FILES. Those record what was FETCHED; this records
+# that the PROCESS ran, which is a different question and is unanswerable from
+# them — a run that died before its first fetch leaves no feed row at all.
+TASK_RUNS = BASE / "memory" / "task_runs.jsonl"
+TASK_NAME = "openclaw_axis_worker"
+
 DEFAULT_TIMEOUT = 30
 
 
@@ -82,6 +119,49 @@ class Refused(ValueError):
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _task_row(row: dict, path: pathlib.Path | None = None) -> None:
+    """Append one run row. Fail-open: a log that cannot be written must not
+    cost the run it is describing."""
+    try:
+        p = path or TASK_RUNS
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with open(p, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
+
+
+def unfinished_runs(path: pathlib.Path | None = None, task: str = TASK_NAME) -> list:
+    """Runs that wrote a start and never a finish.
+
+    THE READER OF TASK_RUNS, in the same commit that starts writing it, because
+    a file nobody reads is the thing this repo spent yesterday removing. It is
+    read at the top of every run, so the FIRST thing a run says is whether the
+    last one came back.
+    """
+    p = path or TASK_RUNS
+    started, finished = {}, set()
+    try:
+        text = p.read_text(encoding="utf-8")
+    except OSError:
+        return []
+    for line in text.splitlines():
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue                      # a torn final line is not a lost run
+        if row.get("task") != task:
+            continue
+        rid = row.get("run_id")
+        if row.get("event") == "start":
+            started[rid] = row
+        elif row.get("event") == "finish":
+            finished.add(rid)
+    return [r for rid, r in started.items() if rid not in finished]
 
 
 DISCOVERED = BASE / "memory" / "discovered_data_sources.json"
@@ -245,15 +325,41 @@ def quote_from_body(raw: str, value: float, width: int = _QUOTE_WIDTH) -> str | 
         i = raw.find(cand)
         while i != -1:
             end = i + len(cand)
-            # a digit either side means we matched inside a longer number
-            if not (raw[i - 1:i].isdigit() or raw[end:end + 1].isdigit()):
+            # INSIDE A LONGER NUMBER, and a digit either side is not enough to
+            # rule it out. The first live run quoted "46.0016162" — a LATITUDE —
+            # as evidence for a flood count of 46, because the character after
+            # "46" is a dot and the guard only looked for digits.
+            if not (_IN_NUMBER.match(raw[i - 1:i])
+                    or _IN_NUMBER.match(raw[end:end + 1])):
                 left = i if _BLOCKS_NUM.match(raw[i - 1:i]) else max(0, i - width // 2)
-                return raw[left:min(len(raw), end + width // 2)]
+                cut = raw[left:min(len(raw), end + width // 2)]
+                if _gate_sees(cut, value):
+                    return cut
             i = raw.find(cand, i + 1)
     return None
 
 
+def _gate_sees(quote: str, value: float) -> bool:
+    """Would core.quote_gate find `value` among the numbers of this quote?
+
+    THE GATE'S OWN REGEX, imported rather than copied. A quote this worker emits
+    and the gate then rejects is worse than no quote: it lands in
+    memory/card_refusals.jsonl as if the SOURCE were at fault, when the fault is
+    in the cutting. Asking the gate's own rule here means the worker never
+    produces a quote it already knows will be refused.
+    """
+    try:
+        from core import quote_gate as _qg
+        nums = [float(n.replace(",", ".")) for n in _qg._NUM.findall(quote)]
+    except Exception:                                             # noqa: BLE001
+        return True              # fail open: the gate will judge it either way
+    return any(abs(n - value) < 1e-9 for n in nums)
+
+
 _BLOCKS_NUM = re.compile(r"[\w:./\-]")
+# A digit or a decimal point beside the match means it is part of a longer
+# number: "46" inside "46.0016162", "2" inside "1.2".
+_IN_NUMBER = re.compile(r"[\d.]")
 
 
 def _spellings(value: float) -> list:
@@ -360,9 +466,18 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
     if status != 200:
         raise Refused(f"{sid}: HTTP {status}")
 
-    value = as_number(walk(payload, source.get("path", "")),
-                      f"{sid} at path {source.get('path')!r}")
-    quote = quote_from_body(raw, value)
+    path = source.get("path", "")
+    value = as_number(walk(payload, path), f"{sid} at path {path!r}")
+
+    # A COMPUTED VALUE CANNOT BE QUOTED, and pretending otherwise is how the
+    # first live run produced three cards whose quotes were coincidences.
+    # '#len' does not READ a number off the body; it counts the body's own
+    # structure, so the number appears nowhere in the bytes and every match is
+    # an accident of decimal digits. celestrak (250 objects) escaped only
+    # because no "250" happened to be in its body; the three EONET counts did
+    # not, and quoted a latitude and a magnitude array instead.
+    computed = "#len" in path.split(".")
+    quote = None if computed else quote_from_body(raw, value)
     data_date, date_missing = observation_date(payload, source)
 
     return {
@@ -380,7 +495,9 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
         # for the card, and for a human reading the feed row beside it
         "quote": quote,
         "quote_missing": None if quote else (
-            "no raw response text" if not raw else
+            f"the value is COUNTED from the body's structure (path {path!r}), so "
+            f"it appears nowhere in it verbatim and cannot be quoted" if computed
+            else "no raw response text" if not raw else
             f"the value {value!r} is not in the body verbatim"),
         "data_date": data_date,
         "data_date_missing": date_missing,
@@ -527,9 +644,46 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--sources", default=None)
+    ap.add_argument("--unfinished", action="store_true",
+                    help="report runs that started and never finished, then exit")
     a = ap.parse_args()
-    result = run(pathlib.Path(a.sources) if a.sources else None,
-                 dry_run=a.dry_run)
+
+    if a.unfinished:
+        open_runs = unfinished_runs()
+        print(json.dumps({"unfinished": open_runs}, ensure_ascii=False, indent=1))
+        return 1 if open_runs else 0
+
+    for stale in unfinished_runs():
+        print(f"[DMZ] PREVIOUS RUN NEVER FINISHED: started {stale.get('ts')} "
+              f"(run_id {stale.get('run_id')}) — killed, rebooted or crashed "
+              f"before it could write a finish row")
+
+    run_id = hashlib.sha256(
+        f"{TASK_NAME}|{_now()}|{os.getpid()}".encode("utf-8")).hexdigest()[:12]
+    started = time.time()
+    _task_row({"task": TASK_NAME, "event": "start", "run_id": run_id,
+               "ts": _now(), "pid": os.getpid(), "dry_run": bool(a.dry_run)})
+    try:
+        result = run(pathlib.Path(a.sources) if a.sources else None,
+                     dry_run=a.dry_run)
+    except BaseException as exc:                                  # noqa: BLE001
+        # A CRASH IS A FINISH, and it is recorded as one with its reason. What
+        # must stay unrecorded is a process that never got here at all — killed
+        # or rebooted — and that is exactly the row this except clause does not
+        # write for it.
+        _task_row({"task": TASK_NAME, "event": "finish", "run_id": run_id,
+                   "ts": _now(), "ok": False,
+                   "seconds": round(time.time() - started, 1),
+                   "error": f"{type(exc).__name__}: {str(exc)[:300]}"})
+        raise
+    _task_row({"task": TASK_NAME, "event": "finish", "run_id": run_id,
+               "ts": _now(), "ok": True,
+               "seconds": round(time.time() - started, 1),
+               "sources": result["sources"],
+               "trusted": len(result["feeds"]),
+               "shadow": len(result["shadows"]),
+               "refused": len(result["refusals"]),
+               "cards": len(result["cards"])})
     return 0 if result["feeds"] else 1
 
 
