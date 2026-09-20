@@ -32,21 +32,34 @@ it is the same defect waiting for the next name added to the set. This test is
 the structural version: **you may not join VERIFIERS without declaring what you
 read.**
 
-WHY THIS TEST IS RED TODAY, ON PURPOSE
---------------------------------------
-Four of the five current verifiers cannot say what they read. They are named in
-KNOWN_UNDECLARED below with the date the debt was recorded. The red clears when
-each is declared in config/step_inputs.json — following that file's own
-`_how_to_add_a_step` rule: read the module the step actually calls, list what it
-opens on THAT path, and record `derived_from`. Do not copy the scanner's output
-and do not guess from the step name.
+WHY THIS TEST WAS RED, AND WHAT CLOSED IT
+-----------------------------------------
+Four of the five verifiers could not say what they read. Three were declared by
+reading the module the step actually calls. The fourth, browser_scout, could not
+be: on the cycle path it opens NO repo file at all — run_all() loops a table of
+URLs and fetches each over HTTP. Its input is the world.
+
+That was not a configuration gap, it was a hole in the model. A step was in
+VERIFIERS — the list allowed to BREAK inherited provenance, granted precisely for
+checking against a live external source — and was scored UNKNOWN(0) for having no
+file to be aged by. Both available answers were worse than the defect: declaring
+a file it does not read is fabricated provenance, and declaring the directory it
+WRITES makes the step grade itself off its own cache.
+
+So on 20 Sep 2026 the model grew the category it was missing. A LIVE FETCH is
+aged by its own fetch timestamp — the moment the record was fetched, written into
+the record at fetch time — which is the observation date, which is what the age
+dimension asks every other step for. config/passage_rules.json was not touched:
+browser_scout is a verifier and its name stays.
 
 An xfail here would be the exact defect the whole file is about: a failure
-rendered as something plausible. So it fails.
+rendered as something plausible. So it fails instead.
 """
 from __future__ import annotations
 
+import json
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pytest
@@ -54,89 +67,84 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
-from core.declared_inputs import for_step          # noqa: E402
-from core.notary import VERIFIERS, _age_state, _inputs_for   # noqa: E402
+from core.declared_inputs import for_step, live_fetch_for   # noqa: E402
+from core.notary import (VERIFIERS, _age_state, _declares_provenance,  # noqa: E402
+                         _fetch_age_state, _inputs_for)
 
-# The debt, measured 2026-09-05 and REDUCED 2026-09-08 from four names to two.
-# This set is a LEDGER, not permission: test_every_verifier_declares_what_it_reads
-# still fails for every name in it. Its only job is to let a NEWLY added landmine
-# be told apart from the ones already known, so the second failure is not lost in
-# the first.
+# THE LEDGER. A set, not a comment, so that a NEWLY added landmine fails on its
+# own line instead of disappearing into an already-red test. Every name in it
+# still fails test_every_verifier_declares_what_it_reads; being listed buys a
+# step nothing except being told apart from the next one.
 #
-# PAID OFF 2026-09-08, by reading each module on the path the cycle calls:
-#   global_indicators -> data/ucdp
-#       _resolve_ucdp_csv/_fetch_ucdp_local_csv (global_indicators.py:377-406).
-#       Its one local input, and its age is a real fact: the active-conflict
-#       count is exactly as old as that CSV. Now scores MINIMAL(1) — lower than
-#       anyone would like, and TRUE, where before it scored UNKNOWN(0).
-#   sensorium_ingest -> memory/sensorium, memory/penumbra
-#       ingest() and verify() re-hash both merkle chains; the drop paths come out
-#       of the leaf records at runtime, so the trees are declared. Now REDUCED(2).
+# HOW THE FOUR WERE PAID OFF, each by reading the module the cycle actually calls:
+#   global_indicators      -> data/ucdp, 8 Sep. _resolve_ucdp_csv/
+#                             _fetch_ucdp_local_csv. Its one local input, and its
+#                             age is a real fact: the active-conflict count is
+#                             exactly as old as that CSV. MINIMAL(1) — lower than
+#                             anyone would like, and TRUE, where it had been
+#                             UNKNOWN(0).
+#   sensorium_ingest       -> memory/sensorium, memory/penumbra, 8 Sep. verify()
+#                             re-hashes both chains; the drop paths come out of
+#                             the leaf records at runtime, so the trees are what
+#                             is declared. REDUCED(2).
+#   internet_intelligence  -> 19 Sep, from read_pantry()'s own docstring: the
+#                             queue cards, the news and memory/transcript_cache.
+#   browser_scout          -> 20 Sep, and NOT by a declaration of files. See below.
+KNOWN_UNDECLARED: set = set()
+# EMPTY SINCE 20 SEP 2026, and the last name left by a change to the model rather
+# than by a declaration.
 #
-# WHY THE REMAINING TWO ARE A DIFFERENT PROBLEM, AND ARE NOT DECLARED HERE.
-# Neither reads any local file whose age means anything:
-#   browser_scout          AST census of experiments/browser_scout/scout.py: one
-#                          write_text (its own output) and one read_text behind
-#                          sys.argv, which the cycle never takes. Its SOURCES
-#                          table of URLs is a literal in the module. It reads
-#                          NOTHING locally on the cycle path.
-#   internet_intelligence  agents/internet/internet_agent.py reads only its own
-#                          outputs and caches — memory/youtube_adaptive_memory.json
-#                          (896, written at 904) and memory/transcript_cache —
-#                          plus .env for a key. Declaring a step's own cache as
-#                          its input makes it grade itself; declaring a secrets
-#                          file ties the gate to a credential's mtime. Neither is
-#                          a provenance statement.
+# browser_scout could not be declared the ordinary way, and the entry here said
+# so: it opens NO repo file, so it had no artifact whose age could grade it, and
+# the only two moves available were to fabricate a file input or to take it out of
+# config/passage_rules.json VERIFIERS — a file this work may not touch, and a
+# removal that would have been false anyway, since the step really does verify
+# against a live external source.
 #
-# So the honest declaration for both is EMPTY, and an empty declaration is
-# UNKNOWN by design (core/notary._age_state fails closed). Their real input is a
-# live URL, and the notary's age model has no category for that. Inventing a file
-# to declare would be faking provenance — the one thing this whole subsystem
-# exists to refuse.
+# The third move is the one taken: a step that reads the world declares
+# `live_fetch` in config/step_inputs.json, and core/notary._fetch_age_state ages
+# it by the timestamp the fetch itself recorded. Measured on this repo the day it
+# landed: FULL(3), "най-старо теглене memory/browse_sources/social_conflicts.json:
+# 0.3 дни", where the same step scored UNKNOWN(0) the day before.
 #
-# THE DECISION IS EMIL'S, and REMEDY below already states both acceptable
-# answers: give them a real local input (e.g. move the URL tables into a config
-# file that IS declared and IS aged), or take them out of VERIFIERS, since a step
-# with no local provenance cannot honestly hold the right to BREAK inherited
-# provenance. Not decided here.
-KNOWN_UNDECLARED = {
-    # internet_intelligence LEFT on 19 Sep 2026: read_pantry() names its three
-    # inputs in its own docstring (openclaw_queue/cards, news,
-    # memory/transcript_cache) and they are now in config/step_inputs.json.
-    #
-    # browser_scout STAYS, and the reason is a finding rather than a backlog
-    # item. It opens NO repo file: run_all() loops SOURCES and fetches each URL
-    # over HTTP, OUT_DIR = memory/browse_sources is written and never read, and
-    # the only read_text() is a CLI debug path behind sys.argv. So there is no
-    # artifact whose age could grade its output, and an empty list is the honest
-    # answer rather than a gap to be filled — naming memory/browse_sources here
-    # would be a lie about what it reads.
-    #
-    # VERIFIERS means "verifies against a LIVE EXTERNAL SOURCE", which this step
-    # genuinely does. Either the provenance model grows a way to age a live fetch
-    # by its fetch timestamp, or the name comes out of config/passage_rules.json.
-    # That file is one this work is instructed never to touch, so the choice is
-    # Emil's and the debt stays visible here until he makes it.
-    "browser_scout",
-}
+# The set stays, and so do the three tests around it. A name added to VERIFIERS
+# tomorrow with provenance of NEITHER kind fails
+# test_no_verifier_becomes_undeclared_that_was_not_already, and it fails alone,
+# which is the whole reason the ledger was written as a set and not as a comment.
+
+# A name no step has ever had, used where the mechanism must still be exercised
+# after the last real debt is paid. It declares nothing by construction, so the
+# notary answers UNKNOWN for it for exactly the reason under test.
+_NO_SUCH_STEP = "__no_step_by_this_name__"
 
 REMEDY = (
     "Declare its inputs in config/step_inputs.json under 'steps', following that "
     "file's _how_to_add_a_step: read the module the step actually calls, list what "
-    "it opens on THAT path, and fill in 'derived_from'. If the step does not belong "
-    "in VERIFIERS, remove it from core/notary.VERIFIERS instead — either answer is "
-    "acceptable; leaving it undeclared is not."
+    "it opens on THAT path, and fill in 'derived_from'. If it reads no repo file "
+    "because it reads the WORLD, declare 'live_fetch' instead — the records its "
+    "fetch writes and the field that holds the fetch timestamp — and it will be "
+    "aged by when it last looked. If the step does not belong in VERIFIERS, remove "
+    "it from core.notary.VERIFIERS instead. Any of the three is acceptable; "
+    "leaving it undeclared is not."
 )
 
 
 def _undeclared() -> list[str]:
-    """Verifiers that cannot say what they read.
+    """Verifiers that cannot say where their knowledge comes from.
 
-    for_step() returns None for 'nobody wrote a declaration' and [] for 'a
-    declaration exists and is empty or broken' (core/declared_inputs.py:113-120).
-    Both produce UNKNOWN provenance, so both fail here.
+    TWO WAYS TO SAY IT, since 20 Sep 2026, and a step needs exactly one:
+      * file inputs — for_step() returns None for 'nobody wrote a declaration'
+        and [] for 'a declaration exists and is empty or broken'. Both produce
+        UNKNOWN provenance, so both still fail here.
+      * a live fetch — live_fetch_for() returns the records and the field holding
+        the fetch timestamp, or None. A step that reads the world and records
+        when it looked is not blind; it is datable, and it can be graded LOW for
+        having looked a long time ago, which is a verdict and not an absence.
+
+    Asked through core.notary._declares_provenance, so this test cannot answer
+    differently from the gate it is guarding.
     """
-    return sorted(s for s in VERIFIERS if not (for_step(s) or []))
+    return sorted(s for s in VERIFIERS if not _declares_provenance(s))
 
 
 # ── the requirement ──────────────────────────────────────────────────────────
@@ -191,11 +199,16 @@ def test_every_name_in_the_ledger_is_still_a_verifier():
 
 # ── the mechanism, so the requirement above cannot be argued with ────────────
 
-@pytest.mark.parametrize("step", sorted(KNOWN_UNDECLARED))
+@pytest.mark.parametrize("step", sorted(KNOWN_UNDECLARED) or [_NO_SUCH_STEP])
 def test_an_undeclared_verifier_really_does_score_unknown(step):
-    """Not an assumption: the four named steps are asked, right now, through the
-    notary's own code path, and each answers UNKNOWN(0)."""
-    if for_step(step):
+    """Not an assumption: each named step is asked, right now, through the
+    notary's own code path, and answers UNKNOWN(0).
+
+    With the ledger empty the parameter falls back to a name that is not a step at
+    all, so the MECHANISM stays asserted. Letting an empty set collapse the
+    parametrisation would delete this check silently on the day the last debt was
+    paid — the one day it is most worth keeping."""
+    if for_step(step) or live_fetch_for(step):
         pytest.skip(f"{step} now has a declaration — see the ledger test")
     inputs, source = _inputs_for(step)
     level, why = _age_state(inputs, source)
@@ -212,8 +225,8 @@ def test_an_undeclared_verifier_really_does_score_unknown(step):
 
 def test_a_blind_step_is_named_as_blind_not_scored_as_poor():
     """The step's own blindness, in words, ahead of the level number."""
-    step = sorted(KNOWN_UNDECLARED)[0]
-    if for_step(step):
+    step = (sorted(KNOWN_UNDECLARED) or [_NO_SUCH_STEP])[0]
+    if for_step(step) or live_fetch_for(step):
         pytest.skip(f"{step} now has a declaration")
     from core.notary import _blindness
     said = _blindness(step, {})
@@ -396,3 +409,229 @@ def test_no_verifier_declares_its_own_output_as_an_input():
             f"{step} gates on its own output {product}")
         assert product in entry.get("also_reads", []), (
             f"{product} is read by {step} and is declared nowhere")
+
+
+# ── THE LIVE FETCH: aged by when it looked, not by when a file was touched ──
+# Added 20 Sep 2026 with the category itself. Every test below fails if the
+# category is removed, weakened, or quietly turned back into mtime aging.
+
+_LIVE_SPEC = {"records": ["memory/browse_sources/social_conflicts.json"],
+              "timestamp_field": "extracted_at"}
+
+
+def _record(tmp_path, monkeypatch, stamp, field="extracted_at"):
+    """A fetch record with a chosen recorded timestamp and a FRESH mtime.
+
+    The mtime is fresh by construction — the file is written right now. That is
+    what makes these tests able to tell the two aging models apart: anything that
+    still grades by mtime reads every one of them as brand new.
+    """
+    from core import notary as _N
+    rel = "recs/one.json"
+    f = tmp_path / rel
+    f.parent.mkdir(parents=True, exist_ok=True)
+    body = {} if stamp is None else {field: stamp}
+    f.write_text(json.dumps(body), encoding="utf-8")
+    monkeypatch.setattr(_N, "BASE", tmp_path)
+    return {"records": [rel], "timestamp_field": "extracted_at"}
+
+
+def test_a_live_fetch_is_aged_by_the_recorded_timestamp_and_not_by_mtime(
+        tmp_path, monkeypatch):
+    """THE WHOLE POINT, AND THE MUTATION NET UNDER IT.
+
+    The record is written this second, so its mtime says 'brand new'. The
+    timestamp INSIDE it says 400 days. The age model must answer 400 days. If
+    _fetch_age_state is ever rewritten to stat the file — the obvious shortcut,
+    since the record does sit on disk — this goes red instead of silently handing
+    a year-old observation a FULL stamp every night.
+    """
+    from core.notary import FULL, UNKNOWN
+
+    old = (datetime.now(timezone.utc) - timedelta(days=400)).isoformat()
+    spec = _record(tmp_path, monkeypatch, old)
+    level, why = _fetch_age_state(spec)
+    assert level == UNKNOWN, f"400-day-old fetch scored {level}: {why}"
+    assert level != FULL
+    assert "400." in why, why
+
+
+def test_a_fresh_fetch_scores_full(tmp_path, monkeypatch):
+    """The counter-example, so the test above is not vacuously true of every
+    input: a fetch recorded minutes ago is FULL."""
+    from core.notary import FULL
+
+    now = datetime.now(timezone.utc).isoformat()
+    level, why = _fetch_age_state(_record(tmp_path, monkeypatch, now))
+    assert level == FULL, why
+
+
+def test_the_bands_are_the_same_ones_every_other_step_is_graded_by(
+        tmp_path, monkeypatch):
+    """A live fetch must not get its own, kinder thresholds. Both paths go
+    through _by_days, so a widened band would show up for every step at once
+    rather than quietly for this one."""
+    from core.notary import _by_days, _STALE_DAYS
+
+    d2, d30, _d365 = _STALE_DAYS
+    for days in (0, d2 + 1, d30 + 1, 400):
+        stamp = (datetime.now(timezone.utc) - timedelta(days=days, minutes=1)
+                 ).isoformat()
+        level, why = _fetch_age_state(_record(tmp_path, monkeypatch, stamp))
+        assert level == _by_days(days + 0.001), (days, level, why)
+
+
+@pytest.mark.parametrize("stamp,what", [
+    (None, "no such field in the record"),
+    ("", "an empty timestamp"),
+    ("yesterday", "a timestamp that is not a date"),
+    (1758326400, "a number where an ISO string belongs"),
+])
+def test_an_unreadable_fetch_timestamp_fails_closed(stamp, what, tmp_path,
+                                                    monkeypatch):
+    """FAIL CLOSED, like every other path in this subsystem. A record that cannot
+    say when it was fetched is not fresh by default; it is UNKNOWN, which refuses.
+    The forbidden fallback is to reach for the file's mtime when the field is
+    missing — that turns every malformed record into a perfect score."""
+    from core.notary import UNKNOWN
+
+    level, why = _fetch_age_state(_record(tmp_path, monkeypatch, stamp))
+    assert level == UNKNOWN, f"{what} scored {level}: {why}"
+
+
+def test_a_missing_fetch_record_fails_closed(tmp_path, monkeypatch):
+    """A step that has not fetched at all has no observation date, and no
+    observation date is UNKNOWN — never 'nothing to be stale, so fine'. This is
+    the same trap _age_state fell into until 17 Aug 2026."""
+    from core import notary as _N
+    from core.notary import UNKNOWN
+
+    monkeypatch.setattr(_N, "BASE", tmp_path)
+    level, why = _fetch_age_state({"records": ["recs/absent.json"],
+                                   "timestamp_field": "extracted_at"})
+    assert level == UNKNOWN, why
+
+
+def test_a_naive_timestamp_is_read_as_utc_not_as_local_time():
+    """A record written without an offset must not be read as local time: on a
+    machine three hours ahead that would make a just-fetched record look three
+    hours stale, and on one behind it would place the fetch in the future."""
+    from core.notary import _parse_stamp
+
+    naive = datetime(2026, 9, 20, 12, 0, 0)
+    assert _parse_stamp(naive.isoformat()) == naive.replace(
+        tzinfo=timezone.utc).timestamp()
+
+
+def test_a_broken_live_declaration_is_no_declaration_at_all(tmp_path,
+                                                            monkeypatch):
+    """The safety property of the whole file, restated for the new key: a
+    declaration that cannot be read must leave the step exactly where it was,
+    which is UNKNOWN. It must never be half-honoured."""
+    from core import declared_inputs as DI
+
+    for broken in ({"timestamp_field": "extracted_at"},            # no records
+                   {"records": [], "timestamp_field": "x"},        # empty
+                   {"records": ["a.json"]},                        # no field
+                   {"records": ["a.json"], "timestamp_field": ""},
+                   {"records": ["C:/elsewhere/a.json"], "timestamp_field": "x"},
+                   {"records": ["../outside.json"], "timestamp_field": "x"},
+                   {"records": "a.json", "timestamp_field": "x"},
+                   "not a dict"):
+        f = tmp_path / "decl.json"
+        f.write_text(json.dumps({"steps": {"s": {"inputs": [],
+                                                 "live_fetch": broken}}}),
+                     encoding="utf-8")
+        monkeypatch.setattr(DI, "PATH", f)
+        assert DI.live_fetch_for("s") is None, broken
+
+
+# ── the declaration is BOUND to what the scout actually writes ──────────────
+
+def test_the_declared_fetch_records_are_the_ones_the_scout_writes():
+    """The same binding _DECLARED_VERIFIER_READS does for file inputs, for the
+    fetch records: the declaration names one file per key of scout.SOURCES, and
+    goes red if that table grows a key without the declaration following.
+
+    NOT A GREP OVER PROSE — the table is imported and read. A source added to the
+    scout and not declared here would otherwise be fetched every night and never
+    counted when the step is aged, which means the OLDEST fetch could be arbitrarily
+    stale while the step scored FULL on the one record that was declared.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "scout_for_test", REPO / "experiments" / "browser_scout" / "scout.py")
+    scout = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(scout)
+
+    expected = {f"memory/browse_sources/{key}.json" for key in scout.SOURCES}
+    declared = set(live_fetch_for("browser_scout")["records"])
+    assert declared == expected, (
+        f"browser_scout declares {sorted(declared)} but scout.SOURCES writes "
+        f"{sorted(expected)}. Every key of SOURCES is refreshed by run_all(), so "
+        f"every one of them is part of this step's observation date.")
+
+
+def test_the_declared_timestamp_field_is_one_the_scout_writes():
+    """Binds the field name to the record the module builds. A renamed field
+    would otherwise fail closed every night — correctly, and for a reason nobody
+    could see from the declaration."""
+    import ast
+
+    src = (REPO / "experiments" / "browser_scout" / "scout.py").read_text(
+        encoding="utf-8")
+    keys = set()
+    for node in ast.walk(ast.parse(src)):
+        if isinstance(node, ast.Dict):
+            keys |= {k.value for k in node.keys
+                     if isinstance(k, ast.Constant) and isinstance(k.value, str)}
+    field = live_fetch_for("browser_scout")["timestamp_field"]
+    assert field in keys, (
+        f"scout.py writes no {field!r} key; the declaration in "
+        f"config/step_inputs.json names a field the record does not carry")
+
+
+# ── and the step itself, on this repo, right now ────────────────────────────
+
+def test_browser_scout_is_aged_by_its_fetch_and_is_not_called_blind():
+    """The live check, on this repo. Before 20 Sep this step scored UNKNOWN(0)
+    and _blindness() named it as unable to say what it reads. It can say: it
+    reports when it last looked."""
+    from core.notary import _blindness
+
+    spec = live_fetch_for("browser_scout")
+    assert spec, "browser_scout lost its live-fetch declaration"
+    level, why = _fetch_age_state(spec)
+    assert level > 0, f"still UNKNOWN: {why}"
+    assert "теглене" in why, why
+    assert _blindness("browser_scout", {}) == "", (
+        "a step that records when it looked is not blind; it is datable")
+
+
+def test_a_live_fetch_declaration_does_not_open_the_inputs_door():
+    """The ban it was carved around stays exactly where it was: the records are
+    declared under their own key, and memory/browse_sources must never appear in
+    'inputs', where it would be the step grading itself off its own output."""
+    doc = json.loads((REPO / "config" / "step_inputs.json").read_text(
+        encoding="utf-8"))
+    entry = doc["steps"]["browser_scout"]
+    assert entry["inputs"] == [], entry["inputs"]
+    assert not any("browse_sources" in p for p in entry["inputs"])
+    assert entry["live_fetch"]["records"], "the records are declared nowhere"
+
+
+def test_the_gate_asks_the_fetch_path_and_not_the_file_path(monkeypatch):
+    """MUTATION NET ON THE WIRING. The two functions can both be correct and the
+    gate still never reach the new one — which is exactly what an unwired module
+    looks like from the outside. vector() must consult the live-fetch path for a
+    step that declares one, so removing the dispatch turns this red."""
+    from core import notary as _N
+
+    called = []
+    monkeypatch.setattr(_N, "_fetch_age_state",
+                        lambda spec: called.append(spec) or (3, "fetched"))
+    vec = _N.vector("browser_scout", prev_step=_N.PREV_NONE)
+    assert called, ("vector() graded browser_scout without asking "
+                    "_fetch_age_state — the live-fetch path is not wired in")
+    assert vec["why"]["age"] == "fetched", vec["why"]["age"]

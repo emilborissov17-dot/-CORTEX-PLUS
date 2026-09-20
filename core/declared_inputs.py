@@ -35,6 +35,31 @@ declaration that is absent, unreadable or malformed degrades to exactly today's
 behaviour rather than to trust — every failure path below returns None or [], and
 both of those score UNKNOWN at the gate.
 
+A SECOND CLASS OF INPUT: THE LIVE FETCH (20 September 2026)
+-----------------------------------------------------------
+The rule above ages a step by the files it opens, and for a year that covered
+every step. It does not cover `browser_scout`, which opens no file on the cycle
+path at all: run_all() loops a table of URLs and fetches each one over HTTP. Its
+input is the world. An AST census found one write_text (its own output) and one
+read_text behind sys.argv, which the cycle never takes.
+
+That step is in VERIFIERS — the short list of steps allowed to BREAK inherited
+provenance, precisely because they check against a live external source. So the
+model had it both ways: the step held that right for verifying against the live
+world, and was scored UNKNOWN(0) for having no file to be aged by. The
+configuration was not what was wrong. The model was.
+
+Both available remedies were worse than the defect. Declaring a file it does not
+read is fabricated provenance. Declaring the directory it WRITES makes a step
+grade itself off its own cache.
+
+The fix is a category the model was missing. A live fetch is aged by ITS OWN
+FETCH TIMESTAMP, written into the record at the moment of fetching — which is
+the observation date, which is exactly what the age dimension asks every other
+step for. `live_fetch` is a separate key from `inputs` and carries exactly two
+things: which records to read, and which field in them holds that timestamp.
+Nothing else about those records is looked at — not their value, not their mtime.
+
 WHO OWNS THE FILE
 -----------------
 A human. `config/step_inputs.json` is named in `safety/protected_paths.py`, so no
@@ -59,6 +84,7 @@ PATH = BASE / REL
 # the attestation record says WHERE the trust came from, not merely how much of it.
 SOURCE_WRITTEN = f"the written declaration in {REL}"
 SOURCE_SCANNER = "the static scanner in core/cycle_graph.scan_requires()"
+SOURCE_LIVE_FETCH = f"the live-fetch declaration in {REL}"
 
 
 def _clean(rel) -> str | None:
@@ -76,6 +102,83 @@ def _clean(rel) -> str | None:
     if norm[1:2] == ":" or ".." in norm.split("/"):
         return None
     return norm
+
+
+def _clean_live(entry) -> dict | None:
+    """A usable live-fetch declaration, or None.
+
+    A LIVE FETCH is a step whose input is not a file in this repo but the world.
+    It opens a URL; the answer exists only in the moment it was asked. Such a step
+    cannot be aged by a file's mtime, because on the cycle path it opens no file —
+    and it must not be HANDED one to be aged by, which would be provenance it did
+    not earn and is the exact fabrication the whole subsystem refuses.
+
+    What it can state honestly is WHEN IT LAST LOOKED, because the fetch writes
+    that timestamp into the record it produces, at the moment of fetching. The age
+    dimension asks for the observation date of what enters the composite; for a
+    live fetch the observation date IS the fetch timestamp. Nothing else about the
+    record is read — not its value, not its size, not its mtime.
+
+    THE SELF-GRADING TRAP, AND WHY THIS IS NOT IT. A step must not be aged by its
+    own cache: a cache is a copy of an older observation, so one missed night would
+    hold the step down for ever over data that never changed. A fetch record is the
+    opposite — if the scout did not fetch last night, its picture of the live world
+    IS a night old, and saying so is the measurement, not a penalty. That is why
+    this lives in its own key and not in `inputs`, where a path a step writes is
+    still forbidden.
+
+    Refuses anything it cannot fully resolve: `records` that is not a non-empty
+    list of repo-relative paths, or a `timestamp_field` that is not a non-empty
+    string. A half-read declaration leaves the step exactly where it was — with no
+    declaration at all, which scores UNKNOWN.
+    """
+    if not isinstance(entry, dict):
+        return None
+    raw = entry.get("records")
+    field = entry.get("timestamp_field")
+    if not isinstance(raw, list) or not raw:
+        return None
+    if not isinstance(field, str) or not field.strip():
+        return None
+    cleaned = [c for c in (_clean(r) for r in raw) if c]
+    # All or nothing, for the same reason as _load(): a shrunken list is a WIDER
+    # grade, and the record a typo drops is exactly the one that would have been
+    # oldest.
+    if len(cleaned) != len(raw):
+        return None
+    return {"records": cleaned, "timestamp_field": field.strip()}
+
+
+def _load_live() -> dict:
+    """{step: {records, timestamp_field}} for every step that declares a live fetch.
+
+    Fails closed on every path, exactly like _load(): a step whose live-fetch
+    declaration is missing, malformed or unresolvable simply does not appear here,
+    and is then graded by its file inputs — which for a live fetch is [], which is
+    UNKNOWN. Nothing here can raise a step's provenance by being broken.
+    """
+    try:
+        doc = json.loads(PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    steps = doc.get("steps")
+    if not isinstance(steps, dict):
+        return {}
+    out: dict = {}
+    for step, entry in steps.items():
+        if not isinstance(step, str) or not step.strip():
+            continue
+        if not isinstance(entry, dict) or "live_fetch" not in entry:
+            continue
+        spec = _clean_live(entry["live_fetch"])
+        if spec:
+            out[step] = spec
+    return out
+
+
+def live_fetch_for(step: str) -> dict | None:
+    """The live-fetch record set of `step`, or None if it does not declare one."""
+    return _load_live().get(step)
 
 
 def _load() -> dict:
@@ -127,6 +230,8 @@ def all_declared() -> dict:
 
 def source_for(step: str) -> str:
     """Which origin a reason string should name for this step's input list."""
+    if live_fetch_for(step) is not None:
+        return SOURCE_LIVE_FETCH
     return SOURCE_WRITTEN if for_step(step) is not None else SOURCE_SCANNER
 
 
@@ -136,7 +241,8 @@ def source_for(step: str) -> str:
 
 def selftest() -> dict:
     rep: dict = {"declaration": REL, "exists": PATH.exists(),
-                 "declared_steps": sorted(_load()), "integrations": {}}
+                 "declared_steps": sorted(_load()),
+                 "live_fetch_steps": sorted(_load_live()), "integrations": {}}
 
     try:
         from core.cycle_graph import scan_requires
@@ -155,6 +261,11 @@ def selftest() -> dict:
         rep["integrations"]["core.notary"] = (
             "LIVE - the gate reads the declaration" if "declared_inputs" in src else
             "INERT - core/notary.py does not consult this module")
+        rep["integrations"]["core.notary live_fetch"] = (
+            "LIVE - a live fetch is aged by its fetch timestamp"
+            if "_fetch_age_state" in src else
+            "INERT - core/notary.py still ages every step by file mtime, so a step "
+            "that reads only the world scores UNKNOWN")
     except Exception as e:
         rep["integrations"]["core.notary"] = f"INERT - {type(e).__name__}: {e}"
 
@@ -170,6 +281,11 @@ def selftest() -> dict:
         rep.setdefault("steps", {})[step] = {
             "inputs": files,
             "missing_on_disk": [f for f in files if not (BASE / f).exists()]}
+    for step, spec in sorted(_load_live().items()):
+        rep.setdefault("steps", {}).setdefault(step, {})["live_fetch"] = {
+            "records": spec["records"], "timestamp_field": spec["timestamp_field"],
+            "missing_on_disk": [f for f in spec["records"]
+                                if not (BASE / f).exists()]}
     return rep
 
 

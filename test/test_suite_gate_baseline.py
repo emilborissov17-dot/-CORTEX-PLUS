@@ -234,7 +234,14 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # .vbs, all twelve Task Scheduler actions, the whole of Desktop/AGI), so the step
     # stopped writing it and the path left config/cycle_phases.json. Nothing was
     # declared that is not read.
-    assert len(known) == 5, "the baseline changed size, got %d" % len(known)
+    # 4 on 20 Sep, same day: test_verifier_inputs::test_every_verifier_declares
+    # _what_it_reads was the OTHER one awaiting a decision. browser_scout could not
+    # declare a file input because it opens none - it fetches URLs - so the
+    # provenance model grew a second category instead: a live fetch is aged by the
+    # timestamp the fetch itself recorded. config/passage_rules.json untouched, no
+    # file input fabricated, and the step went from UNKNOWN(0) to FULL(3) with a
+    # reason that names the fetch.
+    assert len(known) == 4, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

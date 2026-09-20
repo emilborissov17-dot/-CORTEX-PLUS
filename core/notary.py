@@ -338,10 +338,78 @@ def _age_state(inputs: list, source: str | None = None) -> tuple:
     if oldest is None:
         return UNKNOWN, "възрастта на входовете е неизвестна" + tail
     days = (now - oldest) / 86400.0
+    return _by_days(days), f"най-стар вход {oldest_name}: {days:.1f} дни" + tail
+
+
+def _by_days(days: float) -> int:
+    """Праговете за давност, на едно място, за двата вида произход."""
     d2, d30, d365 = _STALE_DAYS
-    lvl = FULL if days <= d2 else REDUCED if days <= d30 else \
+    return FULL if days <= d2 else REDUCED if days <= d30 else \
         MINIMAL if days <= d365 else UNKNOWN
-    return lvl, f"най-стар вход {oldest_name}: {days:.1f} дни" + tail
+
+
+def _live_fetch_for(step: str):
+    """Обявеният ЖИВ ИЗТОЧНИК на стъпката, или None. Проваля се затворено."""
+    try:
+        from core.declared_inputs import live_fetch_for
+        return live_fetch_for(step)
+    except Exception:
+        return None
+
+
+def _parse_stamp(raw) -> float | None:
+    """ISO 8601 -> epoch. Наивното време се чете като UTC, не като локално."""
+    if not isinstance(raw, str) or not raw.strip():
+        return None
+    try:
+        dt = datetime.fromisoformat(raw.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.timestamp()
+
+
+def _fetch_age_state(spec: dict) -> tuple:
+    """Възрастта на ЖИВО ТЕГЛЕНЕ — по времето, което самото теглене е записало.
+
+    ЗАЩО СЪЩЕСТВУВА (20 сеп 2026). _age_state пита файловете на диска на колко са
+    дни. За browser_scout този въпрос няма отговор: стъпката не отваря никакъв файл
+    по пътя на цикъла — тегли URL-и. Тя обаче Е в VERIFIERS, тоест има правото да
+    ПРЕЧУПИ наследения произход именно защото сверява срещу живия свят, и в същото
+    време получаваше UNKNOWN(0), защото няма артефакт, по който да бъде остарена.
+    Сгрешен беше МОДЕЛЪТ, не настройката.
+
+    Наблюдателната дата на едно живо теглене е мигът на тегленето, и този миг е
+    записан в самия запис. Това е същото, което възрастовото измерение пита всяка
+    друга стъпка: кога е наблюдавано онова, което влиза в композита.
+
+    ЧЕТЕ СЕ САМО ПОЛЕТО С ВРЕМЕТО. Не стойността, не размерът и НЕ mtime-ът на
+    файла: mtime се мести при всяко пипване и при възстановяване от git, докато
+    записаното време не може да се подмени, без да се подмени и самият запис.
+
+    ПРОВАЛЯ СЕ ЗАТВОРЕНО навсякъде: липсващ запис, липсващо поле, неразчетимо време
+    -> UNKNOWN. Празен списък не може да стигне дотук — _clean_live() отхвърля
+    такава декларация още при четенето.
+    """
+    field, rels = spec["timestamp_field"], spec["records"]
+    tail = f" (възрастта идва от полето {field}, записано при самото теглене)"
+    now = datetime.now(timezone.utc).timestamp()
+    oldest, oldest_name = None, None
+    for rel in rels:
+        try:
+            raw = json.loads((BASE / rel).read_text(encoding="utf-8")).get(field)
+        except Exception:
+            return UNKNOWN, f"записът от теглене липсва или е нечетим: {rel}" + tail
+        ts = _parse_stamp(raw)
+        if ts is None:
+            return UNKNOWN, f"{rel}: няма разчетимо {field}" + tail
+        if oldest is None or ts < oldest:
+            oldest, oldest_name = ts, rel
+    if oldest is None:
+        return UNKNOWN, "няма записи от теглене" + tail
+    days = (now - oldest) / 86400.0
+    return _by_days(days), f"най-старо теглене {oldest_name}: {days:.1f} дни" + tail
 
 
 def _promise_state(prev_step: str | None, step: str | None = None) -> tuple:
@@ -391,7 +459,11 @@ def vector(step: str, prev_step: str | None = PREV_UNKNOWN,
     w, wl = _witness_state()
     h, hl = _human_state()
     t, tl = _thought_state()
-    a, al = _age_state(inputs, inputs_source)
+    # ДВА ПРОИЗХОДА ЗА ВЪЗРАСТТА, и стъпката казва кой е нейният. Стъпка с обявен
+    # жив източник се съди по времето на собственото си теглене; всяка друга — по
+    # възрастта на файловете, които чете. Обявяването е ръчно и се вижда в diff-а.
+    live = _live_fetch_for(step)
+    a, al = _fetch_age_state(live) if live else _age_state(inputs, inputs_source)
     p, pl = _promise_state(prev_step, step)
     return {"witness": w, "human": h, "thought": t, "age": a, "promise": p,
             "why": {"witness": wl, "human": hl, "thought": tl, "age": al, "promise": pl}}
@@ -476,7 +548,11 @@ def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
            "ceiling_binds": ceiling_binds,
            "level_name": LEVEL_NAMES.get(level, str(level)),
            "products": products, "inputs": inputs,
-           "inputs_source": inputs_source}
+           "inputs_source": inputs_source,
+           # None за обикновения случай, така че ред, който носи списък, е ред,
+           # чиято възраст идва от време на теглене, а не от mtime на файл.
+           # Влиза във веригата, защото ниво без произход е просто число.
+           "live_fetch": (_live_fetch_for(step) or {}).get("records")}
     _append(rec)
     return rec
 
@@ -560,6 +636,11 @@ def _producers_of(artifact: str) -> list:
         return []
 
 
+def _declares_provenance(step: str) -> bool:
+    """Може ли стъпката изобщо да каже откъде знае — по файлове или по теглене."""
+    return bool(_inputs_for(step)[0]) or bool(_live_fetch_for(step))
+
+
 def _blindness(step: str, rec: dict) -> str:
     """Назовава стъпката, чиято слепота е причинила ТОЗИ отказ, или ''.
 
@@ -567,12 +648,16 @@ def _blindness(step: str, rec: dict) -> str:
       1. самата стъпка не може да каже какво чете;
       2. нивото е наследено от артефакт, чийто ПРОИЗВОДИТЕЛ не може.
     """
-    if not _inputs_for(step)[0]:
+    # СЛЯПА Е СТЪПКА, КОЯТО НЕ МОЖЕ ДА КАЖЕ ОТКЪДЕ ЗНАЕ — а не всяка стъпка без
+    # файлови входове. Стъпка с обявен жив източник казва точно това: кога е
+    # гледала. Тя може да бъде ОЦЕНЕНА НИСКО, ако е гледала отдавна, и това е
+    # присъда, не слепота — разликата, заради която тази функция съществува.
+    if not _declares_provenance(step):
         return f"blind step {step!r} (itself): {BLIND_WHY}"
     art = rec.get("inherited_from")
     if art and rec.get("inherited", FULL) < rec.get("own", FULL):
         blind = [p for p in _producers_of(art)
-                 if p != step and not _inputs_for(p)[0]]
+                 if p != step and not _declares_provenance(p)]
         if blind:
             who = ", ".join(repr(b) for b in blind)
             return f"blind step {who} (produces {art}): {BLIND_WHY}"
