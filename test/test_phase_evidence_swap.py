@@ -63,14 +63,83 @@ def test_each_menu_carries_at_least_two_numbers_no_other_phase_has(phase):
         f"the swap test cannot distinguish it from another phase")
 
 
-def test_the_composite_belongs_to_the_phase_that_computes_it():
+def test_no_phase_but_d_score_may_hold_the_composite():
     """A_ORIENT runs before the scorer. Handing it the composite meant handing
-    it YESTERDAY'S composite and calling it this phase's own data."""
+    it YESTERDAY'S composite and calling it this phase's own data.
+
+    DE-COUPLED FROM LIVE STATE, 20 Sep 2026, and the claim is unchanged. This
+    asserted `holders == ["D_SCORE"]`, which is two claims wearing one
+    assertion: that nobody ELSE holds the composite, and that D_SCORE holds it
+    TODAY. The first is structural. The second is a fact about this morning's
+    numbers, and it went red on 20 Sep for a reason that is not a defect:
+
+        snapshots/master/goal_score_latest.json, read live -
+            composite_score            = None
+            composite_score_withheld   = 0.6251
+            composite_valid            = False
+            coverage 0.6826 < coverage_min 0.8
+
+    The composite is WITHHELD because coverage is 68% against a floor of 80%,
+    so the key is None, and _put() drops a None on purpose - "a menu full of
+    nulls trains the reader to skip the menu". Nothing about the ownership rule
+    stopped being true; there was no number to own. Raising coverage is the
+    facade work, not a test fix, and making the gate green by asserting the
+    withheld value instead would be asserting that the composite is published
+    when the system is refusing to publish it.
+
+    So the structural half gates, here, deterministically: no phase but D_SCORE
+    may carry the key, whether or not there is a value in it today. The live
+    half is the test below, marked like its two siblings in this file."""
     menus = pe.all_menus()
     holders = [p for p in pe.PHASES if "composite_score" in menus[p]]
-    assert holders == ["D_SCORE"], (
+    assert set(holders) <= {"D_SCORE"}, (
         f"composite_score is in {holders}; it is D_SCORE's number and nobody "
         f"else's")
+
+
+def test_only_d_scores_builder_names_the_composite_in_the_code():
+    """The same rule one level down, where no live value can silence it.
+
+    The test above can only see keys that HAVE a value this morning, so on a day
+    the composite is withheld it would pass over a menu that had quietly gained
+    A_ORIENT as a holder. This reads the builders instead: exactly one function
+    in the _MENUS dispatch may name composite_score, and it is D_SCORE's."""
+    import ast
+    import inspect
+
+    src = inspect.getsource(pe)
+    tree = ast.parse(src)
+    by_name = {n.name: n for n in ast.walk(tree)
+               if isinstance(n, ast.FunctionDef)}
+
+    naming = []
+    for phase, fn in pe._MENUS.items():
+        node = by_name.get(fn.__name__)
+        assert node is not None, f"{fn.__name__} not found in the source"
+        for c in ast.walk(node):
+            if isinstance(c, ast.Constant) and c.value == "composite_score":
+                naming.append(phase)
+                break
+    assert naming == ["D_SCORE"], (
+        f"these phase builders name composite_score: {naming}. It is computed "
+        f"by the scorer and belongs to D_SCORE alone; a phase that runs before "
+        f"the scorer can only be handed yesterday's number.")
+
+
+# LIVE_STATE (20 Sep 2026): whether D_SCORE's menu carries the composite depends
+# on whether the composite was published this morning, and it is withheld while
+# coverage sits under the floor. An operational fact, not a gate.
+@pytest.mark.live_state
+def test_d_score_carries_the_composite_when_one_was_published():
+    menus = pe.all_menus()
+    goal = pe._json("snapshots/master/goal_score_latest.json")
+    if not isinstance(goal, dict) or goal.get("composite_score") is None:
+        pytest.skip(
+            "no composite was published: composite_score=%r withheld=%r "
+            "coverage=%r < %r" % (goal.get("composite_score"),
+                                  goal.get("composite_score_withheld"),
+                                  goal.get("coverage"), goal.get("coverage_min")))
+    assert "composite_score" in menus["D_SCORE"]
 
 
 def test_a_menu_never_raises_even_against_an_empty_repo(tmp_path):

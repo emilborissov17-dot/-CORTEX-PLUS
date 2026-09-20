@@ -38,10 +38,42 @@ import pathlib
 import sys
 import tempfile
 
+import pytest
+
 BASE = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
+from core import durable as _D  # noqa: E402
 from core import redact as R  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _own_batch_buffer_only():
+    """This file must flush what IT queued, not what the suite left behind.
+
+    THE COUPLING, measured 20 Sep 2026. test_the_durable_write_path_scrubs_both
+    _modes calls durable.barrier(), and barrier() takes sorted(durable._pending)
+    and REOPENS every path in it for append. _pending is a module-level set —
+    correct in production, where one process runs one cycle and every beat()
+    flushes it — but a suite has no beats, so any earlier test that made a
+    batched write leaves a LIVE path in that set. This test's barrier() then
+    appends to it, and test/conftest.py::_no_live_writes attributes the write to
+    this test. Green alone (3 of 3) and green as a file (3 of 3), red only inside
+    the full run.
+
+    The guard is right and the global is not the defect, so the same remedy as
+    test/test_durable_writes.py::_own_buffer_only: swap the buffer for an empty
+    one around each test and restore it afterwards. No I/O, nothing flushed, no
+    other test's queued write dropped. Hunting the specific polluter would fix
+    nothing that lasts — the next batched write anywhere re-creates it.
+    """
+    saved = set(_D._pending)
+    _D._pending.clear()
+    try:
+        yield
+    finally:
+        _D._pending.clear()
+        _D._pending.update(saved)
 
 # Real shapes, none of them a live credential: each body is filler of the right
 # length and alphabet. A test must never carry a working key.
@@ -289,3 +321,33 @@ def test_every_backend_the_chain_calls_has_a_pattern():
         f"core/groq_backend.py loads {missing} and core/redact.py has no pattern "
         f"for them. A backend added without its key shape is a key that reaches a "
         f"log: add the rule in the same commit as the backend.")
+
+
+# --------------------------------------------------------------------------- #
+# the de-coupling above, asserted rather than described
+# --------------------------------------------------------------------------- #
+
+def test_barrier_reopens_every_path_left_in_the_shared_buffer(tmp_path):
+    """The mechanism the fixture exists for, on a tmp path instead of a live one.
+
+    barrier() takes sorted(durable._pending) and reopens each entry for append.
+    A path another test left in that set is therefore written FROM HERE, and the
+    write is charged to this test. Asserted rather than described, so that if
+    barrier() ever stops doing it the fixture above becomes provably
+    unnecessary instead of silently pointless."""
+    victim = tmp_path / "someone_elses.jsonl"
+    assert not victim.exists()
+    _D._pending.add(str(victim))
+    _D.barrier()
+    assert victim.exists(), (
+        "barrier() did not touch a path left in durable._pending; the coupling "
+        "this file guards against would no longer exist")
+
+
+def test_the_shared_buffer_is_empty_inside_every_test_in_this_file():
+    """The fixture's own effect, so removing it is visible here rather than as a
+    teardown error in the full suite forty minutes later."""
+    assert _D._pending == set(), (
+        f"the shared batch buffer is not empty inside this test: "
+        f"{sorted(_D._pending)[:3]}. barrier() would flush another test's queued "
+        f"path and _no_live_writes would charge the append to this file.")

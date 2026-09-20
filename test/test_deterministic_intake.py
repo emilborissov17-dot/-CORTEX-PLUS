@@ -173,6 +173,18 @@ def write_spec(deterministic=True):
             {"id": "det", "kind": "file", "path": "test/_deterministic_feed.json",
              "extract": "value", "org": "T", "unit": "u",
              "deterministic": deterministic,
+             # DECLARED 20 Sep 2026, and the fixture is what was fixed rather
+             # than the gate. core.cadence.load_specs refuses a spec whose
+             # source declares no cadence; it was wired into compose() on 19 Sep
+             # after existing uncalled since 6 Sep, and it then refused this
+             # fixture at import, so the module stopped collecting. The evidence
+             # for the value is three lines below and again at the bottom of
+             # this file: _deterministic_feed.json is rewritten by this test
+             # several times within a single run, so its observations arrive as
+             # often as the test writes them. daily is the fastest tier and the
+             # tightest freshness rule. The slot name is not evidence — 5 of the
+             # 28 live anchor_annual sources are daily.
+             "cadence": "daily",
              "schema": {"type": "dict", "keys": ["as_of", "value"]}}]}}}}),
         encoding="utf-8")
 

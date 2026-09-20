@@ -646,3 +646,11 @@ test/test_verifier_inputs.py b44368372981  # BACKED: test_verifier_inputs.test_e
 test/test_verifier_inputs.py b598e5ac7a5f  # BACKED: test_verifier_inputs.test_an_undeclared_verifier_really_does_score_unknown asks the notary and asserts UNKNOWN(0)
 test/test_verifier_inputs.py bc62b4c83f6d  # BACKED: test_verifier_inputs.test_the_gate_asks_the_fetch_path_and_not_the_file_path fails if vector() stops consulting _fetch_age_state
 test/test_verifier_inputs.py fae9fb02e822  # BACKED: the assertion is in the body of the test this docstring belongs to: test_an_undeclared_verifier_really_does_score_unknown
+
+# ── 20 Sep 2026, the baseline reconciliation. Same kind as the block
+# above: each names the assertion that goes red when it stops being true.
+test/test_consult_roster.py eca1f3048ddf  # BACKED: test_consult_roster.test_load_refuses_when_the_provenance_redirect_is_not_in_place removes the tmp dir and asks for the RuntimeError by name
+test/test_phase_evidence_swap.py 685e84dcbf7c  # BACKED: test_phase_evidence_swap.test_no_phase_but_d_score_may_hold_the_composite asserts set(holders) <= {D_SCORE} with no dependence on today's value
+test/test_phase_evidence_swap.py 723be6ebab28  # BACKED: test_phase_evidence_swap.test_only_d_scores_builder_names_the_composite_in_the_code, the test this docstring belongs to - verified by mutation on 20 Sep by making _a_orient name the key
+test/test_phase_evidence_swap.py ab30ad29d248  # BACKED: test_phase_evidence_swap.test_no_phase_but_d_score_may_hold_the_composite, the test this docstring belongs to; the live half it describes is the skip in test_d_score_carries_the_composite_when_one_was_published
+test/test_redact.py 9d52125f6ece  # BACKED: test_redact.test_barrier_reopens_every_path_left_in_the_shared_buffer proves the mechanism on a tmp path; test_the_shared_buffer_is_empty_inside_every_test_in_this_file proves the fixture removes it

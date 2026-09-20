@@ -7,8 +7,36 @@ import sys
 import types
 from pathlib import Path
 
+import pytest
+
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
+
+
+# ── NO TEST WRITES PRODUCTION PROVENANCE (20 Sep 2026) ──────────────────────
+# consult._record_refusal appends to memory/llm_provenance.jsonl, and every test
+# here that drives a refusal path was appending to the LIVE file — 9120 rows the
+# system reads to answer "which backend served what". The suite's
+# _no_live_writes fixture caught it, which is the guard working; the leak is
+# what was wrong, not the guard.
+#
+# test/test_consult_free_only.py redirects consult.PROVENANCE with a
+# monkeypatch, but it imports the module once at the top. This file loads a
+# FRESH copy per test through _load(), so PROVENANCE is recomputed every time
+# and a module-level patch is gone before the module exists.
+#
+# So the redirect happens inside _load(), off a directory an autouse fixture
+# supplies. If a future test ever calls _load() outside that fixture, _load
+# RAISES rather than falling back to the live path: a fixture that quietly
+# degrades to writing production is the failure this whole comment is about.
+_TMP: dict = {}
+
+
+@pytest.fixture(autouse=True)
+def _provenance_to_tmp(tmp_path):
+    _TMP["dir"] = tmp_path
+    yield
+    _TMP.clear()
 
 
 def _load(monkeypatch, keys):
@@ -22,6 +50,12 @@ def _load(monkeypatch, keys):
     spec = importlib.util.spec_from_file_location("consult_under_test", REPO / "experiments" / "kimi_duel" / "consult.py")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
+    if "dir" not in _TMP:
+        raise RuntimeError(
+            "_load() was called outside the _provenance_to_tmp fixture, so "
+            "consult.PROVENANCE still points at memory/llm_provenance.jsonl. "
+            "Refusing rather than writing production provenance from a test.")
+    mod.PROVENANCE = _TMP["dir"] / "llm_provenance.jsonl"
     return mod
 
 
@@ -99,3 +133,15 @@ def test_nvidia_kimi_is_asked_first_when_its_key_exists(monkeypatch):
     r = C.ask_kimi("brief")
     assert r["ok"] and r["is_kimi"] and r["backend"] == "nvidia:moonshotai/kimi-k2.6"
     assert calls == ["https://integrate.api.nvidia.com/v1/chat/completions"]
+
+
+def test_load_refuses_when_the_provenance_redirect_is_not_in_place(monkeypatch):
+    """MUTATION NET on the fixture above, and on its promise not to degrade.
+
+    A fixture that falls back to the live path when it is not in place is worse
+    than no fixture: it writes production provenance on the one run nobody was
+    watching. _load() must refuse instead, so this removes the tmp directory and
+    asks for the refusal by name."""
+    monkeypatch.delitem(_TMP, "dir", raising=False)
+    with pytest.raises(RuntimeError, match="production provenance"):
+        _load(monkeypatch, {"GROQ_API_KEY": "g"})

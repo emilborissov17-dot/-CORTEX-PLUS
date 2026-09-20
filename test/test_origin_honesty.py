@@ -154,6 +154,31 @@ check("the unmapped queue names both the org and the host to rule on",
 
 # ── C6: THE LOAD-BEARING ONE — the class changes no number anywhere ──────────
 
+# EVERY SOURCE DECLARES A CADENCE, INCLUDING A FIXTURE'S (20 Sep 2026).
+#
+# core/cadence.py has had load_specs() — which refuses composer_specs.json when
+# any source declares no cadence — since 6 Sep, and until 19 Sep NOTHING CALLED
+# IT: composer.compose() read the spec file directly, so a source promoted
+# without a cadence loaded normally. Wiring the gate in was the fix. It then
+# refused this fixture, which predates the requirement, and the refusal happens
+# at IMPORT time here, so the whole module fails to collect.
+#
+# The fixture is fixed, not the gate. A test spec is still a spec: if it may
+# omit a cadence, the gate is only enforced where somebody remembered, which is
+# the state the wiring was supposed to end. The slot name is NOT the evidence —
+# measured in config/composer_specs.json on 20 Sep, 5 of 28 sources in
+# anchor_annual are daily and 2 of 12 in measurement_daily are annual, so
+# "anchor_annual therefore annual" would have been an invented relation.
+#
+# What IS evidence is the file itself: it is written a few lines below, by this
+# module, on every run.
+CADENCE_NOTE = (
+    "a fixture file this test writes itself, at import, on every run, so a new "
+    "observation arrives as often as the test does. Declared daily — the fastest "
+    "tier, and the tightest freshness rule, so it is the value least able to let "
+    "a stale fixture pass. Nothing in compose() reads a source's cadence: it is "
+    "read only by core.cadence.audit_specs, the gate. Declared 20 Sep 2026.")
+
 AXIS = "TESTAX"
 C.SPEC_FILE = TMP / "specs.json"
 C.STATE_DIR = TMP / "state"
@@ -168,12 +193,15 @@ C.SPEC_FILE.write_text(json.dumps({AXIS: {
     "portfolio": {
         "anchor_annual": {"min": 1, "freshness_days": 400, "sources": [
             {"id": "s1", "kind": "file", "path": "test/_origin_honesty_probe.json",
-             "extract": "a", "org": "World Bank", "unit": "u"},
+             "extract": "a", "org": "World Bank", "unit": "u",
+             "cadence": "daily", "cadence_note": CADENCE_NOTE},
             {"id": "s2", "kind": "file", "path": "test/_origin_honesty_probe.json",
-             "extract": "b", "org": "UNHCR", "unit": "u"}]},
+             "extract": "b", "org": "UNHCR", "unit": "u",
+             "cadence": "daily", "cadence_note": CADENCE_NOTE}]},
         "measurement_daily": {"min": 1, "freshness_days": 400, "sources": [
             {"id": "s3", "kind": "file", "path": "test/_origin_honesty_probe.json",
-             "extract": "a", "org": "FAO/WB", "unit": "u"}]},
+             "extract": "a", "org": "FAO/WB", "unit": "u",
+             "cadence": "daily", "cadence_note": CADENCE_NOTE}]},
     }}}), encoding="utf-8")
 
 
@@ -290,9 +318,11 @@ C.SPEC_FILE.write_text(json.dumps({AX2: {
     "portfolio": {"anchor_annual": {"min": 1, "freshness_days": 400, "sources": [
         {"id": "declared_first_but_stale", "kind": "file",
          "path": "test/_origin_honesty_stale.json", "extract": "gone_null",
-         "org": "A", "unit": "u"},
+         "org": "A", "unit": "u",
+         "cadence": "daily", "cadence_note": CADENCE_NOTE},
         {"id": "declared_second_but_fresh", "kind": "file",
-         "path": "test/_origin_honesty_stale.json", "extract": "new", "org": "B", "unit": "u"},
+         "path": "test/_origin_honesty_stale.json", "extract": "new", "org": "B", "unit": "u",
+         "cadence": "daily", "cadence_note": CADENCE_NOTE},
     ]}}}}), encoding="utf-8")
 
 C.STATE_DIR.mkdir(parents=True, exist_ok=True)

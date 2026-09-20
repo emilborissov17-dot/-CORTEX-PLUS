@@ -301,6 +301,25 @@ def test_callers_of_a_name_that_does_not_exist_says_so(tmp_path):
     assert res["files_searched"] == 3
 
 
+def test_a_call_from_inside_the_defining_module_is_neither_live_nor_a_test(tmp_path):
+    """THE THIRD GROUP, and a false verdict before it existed.
+
+    `callers core.cadence.audit_specs` answered "every call site is a test, so
+    this function enforces nothing in the running system" while core/cadence.py
+    called it one line away, from load_specs — the live gate. A self-call is not
+    an outside caller and it is not a test, and collapsing it into either one
+    produces a confident wrong answer about whether a function is wired in."""
+    root = _callers_repo(tmp_path, live=False)
+    (root / "core" / "cadence.py").write_text(
+        "def load_specs(path=None):\n"
+        "    return audit_specs(path)\n"
+        "def audit_specs(path=None):\n"
+        "    return {}\n", encoding="utf-8")
+    res = ask.callers("core.cadence.audit_specs", base=root)
+    assert res["live_outside_test"] == []
+    assert [h["file"] for h in res["live_inside_own_module"]] == ["core/cadence.py"]
+
+
 def test_callers_says_when_every_call_site_is_a_test(tmp_path):
     """MUTATION, and the question the subcommand exists for. Remove the one live
     caller and the answer must change from 'called' to 'enforces nothing' —

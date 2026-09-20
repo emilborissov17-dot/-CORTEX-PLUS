@@ -107,7 +107,9 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
         "behind it is the debt this file holds; more of them is the population "
         "growing in silence, which is what the net exists to stop."
         % len(unbacked))
-    assert len(accepted) <= 625, (
+    # 630 on 20 Sep, later the same day: the baseline reconciliation added five
+    # more, all backed, while the UNBACKED count above did not move at all.
+    assert len(accepted) <= 630, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

@@ -779,10 +779,20 @@ def callers(dotted: str, base: Path | None = None) -> dict:
             hits.append({"file": rel, "line": node.lineno, "as": qual,
                          "in_test": rel.startswith("test/") or
                                     Path(rel).name.startswith("test_")})
-    live = [h for h in hits if not h["in_test"] and h["file"] != (defined or "").split(":")[0]]
+    # THREE GROUPS, NOT TWO, and the third one produced a false verdict before it
+    # existed. `callers core.cadence.audit_specs` answered "every call site is a
+    # test, so this function enforces nothing in the running system" while
+    # core/cadence.py:265 — load_specs, the live gate — calls it one line away.
+    # A call from inside the defining module is not an outside caller and it is
+    # not a test; it is the function being used by its own module, and saying so
+    # is different from saying nobody uses it.
+    home = (defined or "").split(":")[0]
+    live = [h for h in hits if not h["in_test"] and h["file"] != home]
+    internal = [h for h in hits if not h["in_test"] and h["file"] == home]
     return {"dotted": dotted, "module": module, "function": func,
             "defined_at": defined, "files_searched": len(files),
-            "hits": hits, "live_outside_test": live}
+            "hits": hits, "live_outside_test": live,
+            "live_inside_own_module": internal}
 
 
 def print_callers(res: dict) -> None:
@@ -800,8 +810,15 @@ def print_callers(res: dict) -> None:
         print("  (no call sites at all)")
     print()
     n = len(res["live_outside_test"])
+    inside = res.get("live_inside_own_module") or []
     if n:
         print(f"{n} live caller(s) outside test/.")
+    elif inside:
+        where = ", ".join(f"{h['file']}:{h['line']}" for h in inside[:3])
+        print(f"NO caller outside its own module, and {len(inside)} inside it "
+              f"({where}). It is reached only through {res['module']}, so ask "
+              f"whether THAT entry point is called before concluding anything "
+              f"about this one.")
     else:
         print("NO live caller outside test/. Every call site is a test, so this "
               "function enforces nothing in the running system.")
