@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Author>Lespeed Ltd.</Author>
+    <URI>\CORTEX_YouTubeWorker</URI>
+  </RegistrationInfo>
+  <Principals>
+    <Principal id="Author">
+      <UserId>S-1-5-21-630340788-1828273542-2258469637-1001</UserId>
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>HighestAvailable</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <AllowHardTerminate>false</AllowHardTerminate>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <StartWhenAvailable>true</StartWhenAvailable>
+    <IdleSettings>
+      <Duration>PT10M</Duration>
+      <WaitTimeout>PT1H</WaitTimeout>
+      <StopOnIdleEnd>true</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+  </Settings>
+  <Triggers>
+    <LogonTrigger id="trigger1">
+      <StartBoundary>2026-09-07T22:52:31</StartBoundary>
+    </LogonTrigger>
+  </Triggers>
+  <Actions Context="Author">
+    <Exec>
+      <Command>cmd</Command>
+      <Arguments>/c cd /d C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN &amp;&amp; set PYTHONIOENCODING=utf-8 &amp;&amp; python youtube_worker.py</Arguments>
+    </Exec>
+  </Actions>
+</Task>

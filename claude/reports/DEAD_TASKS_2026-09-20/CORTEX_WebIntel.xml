@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-16"?>
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Date>2026-05-08T12:47:41</Date>
+    <Author>EMILIO-LAPTOP\emilb</Author>
+    <URI>\CORTEX_WebIntel</URI>
+  </RegistrationInfo>
+  <Principals>
+    <Principal id="Author">
+      <UserId>S-1-5-21-630340788-1828273542-2258469637-1001</UserId>
+      <LogonType>InteractiveToken</LogonType>
+    </Principal>
+  </Principals>
+  <Settings>
+    <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <IdleSettings>
+      <Duration>PT10M</Duration>
+      <WaitTimeout>PT1H</WaitTimeout>
+      <StopOnIdleEnd>true</StopOnIdleEnd>
+      <RestartOnIdle>false</RestartOnIdle>
+    </IdleSettings>
+  </Settings>
+  <Triggers>
+    <CalendarTrigger>
+      <StartBoundary>2026-05-08T06:00:00</StartBoundary>
+      <ScheduleByDay>
+        <DaysInterval>1</DaysInterval>
+      </ScheduleByDay>
+    </CalendarTrigger>
+  </Triggers>
+  <Actions Context="Author">
+    <Exec>
+      <Command>cmd</Command>
+      <Arguments>/c cd /d C:\Users\emilb\Desktop\AGI\CORTEX++_QWEN &amp;&amp; set PYTHONIOENCODING=utf-8 &amp;&amp; python web_intelligence_agent.py --no-youtube &gt;&gt; logs\daily_log.txt 2&gt;&amp;1</Arguments>
+    </Exec>
+  </Actions>
+</Task>
