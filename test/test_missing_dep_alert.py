@@ -68,11 +68,11 @@ def test_a_binary_that_is_present_but_broken_still_counts_as_missing(monkeypatch
     """A dead runtime is not passed to yt-dlp, so 'found but --version failed'
     must produce the need too — and must say which of the two it is, because
     'install it' is the wrong advice for a binary that is already there."""
-    _fake_status(monkeypatch, deno="C:/deno/deno.exe", deno_ok=False,
+    _fake_status(monkeypatch, deno="C:/deno/deno.exe", deno_ok=False,  # drive-letter-is-data: a fake status string, asserted to reappear verbatim in the alert text
                  ffmpeg="/usr/bin/ffmpeg", ffmpeg_ok=True)
     items = N._missing_media_dep_items()
     assert len(items) == 1
-    assert "C:/deno/deno.exe" in items[0]["why"]
+    assert "C:/deno/deno.exe" in items[0]["why"]  # drive-letter-is-data: the other half of the line above - the alert must name the binary it found
     assert "--version" in items[0]["why"]
 
 

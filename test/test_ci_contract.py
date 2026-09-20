@@ -174,6 +174,39 @@ DRIVE_LETTERS_ARE_THE_POINT = {
     "test/test_openclaw_schema_gate.py",
 }
 
+# THE LINE-LEVEL EXEMPTION, added 20 Sep 2026 — and the reason it is per LINE.
+#
+# DRIVE_LETTERS_ARE_THE_POINT above exempts a whole FILE, which is right for
+# safety/safe_path.py, where drive letters are the subject of every line. It is
+# wrong for a test file that writes one string of test DATA and is otherwise
+# ordinary code: exempting the file hands a permanent licence to the next
+# hardcoded path anybody adds to it, and that is the rule being weakened to
+# accommodate five lines rather than five lines being accounted for.
+#
+# So a line may carry its own exemption, and must state WHY on the line itself:
+#
+#     assert M._version_flag("C:/x/ffmpeg.exe") == "-version"  # drive-letter-is-data: ...
+#
+# The reason is not decoration. A bare marker is refused (test_a_marker_without
+# _a_reason_is_not_an_exemption), so the cheapest way to silence this test is
+# still to write down why the string is data — which is exactly the moment a
+# person notices it is not.
+#
+# WHAT THIS CANNOT CHECK, stated plainly: nothing here can tell a string that is
+# data from a path that is opened. The marker records a HUMAN's claim, on the
+# line, in the diff. What it does buy is that the claim is visible, attached to
+# the one line it excuses, and impossible to make silently.
+EXEMPT = re.compile(r"#\s*drive-letter-is-data:\s*(\S.*)$")
+
+
+def _offending(line: str) -> bool:
+    """One line's verdict, factored out so it can be tested directly rather than
+    only through a scan of the whole repo."""
+    if not DRIVE.search(line) or line.strip().startswith("#"):
+        return False
+    return not EXEMPT.search(line)
+
+
 # Aligned with pytest.ini norecursedirs on 19 Sep 2026. venv_train, Broker-bot
 # and _ARCHIVE were missing, so this scanned a vendored virtualenv and reported
 # numpy's own build paths as OUR hardcoded drive letters.
@@ -196,8 +229,56 @@ def test_no_hardcoded_drive_letters_in_code():
             continue
         for i, line in enumerate(f.read_text(encoding="utf-8",
                                              errors="ignore").splitlines(), 1):
-            if DRIVE.search(line) and not line.strip().startswith("#"):
+            if _offending(line):
                 offenders.append(f"{rel}:{i}: {line.strip()[:100]}")
     assert not offenders, (
         "hardcoded drive letters make a path mean different things on different "
-        "platforms:\n" + "\n".join(offenders))
+        "platforms:\n" + "\n".join(offenders)
+        + "\n\nIf the path is EXECUTED, make it platform-neutral — Path(base.anchor) "
+          "is the filesystem root on both. If the string is DATA the test never "
+          "opens, say so on the line: `# drive-letter-is-data: <why>`. Do not add "
+          "the file to DRIVE_LETTERS_ARE_THE_POINT unless drive letters are what "
+          "the whole file is about.")
+
+
+def test_a_line_without_the_marker_is_still_an_offender():
+    """The rule itself, on one line, so the scan above cannot be the only thing
+    holding it. If the marker ever matched too eagerly this goes red."""
+    assert _offending('    p = Path("C:/Windows/System32/x.tmp")')
+    assert _offending("    p = Path('Z:/nonexistent/dir/hb.json')")
+
+
+def test_a_marked_line_is_exempt():
+    assert not _offending(
+        '    x = "C:/x/deno.exe"  # drive-letter-is-data: a stub return value')
+
+
+def test_a_marker_without_a_reason_is_not_an_exemption():
+    """THE FORBIDDEN SHORTCUT. A bare marker would make silencing this test
+    cheaper than explaining the line, and an exemption nobody had to justify is
+    the rule weakened one line at a time. Every one of these still fails."""
+    for bare in ('    x = "C:/a"  # drive-letter-is-data',
+                 '    x = "C:/a"  # drive-letter-is-data:',
+                 '    x = "C:/a"  # drive-letter-is-data:    ',
+                 '    x = "C:/a"  # drive-letter'):
+        assert _offending(bare), bare
+
+
+def test_every_marker_in_the_repo_sits_on_a_real_drive_letter():
+    """A marker on a line with no drive letter is a licence planted in advance:
+    it silences nothing today and quietly excuses whatever is added to that line
+    tomorrow. It is also how the census of exemptions stops being true."""
+    stray = []
+    for f in REPO.rglob("*.py"):
+        if any(p in SKIP_PARTS for p in f.parts):
+            continue
+        rel = str(f.relative_to(REPO)).replace("\\", "/")
+        if rel == "test/test_ci_contract.py":          # the examples above
+            continue
+        for i, line in enumerate(f.read_text(encoding="utf-8",
+                                             errors="ignore").splitlines(), 1):
+            if EXEMPT.search(line) and not DRIVE.search(line):
+                stray.append(f"{rel}:{i}: {line.strip()[:100]}")
+    assert not stray, (
+        "these lines carry a drive-letter exemption and have no drive letter on "
+        "them. Remove the marker:\n" + "\n".join(stray))

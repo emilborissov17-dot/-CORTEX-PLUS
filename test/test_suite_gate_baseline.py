@@ -241,7 +241,14 @@ def test_the_committed_baseline_parses_and_every_line_carries_a_reason():
     # timestamp the fetch itself recorded. config/passage_rules.json untouched, no
     # file input fabricated, and the step went from UNKNOWN(0) to FULL(3) with a
     # reason that names the fetch.
-    assert len(known) == 4, "the baseline changed size, got %d" % len(known)
+    # 3 on 20 Sep, the third decision of the day. Of the five drive-letter hits
+    # one was the real defect - test_disk_actuator.py asserted that a path outside
+    # the repo is refused while naming a string that is absolute on Windows and
+    # RELATIVE on Linux, so on Linux it would have gone green for the opposite
+    # case. It now builds the path from tmp_path.anchor. The other four are test
+    # DATA and carry a per-LINE exemption that must state why; the rule itself was
+    # not widened and no file was added to DRIVE_LETTERS_ARE_THE_POINT.
+    assert len(known) == 3, "the baseline changed size, got %d" % len(known)
     missing = sorted(n for n, why in known.items() if not why)
     assert not missing, (
         "these baseline entries carry no reason, which makes them a "

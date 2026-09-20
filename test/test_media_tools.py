@@ -155,7 +155,7 @@ def test_after_parking_no_process_is_spawned(monkeypatch, capsys, tmp_path):
 
 
 def test_version_flag_per_binary():
-    assert M._version_flag("C:/x/ffmpeg.exe") == "-version"
+    assert M._version_flag("C:/x/ffmpeg.exe") == "-version"  # drive-letter-is-data: the pair of spellings IS the assertion - _version_flag picks by basename and opens nothing
     assert M._version_flag("/usr/bin/deno") == "--version"
 
 
@@ -171,7 +171,7 @@ def test_a_found_binary_that_does_not_run_is_not_passed(monkeypatch, tmp_path):
 
 def test_dep_check_lines_speak_the_runner_vocabulary(monkeypatch):
     monkeypatch.setattr(M, "find_ffmpeg", lambda: None)
-    monkeypatch.setattr(M, "find_deno", lambda: "C:/x/deno.exe")
+    monkeypatch.setattr(M, "find_deno", lambda: "C:/x/deno.exe")  # drive-letter-is-data: a stub return value echoed into a report line; nothing resolves or opens it
     monkeypatch.setattr(M, "_runs", lambda p: True)
     monkeypatch.setattr(M, "binary_version", lambda p: "deno 2.x")
     lines = M.dep_check_lines()

@@ -223,8 +223,25 @@ def test_is_protected_fails_closed_when_git_is_unknown(tmp_path):
 
 
 def test_a_path_outside_the_repo_is_protected(tmp_path):
-    ok, why = da.is_protected(pathlib.Path("C:/Windows/System32/x.tmp"),
-                              tmp_path, tracked=frozenset())
+    """PLATFORM-NEUTRAL SINCE 20 SEP 2026, and the old spelling was the exact
+    defect the drive-letter rule exists to catch.
+
+    It hardcoded a Windows system path behind a drive letter. On Windows that is
+    an absolute path outside the repo, which is what the name claims. On Linux the
+    very same string is an ordinary RELATIVE path, resolved against the working
+    directory — so the test would have gone green there while exercising the
+    opposite case, and would have gone on passing even if is_protected stopped
+    refusing absolute outside paths altogether.
+
+    tmp_path.anchor is the filesystem root on both platforms: "C:\\" on Windows,
+    "/" on Linux. A path under it is absolute everywhere and outside tmp_path
+    everywhere, so the two assertions below hold the property the name states
+    rather than one spelling of it.
+    """
+    outside = pathlib.Path(tmp_path.anchor) / "definitely" / "outside" / "x.tmp"
+    assert outside.is_absolute(), outside
+    assert tmp_path not in outside.parents, outside
+    ok, why = da.is_protected(outside, tmp_path, tracked=frozenset())
     assert ok is True
     assert "does not resolve inside the repo" in why
 

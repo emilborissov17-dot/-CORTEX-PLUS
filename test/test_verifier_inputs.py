@@ -534,7 +534,7 @@ def test_a_broken_live_declaration_is_no_declaration_at_all(tmp_path,
                    {"records": [], "timestamp_field": "x"},        # empty
                    {"records": ["a.json"]},                        # no field
                    {"records": ["a.json"], "timestamp_field": ""},
-                   {"records": ["C:/elsewhere/a.json"], "timestamp_field": "x"},
+                   {"records": ["C:/elsewhere/a.json"], "timestamp_field": "x"},  # drive-letter-is-data: the drive letter is the ATTACK - _clean must refuse a declaration pointing outside the repo
                    {"records": ["../outside.json"], "timestamp_field": "x"},
                    {"records": "a.json", "timestamp_field": "x"},
                    "not a dict"):
