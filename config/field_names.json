@@ -1,12 +1,8 @@
 {
   "_what_this_is": "ONE place naming the concepts this repo stores on disk, and every SPELLING each concept actually has. Written 20 September 2026 after a question about the repo was answered twice in one day by grepping for ONE literal string and reporting the empty result as the answer to a broader question. 'Does this file contain the string extracted_at' is not 'does this record carry an observation date': memory/browse_sources/*.json carry data_date. When a concept has two names on disk, a grep for one spelling is wrong by construction, and it is wrong in the most expensive direction - it returns nothing, and nothing reads like an answer.",
-
   "_the_rule": "A question of the form 'does X carry a <concept>' is answered from this file, through tools/ask.py, and never from an ad-hoc grep. tools/ask.py reads this file at runtime; it holds no spelling of its own, so adding a spelling here is the whole change.",
-
   "_how_to_add_a_spelling": "Do NOT invent one. Find it on disk or in code, and record where. Every entry below carries found_in (a real path in this repo when the census found one) and written_by (the code that produces it), and both were read on the date in _censused. A spelling nobody could point at is a guess, and a guess in this file is worse than a missing entry: the tool would report a concept present where the disk says nothing.",
-
   "_censused": "20 September 2026. memory/**/*.json: 5145 files parsed, every dict key matching /(date|_at$|_ts$|^ts$|time|stamp|observed|fetched|as_of|asof)/i counted. core/*.py: every string literal matching /^[a-z][a-z0-9_]*$/ against the same pattern, via AST. core/provenance.py:121 OBSERVED_FIELD contributed the six per-source year fields, which is itself a second registry of this same concept and is the clearest evidence that one was needed.",
-
   "_shapes": {
     "iso_date": "YYYY-MM-DD",
     "iso_datetime": "full ISO 8601; a naive value is read as UTC",
@@ -14,7 +10,6 @@
     "year_fraction": "YYYY.f, e.g. 2026.101 - a decimal fraction of the year",
     "year_map": "an object of {name: year}; the OLDEST value is the record's observation date, because a composite is as old as its oldest number"
   },
-
   "concepts": {
     "OBSERVATION_DATE": {
       "means": "WHEN THE THING WAS OBSERVED, or the date the observed value refers to. Not when the file was written, not when the record was processed, not when a row was cached for convenience. This is the concept core.measurement_honesty.observation_age_days ages, and the one core/notary.py's age dimension asks every step for.",
@@ -32,7 +27,12 @@
           "found_in": "memory/browse_sources/CLIMATE_GLOBAL_RISK_REVIEW.json",
           "example": "2026-07-31",
           "occurrences_in_memory": 126,
-          "written_by": ["experiments/browser_scout/scout.py", "experiments/browser_scout/goal_impact_collector.py", "experiments/browser_scout/autonomous_scout.py", "core/provenance_pairs.py"]
+          "written_by": [
+            "experiments/browser_scout/scout.py",
+            "experiments/browser_scout/goal_impact_collector.py",
+            "experiments/browser_scout/autonomous_scout.py",
+            "core/provenance_pairs.py"
+          ]
         },
         {
           "spelling": "extracted_at",
@@ -41,7 +41,9 @@
           "found_in": "memory/browse_sources/social_conflicts.json",
           "example": "2026-09-20T03:27:00.000000+00:00",
           "occurrences_in_memory": 1,
-          "written_by": ["experiments/browser_scout/scout.py"],
+          "written_by": [
+            "experiments/browser_scout/scout.py"
+          ],
           "note": "One occurrence on disk, and a whole night's provenance decision rests on it: config/step_inputs.json declares it as browser_scout's live_fetch timestamp_field."
         },
         {
@@ -51,7 +53,10 @@
           "found_in": "memory/measurement_honesty_latest.json",
           "example": "2020-12-31",
           "occurrences_in_memory": 62,
-          "written_by": ["core/measurement_honesty.py", "core/provenance.py"]
+          "written_by": [
+            "core/measurement_honesty.py",
+            "core/provenance.py"
+          ]
         },
         {
           "spelling": "fetched_at",
@@ -60,7 +65,11 @@
           "found_in": "memory/provenance_latest.json",
           "example": "2026-09-20T00:25:46.469090+00:00",
           "occurrences_in_memory": 31,
-          "written_by": ["core/provenance.py", "agents/internet/internet_agent.py", "scripts/energy_query_all.py"]
+          "written_by": [
+            "core/provenance.py",
+            "agents/internet/internet_agent.py",
+            "scripts/energy_query_all.py"
+          ]
         },
         {
           "spelling": "cached_at",
@@ -69,7 +78,9 @@
           "found_in": "memory/transcript_cache",
           "example": "2026-08-22T00:33:18.933494+00:00",
           "occurrences_in_memory": 738,
-          "written_by": ["agents/internet/internet_agent.py"]
+          "written_by": [
+            "agents/internet/internet_agent.py"
+          ]
         },
         {
           "spelling": "co2_date",
@@ -77,7 +88,9 @@
           "means": "observation date of the CO2 reading",
           "found_in": "snapshots/master/global_indicators_latest.json",
           "example": "2026-09-13",
-          "written_by": ["core/global_indicators.py"],
+          "written_by": [
+            "core/global_indicators.py"
+          ],
           "registered_also_in": "core/provenance.py:121 OBSERVED_FIELD"
         },
         {
@@ -125,8 +138,13 @@
           "shape": "year_map",
           "means": "per-indicator observation years for a World Bank section; the section is as old as its oldest number",
           "found_in": "snapshots/master/global_indicators_latest.json",
-          "example": {"population_billions": "2025", "renewable_energy_pct": "2020"},
-          "written_by": ["core/global_indicators.py"],
+          "example": {
+            "population_billions": "2025",
+            "renewable_energy_pct": "2020"
+          },
+          "written_by": [
+            "core/global_indicators.py"
+          ],
           "registered_also_in": "core/provenance.py:232"
         },
         {
@@ -137,6 +155,84 @@
           "example": "2026-03-09",
           "occurrences_in_memory": 3145,
           "caveat": "AMBIGUOUS AND DELIBERATELY REGISTERED ANYWAY. 'date' is the observation date in memory/axis_history.json, where each row carries 'date' for the observation and 'timestamp' for when the row was written - but the same four letters are used elsewhere for things that are not observations. tools/ask.py prints this caveat next to any match on this spelling, so a hit on 'date' is reported as a lead and never as a settled answer."
+        }
+      ]
+    },
+    "OBSERVATION_RECORD": {
+      "means": "The shape of ONE observation at ingest: a panel yields N of these, one per (entity, period), or none. Added 21 Sep 2026 after a World Bank panel of 17,490 cells was collapsed into a single card carrying value 83.3899993896484, unit 'unknown', no country and no year. Measured against the real body, that number is AFE / 2024.",
+      "_the_rule": "NO PLACEHOLDER IN A REQUIRED FIELD. unit:'unknown', entity:'unknown', period:null are forbidden: a placeholder passes every check that only tests presence, which makes it worse than absence. A record missing a required field is emitted UNVERIFIED with a reason naming the field.",
+      "_three_timestamps": "period is a property of the DATUM, published_at of the SOURCE, retrieved_at of US. None substitutes for another: today we can read a value that refers to 1990, and the fetch date says nothing about it.",
+      "_one_door": "core/observation_record.py::extract is the only code that builds one.",
+      "spellings": [
+        {
+          "spelling": "entity",
+          "shape": "iso3",
+          "means": "ISO3 country code, or an aggregate code the SOURCE ITSELF declares as one. Never inferred from the shape of the code.",
+          "found_in": "worldbank row.countryiso3code",
+          "example": "AFE"
+        },
+        {
+          "spelling": "period",
+          "shape": "iso_date",
+          "means": "the period the VALUE refers to. Not when it was fetched.",
+          "found_in": "worldbank row.date",
+          "example": "2024"
+        },
+        {
+          "spelling": "period_granularity",
+          "shape": "enum",
+          "means": "year | month | day | instant — how precise `period` is.",
+          "found_in": "declared per source",
+          "example": "year"
+        },
+        {
+          "spelling": "value",
+          "shape": "number",
+          "means": "the number itself.",
+          "found_in": "worldbank row.value",
+          "example": 83.3899993896484
+        },
+        {
+          "spelling": "unit",
+          "shape": "text",
+          "means": "the unit AS THE SOURCE STATES IT. Never 'unknown'; a missing unit makes the record UNVERIFIED.",
+          "found_in": "worldbank indicator.value, parenthetical",
+          "example": "% of people ages 15-24"
+        },
+        {
+          "spelling": "span",
+          "shape": "text",
+          "means": "the VERBATIM slice of the fetched body carrying the value, entity and period. Never rebuilt from the parsed object.",
+          "found_in": "cut from the raw body",
+          "example": "{\"countryiso3code\":\"AFE\",\"date\":\"2024\",\"value\":83.38...}"
+        },
+        {
+          "spelling": "url",
+          "shape": "text",
+          "means": "the address fetched.",
+          "found_in": "the source declaration",
+          "example": "https://api.worldbank.org/v2/..."
+        },
+        {
+          "spelling": "selector_path",
+          "shape": "text",
+          "means": "the path that selected THIS row.",
+          "found_in": "built by the extractor",
+          "example": "1.1.value"
+        },
+        {
+          "spelling": "published_at",
+          "shape": "iso_date",
+          "means": "the SOURCE's own publication/update stamp, if it gives one; else absent.",
+          "found_in": "worldbank meta[0].lastupdated",
+          "example": "2026-07-13"
+        },
+        {
+          "spelling": "retrieved_at",
+          "shape": "iso_datetime",
+          "means": "the moment WE fetched. Never a substitute for period.",
+          "found_in": "the worker",
+          "example": "2026-09-21T10:00:00+00:00"
         }
       ]
     }

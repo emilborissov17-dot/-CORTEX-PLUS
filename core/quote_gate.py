@@ -131,6 +131,107 @@ def judge(record: dict, page_text: Optional[str]) -> dict:
     return {"verdict": "ACCEPTED", "value": value, "quote": quote, "url": record["url"]}
 
 
+# ---------------------------------------------------------------------------
+# THE RECORD GATE (21 September 2026)
+# ---------------------------------------------------------------------------
+#
+# REQUIRED above is the CARD contract and it stays exactly as it is: card_intake
+# judges every card the worker writes against it, and widening it in place would
+# turn every card now in flight MALFORMED between one run and the next. A record
+# is a different object with a different contract, so it gets its own list and
+# its own verdict; which producers move across is a migration, and migration is
+# a separate decision from defining the shape.
+#
+# WHAT A CARD COULD NOT SAY. The card that started this carried
+# value 83.3899993896484, unit "unknown", no country and no year. Measured
+# against the real body it is AFE / 2024 — one aggregate region, one year, out
+# of a panel of 17,490 cells. Every field below exists because that card was
+# missing it.
+RECORD_REQUIRED = ("entity", "period", "period_granularity", "value", "unit",
+                   "span", "url", "selector_path", "retrieved_at")
+
+
+_IN_NUMBER = re.compile(r"[\d.]")
+
+
+def _value_token_in(text: str, value: float) -> bool:
+    """Does `value` appear in `text` as a standalone number?
+
+    Standalone means not flanked by a digit or a decimal point, so 46 inside
+    46.0016162 is not a match — the latitude that was once quoted as a flood
+    count. Every spelling the body might use is tried; none is rebuilt into the
+    text, only searched for in it.
+    """
+    cands = []
+    try:
+        f = float(value)
+    except (TypeError, ValueError):
+        return False
+    if f.is_integer():
+        cands.append(str(int(f)))
+    cands += [repr(f), str(value)]
+    for cand in dict.fromkeys(cands):
+        i = text.find(cand)
+        while i != -1:
+            end = i + len(cand)
+            if not (_IN_NUMBER.match(text[i - 1:i])
+                    or _IN_NUMBER.match(text[end:end + 1])):
+                return True
+            i = text.find(cand, i + 1)
+    return False
+
+
+def judge_record(record: dict, body_text: Optional[str]) -> dict:
+    """Pure verdict on ONE observation record. body_text=None means the fetch failed.
+
+    THREE THINGS ARE CHECKED AGAINST THE BODY, and the third is the one the card
+    gate could not ask:
+      1. the span occurs in the body;
+      2. the value occurs in the span;
+      3. the entity and the period occur in THAT SAME span.
+
+    Without (3) a span is evidence that the number is on the page and no
+    evidence at all that it belongs to the country and year the record claims.
+    A record whose entity or period cannot be tied to the span carrying its
+    value is UNVERIFIED, not VERIFIED.
+    """
+    missing = [k for k in RECORD_REQUIRED
+               if k not in record or record[k] in (None, "")]
+    if missing:
+        return {"verdict": "UNVERIFIED", "missing": missing}
+    try:
+        value = float(record["value"])
+    except (TypeError, ValueError):
+        return {"verdict": "UNVERIFIED", "missing": ["value:not-a-number"]}
+    if body_text is None:
+        return {"verdict": "FETCH_FAILED", "url": record["url"]}
+
+    span = _norm(str(record["span"]))
+    body = _norm(body_text)
+    if span not in body and _WS.sub("", span) not in _WS.sub("", body):
+        return {"verdict": "SPAN_NOT_ON_PAGE", "url": record["url"]}
+
+    # NOT _NUM HERE, AND THE REASON IS A TRAP THIS REPO HAS ALREADY PAID FOR.
+    # _NUM refuses a number whose preceding character is a colon, which is right
+    # for prose and wrong for a JSON span: the body writes "value":83.38..., so
+    # every record would come back VALUE_NOT_IN_SPAN with the value plainly
+    # there. A span is a slice of JSON, so the value is checked as a standalone
+    # numeric TOKEN — not flanked by a digit or a dot, which is what makes 46
+    # inside 46.0016162 not a match.
+    if not _value_token_in(str(record["span"]), value):
+        return {"verdict": "VALUE_NOT_IN_SPAN", "value": value,
+                "span_head": str(record["span"])[:120]}
+
+    untied = [f for f in ("entity", "period")
+              if str(record[f]) not in str(record["span"])]
+    if untied:
+        return {"verdict": "UNTIED", "untied": untied,
+                "selector_path": record.get("selector_path")}
+
+    return {"verdict": "VERIFIED", "value": value, "entity": record["entity"],
+            "period": record["period"], "url": record["url"]}
+
+
 def _fetch(url: str, timeout: int = 30) -> Optional[str]:
     try:
         import requests  # noqa: PLC0415

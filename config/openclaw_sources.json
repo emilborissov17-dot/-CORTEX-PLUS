@@ -80,5 +80,40 @@
       "_data_date_why": "NOT APPLICABLE: this source is meant to refuse, so it never produces a value to date.",
       "why": "DELIBERATELY BROKEN. The endpoint is real and answers 200; the path walks into a number as if it were an object. Kept in the allowlist on purpose so the refusal path is exercised on every run instead of only in a test."
     }
-  ]
+  ],
+  "_record_declarations": [
+    "Added 21 Sep 2026 with core/observation_record.py. A source named here can be",
+    "extracted into OBSERVATION_RECORDs: one per (entity, period). A source NOT named",
+    "here emits ZERO records and one REFUSED entry — zero is a correct answer, one",
+    "nameless number is not.",
+    "",
+    "EVERY PATH BELOW WAS READ OFF A REAL FETCHED BODY on 21 Sep, saved under",
+    "test/fixtures/. Nothing here is guessed; a source whose body I did not fetch is",
+    "listed under undeclared with its reason."
+  ],
+  "record_sources": {
+    "worldbank_indicator_panel": {
+      "matches_url_prefix": "https://api.worldbank.org/v2/",
+      "rows_path": "1",
+      "entity_path": "countryiso3code",
+      "period_path": "date",
+      "period_granularity": "year",
+      "value_path": "value",
+      "unit_path": "indicator.value",
+      "unit_pattern": "\\((.+)\\)",
+      "published_at_path": "0.lastupdated",
+      "_why_unit_comes_from_the_indicator_name": "The World Bank row HAS a `unit` field and it is empty: measured 21 Sep over SE.ADT.1524.LT.ZS, IT.NET.BBND.P2, EG.ELC.ACCS.ZS and ER.H2O.INTR.PC, all 160 sampled rows carry unit:''. The unit is stated inside the indicator's own name — 'Literacy rate, youth total (% of people ages 15-24)' — so it is taken verbatim from the parenthetical by a DECLARED pattern. That is the source stating it; inventing '%' from the indicator id would be inference.",
+      "_aggregates": "https://api.worldbank.org/v2/country?format=json&per_page=400 marks every aggregate with region.id == 'NA' — 78 of 295 entries, AFE among them, BGR not. That list is the SOURCE declaring which codes are aggregates, which is the only condition under which an aggregate code may be an entity. Saved as test/fixtures/worldbank_country_list.json.",
+      "_fixture": "test/fixtures/worldbank_SE.ADT.1524.LT.ZS_page1.json"
+    },
+    "_undeclared": {
+      "_what_this_means": "These sources emit ZERO records until somebody fetches a real body and reads the paths off it. They are listed so the absence is visible rather than silent.",
+      "eonet_event_counts": "path is 'events.#len' — the value is COUNTED from the body's structure, so it has no entity and no period of its own and appears nowhere in the bytes. A count over a window is a different shape from a panel cell and needs its own declaration before it can be a record.",
+      "celestrak_launched_30d": "same: '#len' over a 30-day window.",
+      "unstats_sdg": "path is 'dimensions.1.codes.#len'. No body was fetched for it on 21 Sep, so no path is declared rather than guessed.",
+      "who_gho": "path 'value.0.NumericValue' indexes a WHO observation list that almost certainly carries SpatialDim and TimeDim, but no body was fetched on 21 Sep. Undeclared until one is.",
+      "open_meteo_daily_arrays": "'daily.<var>' is a parallel-array series: the periods live in daily.time at the same index. That is a real shape and a different extractor; undeclared here.",
+      "usgs_count_and_open_meteo_current": "scalars with no entity in the body at all — the place is in the URL. A record needs an entity the SOURCE states, so these emit zero until the declaration can name one."
+    }
+  }
 }
