@@ -189,6 +189,57 @@ def is_english_enough(text) -> tuple:
     return True, OK
 
 
+def may_be_exemplar(entry) -> tuple:
+    """(bool, reason) — may this journal row be SHOWN TO THE MODEL as a worked
+    example? ZERO foreign letters, not a small ratio of them.
+
+    WHY THIS IS NOT entry_is_clean (21 September 2026)
+    --------------------------------------------------
+    One predicate was answering two different questions, and a ratio is the
+    right instrument for only one of them.
+
+      "Is the corpus drifting?"      -> a RATIO over many outputs. MAX_CYRILLIC
+                                        = 0.03 is calibrated for that and stays
+                                        exactly as it is; purity_ratio() and the
+                                        per-kind breakdown still call
+                                        entry_is_clean and are untouched.
+      "May this row be an exemplar?" -> a question about ONE row, where a ratio
+                                        is meaningless. The sample size is one.
+
+    WHAT IT COST. On 2026-09-21 at 00:40:29 the constancy step wrote
+
+        {"reasoning": "NEПОДВИЖНА vs frozen: it is stated to be stationary; ..."}
+
+    a hybrid word: Latin "NE" then Cyrillic "ПОДВИЖНА". Eight Cyrillic letters
+    in a 285-letter summary is 0.0281, under MAX_CYRILLIC, so the row was stored
+    ok=true and _memory() offered it to the model as an example of how to
+    answer. Its twenty-one siblings the same night wrote the full "НЕПОДВИЖНА" —
+    ten Cyrillic letters in shorter summaries, 0.04 to 0.07 — and every one was
+    rejected. The one that got through was the one that was longer AND half
+    transliterated.
+
+    Measured over the whole journal: 2 rows of 2128 carry Cyrillic and pass
+    entry_is_clean. Both are exactly this shape.
+
+    AN EXEMPLAR IS OFFERED, NOT NEEDED. The gate above says so in as many words,
+    and that is the whole argument for zero: one Cyrillic word in a worked
+    example teaches the next answer to contain Cyrillic, which is how six days
+    of Russian happened. A pool that loses a row costs nothing; amnesia mode
+    exists for exactly that.
+    """
+    ok, reason = entry_is_clean(entry)
+    if not ok:
+        return False, reason
+    p = script_profile(entry.get("summary"))
+    if p["cyrillic"]:
+        return False, "EXEMPLAR_CYRILLIC_{}".format(
+            int(round(p["cyrillic"] * p["letters"])))
+    if p["han"]:
+        return False, "EXEMPLAR_HAN_{}".format(
+            int(round(p["han"] * p["letters"])))
+    return True, OK
+
+
 def verdict(text) -> dict:
     """The whole judgement, in the shape the journal stores."""
     ok, reason = is_english_enough(text)

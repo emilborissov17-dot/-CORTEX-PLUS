@@ -266,7 +266,13 @@ def _entry_is_clean(entry: dict) -> bool:
     """
     try:
         from core import language_gate as _lg          # noqa: PLC0415
-        ok, _reason = _lg.entry_is_clean(entry)
+        # may_be_exemplar, NOT entry_is_clean (21 Sep 2026). The second is a
+        # RATIO gate, correct for measuring whether the corpus is drifting and
+        # wrong for deciding about one row: a hybrid word — Latin "NE" plus
+        # Cyrillic "ПОДВИЖНА" — is 2.81% of a 285-letter summary, under
+        # MAX_CYRILLIC, and it reached the model as a worked example. An
+        # exemplar carries zero foreign letters or it is not offered.
+        ok, _reason = _lg.may_be_exemplar(entry)
         return bool(ok)
     except Exception:
         return False
