@@ -661,3 +661,11 @@ core/card_intake.py 164d8ffeb784  # BACKED: test_openclaw_wire_to_the_gate.test_
 core/card_intake.py 6e69b0e03022  # BACKED: test_openclaw_wire_to_the_gate.test_a_chain_whose_judge_dies_is_still_reported_unfinished drives both tasks through core.task_runs and asserts the pairing
 core/card_intake.py fe17b46cdf9b  # BACKED: test_openclaw_wire_to_the_gate.test_exactly_one_caller_owns_the_judge counts the callers in every .bat and fails at two; test_the_chain_exports_the_shared_id_before_it_runs_anything pins the export
 test/test_openclaw_wire_to_the_gate.py 33898245d8e1  # BACKED: test_openclaw_wire_to_the_gate.test_a_number_inside_a_longer_number_is_not_a_quote and test_the_worker_never_emits_a_quote_the_gate_would_refuse both fail if the colon rule stops holding
+
+# ── 21 Sep 2026, the observation record shape. Each names its test.
+core/card_intake.py 2b8cce542b85  # BACKED: test_openclaw_wire_to_the_gate.test_the_judge_records_an_interrupt_and_re_raises_it over KeyboardInterrupt and SystemExit; mutation-proved both halves
+core/card_intake.py 7944e544fad7  # BACKED: test_openclaw_wire_to_the_gate.test_exactly_one_caller_owns_the_judge and test_the_chain_exports_the_shared_id_before_it_runs_anything
+core/observation_record.py 09eae6cde6e5  # BACKED: test_panel_yields_one_record_per_cell.test_a_source_with_no_entity_path_yields_zero_records_and_one_refusal
+core/observation_record.py 58b3f6af531b  # BACKED: test_panel_yields_one_record_per_cell.test_the_panel_yields_more_than_one_record_each_a_distinct_cell — 38 records from the committed body; mutation-proved by collapsing to one
+core/quote_gate.py 22957a98759c  # BACKED: test_panel_yields_one_record_per_cell.test_every_record_passes_the_gate_against_the_same_body — all 38 VERIFIED, which is exactly what _NUM's colon rule made impossible
+test/test_panel_yields_one_record_per_cell.py 1cb91e59cb19  # BACKED: test_panel_yields_one_record_per_cell.test_a_source_with_no_entity_path_yields_zero_records_and_one_refusal and ..._no_period_path_also_yields_zero; mutation-proved by removing the refusal

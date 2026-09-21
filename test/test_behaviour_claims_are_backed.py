@@ -113,7 +113,9 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # docstring belongs to. The UNBACKED count above is still the debt.
     # 635 on 20 Sep: the fetch/judge chain added four, all backed. The
     # UNBACKED count above has not moved all day.
-    assert len(accepted) <= 635, (
+    # 641 on 21 Sep: the observation-record shape added six, all backed.
+    # The UNBACKED count above has still not moved.
+    assert len(accepted) <= 641, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 
