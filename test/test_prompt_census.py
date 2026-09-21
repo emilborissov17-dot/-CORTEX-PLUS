@@ -30,6 +30,11 @@ from core import brain as _brain          # noqa: E402
 _REAL_ATTEND = _brain.attend
 
 
+# The Bulgarian this file injects on purpose, in one place. It is test
+# INPUT, never an expectation: the census must find it.
+DIRT = "\u0412\u042a\u041f\u0420\u041e\u0421: \u043d\u0435\u0449\u043e"
+
+
 def _load():
     spec = importlib.util.spec_from_file_location("prompt_census", SCRIPT)
     mod = importlib.util.module_from_spec(spec)
@@ -107,23 +112,45 @@ def test_a_chinese_block_makes_it_fail_too(capsys, monkeypatch):
 
 def test_cyrillic_outside_a_named_block_is_still_caught(capsys, monkeypatch):
     """The scaffold and the caller's role/question are not named blocks. The
-    census must not report PASS just because every block it lists is clean."""
-    mod = _load()
-    from core import brain
-    real = brain.LANGUAGE_PIN
-    monkeypatch.setattr(brain, "LANGUAGE_PIN", real)
+    census must not report PASS just because every block it lists is clean.
 
-    original = mod.assemble
+    HERMETIC SINCE 21 SEPTEMBER 2026, AND THAT IS THE POINT OF IT.
+
+    This built its dirty prompt on top of the REAL one, so it could only ask its
+    question while every named block happened to be clean. On 21 Sep the
+    constancy exemplar pool carried "NE" + Cyrillic, _memory() became an
+    offender, census() printed that block instead of reaching the branch under
+    test, and this failed — with a message about a string it never injected.
+
+    It then went GREEN AGAIN the moment the exemplar gate was fixed, which is
+    worse than the failure: a test that passes because the room is clean is not
+    testing the census, it is reporting the room. The base prompt is a constant
+    now, so the injected Cyrillic is the ONLY Cyrillic and the branch under test
+    is reached whatever the live journal holds.
+    """
+    mod = _load()
+
+    CLEAN = ("SYSTEM: you answer in English.\n"
+             "ROLE: interpreter of an indicator.\n"
+             "EVIDENCE: 1\n")
+    BLOCKS = [("LANGUAGE_PIN", "Answer in English."),
+              ("_memory('constancy')", "[seed] constancy: it does not move.")]
 
     def _dirty(kind, attend=None):
-        prompt, blocks = original(kind)
-        return prompt + "\n\nВЪПРОС: нещо на български", blocks
+        # dirt OUTSIDE every named block: the scaffold's own tail
+        return CLEAN + "\n\n" + DIRT, BLOCKS
 
     monkeypatch.setattr(mod, "assemble", _dirty)
     assert mod.census("constancy") == 1
     out = capsys.readouterr().out
     assert "FAIL" in out
-    assert "not in any named block" in out
+    assert "not in any named block" in out, out
+
+    # ...and the SAME blocks with no dirt outside them is a PASS, so the
+    # assertion above cannot be satisfied by a census that fails everything.
+    monkeypatch.setattr(mod, "assemble",
+                        lambda kind, attend=None: (CLEAN, BLOCKS))
+    assert mod.census("constancy") == 0
 
 
 def test_it_contacts_no_model():

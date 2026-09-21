@@ -50,6 +50,19 @@ ALLOWED_BASE_EXCEPTION = {
                              "at import time; the runner must survive that"),
     ("supervisor.py",        "metta_selfcheck must never throw — it records the "
                              "verdict and returns, including when the bridge exits"),
+    # Added 21 Sep 2026, both for the same reason and both RE-RAISING. The run
+    # log is two rows, start and finish, and its whole value is that a run which
+    # died leaves the first without the second. A Ctrl-C or a SystemExit IS a
+    # finish — the process ended and a human wants to see why — so the handler
+    # records it and re-raises immediately. Narrowing these to `except
+    # Exception` would leave an interrupted run looking exactly like one killed
+    # by a reboot, which is the single distinction the file exists to make.
+    ("scripts/openclaw_axis_worker.py",
+     "writes the finish row for an interrupted run, then re-raises; "
+     "KeyboardInterrupt and SystemExit are finishes, not crashes to hide"),
+    ("core/card_intake.py",
+     "same handler, second half of the openclaw chain: records the finish row "
+     "with its reason and re-raises"),
 }
 
 
