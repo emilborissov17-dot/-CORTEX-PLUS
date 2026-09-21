@@ -658,10 +658,25 @@ def main() -> int:
         result = run(pathlib.Path(a.sources) if a.sources else None,
                      dry_run=a.dry_run)
     except BaseException as exc:                                  # noqa: BLE001
-        # A CRASH IS A FINISH, and it is recorded as one with its reason. What
-        # must stay unrecorded is a process that never got here at all — killed
-        # or rebooted — and that is exactly the row this except clause does not
-        # write for it.
+        # A CRASH IS A FINISH, recorded with its reason and then RE-RAISED.
+        # Nothing is swallowed here; what must stay unrecorded is a process that
+        # never got here at all — killed or rebooted — and that is exactly the
+        # row this clause does not write for it.
+        #
+        # WHY BaseException AND NOT Exception. Measured 21 Sep 2026: run() is
+        # not a generator, so GeneratorExit cannot arrive, and the only sys.exit
+        # in this module is at the bottom, outside main() — so SystemExit cannot
+        # arise from the call path. What remains is KeyboardInterrupt. Under
+        # `except Exception` a Ctrl-C would leave a start with no finish, the
+        # row shape that means "killed by a reboot", and nothing ever clears it:
+        # unfinished_runs() would announce that phantom at the top of every
+        # future run for ever.
+        #
+        # NOTHING IS LOST BY IT EITHER. The feed, shadow, refusal and card
+        # writes all happen inside run() before it returns; an interrupt mid-run
+        # leaves them exactly as they were, and the cards it did not reach are
+        # re-judged next run because judge_inbox rebuilds `seen` from its own
+        # output files.
         _task_row({"task": TASK_NAME, "event": "finish", "run_id": run_id,
                    "ts": _now(), "ok": False,
                    "seconds": round(time.time() - started, 1),

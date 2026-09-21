@@ -585,3 +585,98 @@ def test_the_live_log_carries_a_readable_chain_id():
     assert re.fullmatch(r"chain-\d{8}-\d{6}", newest), (
         f"the last chain id is not a readable timestamp: {newest!r}")
 
+
+# ── the two BaseException handlers, exercised rather than declared ──────────
+# Added 21 Sep 2026. test_no_bare_except flagged both sites and they were
+# resolved by adding them to ALLOWED_BASE_EXCEPTION, which recorded the choice
+# without checking it — and one of them sat in a __main__ block where no test
+# could reach it at all. These are the checks the declaration now rests on.
+
+import pytest as _pytest        # noqa: E402
+
+
+def _isolate_run_log(monkeypatch, tmp_path):
+    log = tmp_path / "task_runs.jsonl"
+    monkeypatch.setattr(TR, "LOG", log)
+    monkeypatch.delenv(TR.RUN_ID_ENV, raising=False)
+    return log
+
+
+@_pytest.mark.parametrize("exc", [KeyboardInterrupt, SystemExit],
+                          ids=["ctrl-c", "sys.exit"])
+def test_the_worker_records_an_interrupt_and_re_raises_it(exc, tmp_path,
+                                                          monkeypatch):
+    """BOTH HALVES, because either alone would be a false comfort.
+
+    If it did not RE-RAISE, a Ctrl-C would be swallowed and the shell would see
+    a clean exit. If it did not RECORD, the run would leave a start with no
+    finish — the row shape that means "killed by a reboot" — and nothing ever
+    clears that, so unfinished_runs() would announce the phantom at the top of
+    every future run for ever.
+    """
+    log = _isolate_run_log(monkeypatch, tmp_path)
+
+    def _boom(*a, **k):
+        raise exc("interrupted")
+
+    monkeypatch.setattr(W, "run", _boom)
+    monkeypatch.setattr(sys, "argv", ["openclaw_axis_worker.py"])
+    with _pytest.raises(exc):
+        W.main()
+
+    rows = _rows(log)
+    assert [r["event"] for r in rows] == ["start", "finish"], rows
+    assert rows[1]["ok"] is False
+    assert exc.__name__ in rows[1]["error"]
+    assert TR.unfinished(path=log) == [], (
+        "the interrupted run is still open; it was recorded, so it is closed")
+
+
+@_pytest.mark.parametrize("exc", [KeyboardInterrupt, SystemExit],
+                          ids=["ctrl-c", "sys.exit"])
+def test_the_judge_records_an_interrupt_and_re_raises_it(exc, tmp_path,
+                                                         monkeypatch):
+    """The same for the second half of the chain. This handler lived in a
+    __main__ block until 21 Sep 2026 and could not be reached by any test."""
+    log = _isolate_run_log(monkeypatch, tmp_path)
+
+    def _boom(*a, **k):
+        raise exc("interrupted")
+
+    monkeypatch.setattr(CI, "judge_inbox", _boom)
+    with _pytest.raises(exc):
+        CI.main(argv=["card_intake.py"])
+
+    rows = _rows(log)
+    assert [r["event"] for r in rows] == ["start", "finish"], rows
+    assert rows[1]["ok"] is False
+    assert exc.__name__ in rows[1]["error"]
+    assert TR.unfinished(path=log) == []
+
+
+def test_an_ordinary_exception_is_recorded_and_re_raised_too(tmp_path,
+                                                             monkeypatch):
+    """The BaseException catch must not be the only path that records. A plain
+    RuntimeError takes the same branch and must be treated identically."""
+    log = _isolate_run_log(monkeypatch, tmp_path)
+    monkeypatch.setattr(CI, "judge_inbox",
+                        lambda *a, **k: (_ for _ in ()).throw(RuntimeError("x")))
+    with _pytest.raises(RuntimeError):
+        CI.main(argv=["card_intake.py"])
+    rows = _rows(log)
+    assert rows[-1]["event"] == "finish" and rows[-1]["ok"] is False
+    assert "RuntimeError" in rows[-1]["error"]
+
+
+def test_a_clean_judge_run_closes_its_own_row(tmp_path, monkeypatch):
+    """The counter-example, so the tests above are not passing on a main() that
+    fails every time."""
+    log = _isolate_run_log(monkeypatch, tmp_path)
+    monkeypatch.setattr(CI, "judge_inbox",
+                        lambda *a, **k: {"accepted": 0, "refused": 0})
+    out = CI.main(argv=["card_intake.py"])
+    assert out == {"accepted": 0, "refused": 0}
+    rows = _rows(log)
+    assert rows[-1]["event"] == "finish" and rows[-1]["ok"] is True
+    assert TR.unfinished(path=log) == []
+

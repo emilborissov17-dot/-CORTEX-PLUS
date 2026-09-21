@@ -116,24 +116,50 @@ def judge_inbox(inbox: Path = INBOX, fetch: Callable[[str], Optional[str]] = qg.
     return counts
 
 
-if __name__ == "__main__":
-    # TWO ROWS, THE SAME TWO THE WORKER WRITES (20 Sep 2026). This step now runs
-    # as the second half of tools/openclaw_chain.bat, which exports CORTEX_RUN_ID
-    # so both halves carry one id and the pair reads as one event. A chain whose
-    # fetch finished and whose judge died leaves ("card_intake", <id>) with a
-    # start and no finish, which is exactly the shape core.task_runs.unfinished
-    # keys on.
+def main(argv=None) -> dict:
+    """The judge, with its two run rows. A FUNCTION, not a __main__ block.
+
+    TWO ROWS, THE SAME TWO THE WORKER WRITES (20 Sep 2026). This step runs as
+    the second half of tools/openclaw_chain.bat, which exports CORTEX_RUN_ID so
+    both halves carry one id and the pair reads as one event. A chain whose
+    fetch finished and whose judge died leaves ("card_intake", <id>) with a
+    start and no finish, which is exactly the shape core.task_runs.unfinished
+    keys on.
+
+    LIFTED OUT OF __main__ ON 21 SEP 2026, and the reason is the handler below.
+    It caught BaseException, which test_no_bare_except flagged, and it was
+    resolved by DECLARING it — which recorded the choice without checking it. A
+    guard sitting in a __main__ block cannot be reached by any test, so nobody
+    could have checked it. It is a function now, and
+    test_the_interrupt_handlers_record_and_reraise exercises it.
+    """
+    argv = sys.argv if argv is None else argv
+    dry = "--dry" in argv
     tr.announce(TASK_NAME)
-    _rid = tr.run_id(TASK_NAME)
-    tr.row(TASK_NAME, "start", _rid, dry="--dry" in sys.argv)
+    rid = tr.run_id(TASK_NAME)
+    tr.row(TASK_NAME, "start", rid, dry=dry)
     try:
-        c = judge_inbox(dry="--dry" in sys.argv)
+        c = judge_inbox(dry=dry)
     except BaseException as exc:                                  # noqa: BLE001
-        # A crash IS a finish and is recorded with its reason. What stays
-        # unrecorded is a process that never reached here — killed or rebooted —
-        # and that is the row this clause deliberately does not write for it.
-        tr.row(TASK_NAME, "finish", _rid, ok=False,
+        # A CRASH IS A FINISH, and it is recorded with its reason before being
+        # RE-RAISED — nothing is swallowed on this path, which is what makes
+        # the BaseException catch safe.
+        #
+        # WHY BaseException AND NOT Exception. Measured 21 Sep 2026: judge_inbox
+        # is not a generator, so GeneratorExit cannot arrive here, and the only
+        # sys.exit in this module is in the __main__ block below, after this
+        # returns — so SystemExit cannot arise from the call path either. What
+        # remains is KeyboardInterrupt. Narrowed to `except Exception`, a Ctrl-C
+        # would leave a start with no finish, which is the row shape that means
+        # "killed by a reboot" — and, because nothing ever clears it,
+        # tr.announce() would report that phantom at the top of every future run
+        # for ever. Recording the interrupt is what keeps the signal a signal.
+        tr.row(TASK_NAME, "finish", rid, ok=False,
                error=f"{type(exc).__name__}: {str(exc)[:300]}")
         raise
-    tr.row(TASK_NAME, "finish", _rid, ok=True, **c)
-    print(json.dumps(c, ensure_ascii=False))
+    tr.row(TASK_NAME, "finish", rid, ok=True, **c)
+    return c
+
+
+if __name__ == "__main__":
+    print(json.dumps(main(), ensure_ascii=False))
