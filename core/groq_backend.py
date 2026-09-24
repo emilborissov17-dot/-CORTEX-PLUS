@@ -341,7 +341,7 @@ def _call_groq(prompt: str, max_tokens: int):
     time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
     from core import llm_door
     r = llm_door.post(None, "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text=prompt,
-                      headers=headers, json=payload, timeout=(10, 60))
+                      headers=headers, json=payload)   # timeout: llm_door, measured
 
     if r.status_code == 429:
         _set_cooldown("groq")
@@ -384,7 +384,7 @@ def _call_openrouter(prompt: str, max_tokens: int):
     time.sleep(_SLEEP_SECS)
     from core import llm_door
     r = llm_door.post(None, "OpenRouter", OPENROUTER_MODEL, OPENROUTER_API_URL, prompt_text=prompt,
-                      headers=headers, json=payload, timeout=(10, 90))
+                      headers=headers, json=payload)   # timeout: llm_door, measured
 
     if r.status_code == 429:
         _set_cooldown("openrouter")
@@ -437,7 +437,7 @@ def _call_nvidia_kimi(prompt: str, max_tokens: int):
     }
     from core import llm_door
     r = llm_door.post(None, "NVIDIA", model, NVIDIA_API_URL, prompt_text=prompt,
-                      json=payload, timeout=(10, 120),
+                      json=payload,   # timeout: llm_door, measured
                       headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
                                "Accept": "application/json"})
     if r.status_code == 429:
@@ -490,7 +490,7 @@ def _call_gemini(prompt: str, max_tokens: int):
     time.sleep(_SLEEP_SECS)
     from core import llm_door
     r = llm_door.post(None, "Gemini", model_name, url, prompt_text=prompt,
-                      json=payload, timeout=(10, 60))
+                      json=payload)   # timeout: llm_door, measured
 
     if r.status_code == 429:
         _set_cooldown("gemini")
@@ -567,7 +567,7 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
     try:
         from core import llm_door
         r = llm_door.post(None, f"local:{body.get('model')}", body.get("model"),
-                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body, timeout=300)
+                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body)  # timeout: llm_door
     except requests.exceptions.Timeout:
         raise RuntimeError(f"local model {model_id} cold-start >300s")
     if r.status_code != 200:
@@ -611,7 +611,7 @@ def _call_local(prompt: str, max_tokens: int):
     try:
         from core import llm_door
         r = llm_door.post(None, f"local:{body.get('model')}", body.get("model"),
-                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body, timeout=300)
+                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body)  # timeout: llm_door
     except requests.exceptions.Timeout:
         raise RuntimeError(f"local model {model} cold-start >300s")
     if r.status_code != 200:
@@ -741,15 +741,25 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             try:
                 _t0 = time.monotonic()
                 result, meta = fn(prompt, max_tokens)
+                # TRUNCATED IS AN ERROR (24 Sep 2026, task #19 c). 7 of 91 cloud
+                # "ok" answers on the 15:14 cycle were cut at max_tokens and were
+                # used as if whole. Once more on the same leg with twice the
+                # room; cut again -> this leg failed, the next one is asked.
+                from core import llm_door as _door
+                if (meta or {}).get("finish_reason") in _door.TRUNCATED:
+                    print(f"  [LLM] {label} truncated (finish_reason={meta.get('finish_reason')}) "
+                          f"-- once more with max_tokens={max_tokens * 2}")
+                    result, meta = fn(prompt, max_tokens * 2)
+                    if (meta or {}).get("finish_reason") in _door.TRUNCATED:
+                        raise ValueError(f"{label} truncated twice "
+                                         f"(finish_reason={meta.get('finish_reason')})")
                 if result and result.strip():
                     _clear_cooldown(key)  # healthy again → reset its escalation
                     meta = dict(meta or {})
                     meta["latency_s"] = round(time.monotonic() - _t0, 2)
                     meta["backend"] = label
                     meta["model"] = _model_for(label)
-                    if meta.get("finish_reason") == "length":
-                        print(f"[LLM] {label} OK (finish_reason=length — ОТРЯЗАН отговор)")
-                    elif meta.get("used_reasoning_fallback"):
+                    if meta.get("used_reasoning_fallback"):
                         print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
                     else:
                         print(f"[LLM] {label} OK")

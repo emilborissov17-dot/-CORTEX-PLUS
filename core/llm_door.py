@@ -37,6 +37,23 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parents[1]
 PROVENANCE = BASE / "memory" / "llm_provenance.jsonl"
 SCHEMA = 2
+
+# ── TIMEOUTS FROM MEASUREMENT (24 Sep 2026, task #19 c) ──────────────────────
+# Per leg: max(FLOOR_S, p95 of that leg's ok latencies over the last NIGHTS
+# nights x FACTOR), recomputed from provenance into TIMEOUTS by recompute(),
+# which fast_cycle_runner calls at boot. Until a value is measured the SEED
+# applies (the 24 Sep figures). The door ENFORCES it: post() replaces whatever
+# timeout the caller passed for a known leg, so no caller keeps a 60-120 s literal.
+# A local model is "cold" on its first call in this process (LOCAL_COLD_S) and
+# warm after; provenance cannot tell cold from warm until it carries
+# load_duration, so the cold figure stays a seed.
+TIMEOUTS = BASE / "memory" / "llm_timeouts.json"
+FLOOR_S, FACTOR, NIGHTS = 8.0, 1.5, 7
+SEED = {"Groq": 25.0, "OpenRouter": 45.0, "NVIDIA": 45.0, "Gemini": 45.0, "local": 60.0}
+LOCAL_COLD_S = 300.0
+CONNECT_S = 10.0
+TRUNCATED = ("length", "MAX_TOKENS")
+_warm: set = set()
 _ROTATE_BYTES = 5_000_000
 _SKIP_FRAMES = ("llm_door.py", "groq_backend.py", "llm_json.py", "step_budget.py")
 
@@ -130,6 +147,81 @@ def record(*, caller: str | None, backend: str, model: str | None, outcome: str,
     return row
 
 
+def _family(backend: str) -> str:
+    return "local" if str(backend).startswith("local:") else str(backend)
+
+
+def _p95(xs: list) -> float:
+    xs = sorted(xs)
+    return xs[min(len(xs) - 1, int(round(0.95 * (len(xs) - 1))))]
+
+
+def recompute(provenance: Path | None = None, out: Path | None = None,
+              now: datetime | None = None) -> dict:
+    """Measured timeouts from the last NIGHTS nights of ok, untruncated rows.
+    Keys: every backend label seen, plus its family ("local" for local:*).
+    Writes `out` (default TIMEOUTS) and returns the table. Never raises."""
+    import collections
+    from datetime import timedelta
+    now = now or datetime.now(timezone.utc)
+    cut = (now - timedelta(days=NIGHTS)).isoformat()
+    lat = collections.defaultdict(list)
+    try:
+        for line in (provenance or PROVENANCE).read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                r = json.loads(line)
+            except Exception:
+                continue
+            if str(r.get("ts", "")) < cut or r.get("outcome", "ok") != "ok":
+                continue
+            if r.get("finish_reason") in TRUNCATED:
+                continue
+            v = r.get("latency_s") if r.get("latency_s") is not None else r.get("sec")
+            if not v:
+                continue
+            b = str(r.get("backend"))
+            lat[b].append(float(v))
+            if _family(b) != b:
+                lat[_family(b)].append(float(v))
+    except Exception:
+        pass
+    table = {"computed_utc": now.isoformat(), "floor_s": FLOOR_S, "factor": FACTOR,
+             "nights": NIGHTS, "local_cold_s": LOCAL_COLD_S, "legs": {}}
+    for k, xs in lat.items():
+        p = _p95(xs)
+        table["legs"][k] = {"timeout_s": round(max(FLOOR_S, p * FACTOR), 1),
+                            "p95_ok_s": round(p, 1), "n": len(xs)}
+    try:
+        (out or TIMEOUTS).parent.mkdir(parents=True, exist_ok=True)
+        (out or TIMEOUTS).write_text(json.dumps(table, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+    return table
+
+
+def timeout_for(backend: str) -> float | None:
+    """Wall timeout for this leg: measured if TIMEOUTS has it, else the SEED.
+    None for a backend the table does not govern (the caller's value stands)."""
+    legs = {}
+    try:
+        legs = json.loads(TIMEOUTS.read_text(encoding="utf-8")).get("legs") or {}
+    except Exception:
+        pass
+    for key in (str(backend), _family(backend)):
+        if key in legs:
+            return float(legs[key]["timeout_s"])
+    return SEED.get(_family(backend))
+
+
+def _enforced_timeout(backend: str, model: str | None, asked):
+    t = timeout_for(backend)
+    if t is None:
+        return asked
+    if _family(backend) == "local" and (model or backend) not in _warm:
+        t = max(t, LOCAL_COLD_S)
+    return (min(CONNECT_S, t), t)
+
+
 def post(caller: str | None, backend: str, model: str | None, url: str, *,
          prompt_text: str | None = None, row_extra: dict | None = None, **kw):
     """requests.post through the door. Returns the Response; re-raises what
@@ -139,6 +231,7 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     # (a test's stand-in, once), for the life of the process.
     import requests
     caller = caller or _caller_from_stack()
+    kw["timeout"] = _enforced_timeout(backend, model, kw.get("timeout"))
     t0 = time.monotonic()
     try:
         resp = requests.post(url, **kw)
@@ -151,16 +244,24 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     latency = round(time.monotonic() - t0, 2)
     status = getattr(resp, "status_code", None)
     facts = _reply_facts(backend, resp) if (status or 200) < 400 else {}
-    if status is not None and status >= 400:
-        outcome, err = "error", f"HTTP {status}"
-    elif facts.get("reply_chars") == 0:
-        outcome, err = "error", "empty reply"
-    else:
-        outcome, err = "ok", None
+    outcome, err = _judge(status, facts)
+    if outcome == "ok" and _family(backend) == "local":
+        _warm.add(model or backend)
     record(caller=caller, backend=backend, model=model, outcome=outcome,
            latency_s=latency, http_status=status, error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))
     return resp
+
+
+def _judge(status, facts) -> tuple:
+    """A truncated answer is an error, never an ok (task #19 c)."""
+    if status is not None and status >= 400:
+        return "error", f"HTTP {status}"
+    if facts.get("finish_reason") in TRUNCATED:
+        return "error", f"truncated (finish_reason={facts.get('finish_reason')})"
+    if facts.get("reply_chars") == 0:
+        return "error", "empty reply"
+    return "ok", None
 
 
 def call(caller: str | None, backend: str, model: str | None, fn, *,
@@ -179,7 +280,7 @@ def call(caller: str | None, backend: str, model: str | None, fn, *,
                **(row_extra or {}))
         raise
     facts = _facts_from_dict(d)
-    outcome, err = ("error", "empty reply") if facts.get("reply_chars") == 0 else ("ok", None)
+    outcome, err = _judge(None, facts)
     record(caller=caller, backend=backend, model=model, outcome=outcome,
            latency_s=round(time.monotonic() - t0, 2), error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))

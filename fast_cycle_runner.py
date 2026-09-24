@@ -364,6 +364,16 @@ def _classify_cycle_id(env_id):
         # The runner's own flag: everything below knows it is inside a cycle,
         # also on a manual run that has no CORTEX_CYCLE_ID (core.model_window.in_cycle).
         os.environ["CORTEX_IN_CYCLE"] = str(cid)
+        # Per-leg LLM timeouts from the last nights' measured latencies (core/llm_door).
+        try:
+            from core import llm_door as _door
+            _lt = _door.recompute()
+            print("[FAST_CYCLE] llm timeouts -> " + ", ".join(
+                f"{k}={v['timeout_s']}s" for k, v in sorted(_lt.get("legs", {}).items())
+                if not k.startswith("local:")) + f" (local cold {_lt.get('local_cold_s')}s)")
+        except Exception as _e:  # noqa: BLE001
+            print(f"[FAST_CYCLE] llm timeouts -> recompute FAILED ({type(_e).__name__}: {_e}); "
+                  f"the seed applies")
         if _fr is not None:
             # The trace takes the cycle's name here; the buffered rows from the
             # import phase are replayed into the file as soon as it has one.
