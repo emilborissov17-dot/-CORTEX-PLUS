@@ -1038,3 +1038,7 @@ def test_death_and_retry_keeps_the_ledger_chain_valid(tick_sandbox, monkeypatch)
 
     sup.tick()
     assert el.verify()["valid"] is True
+
+
+def test_a_nothing_tick_logs_its_reason(tick_sandbox):
+    st = sup.load_state(); st["last_run_date"] = _today(); sup.save_state(st); a = sup.tick(); assert a.kind == sup.NOTHING and f"TICK NOTHING: {a.reason}" in (tick_sandbox / "supervisor.log").read_text(encoding="utf-8")

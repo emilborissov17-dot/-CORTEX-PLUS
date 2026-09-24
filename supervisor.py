@@ -2233,7 +2233,11 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         pass
 
     if action.kind == NOTHING:
-        return action     # the steady state: no log, no ledger entry, no noise
+        # One line per tick, the same text --dry-run prints. A silent NOTHING hid
+        # a refusal to spawn on 24 Sep 2026: the only way to read the reason was
+        # to re-run the decision by hand.
+        log(f"TICK NOTHING: {action.reason}")
+        return action
 
     log(f"{action.kind}: {action.reason}")
 
