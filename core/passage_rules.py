@@ -179,14 +179,11 @@ def _selftest() -> int:
         print(f"  notary enforces this file: INERT ({type(exc).__name__}: {exc})")
         ok = False
 
-    try:
-        from agents.core.self_modifier import PASSAGE_RULES_BLOCK
-        shown = PASSAGE_RULES_BLOCK == strict["actor_block"]
-        print(f"  actor is shown this file : {'LIVE' if shown else 'DRIFTED'}")
-        ok = ok and shown
-    except Exception as exc:                                     # noqa: BLE001
-        print(f"  actor is shown this file : INERT ({type(exc).__name__}: {exc})")
-        ok = False
+    # "Is the actor shown this file" is asserted by test/test_passage_rules.py
+    # (PASSAGE_RULES_BLOCK == actor_block). It is not re-checked here: importing
+    # agents.core.self_modifier from this module made core/notary - and with it
+    # goal_score and publish - reach the LLM stack (task #8 step A, 24 Sep 2026).
+    print("  actor is shown this file : asserted by test/test_passage_rules.py")
 
     bad = load(path=REPO / "config" / "does_not_exist.json")
     closed = bad["irreversible_min"] == UNREACHABLE

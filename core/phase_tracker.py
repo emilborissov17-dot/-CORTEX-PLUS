@@ -160,17 +160,21 @@ def _close(phase: str, report) -> None:
     # FAIL-OPEN и с таван: cockpit/phase_voice.py минава през
     # step_budget.call_with_timeout, така че заклещен 3b струва един липсващ
     # ред, не нощ.
-    try:
-        from cockpit.phase_voice import on_phase_close
-        _said = on_phase_close(phase, str(_cycle_id), result, debrief)
-        if _said.get("emitted"):
-            print(f"[PHASE] {phase}: expression -> {_said.get('text')}")
-        else:
-            print(f"[PHASE] {phase}: no expression line "
-                  f"({str(_said.get('why') or _said.get('rejected'))[:120]})")
-    except Exception as exc:  # noqa: BLE001
-        print(f"[PHASE] {phase}: expression hook failed "
-              f"({type(exc).__name__}: {exc})")
+    # THE PHASE VOICE IS A HOOK, NOT AN IMPORT (24 Sep 2026, task #8 step A).
+    # cockpit/phase_voice speaks through a local model; importing it here made
+    # every step that touches the phase tracker reach core/llm_door. Whoever wants
+    # the voice registers it with on_close(); the tracker itself calls no model.
+    for _hook in list(_CLOSE_HOOKS):
+        try:
+            _said = _hook(phase, str(_cycle_id), result, debrief) or {}
+            if _said.get("emitted"):
+                print(f"[PHASE] {phase}: expression -> {_said.get('text')}")
+            else:
+                print(f"[PHASE] {phase}: no expression line "
+                      f"({str(_said.get('why') or _said.get('rejected'))[:120]})")
+        except Exception as exc:  # noqa: BLE001
+            print(f"[PHASE] {phase}: expression hook failed "
+                  f"({type(exc).__name__}: {exc})")
 
     try:
         import supervisor
@@ -229,6 +233,17 @@ def on_beat(step: str, index: str | None = None,
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] could not open {phase}: {type(exc).__name__}: {exc}")
         _open_phase, _open_report = None, None
+
+
+_CLOSE_HOOKS: list = []
+
+
+def on_close(fn) -> None:
+    """Register fn(phase, cycle_id, result, debrief) -> dict, called when a phase
+    closes. The phase voice (cockpit/phase_voice.on_phase_close) is registered by
+    the process that wants it, never imported here."""
+    if fn not in _CLOSE_HOOKS:
+        _CLOSE_HOOKS.append(fn)
 
 
 def note_failure(step: str, exc) -> None:
