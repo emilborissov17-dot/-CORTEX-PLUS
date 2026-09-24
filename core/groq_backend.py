@@ -547,6 +547,7 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
     num_predict = max(64, min(int(max_tokens), 1024))
     try:
         from core import model_window as _mw
+        model_id = _mw.guard_local(model_id, "groq_backend._call_local_as")
         keep_alive = _mw.keep_alive_for(model_id)
     except Exception:
         keep_alive = "30m"

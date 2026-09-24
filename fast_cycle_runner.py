@@ -359,6 +359,9 @@ def _classify_cycle_id(env_id):
         except Exception:
             _sealed = None
         globals()["_CYCLE_ID_FOR_HALT"] = cid
+        # The runner's own flag: everything below knows it is inside a cycle,
+        # also on a manual run that has no CORTEX_CYCLE_ID (core.model_window.in_cycle).
+        os.environ["CORTEX_IN_CYCLE"] = str(cid)
         if _fr is not None:
             # The trace takes the cycle's name here; the buffered rows from the
             # import phase are replayed into the file as soon as it has one.

@@ -121,6 +121,39 @@ def config() -> dict:
     }
 
 
+# ── NO 8b INSIDE A CYCLE (Emil, 24 Sep 2026) ──────────────────────────────────
+# On a 4 GB card qwen3:8b does not fit and every alternation with a 3b model is
+# a reload. Inside a cycle there is ONE local model, the adapter-bearing
+# cortex-l1b-3b, for the brain and for the ladder's local leg alike; 8b is for
+# work outside a cycle (collector, morning task). "Inside a cycle" is the flag
+# fast_cycle_runner sets at boot (CORTEX_IN_CYCLE) or the id the supervisor
+# stamps at spawn (CORTEX_CYCLE_ID). config/model_window.json may name the model
+# as "cycle_local_model".
+CYCLE_LOCAL_DEFAULT = "cortex-l1b-3b:latest"
+REFUSED_8B = "8b refused inside cycle"
+
+
+def in_cycle() -> bool:
+    return bool((os.environ.get("CORTEX_IN_CYCLE") or os.environ.get("CORTEX_CYCLE_ID") or "").strip())
+
+
+def cycle_local_model() -> str:
+    return _load_json(CONFIG).get("cycle_local_model", CYCLE_LOCAL_DEFAULT)
+
+
+def guard_local(model: str, purpose: str = "") -> str:
+    """The model a local call may actually load. Inside a cycle that is always the
+    cycle's one model; a request for 8b is refused by name, and the refusal is
+    printed so the cycle log says which call asked."""
+    if not in_cycle():
+        return model
+    local = cycle_local_model()
+    if model != local and (model == big_model() or ":8b" in str(model).lower()):
+        print(f"  [LOCAL] {REFUSED_8B}: {purpose or 'unnamed'} asked for {model}, "
+              f"served {local}")
+    return local
+
+
 def small_model() -> str:
     return config()["small"]
 
@@ -435,6 +468,8 @@ def local_model(want_big: bool = False, purpose: str = "",
     outside the window returns the small one and RECORDS the downgrade — the caller
     is not told it got what it asked for.
     """
+    if in_cycle():
+        return guard_local(config()["big"] if want_big else config()["small"], purpose)
     cfg = config()
     if not want_big:
         return cfg["small"]
@@ -449,6 +484,8 @@ def local_model(want_big: bool = False, purpose: str = "",
 
 def keep_alive_for(model: str):
     """3b outside the window is pinned forever; everything else gets a normal TTL."""
+    if in_cycle() and model == cycle_local_model():
+        return FOREVER
     if model == config()["small"] and not is_open():
         return FOREVER
     return BIG_KEEP_ALIVE

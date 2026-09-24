@@ -464,6 +464,16 @@ def _pick_model() -> tuple:
         return "qwen3", "http://localhost:11434"
 
 
+def _guard_local(model: str, purpose: str) -> str:
+    """Inside a cycle every brain role uses the cycle's one local model; a call
+    that would load 8b is refused by name (core.model_window.guard_local)."""
+    try:
+        from core import model_window as _mw
+        return _mw.guard_local(model, purpose)
+    except Exception:  # noqa: BLE001
+        return model
+
+
 def _smaller(current: str) -> str | None:
     """The smallest installed model STRICTLY SMALLER than `current`, or None.
 
@@ -603,9 +613,14 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         return None
 
     txt = None
+    _tried = set()
     for mdl, tmo in ((model, COLD_TIMEOUT), (_smaller(model), WARM_TIMEOUT)):
         if not mdl:
             break
+        mdl = _guard_local(mdl, f"brain.think:{role}")
+        if mdl in _tried:          # inside a cycle both rungs are the one model
+            break
+        _tried.add(mdl)
         try:
             body["model"] = mdl
             r = _rq.post(f"{base}/api/chat", timeout=tmo, json=body)
@@ -1264,6 +1279,7 @@ def attend(step: str) -> dict | None:
     try:
         import requests as _rq
         _, base = _pick_model()
+        mdl = _guard_local(mdl, "brain.attend")
         r = _rq.post(f"{base}/api/chat", timeout=ATTEND_TIMEOUT, json={
             "model": mdl, "stream": False, "keep_alive": KEEP_ALIVE, "format": "json",
             "messages": [{"role": "user", "content": prompt}],
