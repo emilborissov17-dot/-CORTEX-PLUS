@@ -432,9 +432,23 @@ def run():
     except Exception as e:
         # HTTP/таймаут отказ = МЪРТЪВ канал, не „няма съобщения". Цикълът върви,
         # но необратимите стъпки замръзват (виж channel_alive).
-        print(f"[approve] getUpdates FAILED -> channel treated as DEAD: "
-              f"{type(e).__name__}: {e}")
-        _mark_channel("dead", f"{type(e).__name__}: {e}")
+        # requests puts the URL in the message, and the URL is /bot<TOKEN>/...:
+        # the bot token reached the 23 Sep cycle log and the channel-state file
+        # verbatim. Both strings are masked to 4 characters of each secret.
+        # This file also runs standalone (CORTEX_Approvals, every minute), where
+        # the repo root may not be on sys.path — an ImportError here would turn a
+        # dead channel into a crashed reader. So: put it there, and if the import
+        # still fails, mask the one shape this line is known to carry.
+        try:
+            if str(REPO) not in sys.path:
+                sys.path.insert(0, str(REPO))
+            from core.redact import mask_secrets
+        except Exception:
+            def mask_secrets(s):
+                return re.sub(r"(?<![0-9])(\d{4})\d{4,8}:[A-Za-z0-9_\-]{30,}", r"\1…", s)
+        _why = mask_secrets(f"{type(e).__name__}: {e}")
+        print(f"[approve] getUpdates FAILED -> channel treated as DEAD: {_why}")
+        _mark_channel("dead", _why)
         return 0
     if not data.get("ok"):
         print(f"[approve] telegram error -> channel DEAD: {data.get('description')}")

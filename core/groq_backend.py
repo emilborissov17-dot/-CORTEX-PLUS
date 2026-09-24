@@ -844,7 +844,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                 # Reading a gap as "nothing happened" is the same defect as a
                 # guardrail that skips and writes nothing down.
                 _log_failure(label, key, prompt, e, kind)
-                print(f"  [LLM] {label} failed ({e}) -- next...")
+                # The provider's error text echoes the request URL, and a Gemini
+                # URL carries ?key=. This line goes to the cycle log (stdout),
+                # which core/durable.py's scrub never sees — mask it here.
+                from core.redact import mask_secrets
+                print(mask_secrets(f"  [LLM] {label} failed ({e}) -- next..."))
                 last_error = e
         return None                      # None => this tier declined, next tier
 

@@ -107,8 +107,13 @@ PATTERNS: tuple[tuple[str, re.Pattern], ...] = (
     ("openai_key", re.compile(r"(?<![0-9A-Za-z_])sk-(?:proj-)?[0-9A-Za-z]{32,}")),
     ("github_token", re.compile(r"(?:gh[pousr]_[0-9A-Za-z]{30,}|github_pat_[0-9A-Za-z_]{30,})")),
     ("slack_token", re.compile(r"xox[baprs]-[0-9A-Za-z\-]{10,}")),
-    # Telegram bot tokens: <numeric id>:<35-char secret>
-    ("telegram_bot_token", re.compile(r"\b\d{8,12}:[A-Za-z0-9_\-]{30,}\b")),
+    # Telegram bot tokens: <numeric id>:<35-char secret>.
+    # NOT anchored on \b, and that was a live miss until 24 Sep 2026: in the URL
+    # the token follows "bot" directly (".../bot8601817522:AAE.../getUpdates"),
+    # "t" and "8" are both word characters, so \b never matched there and the
+    # token went through untouched into cycle_2026-09-23_101901.log. A digit
+    # lookbehind keeps the id whole without needing a word boundary.
+    ("telegram_bot_token", re.compile(r"(?<![0-9])\d{8,12}:[A-Za-z0-9_\-]{30,}(?![A-Za-z0-9_\-])")),
     ("private_key_block", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
 )
 
@@ -157,6 +162,31 @@ def scrub_line(line: str) -> str:
                   f"line before it was written ({names}). This is the guard "
                   f"working; core/redact.py says why it exists.")
     return clean
+
+
+def mask_secrets(text) -> str:
+    """For text printed to a cycle log: every credential keeps its first 4
+    characters and becomes "…" after them (e.g. `key=AIza…`, `bot8601…`).
+
+    Same patterns as redact(); a different replacement, because the cycle log is
+    read by a human deciding WHICH key failed, and four characters say that
+    without saying the key. Added 24 Sep 2026: the cycle log is stdout, which
+    never passes through core/durable.py, so the Gemini key (17 lines in the
+    22 Sep log) and the Telegram bot token (23 Sep) reached it verbatim.
+    Never raises; non-str input is returned unchanged.
+    """
+    if not isinstance(text, str) or not text:
+        return text
+    out = text
+    try:
+        for name, pat in PATTERNS:
+            if name == "url_credential":
+                out = pat.sub(lambda m: m.group(0)[:len(m.group(1)) + 4] + "…", out)
+            elif name != "private_key_block":
+                out = pat.sub(lambda m: m.group(0)[:4] + "…", out)
+    except Exception:
+        return text
+    return out
 
 
 def redactions() -> dict[str, int]:
