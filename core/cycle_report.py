@@ -255,6 +255,48 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None) -> dict
             "brain": opening, "mirror": mirror, "series_breaks": breaks}
 
 
+def _series_break_lines(b: dict) -> list:
+    """One break from config/series_breaks.json, rendered by its break_kind.
+
+    24 Sep 2026: the reader assumed every break was a 'tree' break, whose
+    measured_effect is a dict of before/after numbers. Since 18 Sep the file also
+    carries 'instrument' breaks, whose measured_effect is prose by the file's own
+    contract (its _doc) — and to_markdown raised AttributeError on the first one,
+    losing the whole cycle report. A shape that does not match its kind is now
+    REFUSED by name, in the report and through phase_tracker.note_failure; it
+    never takes the rest of the report down with it.
+    """
+    head = [f"**{b.get('date_utc')} · {b.get('cause')}** (правило {b.get('rule')})", "",
+            f"- отпечатък: `{b.get('config_fingerprint_before')}` → "
+            f"`{b.get('config_fingerprint_after')}`"]
+    kind = b.get("break_kind") or "tree"
+    eff = b.get("measured_effect")
+    if kind == "tree" and isinstance(eff, dict):
+        def _ba(key):
+            v = eff.get(key)
+            return (v.get("before"), v.get("after")) if isinstance(v, dict) else (None, None)
+        tw, ax, cs, cg = _ba("total_weight"), _ba("axes"), _ba("composite_score"), _ba("coverage_of_goal")
+        lines = head + [f"- тегло на целта: {tw[0]} → {tw[1]}; оси: {ax[0]} → {ax[1]}",
+                        f"- композит: {cs[0]} → {cs[1]}; покритие на целта: {cg[0]} → {cg[1]}",
+                        f"- {b.get('why')}", ""]
+        if eff.get("note"):
+            lines += [f"> {eff['note']}", ""]
+        return lines
+    if kind == "instrument" and (eff is None or isinstance(eff, str)):
+        return head + [f"- инструмент: {b.get('instrument_before')} → {b.get('instrument_after')}",
+                       f"- ефект: {eff or '(не е описан)'}",
+                       f"- {b.get('why')}", ""]
+    why = (f"series break {b.get('id')!r}: break_kind={kind!r} with measured_effect of type "
+           f"{type(eff).__name__} — not a shape this report can read")
+    try:
+        from core import phase_tracker
+        phase_tracker.note_failure("cycle_report", ValueError(why))
+    except Exception:  # noqa: BLE001
+        pass
+    print(f"[REPORT] REFUSED {why}")
+    return head + [f"- **ОТКАЗАН ЗАПИС:** {why}", ""]
+
+
 def to_markdown(rep: dict) -> str:
     if rep.get("error"):
         return f"# Отчет — {rep['error']}"
@@ -533,21 +575,7 @@ def to_markdown(rep: dict) -> str:
     if rep.get("series_breaks"):
         out += ["## Прекъснати серии", ""]
         for b in rep["series_breaks"]:
-            eff = b.get("measured_effect") or {}
-            out += [f"**{b.get('date_utc')} · {b.get('cause')}** (правило {b.get('rule')})", "",
-                    f"- отпечатък: `{b.get('config_fingerprint_before')}` → "
-                    f"`{b.get('config_fingerprint_after')}`",
-                    f"- тегло на целта: {(eff.get('total_weight') or {}).get('before')} → "
-                    f"{(eff.get('total_weight') or {}).get('after')}; "
-                    f"оси: {(eff.get('axes') or {}).get('before')} → "
-                    f"{(eff.get('axes') or {}).get('after')}",
-                    f"- композит: {(eff.get('composite_score') or {}).get('before')} → "
-                    f"{(eff.get('composite_score') or {}).get('after')}; "
-                    f"покритие на целта: {(eff.get('coverage_of_goal') or {}).get('before')} → "
-                    f"{(eff.get('coverage_of_goal') or {}).get('after')}",
-                    f"- {b.get('why')}", ""]
-            if eff.get("note"):
-                out += [f"> {eff['note']}", ""]
+            out += _series_break_lines(b)
         out += ["_Точки от двете страни на прекъсване НЕ се сравняват._", ""]
 
     if rep["broken"]:
