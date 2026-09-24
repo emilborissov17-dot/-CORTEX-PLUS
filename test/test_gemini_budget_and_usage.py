@@ -191,15 +191,28 @@ def test_absent_usage_metadata_yields_absent_keys_not_zeros(monkeypatch):
     assert meta["finish_reason"] == "stop"
 
 
-def test_provenance_row_carries_the_token_fields():
-    """_log_provenance is nested inside call_groq_meta; assert on the source."""
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    assert "def _log_provenance(backend_label: str, prompt_text: str, content_text: str,\n" \
-           "                        meta: dict | None = None):" in src
-    assert "_log_provenance(label, prompt, result, meta)" in src
-    for field in ("thoughts_tokens", "answer_tokens", "prompt_tokens",
-                  "total_tokens", "budget", "finish_reason"):
-        assert f'"{field}"' in src, f"{field} must be written to provenance"
+def test_provenance_row_carries_the_token_fields(monkeypatch, tmp_path):
+    """Since 24 Sep 2026 the row is written by core/llm_door.py from the reply
+    itself: finish_reason and the provider's token counts, thoughts included."""
+    import json
+    from core import llm_door
+    prov = tmp_path / "llm_provenance.jsonl"
+    monkeypatch.setattr(llm_door, "PROVENANCE", prov)
+
+    class _R:
+        status_code = 200
+
+        @staticmethod
+        def json():
+            return {"candidates": [{"content": {"parts": [{"text": "ok"}]}, "finishReason": "STOP"}],
+                    "usageMetadata": {"promptTokenCount": 7, "candidatesTokenCount": 2,
+                                      "thoughtsTokenCount": 30}}
+    import requests
+    monkeypatch.setattr(requests, "post", lambda *a, **k: _R())
+    llm_door.post("t", "Gemini", "gemini-x", "https://example.invalid", prompt_text="p")
+    row = json.loads(prov.read_text(encoding="utf-8").splitlines()[-1])
+    assert row["finish_reason"] == "STOP" and row["prompt_tokens"] == 7
+    assert row["completion_tokens"] == 2 and row["thoughts_tokens"] == 30
 
 
 def test_a_call_without_the_stub_would_be_caught(monkeypatch):

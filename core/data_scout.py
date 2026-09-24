@@ -207,8 +207,11 @@ def _suggest_via_local_brain(prompt: str, timeout: int = 45) -> list[dict]:
     }).encode("utf-8")
     req = urllib.request.Request(_OLLAMA_URL + "/api/chat", data=body,
                                  headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        raw = ((json.loads(r.read().decode("utf-8")).get("message") or {}).get("content") or "")
+    from core import llm_door
+    d = llm_door.call("data_scout:suggest_via_local_brain", f"local:{_LOCAL_MODEL}", _LOCAL_MODEL,
+                      lambda: llm_door._read_json(urllib.request.urlopen(req, timeout=timeout)),
+                      prompt_text=prompt)
+    raw = ((d.get("message") or {}).get("content") or "")
     i, j = raw.find("{"), raw.rfind("}")
     if i < 0 or j <= i:
         return []

@@ -805,7 +805,9 @@ def _get_transcript_whisper(video_id: str) -> Optional[str]:
                 print(f"    [TRANSCRIPT] {video_id[:11]} ⚠️ audio > 24 MB — skip")
                 return None
             with open(audio_path, "rb") as f:
-                resp = _req.post(
+                from core import llm_door
+                resp = llm_door.post(
+                    "internet_agent:whisper", "Groq-Whisper", "whisper-large-v3",
                     "https://api.groq.com/openai/v1/audio/transcriptions",
                     headers={"Authorization": f"Bearer {groq_key}"},
                     files={"file": ("audio.mp3", f, "audio/mpeg")},

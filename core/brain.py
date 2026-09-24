@@ -43,7 +43,6 @@ JOURNAL = BASE / "memory" / "brain_journal.jsonl"
 # anyone reading the constants at the top of the file. It was inline until
 # 21 Aug, so every test of this write path either touched live state or did
 # not exist. The second one is what actually happened.
-PROVENANCE = BASE / "memory" / "llm_provenance.jsonl"
 PLAN = BASE / "memory" / "brain_cycle_plan.json"
 # ── ПРИСЪДИТЕ СЕ ПАЗЯТ (A-1, 11 септември 2026) ─────────────────────────────
 # Пет нощи подред (7–11 септ.) планът беше „Resolve sensor conflicts", присъдата
@@ -623,7 +622,10 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         _tried.add(mdl)
         try:
             body["model"] = mdl
-            r = _rq.post(f"{base}/api/chat", timeout=tmo, json=body)
+            from core import llm_door
+            r = llm_door.post(f"brain:{role}", f"local:{mdl}", mdl, f"{base}/api/chat",
+                              prompt_text=prompt, timeout=tmo, json=body,
+                              row_extra={"requested": (model_override or picked)})
             r.raise_for_status()
             t = ((r.json().get("message") or {}).get("content") or "").strip()
             txt = t.split("</think>")[-1].strip() if "</think>" in t else t
@@ -636,34 +638,8 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         return None
 
     took = round(time.time() - t0, 1)
-    try:            # provenance: коя мисъл от кой модел (join key за E7/E2)
-        import hashlib as _hl
-        pf = PROVENANCE
-        pf.parent.mkdir(parents=True, exist_ok=True)
-        # BATCHED (23 Aug 2026). 143 writes on the last sealed cycle.
-        # Provenance is a diagnostic stream about which model answered; losing
-        # the tail of the step that died is survivable, and 143 fsyncs a night
-        # is not free. The barrier is beat(), so the window is ONE STEP.
-        from core.durable import append_json as _append_json   # noqa: PLC0415
-        _append_json(pf, {
-                "ts": _now(), "backend": f"local:{model}", "caller": f"brain:{role}",
-                # THE EXACT MODEL ID IN ITS OWN FIELD (21 Aug 2026). It was
-                # already inside the backend string here — "local:qwen3:8b" —
-                # which meant reading it required knowing to split on the first
-                # colon and not the second. The cloud path had it nowhere at
-                # all. One field, same name, both paths, so a query for "which
-                # model produced this verdict" is one key on every row.
-                #
-                # `requested` matters when they differ: think() may fall back to
-                # a smaller local model on timeout, and a row that records only
-                # what answered hides the degradation that made it answer.
-                "model": model,
-                "requested": (model_override or picked),
-                "prompt_sha": _hl.sha256(prompt.encode("utf-8")).hexdigest()[:16],
-                "prompt_head": prompt[:160], "chars": len(txt), "sec": took,
-            }, batched=True)
-    except Exception:
-        pass
+    # Provenance for this thought is the row core/llm_door.py wrote for the
+    # request above (caller brain:<role>, backend local:<model>, requested).
 
     if not schema:
         out = {"text": txt[:2000], "model": model, "sec": took}
@@ -1280,7 +1256,9 @@ def attend(step: str) -> dict | None:
         import requests as _rq
         _, base = _pick_model()
         mdl = _guard_local(mdl, "brain.attend")
-        r = _rq.post(f"{base}/api/chat", timeout=ATTEND_TIMEOUT, json={
+        from core import llm_door
+        r = llm_door.post(f"brain:attend:{step}", f"local:{mdl}", mdl, f"{base}/api/chat",
+                          prompt_text=prompt, timeout=ATTEND_TIMEOUT, json={
             "model": mdl, "stream": False, "keep_alive": KEEP_ALIVE, "format": "json",
             "messages": [{"role": "user", "content": prompt}],
             "options": {"temperature": 0.1, "num_predict": 220}})

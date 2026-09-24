@@ -45,7 +45,7 @@ def _capture(monkeypatch, tmp_path, content='{"stance": "go", "expect": "x", "se
         return _Reply(content)
 
     monkeypatch.setattr(requests, "post", post)
-    for name in ("JOURNAL", "PROVENANCE", "PLAN", "REVIEWS", "STEP_LOG", "STANCE"):
+    for name in ("JOURNAL", "PLAN", "REVIEWS", "STEP_LOG", "STANCE"):
         monkeypatch.setattr(brain, name, tmp_path / f"{name}.jsonl")
     monkeypatch.setattr(brain, "models", lambda: [BIG, "qwen2.5:3b", model_window.CYCLE_LOCAL_DEFAULT])
     monkeypatch.setattr(brain, "_pick_model", lambda: (BIG, "http://localhost:11434"))

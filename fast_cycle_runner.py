@@ -147,6 +147,8 @@ def _close_open_step() -> None:
 
 def beat(step, step_index=None, cycle_id=None):
     _STEPS_DONE_FOR_HALT[0] += 1
+    # every provenance row written during this step names it (core/llm_door.py)
+    os.environ["CORTEX_STEP"] = str(step)
     """Границата на стъпка: затвори предишната на запис, после обяви новата."""
     # ── THE DURABILITY BARRIER (23 Aug 2026) ──────────────────────────────
     # core/durable.py lets the two high-frequency writers — llm_provenance
@@ -1631,8 +1633,9 @@ def _check_dependencies() -> bool:
         try:
             import requests as _req
             from core.groq_backend import GROQ_API_URL, GROQ_MODEL
-            r = _req.post(
-                GROQ_API_URL,
+            from core import llm_door
+            r = llm_door.post(
+                "dependency_check:groq_ping", "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text="ping",
                 headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
                 json={"model": GROQ_MODEL, "messages": [{"role": "user", "content": "ping"}], "max_tokens": 3},
                 timeout=15,

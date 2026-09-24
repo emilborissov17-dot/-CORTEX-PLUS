@@ -339,7 +339,9 @@ def _call_groq(prompt: str, max_tokens: int):
         "max_completion_tokens": budget,
     }
     time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
-    r = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=(10, 60))
+    from core import llm_door
+    r = llm_door.post(None, "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text=prompt,
+                      headers=headers, json=payload, timeout=(10, 60))
 
     if r.status_code == 429:
         _set_cooldown("groq")
@@ -380,7 +382,9 @@ def _call_openrouter(prompt: str, max_tokens: int):
         "max_tokens": max_tokens,
     }
     time.sleep(_SLEEP_SECS)
-    r = requests.post(OPENROUTER_API_URL, headers=headers, json=payload, timeout=(10, 90))
+    from core import llm_door
+    r = llm_door.post(None, "OpenRouter", OPENROUTER_MODEL, OPENROUTER_API_URL, prompt_text=prompt,
+                      headers=headers, json=payload, timeout=(10, 90))
 
     if r.status_code == 429:
         _set_cooldown("openrouter")
@@ -431,7 +435,9 @@ def _call_nvidia_kimi(prompt: str, max_tokens: int):
         "max_tokens": max_tokens,
         "temperature": 0.3,
     }
-    r = requests.post(NVIDIA_API_URL, json=payload, timeout=(10, 120),
+    from core import llm_door
+    r = llm_door.post(None, "NVIDIA", model, NVIDIA_API_URL, prompt_text=prompt,
+                      json=payload, timeout=(10, 120),
                       headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
                                "Accept": "application/json"})
     if r.status_code == 429:
@@ -482,7 +488,9 @@ def _call_gemini(prompt: str, max_tokens: int):
         "generationConfig": {"maxOutputTokens": budget},
     }
     time.sleep(_SLEEP_SECS)
-    r = requests.post(url, json=payload, timeout=(10, 60))
+    from core import llm_door
+    r = llm_door.post(None, "Gemini", model_name, url, prompt_text=prompt,
+                      json=payload, timeout=(10, 60))
 
     if r.status_code == 429:
         _set_cooldown("gemini")
@@ -557,7 +565,9 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
             "keep_alive": keep_alive,
             "options": {"temperature": 0.4, "num_predict": num_predict}}
     try:
-        r = requests.post(f"{_OLLAMA_URL}/api/chat", json=body, timeout=300)
+        from core import llm_door
+        r = llm_door.post(None, f"local:{body.get('model')}", body.get("model"),
+                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body, timeout=300)
     except requests.exceptions.Timeout:
         raise RuntimeError(f"local model {model_id} cold-start >300s")
     if r.status_code != 200:
@@ -599,7 +609,9 @@ def _call_local(prompt: str, max_tokens: int):
             "keep_alive": keep_alive,
             "options": {"temperature": 0.4, "num_predict": num_predict}}
     try:
-        r = requests.post(f"{_OLLAMA_URL}/api/chat", json=body, timeout=300)
+        from core import llm_door
+        r = llm_door.post(None, f"local:{body.get('model')}", body.get("model"),
+                          f"{_OLLAMA_URL}/api/chat", prompt_text=prompt, json=body, timeout=300)
     except requests.exceptions.Timeout:
         raise RuntimeError(f"local model {model} cold-start >300s")
     if r.status_code != 200:
@@ -673,101 +685,11 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             return backend_label.split(":", 1)[1]
         return backend_label
 
-    def _log_failure(backend_label: str, key: str, prompt_text: str,
-                     exc: BaseException, kind: str):
-        """The other half of provenance. Same file, same shape, outcome='error'.
-
-        HTTP status is pulled off the exception where requests attached one, so
-        a 402 is findable as a NUMBER rather than by grepping English out of a
-        message. `classification` is backend_policy's own verdict — permanent /
-        cooldown / transient — so the ledger records not just that a call failed
-        but what the system decided it meant.
-        """
-        status = None
-        resp = getattr(exc, "response", None)
-        if resp is not None:
-            status = getattr(resp, "status_code", None)
-        _log_provenance(backend_label, prompt_text, "", {
-            "outcome": "error",
-            "error": f"{type(exc).__name__}: {exc}"[:300],
-            "http_status": status,
-            "classification": kind,
-            "backend_key": key,
-        })
-
-    def _log_provenance(backend_label: str, prompt_text: str, content_text: str,
-                        meta: dict | None = None):
-        """PROVENANCE (14 Aug 2026): every verdict the system records used to be
-        anonymous — no trace of WHICH model produced it, though the chain falls
-        through 4 providers many times per cycle. E7 (calibrated ensemble) and E2
-        (LLM-vs-data grounding) both need this join key. Append-only, fail-open,
-        5MB rotation; prompt is stored as a hash + head, never in full.
-
-        THE EXACT MODEL ID (21 Aug 2026, Emil). _model_for() has existed since
-        17 Aug and this function never called it: every cloud row on disk says
-        "Groq" or "Cerebras" and not one of them says WHICH model. Counted on
-        the live log: 235 Groq rows, 440 Cerebras, 232 OpenRouter, 41 Gemini —
-        948 cloud verdicts whose model is unrecoverable.
-
-        That is not bookkeeping pedantry, it is the reason the 18-20 Aug outage
-        took log-grepping to diagnose. 471 lines of
-        "Groq failed (404 Client Error)" sat in memory/cycle_logs/, and the only
-        way to learn which id had 404'd was to read the [LLM] print line
-        immediately above each one. Provenance — the file that exists to answer
-        "which model said this" — could not.
-
-        `backend` keeps its old values on purpose: core/phase_report
-        ._provenance_between() groups by it, and renaming the field would break
-        the per-phase LLM-call table for every historical row. `model` is added
-        beside it.
-        """
-        try:
-            import hashlib as _hl
-            _pf = Path(__file__).resolve().parents[1] / "memory" / "llm_provenance.jsonl"
-            _pf.parent.mkdir(parents=True, exist_ok=True)
-            if _pf.exists() and _pf.stat().st_size > 5_000_000:
-                _pf.replace(_pf.with_suffix(".jsonl.1"))
-            # BATCHED (23 Aug 2026). The cloud half of the same
-            # 143-writes-a-night provenance stream as core/brain.py.
-            # Same trade, same barrier: beat(). See core/durable.py.
-            from core.durable import append_json as _append_json  # noqa: PLC0415
-            _row = {
-                    "ts": datetime.now(timezone.utc).isoformat(),
-                    "backend": backend_label,
-                    "model": _model_for(backend_label),
-                    "prompt_sha1": _hl.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12],
-                    "prompt_head": prompt_text[:80],
-                    # HOW BIG IT WAS (STEP 6b, 10 Sep 2026). Groq answered 413
-                    # Payload Too Large five times between 2 and 10 Sep, on
-                    # three different callers, and not one of those rows can say
-                    # how large the payload was: sha1 identifies a prompt,
-                    # prompt_head shows its first 80 chars, and the LENGTH — the
-                    # one number a 413 is about — was never written down. Two
-                    # numbers, because the limit is bytes and the caller's cap
-                    # is chars, and for Cyrillic prose they differ by ~12%.
-                    "prompt_chars": len(prompt_text or ""),
-                    "prompt_bytes": len((prompt_text or "").encode("utf-8", "ignore")),
-                    "reply_chars": len(content_text or ""),
-                }
-            # WHY THE ANSWER WAS THAT SHORT, not just how short it was. Where
-            # the provider reports its own token accounting, it is carried here
-            # verbatim. Item 4(d) had to estimate the thinking/answer split from
-            # reply_chars because these fields were read and discarded; whoever
-            # asks next reads the number. Absent for providers that report none
-            # — an absent key is honest, a zero would not be.
-            _row["outcome"] = "ok"
-            if meta:
-                for _k in ("finish_reason", "latency_s", "thoughts_tokens", "answer_tokens",
-                           "prompt_tokens", "total_tokens", "budget",
-                           "used_reasoning_fallback",
-                           # the failure half (see _log_failure)
-                           "outcome", "error", "http_status", "classification",
-                           "backend_key"):
-                    if meta.get(_k) is not None:
-                        _row[_k] = meta[_k]
-            _append_json(_pf, _row, batched=True)
-        except Exception:
-            pass  # bookkeeping must never break the chain
+    # PROVENANCE IS WRITTEN BY core/llm_door.py (24 Sep 2026). Each leg's HTTP
+    # request goes through llm_door.post(), which writes one schema-2 row on every
+    # path - success, HTTP error, exception, empty reply - with latency on error
+    # too. The two writers that stood here (_log_provenance, _log_failure) used a
+    # second schema and timed successes only; they would now double every row.
 
     last_error = None
 
@@ -831,7 +753,6 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                         print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
                     else:
                         print(f"[LLM] {label} OK")
-                    _log_provenance(label, prompt, result, meta)
                     _policy.note_cloud_success()
                     return result, meta
                 raise ValueError(f"Empty response from {label}")
@@ -844,7 +765,6 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                 # why the DECLARED_DEAD reason above stayed wrong for five days.
                 # Reading a gap as "nothing happened" is the same defect as a
                 # guardrail that skips and writes nothing down.
-                _log_failure(label, key, prompt, e, kind)
                 # The provider's error text echoes the request URL, and a Gemini
                 # URL carries ?key=. This line goes to the cycle log (stdout),
                 # which core/durable.py's scrub never sees — mask it here.
@@ -864,7 +784,6 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             meta["backend"] = f"local:{model_id}"
             meta["model"] = model_id
             meta["degraded"] = True
-            _log_provenance(f"local:{model_id}", prompt, result)
             return result, meta
         return _go
 

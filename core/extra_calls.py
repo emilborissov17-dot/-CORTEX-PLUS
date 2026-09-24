@@ -291,8 +291,10 @@ def _attempt(kind: str, prompt: str, model: str = "qwen2.5:3b",
         req = urllib.request.Request(
             url, data=payload, headers={"Content-Type": "application/json"})
         _open = opener or urllib.request.urlopen
-        with _open(req, timeout=timeout) as r:
-            d = json.loads(r.read().decode("utf-8"))
+        from core import llm_door
+        d = llm_door.call(f"extra_calls:{kind}", f"local:{model}", model,
+                          lambda: llm_door._read_json(_open(req, timeout=timeout)),
+                          prompt_text=prompt)
         rec.update(outcome=COMPLETED, text=d.get("response"), raw=d)
         _consecutive_failures = 0
     except (TimeoutError, urllib.error.URLError, OSError) as exc:

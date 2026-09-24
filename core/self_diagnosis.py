@@ -293,7 +293,9 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
         msgs = [{"role": "user", "content": prompt}]
 
         def _ask(mdl, timeout):
-            r = _rq.post(f"{base}/api/chat", timeout=timeout, json={
+            from core import llm_door
+            r = llm_door.post("self_diagnosis:brain_diagnosis", f"local:{mdl}", mdl,
+                              f"{base}/api/chat", prompt_text=prompt, timeout=timeout, json={
                 "model": mdl, "stream": False, "messages": msgs,
                 "keep_alive": _KEEP_ALIVE, "format": "json",
                 "options": {"temperature": 0.1}})
@@ -396,7 +398,9 @@ def _local_remedy(cause: str, why: str, evidence: list, step: str) -> tuple:
         msgs = [{"role": "user", "content": prompt}]
 
         def _ask(mdl: str, timeout: int) -> str:
-            r = _rq.post(f"{base}/api/chat", timeout=timeout, json={
+            from core import llm_door
+            r = llm_door.post("self_diagnosis:local_remedy", f"local:{mdl}", mdl,
+                              f"{base}/api/chat", prompt_text=prompt, timeout=timeout, json={
                 "model": mdl, "stream": False, "messages": msgs,
                 "keep_alive": _KEEP_ALIVE,
                 "options": {"temperature": 0.2}})

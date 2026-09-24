@@ -268,6 +268,23 @@ def _blackbox_to_tmp(monkeypatch, tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def _llm_provenance_to_tmp(monkeypatch, tmp_path):
+    """Redirect core/llm_door.py's provenance file into tmp_path for every test.
+
+    ADDED 24 Sep 2026 with the one door. Its first suite run appended 26 mocked
+    rows (latency 0.0) to the LIVE memory/llm_provenance.jsonl: the door writes
+    through core.durable.append_json, which _no_live_writes below does not see,
+    and the tests that used to redirect brain.PROVENANCE were redirecting a path
+    nothing writes any more. The rows were removed by hand; this keeps it so.
+    """
+    try:
+        from core import llm_door as _door
+        monkeypatch.setattr(_door, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
+    except Exception:
+        pass
+
+
+@pytest.fixture(autouse=True)
 def _daily_tier_to_tmp(monkeypatch, tmp_path):
     """No test may read the LIVE daily tier. Autouse, for every test.
 

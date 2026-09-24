@@ -277,7 +277,9 @@ def groq_asker(model: str):
             return None
         fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
         prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
-        r = requests.post(consult.GROQ_URL, timeout=60,
+        from core import llm_door
+        r = llm_door.post("counterfactual_probe:groq_asker", "Groq", model, consult.GROQ_URL,
+                          prompt_text=prompt, timeout=60,
                           headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                           json={"model": model, "temperature": 0, "max_tokens": 200,
                                 "response_format": {"type": "json_object"},
@@ -306,7 +308,9 @@ def nvidia_kimi_ask(question: str, evidence: str, schema: dict):
     model = gb._nvidia_model(key)
     fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
     prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
-    r = requests.post(gb.NVIDIA_API_URL, timeout=120,
+    from core import llm_door
+    r = llm_door.post("counterfactual_probe:nvidia_kimi_ask", "NVIDIA", model, gb.NVIDIA_API_URL,
+                      prompt_text=prompt, timeout=120,
                       headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                       json={"model": model, "temperature": 0, "max_tokens": 300,
                             "messages": [{"role": "user", "content": prompt}]})

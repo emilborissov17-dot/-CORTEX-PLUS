@@ -86,26 +86,36 @@ def test_each_backend_label_resolves_to_its_configured_id(label, expected):
     assert expected
 
 
-def test_the_writer_calls_the_resolver_rather_than_recomputing_it():
-    """The whole defect was a resolver that existed and was never called."""
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    writer = src.split("def _log_provenance", 1)[1].split("def ", 1)[0]
-    assert '"model": _model_for(backend_label)' in writer, (
-        "_log_provenance does not record the exact model id — which is the "
-        "state that made the 18-20 Aug 404 loop undiagnosable from provenance")
+class _CloudReply:
+    status_code = 200
+
+    def raise_for_status(self):
+        return None
+
+    @staticmethod
+    def json():
+        return {"choices": [{"message": {"content": "жив"}, "finish_reason": "stop"}],
+                "usage": {"prompt_tokens": 5, "completion_tokens": 1}}
 
 
-def test_the_resolver_is_defined_before_the_writer_that_uses_it():
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    assert src.index("def _model_for") < src.index("def _log_provenance")
-
-
-def test_backend_keeps_its_old_values_so_the_phase_report_still_groups():
-    """core/phase_report._provenance_between() groups by `backend`. Renaming it
-    would silently break the per-phase LLM table for every historical row."""
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    writer = src.split("def _log_provenance", 1)[1].split("def ", 1)[0]
-    assert '"backend": backend_label' in writer
+@pytest.mark.parametrize("leg,label,model_attr", [
+    ("_call_groq", "Groq", "GROQ_MODEL"), ("_call_openrouter", "OpenRouter", "OPENROUTER_MODEL")])
+def test_the_cloud_row_names_the_exact_model_and_keeps_the_backend_label(
+        monkeypatch, tmp_path, leg, label, model_attr):
+    """Since 24 Sep the row is written by core/llm_door.py for every leg. The
+    exact id is on it (the 18-20 Aug 404 loop), and `backend` keeps the label
+    core/phase_report._provenance_between() groups by."""
+    from core import llm_door
+    prov = tmp_path / "llm_provenance.jsonl"
+    monkeypatch.setattr(llm_door, "PROVENANCE", prov)
+    monkeypatch.setattr(gb, "_load_key", lambda name: "test-key")
+    monkeypatch.setattr(gb, "_SLEEP_SECS", 0)
+    import requests
+    monkeypatch.setattr(requests, "post", lambda *a, **k: _CloudReply())
+    getattr(gb, leg)("кажи жив", 16)
+    row = json.loads(prov.read_text(encoding="utf-8").splitlines()[-1])
+    assert row["backend"] == label and row["model"] == getattr(gb, model_attr), row
+    assert row["outcome"] == "ok" and row["finish_reason"] == "stop" and row["latency_s"] is not None
 
 
 # --------------------------------------------------------------------------- #
@@ -129,8 +139,9 @@ def test_the_local_path_records_the_model_and_what_was_requested(monkeypatch,
     cold-start ran past 6m40s, which is the same failure the cycle logs record
     as 'local model qwen3:8b cold-start >300s'. So the HTTP layer is stubbed —
     what is under test is the ROW, not Ollama."""
+    from core import llm_door
     prov = tmp_path / "llm_provenance.jsonl"
-    monkeypatch.setattr(brain, "PROVENANCE", prov)
+    monkeypatch.setattr(llm_door, "PROVENANCE", prov)
     monkeypatch.setattr(brain, "JOURNAL", tmp_path / "brain_journal.jsonl")
     monkeypatch.setattr(brain, "models", lambda: ["qwen2.5:3b", "qwen3:8b"])
     monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://x"))
@@ -155,8 +166,9 @@ def test_a_silent_fallback_to_a_smaller_model_is_visible(monkeypatch, tmp_path):
     """think() falls back to a smaller local model when the first times out. A
     row that records only what ANSWERED hides the degradation that made it
     answer, which is the class of defect this repo exists to catch."""
+    from core import llm_door
     prov = tmp_path / "llm_provenance.jsonl"
-    monkeypatch.setattr(brain, "PROVENANCE", prov)
+    monkeypatch.setattr(llm_door, "PROVENANCE", prov)
     monkeypatch.setattr(brain, "JOURNAL", tmp_path / "brain_journal.jsonl")
     monkeypatch.setattr(brain, "models", lambda: ["qwen2.5:3b", "qwen3:8b"])
     monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://x"))
@@ -176,7 +188,11 @@ def test_a_silent_fallback_to_a_smaller_model_is_visible(monkeypatch, tmp_path):
 
     brain.think(role="проверка", question="кажи жив", kind="provenance_check",
                 remember_it=False)
-    row = json.loads(prov.read_text(encoding="utf-8").splitlines()[0])
+    rows = [json.loads(x) for x in prov.read_text(encoding="utf-8").splitlines() if x.strip()]
+    # Since 24 Sep the timed-out attempt is a row of its own (outcome error,
+    # with its latency) - the fallback is visible twice over.
+    assert rows[0]["outcome"] == "error" and rows[0]["model"] == "qwen3:8b", rows[0]
+    row = rows[-1]
     assert row["model"] == "qwen2.5:3b", "the row hides which model answered"
     assert row["requested"] == "qwen3:8b", (
         "the row does not record what was asked for, so the fallback is invisible")
@@ -187,10 +203,16 @@ def test_the_provenance_path_is_redirectable():
     """It was built inline inside think() until 21 Aug, so no fixture could
     redirect it and no test of this write path could exist without touching
     live state. Same scar as supervisor.NOTIFY_CHANNEL."""
-    assert isinstance(brain.PROVENANCE, Path)
-    src = (REPO / "core" / "brain.py").read_text(encoding="utf-8")
-    assert 'pf = PROVENANCE' in src
-    assert 'pf = BASE / "memory" / "llm_provenance.jsonl"' not in src
+    from core import llm_door
+    assert isinstance(llm_door.PROVENANCE, Path)
+    import ast
+    import inspect
+    import textwrap
+    fn = ast.parse(textwrap.dedent(inspect.getsource(brain.think))).body[0]
+    code = [n for n in fn.body if not (isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant))]
+    assert "llm_provenance.jsonl" not in "\n".join(ast.unparse(n) for n in code), (
+        "brain.think builds its own provenance path again; the door owns it")
+    assert not hasattr(brain, "PROVENANCE"), "brain keeps a second provenance path"
 
 
 # --------------------------------------------------------------------------- #

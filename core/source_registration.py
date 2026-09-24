@@ -549,7 +549,10 @@ def _semantic_rule(payload, metric: str, axis: str) -> tuple:
         for attempt in (1, 2):
             # 15 Aug: 60s стигат за топъл модел (измерено 49s), но не и за студен —
             # 300s + keep_alive, за да не отпада откриването само защото мозъкът спи.
-            r = _rq.post(f"{base}/api/chat", timeout=300, json={
+            from core import llm_door
+            r = llm_door.post("source_registration:semantic_rule", f"local:{model}", model,
+                              f"{base}/api/chat", prompt_text=str(messages[-1].get("content", "")),
+                              timeout=300, json={
                 "model": model, "stream": False, "messages": messages,
                 "keep_alive": "30m",
                 "options": {"temperature": 0}})
