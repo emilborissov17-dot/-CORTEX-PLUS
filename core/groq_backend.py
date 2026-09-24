@@ -738,6 +738,13 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
             if _is_cooling(key):
                 print(f"  [LLM] {label} in cooldown -- skipping")
                 continue
+            from core import llm_door as _door
+            _gate = _door.leg_gate(label, _model_for(label))
+            if _gate == "skip":
+                print(f"  [LLM] {label} -- {_door.SKIPPED}, probed already tonight -- skipping")
+                continue
+            if _gate == "probe":
+                print(f"  [LLM] {label} -- {_door.SKIPPED}; tonight's one probe")
             try:
                 _t0 = time.monotonic()
                 result, meta = fn(prompt, max_tokens)
@@ -754,6 +761,7 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
                         raise ValueError(f"{label} truncated twice "
                                          f"(finish_reason={meta.get('finish_reason')})")
                 if result and result.strip():
+                    _door.note_ok(label)
                     _clear_cooldown(key)  # healthy again → reset its escalation
                     meta = dict(meta or {})
                     meta["latency_s"] = round(time.monotonic() - _t0, 2)

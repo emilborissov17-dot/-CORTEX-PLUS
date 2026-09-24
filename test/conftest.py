@@ -280,6 +280,13 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
     try:
         from core import llm_door as _door
         monkeypatch.setattr(_door, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
+        # and the two other files the door keeps (task #19 c, d): measured
+        # timeouts (absent -> the seed) and the per-night dead-leg state
+        monkeypatch.setattr(_door, "TIMEOUTS", tmp_path / "llm_timeouts.json")
+        monkeypatch.setattr(_door, "LEG_STATE", tmp_path / "llm_leg_state.json")
+        monkeypatch.setattr(_door, "_ok_cache", {})
+        monkeypatch.setattr(_door, "_alive", set())
+        monkeypatch.setattr(_door, "_warm", set())
     except Exception:
         pass
 

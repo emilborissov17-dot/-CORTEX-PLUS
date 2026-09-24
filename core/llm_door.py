@@ -120,7 +120,7 @@ def _mask(error) -> str | None:
 def record(*, caller: str | None, backend: str, model: str | None, outcome: str,
            latency_s: float | None = None, finish_reason: str | None = None,
            http_status: int | None = None, error: str | None = None,
-           prompt_text: str | None = None, **extra) -> dict:
+           prompt_text: str | None = None, batched: bool = True, **extra) -> dict:
     """Append one schema-2 row. Never raises: bookkeeping must not break a call."""
     row = {"ts": datetime.now(timezone.utc).isoformat(), "schema": SCHEMA,
            "caller": caller or _caller_from_stack(),
@@ -132,19 +132,94 @@ def record(*, caller: str | None, backend: str, model: str | None, outcome: str,
         row["prompt_sha1"] = hashlib.sha1(prompt_text.encode("utf-8", "ignore")).hexdigest()[:12]
         row["prompt_chars"] = len(prompt_text)
     row.update({k: v for k, v in extra.items() if v is not None})
+    if outcome == "ok":
+        for k in [k for k in _ok_cache if k[1] == backend]:
+            _ok_cache.pop(k, None)
     try:
         PROVENANCE.parent.mkdir(parents=True, exist_ok=True)
         if PROVENANCE.exists() and PROVENANCE.stat().st_size > _ROTATE_BYTES:
             PROVENANCE.replace(PROVENANCE.with_suffix(".jsonl.1"))
         try:
             from core.durable import append_json
-            append_json(PROVENANCE, row, batched=True)
+            append_json(PROVENANCE, row, batched=batched)
         except Exception:
             with PROVENANCE.open("a", encoding="utf-8") as fh:
                 fh.write(json.dumps(row, ensure_ascii=False) + "\n")
     except Exception:
         pass
     return row
+
+
+# ── DEAD LEGS LEAVE THE LADDER BY EVIDENCE (24 Sep 2026, task #19 d) ────────
+# A leg with 0 ok rows in the last 24 h of provenance is skipped. Once per night
+# (calendar date, across every process - LEG_STATE) its first call goes through as
+# a PROBE, whose own row is the new evidence; after that the leg is skipped for the
+# rest of the night, and ONE row per leg per night says so.
+LEG_STATE = BASE / "memory" / "llm_leg_state.json"
+DEAD_WINDOW_H = 24
+SKIPPED = "leg skipped: 0 ok/24h"
+_ok_cache: dict = {}
+_alive: set = set()          # legs that answered ok in this process
+
+
+def note_ok(backend: str) -> None:
+    """The ladder got a usable answer from this leg: it is alive, whatever the
+    cached count says (a successful probe must not be skipped on the next call)."""
+    _alive.add(backend)
+
+
+def ok_count(backend: str, now: datetime | None = None, hours: int = DEAD_WINDOW_H) -> int:
+    """ok rows for this backend label in the last `hours`. Cached for 10 min."""
+    from datetime import timedelta
+    now = now or datetime.now(timezone.utc)
+    key = (str(PROVENANCE), backend, hours)
+    hit = _ok_cache.get(key)
+    if hit and (now - hit[0]).total_seconds() < 600:
+        return hit[1]
+    cut = (now - timedelta(hours=hours)).isoformat()
+    n = 0
+    try:
+        for line in PROVENANCE.read_text(encoding="utf-8", errors="replace").splitlines():
+            try:
+                r = json.loads(line)
+            except Exception:
+                continue
+            if r.get("backend") == backend and str(r.get("ts", "")) >= cut \
+                    and r.get("outcome", "ok") == "ok" and r.get("finish_reason") not in TRUNCATED:
+                n += 1
+    except Exception:
+        pass
+    _ok_cache[key] = (now, n)
+    return n
+
+
+def leg_gate(backend: str, model: str | None = None, now: datetime | None = None) -> str:
+    """"use", "probe" or "skip" for a cloud leg. Writes LEG_STATE and, on the
+    first skip of a night, one provenance row. Never raises (fails open: "use")."""
+    now = now or datetime.now(timezone.utc)
+    night = now.date().isoformat()
+    try:
+        if backend in _alive or ok_count(backend, now) > 0:
+            return "use"
+        try:
+            state = json.loads(LEG_STATE.read_text(encoding="utf-8"))
+        except Exception:
+            state = {}
+        leg = state.setdefault(backend, {})
+        if leg.get("probed_night") != night:
+            leg["probed_night"] = night
+            verdict = "probe"
+        else:
+            verdict = "skip"
+            if leg.get("skip_row_night") != night:
+                leg["skip_row_night"] = night
+                record(caller="ladder", backend=backend, model=model, outcome="refused",
+                       error=SKIPPED, batched=False)   # rare; on disk at once
+        LEG_STATE.parent.mkdir(parents=True, exist_ok=True)
+        LEG_STATE.write_text(json.dumps(state, indent=2), encoding="utf-8")
+        return verdict
+    except Exception:
+        return "use"
 
 
 def _family(backend: str) -> str:
