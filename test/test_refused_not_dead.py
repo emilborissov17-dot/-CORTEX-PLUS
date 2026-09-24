@@ -59,7 +59,7 @@ def test_a_refused_cycle_is_cleared_without_a_death_record():
                    lock_pid_alive=False, lock_cycle_finished=False,
                    lock_cycle_refused=True)
     assert a.kind == sup.CLEAR_REFUSED_LOCK
-    assert a.kind not in (sup.DEAD_LOCK_RETRY, sup.DEAD_LOCK_BUDGET_DONE)
+    assert a.kind != sup.DEAD_LOCK_RETRY
     assert "REFUSED" in a.reason
     assert "not a death" in a.reason
 
@@ -69,7 +69,7 @@ def test_without_the_refusal_on_record_it_is_still_a_death():
     a = sup.decide(at(9), state(), None, lock(pid=4321), CFG,
                    lock_pid_alive=False, lock_cycle_finished=False,
                    lock_cycle_refused=False)
-    assert a.kind == sup.DEAD_LOCK_RETRY
+    assert a.kind in (sup.DEAD_LOCK_RETRY, sup.DEATH_UNEXPLAINED)
     assert "DIED" in a.reason
 
 

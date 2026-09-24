@@ -160,25 +160,26 @@ def test_a_broken_survival_lookup_leaves_the_ceiling_alone(monkeypatch):
 # ---------------------------------------------------------------------------
 
 def test_the_supervisor_latches_instead_of_only_alarming():
-    src = (REPO / "supervisor.py").read_text(encoding="utf-8", errors="replace")
+    """Since 24 Sep 2026 the latch hangs on an UNEXPLAINED death — there is no
+    per-day restart count left to run out."""
+    import inspect
+    src = inspect.getsource(supervisor._handle_unexplained_death)
     assert "_sm.enter(" in src, (
-        "budget exhausted no longer latches survival mode; the next cycle would "
-        "start at full fat into the wall that emptied the budget")
-    assert "notifier=lambda" in src, (
-        "survival_mode.enter must be given the notifier, never import one — on "
-        "16 Aug 2026 a module that reached for its own alarm path sent the human "
-        "a real emergency about a failure that never happened")
+        "an unexplained death no longer latches survival mode; the cycle a human "
+        "starts next would run at full fat into the same wall")
+    assert "notifier=" in src.split("_sm.enter(", 1)[1], (
+        "survival_mode.enter must be given the notifier explicitly, never import "
+        "one — on 16 Aug 2026 a module that reached for its own alarm path sent "
+        "the human a real emergency about a failure that never happened")
 
 
-def test_the_supervisor_still_does_not_spawn_another_cycle_on_budget_done():
+def test_the_supervisor_still_does_not_spawn_another_cycle_on_an_unexplained_death():
     """Survival mode is what the NEXT cycle inherits, not permission to retry now."""
     import inspect
-    src = inspect.getsource(supervisor.tick)
-    after = src.split("KILL_BUDGET_DONE")[-1]
-    tail = after[after.rfind("_sm.enter("):] if "_sm.enter(" in after else after
-    assert "spawn_cycle(" not in tail, (
-        "the budget-exhausted branch spawns a cycle; the restart budget would "
-        "mean nothing")
+    src = inspect.getsource(supervisor._handle_unexplained_death)
+    assert "spawn_cycle(" not in src, (
+        "the unexplained-death path spawns a cycle; the knowledge gate would mean "
+        "nothing")
 
 
 def test_the_flag_is_cleared_only_after_a_cycle_finishes():

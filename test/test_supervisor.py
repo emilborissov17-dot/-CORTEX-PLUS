@@ -32,6 +32,12 @@ CFG = {
 }
 
 
+# An exit row with an integer code: the witness explains the death (24 Sep 2026).
+# Without one, a death is CYCLE_DEATH_UNEXPLAINED and is not retried.
+EXPLAINED = {"event": "exit", "cycle_id": "c1", "exit_code": 1, "exit_code_hex": "0x00000001",
+             "meaning": "python error, see log"}
+
+
 def at(h, m=0, day=13):
     return datetime(2026, 7, day, h, m, tzinfo=timezone.utc)
 
@@ -195,7 +201,7 @@ def test_alive_cycle_that_never_beats_is_eventually_killed():
 
 
 # ---------------------------------------------------------------------------
-# Restart budget
+# Kill-restarts: no per-day count (24 Sep 2026)
 # ---------------------------------------------------------------------------
 
 def test_second_restart_is_allowed(livelocked):
@@ -206,14 +212,12 @@ def test_second_restart_is_allowed(livelocked):
     assert a.kind == sup.KILL_RESTART
 
 
-def test_third_restart_fails_loudly_instead_of_restarting(livelocked):
+def test_a_third_kill_restarts_too_there_is_no_count(livelocked):
     now = at(4)
     hb = beat("x", now - timedelta(seconds=1000))
     a = sup.decide(now, state("2026-07-13", restarts={"2026-07-13": 2}), hb, lock(),
                    CFG, lock_pid_alive=True)
-
-    assert a.kind == sup.KILL_BUDGET_DONE
-    assert "budget" in a.reason.lower()
+    assert a.kind == sup.KILL_RESTART
 
 
 def test_yesterdays_restarts_do_not_count_against_today(livelocked):
@@ -224,13 +228,19 @@ def test_yesterdays_restarts_do_not_count_against_today(livelocked):
     assert a.kind == sup.KILL_RESTART
 
 
-def test_after_budget_exhaustion_no_new_cycle_is_started():
-    """The system must stay down and visible, not silently limp on."""
+def test_an_unexplained_last_spawn_holds_the_system_down():
+    """The system must stay down and visible, not silently limp on — until a human."""
     now = at(10)
-    st = state(last_run_date=None, failure={"date": "2026-07-13", "reason": "wedged"})
-    a = sup.decide(now, st, None, None, CFG)
+    a = sup.decide(now, state(last_run_date=None), None, None, CFG,
+                   last_spawn_unexplained={"cycle_id": "c-dead", "why": "has NO exit row for it"})
     assert a.kind == sup.NOTHING
-    assert "human" in a.reason.lower()
+    assert sup.DEATH_UNEXPLAINED in a.reason and "human" in a.reason.lower()
+
+
+def test_a_failure_record_alone_does_not_block():
+    """The per-day block was a restart count under another name (24 Sep 2026)."""
+    st = state(last_run_date=None, failure={"date": "2026-07-13", "reason": "wedged"})
+    assert sup.decide(at(10), st, None, None, CFG).kind in (sup.START, sup.CATCHUP)
 
 
 # ---------------------------------------------------------------------------
@@ -309,7 +319,8 @@ def test_dead_lock_from_a_died_cycle_is_recorded_and_retried():
     This is the 2026-07-15 bug: a died cycle used to satisfy the daily gate, so
     nothing retried and no death was ever recorded."""
     a = sup.decide(at(9), state(last_run_date="2026-07-13"), None, lock(pid=4321),
-                   CFG, lock_pid_alive=False, lock_cycle_finished=False)
+                   CFG, lock_pid_alive=False, lock_cycle_finished=False,
+                   witness_exit=EXPLAINED)
     assert a.kind == sup.DEAD_LOCK_RETRY
     assert "DIED" in a.reason
 
@@ -331,7 +342,8 @@ def test_a_died_cycle_records_its_last_step_from_the_heartbeat():
     now = at(9)
     hb = beat("web_intelligence", now - timedelta(minutes=20))  # its own heartbeat
     a = sup.decide(now, state(last_run_date="2026-07-13"), hb, lock(pid=4321),
-                   CFG, lock_pid_alive=False, lock_cycle_finished=False)
+                   CFG, lock_pid_alive=False, lock_cycle_finished=False,
+                   witness_exit=EXPLAINED)
     assert a.kind == sup.DEAD_LOCK_RETRY
     assert a.wedged_step == "web_intelligence"
 
@@ -373,7 +385,8 @@ def test_a_live_cycle_is_not_buried_when_the_launcher_pid_dies():
     # death" quietly becomes "acceptance of a real one".
     hb = beat("web_intelligence", now - timedelta(seconds=900))
     a = sup.decide(now, state("2026-07-13"), hb, lock(pid=4321), CFG,
-                   lock_pid_alive=False, heartbeat_pid_alive=False)
+                   lock_pid_alive=False, heartbeat_pid_alive=False,
+                   witness_exit=EXPLAINED)
     assert a.kind == sup.DEAD_LOCK_RETRY
 
 
@@ -386,7 +399,8 @@ def test_a_retired_heartbeat_does_not_resurrect_its_own_cycle():
     hb["retired_utc"] = now.isoformat()
     hb["retired_by"] = "supervisor:dead_lock"
     a = sup.decide(now, state(last_run_date="2026-07-13"), hb, lock(pid=4321), CFG,
-                   lock_pid_alive=False, heartbeat_pid_alive=True)
+                   lock_pid_alive=False, heartbeat_pid_alive=True,
+                   witness_exit=EXPLAINED)
     assert a.kind == sup.DEAD_LOCK_RETRY, "a retired heartbeat vouched for a corpse"
 
 
@@ -407,26 +421,16 @@ def test_a_died_cycle_is_never_killed_only_recorded_and_retried():
     holds a recycled PID would be a serious bug."""
     a = sup.decide(at(9), state(), None, lock(pid=4321), CFG,
                    lock_pid_alive=False, lock_cycle_finished=False)
-    assert a.kind not in (sup.KILL_RESTART, sup.KILL_BUDGET_DONE)
+    assert a.kind != sup.KILL_RESTART
 
 
-def test_a_died_cycle_stops_retrying_once_the_budget_is_spent():
-    """A cycle that dies on every attempt must become a visible failure, not an
-    invisible restart loop. Same budget as kill-restarts, same reason."""
-    a = sup.decide(at(9), state(last_run_date="2026-07-13", restarts={"2026-07-13": 2}),
-                   None, lock(pid=4321), CFG,
-                   lock_pid_alive=False, lock_cycle_finished=False)
-    assert a.kind == sup.DEAD_LOCK_BUDGET_DONE
-    assert "budget" in a.reason.lower()
-
-
-def test_corrupt_lock_is_retried_since_it_cannot_be_proven_finished():
-    """A lock we could not even parse has no CYCLE_FINISHED we can match, so we
-    cannot claim it finished. Conservatively: record a death and retry within
-    budget, rather than silently counting the day as done."""
+def test_corrupt_lock_is_an_unexplained_death():
+    """A lock we could not even parse has no CYCLE_FINISHED and no cycle_id a
+    witness row could match, so we cannot claim it finished and cannot say how it
+    ended: an unexplained death, not a retry, and never a satisfied day."""
     a = sup.decide(at(9), state(), None, {"pid": None, "corrupt": True}, CFG,
                    lock_pid_alive=False, lock_cycle_finished=False)
-    assert a.kind == sup.DEAD_LOCK_RETRY
+    assert a.kind == sup.DEATH_UNEXPLAINED
 
 
 # ---------------------------------------------------------------------------
@@ -791,6 +795,8 @@ def tick_sandbox(tmp_path, monkeypatch):
     # promises. The mechanism was not bypassed; it was used.
     monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     monkeypatch.setattr(sup, "OUTBOX_SENT", tmp_path / "outbox" / "sent")
+    # 24 Sep 2026: an unexplained death latches survival mode through this base.
+    monkeypatch.setattr(sup, "SURVIVAL_BASE", tmp_path)
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
     monkeypatch.setattr(hb, "HEARTBEAT_PATH", tmp_path / "heartbeat.json")
 
@@ -836,6 +842,7 @@ _NOT_WRITTEN_BY_SUPERVISOR = {
     # see. If you are about to write `BASE / ...` inside a function, stop and make
     # it a module constant instead. That single rule is what closed this hole.
     "BASE",
+    "WITNESS_PS1",   # tools/cycle_witness.ps1 — executed, never written
 }
 
 
@@ -876,12 +883,21 @@ def _today():
     return datetime.now().astimezone().date().isoformat()
 
 
+def _witness(rows):
+    """Write rows to the sandboxed witness log (it follows CYCLE_LOG_DIR)."""
+    import json as _json
+    with sup.witness_log_path().open("a", encoding="utf-8") as fh:
+        for r in rows:
+            fh.write(_json.dumps(r) + "\n")
+
+
 def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
     """THE 2026-07-15 bug, end to end. A cycle started today, wrote a heartbeat,
     then died (OOM at 99% RAM): a stale lock with no CYCLE_FINISHED. It used to
     still satisfy the daily gate — no death recorded, no retry. Now:
       * CYCLE_DIED lands in the ledger, naming the step it died in, and
-      * the day is un-satisfied so the ordinary daily logic retries within budget.
+      * the day is un-satisfied so the ordinary daily logic retries — because the
+        witness explains this death (an exit row with an integer code).
     """
     from memory import existence_ledger as el
     from memory import heartbeat as hb
@@ -892,6 +908,7 @@ def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
     _silence_heartbeat(minutes=20)      # see the helper: a corpse does not beat
     sup.write_lock(pid=4321, cycle_id="dead-1")
     st = sup.load_state(); st["last_run_date"] = today; sup.save_state(st)
+    _witness([{**EXPLAINED, "cycle_id": "dead-1"}])
 
     monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
 
@@ -906,7 +923,7 @@ def test_tick_records_a_death_and_retries_the_day(tick_sandbox, monkeypatch):
 
     st = sup.load_state()
     assert st["last_run_date"] is None, "a death must not count as today's run"
-    assert st["restarts"][today] == 1, "the retry must spend one unit of budget"
+    assert "restarts" not in st or today not in (st.get("restarts") or {}),         "a per-day restart count is being kept again"
 
     # The lock is gone and the chain is intact — but the HEARTBEAT SURVIVES.
     # Changed 16 Aug 2026 (Kimi): „Heartbeat се чисти само при KeyboardInterrupt и
@@ -953,36 +970,10 @@ def test_tick_does_not_retry_a_cleanly_finished_cycle(tick_sandbox, monkeypatch)
     assert el.verify()["valid"] is True
 
 
-def test_budget_exhaustion_is_decided_without_touching_anything():
-    """THE UNIT HALF (split out 16 Aug 2026, on Kimi's instruction).
-
-    The old single test bundled two questions: "is the decision right?" and "does
-    the system then do the right things?" The first needs no files, no model and no
-    network; the second needs all three mocked. Bundled, the fast half was hostage
-    to the slow half — and the slow half is why the suite took 5m53s and therefore
-    went unrun for a month, which is how every defect in this file survived.
-
-    This half is pure: decide() sees a dead cycle with the day's budget spent and
-    must refuse to retry.
-    """
-    now = at(9)
-    hb = beat("scoring_engine", now - timedelta(minutes=20))
-    a = sup.decide(now, state("2026-07-13", restarts={"2026-07-13": 2}), hb,
-                   lock(pid=4321), CFG, lock_pid_alive=False, lock_cycle_finished=False)
-    assert a.kind == sup.DEAD_LOCK_BUDGET_DONE
-    assert "budget" in a.reason.lower()
-
-
-def test_tick_stops_after_repeated_deaths_exhaust_the_budget(tick_sandbox, monkeypatch):
-    """THE INTEGRATION HALF. A cycle that dies on every attempt must become a
-    VISIBLE failure, not an invisible restart loop. Once the budget is spent the
-    death is still recorded, but the system stays down and waits for a human.
-
-    This is the only test that reaches the branch which wakes a human, so it is the
-    one that has to prove the waking machinery is exercised AND contained. The
-    autopsy is MOCKED, not removed (Kimi: „Мокнете, не заглушавайте") — the branch
-    still calls it, and the call is asserted below. What is removed is only its
-    ability to spend six minutes talking to a local model.
+def test_tick_holds_the_system_down_after_an_unexplained_death(tick_sandbox, monkeypatch):
+    """A cycle that dies with nothing to say how must become a VISIBLE failure, not
+    an invisible restart loop: the death is recorded, survival mode is latched, and
+    every later tick holds until a human starts a cycle — on this day and the next.
     """
     from memory import existence_ledger as el
     from memory import heartbeat as hb
@@ -994,33 +985,97 @@ def test_tick_stops_after_repeated_deaths_exhaust_the_budget(tick_sandbox, monke
     sup.write_lock(pid=4321, cycle_id="dead-3")
     st = sup.load_state()
     st["last_run_date"] = today
-    st["restarts"] = {today: 2}            # budget already spent
+    st["last_spawn"] = {"cycle_id": "dead-3", "utc": "2026-09-25T06:00:00+00:00"}
     sup.save_state(st)
+    _witness([{"event": "start", "cycle_id": "dead-3", "ts": "2026-09-25T06:00:01Z"}])
 
     monkeypatch.setattr(sup, "pid_is_our_cycle", lambda pid: False)
+    spawned = []
+    monkeypatch.setattr(sup, "spawn_cycle", lambda *a, **k: spawned.append(a) or 4242)
 
     action = sup.tick()
-    assert action.kind == sup.DEAD_LOCK_BUDGET_DONE
-
-    # The waking machinery RAN — mocked, but ran. A test that merely deleted the
-    # autopsy from the path would leave nobody checking that this branch still
-    # tries to explain itself to the human before going quiet.
-    assert len(_AUTOPSY_CALLS) == 1, \
-        "the budget-exhausted branch no longer asks for an autopsy before it gives up"
-    assert _AUTOPSY_CALLS[0].kind == sup.DEAD_LOCK_BUDGET_DONE
+    assert action.kind == sup.DEATH_UNEXPLAINED
 
     kinds = [e["event"] for e in el.read_all()]
-    assert el.CYCLE_DIED in kinds, "the death must be recorded even when the budget is spent"
-    assert el.BUDGET_EXHAUSTED in kinds
+    assert el.CYCLE_DIED in kinds and el.CYCLE_DEATH_UNEXPLAINED in kinds
+    assert (tick_sandbox / "memory" / "survival_state.json").exists(),         "an unexplained death did not latch survival mode"
 
-    st = sup.load_state()
-    assert st["failure"]["date"] == today
-
-    # The daily logic now holds and waits for a human, on the SAME day.
-    now9 = datetime.now().astimezone().replace(hour=9, minute=0, second=0, microsecond=0)
-    hold = sup.decide(now9, st, None, None, CFG)
+    later = datetime.now().astimezone() + timedelta(days=1)
+    hold = sup.tick(now=later.replace(hour=9, minute=0, second=0, microsecond=0))
     assert hold.kind == sup.NOTHING
-    assert "human" in hold.reason.lower()
+    assert sup.DEATH_UNEXPLAINED in hold.reason and "human" in hold.reason.lower()
+    assert spawned == [], "a cycle was spawned over an unexplained death"
+
+
+# ---------------------------------------------------------------------------
+# The witness decides what blocks (24 Sep 2026)
+# ---------------------------------------------------------------------------
+
+def _spawn_catcher(monkeypatch):
+    spawned = []
+    monkeypatch.setattr(sup, "spawn_cycle", lambda *a, **k: spawned.append(a) or 4242)
+    monkeypatch.setattr(sup, "memory_allows_spawn", lambda now, cfg: (True, {}))
+    return spawned
+
+
+def _ten_today():
+    return datetime.now().astimezone().replace(hour=10, minute=0, second=0, microsecond=0)
+
+
+def test_a_pre_witness_failure_does_not_block_a_spawn(tick_sandbox, monkeypatch):
+    """(i) This morning's shape: a failure record and a satisfied day, written
+    before memory/witness.jsonl existed. Reported once as PRE_WITNESS_DEATH, then
+    ignored — the day is owed and a cycle starts."""
+    spawned = _spawn_catcher(monkeypatch)
+    today = _today()
+    st = sup.load_state()
+    st["last_run_date"] = today
+    st["failure"] = {"date": today, "cycle_id": "old", "at_utc": "2026-09-24T06:54:04+00:00",
+                     "reason": "stale lock ... restart budget is exhausted (2/2)", "wedged_step": "boot"}
+    sup.save_state(st)
+
+    action = sup.tick(now=_ten_today())
+    assert action.kind in (sup.START, sup.CATCHUP), action
+    assert len(spawned) == 1
+    log = (tick_sandbox / "supervisor.log").read_text(encoding="utf-8")
+    assert log.count("PRE_WITNESS_DEATH") == 1
+    st = sup.load_state()
+    assert st["failure"] is None
+    assert st["failure_history"][-1]["cleared_as"] == sup.PRE_WITNESS_DEATH
+
+
+def test_a_witnessed_spawn_with_no_exit_row_blocks(tick_sandbox, monkeypatch):
+    """(ii) The most recent spawn went through the witness and has no exit row —
+    or an exit row with exit_code null. Either way: CYCLE_DEATH_UNEXPLAINED, and
+    nothing is spawned."""
+    spawned = _spawn_catcher(monkeypatch)
+    for cid, rows in (("w-none", [{"event": "start", "cycle_id": "w-none", "ts": "2026-09-24T12:00:00Z"}]),
+                      ("w-null", [{"event": "exit", "cycle_id": "w-null", "exit_code": None,
+                                   "meaning": "WITNESS_DEFECT"}])):
+        _witness(rows)
+        st = sup.load_state()
+        st["last_run_date"] = None
+        st["last_spawn"] = {"cycle_id": cid, "utc": "2026-09-24T12:00:00+00:00"}
+        sup.save_state(st)
+        a = sup.tick(now=_ten_today())
+        assert a.kind == sup.NOTHING and sup.DEATH_UNEXPLAINED in a.reason, (cid, a)
+    assert spawned == []
+
+
+def test_a_witnessed_explained_death_allows_a_restart(tick_sandbox, monkeypatch):
+    """(iii) The most recent spawn died and the witness says how: an integer exit
+    code. Nothing holds the system down; the owed day starts a cycle."""
+    spawned = _spawn_catcher(monkeypatch)
+    _witness([{"event": "start", "cycle_id": "w-ok", "ts": "2026-09-24T12:00:00Z"},
+              {**EXPLAINED, "cycle_id": "w-ok", "exit_code": 3}])
+    st = sup.load_state()
+    st["last_run_date"] = None
+    st["last_spawn"] = {"cycle_id": "w-ok", "utc": "2026-09-24T12:00:00+00:00"}
+    sup.save_state(st)
+    a = sup.tick(now=_ten_today())
+    assert a.kind in (sup.START, sup.CATCHUP), a
+    assert len(spawned) == 1
+    assert sup.load_state()["last_spawn"]["cycle_id"] != "w-ok", "the new spawn was not recorded"
 
 
 def test_death_and_retry_keeps_the_ledger_chain_valid(tick_sandbox, monkeypatch):

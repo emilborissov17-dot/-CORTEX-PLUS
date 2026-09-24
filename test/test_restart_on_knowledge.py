@@ -83,12 +83,16 @@ def test_an_explained_death_is_restarted_and_says_how_it_died():
 def test_there_is_no_daily_cap():
     state = {"restarts": {NOW.date().isoformat(): 50}}
     assert _decide(state=state, witness_exit=EXIT_ROW).kind == sup.DEAD_LOCK_RETRY
-    assert sup.restart_cap({"max_restarts_per_day": None}) is None
-    assert sup.restart_cap({}) is None, "an absent key must mean no cap, not 2"
+    for gone in ("restart_cap", "restarts_today", "_cap_text"):
+        assert not hasattr(sup, gone), f"the per-day count is back: supervisor.{gone}"
 
 
-def test_the_shipped_config_has_no_cap():
-    assert sup.restart_cap(sup.load_config()) is None
+def test_a_number_in_max_restarts_per_day_is_not_read():
+    """24 Sep 2026: no per-day count, not even one a human writes into the config."""
+    cfg = _cfg(); cfg["max_restarts_per_day"] = 2
+    state = {"restarts": {NOW.date().isoformat(): 5}}
+    assert _decide(state=state, witness_exit=EXIT_ROW, cfg=cfg).kind == sup.DEAD_LOCK_RETRY
+    assert _decide(state=state, witness_exit=EXIT_ROW, cfg=sup.load_config()).kind == sup.DEAD_LOCK_RETRY
 
 
 def test_never_more_than_one_restart_per_ten_minutes():
@@ -97,12 +101,6 @@ def test_never_more_than_one_restart_per_ten_minutes():
     assert held.kind == sup.NOTHING and "minimum gap" in held.reason
     old = {"last_restart_utc": (NOW - timedelta(minutes=11)).isoformat()}
     assert _decide(state=old, witness_exit=EXIT_ROW).kind == sup.DEAD_LOCK_RETRY
-
-
-def test_a_human_set_cap_still_applies_on_top():
-    cfg = _cfg(); cfg["max_restarts_per_day"] = 2
-    state = {"restarts": {NOW.date().isoformat(): 2}}
-    assert _decide(state=state, witness_exit=EXIT_ROW, cfg=cfg).kind == sup.DEAD_LOCK_BUDGET_DONE
 
 
 def test_the_kill_path_has_no_cap_and_respects_the_gap():
@@ -129,8 +127,9 @@ def test_only_a_row_for_the_same_cycle_id_explains_a_death(tmp_path, monkeypatch
 
 @pytest.fixture
 def effects(tmp_path, monkeypatch):
-    rec = {"ledger": [], "deaths": [], "alarms": [], "spawned": [], "state": None}
+    rec = {"ledger": [], "deaths": [], "alarms": [], "spawned": [], "state": None, "base": tmp_path}
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    monkeypatch.setattr(sup, "SURVIVAL_BASE", tmp_path)
     monkeypatch.setattr(sup.ledger, "append", lambda ev, **kw: rec["ledger"].append((ev, kw)) or {})
     monkeypatch.setattr(sup.ledger, "record_death", lambda **kw: rec["deaths"].append(kw) or {})
     monkeypatch.setattr(sup, "alarm_human", lambda subject, detail, **kw: rec["alarms"].append((subject, detail, kw)))
@@ -160,6 +159,8 @@ def test_the_unexplained_path_writes_the_ledger_row_and_raises_the_alarm(effects
     assert len(effects["alarms"]) == 1 and "NO EXPLANATION" in effects["alarms"][0][0]
     assert effects["spawned"] == [], "an unexplained death must not start anything"
     assert effects["state"]["failure"]["kind"] == "death unexplained"
+    assert effects["state"]["failure"]["witness_era"] is True
+    assert (effects["base"] / "memory" / "survival_state.json").exists(),         "an unexplained death must latch survival mode"
 
 
 def test_tick_consults_the_witness(tmp_path, monkeypatch, effects):

@@ -237,8 +237,9 @@ def test_the_kill_path_actually_calls_the_bell():
     of act() and require the call to sit in the CYCLE_KILLED branch — an import
     that nothing calls is the failure mode this repo is aimed at."""
     src = (REPO / "supervisor.py").read_text(encoding="utf-8")
-    for event in ("CYCLE_KILLED", "CYCLE_DIED", "CYCLE_RESTARTED",
-                  "CYCLE_FAILED_BUDGET_EXHAUSTED"):
+    # CYCLE_FAILED_BUDGET_EXHAUSTED left the list on 24 Sep 2026 with the per-day
+    # count; an unexplained death raises its own alarm in _handle_unexplained_death.
+    for event in ("CYCLE_KILLED", "CYCLE_DIED", "CYCLE_RESTARTED"):
         assert f'_ring_death_bell("{event}"' in src, (
             f"{event} is written to the ledger but rings no bell")
 
