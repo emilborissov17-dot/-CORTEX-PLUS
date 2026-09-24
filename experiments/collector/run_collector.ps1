@@ -57,7 +57,9 @@ if (Test-Ollama) {
         Write-Blocked "ollama binary missing at $Ollama"
         exit 3
     }
-    Start-Process -FilePath $Ollama -ArgumentList 'serve' -WindowStyle Hidden
+    # tools/ollama_serve.ps1 is the one starter: it gives the server a log file
+    # (logs/ollama_server.log) - task #19 e, 24 Sep 2026.
+    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot '..\..\tools\ollama_serve.ps1')
     $up = $false
     foreach ($i in 1..20) {
         Start-Sleep -Seconds 3

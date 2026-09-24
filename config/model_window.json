@@ -34,5 +34,14 @@
   "big_model": "qwen3:8b",
 
   "window_opens_at_step": "brain_reconsider",
-  "window_closes_after_step": "cycle_report"
+  "window_closes_after_step": "cycle_report",
+
+  "_keep_alive_policy_README": [
+    "24 Sep 2026 (task #19 e): ONE keep_alive policy, applied by core/llm_door.py to",
+    "every local request. in_cycle: the cycle's one model (cortex-l1b-3b, see",
+    "core/model_window.cycle_local_model) stays loaded for the cycle and is unloaded",
+    "at its end; any other model inside a cycle gets 0. outside_cycle: every call",
+    "unloads (0), as OLLAMA_KEEP_ALIVE=0 already says for callers that pass nothing."
+  ],
+  "keep_alive_policy": {"in_cycle": -1, "outside_cycle": 0}
 }

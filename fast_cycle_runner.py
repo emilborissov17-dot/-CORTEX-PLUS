@@ -4077,6 +4077,14 @@ def main():
         print(f"[FAST_CYCLE] model_window closed: {_closed}")
     except Exception as e:
         print(f"[FAST_CYCLE] model_window close -> FAILED: {type(e).__name__}: {e}")
+    # The cycle's one local model was held with keep_alive=-1 for the cycle
+    # (keep_alive_policy, task #19 e); at the end it leaves the card.
+    try:
+        from core import model_window as _mw
+        print(f"[FAST_CYCLE] cycle model unloaded: {_mw.unload_cycle_model()} "
+              f"({_mw.cycle_local_model()})")
+    except Exception as e:
+        print(f"[FAST_CYCLE] cycle model unload -> FAILED: {type(e).__name__}: {e}")
 
     # ── ФЛАГЪТ ЗА ОЦЕЛЯВАНЕ ПАДА ЕДВА КОГАТО ЦИКЪЛ Е ЗАВЪРШИЛ (22 авг 2026) ─
     # Here, at the end of a cycle that reached its last step — not at the start of

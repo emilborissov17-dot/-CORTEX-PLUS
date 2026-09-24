@@ -482,6 +482,29 @@ def local_model(want_big: bool = False, purpose: str = "",
     return cfg["small"]
 
 
+KEEP_ALIVE_POLICY_DEFAULT = {"in_cycle": -1, "outside_cycle": 0}
+
+
+def keep_alive_policy(model: str):
+    """THE ONE keep_alive POLICY (24 Sep 2026, task #19 e), from
+    config/model_window.json "keep_alive_policy": inside a cycle the cycle's one
+    model stays loaded for the cycle (-1) and is unloaded at its end
+    (unload_cycle_model); outside a cycle every call unloads (0).
+    core/llm_door.py applies it to every local request."""
+    pol = {**KEEP_ALIVE_POLICY_DEFAULT, **(_load_json(CONFIG).get("keep_alive_policy") or {})}
+    if in_cycle():
+        return pol["in_cycle"] if model == cycle_local_model() else 0
+    return pol["outside_cycle"]
+
+
+def unload_cycle_model(url: str = None) -> bool:
+    """At the end of a cycle: the cycle's model leaves the card."""
+    try:
+        return bool(_set_keep_alive(cycle_local_model(), 0, url or OLLAMA_URL))
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def keep_alive_for(model: str):
     """3b outside the window is pinned forever; everything else gets a normal TTL."""
     if in_cycle() and model == cycle_local_model():

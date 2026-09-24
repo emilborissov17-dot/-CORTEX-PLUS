@@ -403,8 +403,12 @@ def wake(nec: dict, ctx: dict, dry: bool) -> list:
         try:
             exe = Path(os.environ.get("LOCALAPPDATA", "")) / "Programs/Ollama/ollama.exe"
             if exe.exists():
+                # tools/ollama_serve.ps1 is the one starter: the server gets a log
+                # file (logs/ollama_server.log) - task #19 e, 24 Sep 2026.
                 import subprocess
-                subprocess.Popen([str(exe), "serve"],
+                starter = Path(__file__).resolve().parents[2] / "tools" / "ollama_serve.ps1"
+                subprocess.Popen(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
+                                  "-File", str(starter)],
                                  creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
                 acted.append("ollama=started")
             else:

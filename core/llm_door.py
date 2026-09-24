@@ -101,6 +101,10 @@ def _facts_from_dict(d) -> dict:
         out["finish_reason"] = d.get("done_reason")
         out["reply_chars"] = len(str((d.get("message") or {}).get("content") or d.get("response") or ""))
         out["prompt_tokens"], out["completion_tokens"] = d.get("prompt_eval_count"), d.get("eval_count")
+        # task #19 e: what a model switch costs is on the row, in seconds
+        for k in ("load_duration", "prompt_eval_duration", "eval_duration"):
+            if isinstance(d.get(k), (int, float)):
+                out[k + "_s"] = round(d[k] / 1e9, 3)
     elif "text" in d:                                      # Whisper transcription
         out["reply_chars"] = len(str(d.get("text") or ""))
     return {k: v for k, v in out.items() if v is not None}
@@ -307,6 +311,13 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     import requests
     caller = caller or _caller_from_stack()
     kw["timeout"] = _enforced_timeout(backend, model, kw.get("timeout"))
+    if _family(backend) == "local" and isinstance(kw.get("json"), dict):
+        # ONE keep_alive policy (config/model_window.json keep_alive_policy)
+        try:
+            from core import model_window as _mw
+            kw["json"] = {**kw["json"], "keep_alive": _mw.keep_alive_policy(model or backend)}
+        except Exception:  # noqa: BLE001
+            pass
     t0 = time.monotonic()
     try:
         resp = requests.post(url, **kw)
