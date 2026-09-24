@@ -16,8 +16,16 @@
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\ollama_serve.ps1            # start if down
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\ollama_serve.ps1 -Restart   # replace a running one
+#   powershell -NoProfile -ExecutionPolicy Bypass -File tools\ollama_serve.ps1 -WarmCore   # + hold the cycle model
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\ollama_serve.ps1 -SelfTest
-param([switch]$Restart, [switch]$SelfTest)
+#
+# -WarmCore (task #8 part 1): after the server is up, load the cycle's one model
+# (config/model_window.json "cycle_local_model", default cortex-l1b-3b:latest) with
+# keep_alive -1 and verify it on /api/ps. A cycle never loads a model itself: a
+# local call whose model is not resident is refused ("warm core absent"). The
+# CORTEX_WarmCore scheduled task (tools/install_warm_core_task.ps1) runs this at
+# logon and at startup.
+param([switch]$Restart, [switch]$SelfTest, [switch]$WarmCore)
 
 $ErrorActionPreference = "Stop"
 $repo = Split-Path -Parent $PSScriptRoot
@@ -56,8 +64,30 @@ if ($SelfTest) {
 
 if (-not (Test-Path $exe)) { Write-Error "ollama.exe not found at $exe"; exit 2 }
 
+function Get-CoreModel {
+    $cfg = Join-Path $repo "config\model_window.json"
+    try { $m = (Get-Content $cfg -Raw | ConvertFrom-Json).cycle_local_model } catch { $m = $null }
+    if (-not $m) { $m = "cortex-l1b-3b:latest" }
+    return $m
+}
+
+function Invoke-WarmCore {
+    $m = Get-CoreModel
+    $body = @{ model = $m; keep_alive = -1 } | ConvertTo-Json -Compress
+    try {
+        $null = Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:11434/api/generate" -Body $body `
+                                  -ContentType "application/json" -TimeoutSec 300
+    } catch { Write-Output "warm core: load of $m FAILED - $($_.Exception.Message)"; exit 4 }
+    $names = @((Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/ps" -TimeoutSec 5).models | ForEach-Object { $_.name })
+    if ($names -contains $m) { Write-Output "warm core: $m resident, keep_alive -1"; exit 0 }
+    Write-Output "warm core: $m NOT resident after the load (resident: $($names -join ', '))"; exit 5
+}
+
 if (Test-Up) {
-    if (-not $Restart) { Write-Output "ollama: already running - not started (use -Restart to replace it)"; exit 0 }
+    if (-not $Restart) {
+        if ($WarmCore) { Write-Output "ollama: already running"; Invoke-WarmCore }
+        Write-Output "ollama: already running - not started (use -Restart to replace it)"; exit 0
+    }
     Get-Process -Name "ollama" -ErrorAction SilentlyContinue |
         Where-Object { $_.Path -eq $exe } |
         ForEach-Object { Write-Output "ollama: stopping pid $($_.Id)"; Stop-Process -Id $_.Id -Force }
@@ -74,6 +104,10 @@ $p = Start-Process -FilePath $exe -ArgumentList "serve" -WindowStyle Hidden -Pas
 Set-Content -Path $pidFile -Value $p.Id -Encoding ascii
 $deadline = (Get-Date).AddSeconds(30)
 while (-not (Test-Up) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 300 }
-if (Test-Up) { Write-Output "ollama: started pid $($p.Id), log $log"; exit 0 }
+if (Test-Up) {
+    Write-Output "ollama: started pid $($p.Id), log $log"
+    if ($WarmCore) { Invoke-WarmCore }
+    exit 0
+}
 Write-Output "ollama: pid $($p.Id) started but 11434 does not answer after 30 s - see $log"
 exit 3

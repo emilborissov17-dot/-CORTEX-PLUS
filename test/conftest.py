@@ -287,6 +287,11 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
         monkeypatch.setattr(_door, "_ok_cache", {})
         monkeypatch.setattr(_door, "_alive", set())
         monkeypatch.setattr(_door, "_warm", set())
+        # task #8: inside a cycle the door asks Ollama's /api/ps what is resident.
+        # No test may reach the real server for that: by default nothing is
+        # resident; a test that needs the warm core says so itself.
+        monkeypatch.setattr(_door, "_resident", lambda base: set())
+        monkeypatch.setattr(_door, "_ps_cache", {})
     except Exception:
         pass
 

@@ -192,14 +192,30 @@ def residency(url: str = OLLAMA_URL) -> list:
     return out
 
 
+WARM_CORE_ABSENT = "warm core absent"
+NO_LOAD_IN_CYCLE = "warm core: no model load inside a cycle"
+
+
 def _set_keep_alive(model: str, keep_alive, url: str = OLLAMA_URL,
                     timeout: float = 300.0) -> bool:
     """Load (or unload, with keep_alive=0) a model without generating anything.
+
+    THE CYCLE NEVER LOADS A MODEL (24 Sep 2026, task #8 part 1). The warm core -
+    tools/ollama_serve.ps1 -WarmCore, run by the CORTEX_WarmCore task at logon and
+    at startup - holds cycle_local_model() resident with keep_alive -1. Inside a
+    cycle every load through here is refused by name and returns False, and the
+    warm core's model is never unloaded by the cycle.
 
     An /api/chat with an empty message list is Ollama's documented way to change
     residency alone. Returns True on HTTP 200. Never raises: residency management
     must not be able to kill a cycle.
     """
+    if in_cycle():
+        if keep_alive != 0:
+            print(f"  [LOCAL] {NO_LOAD_IN_CYCLE}: {model} (keep_alive={keep_alive}) refused")
+            return False
+        if model == cycle_local_model():
+            return False                    # the warm core stays on the card
     body = json.dumps({"model": model, "keep_alive": keep_alive,
                        "messages": []}).encode("utf-8")
     req = urllib.request.Request(url + "/api/chat", data=body,
@@ -486,23 +502,15 @@ KEEP_ALIVE_POLICY_DEFAULT = {"in_cycle": -1, "outside_cycle": 0}
 
 
 def keep_alive_policy(model: str):
-    """THE ONE keep_alive POLICY (24 Sep 2026, task #19 e), from
-    config/model_window.json "keep_alive_policy": inside a cycle the cycle's one
-    model stays loaded for the cycle (-1) and is unloaded at its end
-    (unload_cycle_model); outside a cycle every call unloads (0).
-    core/llm_door.py applies it to every local request."""
+    """THE ONE keep_alive POLICY (24 Sep 2026, task #19 e; warm core, task #8),
+    from config/model_window.json "keep_alive_policy". The warm core's model -
+    cycle_local_model() - is always held (in_cycle, -1), inside a cycle and out,
+    so no caller unloads it. Any other model: 0 inside a cycle, outside_cycle
+    outside it. core/llm_door.py applies it to every local request."""
     pol = {**KEEP_ALIVE_POLICY_DEFAULT, **(_load_json(CONFIG).get("keep_alive_policy") or {})}
-    if in_cycle():
-        return pol["in_cycle"] if model == cycle_local_model() else 0
-    return pol["outside_cycle"]
-
-
-def unload_cycle_model(url: str = None) -> bool:
-    """At the end of a cycle: the cycle's model leaves the card."""
-    try:
-        return bool(_set_keep_alive(cycle_local_model(), 0, url or OLLAMA_URL))
-    except Exception:  # noqa: BLE001
-        return False
+    if model == cycle_local_model():
+        return pol["in_cycle"]
+    return 0 if in_cycle() else pol["outside_cycle"]
 
 
 def keep_alive_for(model: str):

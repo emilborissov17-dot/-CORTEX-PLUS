@@ -37,6 +37,8 @@ def _sent(monkeypatch):
     bodies = []
     import requests
     monkeypatch.setattr(requests, "post", lambda url, **k: bodies.append(k.get("json")) or _R())
+    # the warm core is resident for these tests (task #8 part 1 has its own)
+    monkeypatch.setattr(llm_door, "_resident", lambda base: {model_window.cycle_local_model(), "m", "other"})
     return bodies
 
 
@@ -56,8 +58,11 @@ def test_one_keep_alive_policy_is_applied_to_every_local_request(monkeypatch):
     llm_door.post("t", "local:other", "other", "http://x/api/chat", json={"model": "other", "keep_alive": "30m"})
     monkeypatch.delenv("CORTEX_IN_CYCLE")
     monkeypatch.delenv("CORTEX_CYCLE_ID", raising=False)
-    llm_door.post("t", f"local:{local}", local, "http://x/api/chat", json={"model": local, "keep_alive": -1})
-    assert [b["keep_alive"] for b in bodies] == [-1, 0, 0], bodies
+    llm_door.post("t", f"local:{local}", local, "http://x/api/chat", json={"model": local, "keep_alive": 0})
+    llm_door.post("t", "local:other", "other", "http://x/api/chat", json={"model": "other", "keep_alive": -1})
+    # the warm core's model is held (-1) inside a cycle AND outside it - no caller
+    # unloads it; any other model: 0 in a cycle, the policy's outside_cycle outside
+    assert [b["keep_alive"] for b in bodies] == [-1, 0, -1, 0], bodies
 
 
 def test_every_starter_goes_through_tools_ollama_serve():
@@ -73,7 +78,10 @@ def test_every_starter_goes_through_tools_ollama_serve():
     assert any("ollama_serve.ps1" in ln for ln in code)
 
 
-def test_the_runner_unloads_the_cycle_model_at_the_end():
+def test_the_runner_does_not_unload_the_warm_core_at_the_end():
+    """7f1918d unloaded the cycle model at the end of a cycle; since task #8 the
+    warm core holds it between cycles, and a cycle never loads a model."""
     tree = ast.parse((REPO / "fast_cycle_runner.py").read_text(encoding="utf-8"))
     calls = {ast.unparse(n.func) for n in ast.walk(tree) if isinstance(n, ast.Call)}
-    assert "_mw.unload_cycle_model" in calls
+    assert not any("unload_cycle_model" in c for c in calls)
+    assert not hasattr(model_window, "unload_cycle_model")

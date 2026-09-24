@@ -226,6 +226,59 @@ def leg_gate(backend: str, model: str | None = None, now: datetime | None = None
         return "use"
 
 
+# ── THE CYCLE NEVER LOADS A MODEL (24 Sep 2026, task #8 part 1) ───────────────
+# Inside a cycle a local request goes out only if its model is already resident
+# (GET /api/ps). If not, the row says outcome=refused "warm core absent" and
+# WarmCoreAbsent is raised - the caller degrades; nothing is loaded.
+class WarmCoreAbsent(RuntimeError):
+    pass
+
+
+_ps_cache: dict = {}
+
+
+def _resident(base: str) -> set | None:
+    """Model names resident in the Ollama at `base`, or None if it cannot be asked."""
+    hit = _ps_cache.get(base)
+    if hit and time.monotonic() - hit[0] < 5:
+        return hit[1]
+    try:
+        import requests
+        names = {m.get("name") for m in (requests.get(base + "/api/ps", timeout=3).json().get("models") or [])}
+    except Exception:
+        return None
+    _ps_cache[base] = (time.monotonic(), names)
+    return names
+
+
+def _base_of(url: str | None) -> str:
+    try:
+        from urllib.parse import urlsplit
+        u = urlsplit(url or "")
+        if u.scheme and u.netloc:
+            return f"{u.scheme}://{u.netloc}"
+    except Exception:
+        pass
+    return os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434").rstrip("/")
+
+
+def _require_warm(caller, backend: str, model: str | None, url: str | None, prompt_text) -> None:
+    try:
+        from core import model_window as _mw
+        if not _mw.in_cycle():
+            return
+        absent = _mw.WARM_CORE_ABSENT
+    except Exception:
+        return
+    names = _resident(_base_of(url))
+    if names is not None and (model or backend[6:]) in names:
+        return
+    why = absent + ("" if names is not None else " (Ollama /api/ps did not answer)")
+    record(caller=caller, backend=backend, model=model, outcome="refused", latency_s=0.0,
+           error=why, prompt_text=prompt_text, batched=False)
+    raise WarmCoreAbsent(f"{why}: {model or backend} is not resident; the cycle does not load models")
+
+
 def _family(backend: str) -> str:
     return "local" if str(backend).startswith("local:") else str(backend)
 
@@ -310,6 +363,8 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     # (a test's stand-in, once), for the life of the process.
     import requests
     caller = caller or _caller_from_stack()
+    if _family(backend) == "local":
+        _require_warm(caller, backend, model, url, prompt_text)
     kw["timeout"] = _enforced_timeout(backend, model, kw.get("timeout"))
     if _family(backend) == "local" and isinstance(kw.get("json"), dict):
         # ONE keep_alive policy (config/model_window.json keep_alive_policy)
@@ -356,6 +411,8 @@ def call(caller: str | None, backend: str, model: str | None, fn, *,
     fn() makes the request and returns the parsed JSON reply. Timed, recorded
     with the same schema as post(), re-raised on failure."""
     caller = caller or _caller_from_stack()
+    if _family(backend) == "local":
+        _require_warm(caller, backend, model, None, prompt_text)
     t0 = time.monotonic()
     try:
         d = fn()

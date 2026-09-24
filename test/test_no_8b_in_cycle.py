@@ -51,6 +51,9 @@ def _capture(monkeypatch, tmp_path, content='{"stance": "go", "expect": "x", "se
     monkeypatch.setattr(brain, "_pick_model", lambda: (BIG, "http://localhost:11434"))
     monkeypatch.setattr(brain, "_fast_model", lambda: BIG)
     monkeypatch.setattr(model_window, "_persist", lambda: None)
+    # the warm core holds the cycle model (task #8); asserted in test_warm_core
+    monkeypatch.setattr(__import__("core.llm_door", fromlist=["x"]), "_resident",
+                        lambda base: {model_window.cycle_local_model()})
     return sent
 
 
