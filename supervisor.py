@@ -131,6 +131,35 @@ CYCLE_EXIT_LOG = BASE / "memory" / "cycle_exits.jsonl"
 # would otherwise spend it waiting for a signature it knows will never come.
 REAPER_SETTLE_SEC = 8.0
 
+# ── THE WITNESS (24 Sep 2026) ────────────────────────────────────────────────
+# The cycle is no longer spawned by this tick directly. tools/cycle_witness.ps1 is
+# spawned instead; IT starts the cycle, waits on it, and writes one start row and
+# one exit row to witness_log_path(). Six catch-up cycles died on 23-24 Sep with
+# the reaper gone too and no exit code anywhere; the witness is a different kind
+# of process (PowerShell), it is the cycle's parent rather than its sibling, and
+# it is started outside this tick's job. It replaces memory/cycle_reaper.py on
+# the spawn path. See claude/reports/STEP_AUDIT_2026-09-24.md, Parts 3-5.
+WITNESS_PS1 = BASE / "tools" / "cycle_witness.ps1"
+# How long spawn_cycle waits for the witness's start row, which carries the pid
+# of the real interpreter. PowerShell start + the process walk take ~2-3 s here.
+WITNESS_START_WAIT_SEC = 20.0
+# Win32 CREATE_BREAKAWAY_FROM_JOB. Not exported by the subprocess module. It asks
+# for the child to leave the Task Scheduler job the tick runs in; a job that does
+# not allow breakaway refuses it with ERROR_ACCESS_DENIED, which _popen_detached()
+# catches and retries without, saying so in the log.
+CREATE_BREAKAWAY_FROM_JOB = 0x01000000
+
+
+def witness_log_path() -> Path:
+    """memory/witness.jsonl — derived from CYCLE_LOG_DIR, not a separate constant.
+
+    Every test that sandboxes spawn_cycle already redirects CYCLE_LOG_DIR into a
+    tmp dir. Deriving from it means those tests sandbox the witness log too,
+    without knowing it exists, so no test run can append fake rows to the live
+    file the restart decision reads.
+    """
+    return CYCLE_LOG_DIR.parent / "witness.jsonl"
+
 
 # ---------------------------------------------------------------------------
 # Actions — the complete vocabulary of what a tick may do
@@ -804,11 +833,18 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
             # it, and the guard is right to be crude: the supervisor must never
             # grow the ability to ask a model whether the system should run.)
             #
-            # The cause: write_lock() stores Popen.pid, and on this machine
+            # The cause: write_lock() stored Popen.pid, and on this machine
             # venv\Scripts\python.exe is a LAUNCHER — it spawns the real
-            # interpreter as a child and exits. Measured twice:
+            # interpreter as a child. Measured twice:
             #     Popen.pid = 85400 | child os.getpid() = 97752   -> MISMATCH
-            # So pid_is_our_cycle(lock["pid"]) goes False within seconds of a
+            # CORRECTED 24 Sep 2026: the launcher does NOT exit after spawning.
+            # It stays alive as the interpreter's parent for the whole run (the
+            # 22 Sep cycle's Popen pid 16336 exited with code 0 after 6089.9 s,
+            # night_events:1059), and killing it takes the interpreter down with
+            # exit code 0 (measured). The pid MISMATCH is real; the "exits" was
+            # not. Since the witness (tools/cycle_witness.ps1) the lock carries
+            # the real interpreter's pid from the witness's start row.
+            # Historically, pid_is_our_cycle(lock["pid"]) went False early in a
             # perfectly healthy start, and this branch buried a working cycle on
             # the supervisor's very first look at it. total_kills stayed 0 — the
             # supervisor never killed anything, it just declared, cleared the
@@ -1446,6 +1482,13 @@ def prune_cycle_logs(keep: int = CYCLE_LOG_KEEP) -> int:
 def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
     """Start the detached process that will record how `pid` ended. Never raises.
 
+    RETIRED FROM THE SPAWN PATH 24 Sep 2026. spawn_cycle no longer calls this;
+    tools/cycle_witness.ps1 records the exit code as the cycle's parent. On 23-24
+    Sep the reaper — a sibling Python process from the same tick — vanished with
+    the cycle six times out of six and recorded nothing. The function and
+    memory/cycle_reaper.py are kept (not deleted) for their tests and for a
+    manual re-enable; nothing in production calls them.
+
     WHY THIS IS NOT `proc.wait()` IN THE TICK: the tick exits in milliseconds and
     the cycle runs for ninety minutes. Waiting here would turn the supervisor into
     the cycle. So the wait is moved into its own process, which holds a handle to
@@ -1574,24 +1617,52 @@ def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[in
     #   * stdin is pinned to DEVNULL. With no console, an inherited stdin handle
     #     is invalid, and code that reads it would fail in a way that has nothing
     #     to do with its actual bug.
-    creationflags = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
-                     | getattr(subprocess, "DETACHED_PROCESS", 0))
+    # The flags themselves (DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP, plus
+    # CREATE_BREAKAWAY_FROM_JOB with a logged fallback) are applied in
+    # _popen_detached(), for the witness and for the unwitnessed fallback alike.
+    #
+    # -u as well as PYTHONUNBUFFERED. The env var is already set above and
+    # was VERIFIED effective on 20 Aug 2026 (sys.stdout.reconfigure() in the
+    # runner does NOT reset write_through, measured — a line printed before
+    # an abrupt os._exit still reached disk). The flag is redundancy, not the
+    # fix: an env var can be dropped by a wrapper, a shell profile or a
+    # future edit to this dict, and the one run that needs the log is the one
+    # where that happened. -u cannot be lost that way.
+    argv = [python, "-u", str(RUNNER)]
+    if resume_from:
+        argv.append("--resume")
+
+    # ── THROUGH THE WITNESS (24 Sep 2026) ────────────────────────────────────
+    # The witness's cmd.exe owns the `> log 2>&1` now, so this tick's handle on
+    # the log is closed first: one writer per file. The memory/cycle_reaper.py
+    # spawn that used to follow here is RETIRED from this path — the witness is
+    # the cycle's parent and records the exit code itself; the reaper was a
+    # sibling and died with the cycle six times out of six on 23-24 Sep.
+    if _witness_available() and log_file is not None:
+        try:
+            if fh is not subprocess.DEVNULL:
+                fh.close()
+        except Exception:
+            pass
+        pid = _spawn_witnessed(argv, log_file, cycle_id, env)
+        if pid is not None:
+            try:
+                log(f"cycle output -> {log_file}")
+            except Exception:
+                pass
+            return pid
+        # The witness never started, so no cycle did either: safe to fall back.
+        try:
+            fh = log_file.open("w", encoding="utf-8", errors="replace")
+        except Exception:
+            fh = subprocess.DEVNULL
+    log("WITNESS: unavailable — this cycle runs UNWITNESSED. If it dies, the "
+        "death has no exit row, is recorded as UNEXPLAINED, and is not restarted.")
     try:
-        # -u as well as PYTHONUNBUFFERED. The env var is already set above and
-        # was VERIFIED effective on 20 Aug 2026 (sys.stdout.reconfigure() in the
-        # runner does NOT reset write_through, measured — a line printed before
-        # an abrupt os._exit still reached disk). The flag is redundancy, not the
-        # fix: an env var can be dropped by a wrapper, a shell profile or a
-        # future edit to this dict, and the one run that needs the log is the one
-        # where that happened. -u cannot be lost that way.
-        argv = [python, "-u", str(RUNNER)]
-        if resume_from:
-            argv.append("--resume")
-        proc = subprocess.Popen(
+        proc = _popen_detached(
             argv,
             cwd=str(BASE), env=env,
             stdin=subprocess.DEVNULL, stdout=fh, stderr=subprocess.STDOUT,
-            creationflags=creationflags,
         )
     except Exception as e:
         log(f"failed to spawn cycle: {type(e).__name__}: {e}")
@@ -1606,17 +1677,109 @@ def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[in
             log(f"cycle output -> {log_file}")
     except Exception:
         pass
-
-    # The reaper is started AFTER the pid exists and inside the protected zone:
-    # its whole job is bookkeeping, and bookkeeping must never cost us the pid.
-    try:
-        reaper_pid = _spawn_reaper(python, proc.pid, cycle_id)
-        if reaper_pid:
-            log(f"reaper {reaper_pid} watching cycle pid {proc.pid} "
-                f"-> {CYCLE_EXIT_PATH}")
-    except Exception:
-        pass
     return proc.pid
+
+
+def _is_access_denied(e: BaseException) -> bool:
+    return (isinstance(e, PermissionError)
+            or getattr(e, "winerror", None) == 5
+            or "Access is denied" in str(e))
+
+
+def _popen_detached(argv, **kw):
+    """Popen with no console, its own process group, and OUTSIDE the parent's job.
+
+    DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP are the 17 Aug 2026 flags (see
+    spawn_cycle). CREATE_BREAKAWAY_FROM_JOB is new on 24 Sep: every process this
+    tick spawned used to stay in the Task Scheduler job of the tick itself. A job
+    that forbids breakaway refuses it with ERROR_ACCESS_DENIED; that is caught,
+    logged as "WITNESS: breakaway refused", and the spawn is retried without it —
+    a cycle inside the job is worse than one outside it, but better than none.
+    """
+    base = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+            | getattr(subprocess, "DETACHED_PROCESS", 0))
+    if os.name != "nt":
+        return subprocess.Popen(argv, **kw)
+    try:
+        return subprocess.Popen(argv, creationflags=base | CREATE_BREAKAWAY_FROM_JOB, **kw)
+    except OSError as e:
+        if not _is_access_denied(e):
+            raise
+        log(f"WITNESS: breakaway refused ({type(e).__name__}: {e}) — starting "
+            f"inside the parent's job instead")
+        return subprocess.Popen(argv, creationflags=base, **kw)
+
+
+def _witness_available() -> bool:
+    import shutil
+    return (os.name == "nt" and WITNESS_PS1.exists()
+            and shutil.which("powershell.exe") is not None)
+
+
+def witness_rows() -> list:
+    """Every parseable row of witness_log_path(). A torn last line is skipped."""
+    rows = []
+    try:
+        text = witness_log_path().read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return rows
+    for line in text.splitlines():
+        try:
+            r = json.loads(line)
+        except Exception:
+            continue
+        if isinstance(r, dict):
+            rows.append(r)
+    return rows
+
+
+def _wait_witness_start(cycle_id: str, timeout: float) -> Optional[dict]:
+    deadline = time.monotonic() + timeout
+    while True:
+        for r in reversed(witness_rows()):
+            if r.get("event") == "start" and str(r.get("cycle_id")) == str(cycle_id):
+                return r
+        if time.monotonic() >= deadline:
+            return None
+        time.sleep(0.2)
+
+
+def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict) -> Optional[int]:
+    """Start tools/cycle_witness.ps1, which starts `argv`. Returns the cycle's pid.
+
+    None ONLY when the witness process itself could not be created — then no
+    cycle exists and the caller may fall back. If the witness started but its
+    start row is late, the witness pid is returned instead: the cycle may already
+    be running, and falling back would start a second one.
+
+    The arguments travel as base64 JSON: they cross list2cmdline into
+    powershell.exe and then cmd.exe, and a quote that survives one parser is
+    mangled by the other.
+    """
+    import base64
+    args_b64 = base64.b64encode(json.dumps(list(argv[1:])).encode("utf-8")).decode("ascii")
+    wargv = ["powershell.exe", "-NoProfile", "-NonInteractive",
+             "-ExecutionPolicy", "Bypass", "-File", str(WITNESS_PS1),
+             "-Exe", str(argv[0]), "-ArgsB64", args_b64,
+             "-Log", str(log_file), "-WitnessLog", str(witness_log_path()),
+             "-CycleId", str(cycle_id), "-WorkDir", str(BASE)]
+    try:
+        w = _popen_detached(wargv, cwd=str(BASE), env=env,
+                            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL)
+    except Exception as e:
+        log(f"WITNESS: failed to start ({type(e).__name__}: {e})")
+        return None
+    row = _wait_witness_start(cycle_id, WITNESS_START_WAIT_SEC)
+    if row is None:
+        log(f"WITNESS {w.pid}: no start row for {cycle_id} within "
+            f"{WITNESS_START_WAIT_SEC:.0f}s — the lock gets the witness pid")
+        return w.pid
+    pid = row.get("cycle_pid") or row.get("launcher_pid") or w.pid
+    log(f"WITNESS {w.pid} started cycle {cycle_id}: cycle_pid={row.get('cycle_pid')} "
+        f"({row.get('cycle_pid_source')}), launcher_pid={row.get('launcher_pid')} "
+        f"-> {witness_log_path()}")
+    return int(pid)
 
 
 # ── ИЗХОДЯЩАТА КУТИЯ (Емил, 15 авг 2026) ───────────────────────────────────────
