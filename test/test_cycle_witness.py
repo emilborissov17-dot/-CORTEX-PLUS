@@ -28,6 +28,7 @@ import os
 import subprocess
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -91,7 +92,7 @@ def test_a_clean_exit_is_recorded_as_clean(tmp_path):
     assert ex["exit_code_hex"] == "0x00000000"
     assert ex["meaning"] == "clean exit"
     st = _wait_row(wl, "start")
-    for k in ("witness_pid", "witness_parent_pid", "cmd_pid"):
+    for k in ("witness_pid", "witness_parent_pid", "launcher_pid"):
         assert isinstance(st[k], int) and st[k] > 0, f"start row lacks {k}: {st}"
 
 
@@ -100,7 +101,7 @@ def test_the_start_row_carries_every_pid(tmp_path):
     pid is the REAL interpreter, distinct from the venv launcher."""
     proc, wl, _ = _start_witness(tmp_path, "import time,sys; time.sleep(3); sys.exit(0)", "pids")
     st = _wait_row(wl, "start")
-    for k in ("witness_pid", "witness_parent_pid", "cmd_pid", "launcher_pid", "cycle_pid"):
+    for k in ("witness_pid", "witness_parent_pid", "launcher_pid", "cycle_pid"):
         assert isinstance(st[k], int) and st[k] > 0, f"start row lacks {k}: {st}"
     assert st["cycle_pid_source"] == "interpreter"
     assert st["cycle_pid"] != st["launcher_pid"]
@@ -160,6 +161,31 @@ def test_a_launcher_kill_is_not_recorded_as_a_clean_exit(tmp_path):
     assert ex["exit_code"] == 0 and ex["launcher_exit_code"] == 1, ex
     assert ex["meaning"] != "clean exit"
     assert ex["meaning"].startswith("killed through its launcher")
+
+
+def test_a_child_that_exits_in_100ms_still_gets_an_exit_code(tmp_path):
+    """The fast-exit race (24 Sep 2026): the launcher used to be FOUND by a tree
+    walk and opened after the fact, and a child gone in ~0.3 s left an exit row
+    with exit_code null (10 of 60, measured). The launcher's handle is now held
+    from birth, so every row carries 3 - from the interpreter if the witness
+    caught it, from the launcher if it did not - and never null or WITNESS_DEFECT."""
+    rows = []
+    for i in range(10):
+        run = tmp_path / f"run{i}"
+        run.mkdir()
+        proc, wl, _ = _start_witness(run, "import time; time.sleep(0.1); raise SystemExit(3)", f"fast{i}")
+        rows.append(_wait_row(wl, "exit"))
+        proc.wait(timeout=30)
+    for ex in rows:
+        assert isinstance(ex["exit_code"], int), ex
+        assert ex["exit_code"] == 3, ex
+        assert ex["exit_source"] in ("interpreter", "launcher"), ex
+        assert ex["meaning"] != "WITNESS_DEFECT", ex
+        assert ex["meaning"] == "python error, see log", ex
+        if ex["exit_source"] == "launcher":
+            assert ex["launcher_exit_code"] == 3, ex
+            assert ex["exit_code_note"] == (
+                "python exited before the witness opened its handle; launcher code used"), ex
 
 
 # ---------------------------------------------------------------------------
@@ -276,3 +302,7 @@ def test_the_real_spawn_path_starts_the_witness_and_it_reports(tmp_path, monkeyp
     logs = list((tmp_path / "cycle_logs").glob("cycle_*.log"))
     assert len(logs) == 1, logs
     assert "STUB CYCLE RAN" in logs[0].read_text(encoding="utf-8", errors="replace")
+
+
+def test_an_exit_row_without_an_exit_code_is_not_an_explanation():
+    assert sup._dead_cycle_action(datetime.now().astimezone(), {}, "2026-09-24", {}, {"pid": 1, "cycle_id": "c"}, None, witness_exit={"event": "exit", "cycle_id": "c", "exit_code": None}).kind == sup.DEATH_UNEXPLAINED

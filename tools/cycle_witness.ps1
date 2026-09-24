@@ -15,10 +15,10 @@
 # Task Scheduler job of the tick that launched it.
 #
 # WHAT IT WRITES - memory/witness.jsonl, one JSON object per line, fsync'd:
-#   start: {event, cycle_id, witness_pid, witness_parent_pid, cmd_pid,
+#   start: {event, cycle_id, witness_pid, witness_parent_pid,
 #           launcher_pid, cycle_pid, cycle_pid_source, cmdline, log, ts}
 #   exit:  {event, cycle_id, cycle_pid, exit_code, exit_code_hex, exit_source,
-#           launcher_exit_code, wall_seconds, meaning, ts}
+#           launcher_exit_code, wall_seconds, meaning, exit_code_note, ts}
 #
 # IF THE WITNESS ITSELF DIES, a start row with no exit row for the same cycle_id
 # IS the evidence: the watcher was killed, so the death was not a normal exit of
@@ -34,18 +34,17 @@
 # whether the log ENDS in a traceback; and 0 is "clean" only if the launcher also
 # returned 0 - otherwise it is the launcher-kill signature, never a clean exit.
 #
-# CHAIN: witness -> cmd.exe (does the `> log 2>&1`, so stdout and stderr land in
-# ONE file exactly as supervisor.spawn_cycle did before) -> venv\Scripts\python.exe
-# (the launcher) -> the real interpreter. The witness opens a handle to each as
-# soon as it sees it, so an exit code can still be read after the process is gone.
+# CHAIN: witness -> venv\Scripts\python.exe (the launcher, started by the witness
+# with CreateProcessW, stdout and stderr on ONE log handle as `> log 2>&1` did) ->
+# the real interpreter. The launcher's handle is held from birth; the
+# interpreter's is opened as soon as the witness sees it.
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\cycle_witness.ps1 -SelfTest
 param(
     [string]$Exe = "",
     # The child's arguments as a base64-encoded JSON array of strings. JSON+base64
     # because the arguments cross TWO command-line parsers (Python's list2cmdline
-    # into powershell.exe, then cmd.exe); a quote that survives one is mangled by
-    # the other. Each element is quoted for cmd.exe here, once.
+    # into powershell.exe); each element is quoted for CreateProcess here, once.
     [string]$ArgsB64 = "",
     [string]$Log = "",
     [string]$WitnessLog = "",
@@ -83,12 +82,8 @@ function Get-Children([int]$ParentPid, [datetime]$NotBefore) {
     return $out
 }
 
-function Open-Proc([int]$ProcId) {
-    try { $p = [System.Diagnostics.Process]::GetProcessById($ProcId); $null = $p.Handle; return $p } catch { return $null }
-}
-
 function Get-Meaning($code, $launcherCode, [string]$logPath) {
-    if ($null -eq $code) { return "unknown (no handle was open to read an exit code)" }
+    if ($null -eq $code) { return "WITNESS_DEFECT" }   # the launcher handle is held from birth; null must not happen
     if ($code -eq -1) { return "killed (taskkill /F or TerminateProcess)" }
     if ($code -eq -1073741510) { return "console closed / Ctrl+C" }          # 0xC000013A
     if ($code -eq 0) {
@@ -121,7 +116,7 @@ if ($SelfTest) {
     $childOut = (Get-Content $lg -Raw -ErrorAction SilentlyContinue)
     Write-Output "tools/cycle_witness.ps1 -SelfTest (PowerShell $($PSVersionTable.PSVersion))"
     Write-Output ("  {0}  witness row written and fsync'd       ({1})" -f $(if ($start) {"LIVE "} else {"INERT"}), $wl)
-    Write-Output ("  {0}  launcher found under cmd.exe         (launcher_pid={1})" -f $(if ($start.launcher_pid) {"LIVE "} else {"INERT"}), $start.launcher_pid)
+    Write-Output ("  {0}  launcher started, handle from birth  (launcher_pid={1})" -f $(if ($start.launcher_pid) {"LIVE "} else {"INERT"}), $start.launcher_pid)
     Write-Output ("  {0}  real interpreter found under launcher (cycle_pid={1}, source={2})" -f $(if ($start.cycle_pid_source -eq "interpreter") {"LIVE "} else {"INERT"}), $start.cycle_pid, $start.cycle_pid_source)
     Write-Output ("  {0}  exit code read after exit             (exit_code={1}, meaning={2})" -f $(if ($null -ne $exit.exit_code) {"LIVE "} else {"INERT"}), $exit.exit_code, $exit.meaning)
     Write-Output ("  {0}  child stdout reached the log          ({1})" -f $(if ($childOut -match "selftest child") {"LIVE "} else {"INERT"}), $lg)
@@ -144,68 +139,186 @@ if ($ArgsB64) {
     $parsed = [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($ArgsB64)) | ConvertFrom-Json
     foreach ($x in $parsed) { $argv += [string]$x }
 }
-# Quote each argument for cmd.exe: wrap in double quotes, escape embedded quotes.
-$quoted = ($argv | ForEach-Object { '"' + ($_ -replace '"', '\"') + '"' }) -join " "
-$inner = '"' + $Exe + '" ' + $quoted + ' > "' + $Log + '" 2>&1'
-$cmdline = '/d /s /c "' + $inner + '"'
+# The launcher is started HERE, by CreateProcessW, and its process handle is held
+# from that call on - never looked up afterwards. Until 24 Sep the chain was
+# witness -> cmd.exe -> launcher, and the launcher was FOUND by a tree walk and
+# opened with GetProcessById + .Handle. A child that exits in ~0.3 s is gone by
+# then: .Handle fails, PowerShell turns the failed getter into $null WITHOUT
+# throwing, the Process object is left with no handle, and .ExitCode fails the
+# same silent way - an exit row with exit_code null (10 of 60 fast children,
+# measured 24 Sep). The Win32 calls below report failure as a return value.
+#
+# stdout and stderr share ONE inheritable handle on the log, which is what
+# cmd.exe's `> log 2>&1` did. PROC_THREAD_ATTRIBUTE_HANDLE_LIST limits
+# inheritance to that handle and NUL, so the cycle holds none of the witness's
+# own handles (a caller's pipe would otherwise stay open for 90 minutes).
+if (-not ("CortexWitness.Native" -as [type])) {
+Add-Type -TypeDefinition @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
+namespace CortexWitness {
+public static class Native {
+    [StructLayout(LayoutKind.Sequential)]
+    struct SECURITY_ATTRIBUTES { public int nLength; public IntPtr lpSecurityDescriptor; public int bInheritHandle; }
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    struct STARTUPINFO {
+        public int cb; public IntPtr lpReserved, lpDesktop, lpTitle;
+        public int dwX, dwY, dwXSize, dwYSize, dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
+        public short wShowWindow, cbReserved2; public IntPtr lpReserved2, hStdInput, hStdOutput, hStdError;
+    }
+    [StructLayout(LayoutKind.Sequential)]
+    struct STARTUPINFOEX { public STARTUPINFO StartupInfo; public IntPtr lpAttributeList; }
+    [StructLayout(LayoutKind.Sequential)]
+    struct PROCESS_INFORMATION { public IntPtr hProcess, hThread; public int dwProcessId, dwThreadId; }
+
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    static extern IntPtr CreateFileW(string name, uint access, uint share, ref SECURITY_ATTRIBUTES sa, uint disp, uint flags, IntPtr tmpl);
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    static extern bool CreateProcessW(string app, StringBuilder cmd, IntPtr pa, IntPtr ta, bool inherit, uint flags,
+                                      IntPtr env, string cwd, ref STARTUPINFOEX si, out PROCESS_INFORMATION pi);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool InitializeProcThreadAttributeList(IntPtr list, int count, int flags, ref IntPtr size);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool UpdateProcThreadAttribute(IntPtr list, uint flags, IntPtr attr, IntPtr val, IntPtr size, IntPtr prev, IntPtr ret);
+    [DllImport("kernel32.dll")] static extern void DeleteProcThreadAttributeList(IntPtr list);
+    [DllImport("kernel32.dll", SetLastError = true)] static extern bool CloseHandle(IntPtr h);
+    [DllImport("kernel32.dll", SetLastError = true)] static extern IntPtr OpenProcess(uint access, bool inherit, int pid);
+    [DllImport("kernel32.dll", SetLastError = true)] static extern uint WaitForSingleObject(IntPtr h, uint ms);
+    [DllImport("kernel32.dll", SetLastError = true)] static extern bool GetExitCodeProcess(IntPtr h, out uint code);
+
+    static readonly IntPtr INVALID = new IntPtr(-1);
+
+    // MSVC / CommandLineToArgvW quoting: there is no cmd.exe in the chain any more.
+    public static string QuoteArg(string a) {
+        if (a.Length > 0 && a.IndexOfAny(new[] { ' ', '\t', '\n', '\v', '"' }) < 0) return a;
+        var sb = new StringBuilder("\"");
+        int bs = 0;
+        foreach (char c in a) {
+            if (c == '\\') { bs++; continue; }
+            if (c == '"') { sb.Append('\\', 2 * bs + 1).Append('"'); bs = 0; continue; }
+            sb.Append('\\', bs).Append(c); bs = 0;
+        }
+        return sb.Append('\\', 2 * bs).Append('"').ToString();
+    }
+
+    // Returns { processHandle, pid }. Throws Win32Exception - it never returns a
+    // child it does not hold a handle to.
+    public static long[] Start(string exe, string cmdline, string cwd, string logPath) {
+        var sa = new SECURITY_ATTRIBUTES { nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES)), bInheritHandle = 1 };
+        IntPtr log = CreateFileW(logPath, 0x40000000 /*GENERIC_WRITE*/, 7 /*share r|w|d*/, ref sa, 2 /*CREATE_ALWAYS*/, 0x80, IntPtr.Zero);
+        if (log == INVALID) throw new Win32Exception(Marshal.GetLastWin32Error(), "open log " + logPath);
+        IntPtr nul = CreateFileW("NUL", 0x80000000 /*GENERIC_READ*/, 3, ref sa, 3 /*OPEN_EXISTING*/, 0, IntPtr.Zero);
+        if (nul == INVALID) { int e = Marshal.GetLastWin32Error(); CloseHandle(log); throw new Win32Exception(e, "open NUL"); }
+        IntPtr handles = Marshal.AllocHGlobal(2 * IntPtr.Size);
+        IntPtr attrs = IntPtr.Zero;
+        try {
+            Marshal.WriteIntPtr(handles, 0, log);
+            Marshal.WriteIntPtr(handles, IntPtr.Size, nul);
+            IntPtr size = IntPtr.Zero;
+            InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0, ref size);
+            attrs = Marshal.AllocHGlobal(size);
+            if (!InitializeProcThreadAttributeList(attrs, 1, 0, ref size))
+                throw new Win32Exception(Marshal.GetLastWin32Error(), "InitializeProcThreadAttributeList");
+            if (!UpdateProcThreadAttribute(attrs, 0, (IntPtr)0x20002 /*HANDLE_LIST*/, handles,
+                                           (IntPtr)(2 * IntPtr.Size), IntPtr.Zero, IntPtr.Zero))
+                throw new Win32Exception(Marshal.GetLastWin32Error(), "UpdateProcThreadAttribute");
+            var si = new STARTUPINFOEX();
+            si.StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFOEX));
+            si.StartupInfo.dwFlags = 0x100; // STARTF_USESTDHANDLES
+            si.StartupInfo.hStdInput = nul; si.StartupInfo.hStdOutput = log; si.StartupInfo.hStdError = log;
+            si.lpAttributeList = attrs;
+            PROCESS_INFORMATION pi;
+            // EXTENDED_STARTUPINFO_PRESENT | CREATE_NO_WINDOW
+            if (!CreateProcessW(exe, new StringBuilder(cmdline), IntPtr.Zero, IntPtr.Zero, true,
+                                0x00080000 | 0x08000000, IntPtr.Zero, cwd, ref si, out pi))
+                throw new Win32Exception(Marshal.GetLastWin32Error(), "CreateProcessW " + exe);
+            CloseHandle(pi.hThread);
+            return new long[] { pi.hProcess.ToInt64(), pi.dwProcessId };
+        } finally {
+            if (attrs != IntPtr.Zero) { DeleteProcThreadAttributeList(attrs); Marshal.FreeHGlobal(attrs); }
+            Marshal.FreeHGlobal(handles);
+            CloseHandle(log); CloseHandle(nul);   // the child has its own copies
+        }
+    }
+
+    // SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION. 0 when the process is gone.
+    public static long Open(int pid) { return OpenProcess(0x00100000 | 0x1000, false, pid).ToInt64(); }
+    public static bool Wait(long h, uint ms) { return WaitForSingleObject(new IntPtr(h), ms) == 0; }
+    public static bool Exited(long h) { return Wait(h, 0); }
+    // The exit code as a signed int (0xFFFFFFFF -> -1), or null if it cannot be read.
+    public static int? ExitCode(long h) {
+        uint c;
+        if (!GetExitCodeProcess(new IntPtr(h), out c) || c == 259 /*STILL_ACTIVE*/) return null;
+        return unchecked((int)c);
+    }
+    public static void Close(long h) { if (h != 0) CloseHandle(new IntPtr(h)); }
+}
+}
+'@
+}
+
+$cmdline = (@($Exe) + $argv | ForEach-Object { [CortexWitness.Native]::QuoteArg($_) }) -join " "
 
 $t0 = Get-Date
 $myParent = $null
 try { $myParent = (Get-CimInstance Win32_Process -Filter "ProcessId=$PID" -ErrorAction Stop).ParentProcessId } catch { }
 
 try {
-    $cmd = Start-Process -FilePath $env:ComSpec -ArgumentList $cmdline -WorkingDirectory $WorkDir -WindowStyle Hidden -PassThru
-    $null = $cmd.Handle
+    $born = [CortexWitness.Native]::Start($Exe, $cmdline, $WorkDir, $Log)
 } catch {
     Write-Row ([ordered]@{ event = "witness_error"; cycle_id = $CycleId; witness_pid = $PID;
-                           error = "Start-Process failed: $($_.Exception.Message)"; ts = (Now-Iso) })
+                           error = "CreateProcess failed: $($_.Exception.InnerException.Message)"; ts = (Now-Iso) })
     exit 3
 }
+$lh = $born[0]; $launcherPid = [int]$born[1]
 
-# Find launcher (python under cmd) and the real interpreter (python under the launcher).
-$launcher = $null; $interp = $null; $lp = $null; $cp = $null
-$deadline = (Get-Date).AddSeconds(10)
-while ((Get-Date) -lt $deadline -and -not $launcher) {
-    $launcher = Get-Children $cmd.Id $t0 | Where-Object { $_.Name -like "python*" } | Select-Object -First 1
-    if ($launcher) { $lp = Open-Proc $launcher.ProcessId; break }
-    if ($cmd.HasExited) { break }
+# The real interpreter (python under the launcher) is still FOUND, every 100 ms -
+# the launcher creates it, not the witness. If the launcher exits before the
+# witness holds it, the launcher's code (held from birth) stands in, and the row
+# says so.
+$ch = 0; $interpPid = $null; $pyRaced = $false
+$deadline = (Get-Date).AddSeconds(3)
+while ((Get-Date) -lt $deadline) {
+    $interp = Get-Children $launcherPid $t0 | Where-Object { $_.Name -like "python*" } | Select-Object -First 1
+    if ($interp) {
+        $ch = [CortexWitness.Native]::Open([int]$interp.ProcessId)
+        if ($ch -ne 0) { $interpPid = [int]$interp.ProcessId } else { $pyRaced = $true }
+        break
+    }
+    if ([CortexWitness.Native]::Exited($lh)) { $pyRaced = $true; break }
     Start-Sleep -Milliseconds 100
 }
-if ($launcher) {
-    $deadline = (Get-Date).AddSeconds(3)
-    while ((Get-Date) -lt $deadline -and -not $interp) {
-        $interp = Get-Children $launcher.ProcessId $t0 | Where-Object { $_.Name -like "python*" } | Select-Object -First 1
-        if ($interp) { $cp = Open-Proc $interp.ProcessId; break }
-        if ($lp -and $lp.HasExited) { break }
-        Start-Sleep -Milliseconds 100
-    }
-}
-$cyclePid = $null; $source = "unknown"
-if ($cp) { $cyclePid = $cp.Id; $source = "interpreter" }
-elseif ($launcher) { $cyclePid = [int]$launcher.ProcessId; $source = "launcher" }
+$cyclePid = $launcherPid; $source = "launcher"
+if ($interpPid) { $cyclePid = $interpPid; $source = "interpreter" }
 
 Write-Row ([ordered]@{
     event              = "start"
     cycle_id           = $CycleId
     witness_pid        = $PID
     witness_parent_pid = $myParent
-    cmd_pid            = $cmd.Id
-    launcher_pid       = $(if ($launcher) { [int]$launcher.ProcessId } else { $null })
+    launcher_pid       = $launcherPid
     cycle_pid          = $cyclePid
     cycle_pid_source   = $source
-    cmdline            = "$env:ComSpec $cmdline"
+    cmdline            = $cmdline
     log                = $Log
     ts                 = (Now-Iso)
 })
 
-# Wait on the most specific process we hold a handle to.
-$code = $null; $exitSource = "none"
-if ($cp)      { $cp.WaitForExit();  $code = $cp.ExitCode;  $exitSource = "interpreter" }
-elseif ($lp)  { $lp.WaitForExit();  $code = $lp.ExitCode;  $exitSource = "launcher" }
-else          { $cmd.WaitForExit(); $code = $cmd.ExitCode; $exitSource = "cmd" }
-$launcherCode = $null
-if ($lp) { if ($lp.WaitForExit(15000)) { $launcherCode = $lp.ExitCode } }
-$null = $cmd.WaitForExit(15000)
+# Wait on the most specific process the witness holds a handle to.
+$code = $null; $exitSource = "none"; $launcherCode = $null; $exitCodeNote = $null
+if ($ch -ne 0) {
+    $null = [CortexWitness.Native]::Wait($ch, [uint32]::MaxValue)
+    $code = [CortexWitness.Native]::ExitCode($ch); $exitSource = "interpreter"
+    if ([CortexWitness.Native]::Wait($lh, 15000)) { $launcherCode = [CortexWitness.Native]::ExitCode($lh) }
+} else {
+    $null = [CortexWitness.Native]::Wait($lh, [uint32]::MaxValue)
+    $launcherCode = [CortexWitness.Native]::ExitCode($lh)
+    $code = $launcherCode; $exitSource = "launcher"
+    if ($pyRaced) { $exitCodeNote = "python exited before the witness opened its handle; launcher code used" }
+}
+[CortexWitness.Native]::Close($ch); [CortexWitness.Native]::Close($lh)
 
 Write-Row ([ordered]@{
     event              = "exit"
@@ -217,6 +330,7 @@ Write-Row ([ordered]@{
     launcher_exit_code = $launcherCode
     wall_seconds       = [math]::Round(((Get-Date) - $t0).TotalSeconds, 1)
     meaning            = (Get-Meaning $code $launcherCode $Log)
+    exit_code_note     = $exitCodeNote
     ts                 = (Now-Iso)
 })
 exit 0

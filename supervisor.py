@@ -1496,6 +1496,15 @@ def _dead_cycle_action(now, state, today, cfg, lock, heartbeat,
                   wedged_step_index=(heartbeat or {}).get("step_index"),
                   pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
 
+    if witness_exit is not None and not isinstance(witness_exit.get("exit_code"), int):
+        # An exit row with no exit code says the witness saw the end but not how
+        # it ended — that is not an explanation (24 Sep 2026: rows with
+        # exit_code null used to be read as one, and the dead cycle restarted).
+        return Action(DEATH_UNEXPLAINED,
+                      reason=reason + f" — the witness exit row has NO exit code "
+                                      f"(meaning: {witness_exit.get('meaning')}); NOT restarting",
+                      details={"restarts_used": used, "witness_exit": witness_exit},
+                      **common)
     if witness_exit is None:
         return Action(DEATH_UNEXPLAINED,
                       reason=reason + " — the witness has NO exit row for this cycle, "
