@@ -91,6 +91,10 @@ MISSED_SKIPPED   = "MISSED_RUN_SKIPPED"
 # human's choice for its own.
 CATCHUP_SUPPRESSED = "CATCHUP_SUPPRESSED_BY_HUMAN"
 BUDGET_EXHAUSTED = "CYCLE_FAILED_BUDGET_EXHAUSTED"
+# A cycle died and the witness (tools/cycle_witness.ps1) has NO exit row for it:
+# nothing on record says how it ended. Written BESIDE the ordinary CYCLE_DIED,
+# never instead of it, and the supervisor does not restart after one (24 Sep 2026).
+CYCLE_DEATH_UNEXPLAINED = "CYCLE_DEATH_UNEXPLAINED"
 # A gate read a threshold, found it crossed, and declined to start the night.
 # This is an ENDING, not a death: nothing ran, nothing crashed, and a human
 # decision — a threshold somebody set — is the whole cause. It was terminal in

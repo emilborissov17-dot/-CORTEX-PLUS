@@ -216,7 +216,7 @@ class Action:
 DEFAULT_CONFIG = {
     "daily_hour": 3,
     "catchup_grace_hours": 20,
-    "max_restarts_per_day": 2,
+    "max_restarts_per_day": None,   # None = no cap (Emil, 24 Sep 2026)
     "step_ceilings_sec": {"_default": 900},
 }
 
@@ -649,6 +649,81 @@ def restarts_today(state: dict, today: str) -> int:
     return int((state.get("restarts") or {}).get(today, 0))
 
 
+# ── NO BUDGET; A RESTART IS GATED ON KNOWLEDGE, NOT ON A COUNT (Emil, 24 Sep 2026)
+# The daily cap of 2 turned six unexplained deaths into "budget exhausted" and a
+# dead system, while saying nothing about WHY any of them died. The rule now:
+#   * a death with an EXIT ROW in the witness log is explained -> restart,
+#     without limit, but never more than one restart per RESTART_MIN_GAP_SEC;
+#   * a death with NO exit row is unexplained -> no restart, a
+#     CYCLE_DEATH_UNEXPLAINED ledger row, and the alarm. Restarting into a death
+#     nobody can explain is how six nights disappeared.
+# max_restarts_per_day stays readable: absent or null means no cap. A human who
+# writes a number there gets that number back, on top of the knowledge gate.
+RESTART_MIN_GAP_SEC = 600
+DEATH_UNEXPLAINED = "CYCLE_DEATH_UNEXPLAINED"
+
+
+def restart_cap(cfg: dict) -> Optional[int]:
+    v = cfg.get("max_restarts_per_day")
+    return None if v is None else int(v)
+
+
+def _cap_text(cfg: dict) -> str:
+    cap = restart_cap(cfg)
+    return "∞ (no cap)" if cap is None else str(cap)
+
+
+def _restart_too_soon(now: datetime, state: dict) -> Optional[float]:
+    """Seconds since the last restart, if that is under the minimum gap; else None."""
+    age = _age(now, state.get("last_restart_utc"))
+    if age is not None and 0 <= age < RESTART_MIN_GAP_SEC:
+        return age
+    return None
+
+
+def witness_exit_for(cycle_id: Optional[str]) -> Optional[dict]:
+    """The witness's exit row for this cycle, or None if it has none.
+
+    Matched on cycle_id ONLY. A pid is a number Windows hands out again; a
+    cycle_id is minted once per spawn. A test row or an old row can therefore
+    never explain a real death.
+    """
+    if not cycle_id:
+        return None
+    for r in reversed(witness_rows()):
+        if r.get("event") == "exit" and str(r.get("cycle_id")) == str(cycle_id):
+            return r
+    return None
+
+
+def _blackbox_path() -> Path:
+    # Follows CYCLE_LOG_DIR like witness_log_path(), so a sandboxed test reads a
+    # sandboxed blackbox.
+    return CYCLE_LOG_DIR.parent / "blackbox.jsonl"
+
+
+def _last_blackbox_step(pids) -> Optional[str]:
+    """'<step> <phase> <utc>' of the last blackbox row written by any of `pids`."""
+    want = {int(p) for p in pids if p}
+    if not want:
+        return None
+    last = None
+    try:
+        with _blackbox_path().open(encoding="utf-8", errors="replace") as fh:
+            for line in fh:
+                try:
+                    r = json.loads(line)
+                except Exception:
+                    continue
+                if r.get("pid") in want:
+                    last = r
+    except Exception:
+        return None
+    if not last:
+        return None
+    return f"{last.get('step')} {last.get('phase')} {last.get('utc')}"
+
+
 # ---------------------------------------------------------------------------
 # Lock
 # ---------------------------------------------------------------------------
@@ -802,7 +877,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            lock_cycle_finished: bool = False,
            lock_cycle_refused: bool = False,
            extraordinary: Optional[dict] = None,
-           heartbeat_pid_alive: bool = False) -> Action:
+           heartbeat_pid_alive: bool = False,
+           witness_exit: Optional[dict] = None) -> Action:
     """What should this tick do? Exactly one thing.
 
     `lock_pid_alive`, `heartbeat_pid_alive`, `lock_cycle_finished` and `extraordinary`
@@ -954,7 +1030,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
             # No CYCLE_FINISHED on record: the cycle DIED mid-run — OOM, power loss,
             # an uncaught crash. A death is not a completed run, so it must not
             # satisfy the day. Record it and retry, within the restart budget.
-            return _dead_cycle_action(now, state, today, cfg, lock, heartbeat)
+            return _dead_cycle_action(now, state, today, cfg, lock, heartbeat,
+                                      witness_exit=witness_exit)
 
         # It is alive. Is it making progress?
         if heartbeat is None:
@@ -966,7 +1043,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
                 return _kill_or_fail(state, today, cfg,
                                      reason="cycle is alive but has never written a heartbeat",
                                      step=None, step_index=None, age=age, ceil=ceil,
-                                     pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
+                                     pid=lock.get("pid"), cycle_id=lock.get("cycle_id"),
+                                     now=now)
             return Action(NOTHING, reason="cycle just started; no heartbeat yet")
 
         step = heartbeat.get("step")
@@ -1027,7 +1105,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
                                  step=step, step_index=heartbeat.get("step_index"),
                                  age=age, ceil=ceil,
                                  pid=heartbeat.get("pid") or lock.get("pid"),
-                                 cycle_id=heartbeat.get("cycle_id") or lock.get("cycle_id"))
+                                 cycle_id=heartbeat.get("cycle_id") or lock.get("cycle_id"),
+                                 now=now)
 
         # Healthy — including a 40-minute web_intelligence step. Do NOT kill it.
         return Action(NOTHING, reason=f"cycle healthy in '{step}' ({age:.0f}s / {ceil}s)")
@@ -1035,8 +1114,10 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
     # ── No cycle running. Should today's run have happened? ─────────────────
     if state.get("failure", {}) and (state.get("failure") or {}).get("date") == today:
         return Action(NOTHING,
-                      reason="restart budget exhausted today — waiting for human "
-                             "intervention (see daily report)")
+                      reason=f"a failure is recorded for today "
+                             f"({(state.get('failure') or {}).get('kind') or 'restart budget exhausted'})"
+                             " — no new cycle until tomorrow's run or a human "
+                             "(see daily report)")
 
     # ── An EXTRAORDINARY request (from the pulse) ───────────────────────────
     # Deliberately placed AFTER the lock and restart-budget checks and BEFORE the
@@ -1098,12 +1179,28 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
                   details={"late_by_hours": round(late_by.total_seconds() / 3600, 2)})
 
 
-def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, cycle_id) -> Action:
-    """A wedged cycle. Restart it — unless we have already spent the budget."""
-    used = restarts_today(state, today)
-    budget = int(cfg.get("max_restarts_per_day", 2))
+def _kill_or_fail(state, today, cfg, reason, step, step_index, age, ceil, pid, cycle_id,
+                  now: Optional[datetime] = None) -> Action:
+    """A wedged cycle. Kill it and restart — no daily cap unless a human set one.
 
-    kind = KILL_RESTART if used < budget else KILL_BUDGET_DONE
+    A kill is an explained death by construction (this supervisor did it, and the
+    witness records the exit code), so the knowledge gate is met. What still
+    applies is the minimum gap: never more than one restart per
+    RESTART_MIN_GAP_SEC. Inside the gap the wedged cycle is left alone for one
+    more tick rather than killed with nothing to replace it.
+    """
+    if now is not None:
+        _since = _restart_too_soon(now, state)
+        if _since is not None:
+            return Action(NOTHING,
+                          reason=f"{reason} — kill deferred: the last restart was "
+                                 f"{_since:.0f}s ago, minimum gap {RESTART_MIN_GAP_SEC}s",
+                          pid=pid, cycle_id=cycle_id)
+    used = restarts_today(state, today)
+    cap = restart_cap(cfg)
+    budget = _cap_text(cfg)
+
+    kind = KILL_RESTART if (cap is None or used < cap) else KILL_BUDGET_DONE
     if kind == KILL_BUDGET_DONE:
         # Before giving up the whole day: is the cause KNOWN and TRANSIENT?
         try:
@@ -1178,7 +1275,7 @@ def refusal_budget(cfg) -> int:
     their own budget was describing an intention, not the running system.
     """
     return int(cfg.get("max_refusal_retries_per_day",
-                       cfg.get("max_restarts_per_day", 2)))
+                       cfg.get("max_restarts_per_day") or 2))
 
 
 def refusals_today(state, today) -> int:
@@ -1374,28 +1471,54 @@ def _refused_cycle_action(now, state, today, cfg, lock) -> Action:
                            "night": day})
 
 
-def _dead_cycle_action(now, state, today, cfg, lock, heartbeat) -> Action:
+def _dead_cycle_action(now, state, today, cfg, lock, heartbeat,
+                       witness_exit: Optional[dict] = None) -> Action:
     """A stale lock with no CYCLE_FINISHED behind it: the cycle died mid-run and
-    the supervisor found the body. Record the death and retry — bounded by the
-    same restart budget that bounds kill-restarts, for the same reason: a cycle
-    that dies on every attempt must eventually stop and become a visible failure,
-    not an invisible restart loop."""
+    the supervisor found the body. What happens next depends on whether the death
+    is EXPLAINED — whether the witness wrote an exit row for this cycle_id:
+
+      no exit row  -> CYCLE_DEATH_UNEXPLAINED: record, alarm, do NOT restart;
+      exit row     -> restart (no daily cap), but not within RESTART_MIN_GAP_SEC
+                      of the previous restart — inside the gap, wait a tick;
+      a human-set max_restarts_per_day, if any, still applies on top.
+    """
     last_step = _last_step_of(lock, heartbeat)
     used = restarts_today(state, today)
-    budget = int(cfg.get("max_restarts_per_day", 2))
-    kind = DEAD_LOCK_RETRY if used < budget else DEAD_LOCK_BUDGET_DONE
+    cap = restart_cap(cfg)
 
     reason = (f"stale lock from a cycle that DIED without finishing "
               f"(pid={lock.get('pid')} is gone; no CYCLE_FINISHED on record; "
               f"last step '{last_step}')")
-    if kind == DEAD_LOCK_BUDGET_DONE:
-        reason += (f" — and today's restart budget is exhausted ({used}/{budget}); "
-                   f"NOT retrying, failing loudly")
-
-    return Action(kind, reason=reason, wedged_step=last_step,
+    common = dict(wedged_step=last_step,
                   wedged_step_index=(heartbeat or {}).get("step_index"),
-                  pid=lock.get("pid"), cycle_id=lock.get("cycle_id"),
-                  details={"restarts_used": used, "restart_budget": budget})
+                  pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
+
+    if witness_exit is None:
+        return Action(DEATH_UNEXPLAINED,
+                      reason=reason + " — the witness has NO exit row for this cycle, "
+                                      "so nothing says how it ended; NOT restarting",
+                      details={"restarts_used": used, "heartbeat_pid": (heartbeat or {}).get("pid")},
+                      **common)
+
+    how = (f"witness: exit {witness_exit.get('exit_code')} "
+           f"({witness_exit.get('exit_code_hex')}) — {witness_exit.get('meaning')}")
+    _since = _restart_too_soon(now, state)
+    if _since is not None:
+        return Action(NOTHING,
+                      reason=f"{reason}; {how}; restart held: the last restart was "
+                             f"{_since:.0f}s ago, minimum gap {RESTART_MIN_GAP_SEC}s",
+                      **common)
+    if cap is not None and used >= cap:
+        return Action(DEAD_LOCK_BUDGET_DONE,
+                      reason=f"{reason}; {how} — and the human-set cap is reached "
+                             f"({used}/{cap}); NOT retrying, failing loudly",
+                      details={"restarts_used": used, "restart_budget": cap,
+                               "witness_exit": witness_exit},
+                      **common)
+    return Action(DEAD_LOCK_RETRY, reason=f"{reason}; {how}",
+                  details={"restarts_used": used, "restart_budget": cap,
+                           "witness_exit": witness_exit},
+                  **common)
 
 
 def _age(now: datetime, ts: Optional[str]) -> Optional[float]:
@@ -1923,6 +2046,56 @@ def metta_selfcheck(force: bool = False) -> Optional[dict]:
     return rec
 
 
+def _handle_unexplained_death(action: Action, state: dict, today: str, cfg: dict) -> Action:
+    """A cycle died and the witness has no exit row for it. Record, alarm, stay down.
+
+    No restart: restarting into a death nobody can explain is how 23-24 Sep lost
+    six runs. The ledger gets the ordinary CYCLE_DIED (every existing reader
+    knows it) AND CYCLE_DEATH_UNEXPLAINED with the last blackbox step, so the
+    record says exactly what is and is not known. The lock is cleared and the
+    day marked failed so the next tick does not re-alarm on the same body; the
+    next scheduled run starts normally, and a human can start one by hand.
+    """
+    pids = [action.pid, (action.details or {}).get("heartbeat_pid")]
+    bb = _last_blackbox_step(pids)
+    ledger.record_death(cycle_id=action.cycle_id or "unknown",
+                        pid=action.pid or -1, last_step=action.wedged_step,
+                        detail=action.reason)
+    ledger.append(ledger.CYCLE_DEATH_UNEXPLAINED, cycle_id=action.cycle_id,
+                  pid=action.pid, last_step=action.wedged_step,
+                  last_blackbox_step=bb, witness_log=str(witness_log_path()),
+                  detail=action.reason)
+    _release_after_death(action.cycle_id)
+    clear_lock()
+    hb.retire(action.reason, by="supervisor:death_unexplained",
+              ended_cycle_id=action.cycle_id)
+    state["failure"] = {
+        "date": today,
+        "kind": "death unexplained",
+        "cycle_id": action.cycle_id,
+        "at_utc": datetime.now(timezone.utc).isoformat(),
+        "reason": action.reason,
+        "wedged_step": action.wedged_step,
+        "last_blackbox_step": bb,
+    }
+    save_state(state)
+    log(f"CYCLE_DEATH_UNEXPLAINED: cycle {action.cycle_id} pid={action.pid} last step "
+        f"'{action.wedged_step}', last blackbox '{bb}' — no witness exit row; NOT restarting")
+    alarm_human("CYCLE DIED WITH NO EXPLANATION - not restarting",
+                "\n".join([
+                    f"cycle: {action.cycle_id}",
+                    f"pid: {action.pid}",
+                    f"last step (heartbeat): {action.wedged_step}",
+                    f"last blackbox record: {bb}",
+                    f"witness log: {witness_log_path()} has NO exit row for this cycle.",
+                    "A start row with no exit row means the witness died too.",
+                    "The system stays down until the next scheduled run or a manual start:",
+                    r"venv\Scripts\python.exe supervisor.py --run-now",
+                ]),
+                dedup_key=f"unexplained:{action.cycle_id}")
+    return action
+
+
 def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     now = now or datetime.now().astimezone()
 
@@ -1982,11 +2155,18 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # tell them apart. Before this existed every refusal was recorded as a death.
     refused = (ledger.was_refused(lock.get("cycle_id"))
                if (lock and not alive and not finished) else False)
+    # The witness row that says HOW this cycle ended, if it wrote one. Read only
+    # when the lock's process is gone and no ending is on record: that is the
+    # one situation in which decide() must tell an explained death from an
+    # unexplained one (see _dead_cycle_action).
+    wexit = (witness_exit_for(lock.get("cycle_id"))
+             if (lock and not alive and not finished and not refused) else None)
     extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
                     lock_cycle_finished=finished, lock_cycle_refused=refused,
                     extraordinary=extra,
-                    heartbeat_pid_alive=beat_alive)
+                    heartbeat_pid_alive=beat_alive,
+                    witness_exit=wexit)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
@@ -2103,6 +2283,9 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                              restart_budget=refusal_budget(cfg))
         return action
 
+    if action.kind == DEATH_UNEXPLAINED:
+        return _handle_unexplained_death(action, state, today, cfg)
+
     if action.kind in (DEAD_LOCK_RETRY, DEAD_LOCK_BUDGET_DONE):
         # Record the death FIRST, off the still-present heartbeat, then retire it.
         # A cycle killed by the supervisor gets CYCLE_KILLED from the kill path; a
@@ -2117,7 +2300,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         # them after the surrounding state has moved on.
         _ring_death_bell("CYCLE_DIED", action,
                          restarts_used=restarts_today(state, today),
-                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
+                         restart_budget=restart_cap(cfg))
         clear_lock()
         # Kimi, 16 Aug 2026: the heartbeat is the only evidence of WHERE the cycle
         # died and the only thing that feeds deaths_by_step. It survives the death
@@ -2130,6 +2313,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
 
         if action.kind == DEAD_LOCK_RETRY:
             state.setdefault("restarts", {})[today] = used + 1
+            state["last_restart_utc"] = datetime.now(timezone.utc).isoformat()
             # THE fix: a death is not today's completed run. Un-satisfy the day so
             # the ordinary daily logic starts a replacement on the next tick —
             # within the budget just incremented, so a cycle that dies every time
@@ -2163,7 +2347,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                       detail=action.reason)
         _ring_death_bell("CYCLE_FAILED_BUDGET_EXHAUSTED", action,
                          restarts_used=used,
-                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
+                         restart_budget=restart_cap(cfg))
         log("!!! RESTART BUDGET EXHAUSTED after a cycle death — the system is NOT "
             "running. Human intervention required. This will appear in the daily report.")
         _diag = _autopsy(action)
@@ -2172,7 +2356,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                     # change that. This is what the siren is for.
                     f"Умряла на стъпка: {action.wedged_step}\n"
                     f"{_diag}\n"
-                    f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
+                    f"Рестарти: {used}/{_cap_text(cfg)}\n"
                     f"Причина: {str(action.reason)[:300]}\n"
                     f"КАКВО ДА НАПРАВИШ:\n"
                     f"1) нищо — утре бюджетът се нулира и системата опитва пак (губиш 1 ден данни)\n"
@@ -2255,10 +2439,11 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         # wedged step and a measured heartbeat age. with_postmortem defaults to
         # True for CYCLE_KILLED in death_bell.ring(), on a 60 s budget.
         _ring_death_bell("CYCLE_KILLED", action, restarts_used=used,
-                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
+                         restart_budget=restart_cap(cfg))
 
         if action.kind == KILL_RESTART:
             state.setdefault("restarts", {})[today] = used + 1
+            state["last_restart_utc"] = datetime.now(timezone.utc).isoformat()
             save_state(state)
 
             cycle_id = now.isoformat()
@@ -2279,7 +2464,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                               trigger="RESTART")
                 _ring_death_bell("CYCLE_RESTARTED", action,
                                  restarts_used=used + 1,
-                                 restart_budget=int(cfg.get("max_restarts_per_day", 2)),
+                                 restart_budget=restart_cap(cfg),
                                  detail=f"нов цикъл {cycle_id} pid={pid}")
             return action
 
@@ -2302,7 +2487,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                       detail=action.reason)
         _ring_death_bell("CYCLE_FAILED_BUDGET_EXHAUSTED", action,
                          restarts_used=used,
-                         restart_budget=int(cfg.get("max_restarts_per_day", 2)))
+                         restart_budget=restart_cap(cfg))
         # ── ИЗЧЕРПАН БЮДЖЕТ ВЕЧЕ НЕ ЗНАЧИ „СПРИ" (22 авг 2026) ──────────────
         # It still means "do not spawn another cycle now" — a system that can
         # restart itself indefinitely has no restart budget, and that limit is
@@ -2330,7 +2515,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         # cycle that knows nothing about this one.
         _diag = _autopsy(action)
         _survival_reason = (
-            f"restart budget exhausted ({used}/{int(cfg.get('max_restarts_per_day', 2))}) "
+            f"restart budget exhausted ({used}/{_cap_text(cfg)}) "
             f"on step {action.wedged_step!r}: {str(action.reason)[:200]}")
         try:
             from core import survival_mode as _sm
@@ -2364,7 +2549,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
             alarm_human("СИСТЕМАТА НЕ РАБОТИ — рестартите за деня свършиха",
                         f"Заклещена на стъпка: {action.wedged_step}\n"
                         f"{_diag}\n"
-                        f"Рестарти: {used}/{int(cfg.get('max_restarts_per_day', 2))}\n"
+                        f"Рестарти: {used}/{_cap_text(cfg)}\n"
                         f"Причина: {str(action.reason)[:300]}")
         return action
 
@@ -2386,7 +2571,7 @@ def cmd_status() -> None:
     print(f"daily hour          {cfg['daily_hour']:02d}:00  (grace {cfg['catchup_grace_hours']}h)")
     print(f"last run            {state.get('last_run_date') or 'never'}")
     print(f"restarts today      {restarts_today(state, now.date().isoformat())}"
-          f" / {cfg['max_restarts_per_day']}")
+          f" / {_cap_text(cfg)}")
 
     # ── БАНЕРЪТ КАЗВА КОГА И ЗА КОЙ ЦИКЪЛ (22 авг 2026) ────────────────────
     # It used to be one line — the reason, and nothing else. A failure from a
