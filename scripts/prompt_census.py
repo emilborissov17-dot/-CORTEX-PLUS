@@ -102,6 +102,10 @@ def assemble(kind: str, attend=None) -> tuple:
     real function; the tests hand in the one they captured at import.
     """
     rec = _Recorder()
+    # Restored in the finally below (24 Sep 2026). It was left in place, which a
+    # standalone run never noticed; inside pytest every later test that imports
+    # `requests` at call time - core/llm_door does - talked to this recorder.
+    _prior_requests = sys.modules.get("requests")
     sys.modules["requests"] = rec
     from core import brain
 
@@ -134,6 +138,10 @@ def assemble(kind: str, attend=None) -> tuple:
     finally:
         (brain.models, brain._pick_model, brain._fast_model,
          brain._smaller) = real
+        if _prior_requests is not None:
+            sys.modules["requests"] = _prior_requests
+        else:
+            sys.modules.pop("requests", None)
 
     prompt = rec.prompts[0] if rec.prompts else ""
 

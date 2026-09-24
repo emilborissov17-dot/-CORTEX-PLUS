@@ -142,9 +142,12 @@ a = SV.decide(NOW, dict(STATE_RAN), {"step": "x", "updated_utc": NOW.isoformat()
               CFG, lock_pid_alive=True, extraordinary=req)
 check("a running cycle still vetoes it", a.kind == SV.NOTHING)
 
-spent = dict(STATE_RAN, failure={"date": TODAY, "reason": "budget"})
-check("a spent restart budget still vetoes it",
-      SV.decide(NOW, spent, None, None, CFG, extraordinary=req).kind == SV.NOTHING)
+# Since 0d73473 there is no restart budget: what holds the system down is an
+# unexplained witnessed death, and it vetoes an extraordinary run too.
+check("an unexplained last spawn still vetoes it",
+      SV.decide(NOW, STATE_RAN, None, None, CFG, extraordinary=req,
+                last_spawn_unexplained={"cycle_id": "c-dead", "why": "has NO exit row for it"}
+                ).kind == SV.NOTHING)
 
 recent = dict(STATE_RAN, last_extraordinary_utc=(NOW - timedelta(hours=1)).isoformat())
 a = SV.decide(NOW, recent, None, None, CFG, extraordinary=req)

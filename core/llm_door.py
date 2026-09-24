@@ -143,12 +143,8 @@ def record(*, caller: str | None, backend: str, model: str | None, outcome: str,
         PROVENANCE.parent.mkdir(parents=True, exist_ok=True)
         if PROVENANCE.exists() and PROVENANCE.stat().st_size > _ROTATE_BYTES:
             PROVENANCE.replace(PROVENANCE.with_suffix(".jsonl.1"))
-        try:
-            from core.durable import append_json
-            append_json(PROVENANCE, row, batched=batched)
-        except Exception:
-            with PROVENANCE.open("a", encoding="utf-8") as fh:
-                fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        from core.durable import append_json as _append_json
+        _append_json(PROVENANCE, row, batched=batched)
     except Exception:
         pass
     return row

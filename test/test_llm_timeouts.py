@@ -100,6 +100,7 @@ def _ladder(monkeypatch, groq_replies, openrouter_reply=("fallback", {"finish_re
 
     monkeypatch.setattr(gb, "_call_groq", groq)
     monkeypatch.setattr(gb, "_call_openrouter", openrouter)
+    monkeypatch.setattr(gb, "_call_local_as", lambda m, p, t: ("local answer", {}))
     monkeypatch.setattr(gb, "ordered_backend_keys", lambda: ["groq", "openrouter"])
     monkeypatch.setattr(gb, "_cooldowns", {})
     monkeypatch.setattr(gb, "_cooldown_hits", {})

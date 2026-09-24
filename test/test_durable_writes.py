@@ -263,7 +263,8 @@ def test_the_named_writers_no_longer_hand_roll_their_appends():
     import ast
     checks = {
         "core/brain.py": 3,          # journal, provenance, step log x2 -> 4 calls
-        "core/groq_backend.py": 1,
+        # the provenance writer moved from groq_backend into the one door (d7cf655)
+        "core/llm_door.py": 1,
     }
     for rel, minimum in checks.items():
         src = (REPO / rel).read_text(encoding="utf-8")

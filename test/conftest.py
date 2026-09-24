@@ -472,6 +472,14 @@ def _reset_cycle_scoped_state():
         _sb.reset_cycle()
     except Exception:
         pass
+    # backend_policy disables legs and blocks the cloud process-wide; a test that
+    # drove failures used to leave the ladder local-only for every later test,
+    # which then reached the REAL local model (24 Sep 2026).
+    try:
+        from core import backend_policy as _bp
+        _bp.reset_for_tests()
+    except Exception:
+        pass
     yield
     try:
         from core import step_budget as _sb
