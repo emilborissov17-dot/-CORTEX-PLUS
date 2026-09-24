@@ -3,15 +3,15 @@
 """
 core/survival_mode.py — WHEN THE BUDGET IS SPENT, DEGRADE. DO NOT DIE.
 
-WHAT IT REPLACES
------------------
-Today, when the restart budget is exhausted, supervisor.py stops:
+WHAT IT REPLACED (21 Aug 2026)
+------------------------------
+Then, when the restart budget was exhausted, supervisor.py stopped:
 
     !!! RESTART BUDGET EXHAUSTED — the system is NOT running.
     Human intervention required.
 
-memory/scheduler_state.json says how normal that is. The budget has been spent
-2/2 on sixteen of the last seventeen days. "Fail loudly and wait for a human" is
+memory/scheduler_state.json said how normal that was. The budget had been spent
+2/2 on sixteen of the seventeen days before. "Fail loudly and wait for a human" is
 not an exceptional path here; it is most nights. A system that stops on most
 nights is not being safe, it is being absent.
 
@@ -32,8 +32,9 @@ an in-process restart counter of zero and no idea that the day is already lost.
 Therefore survival mode must NEVER be derived from anything held in memory. It is
 resolved from two files on disk, both of which outlive any process:
 
-    memory/scheduler_state.json   written by the supervisor: restarts per day,
-                                  and the `failure` block for the current day
+    memory/scheduler_state.json   written by the supervisor: the `failure` block
+                                  for the current day (since 24 Sep 2026 there is
+                                  no per-day restart count; see derived_from_disk)
     memory/survival_state.json    written here: the latched flag, so a mode
                                   entered by one process is seen by the next
 
@@ -131,27 +132,21 @@ def _write_state(state: dict, base: Optional[pathlib.Path] = None) -> None:
 def derived_from_disk(scheduler_state: dict, cfg: dict, today: str) -> tuple:
     """(should_be_active, reason) from what the SUPERVISOR persisted. No memory.
 
-    Two independent triggers, either sufficient:
-      * restarts for `today` have reached max_restarts_per_day
-      * a `failure` block is recorded for `today`
+    One trigger: a `failure` block recorded for `today`. The supervisor writes it
+    when a cycle dies unexplained — the point at which the system stops running
+    on its own.
 
-    The second exists because the supervisor writes it on the same tick it gives
-    up, and a reader that only counted restarts would miss a day lost some other
-    way.
+    There is no per-day restart count any more (24 Sep 2026: the supervisor keeps
+    none). The count this function used to read did int(cfg["max_restarts_per_day"])
+    and raised TypeError on the config's null, at every cycle start; the runner
+    caught it and fell back to FULL, so this trigger never fired at all.
     """
-    budget = int(cfg.get("max_restarts_per_day", 2))
-    used = int((scheduler_state.get("restarts") or {}).get(today, 0))
-    if used >= budget:
-        return True, ("restart budget exhausted for {} ({}/{}) — persisted in "
-                      "scheduler_state.json".format(today, used, budget))
-
-    failure = scheduler_state.get("failure") or {}
+    failure = (scheduler_state or {}).get("failure") or {}
     if failure.get("date") == today:
         return True, ("a failure is recorded for {} on step {!r}".format(
             today, failure.get("wedged_step")))
 
-    return False, "restarts {}/{} for {}, no failure recorded".format(
-        used, budget, today)
+    return False, "no failure recorded for {}".format(today)
 
 
 def resolve(today: str,
@@ -337,7 +332,7 @@ def _selftest() -> int:
     sched_path = BASE / "memory" / SCHEDULER_STATE_FILE
     sched = _load_json(sched_path)
     print("  scheduler_state.json {}".format(
-        "LIVE ({} days of restarts recorded)".format(len(sched.get("restarts") or {}))
+        "LIVE (failure recorded: {})".format((sched.get("failure") or {}).get("date") or "none")
         if sched else "INERT — survival mode cannot be derived without it"))
     if not sched:
         ok = False

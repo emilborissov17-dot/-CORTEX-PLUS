@@ -302,3 +302,39 @@ def test_the_cycle_log_carries_the_profile_line():
         "nothing writes which profile won; the log would show the consequences "
         "of a decision without the decision")
     assert src.index("_decide_survival(sys.argv)") < src.index("PROFILE:")
+
+
+# ---------------------------------------------------------------------------
+# No restart count (24 Sep 2026): a null config must not raise, and an
+# unexplained death is what latches the reduced (SURVIVAL) profile
+# ---------------------------------------------------------------------------
+
+def test_a_null_max_restarts_per_day_no_longer_raises():
+    """At every start on 24 Sep: TypeError int(None), caught, FULL by default."""
+    should, reason = sm.derived_from_disk({"restarts": {"2026-09-24": 9}, "failure": None},
+                                          {"max_restarts_per_day": None}, "2026-09-24")
+    assert should is False and "no failure recorded" in reason
+    should, _ = sm.derived_from_disk({"failure": {"date": "2026-09-24", "wedged_step": "boot"}},
+                                     {"max_restarts_per_day": None}, "2026-09-24")
+    assert should is True
+
+
+def test_a_witnessed_unexplained_death_latches_the_survival_profile(tmp_path, monkeypatch):
+    """The supervisor's unexplained-death path latches; a fresh runner reads SURVIVAL."""
+    from datetime import datetime
+    monkeypatch.setattr(supervisor, "SURVIVAL_BASE", tmp_path)
+    monkeypatch.setattr(supervisor, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    for name in ("record_death", "append"):
+        monkeypatch.setattr(supervisor.ledger, name, lambda *a, **k: {})
+    for name in ("_release_after_death", "clear_lock", "save_state", "log", "alarm_human"):
+        monkeypatch.setattr(supervisor, name, lambda *a, **k: None)
+    monkeypatch.setattr(supervisor.hb, "retire", lambda *a, **k: None)
+    today = datetime.now().astimezone().date().isoformat()
+    a = supervisor.Action(supervisor.DEATH_UNEXPLAINED, reason="no exit row",
+                          wedged_step="boot", pid=1, cycle_id="c-dead")
+    supervisor._handle_unexplained_death(a, {}, today, {})
+
+    real_resolve = sm.resolve
+    monkeypatch.setattr(sm, "resolve", lambda d, **k: real_resolve(d, base=tmp_path))
+    d = r._decide_survival(argv=[], origin="scheduled")
+    assert d["profile"] == "SURVIVAL", d

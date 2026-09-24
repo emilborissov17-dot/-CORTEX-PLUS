@@ -35,14 +35,15 @@ def _state(**kw):
 
 # ── the headline ───────────────────────────────────────────────────────────
 
-def test_budget_exhausted_runs_critical_steps_and_skips_normal_ones():
-    """The literal ask: force budget-exhausted, assert NORMAL skips, CRITICAL runs."""
-    sched = _state(restarts={TODAY: 2})
+def test_a_failed_day_runs_critical_steps_and_skips_normal_ones():
+    """The literal ask: force a failed day, assert NORMAL skips, CRITICAL runs.
+    (24 Sep 2026: the trigger is the failure block; there is no restart count.)"""
+    sched = _state(failure={"date": TODAY, "wedged_step": "boot"})
     active, reason, _ = resolve(TODAY, scheduler_state=sched, cfg=CFG,
                                 base=_NOWHERE)
 
     assert active is True
-    assert "restart budget exhausted" in reason
+    assert "a failure is recorded" in reason
 
     p = plan(STEPS, active=active, reason=reason, table=TABLE, baseline={},
              ceilings={"_default": 900})
@@ -77,7 +78,7 @@ def test_a_fresh_process_reaches_survival_mode_from_disk_alone(tmp_path):
     (tmp_path / "memory").mkdir()
     (tmp_path / "config").mkdir()
     (tmp_path / "memory" / "scheduler_state.json").write_text(
-        json.dumps({"restarts": {TODAY: 2}}), encoding="utf-8")
+        json.dumps({"failure": {"date": TODAY, "wedged_step": "boot"}}), encoding="utf-8")
     (tmp_path / "config" / "scheduler.json").write_text(
         json.dumps(CFG), encoding="utf-8")
 
@@ -86,7 +87,7 @@ def test_a_fresh_process_reaches_survival_mode_from_disk_alone(tmp_path):
 
     assert active is True
     assert is_new is True
-    assert "persisted in scheduler_state.json" in reason
+    assert "a failure is recorded" in reason
 
 
 def test_the_failure_block_alone_triggers_survival_mode():
