@@ -4233,6 +4233,30 @@ def _phase_cli(argv: list) -> None:
     raise SystemExit(0)
 
 
+def _exit_for_night(cycle_id, log_path=None):
+    """(exit_code, final_line) for a cycle that reached the end of main().
+
+    CLEAN EXIT MEANS A CLEAN NIGHT (24 Sep 2026). The 15:14 cycle crashed in
+    cycle_report and still exited 0, which the witness recorded as "clean exit".
+    0 now requires that no step's own output says it crashed — the same
+    judgement as the cycle report's "failed" list (core.cycle_report.failed_steps).
+    Otherwise 3 and one line naming the steps. A log that cannot be found cannot
+    prove a clean night, so it is 3 as well, never 0.
+    """
+    try:
+        from core import cycle_report as _cr
+        failed = _cr.failed_steps(cycle_id, log_path)
+        code, marker = _cr.FAILURES_EXIT_CODE, _cr.FAILURES_MARKER
+    except Exception as e:  # noqa: BLE001
+        return 3, (f"CYCLE_FINISHED_WITH_FAILURES n=? steps=<failure check raised "
+                   f"{type(e).__name__}: {e}>")
+    if failed is None:
+        return code, f"{marker} n=? steps=<this cycle's log was not found>"
+    if failed:
+        return code, f"{marker} n={len(failed)} steps={','.join(failed)}"
+    return 0, None
+
+
 # ── the flight recorder is flushed on any ordinary exit ─────────────────────
 # Not on a kill, and not on os._exit — nothing runs then. Those are the runs
 # whose last `open` has no `span`, and that record is the finding.
@@ -4334,6 +4358,11 @@ if __name__ == "__main__":
             with _lidaction_guard():
                 try:
                     main()
+                    _code, _line = _exit_for_night(_CYCLE_ID_FOR_HALT)
+                    if _line:
+                        print(_line)
+                    if _code:
+                        raise SystemExit(_code)
                 except _VoluntaryHalt as _halt:
                     # STOPPED ON PURPOSE, NOT DEAD. The distinction is the whole
                     # feature: a death costs a restart from a budget of two and

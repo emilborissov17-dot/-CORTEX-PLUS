@@ -632,6 +632,11 @@ DEATH_UNEXPLAINED = "CYCLE_DEATH_UNEXPLAINED"
 # A failure record written before the witness existed is unexplained by design;
 # it is reported once under this name and then moved to failure_history.
 PRE_WITNESS_DEATH = "PRE_WITNESS_DEATH (unexplained by design: no witness at the time)"
+# fast_cycle_runner exits 3 when it reached its end but a step crashed
+# (core.cycle_report.FAILURES_EXIT_CODE); the witness then says "finished with
+# failed steps". That is not a death: no restart, no survival latch.
+FAILURES_EXIT_CODE = 3
+FINISHED_WITH_FAILURES = "finished with failed steps"
 
 
 def _restart_too_soon(now: datetime, state: dict) -> Optional[float]:
@@ -1509,6 +1514,15 @@ def _dead_cycle_action(now, state, today, cfg, lock, heartbeat,
                   wedged_step_index=(heartbeat or {}).get("step_index"),
                   pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
 
+    if (witness_exit is not None and witness_exit.get("exit_code") == FAILURES_EXIT_CODE
+            and str(witness_exit.get("meaning", "")).startswith(FINISHED_WITH_FAILURES)):
+        # It reached its end; some steps crashed on the way. The night is run,
+        # its failures are in the cycle report — clear the orphaned lock only.
+        return Action(CLEAR_STALE_LOCK,
+                      reason=f"stale lock from a cycle that FINISHED WITH FAILED STEPS "
+                             f"(witness: exit {FAILURES_EXIT_CODE}) — not a death; "
+                             f"clearing, not retrying",
+                      pid=lock.get("pid"), cycle_id=lock.get("cycle_id"))
     if witness_exit is not None and not isinstance(witness_exit.get("exit_code"), int):
         # An exit row with no exit code says the witness saw the end but not how
         # it ended — that is not an explanation (24 Sep 2026: rows with

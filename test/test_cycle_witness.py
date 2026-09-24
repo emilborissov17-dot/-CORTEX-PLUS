@@ -306,3 +306,57 @@ def test_the_real_spawn_path_starts_the_witness_and_it_reports(tmp_path, monkeyp
 
 def test_an_exit_row_without_an_exit_code_is_not_an_explanation():
     assert sup._dead_cycle_action(datetime.now().astimezone(), {}, "2026-09-24", {}, {"pid": 1, "cycle_id": "c"}, None, witness_exit={"event": "exit", "cycle_id": "c", "exit_code": None}).kind == sup.DEATH_UNEXPLAINED
+
+
+# ---------------------------------------------------------------------------
+# Exit 3: the cycle reached its end but a step crashed (24 Sep 2026)
+# ---------------------------------------------------------------------------
+
+def _log_with(tmp_path, lines):
+    p = tmp_path / "cycle.log"
+    p.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return p
+
+
+def test_a_night_with_one_failed_step_exits_3_and_the_witness_says_so(tmp_path):
+    """(i) The 15:14 cycle crashed in cycle_report and still exited 0 = "clean exit"."""
+    import fast_cycle_runner as r
+    from core import cycle_report
+    log = _log_with(tmp_path, ["[STEP] boot", "[FAST_CYCLE] boot -> OK",
+                               "[STEP] cycle_report",
+                               "[FAST_CYCLE] cycle_report -> FAILED: AttributeError: x"])
+    code, line = r._exit_for_night("c", log_path=log)
+    assert code == 3 == sup.FAILURES_EXIT_CODE == cycle_report.FAILURES_EXIT_CODE
+    assert line == "CYCLE_FINISHED_WITH_FAILURES n=1 steps=cycle_report"
+
+    proc, wl, _ = _start_witness(tmp_path, f"print({line!r}); raise SystemExit(3)", "fw")
+    ex = _wait_row(wl, "exit")
+    proc.wait(timeout=30)
+    assert ex["exit_code"] == 3
+    assert ex["meaning"].startswith(sup.FINISHED_WITH_FAILURES), ex
+
+    a = sup.decide(datetime.now().astimezone(), {}, None, {"pid": 1, "cycle_id": "fw"}, {},
+                   lock_pid_alive=False, lock_cycle_finished=False, witness_exit=ex)
+    assert a.kind == sup.CLEAR_STALE_LOCK, "a night with failed steps was treated as a death"
+
+
+def test_a_clean_night_exits_0_and_a_bare_exit_3_is_still_a_python_error(tmp_path):
+    """(ii) Zero failed -> 0. And a 3 without the marker line stays what it was."""
+    import fast_cycle_runner as r
+    log = _log_with(tmp_path, ["[STEP] boot", "[FAST_CYCLE] boot -> OK"])
+    assert r._exit_for_night("c", log_path=log) == (0, None)
+    assert r._exit_for_night("c", log_path=tmp_path / "missing.log")[0] == 3, \
+        "a log that cannot be found must not prove a clean night"
+
+
+def test_the_runner_raises_the_night_code_after_main():
+    """Wiring: the exit code is computed AFTER main() returns and raised when nonzero."""
+    import ast
+    tree = ast.parse((REPO / "fast_cycle_runner.py").read_text(encoding="utf-8"))
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Try) and any(isinstance(s, ast.Expr) and isinstance(s.value, ast.Call)
+                                             and getattr(s.value.func, "id", "") == "main" for s in node.body):
+            src = ast.unparse(node.body)
+            assert src.index("main()") < src.index("_exit_for_night(") < src.index("raise SystemExit(_code)")
+            return
+    raise AssertionError("no try-block around main() found in fast_cycle_runner.py")

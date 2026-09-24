@@ -92,6 +92,14 @@ function Get-Meaning($code, $launcherCode, [string]$logPath) {
         }
         return "clean exit"
     }
+    if ($code -eq 3) {
+        # fast_cycle_runner exits 3 when it reached its end but a step crashed, and
+        # prints CYCLE_FINISHED_WITH_FAILURES as its last line. Without that line a
+        # 3 is an ordinary SystemExit(3) and falls through to "python error".
+        $fw = $false
+        try { $fw = [bool](Get-Content -LiteralPath $logPath -Tail 20 -ErrorAction Stop | Select-String -SimpleMatch "CYCLE_FINISHED_WITH_FAILURES") } catch { }
+        if ($fw) { return "finished with failed steps (CYCLE_FINISHED_WITH_FAILURES in the log)" }
+    }
     if ($code -eq 1) {
         $tb = $false
         try { $tb = [bool](Get-Content -LiteralPath $logPath -Tail 60 -ErrorAction Stop | Select-String -SimpleMatch "Traceback (most recent call last)") } catch { }

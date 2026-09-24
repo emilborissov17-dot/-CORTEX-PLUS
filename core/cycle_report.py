@@ -121,6 +121,25 @@ def _steps_from_log(log_path: Path) -> list:
     return [{"step": k, "lines": v} for k, v in grouped.items()]
 
 
+# The exit code of a cycle (fast_cycle_runner) and the "failed" list of this
+# report are one judgement, made here, so the two can never disagree about a night.
+FAILURES_EXIT_CODE = 3
+FAILURES_MARKER = "CYCLE_FINISHED_WITH_FAILURES"
+
+
+def _said_it_failed(lines) -> bool:
+    return any("FAILED" in l or "Traceback" in l for l in lines)
+
+
+def failed_steps(cycle_id: str | None, log_path: Path | None = None) -> list | None:
+    """Names of the steps whose own output says they crashed, or None when this
+    cycle's log cannot be found — which is NOT the same as "none failed"."""
+    path = log_path or _log_for(cycle_id)
+    if path is None or not Path(path).exists():
+        return None
+    return [s["step"] for s in _steps_from_log(Path(path)) if _said_it_failed(s["lines"])]
+
+
 def _brain_words(cycle_start: float) -> dict:
     """Какво е казал мозъкът на всяка стъпка ПРЕЗ ТОЗИ цикъл."""
     words = {}
@@ -194,7 +213,7 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None) -> dict
         pass
 
     broken = [r for r in rows if r["promise"] == "НЕ ПИПНА"]
-    failed = [r for r in rows if any("FAILED" in l or "Traceback" in l for l in r["said"])]
+    failed = [r for r in rows if _said_it_failed(r["said"])]
 
     # ── ДУМАТА Е НА СИСТЕМАТА: откриване и закриване пише мозъкът ────────────
     opening = closing = None
