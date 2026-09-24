@@ -209,7 +209,9 @@ def test_spawn_cycle_goes_through_the_witness_and_starts_no_reaper(wired, tmp_pa
     assert "memory.cycle_reaper" not in joined
     flags = kw["creationflags"]
     assert flags & sup.CREATE_BREAKAWAY_FROM_JOB, "the witness must leave the tick's job"
-    assert flags & getattr(subprocess, "DETACHED_PROCESS", 0)
+    assert flags & sup.CREATE_NO_WINDOW
+    assert not (flags & getattr(subprocess, "DETACHED_PROCESS", 0)), \
+        "powershell.exe under DETACHED_PROCESS exits 0 and starts nothing (24 Sep 2026)"
     assert flags & getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
     args = json.loads(base64.b64decode(argv[argv.index("-ArgsB64") + 1]))
     assert args[0] == "-u" and args[1].endswith("runner.py")
@@ -224,5 +226,53 @@ def test_a_refused_breakaway_is_retried_without_it_and_logged(wired):
     assert outcomes == ["refused", "ok"], outcomes
     _, kw, _ = _FakePopen.calls[1]
     assert not (kw["creationflags"] & sup.CREATE_BREAKAWAY_FROM_JOB)
-    assert kw["creationflags"] & getattr(subprocess, "DETACHED_PROCESS", 0)
+    assert kw["creationflags"] & sup.CREATE_NO_WINDOW
+    assert not (kw["creationflags"] & getattr(subprocess, "DETACHED_PROCESS", 0))
     assert any("WITNESS: breakaway refused" in m for m in wired), wired
+
+
+# ---------------------------------------------------------------------------
+# The real spawn path, end to end — no fake Popen, no hand-built argv
+# ---------------------------------------------------------------------------
+
+def test_the_real_spawn_path_starts_the_witness_and_it_reports(tmp_path, monkeypatch):
+    """What 1667c26 shipped without: spawn_cycle -> _spawn_witnessed ->
+    _popen_detached, all real, against a stub child. The wiring tests above fake
+    Popen, and the witness tests above start the .ps1 by hand, so neither ever ran
+    powershell.exe with the creation flags the supervisor actually passes — and
+    under DETACHED_PROCESS it exits 0 having started nothing.
+
+    Failure looks like: no start row (the witness died unborn), spawn_cycle
+    returning the witness pid instead of the child's, an empty log, or an exit row
+    with exit_code null.
+    """
+    child = tmp_path / "stub_cycle.py"
+    # the launch path is under test here; the fast-exit race has its own test
+    # (see test_a_child_that_exits_in_100ms_still_gets_an_exit_code)
+    child.write_text("import time\nprint('STUB CYCLE RAN')\ntime.sleep(2)\nraise SystemExit(3)\n",
+                     encoding="utf-8")
+    monkeypatch.setattr(sup, "RUNNER", child)
+    monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
+    monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
+    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
+    monkeypatch.setattr(sup, "CYCLE_EXIT_LOG", tmp_path / "cycle_exits.jsonl")
+    monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
+    assert sup._witness_available(), "powershell.exe or tools/cycle_witness.ps1 missing"
+    wl = sup.witness_log_path()
+    assert wl == tmp_path / "witness.jsonl"
+
+    t0 = time.monotonic()
+    pid = sup.spawn_cycle("e2e-real-spawn")
+    start = _wait_row(wl, "start", timeout=max(0.1, 20.0 - (time.monotonic() - t0)))
+    assert start["cycle_id"] == "e2e-real-spawn"
+    assert isinstance(start["cycle_pid"], int) and start["cycle_pid"] > 0, start
+    assert pid == start["cycle_pid"], (
+        f"spawn_cycle returned {pid}, the start row says cycle_pid={start['cycle_pid']}")
+
+    ex = _wait_row(wl, "exit", timeout=60)
+    assert isinstance(ex["exit_code"], int), f"exit code not captured: {ex}"
+    assert ex["exit_code"] == 3, ex
+
+    logs = list((tmp_path / "cycle_logs").glob("cycle_*.log"))
+    assert len(logs) == 1, logs
+    assert "STUB CYCLE RAN" in logs[0].read_text(encoding="utf-8", errors="replace")

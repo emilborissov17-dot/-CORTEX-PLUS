@@ -148,6 +148,9 @@ WITNESS_START_WAIT_SEC = 20.0
 # not allow breakaway refuses it with ERROR_ACCESS_DENIED, which _popen_detached()
 # catches and retries without, saying so in the log.
 CREATE_BREAKAWAY_FROM_JOB = 0x01000000
+# Win32 CREATE_NO_WINDOW: a console that is never shown. The witness launch uses it
+# in place of DETACHED_PROCESS — see _popen_detached().
+CREATE_NO_WINDOW = 0x08000000
 
 
 def witness_log_path() -> Path:
@@ -1809,7 +1812,7 @@ def _is_access_denied(e: BaseException) -> bool:
             or "Access is denied" in str(e))
 
 
-def _popen_detached(argv, **kw):
+def _popen_detached(argv, *, console_flag: Optional[int] = None, **kw):
     """Popen with no console, its own process group, and OUTSIDE the parent's job.
 
     DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP are the 17 Aug 2026 flags (see
@@ -1818,9 +1821,16 @@ def _popen_detached(argv, **kw):
     that forbids breakaway refuses it with ERROR_ACCESS_DENIED; that is caught,
     logged as "WITNESS: breakaway refused", and the spawn is retried without it —
     a cycle inside the job is worse than one outside it, but better than none.
+
+    `console_flag` replaces DETACHED_PROCESS for one caller: the witness. Measured
+    24 Sep 2026: powershell.exe started with DETACHED_PROCESS exits 0 without
+    starting cmd.exe or writing a row, so every witnessed cycle died unborn. It
+    gets CREATE_NO_WINDOW (a hidden console) instead. test_cycle_witness.py::
+    test_the_real_spawn_path_starts_the_witness_and_it_reports fails if it goes back.
     """
-    base = (getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
-            | getattr(subprocess, "DETACHED_PROCESS", 0))
+    if console_flag is None:
+        console_flag = getattr(subprocess, "DETACHED_PROCESS", 0)
+    base = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | console_flag
     if os.name != "nt":
         return subprocess.Popen(argv, **kw)
     try:
@@ -1887,7 +1897,8 @@ def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict) -> Op
              "-Log", str(log_file), "-WitnessLog", str(witness_log_path()),
              "-CycleId", str(cycle_id), "-WorkDir", str(BASE)]
     try:
-        w = _popen_detached(wargv, cwd=str(BASE), env=env,
+        w = _popen_detached(wargv, console_flag=CREATE_NO_WINDOW,
+                            cwd=str(BASE), env=env,
                             stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL)
     except Exception as e:
