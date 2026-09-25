@@ -1,0 +1,40 @@
+{
+  "_what": [
+    "The citation UCDP asks for, read from UCDP's own documents on 2026-09-25, stored so that",
+    "nothing built on UCDP data is published without it. Read by core/ucdp_client.citation().",
+    "Text is as extracted from the PDFs. Two kinds of normalisation, both stated here:",
+    "(1) run-splitting spaces inside words were removed ('Datase t' -> 'Dataset', '202 6' -> '2026');",
+    "(2) in the GED 26.1 codebook the citation is set in an embedded font whose code map omits",
+    "three glyphs; those were INFERRED from the words around them and are listed under",
+    "'inferred_glyphs'. Every word and number was decoded from the PDF, not supplied from memory."
+  ],
+  "read_on": "2026-09-25",
+  "index_url": "https://ucdp.uu.se/apidocs/",
+
+  "candidate_events": {
+    "applies_to": "UCDP GED Candidate monthly/quarterly releases (26.0.7, 26.0.8, 26.01.26.06) - the data behind the institution #0 rows",
+    "source_url": "https://ucdp.uu.se/downloads/candidateged/ucdp-candidate-codebook1.5.pdf",
+    "please_always_cite": "Hegre, Håvard, Mihai Croicu, Kristine Eck, and Stina Högbladh, July 2020. Introducing the UCDP Candidate Events Dataset Research & Politics doi: 10.1177/2053168020935257",
+    "also_cite_codebook": "Högbladh Stina, 2026 UCDP Candidate Events Dataset Codebook, v.1.5 Uppsala University.",
+    "release_schedule_stated": "Data extracted from UCDP systems on the 20th of every month"
+  },
+
+  "ged": {
+    "applies_to": "UCDP GED 26.1 (1989-01-01 .. 2025-12-31)",
+    "source_url": "https://ucdp.uu.se/downloads/ged/ged261.pdf",
+    "please_always_cite": "Sundberg, Ralph, and Erik Melander, 2013, “Introducing the UCDP Georeferenced Event Dataset”, Journal of Peace Research, vol.50, no.4, 523-532",
+    "also_cite_codebook": "Högbladh Stina, 2026, “UCDP GED Codebook version 26.1”, Department of Peace and Conflict Research, Uppsala University",
+    "version_rule": "Always include the Version number in analyses using the dataset.",
+    "inferred_glyphs": {
+      "0x0355": "',' (comma) - unmapped in the font's code map; every place it stands a comma is the only reading",
+      "0x002F": "'I' in 'Introducing' - the code map gives '='",
+      "0x003A": "'J' in 'Journal' - the code map gives 'H'"
+    }
+  },
+
+  "api_terms": {
+    "source_url": "https://ucdp.uu.se/apidocs/",
+    "verbatim": "Usage is governed by the following limit: 5,000 requests per day. Errors count towards the limit.",
+    "our_cap": 4500
+  }
+}

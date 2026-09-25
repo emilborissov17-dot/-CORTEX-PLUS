@@ -58,6 +58,7 @@ import io
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 import zipfile
@@ -76,7 +77,7 @@ USER_AGENT = ("CORTEX-PLUS/1.0 institution0 "
 
 GED_VERSION = "26.1"
 CANDIDATE_QUARTERLY = "26_01_26_06"
-CANDIDATE_MONTHLY = "26_0_7"
+CANDIDATE_MONTHLY = "26_0_8"
 
 SOURCES = [
     # (local filename, url, kind) — order is oldest release first, so that the
@@ -87,10 +88,25 @@ SOURCES = [
      "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_01_26_06.csv", "csv"),
     ("GEDEvent_v26_0_7.csv",
      "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_7.csv", "csv"),
+    # August 2026, released 2026-09-20. Monthly candidates are incremental, so
+    # 26.0.7 stays: 26.0.8 adds August and revises earlier ids (later wins).
+    ("GEDEvent_v26_0_8.csv",
+     "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_8.csv", "csv"),
 ]
 
 API_BASE = "https://ucdpapi.pcr.uu.se/api/gedevents"
-TOKEN_ENV = "UCDP_ACCESS_TOKEN"
+# The API token (25 Sep 2026): read from .env under this name, sent as the header
+# x-ucdp-access-token. No token -> UcdpTokenMissing, by name; there is no
+# anonymous request and no fallback to the files from the API path.
+TOKEN_ENV = "UCDP_API_TOKEN"
+TOKEN_HEADER = "x-ucdp-access-token"
+ENV_FILE = REPO / ".env"
+
+# Every API request - every page and every error - is counted per UTC day, and
+# the client stops at DAILY_CAP before sending. One provenance row per request.
+REQUESTS_FILE = REPO / "memory" / "ucdp_requests.json"
+PROVENANCE_FILE = REPO / "memory" / "ucdp_provenance.jsonl"
+DAILY_CAP = 4500
 
 OSV = "3"          # UCDP type_of_violence: 3 = one-sided violence against civilians
 CIVILIANS = "Civilians"
@@ -101,6 +117,14 @@ REQUIRED_COLUMNS = ("id", "type_of_violence", "side_a", "side_b", "country",
 # UCDP's placeholder for an actor it could not identify. Counted, named, and
 # NEVER charged to a party that signed something — see institution0_morning.
 UNKNOWN_ACTOR_PREFIX = "XXX"
+
+
+class UcdpTokenMissing(RuntimeError):
+    """UCDP_API_TOKEN is not in the environment or in .env."""
+
+
+class UcdpCapReached(RuntimeError):
+    """Today's (UTC) API request count reached DAILY_CAP; nothing was sent."""
 
 
 class UcdpUnavailable(RuntimeError):
@@ -178,35 +202,111 @@ def load_events(data_dir: Path = DATA_DIR) -> tuple[list[dict], str]:
     return list(by_id.values()), "ucdp:%s" % CANDIDATE_MONTHLY.replace("_", ".")
 
 
-def load_events_api(version: str = GED_VERSION, pagesize: int = 1000) -> tuple[list[dict], str]:
-    """The API path. Activates only when UCDP_ACCESS_TOKEN is set.
+def api_token(env_file: Optional[Path] = None) -> str:
+    """UCDP_API_TOKEN from the process environment, else from .env. Rule: no
+    anonymous request - a missing token is UcdpTokenMissing, by name
+    (test_a_missing_token_refuses_by_name_and_sends_nothing)."""
+    tok = os.environ.get(TOKEN_ENV, "").strip()
+    if tok:
+        return tok
+    p = Path(env_file or ENV_FILE)
+    try:
+        for line in p.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            if k.strip() == TOKEN_ENV:
+                v = v.strip().strip('"').strip("'")
+                if v:
+                    return v
+    except FileNotFoundError:
+        pass
+    raise UcdpTokenMissing("%s is not set in the environment or in %s - the UCDP API "
+                           "refuses without it (header %s)" % (TOKEN_ENV, p, TOKEN_HEADER))
 
-    Written now and unused now, deliberately: the shape of the answer is the same
-    list of dicts as load_events, so the day the token arrives the callers do not
-    change. It refuses loudly rather than silently falling back to the files —
-    a caller that asked for the API and got a file has been told a small lie
-    about what it is looking at.
-    """
-    token = os.environ.get(TOKEN_ENV)
-    if not token:
-        raise UcdpUnavailable(
-            "%s is not set. The API needs it (401 'API token required. Add header: "
-            "x-ucdp-access-token'), requested by email 18 Sep 2026. Use load_events() "
-            "for the file path." % TOKEN_ENV)
+
+def _utc_day() -> str:
+    return dt.datetime.now(dt.timezone.utc).date().isoformat()
+
+
+def requests_today(path: Optional[Path] = None) -> int:
+    try:
+        d = json.loads(Path(path or REQUESTS_FILE).read_text(encoding="utf-8"))
+    except (FileNotFoundError, ValueError):
+        return 0
+    return int((d.get("days") or {}).get(_utc_day(), 0))
+
+
+def _count_request(path: Optional[Path] = None) -> int:
+    """Charge one request to today BEFORE it is sent. Returns the new count."""
+    p = Path(path or REQUESTS_FILE)
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except (FileNotFoundError, ValueError):
+        d = {}
+    days = d.setdefault("days", {})
+    day = _utc_day()
+    days[day] = int(days.get(day, 0)) + 1
+    d["cap"] = DAILY_CAP
+    d["_what"] = ("UCDP API requests per UTC day (every page and every error). "
+                  "core/ucdp_client stops at cap before sending.")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(d, indent=2) + "\n", encoding="utf-8")
+    return days[day]
+
+
+def _provenance(row: dict, path: Optional[Path] = None) -> None:
+    p = Path(path or PROVENANCE_FILE)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def api_get(version: str, page: int = 0, pagesize: int = 1000,
+            endpoint: str = "gedevents") -> dict:
+    """One authenticated GET. Counted before it is sent, stopped at the cap,
+    and recorded (endpoint, version, page, status, latency) whatever happens."""
+    token = api_token()
+    if requests_today() >= DAILY_CAP:
+        raise UcdpCapReached("%d UCDP API requests already today (UTC %s); cap %d"
+                             % (requests_today(), _utc_day(), DAILY_CAP))
+    n = _count_request()
+    base = API_BASE.rsplit("/", 1)[0] + "/" + endpoint
+    url = "%s/%s?pagesize=%d&page=%d" % (base, version, pagesize, page)
+    req = urllib.request.Request(url, method="GET")
+    req.add_header("User-Agent", USER_AGENT)
+    req.add_header(TOKEN_HEADER, token)
+    row = {"ts": dt.datetime.now(dt.timezone.utc).isoformat(), "endpoint": endpoint,
+           "version": version, "page": page, "pagesize": pagesize, "status": None,
+           "latency_s": None, "error": None, "count_today": n}
+    t0 = time.time()
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            body = r.read()
+            row["status"] = r.status
+        return json.loads(body.decode("utf-8", "replace"))
+    except urllib.error.HTTPError as e:
+        row["status"] = e.code
+        row["error"] = e.read()[:200].decode("utf-8", "replace")
+        raise UcdpUnavailable("API %s -> HTTP %s: %s" % (url, e.code, row["error"])) from e
+    except OSError as e:
+        row["error"] = "%s: %s" % (type(e).__name__, e)
+        raise UcdpUnavailable("API %s unreachable: %s" % (url, row["error"])) from e
+    finally:
+        row["latency_s"] = round(time.time() - t0, 3)
+        _provenance(row)
+
+
+def load_events_api(version: str = GED_VERSION, pagesize: int = 1000) -> tuple[list[dict], str]:
+    """The API path: every page through api_get() (token, counter, cap,
+    provenance). Refuses loudly rather than falling back to the files - a caller
+    that asked for the API and got a file has been told a small lie."""
     out: list[dict] = []
     page = 0
     while True:
-        url = "%s/%s?pagesize=%d&page=%d" % (API_BASE, version, pagesize, page)
-        req = urllib.request.Request(url, method="GET")
-        req.add_header("User-Agent", USER_AGENT)
-        req.add_header("x-ucdp-access-token", token)
-        try:
-            with urllib.request.urlopen(req, timeout=300) as r:
-                payload = json.loads(r.read().decode("utf-8", "replace"))
-        except urllib.error.HTTPError as e:
-            raise UcdpUnavailable("API %s -> HTTP %s" % (url, e.code)) from e
-        rows = payload["Result"]
-        out.extend(rows)
+        payload = api_get(version, page=page, pagesize=pagesize)
+        out.extend(payload["Result"])
         if page + 1 >= int(payload["TotalPages"]):
             break
         page += 1
@@ -316,6 +416,17 @@ def percentile(values: list[float], q: float) -> Optional[float]:
     return s[lo] * (1 - frac) + s[hi] * frac
 
 
+CITATION_FILE = REPO / "config" / "ucdp_citation.json"
+
+
+def citation(release: str = "candidate_events", path: Optional[Path] = None) -> str:
+    """The citation UCDP asks for, as read from its documents (config/ucdp_citation.json).
+    Raises when the file or the entry is missing - nothing may be published without it."""
+    d = json.loads(Path(path or CITATION_FILE).read_text(encoding="utf-8"))
+    entry = d[release]
+    return entry["please_always_cite"]
+
+
 def selftest(data_dir: Path = DATA_DIR) -> dict:
     """Which integrations are LIVE in the repo this finds itself in."""
     out: dict = {"data_dir": str(data_dir), "files": {}}
@@ -323,8 +434,16 @@ def selftest(data_dir: Path = DATA_DIR) -> dict:
         p = data_dir / name
         out["files"][name] = ("LIVE (%d bytes)" % p.stat().st_size) if p.exists() else "INERT (absent)"
         out["files"][name + " @url"] = url
-    out["api"] = ("LIVE (%s is set)" % TOKEN_ENV) if os.environ.get(TOKEN_ENV) \
-        else "INERT (%s unset — file path in use)" % TOKEN_ENV
+    try:
+        api_token()
+        out["api"] = "LIVE (%s found; %d request(s) today, cap %d)" % (
+            TOKEN_ENV, requests_today(), DAILY_CAP)
+    except UcdpTokenMissing as why:
+        out["api"] = "INERT (%s)" % why
+    try:
+        out["citation"] = citation()
+    except Exception as why:  # noqa: BLE001
+        out["citation"] = "MISSING (%s: %s)" % (type(why).__name__, why)
     try:
         rows, as_of = load_events(data_dir)
         out["merged_rows"] = len(rows)

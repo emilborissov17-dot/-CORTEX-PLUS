@@ -85,6 +85,8 @@ def tree(tmp_path):
            _row(9003, "Sudan", "RSF", "2026-07-07"),
            _row(qtr[0]["id"], "Sudan", "RSF", "2026-01-05", deaths=99)]   # revision
     _write_csv(d / "GEDEvent_v26_0_7.csv", mon)
+    # monthly candidate 26.0.8: August (incremental, like 26.0.7)
+    _write_csv(d / "GEDEvent_v26_0_8.csv", [_row(9101, "Sudan", "RSF", "2026-08-05")])
     return d
 
 
@@ -125,7 +127,7 @@ def test_an_absent_file_raises(tree):
 
 def test_the_anchor_is_the_data_not_the_clock(tree):
     rows, _ = uc.load_events(tree)
-    assert uc.last_complete_month(rows) == "2026-07"
+    assert uc.last_complete_month(rows) == "2026-08"
 
 
 def test_actor_match_is_exact_never_fuzzy(tree):
