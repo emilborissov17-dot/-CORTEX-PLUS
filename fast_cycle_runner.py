@@ -3394,28 +3394,9 @@ def main():
                   f"{len(shas)} commit sha(s) recorded")
         _run("github_publisher", _github_publisher)
 
-    # ── 16. Action recommendations ──
-    beat("action_recommendations", "16")
-    def _cortex_reasoner():
-        from core.cortex_reasoner import reason
-        from memory.semantic_memory import remember
-        rec = reason(
-            "Какви са най-важните действия сега базирани на "
-            "последните данни, тенденции и web intelligence?"
-        )
-        remember(rec[:500], axis="ACTION_RECOMMENDATIONS", source="fast_cycle")
-        print("[FAST_CYCLE] Препоръка записана в паметта.")
-        try:
-            from memory.context_injector import record_causal
-            record_causal(
-                action="fast_cycle_groq_reasoning",
-                effect=rec[:200],
-                why="Groq reasoning върху последни данни, тенденции и snapshots",
-                axis="ACTION_RECOMMENDATIONS",
-            )
-        except Exception as e:
-            print(f"[FAST_CYCLE] record_causal грешка: {e}")
-    _run("cortex_reasoner", _cortex_reasoner)
+    # 16. action_recommendations was RETIRED on 25 Sep 2026 (task #8): one
+    # call_groq into unmeasured advice memory; its causal log's only reader was
+    # itself (memory.context_injector.get_causal_lessons <- core.cortex_reasoner).
 
     # ── 17. Self observer ──
     beat("self_observer", "17")

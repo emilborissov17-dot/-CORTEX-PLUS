@@ -174,8 +174,6 @@ STEPS = [
     ("hyperclaw_plan", "15.7", "Планът му -> предложения за подобрение.",
      ["memory/improvement_proposals.json"], False),
     ("github_publish", "15.8", "Публикува синтеза на цикъла и проверените хипотези.", [], False),
-    ("action_recommendations", "16", "Разсъждение -> препоръка, записана в семантичната памет.",
-     ["memory/causal_log.json"], False),
     # ATTRIBUTION CORRECTED 8 сеп 2026. This row promised
     # memory/runtime_experiences.json, and self_observer has never written it:
     # agents/core/self_observer.py writes memory/development_journal.json (542)
@@ -340,7 +338,6 @@ ALIASES = {
     # ── ДВЕ ИМЕНА, КОИТО СА ПРОСТО ПРЕИМЕНУВАНИЯ (23 авг 2026) ─────────────
     # _run() ги вика така, beat() ги обявява иначе. Едно към едно, значи псевдоним.
     "session_updater": "session_update",
-    "cortex_reasoner": "action_recommendations",
     # Не беше в списъка на десетте — не се появи в чекпойнтите на 23 авг, защото
     # стъпката беше ОТКАЗАНА от свидетеля и _run() изобщо не се стигна. Тоест
     # име, което щеше да падне на пода първата нощ, в която публикуването мине.

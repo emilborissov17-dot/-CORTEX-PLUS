@@ -282,10 +282,6 @@
           "index": "15.8"
         },
         {
-          "name": "action_recommendations",
-          "index": "16"
-        },
-        {
           "name": "self_observer",
           "index": "17"
         }
