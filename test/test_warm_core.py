@@ -3,8 +3,9 @@ test/test_warm_core.py — inside a cycle no model is ever loaded.
 
 Task #8 part 1, 24 Sep 2026. On the 19:45 cycle model_window.pin_small() loaded
 qwen2.5:3b at boot and the brain then loaded cortex-l1b-3b over it - a reload the
-card pays for. The warm core (tools/ollama_serve.ps1 -WarmCore, task CORTEX_WarmCore)
-now holds the cycle's one model resident; the cycle only checks /api/ps.
+card pays for. Decision: the warm core (tools/ollama_serve.ps1 -WarmCore, task
+CORTEX_WarmCore) keeps the cycle's one model resident, and inside a cycle the door
+only checks /api/ps - the tests below fail if a cycle call loads a model.
 
 Failure shapes, before the happy path: a local call in a cycle that goes out while
 its model is not resident (that request IS a load); the refusal leaving no row, or a

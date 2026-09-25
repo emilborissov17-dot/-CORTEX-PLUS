@@ -3,8 +3,10 @@ test/test_edges_runner.py — the spine is silent; the edges speak afterwards.
 
 Task #8 step B.A, 25 Sep 2026. beat() called brain.attend before every step (150
 model calls on the 24 Sep 19:45 cycle) and every phase close asked the brain for a
-debrief, let the cockpit speak and sent a Telegram message. The spine now writes the
-phase report and nothing else; edges_runner.phase_jobs() does the three afterwards.
+debrief, let the cockpit speak and sent a Telegram message. Decision (B.A): the
+spine writes only the phase report, and the three are edge jobs afterwards
+(edges_runner.phase_jobs) - test_a_phase_close_writes_the_report_and_nothing_else
+and test_phase_jobs_debrief_voice_and_send_every_report_in_order below.
 
 Failure shapes: a spine beat or phase close that still calls a model; an edge job
 that skips a phase, runs them out of order, or lets one failed job stop the rest.

@@ -2,10 +2,10 @@
 test/test_spine_llm_reach.py — which import edges still let the spine reach the LLM stack.
 
 Task #8 step A, 24 Sep 2026. The spine is fast_cycle_runner.main() minus the steps
-named in EDGE_STEPS (moved to the edges runner or retired in step B). A spine step
-REACHES the LLM stack when a module its segment imports - its beat()-delimited part of
-main(), plus the runner functions it calls - transitively imports a module that
-imports core.llm_door.
+named in EDGE_STEPS (moved to the edges runner or retired in step B). Definition used
+by _cut_edges below: a spine step reaches the LLM stack if a module imported by its
+beat()-delimited part of main(), or by the runner functions it calls, transitively
+imports a module that imports core.llm_door.
 
 Step A cut the two chains the plan named: core.phase_tracker -> cockpit.phase_voice
 (the voice is now a hook the cycle registers) and core.notary -> core.passage_rules ->

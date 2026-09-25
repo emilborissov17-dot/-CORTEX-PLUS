@@ -119,9 +119,9 @@ def _close(phase: str, report) -> None:
 
     THE SPINE IS SILENT (25 Sep 2026, task #8 step B.A). This used to go on to
     ask the brain for a debrief (core/phase_debrief), let the cockpit say one line
-    (cockpit/phase_voice) and send the phase's Telegram message. All three are
-    edge jobs now - edges_runner.phase_jobs() reads these reports after the spine
-    has ended - so closing a phase calls no model and imports nothing that does.
+    (cockpit/phase_voice) and send the phase's Telegram message. Decision: all
+    three are edge jobs, run by edges_runner.phase_jobs() after the spine has
+    ended (test_a_phase_close_writes_the_report_and_nothing_else).
     """
     try:
         report.finish()

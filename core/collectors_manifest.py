@@ -3,9 +3,10 @@ core/collectors_manifest.py — what the collectors fetched, when, and on what f
 
 Task #8 B.B (25 Sep 2026). web_intelligence and data_scout no longer run inside the
 spine. collectors_runner.py runs them before it, in their own witnessed process, and
-writes one manifest per run. The spine reads the collectors ONLY through this
-manifest: which files a collector wrote, when it fetched (fetched_at - a spelling
-registered in config/field_names.json), and its provenance level.
+writes one manifest per run. Rule: the spine may read the collectors only through
+this manifest - which files a collector wrote, when it fetched (fetched_at, a
+spelling registered in config/field_names.json), and its provenance level.
+test_spine_llm_reach fails if a spine step imports a collector again.
 
 THE LEVELS. There are exactly three, and a collector entry always carries one:
   MODEL_ANSWERED  at least one model call made under the collector's step answered ok;
@@ -46,7 +47,8 @@ def _parse(ts) -> datetime | None:
 
 
 def model_calls(step: str, since: datetime, path: Path | None = None) -> dict:
-    """Outcome counts of the llm_door rows written under `step` since `since`."""
+    """{ok, refused, error, reasons} over llm_door rows for `step` at or after
+    `since` (test_model_calls_counts_only_this_step_since_the_start)."""
     out = {"ok": 0, "refused": 0, "error": 0, "reasons": []}
     try:
         lines = (path or PROVENANCE).read_text(encoding="utf-8", errors="replace").splitlines()

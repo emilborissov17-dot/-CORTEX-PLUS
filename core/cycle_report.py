@@ -217,9 +217,9 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None,
     failed = [r for r in rows if _said_it_failed(r["said"])]
 
     # ── ДУМАТА Е НА СИСТЕМАТА: откриване и закриване пише мозъкът ────────────
-    # 25 Sep 2026 (task #8 B.C): the brain's words are written by the EDGES, after
-    # the spine - edges_runner passes brain_writer. The spine builds this report
-    # without them and imports no model.
+    # Decision, 25 Sep 2026 (task #8 B.C): the brain's words belong to the EDGES,
+    # after the spine - edges_runner passes brain_writer; without it this report is
+    # built with none (test_the_spine_report_imports_no_brain_and_the_edges_add_its_words).
     opening = closing = None
     try:
         if brain_writer is None:
