@@ -161,3 +161,20 @@ def test_collectors_state_reads_the_witness_and_gives_up_waiting(monkeypatch):
     assert sup._collectors_state({"collectors": old}, now) == "done"
     monkeypatch.setattr(sup, "witness_exit_for", lambda cid: {"event": "exit"})
     assert sup._collectors_state({"collectors": fresh}, now) == "done"
+
+
+def test_a_file_stamped_just_before_the_start_still_counts(tmp_path):
+    """The coarse NTFS clock: a file the collector wrote can carry an mtime a
+    little before t0. Within MTIME_SLACK_S it is this run's; far before, it is not."""
+    import os
+    import time
+    d = tmp_path / "memory" / "web_intelligence"
+    d.mkdir(parents=True)
+    t0 = time.time()
+    near, old = d / "near.json", d / "old.json"
+    near.write_text("{}", encoding="utf-8")
+    old.write_text("{}", encoding="utf-8")
+    os.utime(near, (t0 - 0.5, t0 - 0.5))
+    os.utime(old, (t0 - 60, t0 - 60))
+    assert cr._written_since("web_intelligence", t0, tmp_path) == [
+        "memory/web_intelligence/near.json"]

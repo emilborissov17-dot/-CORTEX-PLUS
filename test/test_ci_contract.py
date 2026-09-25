@@ -65,8 +65,9 @@ MOCKED_NOT_LIVE = {
     "test_backend_policy.py",
     # Script-style; run as a subprocess by test_script_suite.py.
     "test_needs_approvals.py",
-    # Its requests.post is to 127.0.0.1:11434 and exists to prove the conftest net
-    # (_no_ollama_writes) raises BEFORE any socket is opened - no network is used.
+    # Listed because its only requests.post targets 127.0.0.1:11434 and must be
+    # refused by the conftest net (_no_ollama_writes) before any socket opens -
+    # test_a_requests_post_to_ollama_raises_in_tests fails if that stops.
     "test_no_ollama_writes_from_tests.py",
 }
 

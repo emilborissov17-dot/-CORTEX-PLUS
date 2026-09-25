@@ -296,11 +296,11 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
         # outside a cycle, and the supervisor loads it before a spawn. Neither may
         # reach the real Ollama from a test; tests of those paths say so.
         from core import model_window as _mwin
-        # 25 Sep 2026, the lesson that cost a cycle its core: a test that calls
-        # heartbeat.beat() renews the small-model lease through the REAL
-        # _set_keep_alive, which LOADS qwen2.5:3b into the live Ollama (keep_alive
-        # 4200) - it evicted cortex-l1b-3b in the middle of the 08:54 cycle. No
-        # test may touch Ollama's residency: load/unload and /api/ps are stubbed.
+        # 25 Sep 2026, the lesson that cost a cycle its core: a test that called
+        # heartbeat.beat() renewed the small-model lease through the real
+        # _set_keep_alive, which loaded qwen2.5:3b into the live Ollama (keep_alive
+        # 4200) and evicted cortex-l1b-3b in the middle of the 08:54 cycle. Rule:
+        # no test may touch Ollama's residency; load/unload and /api/ps are stubbed.
         monkeypatch.setattr(_mwin, "_set_keep_alive", lambda *a, **k: False)
         monkeypatch.setattr(_mwin, "resident_models", lambda url=None: set())
         monkeypatch.setattr(_mwin, "restore_core", lambda after_model, url=None: None)
@@ -347,6 +347,47 @@ def _no_ollama_writes(monkeypatch):
         monkeypatch.setattr(_rs.Session, "request", guarded_req)
     except Exception:
         pass
+
+
+class LiveRunnerRefused(RuntimeError):
+    """A test tried to start a real cycle, collectors or edges process."""
+
+
+LIVE_RUNNERS = ("collectors_runner.py", "edges_runner.py", "fast_cycle_runner.py")
+# test_phase_resume runs `fast_cycle_runner.py --from D_SCORE` on purpose: a gate
+# that refuses and must stay read-only. Only these flags let a runner through.
+SAFE_RUNNER_FLAGS = ("--from", "--selftest", "--help")
+
+
+@pytest.fixture(autouse=True)
+def _no_live_runners(monkeypatch):
+    """On 25 Sep 2026 the real collectors runner was started twice by tests,
+    through supervisor.tick() -> COLLECTORS_START -> _spawn_collectors and the
+    witness, against the live repo: web fetches, model calls, and files written
+    into the web intelligence tree and the knowledge base. Rule: no test may start a runner;
+    a test that needs the spawn stubs it (test_no_live_runners_from_tests)."""
+    import subprocess as _sp
+    real = _sp.Popen
+
+    class _GuardedPopen(real):
+        def __init__(self, args, *a, **k):
+            argl = list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
+            # The witness gets the real argv as base64 JSON (-ArgsB64), so the
+            # runner's name is not in its command line: decode it. 25 Sep 2026: a
+            # net without this let _spawn_collectors start the witness anyway.
+            if "-ArgsB64" in argl and argl.index("-ArgsB64") + 1 < len(argl):
+                try:
+                    import base64 as _b64
+                    argl.append(_b64.b64decode(argl[argl.index("-ArgsB64") + 1]).decode("utf-8"))
+                except Exception:
+                    pass
+            flat = " ".join(argl)
+            hit = [r for r in LIVE_RUNNERS if r in flat]
+            if hit and not any(f in flat.split() for f in SAFE_RUNNER_FLAGS):
+                raise LiveRunnerRefused(f"test started a live runner ({hit[0]}): {flat[:200]}")
+            super().__init__(args, *a, **k)
+
+    monkeypatch.setattr(_sp, "Popen", _GuardedPopen)
 
 
 @pytest.fixture(autouse=True)

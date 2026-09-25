@@ -36,7 +36,15 @@ OUTPUT_GLOBS = {
 }
 
 
+# NTFS stamps a write with a coarser clock than time.time(): under load a file
+# written AFTER t0 was measured with an mtime BEFORE it (test_collectors, full
+# suite, 25 Sep 2026: outputs came back []). Files within this slack of the start
+# count as this run's.
+MTIME_SLACK_S = 2.0
+
+
 def _written_since(name: str, t0: float, base: Path = BASE) -> list:
+    t0 = t0 - MTIME_SLACK_S
     out = set()
     for g in OUTPUT_GLOBS.get(name, []):
         for p in base.glob(g):
@@ -150,8 +158,14 @@ def main(argv: list) -> int:
             print(f"  manifest[{n}]: ok={r['ok']} level={r['level']} "
                   f"fetched_at={r['fetched_at']} problems={r['problems']}")
         return 0
-    rid = argv[argv.index("--run-id") + 1] if "--run-id" in argv else datetime.now().astimezone().isoformat()
-    m = run(rid)
+    # No --run-id, no run: a bare invocation (a test, a scanner, a stray click)
+    # must not fetch the web and write the live knowledge base. The supervisor
+    # always passes one; a human passes one on purpose.
+    if "--run-id" not in argv or argv.index("--run-id") + 1 >= len(argv):
+        print("[COLLECTORS] refusing: no --run-id (the supervisor passes one; "
+              "a manual run names its own)")
+        return 2
+    m = run(argv[argv.index("--run-id") + 1])
     return 0 if all(e["status"] == "ok" for e in m["collectors"].values()) else 3
 
 
