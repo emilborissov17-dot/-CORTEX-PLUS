@@ -179,6 +179,14 @@ as l; print(l.verify())"` re-derives the chain and tells you whether the history
 was edited. This is how "which step kills me?" is answered by counting rather
 than by remembering.
 
+**What is audited, and what is not yet.** Each cycle's start and end are witnessed
+in `memory/witness.jsonl` — a start row and an exit row with the process's exit code,
+written by `tools/cycle_witness.ps1` since 24 Sep 2026 — but the per-cycle hash in
+`cortex_memory/archive/cycle_*/hash.txt` covers only `{cycle_id, ts, signals count,
+goal_score}` (`MerkleMemory._archive_cycle`), not the signals, decisions and results
+themselves, so an edited archive entry is not detected yet, and the Merkle root is
+not chained to the previous root or to the process and commit that wrote it.
+
 **`output/facade_audit_latest.json`** and `python -m core.scorer_self_check` —
 which axis scorers actually consumed real data this cycle and which quietly
 returned a default. An axis can be scored and still be a facade; this is the
