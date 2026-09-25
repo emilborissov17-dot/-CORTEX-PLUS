@@ -85,6 +85,18 @@ def _validate(doc: dict) -> dict:
             raise RulesUnreadable(f"ceiling for {step!r} is not a level: {lvl!r}")
     if not str(doc["actor_block"]).strip():
         raise RulesUnreadable("actor_block is empty — the actor would be shown nothing")
+    # PASSAGE CLASSES (25 Sep 2026, task #9b). Decision: a class names one step,
+    # one target glob, a level and its checks (core/prereg_gate.py; pinned in
+    # test_the_ratified_values_have_not_moved). Malformed -> unreadable -> FAILSAFE.
+    for name, c in (doc.get("classes") or {}).items():
+        if not isinstance(c, dict):
+            raise RulesUnreadable(f"class {name!r} is not an object")
+        if not c.get("step") or not c.get("target_glob"):
+            raise RulesUnreadable(f"class {name!r} names no step or target_glob")
+        if not isinstance(c.get("level"), int) or not 0 <= c["level"] <= 3:
+            raise RulesUnreadable(f"class {name!r} level is not a level")
+        if not isinstance(c.get("requires_all"), list) or not c["requires_all"]:
+            raise RulesUnreadable(f"class {name!r} requires nothing")
     return doc
 
 
@@ -98,6 +110,7 @@ def _failsafe(why: str) -> dict:
         "irreversible_min": UNREACHABLE,
         "stale_days": (2, 30, 365),
         "ceilings": {},
+        "classes": {},
         "verifiers": set(),
         "actor_block": (
             "THE RULES OF PASSAGE could not be loaded, so the gate is closed to "
@@ -125,6 +138,7 @@ def load(path: Path | None = None, strict: bool = False) -> dict:
         "irreversible_min": doc["irreversible_min"],
         "stale_days": tuple(doc["stale_days"]),
         "ceilings": dict(doc["ceilings"]),
+        "classes": dict(doc.get("classes") or {}),
         "verifiers": set(doc["verifiers"]),
         "actor_block": doc["actor_block"],
         "dimensions": doc.get("dimensions", {}),

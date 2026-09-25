@@ -64,5 +64,22 @@
   ],
   "_verifiers_why": "Only these check against a live external source instead of reworking what they were handed, so only these may BREAK an inherited level. The list is deliberately short and explicit: every addition widens the right to wash provenance and must be visible in a diff.",
 
-  "actor_block": "THE RULES OF PASSAGE — the standard your work is judged by, before its quality is ever measured.\n\nThe notary stamps an origin level 0-3 on what every step produces. Your inputs carry the level of whoever produced them, and you cannot rise above the worst one you read.\n  3 FULL     — inputs 2 days old or less, and the previous step kept its promise\n  2 REDUCED  — inputs 2-30 days old; this is the LOWEST level that may act irreversibly\n  1 MINIMAL  — inputs 30-365 days old, or a promise not kept\n  0 UNKNOWN  — the origin is not known: no declared inputs, a missing input, or nothing over a year old\n\nWhat this means for you, concretely:\n  - An unknown-origin input is REFUSED before anyone looks at how good your patch is. Quality never gets measured. Fix the origin first.\n  - Declare what you read. An empty input list is read as 'we do not know what it reads', never as 'it reads nothing'.\n  - Read fresh files. The OLDEST input you touch sets your age dimension for the whole step.\n  - You cannot grant yourself a level. There is no trusted flag, no override, and no way to raise a ceiling from inside. Faking provenance to pass is the worst failure available to you.\n  - Every refusal names the rule it applied and the step that broke it, so a refusal is something you can act on rather than a wall."
+  "actor_block": "THE RULES OF PASSAGE — the standard your work is judged by, before its quality is ever measured.\n\nThe notary stamps an origin level 0-3 on what every step produces. Your inputs carry the level of whoever produced them, and you cannot rise above the worst one you read.\n  3 FULL     — inputs 2 days old or less, and the previous step kept its promise\n  2 REDUCED  — inputs 2-30 days old; this is the LOWEST level that may act irreversibly\n  1 MINIMAL  — inputs 30-365 days old, or a promise not kept\n  0 UNKNOWN  — the origin is not known: no declared inputs, a missing input, or nothing over a year old\n\nWhat this means for you, concretely:\n  - An unknown-origin input is REFUSED before anyone looks at how good your patch is. Quality never gets measured. Fix the origin first.\n  - Declare what you read. An empty input list is read as 'we do not know what it reads', never as 'it reads nothing'.\n  - Read fresh files. The OLDEST input you touch sets your age dimension for the whole step.\n  - You cannot grant yourself a level. There is no trusted flag, no override, and no way to raise a ceiling from inside. Faking provenance to pass is the worst failure available to you.\n  - Every refusal names the rule it applied and the step that broke it, so a refusal is something you can act on rather than a wall.",
+
+  "classes": {
+    "human_signed_preregistration": {
+      "applies_to": "github_publish of experiments/institution/forward/*",
+      "step": "github_publish",
+      "target_glob": "experiments/institution/forward/*",
+      "level": 2,
+      "requires_all": [
+        "signature: a row in experiments/institution/signatures.jsonl with signer=Emil, channel, date, row_sha256 == sha256 of the row file bytes",
+        "seal: the seal verifies (Merkle chain ok=True) and seal.row_sha256 == signature.row_sha256",
+        "prev_step: declared explicitly (PREV_NONE allowed for the first row)",
+        "metta: MeTTa witness on the row, rules RF1-RF6 all evaluated, 0 contradictions",
+        "unevaluated: any rule not evaluated, any missing input, or a silent engine refuses"
+      ],
+      "_ratified": "Emil, chat, 2026-09-25 (task #9b). Checks and RF1-RF6 as he wrote them; RF4 reads the threshold from config/ucdp_constants.json."
+    }
+  }
 }

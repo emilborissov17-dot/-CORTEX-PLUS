@@ -124,8 +124,10 @@ def publish(row_id: str) -> int:
         fr.record_publish(row_id, "suppressed", f"seal does not verify: {v['why']}")
         print(f"[F] {row_id}: SUPPRESSED - seal does not verify: {v['why']}")
         return 3
-    from core.notary import may_act
-    ok, why = may_act("github_publish")
+    from core.notary import PREV_NONE, may_act
+    # The first forward row has no predecessor step, and says so (PREV_NONE); the
+    # passage class human_signed_preregistration is consulted for this target only.
+    ok, why = may_act("github_publish", PREV_NONE, target=path)
     if not ok:
         fr.record_publish(row_id, "suppressed", f"notary.may_act refused: {why}",
                           {"root": s["root"]})
@@ -147,6 +149,27 @@ def publish(row_id: str) -> int:
     for w in written:
         print(f"[F] {row_id}: delivered {w.get('path')} commit {w.get('commit_sha')} HTTP {w.get('status')}")
     return 0
+
+
+SIGN_LINE = {"F-001": "F-001 - Doha Declaration (DRC and AFC/M23), October 2026, "
+                      "state-based fatalities >= 25 in North and South Kivu"}
+
+
+def request_signature(row_id: str) -> str:
+    """One Telegram message to Emil: what he signs, the full row_sha256, the reply
+    format. Returns alarm_human's status; anything but "delivered" is a STOP."""
+    import hashlib
+    import supervisor
+    sha = hashlib.sha256((fr.FORWARD_DIR / f"{row_id}.json").read_bytes()).hexdigest()
+    detail = "\n".join([f"You are signing: {SIGN_LINE[row_id]}",
+                        f"row_sha256: {sha}",
+                        "Reply exactly:",
+                        f"SIGN {row_id} {sha}"])
+    status = supervisor.alarm_human(f"SIGN REQUEST {row_id}", detail,
+                                    dedup_key=f"sign:{row_id}:{sha}", trigger="MANUAL",
+                                    level=supervisor.NOTICE)
+    print(f"[F] {row_id}: signature request -> {status}")
+    return status
 
 
 def selftest() -> int:
@@ -175,6 +198,8 @@ def main(argv: list) -> int:
         print("[F] refusing: no --row"); return 2
     if "--seal" in argv:
         seal_row(row_id)
+    if "--request-signature" in argv:
+        return 0 if request_signature(row_id) == "delivered" else 5
     if "--publish" in argv:
         return publish(row_id)
     return 0

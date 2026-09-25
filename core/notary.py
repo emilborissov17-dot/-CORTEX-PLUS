@@ -671,7 +671,7 @@ def _blindness(step: str, rec: dict) -> str:
     return ""
 
 
-def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
+def may_act(step: str, prev_step: str | None = PREV_UNKNOWN, target=None) -> tuple:
     """Разрешено ли е НЕОБРАТИМО действие сега. (може_ли, обяснение).
 
     Скаларът решава (Kimi: детерминистично). Векторът обяснява — това е моето
@@ -686,6 +686,7 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     """
     refuse_llm_text(step, "notary.may_act step")
     refuse_llm_text(prev_step, "notary.may_act prev_step")
+    refuse_llm_text(target, "notary.may_act target")
     rec = attest(step, prev_step)
     lvl = rec["level"]
     if lvl >= IRREVERSIBLE_MIN:
@@ -724,7 +725,23 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     except Exception as e:                                   # noqa: BLE001
         blind = f"[blindness check failed: {type(e).__name__}: {e}]"
     head = f"{blind}. " if blind else ""
-    return False, f"{head}{rec['level_name']}{src} — слабо звено: {why}"
+    refusal = f"{head}{rec['level_name']}{src} — слабо звено: {why}"
+    # PASSAGE CLASS human_signed_preregistration (Emil, 25 Sep 2026, task #9b):
+    # consulted ONLY for a named target after the vector has refused, and only
+    # for the one step and target glob the class names; its five checks are in
+    # core/prereg_gate.py. A class that does not apply leaves the refusal as it was.
+    cls = (_RULES.get("classes") or {}).get("human_signed_preregistration")
+    if target is not None and cls:
+        from core import prereg_gate
+        g = prereg_gate.evaluate(cls, step, target, prev_step, ceiling=MAX_LEVEL.get(step))
+        if g["applies"]:
+            if g["ok"]:
+                return True, (f"{LEVEL_NAMES.get(g['level'], g['level'])} via class "
+                              f"human_signed_preregistration — "
+                              + "; ".join(f"{n}: {w}" for n, w in g["passed"]))
+            return False, (f"{refusal} | class human_signed_preregistration refused — "
+                           + "; ".join(f"{n}: {w}" for n, w in g["failed"]))
+    return False, refusal
 
 
 if __name__ == "__main__":

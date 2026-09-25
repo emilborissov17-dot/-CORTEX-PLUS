@@ -161,6 +161,12 @@ def test_the_ratified_values_have_not_moved():
     assert set(rules["level_names"]) == {0, 1, 2, 3}
     assert rules["level_names"][3].startswith("level_3")
     assert rules["level_names"][0].startswith("level_0")
+    # Ratified by Emil, 25 Sep 2026 (task #9b): ONE passage class, one step, one
+    # target glob, level_2, five checks. Widening any of these is a ruling, made here.
+    assert set(rules["classes"]) == {"human_signed_preregistration"}
+    c = rules["classes"]["human_signed_preregistration"]
+    assert (c["step"], c["target_glob"], c["level"], len(c["requires_all"])) == (
+        "github_publish", "experiments/institution/forward/*", 2, 5)
 
 
 def test_the_cooling_off_is_still_stated_where_the_refusal_is_built():

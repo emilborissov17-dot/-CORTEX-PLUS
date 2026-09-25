@@ -73,6 +73,12 @@ def phone(monkeypatch, tmp_path):
             sent.append({"url": url, "json": json})
             class _R:
                 status_code = 200
+
+                @staticmethod
+                def json():
+                    # Telegram's success body; since 25 Sep 2026 alarm_human stamps
+                    # a message as sent only on 200 AND ok=true (task #9b).
+                    return {"ok": True}
             return _R()
 
     import sys

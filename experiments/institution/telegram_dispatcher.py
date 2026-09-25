@@ -71,6 +71,10 @@ UNPARSED = REPO / "memory" / "institution_witness.jsonl"
 
 APPROVE_PREFIXES = ("OK", "NO")
 WITNESS_PREFIXES = ("USED", "NOTHING", "COUNTERMANDED")
+# 25 Sep 2026 (task #9b): "SIGN <row_id> <row_sha256>" signs a forward row;
+# approve_reader.apply_signature checks the sha against the row file and writes
+# experiments/institution/signatures.jsonl. The model never writes a signature.
+SIGN_PREFIXES = ("SIGN",)
 
 
 def _now() -> str:
@@ -98,6 +102,8 @@ def route(text: str) -> str:
         return "approve"
     if head in WITNESS_PREFIXES:
         return "witness"
+    if head in SIGN_PREFIXES:
+        return "sign"
     return "unparsed"
 
 
@@ -123,7 +129,7 @@ def run() -> dict:
         return {"ok": False, "why": "getUpdates ok=false: %s" % data.get("description")}
     updates = data.get("result", [])
 
-    approve, witness, unparsed, foreign = [], [], 0, 0
+    approve, witness, sign, unparsed, foreign = [], [], [], 0, 0
     max_id = offset
     for u in updates:
         max_id = max(max_id, int(u.get("update_id", offset)))
@@ -137,6 +143,8 @@ def run() -> dict:
             approve.append(u)
         elif where == "witness":
             witness.append((u, text))
+        elif where == "sign":
+            sign.append((u, text))
         else:
             _record_unparsed(u.get("update_id"), text,
                              "first word is neither %s nor %s"
@@ -161,6 +169,12 @@ def run() -> dict:
             applied_witness += wr.apply_to_latest(verdict, reason)
             verdicts.append({"verdict": verdict, "reason": reason})
 
+    signed = []
+    for _u, text in sign:
+        import approve_reader                                   # noqa: E402
+        signed.append(approve_reader.apply_signature(text, token, chat_id,
+                                                     update_id=_u.get("update_id")))
+
     # The offset is written ONCE, by this file, after both readers have had the
     # updates. approve_reader.apply_updates no longer writes it when called from
     # here — it is given `offset` and returns a count, and its own run() is the
@@ -172,6 +186,7 @@ def run() -> dict:
     return {"ok": True, "updates": len(updates), "approve_routed": len(approve),
             "approvals_applied": applied_approvals, "witness_routed": len(witness),
             "witness_lines_written": applied_witness, "verdicts": verdicts,
+            "signatures": signed,
             "unparsed": unparsed, "from_other_chats_ignored": foreign,
             "offset": max_id}
 
@@ -181,6 +196,7 @@ def selftest() -> dict:
              ("NOTHING", "witness"), ("nothing", "witness"),
              ("USED reprioritised DRC", "witness"),
              ("COUNTERMANDED coding artefact", "witness"),
+             ("SIGN F-001 abc", "sign"), ("sign F-001 abc", "sign"),
              ("there is nothing to report", "unparsed"),
              ("thanks", "unparsed"), ("", "unparsed")]
     out = {"router": {}, "ok": True}

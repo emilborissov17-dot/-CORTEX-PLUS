@@ -1,0 +1,6 @@
+{
+  "_what": "UCDP constants read by code instead of written as literals (task #9b RF4).",
+  "battle_related_deaths_threshold": 25,
+  "_source": "UCDP GED 26.1 codebook: 'active years (years that have crossed the 25 battle related deaths threshold)'; Candidate codebook v1.5: 'have passed the 25 battle-related deaths threshold ... calculated on a calendar year basis'. Read 2026-09-25.",
+  "_note": "UCDP applies 25 per calendar year to decide whether a dyad is active. Forward row F-001 applies the same number to ONE calendar month of state-based fatalities - that application is the row's (Emil's), not UCDP's."
+}

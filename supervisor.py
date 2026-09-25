@@ -567,7 +567,7 @@ LEVEL_PREFIX = {ALARM: "🚨 CORTEX: ", NOTICE: "CORTEX · "}
 
 
 def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
-                trigger: str | None = None, *, level: str = ALARM) -> None:
+                trigger: str | None = None, *, level: str = ALARM) -> str:
     """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
 
     ПРОМЕНЕНО (15 авг, вечер): в тихите часове НЕ буди. Записва събитието за
@@ -580,6 +580,11 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
     dead. An alarm nobody hears is not an alarm. This sends it to Telegram, the one
     channel that reaches Emil's pocket, and it does so from the MACHINE (which can
     reach the API; the cloud cannot). Fail-open, never raises, never blocks recovery.
+
+    Returns what happened (25 Sep 2026, task #9b), so a caller that must know can:
+    "delivered" (Telegram answered ok=true), "deferred" (quiet hours - recorded for
+    the morning), "suppressed" (already sent under this dedup key), "not_configured",
+    or "failed: <why>". Existing callers ignore it.
     """
     note_night_event(subject, detail)
     # ── QUIET HOURS DO NOT APPLY TO A RUN THE HUMAN STARTED (20 Aug 2026) ───
@@ -588,11 +593,11 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
     # per-phase report that arrives tomorrow morning is useless to him. So the
     # quiet window is skipped when trigger=MANUAL and only then.
     if _quiet_now() and str(trigger or "").upper() != "MANUAL":
-        return                      # спи човекът; сутринта ще прочете всичко
+        return "deferred"           # спи човекът; сутринта ще прочете всичко
     try:
         cfg = json.loads(NOTIFY_CHANNEL.read_text(encoding="utf-8"))
         if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
-            return
+            return "not_configured"
         # do not spam: one alarm per subject per day
         try:
             sent = json.loads(ALARM_STAMP.read_text(encoding="utf-8"))
@@ -606,16 +611,27 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
         key = dedup_key or (
             f"{datetime.now(timezone.utc).strftime('%Y-%m-%d')}:{subject[:40]}")
         if sent.get(key):
-            return
+            return "suppressed"
         import requests
         prefix = LEVEL_PREFIX.get(level, LEVEL_PREFIX[ALARM])
-        requests.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
-                      json={"chat_id": cfg["chat_id"],
-                            "text": f"{prefix}{subject}\n{detail}"[:3500]}, timeout=20)
+        r = requests.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
+                          json={"chat_id": cfg["chat_id"],
+                                "text": f"{prefix}{subject}\n{detail}"[:3500]}, timeout=20)
+        try:
+            delivered = bool(r.status_code == 200 and r.json().get("ok"))
+        except Exception:  # noqa: BLE001
+            delivered = False
+        if not delivered:
+            return f"failed: HTTP {getattr(r, 'status_code', '?')}"
         sent[key] = True
         ALARM_STAMP.write_text(json.dumps(sent, ensure_ascii=False)[:20000], encoding="utf-8")
-    except Exception:
-        pass
+        return "delivered"
+    except Exception as e:  # noqa: BLE001
+        try:
+            from core.redact import mask_secrets
+            return "failed: " + mask_secrets(f"{type(e).__name__}: {e}")[:200]
+        except Exception:  # noqa: BLE001
+            return f"failed: {type(e).__name__}"
 
 
 def send_phase_debrief(phase: str, cycle_id: str, text: str,
