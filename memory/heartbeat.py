@@ -210,7 +210,7 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     # Цена: ~0.06s за целия цикъл, нула LLM повиквания. FAIL-OPEN.
     try:
         from core.metta_check import compare as _mcompare
-        _mcompare(step, (_said or {}).get("prev_step"), _said)
+        _mcompare(step, _PREV_STEP, _said)
     except Exception:
         pass
 
@@ -221,9 +221,15 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     #  произход — архитектурна лъжа."
     # Мозъкът казва какво МИСЛИ, MeTTa какво СЛЕДВА ОТ ФАКТИТЕ, нотариусът — ПОД
     # КАКЪВ РЕЖИМ е произведено това. Лек, детерминистичен, нула LLM. FAIL-OPEN.
+    # prev_step is the beat sequence's own (_PREV_STEP), never the brain's echo of
+    # it (25 Sep 2026). It used to come from brain.attend's answer; when attend
+    # did not answer - the 03:04 cycle, warm core absent - it was None, the
+    # notary's "promise" dimension fell to 0 ("the previous step is not declared"),
+    # web_intelligence was stamped level_0 and github_publish refused, inheriting
+    # it. With attend gone from the spine (B.A) that would have been every night.
     try:
         from core.notary import attest as _attest
-        _attest(step, (_said or {}).get("prev_step"))
+        _attest(step, _PREV_STEP)
     except Exception:
         pass
 

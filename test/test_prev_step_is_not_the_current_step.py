@@ -181,7 +181,9 @@ def test_the_marker_is_still_written_before_the_brain_is_called():
     src = (REPO / "memory" / "heartbeat.py").read_text(encoding="utf-8-sig")
     i_capture = src.index("_PREV_STEP = _last_step_in_log()")
     i_print = src.index('print(f"[STEP] {step}"')
-    i_attend = src.index("_attend(step)")
+    # Since 25 Sep (task #8 B.A) beat() calls no brain; the first thing after the
+    # marker that can block is the notary's attest - the marker must precede it.
+    i_attend = src.index("_attest(step, _PREV_STEP)")
 
     assert i_capture < i_print, (
         "the predecessor must be captured BEFORE the new marker is written — after "
