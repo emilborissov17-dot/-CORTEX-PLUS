@@ -364,14 +364,6 @@ def _classify_cycle_id(env_id):
         # The runner's own flag: everything below knows it is inside a cycle,
         # also on a manual run that has no CORTEX_CYCLE_ID (core.model_window.in_cycle).
         os.environ["CORTEX_IN_CYCLE"] = str(cid)
-        # The phase voice speaks through a local model; the tracker no longer
-        # imports it - the cycle registers it (task #8 step A).
-        try:
-            from core import phase_tracker as _pt_hooks
-            from cockpit.phase_voice import on_phase_close as _voice
-            _pt_hooks.on_close(_voice)
-        except Exception as _e:  # noqa: BLE001
-            print(f"[FAST_CYCLE] phase voice -> not registered ({type(_e).__name__}: {_e})")
         # Per-leg LLM timeouts from the last nights' measured latencies (core/llm_door).
         try:
             from core import llm_door as _door

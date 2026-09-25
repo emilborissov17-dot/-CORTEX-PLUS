@@ -98,21 +98,6 @@ def _own_numbers(phase: str) -> set:
         return set()
 
 
-def _must_cite(phase: str) -> set:
-    """G_LEARN, and only G_LEARN, owes the mirror two numbers.
-
-    Its step 25.46 hands the brain the whole mirror; without a quota on the
-    debrief, "I read it" is a claim nothing can check. Every other phase gets an
-    empty set, which switches the rule off — see core/phase_debrief.validate.
-    """
-    if phase != "G_LEARN":
-        return set()
-    try:
-        from core.interoception import must_cite
-        return must_cite()
-    except Exception:
-        return set()
-
 
 def _trigger() -> str | None:
     """MANUAL only for a cycle a human started. Anything unreadable is nightly.
@@ -130,72 +115,18 @@ def _trigger() -> str | None:
 
 
 def _close(phase: str, report) -> None:
-    """Write the report, ask for a debrief, say one line, send one message.
+    """Write the phase report. Nothing else.
 
-    All four fail-open, and in that order: the report is the record, the debrief
-    is the brain's word about it, the expression line is the cockpit's, and the
-    message is only a notification that the first three happened.
+    THE SPINE IS SILENT (25 Sep 2026, task #8 step B.A). This used to go on to
+    ask the brain for a debrief (core/phase_debrief), let the cockpit say one line
+    (cockpit/phase_voice) and send the phase's Telegram message. All three are
+    edge jobs now - edges_runner.phase_jobs() reads these reports after the spine
+    has ended - so closing a phase calls no model and imports nothing that does.
     """
     try:
-        result = report.finish()
+        report.finish()
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] {phase}: report failed ({type(exc).__name__}: {exc})")
-        return
-
-    debrief = None
-    try:
-        from core.phase_debrief import debrief_phase
-        debrief = debrief_phase(phase, str(_cycle_id), _evidence(phase),
-                                own_numbers=_own_numbers(phase),
-                                must_cite=_must_cite(phase))
-    except Exception as exc:  # noqa: BLE001
-        print(f"[PHASE] {phase}: debrief failed ({type(exc).__name__}: {exc})")
-
-    # ── ГРАНИЦАТА НА ФАЗАТА ВИКА ПРОИЗВОДИТЕЛЯ (23 авг 2026) ───────────────
-    # THE CALL SITE. scripts/cockpit_answer.py --phase намираше границата по
-    # НОВ ФАЙЛ под memory/phase_debriefs/ — тоест не виждаше фаза без дебриф
-    # (а отхвърленият дебриф е точно фазата, за която си струва ред) и сливаше
-    # две фази в една, когато и двете затворят между две пускания на скрипта.
-    # Границата не е загадка: ето я, веднъж на фаза, с доклада и дебрифа в ръка.
-    # FAIL-OPEN и с таван: cockpit/phase_voice.py минава през
-    # step_budget.call_with_timeout, така че заклещен 3b струва един липсващ
-    # ред, не нощ.
-    # THE PHASE VOICE IS A HOOK, NOT AN IMPORT (24 Sep 2026, task #8 step A).
-    # cockpit/phase_voice speaks through a local model; importing it here made
-    # every step that touches the phase tracker reach core/llm_door. Whoever wants
-    # the voice registers it with on_close(); the tracker itself calls no model.
-    for _hook in list(_CLOSE_HOOKS):
-        try:
-            _said = _hook(phase, str(_cycle_id), result, debrief) or {}
-            if _said.get("emitted"):
-                print(f"[PHASE] {phase}: expression -> {_said.get('text')}")
-            else:
-                print(f"[PHASE] {phase}: no expression line "
-                      f"({str(_said.get('why') or _said.get('rejected'))[:120]})")
-        except Exception as exc:  # noqa: BLE001
-            print(f"[PHASE] {phase}: expression hook failed "
-                  f"({type(exc).__name__}: {exc})")
-
-    try:
-        import supervisor
-        if debrief and debrief.get("accepted"):
-            text = debrief["telegram"]
-        else:
-            why = "; ".join((debrief or {}).get("rejected_because", [])) or "no debrief"
-            text = (f"CORTEX++ · фаза {phase} · {result['verdict']}\n"
-                    f"{result['reason'][:300]}\n"
-                    f"(дебрифът е отхвърлен: {why[:160]})")
-        # ── trigger="MANUAL" WAS HARDCODED, AND THAT WAS THE SIREN ────────
-        # MANUAL is the one value alarm_human() honours as "past the quiet
-        # window", and it exists for a cycle a human started and is sitting in
-        # front of. Every phase of every NIGHTLY cycle claimed it, so seven
-        # ordinary phase closings woke the human at 3am, every night. The
-        # runner already records who started the cycle in
-        # memory/cycle_origin.json; ask it instead of asserting.
-        supervisor.send_phase_debrief(phase, str(_cycle_id), text,
-                                      trigger=_trigger())
-    except Exception as exc:  # noqa: BLE001
-        print(f"[PHASE] {phase}: telegram failed ({type(exc).__name__}: {exc})")
 
 
 def on_beat(step: str, index: str | None = None,
@@ -233,17 +164,6 @@ def on_beat(step: str, index: str | None = None,
     except Exception as exc:  # noqa: BLE001
         print(f"[PHASE] could not open {phase}: {type(exc).__name__}: {exc}")
         _open_phase, _open_report = None, None
-
-
-_CLOSE_HOOKS: list = []
-
-
-def on_close(fn) -> None:
-    """Register fn(phase, cycle_id, result, debrief) -> dict, called when a phase
-    closes. The phase voice (cockpit/phase_voice.on_phase_close) is registered by
-    the process that wants it, never imported here."""
-    if fn not in _CLOSE_HOOKS:
-        _CLOSE_HOOKS.append(fn)
 
 
 def note_failure(step: str, exc) -> None:

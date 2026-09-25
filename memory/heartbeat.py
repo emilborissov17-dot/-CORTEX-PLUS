@@ -192,8 +192,11 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
             _fr_b.mark_step(step, step_index)
         except Exception:
             pass
-        from core.brain import attend as _attend
-        _said = _attend(step)
+        # THE SPINE IS SILENT (25 Sep 2026, task #8 step B.A). beat() used to call
+        # core.brain.attend(step) here - a model call before every one of the 75
+        # steps (150 calls on the 24 Sep 19:45 cycle, 4-10 s each on a cold core)
+        # and the import that made every spine step reach core/llm_door.
+        _said = None
     except Exception:
         _said = None
 
