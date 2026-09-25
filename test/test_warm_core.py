@@ -26,6 +26,7 @@ from core import llm_door, model_window  # noqa: E402
 
 CORE = model_window.cycle_local_model()
 _REAL_RESIDENT = llm_door._resident      # conftest stubs it; these tests test it
+_REAL_SET_KEEP_ALIVE = model_window._set_keep_alive
 
 
 class _Reply:
@@ -97,6 +98,7 @@ def test_model_window_loads_nothing_inside_a_cycle(monkeypatch):
     opened = []
     import urllib.request
     monkeypatch.setattr(urllib.request, "urlopen", lambda *a, **k: opened.append(a) or None)
+    monkeypatch.setattr(model_window, "_set_keep_alive", _REAL_SET_KEEP_ALIVE)
     assert model_window.pin_small() is False
     assert model_window._set_keep_alive(CORE, 0) is False, "the cycle unloaded the warm core"
     assert opened == [], "model_window made a load/unload request for the warm core inside a cycle"

@@ -296,6 +296,13 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
         # outside a cycle, and the supervisor loads it before a spawn. Neither may
         # reach the real Ollama from a test; tests of those paths say so.
         from core import model_window as _mwin
+        # 25 Sep 2026, the lesson that cost a cycle its core: a test that calls
+        # heartbeat.beat() renews the small-model lease through the REAL
+        # _set_keep_alive, which LOADS qwen2.5:3b into the live Ollama (keep_alive
+        # 4200) - it evicted cortex-l1b-3b in the middle of the 08:54 cycle. No
+        # test may touch Ollama's residency: load/unload and /api/ps are stubbed.
+        monkeypatch.setattr(_mwin, "_set_keep_alive", lambda *a, **k: False)
+        monkeypatch.setattr(_mwin, "resident_models", lambda url=None: set())
         monkeypatch.setattr(_mwin, "restore_core", lambda after_model, url=None: None)
         monkeypatch.setattr(_mwin, "ensure_core",
                             lambda url=None: {"model": "core", "resident_before": True,
