@@ -844,6 +844,7 @@ _NOT_WRITTEN_BY_SUPERVISOR = {
     "BASE",
     "WITNESS_PS1",   # tools/cycle_witness.ps1 — executed, never written
     "EDGES_RUNNER",  # edges_runner.py — spawned, never written
+    "COLLECTORS_RUNNER",  # collectors_runner.py — spawned, never written
 }
 
 
@@ -1016,6 +1017,9 @@ def _spawn_catcher(monkeypatch):
     spawned = []
     monkeypatch.setattr(sup, "spawn_cycle", lambda *a, **k: spawned.append(a) or 4242)
     monkeypatch.setattr(sup, "memory_allows_spawn", lambda now, cfg: (True, {}))
+    # These tests are about the SPINE's spawn; today's collectors (task #8 B.B,
+    # test_collectors.py) are taken as done so the spine is the next action.
+    monkeypatch.setattr(sup, "_collectors_state", lambda state, now: "done")
     return spawned
 
 

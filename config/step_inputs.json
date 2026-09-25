@@ -55,7 +55,7 @@
       "derived_from": "Read line by line out of execute_patches.py on 21 Aug 2026."
     },
     "web_intelligence": {
-      "entry_point": "web_intelligence_agent.run(axes_filter=...) — fast_cycle_runner.py:1289, launched as a subprocess with `import web_intelligence_agent as w; w.run(axes_filter=...)`. NOT the module's __main__ block.",
+      "entry_point": "web_intelligence_agent.run(axes_filter=...), launched as a subprocess by collectors_runner.web_intelligence() BEFORE the spine (task #8 B.B, 25 Sep 2026). The spine's step 1 no longer runs it: fast_cycle_runner.read_collector('web_intelligence') validates its entry in memory/collectors/manifest_latest.json. NOT the module's __main__ block.",
       "inputs": [
         "memory/web_intelligence"
       ],

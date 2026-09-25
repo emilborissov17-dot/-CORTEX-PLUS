@@ -141,6 +141,8 @@ REAPER_SETTLE_SEC = 8.0
 WITNESS_PS1 = BASE / "tools" / "cycle_witness.ps1"
 EDGES_RUNNER = BASE / "edges_runner.py"
 EDGES_SUFFIX = "#edges"          # the edges' witness cycle_id = <spine cycle_id>#edges
+COLLECTORS_RUNNER = BASE / "collectors_runner.py"
+COLLECTORS_SUFFIX = "#collectors"
 # Where core/survival_mode keeps memory/survival_state.json. A constant so the
 # test sandbox can redirect it; survival_mode.enter() is given it explicitly.
 SURVIVAL_BASE = BASE
@@ -199,6 +201,13 @@ SURVIVAL_SLEEP        = "SURVIVAL_SLEEP"
 # the night) have not run yet. Spawned in their own witnessed process; their
 # failure never touches the spine's exit code (task #8 B.D, 25 Sep 2026).
 EDGES_START           = "EDGES_START"
+# The collectors (collectors_runner.py: web_intelligence, data_scout) run BEFORE the
+# spine, one hour ahead of daily_hour, in their own witnessed process; the spine
+# only reads their manifest (task #8 B.B, 25 Sep 2026). The hour is derived from
+# daily_hour, not a new key: config/scheduler.json is human-tunable only.
+COLLECTORS_START      = "COLLECTORS_START"
+COLLECTORS_LEAD_H     = 1
+COLLECTORS_MAX_WAIT_S = 90 * 60     # past this the spine starts without waiting
 REFUSED_BUDGET_DONE   = SURVIVAL_SLEEP   # the old name; kept so importers hold
 
 
@@ -748,6 +757,50 @@ def _spawn_edges(action: "Action", state: dict) -> "Action":
     return action
 
 
+def _collectors_state(state: dict, now: datetime) -> Optional[str]:
+    """Today's collectors: None (not started today), "running", or "done".
+
+    "done" once the witness wrote their exit row, or once COLLECTORS_MAX_WAIT_S has
+    passed since the spawn - a hung collector must not cost the night its spine."""
+    c = (state or {}).get("collectors") or {}
+    if c.get("date") != now.date().isoformat():
+        return None
+    if witness_exit_for(c.get("witness_id")):
+        return "done"
+    try:
+        t = datetime.fromisoformat(str(c.get("utc")))
+        if (datetime.now(timezone.utc) - t).total_seconds() > COLLECTORS_MAX_WAIT_S:
+            return "done"
+    except Exception:
+        return "done"
+    return "running" if c.get("pid") else "done"
+
+
+def _spawn_collectors(action: "Action", state: dict, now: datetime) -> "Action":
+    """Start collectors_runner.py, witnessed as <run id>#collectors. Marked BEFORE
+    the spawn: a crash here must not start them twice."""
+    rid = datetime.now().astimezone().isoformat()
+    wid = f"{rid}{COLLECTORS_SUFFIX}"
+    state["collectors"] = {"date": now.date().isoformat(), "run_id": rid, "witness_id": wid,
+                           "utc": datetime.now(timezone.utc).isoformat(), "pid": None}
+    save_state(state)
+    if not COLLECTORS_RUNNER.exists() or not _witness_available():
+        log(f"COLLECTORS: not started - collectors_runner or the witness is unavailable; "
+            f"the spine will read the last manifest and say how old it is")
+        return action
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"}
+    CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
+    log_file = CYCLE_LOG_DIR / f"collectors_{datetime.now().astimezone():%Y-%m-%d_%H%M%S}.log"
+    argv = [PYTHON if isinstance(PYTHON, str) else str(PYTHON), "-u", str(COLLECTORS_RUNNER),
+            "--run-id", rid]
+    pid = _spawn_witnessed(argv, log_file, wid, env,
+                           preflight=_warm_core_preflight(), role="collectors")
+    state["collectors"]["pid"] = pid
+    save_state(state)
+    log(f"COLLECTORS: started (pid={pid}) -> {log_file}")
+    return action
+
+
 def _is_pre_witness_failure(failure: Optional[dict]) -> bool:
     """A failure record written before the witness existed.
 
@@ -978,7 +1031,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            heartbeat_pid_alive: bool = False,
            witness_exit: Optional[dict] = None,
            last_spawn_unexplained: Optional[dict] = None,
-           edges_due: Optional[str] = None) -> Action:
+           edges_due: Optional[str] = None,
+           collectors: Optional[str] = "done") -> Action:
     """What should this tick do? Exactly one thing.
 
     `lock_pid_alive`, `heartbeat_pid_alive`, `lock_cycle_finished` and `extraordinary`
@@ -1254,6 +1308,17 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
 
     hour = int(cfg.get("daily_hour", 3))
     scheduled = now.replace(hour=hour, minute=0, second=0, microsecond=0)
+
+    # COLLECTORS -> SPINE. `collectors` is today's state of the collectors:
+    # None (not run today), "running", or "done". Probed by tick(), not here; the
+    # default "done" keeps a caller that knows nothing of them on the old path.
+    c_at = scheduled - timedelta(hours=COLLECTORS_LEAD_H)
+    if collectors is None and now >= c_at:
+        return Action(COLLECTORS_START,
+                      reason=f"the collectors run before the spine ({c_at:%H:%M}); "
+                             f"not run today")
+    if collectors == "running":
+        return Action(NOTHING, reason="the collectors are running; the spine waits")
 
     if now < scheduled:
         return Action(NOTHING, reason=f"before today's scheduled hour ({hour:02d}:00)")
@@ -2308,6 +2373,7 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # recent spawn died unexplained — see _last_spawn_unexplained().
     unexplained = None if lock else _last_spawn_unexplained(state)
     edges_due = None if lock else _edges_due(state)
+    collectors = None if lock else _collectors_state(state, now)
     extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
                     lock_cycle_finished=finished, lock_cycle_refused=refused,
@@ -2315,7 +2381,8 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
                     heartbeat_pid_alive=beat_alive,
                     witness_exit=wexit,
                     last_spawn_unexplained=unexplained,
-                    edges_due=edges_due)
+                    edges_due=edges_due,
+                    collectors=collectors)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
@@ -2509,6 +2576,9 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
 
     if action.kind == EDGES_START:
         return _spawn_edges(action, state)
+
+    if action.kind == COLLECTORS_START:
+        return _spawn_collectors(action, state, now)
 
     if action.kind == SKIP_MISSED:
         state["last_run_date"] = today   # do not retry all day

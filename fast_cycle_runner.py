@@ -1339,113 +1339,28 @@ def _note_night(subject: str, detail: str) -> None:
         pass
 
 
-def _web_intel_order():
-    """Редът на осите според плана на деня — ПРИОРИТЕТ, не филтър.
+def read_collector(name: str) -> dict:
+    """The spine's only contact with a collector (task #8 B.B, 25 Sep 2026).
 
-    КОНСЕНСУС С KIMI, стъпка 8, т.3 (15 авг 2026). Проверих с grep: планът
-    (memory/brain_cycle_plan.json) се четеше само от runner-а и от core/brain.py.
-    Стъпката, която яде най-много от нощта, не знаеше какво мозъкът е поискал.
-    Нарочно НЕ филтрирам: тесен фокус не бива да значи отрязани сетива. Осите,
-    които мозъкът е посочил, минават НАПРЕД; всички останали ги следват. При
-    изчерпан бюджет отрязаното е това, което той е сметнал за маловажно — негово
-    решение, не мое.
+    web_intelligence and data_scout run in collectors_runner.py BEFORE the spine and
+    end in one manifest (core/collectors_manifest.py). This step validates and reads
+    it; it never runs a collector and never asks a model. A missing, stale or
+    malformed entry is written into the night as it is - the spine does not
+    substitute a guess for it.
     """
-    try:
-        from web_intelligence_agent import AXES
-        allx = list(AXES.keys())
-    except BaseException:          # виж run_web_intelligence: модулът може да sys.exit
-        return None
-    try:
-        from core.brain import current_plan
-        plan = current_plan() or {}
-        if plan.get("_stale"):
-            return None
-        want = " ".join(str(plan.get(k, "")) for k in ("focus", "watch")).lower()
-    except Exception:
-        return None
-    if not want.strip():
-        return None
-    first = [a for a in allx if any(w and w in a.lower()
-                                    for w in want.replace(",", " ").split())]
-    if not first:
-        return None
-    rest = [a for a in allx if a not in first]
-    print(f"[FAST_CYCLE] web_intel ред по плана: първо {first[:5]} (+{len(rest)} след тях)")
-    return first + rest
-
-
-def run_web_intelligence():
-    """КОНСЕНСУС С KIMI, стъпка 8 (15 авг 2026). Той подреди приоритета:
-      „Първо бих направил точка 2 — SKIP да ГОРИ в night_events.jsonl."
-      „Смърт от часовоя е ВИДИМА, но сляп цикъл, завършил 'успешно', е по-опасна лъжа."
-      „Точка 3 е важна, но без 2 системата не знае, че е ослепяла."
-
-    Затова тук има три неща, които преди нямаше:
-      1. МЪЛЧАНИЕТО ГОРИ. ImportError вече не е тихо „SKIP" — записва се като
-         нощно събитие и влиза в сутрешния доклад. Цикъл, вървял без сетива, не
-         може да се отчете като нормален.
-      2. СОБСТВЕН БЮДЖЕТ. Таванът стоеше само в часовоя, тоест единственият изход
-         при бавност беше да бъде убит ЦЕЛИЯТ цикъл. Сега стъпката се пуска в
-         отделен процес със свой срок (таванът минус запас) и при изтичане се
-         прекратява САМА, запазвайки каквото вече е записала на диска. Деградация
-         вместо смърт.
-      3. РЕДЪТ Е ПО ПЛАНА (виж _web_intel_order) — приоритет, не филтър.
-    """
-    # НАМЕРЕНО ПРИ ТЕСТА, 15 авг 2026 — по-лошо от трите точки по-горе.
-    # web_intelligence_agent вика sys.exit(1) при липсващ feedparser, ПРИ ИМПОРТ.
-    # SystemExit НЕ Е ImportError и НЕ Е Exception — тоест старият
-    #     except ImportError: ... except Exception: ...
-    # не хващаше нищо, и липсата на ЕДИН незадължителен пакет убиваше ЦЕЛИЯ цикъл
-    # на стъпка 1, без обяснение в пулса. Мина незабелязано само защото на машината
-    # feedparser е инсталиран. Затова тук се лови BaseException.
-    try:
-        import web_intelligence_agent  # noqa: F401
-    except BaseException as e:
-        print(f"[FAST_CYCLE] web_intelligence_agent -> НЕ СЕ ЗАРЕЖДА: "
-              f"{type(e).__name__}: {e}")
-        _note_night("ЦИКЪЛЪТ ВЪРВЯ СЛЯП",
-                    f"web_intelligence не се зареди ({type(e).__name__}: {e}); нощта "
-                    f"минава без свободно търсене в мрежата. Това НЕ е нормален цикъл.")
-        gc.collect()
-        return
-
-    ceiling = 3600
-    try:
-        ceiling = int((json.loads((BASE / "config" / "scheduler.json")
-                                  .read_text(encoding="utf-8")).get("step_ceilings_sec")
-                       or {}).get("web_intelligence", 3600))
-    except Exception:
-        pass
-    budget = max(300, ceiling - 300)          # запас, за да свърши ПРЕДИ часовоя
-
-    order = _web_intel_order()
-    code = ("import sys, json; sys.path.insert(0, %r);"
-            "import web_intelligence_agent as w;"
-            "w.run(axes_filter=%r)" % (str(BASE), order))
-    t0 = time.time()
-    try:
-        r = subprocess.run([sys.executable, "-c", code], cwd=str(BASE),
-                           timeout=budget)
-        took = round(time.time() - t0)
-        if r.returncode == 0:
-            print(f"[FAST_CYCLE] web_intelligence_agent -> OK ({took}s)")
-        else:
-            print(f"[FAST_CYCLE] web_intelligence_agent -> exit {r.returncode} ({took}s)")
-            _note_night("web_intelligence падна",
-                        f"exit={r.returncode} след {took}s; каквото е записано на "
-                        f"диска остава, останалото липсва")
-    except subprocess.TimeoutExpired:
-        took = round(time.time() - t0)
-        print(f"[FAST_CYCLE] web_intelligence_agent -> БЮДЖЕТЪТ ИЗТЕЧЕ след {took}s; "
-              f"спирам сама, вместо да чакам часовоя да убие цикъла")
-        _note_night("web_intelligence спряна по бюджет",
-                    f"{took}s от таван {ceiling}s. Частичен резултат: каквото е "
-                    f"стигнало до диска. Редът беше "
-                    f"{'по плана на мозъка' if order else 'по подразбиране'}.")
-    except Exception as e:
-        print(f"[FAST_CYCLE] web_intelligence_agent -> FAILED: {type(e).__name__}: {e}")
-        _note_night("web_intelligence се провали", f"{type(e).__name__}: {e}")
-    gc.collect()
+    from core.collectors_manifest import validate
+    v = validate(name)
+    print(f"[FAST_CYCLE] {name} (collector): ok={v['ok']} level={v['level']} "
+          f"fetched_at={v['fetched_at']} age_h={v['age_h']} outputs={len(v['outputs'])}")
+    if not v["ok"]:
+        for pr in v["problems"]:
+            print(f"[FAST_CYCLE] {name} (collector): {pr}")
+        _note_night(f"{name}: колекторът не е годен",
+                    "; ".join(v["problems"])[:400])
+    elif v["level"] == "UNVERIFIED":
+        _note_night(f"{name}: UNVERIFIED", "колекторът е вървял без модела си; "
+                    "изходът му е четен с това ниво")
+    return v
 
 def refresh_llm_axes():
     # 21 авг 2026: GENERAL_SELF_REVIEW излезе оттук заедно с осата. Тази стъпка
@@ -2792,10 +2707,9 @@ def main():
 
     # ── 1. Web Intelligence ──
     beat("web_intelligence", "1")
-    if not directives.get("skip_web_intel"):
-        run_web_intelligence()
-    else:
-        print("[FAST_CYCLE] Step 1: web_intelligence SKIPPED (offline)")
+    # A collector now (collectors_runner.py, before the spine) - the spine
+    # validates and reads its manifest entry, nothing more (task #8 B.B).
+    read_collector("web_intelligence")
 
     # NOTE (not a step boundary): step 2 USED to be here. It moved to 2.75 and
     # there is no beat(..., "2") anywhere — the header stayed behind and, because
@@ -3590,17 +3504,8 @@ def main():
 
     # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
     beat("data_scout", "22.5")
-    # Пуска се ПОСЛЕДНО — не се бие с основния цикъл за LLM rate limit.
-    # Кешира предложенията; пита LLM само когато ги няма или са >7 дни.
-    def _data_scout():
-        from core.data_scout import run as _scout_run
-        scout_summary = _scout_run(max_axes=2)
-        print(
-            f"[FAST_CYCLE] data_scout -> "
-            f"scanned={scout_summary.get('scanned',0)} | "
-            f"validated={scout_summary.get('validated',0)} new sources"
-        )
-    _run("data_scout", _data_scout)
+    # A collector now (collectors_runner.py, before the spine) - read, not run.
+    _run("data_scout", lambda: read_collector("data_scout"))
 
     # ── 23. Continuous learning ──
     beat("continuous_learning", "23")
