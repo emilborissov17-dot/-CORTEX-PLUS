@@ -367,7 +367,8 @@ def fetch_gbif() -> dict:
 #   2. the current version is 26.1; 25.1 and older are not served
 # And even with both fixed, UCDP now requires a token (401), so the source is
 # registered NEEDS_AUTH in config/dead_sources.json and skipped cleanly until
-# UCDP_ACCESS_TOKEN is set. See core/source_status.py.
+# UCDP_API_TOKEN is set. Since 25 Sep 2026 every API request goes through
+# core/ucdp_client.api_get (token, daily counter and cap, provenance row).
 UCDP_SOURCE_KEY = "ucdp_api"
 UCDP_VERSIONS = ("26.1", "25.1")
 UCDP_RESOURCE = "ucdpprioconflict"
@@ -490,6 +491,14 @@ def _fetch_ucdp_local_csv() -> dict:
 UCDP_YEAR_LOOKBACK = 3   # the ACD is an annual release; the newest year may not be out yet
 
 
+def _ucdp_client():
+    try:
+        from . import ucdp_client as uc
+    except ImportError:
+        import ucdp_client as uc
+    return uc
+
+
 def _ucdp_api_latest_year(headers: dict, version: str):
     """Active conflicts in the most recent year the API actually has, as (count, year).
 
@@ -501,14 +510,17 @@ def _ucdp_api_latest_year(headers: dict, version: str):
     what this axis was reporting. Walks back a few years because the newest year is only
     published once UCDP releases it (2026 and 2027 both answer 0 today).
     """
+    uc = _ucdp_client()
     year = datetime.now(timezone.utc).year
     for _ in range(UCDP_YEAR_LOOKBACK + 1):
-        data = _get(
-            f"https://ucdpapi.pcr.uu.se/api/{UCDP_RESOURCE}/{version}"
-            f"?pagesize=1&page=1&Year={year}",
-            timeout=30,
-            headers=headers,
-        )
+        try:
+            data = uc.api_get(version, page=0, pagesize=1, endpoint=UCDP_RESOURCE,
+                              query={"Year": year})
+        except uc.UcdpCapReached:
+            raise
+        except uc.UcdpUnavailable as e:
+            print(f"  [GI] UCDP {UCDP_RESOURCE}/{version} Year={year}: {str(e)[:120]}")
+            data = None
         if isinstance(data, dict) and isinstance(data.get("TotalCount"), int) \
                 and data["TotalCount"] > 0:
             return data["TotalCount"], year
@@ -532,7 +544,7 @@ def fetch_ucdp() -> dict:
     token = credential_for(UCDP_SOURCE_KEY)
 
     if token:
-        headers = {"x-ucdp-access-token": token}
+        headers = {}          # the client sends the token; kept for the signature
         for version in UCDP_VERSIONS:
             count, year = _ucdp_api_latest_year(headers, version)
             if count:

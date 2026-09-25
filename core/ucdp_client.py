@@ -9,7 +9,8 @@ WHY FILES AND NOT THE API. Measured 18 Sep 2026:
     401  "API token required. Add header: x-ucdp-access-token: <your-token>"
 
 The same 401 answers the monthly candidate endpoint. `core/needs_auth.py:13` has
-carried an open request for `UCDP_ACCESS_TOKEN` since 2026-07-13. The download
+carried an open request for a token (then named UCDP_ACCESS_TOKEN; since 25 Sep
+2026 the client reads UCDP_API_TOKEN) since 2026-07-13. The download
 files, however, are open: one HEAD each, both 200, no login and no redirect. So
 the file path is what runs today, the API path is written beside it, and
 THE NAMES ARE IDENTICAL IN BOTH — `load_events()` returns the same rows whichever
@@ -264,7 +265,7 @@ def _provenance(row: dict, path: Optional[Path] = None) -> None:
 
 
 def api_get(version: str, page: int = 0, pagesize: int = 1000,
-            endpoint: str = "gedevents") -> dict:
+            endpoint: str = "gedevents", query: Optional[dict] = None) -> dict:
     """One authenticated GET. Counted before it is sent, stopped at the cap,
     and recorded (endpoint, version, page, status, latency) whatever happens."""
     token = api_token()
@@ -274,11 +275,14 @@ def api_get(version: str, page: int = 0, pagesize: int = 1000,
     n = _count_request()
     base = API_BASE.rsplit("/", 1)[0] + "/" + endpoint
     url = "%s/%s?pagesize=%d&page=%d" % (base, version, pagesize, page)
+    if query:
+        url += "".join("&%s=%s" % (k, v) for k, v in query.items())
     req = urllib.request.Request(url, method="GET")
     req.add_header("User-Agent", USER_AGENT)
     req.add_header(TOKEN_HEADER, token)
     row = {"ts": dt.datetime.now(dt.timezone.utc).isoformat(), "endpoint": endpoint,
-           "version": version, "page": page, "pagesize": pagesize, "status": None,
+           "version": version, "page": page, "pagesize": pagesize,
+           "query": query or None, "status": None,
            "latency_s": None, "error": None, "count_today": n}
     t0 = time.time()
     try:

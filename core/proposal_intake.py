@@ -42,6 +42,8 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+from core.llm_text import refuse_llm_text   # task #29
+
 REPO = Path(__file__).resolve().parents[1]
 REFUSALS = REPO / "memory" / "proposal_intake_refusals.jsonl"
 
@@ -121,7 +123,12 @@ def judge(p: dict, today: date | None = None,
           cadence_check: Callable = _default_cadence_check,
           scale_check: Callable = _default_scale_check) -> dict:
     """{"verdict": "ADMITTED"} or {"verdict": "REFUSED", "missing": [...], "why": ...}.
-    Never raises. Every missing piece is named, not just the first."""
+    Every missing piece is named, not just the first. Raises in one case only:
+    LLMTextRefused when INDICATOR, EXPECTED_DELTA or DEADLINE are a model's words
+    that did not pass through core.llm_parse (task #29)."""
+    if isinstance(p, dict):
+        for _f in REQUIRED:
+            refuse_llm_text(p.get(_f), f"proposal_intake {_f.upper()}")
     today = today or date.today()
     missing: list[str] = []
     why: list[str] = []

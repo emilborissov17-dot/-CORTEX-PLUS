@@ -11,6 +11,7 @@ design, so a missing key does not fail every run. That is right, and it is also
 why nothing has happened about them:
 
     ucdp_api   NEEDS_AUTH since 2026-07-13   UCDP_ACCESS_TOKEN     39 days
+    (the key was renamed UCDP_API_TOKEN on 25 Sep 2026; the table is as it stood)
     eia_api    NEEDS_AUTH since 2026-08-15    EIA_API_KEY           6 days
 
 A quiet skip is invisible. The energy section sat empty for six days and was

@@ -28,6 +28,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from core.llm_text import refuse_llm_text   # task #29
+
 # ── paths ─────────────────────────────────────────────────────────────────────
 BASE                = Path(__file__).resolve().parent
 TRENDS_FILE         = BASE / "cortex_memory" / "abstractions" / "trends.json"
@@ -746,6 +748,9 @@ def compute_goal_score(
 
     Returns a dict with composite_score, per-axis scores, and metric details.
     """
+    refuse_llm_text(trends, "compute_goal_score trends")
+    refuse_llm_text(last_obs, "compute_goal_score last_obs")
+    refuse_llm_text(targets, "compute_goal_score targets")
     if trends is None:
         trends = load_trends()
     if last_obs is None:

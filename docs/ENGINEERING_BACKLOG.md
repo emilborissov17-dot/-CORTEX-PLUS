@@ -110,7 +110,7 @@ the main thread — the new parallel fetch would have crashed on Linux.
   quietly if not. A missing/corrupt registry **fails open**.
 
 > **To re-enable UCDP:** request a token (<https://ucdp.uu.se/apidocs/>), then set
-> `UCDP_ACCESS_TOKEN=<token>` in `.env`. No code change needed.
+> `UCDP_API_TOKEN=<token>` in `.env` (renamed from UCDP_ACCESS_TOKEN on 25 Sep 2026). No code change needed.
 
 ### Item 6 — trend_tracker reported GOVERNANCE_RIGHTS as 0.0
 **Commit:** `34f7d91` · **Tests:** `test/test_trend_tracker_score.py` (14 cases)

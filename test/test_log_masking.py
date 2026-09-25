@@ -81,7 +81,8 @@ def test_the_approve_reader_print_and_state_file_are_masked(tmp_path, monkeypatc
             f"HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded "
             f"with url: /bot{token}/{method}?offset=1&timeout=0")
     monkeypatch.setattr(ar, "_tg", _boom)
-    monkeypatch.setattr(ar, "CHANNEL_STATE", tmp_path / "human_channel_state.json")
+    from experiments.needs import channel as _ch
+    monkeypatch.setattr(_ch, "CHANNEL_STATE", tmp_path / "human_channel_state.json")
 
     assert ar.run() == 0
     out = capsys.readouterr().out

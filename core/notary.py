@@ -84,6 +84,8 @@ ATTEST_HEAD = ATTEST_DIR / "chain.head"          # последният хеш �
 # irreversible_min = UNREACHABLE(99) and may_act() then refuses every
 # irreversible step. A ruleset that cannot be read is never permission.
 from core.passage_rules import RULES as _RULES
+# task #29: a model's words are refused by type at this gate (core/llm_text.py).
+from core.llm_text import refuse_llm_text
 
 # Нивата. 3 = пълно доверие, 0 = нищо не се знае за произхода. The SCALE stays a
 # literal — it is what a level IS, not a policy about what a level buys.
@@ -221,7 +223,7 @@ def _human_state() -> tuple:
     непроверено е UNKNOWN, наравно с мъртъв канал.
     """
     try:
-        from experiments.needs.approve_reader import channel_state
+        from experiments.needs.channel import channel_state
         st = channel_state()
     except Exception as e:
         # Непроверимо е UNKNOWN, не MINIMAL. Преди беше MINIMAL — пак по-високо
@@ -453,6 +455,9 @@ def _promise_state(prev_step: str | None, step: str | None = None) -> tuple:
 def vector(step: str, prev_step: str | None = PREV_UNKNOWN,
            inputs: list | None = None, inputs_source: str | None = None) -> dict:
     """Петте състояния — записът, който пази ЗАЩО."""
+    refuse_llm_text(step, "notary.vector step")
+    refuse_llm_text(prev_step, "notary.vector prev_step")
+    refuse_llm_text(inputs, "notary.vector inputs")
     if inputs is None:
         inputs, resolved_src = _inputs_for(step)
         inputs_source = inputs_source or resolved_src
@@ -498,6 +503,8 @@ def _stamps() -> dict:
 
 def attest(step: str, prev_step: str | None = PREV_UNKNOWN) -> dict:
     """Подпечатва продуктите на стъпката. Лек, детерминистичен, без LLM."""
+    refuse_llm_text(step, "notary.attest step")
+    refuse_llm_text(prev_step, "notary.attest prev_step")
     try:
         from core import cycle_map as cm
         products = []
@@ -677,6 +684,8 @@ def may_act(step: str, prev_step: str | None = PREV_UNKNOWN) -> tuple:
     доверила. Сега и двата отговора назовават откъде идва списъкът с входове:
     написан от човек в config/step_inputs.json, или изведен от скенера.
     """
+    refuse_llm_text(step, "notary.may_act step")
+    refuse_llm_text(prev_step, "notary.may_act prev_step")
     rec = attest(step, prev_step)
     lvl = rec["level"]
     if lvl >= IRREVERSIBLE_MIN:

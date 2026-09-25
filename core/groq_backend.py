@@ -53,6 +53,8 @@ import threading
 import requests
 from pathlib import Path
 
+from core.llm_text import LLMText   # task #29
+
 # ---------------------------------------------------------------------------
 # URLs и модели
 # ---------------------------------------------------------------------------
@@ -881,6 +883,25 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
         f"All LLM backends failed ({'/'.join(b[0] for b in backends) or 'cloud skipped'} + local). "
         f"Last error: {last_error}"
     )
+
+
+def _answer_as_llm_text(fn):
+    """The ladder's answer leaves as LLMText (task #29, 25 Sep 2026): the legs
+    clean the door's marked text with re.sub, which hands back a plain str, so
+    the mark is put back here, from the meta of the leg that answered."""
+    import functools
+
+    @functools.wraps(fn)
+    def wrapped(*a, **k):
+        content, meta = fn(*a, **k)
+        if isinstance(content, str) and not isinstance(content, LLMText):
+            content = LLMText(content, (meta or {}).get("backend"), (meta or {}).get("model"),
+                              os.environ.get("CORTEX_STEP"))
+        return content, meta
+    return wrapped
+
+
+call_groq_meta = _answer_as_llm_text(call_groq_meta)
 
 
 def call_groq(prompt: str, max_tokens: int = 1024) -> str:

@@ -34,6 +34,8 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
+from core.llm_text import LLMText, LLMTextRefused  # noqa: F401 - re-exported
+
 BASE = Path(__file__).resolve().parents[1]
 PROVENANCE = BASE / "memory" / "llm_provenance.jsonl"
 SCHEMA = 2
@@ -108,6 +110,50 @@ def _facts_from_dict(d) -> dict:
     elif "text" in d:                                      # Whisper transcription
         out["reply_chars"] = len(str(d.get("text") or ""))
     return {k: v for k, v in out.items() if v is not None}
+
+
+def _tag(d, backend: str, model: str | None):
+    """Mark the answer text in a parsed reply as LLMText (task #29), in place, for
+    every dialect _facts_from_dict reads. Returns d."""
+    if not isinstance(d, dict):
+        return d
+    step = os.environ.get("CORTEX_STEP")
+    ts = datetime.now(timezone.utc).isoformat()
+
+    def mark(holder, key):
+        v = holder.get(key) if isinstance(holder, dict) else None
+        if isinstance(v, str) and not isinstance(v, LLMText):
+            holder[key] = LLMText(v, backend, model, step, ts)
+
+    for ch in d.get("choices") or []:                      # OpenAI-compatible
+        if isinstance(ch, dict):
+            mark(ch, "text")
+            msg = ch.get("message")
+            for k in ("content", "reasoning", "reasoning_content"):
+                mark(msg, k)
+    for c in d.get("candidates") or []:                    # Gemini
+        for part in ((c or {}).get("content") or {}).get("parts") or []:
+            mark(part, "text")
+    mark(d.get("message"), "content")                      # Ollama chat
+    mark(d, "response")                                    # Ollama generate
+    if "text" in d and not d.get("choices"):               # Whisper
+        mark(d, "text")
+    return d
+
+
+def _tag_response(resp, backend: str, model: str | None):
+    """resp.json() hands back the marked reply from now on."""
+    orig = getattr(resp, "json", None)
+    if not callable(orig):
+        return resp
+
+    def _json(*a, **k):
+        return _tag(orig(*a, **k), backend, model)
+    try:
+        resp.json = _json
+    except Exception:  # noqa: BLE001 - an object that refuses attributes stays as it is
+        pass
+    return resp
 
 
 def _mask(error) -> str | None:
@@ -388,7 +434,7 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
            latency_s=latency, http_status=status, error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))
     _restore_core_after(backend, model, url)
-    return resp
+    return _tag_response(resp, backend, model)
 
 
 def _restore_core_after(backend: str, model: str | None, url: str | None) -> None:
@@ -439,7 +485,7 @@ def call(caller: str | None, backend: str, model: str | None, fn, *,
            latency_s=round(time.monotonic() - t0, 2), error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))
     _restore_core_after(backend, model, None)
-    return d
+    return _tag(d, backend, model)
 
 
 def _read_json(opened) -> dict:

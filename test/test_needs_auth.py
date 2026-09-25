@@ -24,7 +24,7 @@ THE THREE PROOFS
   * a key dropped into .env activates the source with no restart and no code
 
 The third is the UCDP precedent, and it is already visible on this machine:
-UCDP_ACCESS_TOKEN is in .env, so ucdp_api reads ACTIVE while eia_api reads
+UCDP_API_TOKEN is in .env, so ucdp_api reads ACTIVE while eia_api reads
 WAITING. Nothing flipped a switch.
 
     venv\\Scripts\\python.exe -m pytest test/test_needs_auth.py -v

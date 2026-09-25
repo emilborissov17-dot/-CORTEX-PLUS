@@ -35,6 +35,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO / "experiments" / "composers"))
+sys.path.insert(0, str(REPO))
+
+# The channel record lives in experiments/needs/channel.py (task #29): the notary
+# reads it there without importing this module.
+from experiments.needs import channel as _channel  # noqa: E402
+from experiments.needs.channel import UNKNOWN_CHANNEL, channel_state  # noqa: E402,F401
 
 NOTIFY_CFG = REPO / "memory" / "notify_channel.json"
 PENDING    = REPO / "memory" / "pending_approvals.json"
@@ -336,10 +342,7 @@ def _apply_goal(spec: dict, chat_id):
 # не е бил настроен, не е ОТКАЗАЛ — човекът просто не го ползва. Да замразим
 # необратимото заради него би значело системата да си върже ръцете завинаги заради
 # функция, която никой не е поискал. Замразява само `dead`.
-CHANNEL_STATE = REPO / "memory" / "human_channel_state.json"
-
-
-UNKNOWN_CHANNEL = "unknown"
+# CHANNEL_STATE and UNKNOWN_CHANNEL: experiments/needs/channel.py
 
 
 def _mark_channel(state: str, why: str, human_msgs: int = 0) -> None:
@@ -356,40 +359,21 @@ def _mark_channel(state: str, why: str, human_msgs: int = 0) -> None:
     try:
         prev = {}
         try:
-            prev = json.loads(CHANNEL_STATE.read_text(encoding="utf-8"))
+            prev = json.loads(_channel.CHANNEL_STATE.read_text(encoding="utf-8"))
         except Exception:
             prev = {}
         now = datetime.now(timezone.utc).isoformat()
         last_human = prev.get("last_human_msg_utc")
         if human_msgs:
             last_human = now
-        CHANNEL_STATE.parent.mkdir(parents=True, exist_ok=True)
-        CHANNEL_STATE.write_text(json.dumps(
+        _channel.CHANNEL_STATE.parent.mkdir(parents=True, exist_ok=True)
+        _channel.CHANNEL_STATE.write_text(json.dumps(
             {"ts": now, "state": state, "why": why,
              "human_msgs": int(human_msgs),
              "last_human_msg_utc": last_human},
             ensure_ascii=False, indent=2), encoding="utf-8")
     except Exception:
         pass
-
-
-def channel_state() -> dict:
-    """Какво ЗНАЕМ за канала. `unknown` когато не сме гледали или не сме могли.
-
-    Отделено от channel_alive() на 17 авг 2026, защото „не проверено" и
-    „проверено и мъртво" се връщаха като едно и също нещо — по-точно, „не
-    проверено" се връщаше като ПО-ДОБРОТО от двете. Виж channel_alive().
-    """
-    try:
-        d = json.loads(CHANNEL_STATE.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        return {"state": UNKNOWN_CHANNEL, "why": "няма запис — каналът НЕ Е проверяван"}
-    except Exception as e:
-        return {"state": UNKNOWN_CHANNEL,
-                "why": f"записът за канала е нечетим: {type(e).__name__}"}
-    if not isinstance(d, dict) or not d.get("state"):
-        return {"state": UNKNOWN_CHANNEL, "why": "записът няма поле state"}
-    return d
 
 
 def channel_alive() -> tuple:

@@ -78,9 +78,9 @@ def channel(tmp_path, monkeypatch):
     Returns a writer. `None` means NO RECORD AT ALL — the never-checked case,
     which is the whole subject of this file.
     """
-    from experiments.needs import approve_reader as ar
+    from experiments.needs import channel as ch
     path = tmp_path / "human_channel_state.json"
-    monkeypatch.setattr(ar, "CHANNEL_STATE", path)
+    monkeypatch.setattr(ch, "CHANNEL_STATE", path)
 
     def write(doc):
         if doc is None:

@@ -349,6 +349,20 @@ def _no_ollama_writes(monkeypatch):
         pass
 
 
+@pytest.fixture(autouse=True)
+def _no_live_ucdp_api(monkeypatch, tmp_path):
+    """Rule (25 Sep 2026): no test may spend the live UCDP API's daily quota or
+    write its counter - a closed local port and a counter in tmp_path for every
+    test; a test that needs a server (test_ucdp_api_client) installs its own."""
+    try:
+        from core import ucdp_client as _uc
+    except Exception:
+        return
+    monkeypatch.setattr(_uc, "API_BASE", "http://127.0.0.1:9/api/gedevents")
+    monkeypatch.setattr(_uc, "REQUESTS_FILE", tmp_path / "ucdp_requests.json")
+    monkeypatch.setattr(_uc, "PROVENANCE_FILE", tmp_path / "ucdp_provenance.jsonl")
+
+
 class LiveRunnerRefused(RuntimeError):
     """A test tried to start a real cycle, collectors or edges process."""
 

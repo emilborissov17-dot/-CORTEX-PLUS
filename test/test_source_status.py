@@ -129,7 +129,8 @@ def test_ucdp_is_registered_in_the_real_config():
     entry = ss.get_status("ucdp_api")
     assert entry is not None, "UCDP must be declared in config/dead_sources.json"
     assert entry["status"] == "NEEDS_AUTH"
-    assert entry["env_key"] == "UCDP_ACCESS_TOKEN"
+    from core import ucdp_client
+    assert entry["env_key"] == "UCDP_API_TOKEN" == ucdp_client.TOKEN_ENV
     assert entry["since"], "a dead/gated source must record WHEN it died"
 
 
@@ -155,31 +156,33 @@ def test_fetch_ucdp_makes_no_http_call_without_a_token(tmp_path, monkeypatch):
 
 
 def test_fetch_ucdp_uses_correct_resource_and_version_with_a_token(monkeypatch):
-    """With a token it must hit /ucdpprioconflict/26.1 — not /conflict/25.1."""
+    """With a token it must ask /ucdpprioconflict/26.1 - not /conflict/25.1 - and
+    through core.ucdp_client.api_get (token header, counter, provenance; 25 Sep 2026)."""
     seen = {}
+    uc = gi._ucdp_client()
 
-    def fake_get(url, timeout=20, params=None, headers=None):
-        seen["url"] = url
-        seen["headers"] = headers
+    def fake_api_get(version, page=0, pagesize=1000, endpoint="gedevents", query=None):
+        seen.update(version=version, endpoint=endpoint, query=query)
         return {"TotalCount": 55}
 
-    monkeypatch.setattr(gi, "_get", fake_get)
+    monkeypatch.setattr(uc, "api_get", fake_api_get)
+    monkeypatch.setattr(gi, "_get", lambda *a, **k: pytest.fail("direct HTTP bypasses the client"))
     monkeypatch.setattr(gi, "is_skipped", lambda key: False)
     monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
 
     got = gi.fetch_ucdp()
 
     assert got["active_armed_conflicts"] == 55
-    assert "ucdpprioconflict" in seen["url"], "wrong resource name was the 404 cause"
-    assert "/conflict/" not in seen["url"], "the old, wrong resource name is back"
-    assert "26.1" in seen["url"], "26.1 is the current version"
-    assert seen["headers"] == {"x-ucdp-access-token": "tok"}
+    assert seen["endpoint"] == "ucdpprioconflict", "wrong resource name was the 404 cause"
+    assert seen["version"] == "26.1", "26.1 is the current version"
+    assert "Year" in seen["query"]
 
 
 def test_fetch_ucdp_returns_empty_when_api_gives_nothing_and_no_csv(tmp_path, monkeypatch):
     """A broken token with no local snapshot to fall back on -> {}."""
     _isolate_ucdp_dir(tmp_path, monkeypatch)
-    monkeypatch.setattr(gi, "_get", lambda *a, **kw: None)
+    uc = gi._ucdp_client()
+    monkeypatch.setattr(uc, "api_get", lambda *a, **k: {"TotalCount": 0})
     monkeypatch.setattr(gi, "is_skipped", lambda key: False)
     monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
     assert gi.fetch_ucdp() == {}
@@ -267,7 +270,7 @@ def test_ucdp_token_takes_precedence_over_the_local_csv(tmp_path, monkeypatch):
     change, no config change, and the stale CSV is ignored."""
     _write_ucdp_csv(tmp_path, monkeypatch)
     monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
-    monkeypatch.setattr(gi, "_get", lambda *a, **kw: {"TotalCount": 55})
+    monkeypatch.setattr(gi._ucdp_client(), "api_get", lambda *a, **kw: {"TotalCount": 55})
 
     got = gi.fetch_ucdp()
 
@@ -280,7 +283,7 @@ def test_ucdp_falls_back_to_csv_if_the_api_returns_nothing(tmp_path, monkeypatch
     from disk."""
     _write_ucdp_csv(tmp_path, monkeypatch)
     monkeypatch.setattr(gi, "credential_for", lambda key: "tok")
-    monkeypatch.setattr(gi, "_get", lambda *a, **kw: None)
+    monkeypatch.setattr(gi._ucdp_client(), "api_get", lambda *a, **kw: {})
 
     got = gi.fetch_ucdp()
 

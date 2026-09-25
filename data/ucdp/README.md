@@ -47,7 +47,7 @@ count.
 
 ## When the token arrives
 
-Put `UCDP_ACCESS_TOKEN=<token>` in `.env`. The live API takes precedence
+Put `UCDP_API_TOKEN=<token>` in `.env` (read by `core/ucdp_client.api_token`). The live API takes precedence
 automatically and this CSV is ignored. **No code change, no config change.**
 
 ## Why this file is not in git

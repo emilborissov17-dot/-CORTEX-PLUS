@@ -51,6 +51,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from core.llm_text import refuse_llm_text   # task #29
+
 log = logging.getLogger("MerkleMemory")
 
 # ── пътища ───────────────────────────────────────────────────────────────────
@@ -235,6 +237,10 @@ class MerkleMemory:
         собствената история на системата, тоест точно измаменото число, заради
         което композитът започна да отказва.
         """
+        for _name, _v in (("cycle_id", cycle_id), ("signals", signals),
+                          ("decisions", decisions), ("results", results),
+                          ("goal_score", goal_score)):
+            refuse_llm_text(_v, f"merkle_memory.commit {_name}")
         ts = datetime.now(timezone.utc).isoformat()
         prev_root = self._state.get("merkle_root")
 

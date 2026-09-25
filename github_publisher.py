@@ -9,6 +9,8 @@ import base64
 import requests
 from datetime import datetime, timezone
 
+from core.llm_text import refuse_llm_text   # task #29
+
 GITHUB_API    = "https://api.github.com"
 REPO_OWNER    = "emilborissov17-dot"
 REPO_NAME     = "cortex-civilization-watch"
@@ -52,6 +54,9 @@ PUBLISHED: list = []
 
 
 def _push_file(path: str, content: str, message: str):
+    refuse_llm_text(path, "github_publisher path")
+    refuse_llm_text(content, "github_publisher content")
+    refuse_llm_text(message, "github_publisher message")
     url = f"{GITHUB_API}/repos/{REPO_OWNER}/{REPO_NAME}/contents/{path}"
     encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
     sha = _get_sha(path)

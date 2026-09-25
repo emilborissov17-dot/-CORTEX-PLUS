@@ -51,7 +51,18 @@ def get_status(key: str) -> Optional[dict]:
 
 
 def credential_for(key: str) -> Optional[str]:
-    """The credential for a NEEDS_AUTH source, from env or .env. None if absent."""
+    """The credential for a NEEDS_AUTH source, from env or .env. None if absent.
+    Decision (25 Sep 2026): the UCDP API's token comes from
+    core.ucdp_client.api_token(), the client's own reader."""
+    if key == "ucdp_api":
+        try:
+            try:
+                from core import ucdp_client as _uc
+            except ImportError:
+                import ucdp_client as _uc
+            return _uc.api_token()
+        except Exception:  # noqa: BLE001 - UcdpTokenMissing, or the client absent
+            return None
     entry = get_status(key) or {}
     env_key = entry.get("env_key")
     if not env_key:
