@@ -127,17 +127,58 @@ FAILURES_EXIT_CODE = 3
 FAILURES_MARKER = "CYCLE_FINISHED_WITH_FAILURES"
 
 
-def _said_it_failed(lines) -> bool:
-    return any("FAILED" in l or "Traceback" in l for l in lines)
+# FAILED IS THE CONTRACT'S VERDICT, NOT A WORD IN THE LOG (25 Sep 2026). This
+# used to be `"FAILED" in line or "Traceback" in line` over a step's log lines, and
+# the 08:54 cycle counted self_observer and data_scout as failed on the line
+# "[BUDGET] cloud re-probe FAILED; demotion re-armed" - both steps' contracts said
+# DEGRADED. A step failed when its contract (core/step_contract) says RAISED.
+FAILED_VERDICTS = ("RAISED",)
 
 
-def failed_steps(cycle_id: str | None, log_path: Path | None = None) -> list | None:
-    """Names of the steps whose own output says they crashed, or None when this
-    cycle's log cannot be found — which is NOT the same as "none failed"."""
-    path = log_path or _log_for(cycle_id)
-    if path is None or not Path(path).exists():
+def contract_rows(cycle_id: str | None, report_path: Path | None = None,
+                  archive_dir: Path | None = None) -> list | None:
+    """This cycle's step-contract rows: the active window if it is this cycle's,
+    else the file open_cycle() archived it to. None when neither exists."""
+    from core import step_contract as sc
+    rp = Path(report_path or sc.REPORT)
+    try:
+        blob = json.loads(rp.read_text(encoding="utf-8"))
+        if cycle_id and str(blob.get("cycle_id")) == str(cycle_id):
+            return list(blob.get("steps") or [])
+    except Exception:
+        pass
+    if not cycle_id:
         return None
-    return [s["step"] for s in _steps_from_log(Path(path)) if _said_it_failed(s["lines"])]
+    safe = "".join(c if (c.isalnum() or c in "-_.") else "_" for c in str(cycle_id))
+    ap = Path(archive_dir or sc.ARCHIVE_DIR) / f"{safe}_steps.jsonl"
+    try:
+        rows = []
+        for line in ap.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                rows.append(json.loads(line))
+        return rows
+    except Exception:
+        return None
+
+
+def failed_steps(cycle_id: str | None, report_path: Path | None = None,
+                 archive_dir: Path | None = None) -> list | None:
+    """Step names whose contract verdict is RAISED, or None when this cycle's
+    contract record cannot be found - which is NOT the same as "none failed"."""
+    rows = contract_rows(cycle_id, report_path, archive_dir)
+    if rows is None:
+        return None
+    try:
+        from core.cycle_map import ALIASES
+    except Exception:
+        ALIASES = {}
+    out = []
+    for r in rows:
+        if r.get("verdict") in FAILED_VERDICTS:
+            name = ALIASES.get(r.get("step"), r.get("step"))
+            if name not in out:
+                out.append(name)
+    return out
 
 
 def _brain_words(cycle_start: float) -> dict:
@@ -214,7 +255,8 @@ def build(cycle_start: float | None = None, cycle_id: str | None = None,
         pass
 
     broken = [r for r in rows if r["promise"] == "НЕ ПИПНА"]
-    failed = [r for r in rows if _said_it_failed(r["said"])]
+    _failed_names = set(failed_steps(cycle_id) or [])
+    failed = [r for r in rows if r["step"] in _failed_names]
 
     # ── ДУМАТА Е НА СИСТЕМАТА: откриване и закриване пише мозъкът ────────────
     # Decision, 25 Sep 2026 (task #8 B.C): the brain's words belong to the EDGES,

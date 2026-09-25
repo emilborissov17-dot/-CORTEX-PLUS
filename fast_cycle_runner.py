@@ -4135,25 +4135,26 @@ def _phase_cli(argv: list) -> None:
     raise SystemExit(0)
 
 
-def _exit_for_night(cycle_id, log_path=None):
+def _exit_for_night(cycle_id, report_path=None, archive_dir=None):
     """(exit_code, final_line) for a cycle that reached the end of main().
 
     CLEAN EXIT MEANS A CLEAN NIGHT (24 Sep 2026). The 15:14 cycle crashed in
     cycle_report and still exited 0, which the witness recorded as "clean exit".
-    0 now requires that no step's own output says it crashed — the same
-    judgement as the cycle report's "failed" list (core.cycle_report.failed_steps).
-    Otherwise 3 and one line naming the steps. A log that cannot be found cannot
-    prove a clean night, so it is 3 as well, never 0.
+    0 now requires that no step's contract verdict is RAISED - the same judgement
+    as the cycle report's "failed" list (core.cycle_report.failed_steps; since 25
+    Sep 2026 the contract's verdict, never a word in the log). Otherwise 3 and one
+    line naming the steps. A contract record that cannot be found cannot prove a
+    clean night, so it is 3 as well, never 0.
     """
     try:
         from core import cycle_report as _cr
-        failed = _cr.failed_steps(cycle_id, log_path)
+        failed = _cr.failed_steps(cycle_id, report_path, archive_dir)
         code, marker = _cr.FAILURES_EXIT_CODE, _cr.FAILURES_MARKER
     except Exception as e:  # noqa: BLE001
         return 3, (f"CYCLE_FINISHED_WITH_FAILURES n=? steps=<failure check raised "
                    f"{type(e).__name__}: {e}>")
     if failed is None:
-        return code, f"{marker} n=? steps=<this cycle's log was not found>"
+        return code, f"{marker} n=? steps=<this cycle's step contracts were not found>"
     if failed:
         return code, f"{marker} n={len(failed)} steps={','.join(failed)}"
     return 0, None

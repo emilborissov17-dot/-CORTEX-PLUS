@@ -92,7 +92,9 @@ $HeadfulMode = '1'
 
 $env:PYTHONIOENCODING        = 'utf-8'
 $env:CORTEX_BROWSER_HEADFUL  = $HeadfulMode
-$env:CORTEX_LOCAL_MODEL      = 'qwen2.5:7b'
+# The warm core, not qwen2.5:7b: the 4 GB card holds ONE model, and a 7b load
+# evicts cortex-l1b-3b before the next cycle (25 Sep 2026).
+$env:CORTEX_LOCAL_MODEL      = 'cortex-l1b-3b:latest'
 $env:CORTEX_STRUCTURAL_GUARD = '1'    # DNA-vs-DNA decomposition, opt-in elsewhere
 $env:CORTEX_SIGN_GUARD       = '1'    # canon-anchored sign skeptic (default on)
 $env:CORTEX_RELEVANCE_GATE   = '1'    # boilerplate + axis relevance (default on)

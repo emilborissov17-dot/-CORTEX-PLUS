@@ -318,14 +318,21 @@ def _log_with(tmp_path, lines):
     return p
 
 
+def _contracts(tmp_path, cycle_id, verdicts):
+    """Fixture: a step-contract window in the shape of step_contract_latest.json."""
+    import json as _json
+    p = tmp_path / "step_contract_latest.json"
+    p.write_text(_json.dumps({"cycle_id": cycle_id, "steps": [
+        {"step": s, "verdict": v} for s, v in verdicts]}), encoding="utf-8")
+    return p
+
+
 def test_a_night_with_one_failed_step_exits_3_and_the_witness_says_so(tmp_path):
     """(i) The 15:14 cycle crashed in cycle_report and still exited 0 = "clean exit"."""
     import fast_cycle_runner as r
     from core import cycle_report
-    log = _log_with(tmp_path, ["[STEP] boot", "[FAST_CYCLE] boot -> OK",
-                               "[STEP] cycle_report",
-                               "[FAST_CYCLE] cycle_report -> FAILED: AttributeError: x"])
-    code, line = r._exit_for_night("c", log_path=log)
+    rep = _contracts(tmp_path, "c", [("boot", "OK"), ("cycle_report", "RAISED")])
+    code, line = r._exit_for_night("c", report_path=rep, archive_dir=tmp_path)
     assert code == 3 == sup.FAILURES_EXIT_CODE == cycle_report.FAILURES_EXIT_CODE
     assert line == "CYCLE_FINISHED_WITH_FAILURES n=1 steps=cycle_report"
 
@@ -341,12 +348,41 @@ def test_a_night_with_one_failed_step_exits_3_and_the_witness_says_so(tmp_path):
 
 
 def test_a_clean_night_exits_0_and_a_bare_exit_3_is_still_a_python_error(tmp_path):
-    """(ii) Zero failed -> 0. And a 3 without the marker line stays what it was."""
+    """(ii) Zero failed -> 0. And a night with no contract record is never 0."""
     import fast_cycle_runner as r
-    log = _log_with(tmp_path, ["[STEP] boot", "[FAST_CYCLE] boot -> OK"])
-    assert r._exit_for_night("c", log_path=log) == (0, None)
-    assert r._exit_for_night("c", log_path=tmp_path / "missing.log")[0] == 3, \
-        "a log that cannot be found must not prove a clean night"
+    rep = _contracts(tmp_path, "c", [("boot", "OK")])
+    assert r._exit_for_night("c", report_path=rep, archive_dir=tmp_path) == (0, None)
+    assert r._exit_for_night("c", report_path=tmp_path / "missing.json",
+                             archive_dir=tmp_path)[0] == 3, \
+        "a night whose contracts cannot be found must not prove a clean night"
+
+
+def test_the_word_failed_in_a_log_line_is_not_a_failed_step(tmp_path):
+    """25 Sep 2026, the 08:54 cycle: self_observer and data_scout were counted as
+    failed on this exact line, while both contracts said DEGRADED."""
+    import fast_cycle_runner as r
+    from core import cycle_report
+    _log_with(tmp_path, ["[STEP] self_observer",
+                         "[BUDGET] cloud re-probe FAILED; demotion re-armed for 300s (failure #1)",
+                         "[STEP] data_scout",
+                         "[BUDGET] cloud re-probe FAILED; demotion re-armed for 300s (failure #1)"])
+    rep = _contracts(tmp_path, "c", [("self_observer", "DEGRADED"), ("data_scout", "DEGRADED"),
+                                     ("cortex_reasoner", "RAISED")])
+    assert cycle_report.failed_steps("c", rep, tmp_path) == ["cortex_reasoner"]
+    code, line = r._exit_for_night("c", report_path=rep, archive_dir=tmp_path)
+    assert line == "CYCLE_FINISHED_WITH_FAILURES n=1 steps=cortex_reasoner"
+
+
+def test_an_archived_window_is_read_for_an_older_cycle(tmp_path):
+    """The active window belongs to the newest cycle; an older one is read from
+    the file open_cycle() archived it to, under its own id."""
+    import json as _json
+    from core import cycle_report
+    rep = _contracts(tmp_path, "newer", [("boot", "OK")])
+    (tmp_path / "old_1_steps.jsonl").write_text(
+        _json.dumps({"step": "x", "verdict": "RAISED"}) + "\n", encoding="utf-8")
+    assert cycle_report.failed_steps("old:1", rep, tmp_path) == ["x"]
+    assert cycle_report.failed_steps("gone", rep, tmp_path) is None
 
 
 def test_the_runner_raises_the_night_code_after_main():
