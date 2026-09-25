@@ -46,8 +46,11 @@ REPO = Path(__file__).resolve().parents[1]
 # The three deliberate `except BaseException:` sites, with the reason each exists.
 # Pinned as data so that adding a fourth fails this file rather than passing quietly.
 ALLOWED_BASE_EXCEPTION = {
-    ("fast_cycle_runner.py", "importing web_intelligence_agent, which may sys.exit() "
-                             "at import time; the runner must survive that"),
+    # Moved from fast_cycle_runner.py on 25 Sep 2026 with the collector itself
+    # (task #8 B.B): the runner no longer imports web_intelligence_agent.
+    ("collectors_runner.py", "importing web_intelligence_agent, which may sys.exit() "
+                             "at import time; the collectors (and --selftest) must "
+                             "survive that and report the collector INERT"),
     ("supervisor.py",        "metta_selfcheck must never throw — it records the "
                              "verdict and returns, including when the bridge exits"),
     # Added 21 Sep 2026, both for the same reason and both RE-RAISING. The run

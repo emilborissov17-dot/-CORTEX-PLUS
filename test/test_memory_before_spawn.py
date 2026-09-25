@@ -62,6 +62,9 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
     monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
+    # These tests are about the SPINE's START branch; today's collectors (task #8
+    # B.B, test_collectors.py) are taken as done so the spine is the next action.
+    monkeypatch.setattr(sup, "_collectors_state", lambda state, now: "done")
     return tmp_path
 
 

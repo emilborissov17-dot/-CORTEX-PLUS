@@ -270,10 +270,12 @@ def test_the_quota_applies_to_g_learn_and_to_nothing_else(monkeypatch):
     G_LEARN's quota is drawn from memory/self_mirror_latest.json, which is
     regenerable runtime state and is no longer tracked. The mirror of 21 Aug 2026
     is captured VERBATIM under test/fixtures/interoception_2026-08-21/, so this
-    still exercises the real path phase_tracker -> interoception.must_cite ->
+    still exercises the real path edges_runner -> interoception.must_cite ->
     mirror_numbers rather than asserting against whatever ran here last night.
+    (_must_cite moved from core/phase_tracker to edges_runner with the debrief,
+    task #8 B.A, 25 Sep 2026.)
     """
-    from core import phase_tracker as pt
+    import edges_runner as pt
     monkeypatch.setattr(io, "MIRROR", MIRROR_FIXTURE)
     assert pt._must_cite("G_LEARN"), (
         "G_LEARN draws no numbers from the captured mirror")
