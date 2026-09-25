@@ -181,11 +181,14 @@ than by remembering.
 
 **What is audited, and what is not yet.** Each cycle's start and end are witnessed
 in `memory/witness.jsonl` — a start row and an exit row with the process's exit code,
-written by `tools/cycle_witness.ps1` since 24 Sep 2026 — but the per-cycle hash in
-`cortex_memory/archive/cycle_*/hash.txt` covers only `{cycle_id, ts, signals count,
-goal_score}` (`MerkleMemory._archive_cycle`), not the signals, decisions and results
-themselves, so an edited archive entry is not detected yet, and the Merkle root is
-not chained to the previous root or to the process and commit that wrote it.
+written by `tools/cycle_witness.ps1` since 24 Sep 2026 — and from 26 Sep 2026 each
+archived cycle's seal (`cortex_memory/archive/cycle_*/seal.json`) hashes the exact
+bytes of its signals, decisions and results together with the previous Merkle root
+and the process and commit that wrote it, with every root appended to
+`memory/merkle_roots.jsonl` and chained to the one before (`verify_root_chain`), while
+the 80 cycles sealed before that carry the old hash of only `{cycle_id, ts, signals
+count, goal_score}`, and no root is yet signed or anchored anywhere outside this
+machine.
 
 **`output/facade_audit_latest.json`** and `python -m core.scorer_self_check` —
 which axis scorers actually consumed real data this cycle and which quietly

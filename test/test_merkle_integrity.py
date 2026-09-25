@@ -250,3 +250,87 @@ def test_the_loss_is_on_the_permanent_record():
     assert e["lost_cycles"] == ["cycle_000017", "cycle_000018", "cycle_000019"]
     assert e["recoverable"] is False
     assert EL.verify()["valid"], "the ledger chain is broken"
+
+
+# ── seal v2: content + previous root + writer; the root history (25 Sep 2026) ──
+
+def _commit(mm, n):
+    import asyncio
+    asyncio.run(mm.commit(cycle_id=f"c{n}", signals=[{"metric": "m", "value": n}],
+                          decisions=[{"d": n}], results=[{"r": n}], goal_score=0.5))
+
+
+@pytest.fixture
+def sandbox(tmp_path, monkeypatch):
+    """A whole cortex_memory/ + memory/ tree in tmp: the module's paths are
+    relative, so the test runs from tmp_path and never touches the live archive."""
+    monkeypatch.chdir(tmp_path)
+    return tmp_path
+
+
+def test_a_fresh_archive_verifies_and_carries_a_v2_seal(sandbox):
+    mm = MM.MerkleMemory()
+    _commit(mm, 1)
+    v = mm.verify_cycle(1)
+    assert v["ok"] is True and v["version"] == 2, v
+    seal = json.loads((MM.ARCHIVE / "cycle_000001" / MM.SEAL_FILE).read_text(encoding="utf-8"))
+    assert seal["writer"]["pid"] and "commit" in seal["writer"]
+
+
+@pytest.mark.parametrize("name", ["signals.json", "decisions.json", "results.json"])
+def test_an_archive_edited_by_one_byte_fails(sandbox, name):
+    """The v1 seal hashed four fields; an edited signal still verified. Not now."""
+    mm = MM.MerkleMemory()
+    _commit(mm, 1)
+    p = MM.ARCHIVE / "cycle_000001" / name
+    b = bytearray(p.read_bytes())
+    i = b.index(b"}")
+    b[i:i] = b" "                      # one byte, JSON still valid
+    p.write_bytes(bytes(b))
+    assert mm.verify_cycle(1)["ok"] is False
+
+
+def test_the_seal_names_the_previous_root(sandbox):
+    mm = MM.MerkleMemory()
+    _commit(mm, 1)
+    first_root = mm._state["merkle_root"]
+    _commit(mm, 2)
+    seal = json.loads((MM.ARCHIVE / "cycle_000002" / MM.SEAL_FILE).read_text(encoding="utf-8"))
+    assert seal["prev_root"] == first_root
+    seal["prev_root"] = "0" * 64       # rewrite history: the hash no longer matches
+    (MM.ARCHIVE / "cycle_000002" / MM.SEAL_FILE).write_text(json.dumps(seal), encoding="utf-8")
+    assert mm.verify_cycle(2)["ok"] is False
+
+
+def test_the_root_history_chains_and_a_missing_link_fails(sandbox):
+    mm = MM.MerkleMemory()
+    for n in (1, 2, 3):
+        _commit(mm, n)
+    rows = [json.loads(l) for l in MM.ROOTS_LOG.read_text(encoding="utf-8").splitlines()]
+    assert [r["cycle_id"] for r in rows] == ["c1", "c2", "c3"]
+    assert [r["leaf_count"] for r in rows] == [1, 2, 3]
+    assert rows[1]["prev_root"] == rows[0]["root"] and rows[2]["prev_root"] == rows[1]["root"]
+    assert MM.verify_root_chain()["ok"] is True
+    lines = MM.ROOTS_LOG.read_text(encoding="utf-8").splitlines()
+    MM.ROOTS_LOG.write_text("\n".join([lines[0], lines[2]]) + "\n", encoding="utf-8")
+    v = MM.verify_root_chain()
+    assert v["ok"] is False and v["broken_at"] == 1, v
+
+
+def test_no_root_history_is_not_a_pass(sandbox):
+    assert MM.verify_root_chain()["ok"] is False
+
+
+@pytest.mark.live_state
+def test_the_current_archive_verifies():
+    """Read-only, against the live archive: the newest sealed cycle verifies."""
+    import os
+    here = os.getcwd()
+    os.chdir(REPO)
+    try:
+        mm = MM.MerkleMemory.__new__(MM.MerkleMemory)
+        newest = max(MM.MerkleMemory._archived_cycle_nums())
+        v = mm.verify_cycle(newest)
+    finally:
+        os.chdir(here)
+    assert v["ok"] is True, v

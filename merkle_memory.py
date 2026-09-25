@@ -42,7 +42,10 @@ import asyncio
 import hashlib
 import json
 import logging
+import os
 import re
+import subprocess
+import sys
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -62,6 +65,18 @@ PROFILE_FILE  = ABSTRACTIONS / "self_profile.json"
 ABS_HASHES    = ABSTRACTIONS / "hashes.json"
 MID_HASHES    = MIDDLE / "hashes.json"
 MERKLE_ROOT   = ARCHIVE / "merkle_root.txt"
+# Every root ever computed, one row per commit, each naming the root before it
+# (25 Sep 2026). Appended, never rewritten: verify_root_chain() fails on a gap.
+ROOTS_LOG     = Path("memory") / "merkle_roots.jsonl"
+
+# SEAL v2 (25 Sep 2026). Until then hash.txt was sha256 of {cycle_id, ts,
+# signals_count, goal_score} - four fields - so an archive whose signals,
+# decisions or results were edited still verified. A v2 seal hashes the exact
+# bytes of the three content files, the Merkle root before this cycle, and the
+# writer (process + commit sha), and keeps the last two in seal.json so the
+# hash can be recomputed. A cycle without seal.json is a v1 (legacy) seal.
+SEAL_FILE     = "seal.json"
+CONTENT_FILES = ("signals.json", "decisions.json", "results.json")
 
 VISION_FILE   = Path("civilization_vision.txt")
 GOAL_FILE     = Path("civilization_goal.txt")
@@ -69,6 +84,61 @@ GOAL_FILE     = Path("civilization_goal.txt")
 CYCLES_PER_WEEK   = 100   # колко цикъла = 1 middle запис
 MAX_MIDDLE_WEEKS  = 52    # пази 1 година middle history
 ESSENCE_MAX_TOKENS = 900  # target размер на essence
+
+
+_COMMIT_SHA: dict = {}
+
+
+def writer_identity() -> dict:
+    """Which process wrote the seal, and from which commit of this repo."""
+    if "v" not in _COMMIT_SHA:
+        try:
+            r = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True,
+                               timeout=10, cwd=str(Path(__file__).resolve().parent))
+            _COMMIT_SHA["v"] = (r.stdout.strip() or None, None if r.returncode == 0
+                                else (r.stderr.strip()[:200] or f"exit {r.returncode}"))
+        except Exception as e:  # noqa: BLE001
+            _COMMIT_SHA["v"] = (None, f"{type(e).__name__}: {e}")
+    sha, err = _COMMIT_SHA["v"]
+    w = {"pid": os.getpid(), "process": Path(sys.argv[0] or "?").name, "commit": sha}
+    if err:
+        w["commit_error"] = err
+    return w
+
+
+def seal_hash(cycle_dir: Path, prev_root, writer) -> str:
+    """sha256 over the exact bytes of the content files, the previous root and the
+    writer. Raises FileNotFoundError when a content file is gone."""
+    h = hashlib.sha256()
+    for name in CONTENT_FILES:
+        b = (Path(cycle_dir) / name).read_bytes()
+        h.update(name.encode("utf-8") + b"\0" + len(b).to_bytes(8, "big") + b)
+    h.update(b"prev_root\0" + str(prev_root or "").encode("utf-8"))
+    h.update(b"writer\0" + json.dumps(writer, sort_keys=True).encode("utf-8"))
+    return h.hexdigest()
+
+
+def verify_root_chain(path: Path | None = None) -> dict:
+    """Every row's prev_root must be the previous row's root. A deleted, reordered
+    or rewritten row breaks the chain; so does a row that does not parse."""
+    p = Path(path or ROOTS_LOG)
+    try:
+        lines = [l for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+    except FileNotFoundError:
+        return {"ok": False, "rows": 0, "broken_at": None, "why": f"{p} does not exist"}
+    prev = None
+    for i, line in enumerate(lines):
+        try:
+            row = json.loads(line)
+        except Exception:
+            return {"ok": False, "rows": len(lines), "broken_at": i, "why": "row does not parse"}
+        if not row.get("root"):
+            return {"ok": False, "rows": len(lines), "broken_at": i, "why": "row has no root"}
+        if i > 0 and row.get("prev_root") != prev:
+            return {"ok": False, "rows": len(lines), "broken_at": i,
+                    "why": f"prev_root {str(row.get('prev_root'))[:12]} != previous root {str(prev)[:12]}"}
+        prev = row["root"]
+    return {"ok": True, "rows": len(lines), "broken_at": None, "why": ""}
 
 
 class MerkleMemory:
@@ -166,6 +236,7 @@ class MerkleMemory:
         което композитът започна да отказва.
         """
         ts = datetime.now(timezone.utc).isoformat()
+        prev_root = self._state.get("merkle_root")
 
         # 1. Архивирай цикъла
         cycle_num = self._next_cycle_num()
@@ -181,8 +252,9 @@ class MerkleMemory:
         if cycle_num % CYCLES_PER_WEEK == 0:
             await self._compress_to_middle(cycle_num)
 
-        # 5. Изчисли нов Merkle root
+        # 5. Изчисли нов Merkle root и го впиши в историята на корените
         new_root = self._compute_merkle_root()
+        self._append_root(new_root, ts, cycle_id, cycle_num, prev_root)
 
         # 6. Обнови abstractions
         self._save_json(TRENDS_FILE, self._trends)
@@ -257,14 +329,15 @@ class MerkleMemory:
             "results": results if isinstance(results, list) else [],
         })
 
-        # Хаш на целия цикъл
-        cycle_content = json.dumps({
-            "cycle_id": cycle_id,
-            "ts": ts,
-            "signals_count": len(signals_data),
-            "goal_score": goal_score,
-        }, sort_keys=True)
-        cycle_hash = self._sha256(cycle_content)
+        # Хаш на СЪДЪРЖАНИЕТО на цикъла (seal v2, 25 Sep 2026): байтовете на
+        # трите файла + предишния корен + кой го е записал.
+        prev_root = self._state.get("merkle_root")
+        writer = writer_identity()
+        cycle_hash = seal_hash(cycle_dir, prev_root, writer)
+        self._save_json(cycle_dir / SEAL_FILE, {
+            "version": 2, "hash": cycle_hash, "prev_root": prev_root,
+            "writer": writer, "files": list(CONTENT_FILES),
+        })
         (cycle_dir / "hash.txt").write_text(cycle_hash, encoding="utf-8")
 
         return cycle_hash
@@ -409,13 +482,39 @@ class MerkleMemory:
 
     # ── Merkle root ───────────────────────────────────────────────────────────
 
-    def _compute_merkle_root(self) -> str:
-        """Изчислява Merkle root от всички archive хашове."""
+    @staticmethod
+    def _leaf_hashes() -> list:
         hashes = []
         for cycle_dir in sorted(ARCHIVE.glob("cycle_*")):
             hash_file = cycle_dir / "hash.txt"
             if hash_file.exists():
                 hashes.append(hash_file.read_text().strip())
+        return hashes
+
+    def _append_root(self, root: str, ts: str, cycle_id: str, cycle_num: int,
+                     prev_root) -> dict:
+        """One row in ROOTS_LOG. prev_root is the last row's root when the log has
+        one - the chain is the log's own - else the state's root before this
+        commit (the first row of a new log)."""
+        last = None
+        try:
+            lines = [l for l in ROOTS_LOG.read_text(encoding="utf-8").splitlines() if l.strip()]
+            last = json.loads(lines[-1]).get("root") if lines else None
+        except FileNotFoundError:
+            pass
+        row = {"root": root, "ts": ts, "cycle_id": cycle_id, "cycle_num": cycle_num,
+               "leaf_count": len(self._leaf_hashes()),
+               "prev_root": last if last is not None else prev_root}
+        ROOTS_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with ROOTS_LOG.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())
+        return row
+
+    def _compute_merkle_root(self) -> str:
+        """Изчислява Merkle root от всички archive хашове."""
+        hashes = self._leaf_hashes()
 
         if not hashes:
             return self._sha256("empty")
@@ -504,6 +603,21 @@ class MerkleMemory:
             return {"ok": False, "error": "липсва hash.txt"}
 
         stored_hash = hash_file.read_text().strip()
+        seal_file = cycle_dir / SEAL_FILE
+        if seal_file.exists():
+            seal = self._load_json(seal_file, default={})
+            try:
+                recomputed = seal_hash(cycle_dir, seal.get("prev_root"), seal.get("writer"))
+            except FileNotFoundError as e:
+                return {"ok": False, "cycle": cycle_num, "version": 2,
+                        "error": f"content file missing: {Path(str(e.filename)).name}"}
+            ok = stored_hash == recomputed == seal.get("hash")
+            return {
+                "ok": ok, "cycle": cycle_num, "version": 2,
+                "stored_hash": stored_hash[:16] + "...",
+                "recomputed": recomputed[:16] + "...",
+                "signals": self._load_json(cycle_dir / "signals.json", {}).get("count", 0),
+            }
         signals_file = cycle_dir / "signals.json"
         if not signals_file.exists():
             return {"ok": False, "error": "липсва signals.json"}
@@ -520,6 +634,8 @@ class MerkleMemory:
         return {
             "ok": ok,
             "cycle": cycle_num,
+            "version": 1,
+            "covers": "cycle_id, ts, signals count, goal_score only (legacy seal)",
             "stored_hash": stored_hash[:16] + "...",
             "recomputed": recomputed[:16] + "...",
             "signals": data.get("count", 0),
