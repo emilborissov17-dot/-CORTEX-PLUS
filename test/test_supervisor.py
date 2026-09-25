@@ -1120,6 +1120,7 @@ def test_the_edges_are_spawned_once_witnessed_and_named_apart(tick_sandbox, monk
     st = sup.load_state(); st["last_run_date"] = _today()
     st["last_spawn"] = {"cycle_id": "c-spine", "utc": "2026-09-25T06:00:00+00:00"}
     sup.save_state(st)
+    _witness([{"event": "start", "cycle_id": "c-spine", "role": "spine"}])
     spawned = []
     monkeypatch.setattr(sup, "_witness_available", lambda: True)
     monkeypatch.setattr(sup, "_spawn_witnessed",
@@ -1131,6 +1132,24 @@ def test_the_edges_are_spawned_once_witnessed_and_named_apart(tick_sandbox, monk
     assert argv[2].endswith("edges_runner.py") and argv[-2:] == ["--cycle-id", "c-spine"]
     assert cid == "c-spine" + sup.EDGES_SUFFIX and role == "edges"
     assert sup.tick().kind != sup.EDGES_START and len(spawned) == 1, "the edges ran twice"
+
+
+def test_a_cycle_from_before_the_split_never_gets_edges(tick_sandbox, monkeypatch):
+    """Its start row has no role: it ran debrief/voice/Telegram inline already.
+    Edges for it would send the human every phase message twice."""
+    from memory import existence_ledger as el
+    el.append(el.CYCLE_STARTED, cycle_id="c-old", pid=1)
+    el.append(el.CYCLE_FINISHED, cycle_id="c-old", pid=1, duration_sec=10.0)
+    st = sup.load_state(); st["last_run_date"] = _today()
+    st["last_spawn"] = {"cycle_id": "c-old", "utc": "2026-09-25T06:00:00+00:00"}
+    sup.save_state(st)
+    _witness([{"event": "start", "cycle_id": "c-old"}])
+    spawned = []
+    monkeypatch.setattr(sup, "_spawn_witnessed", lambda *a, **k: spawned.append(a) or 1)
+    assert sup._edges_due(sup.load_state()) is None
+    assert sup.tick().kind != sup.EDGES_START and spawned == []
+    _witness([{"event": "start", "cycle_id": "c-old", "role": "spine"}])
+    assert sup._edges_due(sup.load_state()) == "c-old"
 
 
 def test_a_failed_edges_run_never_touches_the_spine(tick_sandbox):

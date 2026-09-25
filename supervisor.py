@@ -721,15 +721,28 @@ def _last_spawn_unexplained(state: dict) -> Optional[dict]:
     return {"cycle_id": cid, "why": why, "spawned_utc": spawn.get("utc")}
 
 
+def _spawned_as_spine(cycle_id: str) -> bool:
+    """True only if the witness's start row for this cycle says role "spine".
+
+    A cycle started by the code from before the split has no role in its start
+    row, and it already ran its debrief, voice and Telegram messages inline - its
+    edges would send the human every phase message a second time."""
+    for r in reversed(witness_rows()):   # the latest start row
+        if r.get("event") == "start" and str(r.get("cycle_id")) == str(cycle_id):
+            return r.get("role") == "spine"
+    return False
+
+
 def _edges_due(state: dict) -> Optional[str]:
-    """The spine cycle_id whose edges are owed: it sealed CYCLE_FINISHED (a night
-    with failed steps included) and its edges were never spawned."""
+    """The spine cycle_id whose edges are owed: it was spawned as a spine (see
+    _spawned_as_spine), sealed CYCLE_FINISHED (a night with failed steps
+    included), and its edges were never spawned."""
     spawn = (state or {}).get("last_spawn") or {}
     cid = spawn.get("cycle_id")
     if not cid or spawn.get("edges"):
         return None
     try:
-        return cid if ledger.has_finished(cid) else None
+        return cid if (ledger.has_finished(cid) and _spawned_as_spine(cid)) else None
     except Exception:
         return None
 
