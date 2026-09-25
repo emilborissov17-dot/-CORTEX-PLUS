@@ -68,3 +68,32 @@ def test_phase_jobs_debrief_voice_and_send_every_report_in_order(tmp_path, monke
     assert seen == ["A_ORIENT", "B_SENSE", "C_SNAPSHOT"], "phases out of order"
     assert [r["phase"] for r in out] == seen and sent == seen, "a failed debrief stopped the rest"
     assert out[1]["debrief"] is None and out[0]["debrief"] == "accepted"
+
+
+# --- B.C -------------------------------------------------------------------
+
+def test_the_spine_report_imports_no_brain_and_the_edges_add_its_words(tmp_path, monkeypatch):
+    assert "core.brain" not in _imports("core/cycle_report.py")
+    from core import cycle_report as cr
+    monkeypatch.setattr(cr, "build", lambda cycle_id=None, brain_writer=None:
+                        {"ts": "2026-09-25T09:00:00", "brain": {"opening": brain_writer(role="r")["opening"]}})
+    monkeypatch.setattr(cr, "to_markdown", lambda rep: "OPENING: " + rep["brain"]["opening"])
+    path = edges_runner.cycle_report_words("c", base=tmp_path, writer=lambda **k: {"opening": "words"})
+    assert Path(path).read_text(encoding="utf-8") == "OPENING: words"
+
+
+def test_body_scan_sets_the_pace_without_the_ladder():
+    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    assert "import core.groq_backend as _gb" not in src
+    from core import llm_pacing, groq_backend as gb
+    llm_pacing.set_sleep(0.25)
+    try:
+        assert gb._pace() == 0.25
+    finally:
+        llm_pacing.SLEEP_SECS = None
+
+
+def test_the_orchestrators_model_notes_are_not_in_the_spine():
+    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    assert 'from core.cortex_orchestrator import run' not in src
+    assert "core.cortex_orchestrator" in _imports("edges_runner.py")

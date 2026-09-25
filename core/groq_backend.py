@@ -315,6 +315,17 @@ def _clear_cooldown(name: str) -> None:
 # Backend извиквания
 # ---------------------------------------------------------------------------
 
+def _pace() -> float:
+    """The body scan's directive (core/llm_pacing) if the cycle set one, else ours."""
+    try:
+        from core import llm_pacing
+        if llm_pacing.SLEEP_SECS is not None:
+            return llm_pacing.SLEEP_SECS
+    except Exception:
+        pass
+    return _SLEEP_SECS
+
+
 def _call_groq(prompt: str, max_tokens: int):
     key = _load_key("GROQ_API_KEY")
     if not key:
@@ -338,7 +349,7 @@ def _call_groq(prompt: str, max_tokens: int):
         ],
         "max_completion_tokens": budget,
     }
-    time.sleep(_SLEEP_SECS)  # adaptive: set by body_scanner directives (default 2s)
+    time.sleep(_pace())  # adaptive: set by body_scanner directives (default 2s)
     from core import llm_door
     r = llm_door.post(None, "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text=prompt,
                       headers=headers, json=payload)   # timeout: llm_door, measured
@@ -381,7 +392,7 @@ def _call_openrouter(prompt: str, max_tokens: int):
         ],
         "max_tokens": max_tokens,
     }
-    time.sleep(_SLEEP_SECS)
+    time.sleep(_pace())
     from core import llm_door
     r = llm_door.post(None, "OpenRouter", OPENROUTER_MODEL, OPENROUTER_API_URL, prompt_text=prompt,
                       headers=headers, json=payload)   # timeout: llm_door, measured
@@ -487,7 +498,7 @@ def _call_gemini(prompt: str, max_tokens: int):
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"maxOutputTokens": budget},
     }
-    time.sleep(_SLEEP_SECS)
+    time.sleep(_pace())
     from core import llm_door
     r = llm_door.post(None, "Gemini", model_name, url, prompt_text=prompt,
                       json=payload)   # timeout: llm_door, measured

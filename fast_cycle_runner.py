@@ -2635,10 +2635,11 @@ def main():
         print(f"[FAST_CYCLE] homeostasis -> FAILED: {e}")
         _skip_steps = set()
 
-    # Apply LLM sleep directive to groq_backend globally
+    # Apply the LLM sleep directive (read by the ladder's legs through
+    # core/llm_pacing - body_scan no longer imports the ladder, task #8 B.C).
     try:
-        import core.groq_backend as _gb
-        _gb._SLEEP_SECS = llm_sleep
+        from core import llm_pacing as _pacing
+        _pacing.set_sleep(llm_sleep)
     except Exception:
         pass
 
@@ -3310,10 +3311,9 @@ def main():
         _grounded()
     _run("orchestrator_grounded", _grounded_first)
 
-    def _cortex_orchestrator():
-        from core.cortex_orchestrator import run as _orchestrate
-        _orchestrate()
-    _run("cortex_orchestrator", _cortex_orchestrator)
+    # cortex_orchestrator (the model's notes on the grounded order) runs in the
+    # edges after the spine (edges_runner.py, task #8 B.C); the arithmetic above
+    # stays here.
 
     # ── 12.75. ТОЧКАТА НА ВРЪЩАНЕ (консенсус с Kimi, 15 авг 2026) ──────────
     # „Планът се ражда на стъпка 2 от слепота и умира на стъпка 51, без да е
@@ -3934,7 +3934,7 @@ def main():
         from core.cycle_report import build as _rep_build, to_markdown as _rep_md, \
             telegram_text as _rep_tg
         from pathlib import Path as _P
-        _rep = _rep_build()
+        _rep = _rep_build()        # deterministic; the brain's words are added by the edges
         _dir = BASE / "output" / "reports"
         _dir.mkdir(parents=True, exist_ok=True)
         _day = str(_rep.get("ts", ""))[:10]

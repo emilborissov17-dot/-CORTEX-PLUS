@@ -100,6 +100,37 @@ def phase_jobs(cycle_id: str, base: Path = BASE, debrief=None, voice=None, send=
     return done
 
 
+def cortex_orchestrator() -> str:
+    """B.C: the model's notes on the grounded order (core/cortex_orchestrator).
+    The arithmetic (core/orchestrator_grounded) stays in the spine."""
+    try:
+        from core.cortex_orchestrator import run as _orchestrate
+        _orchestrate()
+        return "ok"
+    except Exception as exc:  # noqa: BLE001
+        print(f"[EDGES] cortex_orchestrator failed ({type(exc).__name__}: {exc})")
+        return f"failed: {type(exc).__name__}"
+
+
+def cycle_report_words(cycle_id: str, base: Path = BASE, writer=None) -> str | None:
+    """B.C: rebuild the night's report WITH the brain's words ("reporting to the
+    human") and write it over the spine's deterministic one. Returns the path."""
+    try:
+        from core import cycle_report as cr
+        if writer is None:
+            from core.brain import think as writer
+        rep = cr.build(cycle_id=cycle_id, brain_writer=writer)
+        out = base / "output" / "reports"
+        out.mkdir(parents=True, exist_ok=True)
+        path = out / f"CYCLE_REPORT_{str(rep.get('ts', ''))[:10]}.md"
+        path.write_text(cr.to_markdown(rep), encoding="utf-8")
+        print(f"[EDGES] cycle_report with the brain's words -> {path.name}")
+        return str(path)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[EDGES] cycle_report words failed ({type(exc).__name__}: {exc})")
+        return None
+
+
 def main(argv: list) -> int:
     if "--selftest" in argv:
         print("edges_runner.py --selftest")
@@ -118,6 +149,8 @@ def main(argv: list) -> int:
     os.environ["CORTEX_IN_CYCLE"] = str(cid)      # the core only; no loads (warm core)
     jobs = phase_jobs(cid)
     print(f"[EDGES] phase jobs: {len(jobs)} phase(s) for {cid}")
+    print(f"[EDGES] cortex_orchestrator: {cortex_orchestrator()}")
+    cycle_report_words(cid)
     return 0
 
 
