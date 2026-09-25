@@ -422,6 +422,17 @@ def publish_synthesis():
     return list(PUBLISHED)
 
 
+def publish_institution0(files: dict, message: str) -> list:
+    """Institution 0 files (forward rows and their page), {path: text}. Independent
+    of goal_score. The caller gates it through core.notary.may_act first
+    (experiments/institution/register_forward_row.py). Returns what was written,
+    with commit shas; raises on the first failed push."""
+    PUBLISHED.clear()
+    for path, content in files.items():
+        _push_file(path, content, message)
+    return list(PUBLISHED)
+
+
 def publish_vision():
     try:
         vision = VISION_FILE.read_text(encoding="utf-8") if VISION_FILE.exists() else ""
