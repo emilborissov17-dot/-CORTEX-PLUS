@@ -41,7 +41,9 @@ from pathlib import Path
 # external API. Dead in the live scoring path by convention; used here only to write
 # the cycle note and the proposal text locally instead of via a rented API.
 OLLAMA_URL  = "http://localhost:11434"
-LOCAL_MODEL = "qwen2.5:3b"    # ~1.9 GB, fits VRAM; PULSE's default local brain
+# The warm core (25 Sep 2026), a fine-tune of the same qwen2.5:3b: any other local
+# model evicts it on a 4 GB card, and the next cycle finds it absent.
+LOCAL_MODEL = "cortex-l1b-3b:latest"
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
@@ -558,6 +560,7 @@ def _local_brain(prompt: str, timeout: int = 30, temperature: float = 0.4,
     back). Never touches an external API — sovereignty is the point."""
     body = json.dumps({
         "model": model or LOCAL_MODEL, "stream": False,
+        "keep_alive": -1 if (model or LOCAL_MODEL) == LOCAL_MODEL else 0,
         "messages": [{"role": "user", "content": prompt}],
         "options": {"temperature": temperature, "num_predict": num_predict},
     }).encode("utf-8")

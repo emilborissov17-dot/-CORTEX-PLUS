@@ -387,7 +387,22 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     record(caller=caller, backend=backend, model=model, outcome=outcome,
            latency_s=latency, http_status=status, error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))
+    _restore_core_after(backend, model, url)
     return resp
+
+
+def _restore_core_after(backend: str, model: str | None, url: str | None) -> None:
+    """Outside a cycle, a local call to any model but the warm core ends with the
+    core restored (core.model_window.restore_core). Fail-open: never raises."""
+    if _family(backend) != "local":
+        return
+    try:
+        from core import model_window as _mw
+        r = _mw.restore_core(model or backend[6:], _base_of(url))
+        if r and r.get("reloaded"):
+            print(f"  [LOCAL] warm core restored after {model}: {r.get('model')} in {r.get('seconds')} s")
+    except Exception:
+        pass
 
 
 def _judge(status, facts) -> tuple:
@@ -423,6 +438,7 @@ def call(caller: str | None, backend: str, model: str | None, fn, *,
     record(caller=caller, backend=backend, model=model, outcome=outcome,
            latency_s=round(time.monotonic() - t0, 2), error=err,
            prompt_text=prompt_text, **facts, **(row_extra or {}))
+    _restore_core_after(backend, model, None)
     return d
 
 

@@ -98,7 +98,9 @@ OLLAMA_URL = "http://localhost:11434"
 # --model overrides all of this, deliberately: measuring the 7b's cost is a
 # legitimate thing to want to do. It is just not the default.
 PREFERRED_MODELS = [
-    "qwen2.5:3b",     # ~1.9 GB — FITS VRAM entirely. Non-reasoning. The default.
+    "cortex-l1b-3b:latest",  # the warm core (25 Sep 2026): a qwen2.5:3b fine-tune that
+                             # is ALREADY resident; any other model evicts it
+    "qwen2.5:3b",     # ~1.9 GB — FITS VRAM entirely. Non-reasoning.
     "qwen3:1.7b",     # ~1.4 GB — fits, but reasoning: <think> costs latency per tick
     "qwen2.5:7b",     # 4.68 GB — SPILLS ~1.9 GB into system RAM. Fallback only.
     "qwen3:8b",       # 5.23 GB — spills more, and reasoning on top. Last resort.
@@ -492,7 +494,9 @@ def infer(model: str, samples: list[dict], prev: Optional[dict]) -> dict:
             "stream": False,
             "think": False,
             "options": {"num_predict": MAX_TOKENS, "temperature": 0.3},
-            "keep_alive": "10m",   # keep it warm — a 60s loop must not reload weights
+            # the core stays loaded (-1); any other model unloads after the tick,
+            # so it cannot sit on the card the cycle's core needs (25 Sep 2026)
+            "keep_alive": -1 if model == PREFERRED_MODELS[0] else 0,
         },
         timeout=INFER_TIMEOUT_SEC,
     )

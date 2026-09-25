@@ -515,11 +515,15 @@ def _semantic_rule(payload, metric: str, axis: str) -> tuple:
     Returns (kind, rule, reason) or (None, None, why_not)."""
     try:
         import requests as _rq
+        # The warm core, not the strongest installed qwen3 (25 Sep 2026): five
+        # qwen3:8b calls from here on the evening of 24 Sep evicted the core the
+        # 03:04 cycle needed.
         try:
-            from core.groq_backend import _pick_local_model, _OLLAMA_URL
-            model, base = _pick_local_model(), _OLLAMA_URL
+            from core.groq_backend import _OLLAMA_URL
+            from core.model_window import cycle_local_model
+            model, base = cycle_local_model(), _OLLAMA_URL
         except Exception:
-            model, base = "qwen3", "http://localhost:11434"
+            model, base = "cortex-l1b-3b:latest", "http://localhost:11434"
         acc = _scan(payload) if isinstance(payload, (dict, list)) else None
         if not acc or not (acc["scalars"] or acc["num_lists"]):
             return None, None, "semantic: nothing numeric to reason about"

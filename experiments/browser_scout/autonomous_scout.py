@@ -38,7 +38,8 @@ COMPOSER_NEEDS = REPO / "memory" / "composer_needs.json"
 
 import os
 _OLLAMA = os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434")
-_MODEL  = os.environ.get("CORTEX_LOCAL_MODEL", "qwen2.5:3b")
+# The warm core (25 Sep 2026): any other local model evicts it on a 4 GB card.
+_MODEL  = os.environ.get("CORTEX_LOCAL_MODEL", "cortex-l1b-3b:latest")
 
 
 def _now_iso():
@@ -81,7 +82,9 @@ def _local(prompt: str, timeout: int = 120, num_predict: int = 300) -> str:
     # future tight loop through _local() would, and should set its own value
     # rather than raise this one.
     r = requests.post(f"{_OLLAMA}/api/chat", timeout=timeout, json={
-        "model": _MODEL, "stream": False, "keep_alive": 0,
+        "model": _MODEL, "stream": False,
+        # the one policy: the core stays (-1), anything else unloads (0)
+        "keep_alive": -1 if _MODEL == "cortex-l1b-3b:latest" else 0,
         "messages": [{"role": "user", "content": prompt}],
         "options": {"temperature": 0.1, "num_predict": num_predict}})
     r.raise_for_status()

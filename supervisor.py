@@ -1678,6 +1678,26 @@ def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
         return None
 
 
+def _warm_core_preflight() -> str:
+    """Before a spawn: the warm core resident, loaded once if absent.
+
+    25 Sep 2026: the 03:04 cycle found cortex-l1b-3b gone (evicted in the evening
+    by calls to other models) and refused 178 local calls. This is the ONE load
+    the cycle path may perform, and it happens here, before step 1 and outside
+    the cycle. The returned sentence goes into the witness start row.
+    """
+    try:
+        from core import model_window as _mw
+        r = _mw.ensure_core()
+    except Exception as e:  # noqa: BLE001
+        return f"warm core preflight FAILED ({type(e).__name__}: {e})"
+    if r.get("resident_before"):
+        return f"warm core resident ({r['model']}), 0 reloads"
+    if r.get("reloaded"):
+        return f"warm core reloaded in {r['seconds']} s ({r['model']})"
+    return f"warm core ABSENT after a reload attempt ({r.get('error')}, {r['seconds']} s)"
+
+
 def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[int]:
     """Start fast_cycle_runner detached, with its output captured. Returns its PID.
 
@@ -1792,13 +1812,18 @@ def spawn_cycle(cycle_id: str, resume_from: Optional[str] = None) -> Optional[in
     # spawn that used to follow here is RETIRED from this path — the witness is
     # the cycle's parent and records the exit code itself; the reaper was a
     # sibling and died with the cycle six times out of six on 23-24 Sep.
+    _preflight = _warm_core_preflight()
+    try:
+        log(f"PREFLIGHT: {_preflight}")
+    except Exception:
+        pass
     if _witness_available() and log_file is not None:
         try:
             if fh is not subprocess.DEVNULL:
                 fh.close()
         except Exception:
             pass
-        pid = _spawn_witnessed(argv, log_file, cycle_id, env)
+        pid = _spawn_witnessed(argv, log_file, cycle_id, env, preflight=_preflight)
         if pid is not None:
             try:
                 log(f"cycle output -> {log_file}")
@@ -1905,7 +1930,8 @@ def _wait_witness_start(cycle_id: str, timeout: float) -> Optional[dict]:
         time.sleep(0.2)
 
 
-def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict) -> Optional[int]:
+def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict,
+                     preflight: str = "") -> Optional[int]:
     """Start tools/cycle_witness.ps1, which starts `argv`. Returns the cycle's pid.
 
     None ONLY when the witness process itself could not be created — then no
@@ -1924,6 +1950,8 @@ def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict) -> Op
              "-Exe", str(argv[0]), "-ArgsB64", args_b64,
              "-Log", str(log_file), "-WitnessLog", str(witness_log_path()),
              "-CycleId", str(cycle_id), "-WorkDir", str(BASE)]
+    if preflight:
+        wargv += ["-Preflight", str(preflight)]
     try:
         w = _popen_detached(wargv, console_flag=CREATE_NO_WINDOW,
                             cwd=str(BASE), env=env,

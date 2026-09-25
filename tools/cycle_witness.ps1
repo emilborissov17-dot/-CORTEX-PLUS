@@ -50,6 +50,9 @@ param(
     [string]$WitnessLog = "",
     [string]$CycleId = "",
     [string]$WorkDir = "",
+    # What the supervisor found before the spawn (warm core resident / reloaded),
+    # carried into the start row as `preflight`.
+    [string]$Preflight = "",
     [switch]$SelfTest
 )
 $ErrorActionPreference = "Continue"
@@ -311,6 +314,7 @@ Write-Row ([ordered]@{
     cycle_pid_source   = $source
     cmdline            = $cmdline
     log                = $Log
+    preflight          = $(if ($Preflight) { $Preflight } else { $null })
     ts                 = (Now-Iso)
 })
 

@@ -292,6 +292,14 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
         # resident; a test that needs the warm core says so itself.
         monkeypatch.setattr(_door, "_resident", lambda base: set())
         monkeypatch.setattr(_door, "_ps_cache", {})
+        # 25 Sep: the door restores the warm core after a non-core local call
+        # outside a cycle, and the supervisor loads it before a spawn. Neither may
+        # reach the real Ollama from a test; tests of those paths say so.
+        from core import model_window as _mwin
+        monkeypatch.setattr(_mwin, "restore_core", lambda after_model, url=None: None)
+        monkeypatch.setattr(_mwin, "ensure_core",
+                            lambda url=None: {"model": "core", "resident_before": True,
+                                              "reloaded": False, "seconds": 0.0})
     except Exception:
         pass
 

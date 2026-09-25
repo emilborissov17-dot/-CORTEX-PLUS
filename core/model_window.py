@@ -154,6 +154,49 @@ def guard_local(model: str, purpose: str = "") -> str:
     return local
 
 
+def resident_models(url: str = None) -> set | None:
+    """Names on Ollama's /api/ps, or None if it did not answer."""
+    try:
+        with urllib.request.urlopen((url or OLLAMA_URL) + "/api/ps", timeout=5) as r:
+            return {m.get("name") for m in (json.loads(r.read().decode("utf-8")).get("models") or [])}
+    except Exception:
+        return None
+
+
+def ensure_core(url: str = None) -> dict:
+    """The warm core resident, loading it (keep_alive -1) if absent. Never raises.
+
+    THE ONE LOAD THE CYCLE PATH MAY PERFORM (25 Sep 2026): the supervisor calls
+    this before it spawns a cycle, outside the cycle, so the cycle itself still
+    loads nothing. Inside a cycle _set_keep_alive refuses, and this reports it.
+    """
+    core = cycle_local_model()
+    names = resident_models(url)
+    if names is not None and core in names:
+        return {"model": core, "resident_before": True, "reloaded": False, "seconds": 0.0}
+    t0 = time.monotonic()
+    ok = _set_keep_alive(core, -1, url or OLLAMA_URL)
+    after = resident_models(url)
+    return {"model": core, "resident_before": False, "reloaded": bool(ok and after and core in after),
+            "seconds": round(time.monotonic() - t0, 1),
+            "error": None if ok else "load refused or failed"}
+
+
+def restore_core(after_model: str, url: str = None) -> dict | None:
+    """After a call to a model other than the core, OUTSIDE a cycle: unload that
+    model and put the core back (25 Sep 2026). On a 4 GB card any second model
+    evicts the core; the night of 24-25 Sep lost it to five qwen3:8b calls from
+    source_registration and a qwen2.5:3b load, and the 03:04 cycle ran with 178
+    "warm core absent" refusals. None when there was nothing to restore."""
+    if in_cycle() or not after_model or after_model == cycle_local_model():
+        return None
+    try:
+        _set_keep_alive(after_model, 0, url or OLLAMA_URL)
+    except Exception:
+        pass
+    return ensure_core(url)
+
+
 def small_model() -> str:
     return config()["small"]
 
