@@ -139,6 +139,8 @@ REAPER_SETTLE_SEC = 8.0
 # it is started outside this tick's job. It replaces memory/cycle_reaper.py on
 # the spawn path. See claude/reports/STEP_AUDIT_2026-09-24.md, Parts 3-5.
 WITNESS_PS1 = BASE / "tools" / "cycle_witness.ps1"
+EDGES_RUNNER = BASE / "edges_runner.py"
+EDGES_SUFFIX = "#edges"          # the edges' witness cycle_id = <spine cycle_id>#edges
 # Where core/survival_mode keeps memory/survival_state.json. A constant so the
 # test sandbox can redirect it; survival_mode.enter() is given it explicitly.
 SURVIVAL_BASE = BASE
@@ -193,6 +195,10 @@ CLEAR_REFUSED_LOCK    = "CLEAR_REFUSED_LOCK"
 # a failure to be retried, it is a decision to stop — so it is named for what it
 # is rather than for the budget that ran out.
 SURVIVAL_SLEEP        = "SURVIVAL_SLEEP"
+# The spine sealed its night; its edges (edges_runner.py - the model calls about
+# the night) have not run yet. Spawned in their own witnessed process; their
+# failure never touches the spine's exit code (task #8 B.D, 25 Sep 2026).
+EDGES_START           = "EDGES_START"
 REFUSED_BUDGET_DONE   = SURVIVAL_SLEEP   # the old name; kept so importers hold
 
 
@@ -706,6 +712,42 @@ def _last_spawn_unexplained(state: dict) -> Optional[dict]:
     return {"cycle_id": cid, "why": why, "spawned_utc": spawn.get("utc")}
 
 
+def _edges_due(state: dict) -> Optional[str]:
+    """The spine cycle_id whose edges are owed: it sealed CYCLE_FINISHED (a night
+    with failed steps included) and its edges were never spawned."""
+    spawn = (state or {}).get("last_spawn") or {}
+    cid = spawn.get("cycle_id")
+    if not cid or spawn.get("edges"):
+        return None
+    try:
+        return cid if ledger.has_finished(cid) else None
+    except Exception:
+        return None
+
+
+def _spawn_edges(action: "Action", state: dict) -> "Action":
+    """Start edges_runner.py for the sealed spine, witnessed as <cid>#edges.
+    Marked BEFORE the spawn: a crash here must not start them twice."""
+    cid = action.cycle_id
+    state.setdefault("last_spawn", {})["edges"] = {"utc": datetime.now(timezone.utc).isoformat()}
+    save_state(state)
+    if not EDGES_RUNNER.exists() or not _witness_available():
+        log(f"EDGES: not started for {cid} - edges_runner or the witness is unavailable")
+        return action
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1",
+           "CORTEX_CYCLE_ID": str(cid)}
+    CYCLE_LOG_DIR.mkdir(parents=True, exist_ok=True)
+    log_file = CYCLE_LOG_DIR / f"edges_{datetime.now().astimezone():%Y-%m-%d_%H%M%S}.log"
+    argv = [PYTHON if isinstance(PYTHON, str) else str(PYTHON), "-u", str(EDGES_RUNNER),
+            "--cycle-id", str(cid)]
+    pid = _spawn_witnessed(argv, log_file, f"{cid}{EDGES_SUFFIX}", env,
+                           preflight=_warm_core_preflight(), role="edges")
+    state["last_spawn"]["edges"]["pid"] = pid
+    save_state(state)
+    log(f"EDGES: started for {cid} (pid={pid}) -> {log_file}")
+    return action
+
+
 def _is_pre_witness_failure(failure: Optional[dict]) -> bool:
     """A failure record written before the witness existed.
 
@@ -935,7 +977,8 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
            extraordinary: Optional[dict] = None,
            heartbeat_pid_alive: bool = False,
            witness_exit: Optional[dict] = None,
-           last_spawn_unexplained: Optional[dict] = None) -> Action:
+           last_spawn_unexplained: Optional[dict] = None,
+           edges_due: Optional[str] = None) -> Action:
     """What should this tick do? Exactly one thing.
 
     `lock_pid_alive`, `heartbeat_pid_alive`, `lock_cycle_finished` and `extraordinary`
@@ -1201,6 +1244,10 @@ def decide(now: datetime, state: dict, heartbeat: Optional[dict],
                       scheduled_for=now.isoformat(),
                       details={"extraordinary": True,
                                "requested_at": extraordinary.get("ts")})
+
+    if edges_due:
+        return Action(EDGES_START, reason=f"the spine of {edges_due} sealed its night; "
+                                          f"its edges have not run", cycle_id=edges_due)
 
     if state.get("last_run_date") == today:
         return Action(NOTHING, reason="today's cycle has already run")
@@ -1931,7 +1978,7 @@ def _wait_witness_start(cycle_id: str, timeout: float) -> Optional[dict]:
 
 
 def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict,
-                     preflight: str = "") -> Optional[int]:
+                     preflight: str = "", role: str = "spine") -> Optional[int]:
     """Start tools/cycle_witness.ps1, which starts `argv`. Returns the cycle's pid.
 
     None ONLY when the witness process itself could not be created — then no
@@ -1952,6 +1999,7 @@ def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict,
              "-CycleId", str(cycle_id), "-WorkDir", str(BASE)]
     if preflight:
         wargv += ["-Preflight", str(preflight)]
+    wargv += ["-Role", str(role)]
     try:
         w = _popen_detached(wargv, console_flag=CREATE_NO_WINDOW,
                             cwd=str(BASE), env=env,
@@ -2259,13 +2307,15 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
     # With no lock, the only question left about the past is whether the most
     # recent spawn died unexplained — see _last_spawn_unexplained().
     unexplained = None if lock else _last_spawn_unexplained(state)
+    edges_due = None if lock else _edges_due(state)
     extra = read_extraordinary(now)
     action = decide(now, state, beat, lock, cfg, lock_pid_alive=alive,
                     lock_cycle_finished=finished, lock_cycle_refused=refused,
                     extraordinary=extra,
                     heartbeat_pid_alive=beat_alive,
                     witness_exit=wexit,
-                    last_spawn_unexplained=unexplained)
+                    last_spawn_unexplained=unexplained,
+                    edges_due=edges_due)
 
     if dry_run:
         log(f"[dry-run] {action.kind}: {action.reason}")
@@ -2456,6 +2506,9 @@ def tick(now: Optional[datetime] = None, dry_run: bool = False) -> Action:
         ledger.append(ledger.CYCLE_STARTED, cycle_id=cycle_id, pid=pid,
                       trigger=action.kind)
         return action
+
+    if action.kind == EDGES_START:
+        return _spawn_edges(action, state)
 
     if action.kind == SKIP_MISSED:
         state["last_run_date"] = today   # do not retry all day

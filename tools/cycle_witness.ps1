@@ -53,6 +53,8 @@ param(
     # What the supervisor found before the spawn (warm core resident / reloaded),
     # carried into the start row as `preflight`.
     [string]$Preflight = "",
+    # "spine" or "edges" (task #8 B.D); the edges' cycle_id is <spine id>#edges.
+    [string]$Role = "spine",
     [switch]$SelfTest
 )
 $ErrorActionPreference = "Continue"
@@ -315,6 +317,7 @@ Write-Row ([ordered]@{
     cmdline            = $cmdline
     log                = $Log
     preflight          = $(if ($Preflight) { $Preflight } else { $null })
+    role               = $Role
     ts                 = (Now-Iso)
 })
 

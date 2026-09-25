@@ -843,6 +843,7 @@ _NOT_WRITTEN_BY_SUPERVISOR = {
     # it a module constant instead. That single rule is what closed this hole.
     "BASE",
     "WITNESS_PS1",   # tools/cycle_witness.ps1 — executed, never written
+    "EDGES_RUNNER",  # edges_runner.py — spawned, never written
 }
 
 
@@ -1097,3 +1098,41 @@ def test_death_and_retry_keeps_the_ledger_chain_valid(tick_sandbox, monkeypatch)
 
 def test_a_nothing_tick_logs_its_reason(tick_sandbox):
     st = sup.load_state(); st["last_run_date"] = _today(); sup.save_state(st); a = sup.tick(); assert a.kind == sup.NOTHING and f"TICK NOTHING: {a.reason}" in (tick_sandbox / "supervisor.log").read_text(encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# Spine -> edges (task #8 B.D, 25 Sep 2026)
+# ---------------------------------------------------------------------------
+
+def test_a_sealed_spine_owes_its_edges_before_anything_else():
+    a = sup.decide(at(10), state(last_run_date="2026-07-13"), None, None, CFG, edges_due="c-spine")
+    assert a.kind == sup.EDGES_START and a.cycle_id == "c-spine"
+
+
+def test_the_edges_are_spawned_once_witnessed_and_named_apart(tick_sandbox, monkeypatch):
+    from memory import existence_ledger as el
+    el.append(el.CYCLE_STARTED, cycle_id="c-spine", pid=1)
+    el.append(el.CYCLE_FINISHED, cycle_id="c-spine", pid=1, duration_sec=10.0)
+    st = sup.load_state(); st["last_run_date"] = _today()
+    st["last_spawn"] = {"cycle_id": "c-spine", "utc": "2026-09-25T06:00:00+00:00"}
+    sup.save_state(st)
+    spawned = []
+    monkeypatch.setattr(sup, "_witness_available", lambda: True)
+    monkeypatch.setattr(sup, "_spawn_witnessed",
+                        lambda argv, log_file, cid, env, preflight="", role="spine":
+                        spawned.append((argv, cid, role)) or 4242)
+    a = sup.tick()
+    assert a.kind == sup.EDGES_START
+    (argv, cid, role), = spawned
+    assert argv[2].endswith("edges_runner.py") and argv[-2:] == ["--cycle-id", "c-spine"]
+    assert cid == "c-spine" + sup.EDGES_SUFFIX and role == "edges"
+    assert sup.tick().kind != sup.EDGES_START and len(spawned) == 1, "the edges ran twice"
+
+
+def test_a_failed_edges_run_never_touches_the_spine(tick_sandbox):
+    _witness([{"event": "exit", "cycle_id": "c-spine", "exit_code": 0, "meaning": "clean exit"},
+              {"event": "exit", "cycle_id": "c-spine" + sup.EDGES_SUFFIX, "exit_code": 1,
+               "meaning": "python error, see log"}])
+    assert sup.witness_exit_for("c-spine")["exit_code"] == 0
+    st = {"last_spawn": {"cycle_id": "c-spine"}}
+    assert sup._last_spawn_unexplained(st) is None
