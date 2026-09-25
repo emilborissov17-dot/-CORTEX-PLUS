@@ -311,6 +311,44 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
         pass
 
 
+class OllamaWriteRefused(RuntimeError):
+    """A test tried to change the live Ollama's residency."""
+
+
+@pytest.fixture(autouse=True)
+def _no_ollama_writes(monkeypatch):
+    """25 Sep 2026, the SECOND eviction the same morning: test_supervisor's dead-
+    cycle paths reach supervisor -> core.aggressive_cleanup.release_ollama(apply=True),
+    which POSTs keep_alive=0 for every resident model to the REAL server. At 09:23:58
+    it unloaded cortex-l1b-3b in the middle of the 08:54 cycle. The stubs above name
+    functions; this is the net under them: any POST to Ollama's port through urllib
+    raises. Reads (GET /api/ps, /api/tags) pass."""
+    import urllib.request as _ur
+    real = _ur.urlopen
+
+    def guarded(url, data=None, *a, **k):
+        target = url.full_url if isinstance(url, _ur.Request) else str(url)
+        body = data if data is not None else getattr(url, "data", None)
+        if ":11434/" in target and body is not None:
+            raise OllamaWriteRefused(f"test POST to the live Ollama refused: {target}")
+        return real(url, data, *a, **k)
+
+    monkeypatch.setattr(_ur, "urlopen", guarded)
+
+    try:
+        import requests.sessions as _rs
+        real_req = _rs.Session.request
+
+        def guarded_req(self, method, url, *a, **k):
+            if ":11434/" in str(url) and str(method).upper() == "POST":
+                raise OllamaWriteRefused(f"test POST to the live Ollama refused: {url}")
+            return real_req(self, method, url, *a, **k)
+
+        monkeypatch.setattr(_rs.Session, "request", guarded_req)
+    except Exception:
+        pass
+
+
 @pytest.fixture(autouse=True)
 def _daily_tier_to_tmp(monkeypatch, tmp_path):
     """No test may read the LIVE daily tier. Autouse, for every test.
