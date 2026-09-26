@@ -3704,39 +3704,9 @@ def main():
         _mirror_run(source="cycle")
     _run("self_mirror", _self_mirror)
 
-    # ── ЕДИН СЪЗНАТЕЛЕН ПРОЧИТ НА ОГЛЕДАЛОТО (21 август 2026) ──────────────
-    # Петте реда на core/interoception.py влизат във ВСЯКО повикване — това е
-    # усет, а не четене: присъстват, независимо дали някой им обръща внимание.
-    # Веднъж на цикъл мозъкът получава ЦЯЛОТО огледало и казва какво вижда.
-    # Числата, които наистина е цитирал, се проверяват срещу огледалото (не се
-    # приемат на доверие) и влизат в менюто на G_LEARN, а дебрифът на фазата е
-    # длъжен да цитира поне две от тях.
-    # Стои СЛЕД self_mirror, защото чете каквото то току-що е написало.
-    # ── 25.46. Мозъкът получава ЦЯЛОТО огледало и казва какво вижда ──
-    beat("read_the_mirror", "25.46")
-    def _read_the_mirror():
-        from core.interoception import read_the_mirror as _rtm
-        rec = _rtm()
-        print(f"[FAST_CYCLE] read_the_mirror -> цитирани {rec.get('cited_count', 0)} "
-              f"от {rec.get('mirror_numbers_available', 0)} числа "
-              f"(квота {rec.get('quota')}, изпълнена={rec.get('met_quota')})")
-        if rec.get("said"):
-            print(f"[FAST_CYCLE] огледалото каза -> {str(rec['said'].get('saw'))[:200]}")
-    _run("read_the_mirror", _read_the_mirror)
-
-    # ── 25.5. Мозъкът съди собствения си план: сбъдна ли се тестът му ──
-    beat("brain_debrief", "25.5")
-    try:
-        from core.brain import debrief_cycle as _debrief
-        _rev = _debrief()
-        if _rev:
-            print(f"[FAST_CYCLE] brain review -> success={_rev.get('success')} "
-                  f"| {str(_rev.get('verdict'))[:120]}")
-            print(f"[FAST_CYCLE] brain blind spot -> {str(_rev.get('blind_spot'))[:120]}")
-        else:
-            print("[FAST_CYCLE] brain review -> no plan to judge / brain silent")
-    except Exception as e:
-        print(f"[FAST_CYCLE] brain review -> FAILED: {type(e).__name__}: {e}")
+    # 25.46 read_the_mirror and 25.5 brain_debrief run in edges_runner.py since
+    # 26 Sep 2026 (C3c): both ask the model, and nothing later in this spine
+    # reads what they write.
 
     # ── ОТЧЕТЪТ ПРЕД ЧОВЕКА, НАПИСАН ОТ САМАТА СИСТЕМА (Емил, 15 авг 2026) ──
     # Стъпка по стъпка: за какво служи, какво каза самата тя, удържа ли обещания

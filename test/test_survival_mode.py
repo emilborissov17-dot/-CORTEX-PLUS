@@ -256,8 +256,8 @@ def test_normal_operation_uses_the_ordinary_ceiling():
 
 
 def test_p50_reads_history_filed_under_the_agent_label():
-    baseline = {"internet_agent": {"runs": [{"seconds": s} for s in (100, 300)]}}
-    seconds, source = p50_ceiling("internet_intelligence", baseline,
+    baseline = {"cosmos_snapshots_agent": {"runs": [{"seconds": s} for s in (100, 300)]}}
+    seconds, source = p50_ceiling("cosmos_snapshots", baseline,
                                   {"_default": 900})
     assert seconds == 100.0
     assert "p50" in source

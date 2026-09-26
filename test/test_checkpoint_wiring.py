@@ -202,7 +202,8 @@ def test_the_checkpoint_call_sits_on_the_completed_path(runner):
 # the limit was set.
 # 30 -> 29 on 2026-09-26: llm_self_review_axes, an uncovered step, was
 # deleted from the cycle with its code (C3b).
-UNCOVERED_STEP_LIMIT = 29
+# 29 -> 28 the same day: brain_debrief, uncovered, moved to edges_runner.py (C3c).
+UNCOVERED_STEP_LIMIT = 28
 
 
 def test_the_uncovered_steps_are_counted_and_not_growing():

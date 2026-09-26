@@ -32,12 +32,15 @@
     "  nothing for the scorer to score, so under stress they are what the day is",
     "  FOR.",
     "",
-    "  FLAGGED FOR HUMAN REVIEW: brain_briefing, self_mirror and brain_debrief are",
-    "  CRITICAL here because they are backbone, but all three are LLM-heavy and",
+    "  FLAGGED FOR HUMAN REVIEW: brain_briefing and self_mirror are",
+    "  CRITICAL here because they are backbone, but both are LLM-heavy and",
     "  survival mode is usually entered BECAUSE the models are unreachable. They",
     "  will most often run and degrade. Kept CRITICAL because breaking the audit",
     "  chain is the worse failure — but this is the entry most likely to be wrong,",
-    "  and it is a human's call, not the system's."
+    "  and it is a human's call, not the system's.",
+    "",
+    "  26 Sep 2026 (C3c): brain_debrief left this list when it moved to",
+    "  edges_runner.py; it is no longer a spine step."
   ],
 
   "_default": "NORMAL",
@@ -54,7 +57,6 @@
     "merklememory_commit",
     "merkle_verify",
     "self_mirror",
-    "brain_debrief",
     "cycle_report",
 
     "civilization_snapshots",

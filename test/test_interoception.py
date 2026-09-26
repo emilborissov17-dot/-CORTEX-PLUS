@@ -209,24 +209,26 @@ def test_the_read_never_raises_when_the_brain_is_down(tmp_path):
     assert (tmp_path / "read.json").exists(), "the failure was not recorded"
 
 
-def test_the_runner_calls_it_inside_g_learn():
-    src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
-    assert 'beat("read_the_mirror", "25.46")' in src
-    assert "read_the_mirror as _rtm" in src
-    # After self_mirror, because it reads what self_mirror just wrote.
-    assert src.index('_run("self_mirror"') < src.index('beat("read_the_mirror"')
-    assert src.index('beat("read_the_mirror"') < src.index('beat("brain_debrief"')
+def test_the_edges_run_it_before_the_phase_jobs():
+    """Since 26 Sep 2026 (C3c) read_the_mirror runs in edges_runner.py, after the
+    whole spine - so after self_mirror, whose output it reads - and before the phase
+    jobs, so the G_LEARN debrief can cite what it read."""
+    import ast
+    tree = ast.parse((REPO / "edges_runner.py").read_text(encoding="utf-8"))
+    main = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "main")
+    order = [name for _line, name in sorted(
+        (n.lineno, n.func.id) for n in ast.walk(main)
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+        and n.func.id in ("read_the_mirror", "brain_debrief", "phase_jobs"))]
+    assert order.index("read_the_mirror") < order.index("phase_jobs"), order
+    assert order.index("read_the_mirror") < order.index("brain_debrief"), order
 
 
-def test_the_phase_spec_places_it_in_g_learn():
+def test_no_spine_phase_lists_it():
     spec = json.loads((REPO / "config" / "cycle_phases.json")
                       .read_text(encoding="utf-8"))["phases"]
-    names = [s["name"] for s in spec["G_LEARN"]["steps"]]
-    assert "read_the_mirror" in names
     for phase, body in spec.items():
-        if phase == "G_LEARN":
-            continue
-        assert "read_the_mirror" not in [s["name"] for s in body["steps"]]
+        assert "read_the_mirror" not in [s["name"] for s in body["steps"]], phase
 
 
 # --------------------------------------------------------------------------- #

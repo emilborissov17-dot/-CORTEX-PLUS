@@ -100,6 +100,37 @@ def phase_jobs(cycle_id: str, base: Path = BASE, debrief=None, voice=None, send=
     return done
 
 
+def read_the_mirror() -> str:
+    """C3c (26 Sep 2026), was spine step 25.46: the brain reads the mirror's numbers
+    (core/interoception). Runs before the phase jobs, so the G_LEARN debrief sees it."""
+    try:
+        from core.interoception import read_the_mirror as _rtm
+        rec = _rtm() or {}
+        print(f"[EDGES] read_the_mirror: cited {rec.get('cited_count', 0)} of "
+              f"{rec.get('mirror_numbers_available', 0)} (quota {rec.get('quota')}, "
+              f"met={rec.get('met_quota')})")
+        return "ok"
+    except Exception as exc:  # noqa: BLE001
+        print(f"[EDGES] read_the_mirror failed ({type(exc).__name__}: {exc})")
+        return f"failed: {type(exc).__name__}"
+
+
+def brain_debrief() -> str:
+    """C3c (26 Sep 2026), was spine step 25.5: the brain judges the plan it wrote at
+    the start of the night (core/brain.debrief_cycle)."""
+    try:
+        from core.brain import debrief_cycle as _debrief
+        rev = _debrief()
+        if not rev:
+            print("[EDGES] brain_debrief: no plan to judge / brain silent")
+            return "silent"
+        print(f"[EDGES] brain_debrief: success={rev.get('success')} | {str(rev.get('verdict'))[:120]}")
+        return "ok"
+    except Exception as exc:  # noqa: BLE001
+        print(f"[EDGES] brain_debrief failed ({type(exc).__name__}: {exc})")
+        return f"failed: {type(exc).__name__}"
+
+
 def cortex_orchestrator() -> str:
     """B.C: the model's notes on the grounded order (core/cortex_orchestrator).
     The arithmetic (core/orchestrator_grounded) stays in the spine."""
@@ -134,7 +165,8 @@ def cycle_report_words(cycle_id: str, base: Path = BASE, writer=None) -> str | N
 def main(argv: list) -> int:
     if "--selftest" in argv:
         print("edges_runner.py --selftest")
-        for mod in ("core.phase_debrief", "cockpit.phase_voice", "core.phase_report"):
+        for mod in ("core.phase_debrief", "cockpit.phase_voice", "core.phase_report",
+                    "core.interoception", "core.brain"):
             try:
                 __import__(mod)
                 print(f"  LIVE   {mod}")
@@ -147,6 +179,8 @@ def main(argv: list) -> int:
         return 2
     os.environ["CORTEX_EDGES"] = str(cid)
     os.environ["CORTEX_IN_CYCLE"] = str(cid)      # the core only; no loads (warm core)
+    print(f"[EDGES] read_the_mirror: {read_the_mirror()}")
+    print(f"[EDGES] brain_debrief: {brain_debrief()}")
     jobs = phase_jobs(cid)
     print(f"[EDGES] phase jobs: {len(jobs)} phase(s) for {cid}")
     print(f"[EDGES] cortex_orchestrator: {cortex_orchestrator()}")
