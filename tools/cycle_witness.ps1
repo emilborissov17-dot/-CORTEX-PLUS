@@ -306,6 +306,36 @@ while ((Get-Date) -lt $deadline) {
 $cyclePid = $launcherPid; $source = "launcher"
 if ($interpPid) { $cyclePid = $interpPid; $source = "interpreter" }
 
+# CODE STATE (26 Sep 2026, C2b): which commit ran, and which TRACKED code files were
+# dirty when it started. "Code" = *.py *.ps1 *.psm1 *.bat *.cmd *.vbs anywhere, plus
+# config/*.json; never memory/, snapshots/, data/, cortex_memory/, claude/reports/,
+# config/scheduler.json. Runtime data files that change every night (output/*.json,
+# agents/out/*.txt) are not code and would make every night DIRTY. Never throws: a
+# failure is recorded as code_state_error and the witness carries on.
+function Get-CodeState([string]$dir) {
+    $out = [ordered]@{ commit = $null; dirty_code = $null; code_state_error = $null }
+    try {
+        $d = $(if ($dir) { $dir } else { (Get-Location).Path })
+        $sha = (& git -C $d rev-parse HEAD 2>$null)
+        if ($LASTEXITCODE -ne 0 -or -not $sha) { $out.code_state_error = "not a git work tree: $d"; return $out }
+        $out.commit = "$sha".Trim()
+        $lines = & git -C $d -c core.quotepath=false status --porcelain --untracked-files=no 2>$null
+        $dirty = New-Object System.Collections.Generic.List[string]
+        foreach ($l in @($lines)) {
+            if (-not $l -or $l.Length -lt 4) { continue }
+            $f = $l.Substring(3)
+            if ($f -match ' -> ') { $f = ($f -split ' -> ')[-1] }
+            $f = $f.Trim('"')
+            if ($f -match '^(memory|snapshots|data|cortex_memory|claude/reports)/') { continue }
+            if ($f -eq 'config/scheduler.json') { continue }
+            if ($f -match '\.(py|ps1|psm1|bat|cmd|vbs)$' -or $f -match '^config/[^/]+\.json$') { $dirty.Add($f) }
+        }
+        $out.dirty_code = [string[]]$dirty.ToArray()
+    } catch { $out.code_state_error = "$($_.Exception.Message)" }
+    return $out
+}
+$codeState = Get-CodeState $WorkDir
+
 Write-Row ([ordered]@{
     event              = "start"
     cycle_id           = $CycleId
@@ -318,6 +348,9 @@ Write-Row ([ordered]@{
     log                = $Log
     preflight          = $(if ($Preflight) { $Preflight } else { $null })
     role               = $Role
+    commit             = $codeState.commit
+    dirty_code         = $codeState.dirty_code
+    code_state_error   = $codeState.code_state_error
     ts                 = (Now-Iso)
 })
 
@@ -337,6 +370,7 @@ if ($ch -ne 0) {
 
 Write-Row ([ordered]@{
     event              = "exit"
+    role               = $Role
     cycle_id           = $CycleId
     cycle_pid          = $cyclePid
     exit_code          = $code

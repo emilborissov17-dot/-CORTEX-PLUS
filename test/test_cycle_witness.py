@@ -396,3 +396,30 @@ def test_the_runner_raises_the_night_code_after_main():
             assert src.index("main()") < src.index("_exit_for_night(") < src.index("raise SystemExit(_code)")
             return
     raise AssertionError("no try-block around main() found in fast_cycle_runner.py")
+
+
+def test_the_start_row_names_the_commit_and_dirty_tracked_code(tmp_path):
+    """C2b (26 Sep 2026): a run started on a work tree with an edited tracked .py
+    says so in its start row; runtime data and untracked files do not count."""
+    import subprocess as sp
+    def git(*a):
+        sp.run(["git", "-C", str(tmp_path), *a], check=True, capture_output=True)
+    git("init", "-q")
+    git("config", "user.email", "t@t"); git("config", "user.name", "t")
+    (tmp_path / "mod.py").write_text("x = 1\n", encoding="utf-8")
+    (tmp_path / "memory").mkdir()
+    (tmp_path / "memory" / "state.py").write_text("s = 1\n", encoding="utf-8")
+    (tmp_path / "out.json").write_text("{}", encoding="utf-8")
+    git("add", "-A"); git("commit", "-q", "-m", "init")
+    head = sp.run(["git", "-C", str(tmp_path), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    (tmp_path / "mod.py").write_text("x = 2\n", encoding="utf-8")                 # dirty tracked code
+    (tmp_path / "memory" / "state.py").write_text("s = 2\n", encoding="utf-8")    # excluded directory
+    (tmp_path / "out.json").write_text('{"a": 1}', encoding="utf-8")              # data, not code
+    (tmp_path / "new.py").write_text("y = 1\n", encoding="utf-8")                 # untracked
+    proc, wl, _ = _start_witness(tmp_path, "pass", "cs")
+    start = _wait_row(wl, "start")
+    ex = _wait_row(wl, "exit")
+    proc.wait(timeout=30)
+    assert start["commit"] == head
+    assert start["dirty_code"] == ["mod.py"], start
+    assert ex["role"] == "spine" and start["role"] == "spine"
