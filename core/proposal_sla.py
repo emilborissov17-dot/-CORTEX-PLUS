@@ -344,7 +344,8 @@ def run(improvements_path=None, quarantine_dir=None, thresholds_path=None,
                         dedup_key=key, trigger="MANUAL",
                         # An overdue promise is pressure, not an emergency. The
                         # counter in the morning report carries it from here.
-                        level=supervisor.NOTICE)
+                        level=supervisor.NOTICE,
+                        cls="proposal_sla")      # files only (C4 E)
             except Exception:
                 ok = False
         if ok:

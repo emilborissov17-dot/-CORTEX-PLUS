@@ -197,7 +197,7 @@ def request_signature(row_id: str) -> str:
                         f"SIGN {row_id} {sha}"])
     status = supervisor.alarm_human(f"SIGN REQUEST {row_id}", detail,
                                     dedup_key=f"sign:{row_id}:{sha}", trigger="MANUAL",
-                                    level=supervisor.NOTICE)
+                                    level=supervisor.NOTICE, cls="sign_request")
     print(f"[F] {row_id}: signature request -> {status}")
     return status
 

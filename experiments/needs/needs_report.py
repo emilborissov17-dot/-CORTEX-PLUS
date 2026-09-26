@@ -38,6 +38,7 @@ HOMEOSTASIS    = REPO / "memory" / "homeostasis_latest.json"
 SELF_PROFILE   = REPO / "memory" / "self_profile.json"
 PRIORITY       = REPO / "memory" / "self_directed_priority.json"
 BRIEF_MD       = REPO / "memory" / "needs_brief.md"
+RATIONALE_DIR  = REPO / "output" / "reports"                  # push_rationale, files only
 NOTIFY_CFG     = REPO / "memory" / "notify_channel.json"   # gitignored; holds secret
 PUSH_STATE     = REPO / "memory" / "needs_push_state.json" # dedupe: last pushed sig
 PENDING        = REPO / "memory" / "pending_approvals.json"  # id -> action approve_reader executes
@@ -776,9 +777,6 @@ def push_rationale() -> str:
     """14 Aug 2026, поръчано от Емил: след всеки цикъл МАШИНАТА му праща в Telegram
     кратък RATIONALE — не сурови числа, а 'какво направих и ЗАЩО', с предпоставки.
     Самостоятелна, fail-open; връща статус-стринг като _push_status."""
-    cfg = _load(NOTIFY_CFG, {})
-    if cfg.get("channel") != "telegram" or not cfg.get("token") or not cfg.get("chat_id"):
-        return "skip:no_config"
     L = ["🧠 CORTEX — дневен rationale"]
     try:  # композит + посока + САЛИЕНТНОСТ: системата сама казва кое мръдна най-много
         hist = _load(REPO / "memory" / "goal_score_history.json", [])
@@ -828,13 +826,20 @@ def push_rationale() -> str:
     text = "\n".join(L)
     if len(L) < 2:
         return "skip:no_content"
+    # FILES ONLY since 26 Sep 2026 (C4 E): the daily rationale is not one of the
+    # four Telegram classes. It is written where the morning report can read it.
     try:
-        import requests as _rq
-        r = _rq.post(f"https://api.telegram.org/bot{cfg['token']}/sendMessage",
-                     json={"chat_id": cfg["chat_id"], "text": text}, timeout=20)
-        return "sent:telegram" if r.ok else f"fail:http_{r.status_code}"
+        import datetime as _dt
+        RATIONALE_DIR.mkdir(parents=True, exist_ok=True)
+        day = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
+        out = RATIONALE_DIR / f"RATIONALE_{day}.md"
+        out.write_text(text + "\n", encoding="utf-8")
+        try:
+            return f"file:{out.relative_to(REPO).as_posix()}"
+        except ValueError:
+            return f"file:{out}"
     except Exception as e:
-        return f"fail:send:{type(e).__name__}"
+        return f"fail:write:{type(e).__name__}"
 
 
 def _actionable(rep: dict):
@@ -884,9 +889,19 @@ def _push_status(rep: dict):
     cfg = _load(NOTIFY_CFG, {})
     if not cfg:
         return "skip:no_config"
-    act = _actionable(rep)
+    # Only candidates awaiting the human's OK/NO reach the phone: they are the
+    # sign_request class. High-severity needs without an approval stay in the
+    # brief on disk (C4 E, 26 Sep 2026).
+    act = [i for i in _actionable(rep) if i.get("approve_id")]
     if not act:
         return "skip:no_actionable"
+    try:
+        import supervisor as _sup
+        refused = _sup.telegram_refusal("sign_request")
+    except Exception as e:  # noqa: BLE001 — no gate, no send
+        refused = f"refused: gate unavailable ({type(e).__name__})"
+    if refused:
+        return "skip:" + refused
     sig = "|".join(sorted(f"{i['domain']}:{i['need']}" for i in act))
     if _load(PUSH_STATE, {}).get("last_sig") == sig:
         return "skip:unchanged"

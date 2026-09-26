@@ -114,6 +114,12 @@ def render(lines: list[dict]) -> str:
 
 
 def send(text: str) -> dict:
+    # C4 E (26 Sep 2026): not one of the four Telegram classes; refused through
+    # the same gate as every other sender. The text still prints with --dry-run.
+    import supervisor
+    refused = supervisor.telegram_refusal("institution_witness")
+    if refused:
+        return {"ok": False, "refused": refused, "chars": len(text)}
     cfg = json.loads(CHANNEL.read_text(encoding="utf-8"))
     token, chat_id = cfg["token"], cfg["chat_id"]
     data = urllib.parse.urlencode({"chat_id": chat_id, "text": text,

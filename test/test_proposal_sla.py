@@ -427,8 +427,9 @@ def test_the_alarm_path_still_sends_one_message_per_event(monkeypatch, tmp_path)
     monkeypatch.setitem(sys.modules, "requests", _Req)
 
     supervisor.alarm_human("wedged step", "daily_analysis is hung",
-                           dedup_key="a:1", trigger="AUTO")
-    supervisor.alarm_human("disk full", "3% left", dedup_key="a:2", trigger="AUTO")
+                           dedup_key="a:1", trigger="AUTO", cls="alarm")
+    supervisor.alarm_human("disk full", "3% left", dedup_key="a:2", trigger="AUTO",
+                           cls="alarm")
     assert len(posts) == 2, (
         "two separate alarms arrived as one message; the SLA digest leaked into "
         "the channel every event shares")

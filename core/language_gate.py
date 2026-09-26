@@ -511,7 +511,8 @@ def check_purity(hours: int = 24, journal: Optional[pathlib.Path] = None,
                     dedup_key="language_purity:{}".format(
                         now.strftime("%Y-%m-%d")),
                     trigger="MANUAL",
-                    level=supervisor.ALARM)
+                    level=supervisor.ALARM,
+                    cls="language_purity")      # files only (C4 E)
             result["alarmed"] = True
         except Exception as exc:                        # noqa: BLE001
             result["why"] += " (alarm failed: {}: {})".format(

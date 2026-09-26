@@ -215,7 +215,8 @@ def run(registry_path=None, env_path=None, stamp_path=None,
                         trigger="MANUAL",
                         # A source that has been waiting for a key since 15 Aug
                         # can wait until the morning. Once a week, and not a siren.
-                        level=supervisor.NOTICE)
+                        level=supervisor.NOTICE,
+                        cls="needs_auth")      # files only (C4 E)
             except Exception:
                 ok = False
         if ok:

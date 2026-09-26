@@ -63,26 +63,31 @@ def phone(tmp_path, monkeypatch):
 
 
 def test_an_alarm_keeps_the_siren(phone):
-    sup.alarm_human("умря", "cycle died", dedup_key="k1", level=sup.ALARM)
+    sup.alarm_human("умря", "cycle died", dedup_key="k1", level=sup.ALARM, cls="alarm")
     assert phone[0]["text"].startswith("🚨 CORTEX: ")
 
 
 def test_a_notice_does_not(phone):
-    sup.alarm_human("фаза A_ORIENT", "OK", dedup_key="k2", level=sup.NOTICE)
+    sup.alarm_human("SIGN REQUEST F-001", "OK", dedup_key="k2", level=sup.NOTICE,
+                    cls="sign_request")
     assert not phone[0]["text"].startswith("🚨")
     assert phone[0]["text"].startswith("CORTEX · ")
 
 
 def test_the_default_is_the_loud_one(phone):
     """A caller that forgets must be too loud, never silently quiet."""
-    sup.alarm_human("something", "detail", dedup_key="k3")
+    sup.alarm_human("something", "detail", dedup_key="k3", cls="alarm")
     assert phone[0]["text"].startswith("🚨 CORTEX: ")
 
 
-def test_a_phase_debrief_is_always_a_notice(phone):
+def test_a_phase_debrief_is_files_only(phone, tmp_path):
+    """Since 26 Sep 2026 (C4 E) a phase report never reaches the phone. It is
+    recorded in the night log with its class."""
     sup.send_phase_debrief("A_ORIENT", "cycle-1", "the phase closed OK")
-    assert phone[0]["text"].startswith("CORTEX · ")
-    assert "🚨" not in phone[0]["text"]
+    assert not phone, "a phase report reached Telegram"
+    rows = [json.loads(l) for l in (tmp_path / "night_events.jsonl")
+            .read_text(encoding="utf-8").splitlines()]
+    assert rows[-1]["cls"] == "phase_report"
 
 
 def test_a_notice_is_still_held_through_the_quiet_window(phone, monkeypatch):

@@ -9,7 +9,9 @@ Content, all read from records, none from a model:
   forward rows: id, status, next expected date
   GITHUB_TOKEN days to expiry (GitHub's own response header), a warning under 30
   DIRTY tracked code at the spine's start (the witness start row), if any
-  "clean nights in a row: N/7"
+  "pipeline healthy N/7" (the clean-night counter, renamed 26 Sep 2026, C4 E)
+  "brain notes: N written, M empty/rejected" - the brain's texts go to files only
+  since C4 E; this line is the only trace of them on the phone
 
 A CLEAN night: collectors, spine and edges all exit 0, AND the proof was published
 with that night's local date label, AND the spine start row lists no dirty code. A
@@ -38,6 +40,7 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 WITNESS = REPO / "memory" / "witness.jsonl"
+BRAIN_JOURNAL = REPO / "memory" / "brain_journal.jsonl"
 CLEAN = REPO / "memory" / "clean_nights.json"
 LOG = REPO / "memory" / "morning_digest_log.jsonl"
 WATCH_REPO = "emilborissov17-dot/cortex-civilization-watch"
@@ -164,8 +167,39 @@ def core_resident() -> bool | None:
         return None
 
 
+def brain_notes(night: dict, path: Path = BRAIN_JOURNAL) -> dict:
+    """{written, empty_rejected, since} over memory/brain_journal.jsonl rows since
+    last night's earliest start row. EMPTY: a blank summary. REJECTED: the
+    language gate's verdict on the row (lang.ok is False). Everything else is
+    written. No start row -> since is None and both counts are None: unknown is
+    not zero."""
+    starts = [((night.get(r) or {}).get("start") or {}).get("ts")
+              for r in ("collectors", "spine", "edges")]
+    starts = [t for t in starts if t]
+    if not starts:
+        return {"written": None, "empty_rejected": None, "since": None}
+    since = min(starts)
+    written = empty_rejected = 0
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        lines = []
+    for line in lines:
+        try:
+            r = json.loads(line)
+        except (ValueError, TypeError):
+            continue
+        if str(r.get("ts", "")) < since:
+            continue
+        if not str(r.get("summary") or "").strip() or (r.get("lang") or {}).get("ok") is False:
+            empty_rejected += 1
+        else:
+            written += 1
+    return {"written": written, "empty_rejected": empty_rejected, "since": since}
+
+
 def compose(night: dict, prf: dict, streak: dict, clean: bool, reasons: list, rows: list,
-            core: bool | None, ucdp: int) -> str:
+            core: bool | None, ucdp: int, notes: dict | None = None) -> str:
     def line(role):
         x = night.get(role) or {}
         ex = x.get("exit")
@@ -183,7 +217,13 @@ def compose(night: dict, prf: dict, streak: dict, clean: bool, reasons: list, ro
              f"GITHUB_TOKEN expires in: {tok}"]
     if start.get("dirty_code"):
         lines.append("DIRTY: " + ", ".join(start["dirty_code"]))
-    lines.append(f"clean nights in a row: {streak.get('count', 0)}/{STREAK_GOAL}"
+    notes = notes or {}
+    if notes.get("written") is None:
+        lines.append("brain notes: unknown (no start row for last night)")
+    else:
+        lines.append(f"brain notes: {notes['written']} written, "
+                     f"{notes['empty_rejected']} empty/rejected")
+    lines.append(f"pipeline healthy {streak.get('count', 0)}/{STREAK_GOAL}"
                  + ("" if clean else " - missed: " + "; ".join(reasons)))
     return "\n".join(lines)
 
@@ -209,7 +249,8 @@ def main(argv: list) -> int:
     streak = (update_streak(night["night"], clean, reasons) if (night and not dry)
               else json.loads(CLEAN.read_text(encoding="utf-8")) if CLEAN.exists() else {"count": 0})
     from core import ucdp_client as uc
-    text = compose(night, prf, streak, clean, reasons, forward_rows(), core_resident(), uc.requests_today())
+    text = compose(night, prf, streak, clean, reasons, forward_rows(), core_resident(), uc.requests_today(),
+                   notes=brain_notes(night))
     print(text)
     if dry:
         return 0

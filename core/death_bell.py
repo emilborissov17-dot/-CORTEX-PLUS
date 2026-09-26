@@ -290,7 +290,7 @@ def ring(event: str, cycle_id=None, wedged_step=None,
                 # cycle_id and must ring again.
                 dedup_key=f"death:{event}:{f['cycle_id']}",
                 trigger="MANUAL",      # ALARM class: past the quiet window
-                level=supervisor.ALARM)
+                level=supervisor.ALARM, cls="alarm")
         record["sent"] = True
     except Exception as exc:           # noqa: BLE001
         record["errors"].append(f"send: {type(exc).__name__}: {exc}")

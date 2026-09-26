@@ -793,6 +793,7 @@ def tick_sandbox(tmp_path, monkeypatch):
     # promises. The mechanism was not bypassed; it was used.
     monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     monkeypatch.setattr(sup, "OUTBOX_SENT", tmp_path / "outbox" / "sent")
+    monkeypatch.setattr(sup, "OUTBOX_HELD", tmp_path / "outbox" / "held")
     # 24 Sep 2026: an unexplained death latches survival mode through this base.
     monkeypatch.setattr(sup, "SURVIVAL_BASE", tmp_path)
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")

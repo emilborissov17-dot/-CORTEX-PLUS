@@ -57,7 +57,7 @@ def test_the_token_warning_under_30_days():
     assert md.token_days("2027-09-24 21:00:00 UTC", now) == 363
     text = md.compose(_night(), {"token_expiration": "2026-10-10 21:00:00 UTC", "label": "2026-09-26"},
                       {"count": 1}, True, [], [], True, 5)
-    assert "UNDER 30" in text and "clean nights in a row: 1/7" in text
+    assert "UNDER 30" in text and "pipeline healthy 1/7" in text
 
 
 def test_only_the_morning_digest_class_passes_quiet_hours(tmp_path, monkeypatch):
@@ -77,8 +77,10 @@ def test_only_the_morning_digest_class_passes_quiet_hours(tmp_path, monkeypatch)
             return {"ok": True}
     monkeypatch.setattr(requests, "post", lambda *a, **k: R())
     assert sup.alarm_human("s", "d", dedup_key="a", cls="morning_digest") == "delivered"
-    assert sup.alarm_human("s", "d", dedup_key="b", cls="phase_debrief") == "deferred"
-    assert sup.alarm_human("s", "d", dedup_key="c") == "deferred"
+    # C4 E: a files-only class is refused before the quiet window, never "deferred"
+    assert sup.alarm_human("s", "d", dedup_key="b", cls="phase_debrief").startswith("refused")
+    assert sup.alarm_human("s", "d", dedup_key="c").startswith("refused")
+    assert sup.alarm_human("s", "d", dedup_key="e", cls="alarm") == "deferred"
     assert sup.QUIET_HOURS_ALLOWED_CLASSES == ("morning_digest",)
 
 

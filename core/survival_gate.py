@@ -226,6 +226,7 @@ def _to_siren(cycle_id, decision: dict) -> bool:
                 ",".join(sorted(v["variable"] for v in offenders))),
             trigger=NAME,
             level=supervisor.ALARM,
+            cls="alarm",            # a refused start is a failed night
         )
         return True
     except Exception as exc:

@@ -195,13 +195,14 @@ def test_alarm_human_reports_its_outcome(tmp_path, monkeypatch):
         def json(self):
             return {"ok": self._ok}
     monkeypatch.setattr(requests, "post", lambda *a, **k: R(False))
-    assert sup.alarm_human("s", "d", dedup_key="k1").startswith("failed")
+    assert sup.alarm_human("s", "d", dedup_key="k1", cls="alarm").startswith("failed")
     monkeypatch.setattr(requests, "post", lambda *a, **k: R(True))
-    assert sup.alarm_human("s", "d", dedup_key="k1") == "delivered"
-    assert sup.alarm_human("s", "d", dedup_key="k1") == "suppressed"
+    assert sup.alarm_human("s", "d", dedup_key="k1", cls="alarm") == "delivered"
+    assert sup.alarm_human("s", "d", dedup_key="k1", cls="alarm") == "suppressed"
     monkeypatch.setattr(sup, "_quiet_now", lambda: True)
-    assert sup.alarm_human("s", "d", dedup_key="k2") == "deferred"
-    assert sup.alarm_human("s", "d", dedup_key="k3", trigger="MANUAL") == "delivered"
+    assert sup.alarm_human("s", "d", dedup_key="k2", cls="alarm") == "deferred"
+    assert sup.alarm_human("s", "d", dedup_key="k3", trigger="MANUAL", cls="alarm") == "delivered"
+    assert sup.alarm_human("s", "d", dedup_key="k4").startswith("refused")
 
 
 # ── the real witness, end to end, on the real row with a test signature ──────

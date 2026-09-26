@@ -321,7 +321,8 @@ def _default_sender(text: str, escalation: bool) -> bool:
             "мозъкът", text,
             dedup_key=f"brain:{hashlib.sha1(text.encode()).hexdigest()[:12]}",
             trigger="MANUAL" if escalation else None,
-            level=supervisor.ALARM if escalation else supervisor.NOTICE)
+            level=supervisor.ALARM if escalation else supervisor.NOTICE,
+            cls="brain_relay")      # files only since 26 Sep 2026 (C4 E)
         return True
     except Exception:
         return False

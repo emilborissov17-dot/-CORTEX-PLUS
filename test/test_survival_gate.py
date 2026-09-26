@@ -130,7 +130,8 @@ def test_the_siren_goes_at_alarm_level_not_as_a_morning_notice(monkeypatch):
     import supervisor
     sent = {}
 
-    def _fake(subject, detail, dedup_key=None, trigger=None, *, level=None):
+    def _fake(subject, detail, dedup_key=None, trigger=None, *, level=None, cls=None):
+        sent["cls"] = cls
         sent.update(subject=subject, detail=detail, level=level,
                     trigger=trigger, dedup_key=dedup_key)
 
@@ -138,6 +139,7 @@ def test_the_siren_goes_at_alarm_level_not_as_a_morning_notice(monkeypatch):
     d = sg.check(state={}, sensors=STARVED_RAM)
     assert sg._to_siren("c", d) is True
     assert sent["level"] == supervisor.ALARM
+    assert sent["cls"] == "alarm", "a refused start must go out as the alarm class"
     assert sent["trigger"] == sg.NAME == "survival_gate"
     assert "ram_free" in sent["detail"]
     assert "600" in sent["detail"], "the threshold is not in the message"

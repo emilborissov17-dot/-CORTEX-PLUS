@@ -589,7 +589,8 @@ def send_stagnation(result: dict, sender=None, now=None) -> int:
                 import supervisor
                 supervisor.alarm_human(f"застой {row['axis']}", text,
                                        dedup_key=f"stagnation:{row['axis']}:{week}",
-                                       trigger="MANUAL", level=supervisor.ALARM)
+                                       trigger="MANUAL", level=supervisor.ALARM,
+                                       cls="stagnation")      # files only (C4 E)
             sent += 1
         except Exception:
             pass
@@ -617,7 +618,7 @@ def send(result: dict, sender=None) -> int:
                     trigger="MANUAL",      # MANUAL bypasses the quiet window
                     # ALARM, and one of the three things that earn it: a
                     # threshold the human set has been crossed NOW.
-                    level=supervisor.ALARM)
+                    level=supervisor.ALARM, cls="new_risks")
             sent += 1
         except Exception:
             pass

@@ -511,7 +511,7 @@ def _quiet_now() -> bool:
     return h >= a or h < b
 
 
-def note_night_event(subject: str, detail: str) -> None:
+def note_night_event(subject: str, detail: str, cls: str | None = None) -> None:
     """Емил, 15 авг 2026: „ДА НЕ МЕ БУДЯТ ... ДАЙ МУ ПЪЛНА АВТОНОМНОСТ ...
     ИСКАМ САМО ДОКЛАДИТЕ ЗА ИЗМИНАЛ ДЕН."
 
@@ -523,7 +523,7 @@ def note_night_event(subject: str, detail: str) -> None:
         NIGHT_LOG.parent.mkdir(parents=True, exist_ok=True)
         with open(NIGHT_LOG, "a", encoding="utf-8") as fh:
             fh.write(json.dumps({"ts": datetime.now(timezone.utc).isoformat(),
-                                 "subject": subject, "detail": detail},
+                                 "subject": subject, "detail": detail, "cls": cls},
                                 ensure_ascii=False) + "\n")
     except Exception:
         pass
@@ -552,9 +552,28 @@ ALARM, NOTICE = "alarm", "notice"
 LEVEL_PREFIX = {ALARM: "🚨 CORTEX: ", NOTICE: "CORTEX · "}
 
 
+# ── ONLY FOUR CLASSES REACH TELEGRAM (Emil, 26 Sep 2026, C4 E) ──────────────
+# morning_digest, sign_request, new_risks, alarm (a failed night, an unexplained
+# death, an eviction during a run). Everything else - brain_relay, phase reports,
+# the daily rationale, cycle_review/cycle_report brain texts, stagnation, overdue
+# proposals, missing keys - goes to files only: alarm_human records it in
+# memory/night_events.jsonl and refuses to send it. cls=None is not a class: a
+# caller that names none is refused too, so a forgotten caller stays quiet on the
+# phone and is still on disk. test_telegram_discipline pins every caller's class.
+TELEGRAM_CLASSES = ("morning_digest", "sign_request", "new_risks", "alarm")
+
 # Message classes allowed through quiet hours (Emil, 26 Sep 2026, C2c): only the
 # morning digest, which is the report he asked for. Everything else still waits.
 QUIET_HOURS_ALLOWED_CLASSES = ("morning_digest",)
+
+
+def telegram_refusal(cls: str | None) -> str | None:
+    """None if `cls` may reach Telegram, else the refusal string. The one check
+    every sender in this repo asks - alarm_human and the direct senders alike."""
+    if cls in TELEGRAM_CLASSES:
+        return None
+    return (f"refused: class {cls!r} is files-only "
+            f"(Telegram carries {', '.join(TELEGRAM_CLASSES)})")
 
 
 def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
@@ -578,7 +597,12 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
     the morning), "suppressed" (already sent under this dedup key), "not_configured",
     or "failed: <why>". Existing callers ignore it.
     """
-    note_night_event(subject, detail)
+    note_night_event(subject, detail, cls=cls)
+    # Refused BEFORE the quiet-hours check: a files-only class is never
+    # "deferred", so no morning flush can ever carry it to the phone.
+    refusal = telegram_refusal(cls)
+    if refusal:
+        return refusal
     # ── QUIET HOURS DO NOT APPLY TO A RUN THE HUMAN STARTED (20 Aug 2026) ───
     # "ДА НЕ МЕ БУДЯТ" is about the NIGHTLY cycle, which runs while he sleeps.
     # A cycle started by hand is one he is sitting in front of, waiting for; a
@@ -640,7 +664,7 @@ def send_phase_debrief(phase: str, cycle_id: str, text: str,
     """
     key = f"{cycle_id}:{phase}"
     alarm_human(f"фаза {phase}", text, dedup_key=key, trigger=trigger,
-                level=NOTICE)
+                level=NOTICE, cls="phase_report")      # files only (C4 E)
     return key
 
 
@@ -2086,6 +2110,10 @@ def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict,
 #   • изпратеното НЕ се трие: остава в sent/ като запис какво е било казано.
 OUTBOX = BASE / "memory" / "outbox"
 OUTBOX_SENT = OUTBOX / "sent"
+# C4 E (26 Sep 2026): a file reaches Telegram only if its name starts with one of
+# TELEGRAM_CLASSES and "__" (e.g. "alarm__disk.md"). Anything else is files-only:
+# it moves to held/ with a log line and is never sent.
+OUTBOX_HELD = OUTBOX / "held"
 OUTBOX_MAX = 3500
 
 
@@ -2110,6 +2138,15 @@ def send_outbox() -> int:
 
     n = 0
     for f in items:
+        refusal = telegram_refusal(f.name.split("__", 1)[0] if "__" in f.name else None)
+        if refusal:
+            try:
+                OUTBOX_HELD.mkdir(parents=True, exist_ok=True)
+                f.replace(OUTBOX_HELD / f.name)
+            except Exception:
+                pass
+            log(f"outbox: {f.name} held, not sent - {refusal}")
+            continue
         try:
             body = f.read_text(encoding="utf-8")
         except Exception:
@@ -2273,7 +2310,7 @@ def _handle_unexplained_death(action: Action, state: dict, today: str, cfg: dict
                     "The system stays down until a human starts a cycle:",
                     r"venv\Scripts\python.exe supervisor.py --run-now",
                 ]),
-                dedup_key=f"unexplained:{action.cycle_id}")
+                dedup_key=f"unexplained:{action.cycle_id}", cls="alarm")
     return action
 
 

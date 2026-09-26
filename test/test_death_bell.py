@@ -141,14 +141,16 @@ def test_the_send_bypasses_quiet_hours(monkeypatch, tmp_path):
     monkeypatch.setattr(supervisor, "ALARM_STAMP", tmp_path / "stamp.json")
     monkeypatch.setattr(supervisor, "alarm_human",
                         lambda subject, detail, dedup_key=None, trigger=None,
-                        level=None:
+                        level=None, cls=None:
                         calls.append({"subject": subject, "detail": detail,
-                                      "dedup_key": dedup_key, "trigger": trigger}))
+                                      "dedup_key": dedup_key, "trigger": trigger,
+                                      "cls": cls}))
 
     death_bell.ring("CYCLE_KILLED", cycle_id="c9", wedged_step="s",
                     with_postmortem=False)
 
     assert len(calls) == 1
+    assert calls[0]["cls"] == "alarm", "a death is not sent as the alarm class"
     assert calls[0]["trigger"] == "MANUAL", (
         "the death bell did not ask to bypass the quiet window; a death at "
         "00:20 would arrive at 09:00")
@@ -190,7 +192,7 @@ def test_a_watchdog_kill_rings_the_bell(monkeypatch):
     sent = []
     monkeypatch.setattr(supervisor, "alarm_human",
                         lambda subject, detail, dedup_key=None, trigger=None,
-                        level=None:
+                        level=None, cls=None:
                         sent.append(detail))
 
     supervisor._ring_death_bell("CYCLE_KILLED", _kill_action(),
@@ -218,7 +220,7 @@ def test_the_mutation_breaking_the_send_turns_this_red(monkeypatch):
     sent = []
     monkeypatch.setattr(supervisor, "alarm_human",
                         lambda subject, detail, dedup_key=None, trigger=None,
-                        level=None:
+                        level=None, cls=None:
                         sent.append(detail))
     monkeypatch.setattr(supervisor, "_ring_death_bell",
                         lambda *a, **k: None)      # ← the mutation
