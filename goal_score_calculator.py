@@ -720,6 +720,18 @@ def format_headline(res: dict) -> str:
 
 GOAL_SCORE_SNAPSHOT = BASE / "snapshots" / "master" / "goal_score_latest.json"
 
+# ── AXES ABOUT THE MACHINE, NOT THE WORLD (C4 F, 26 Sep 2026) ────────────────
+# BODY_SCAN is the machine's capacity %; the others are the system's own output
+# or its opinion of itself. They belong to the self-model only and never to a
+# world-facing aggregate: goal_score raises if one would be scored, and
+# agents/core/feedback_loop.py keeps them out of goal_score_history "scores"
+# (they go to "self_scores"). GOAL_PROGRESS_REVIEW stays in the goal tree as a
+# self-reference, which is scored None by construction.
+SELF_AXES = frozenset({
+    "BODY_SCAN", "GENERAL_SELF_REVIEW", "GOAL_PROGRESS_REVIEW",
+    "STRATEGIST_SOLUTIONS", "OPENCLAW_SOLUTIONS", "HYPERCLAW_PLAN",
+})
+
 
 def persist(result: dict) -> Path:
     """Записва пакета там, където останалата система го чете.
@@ -812,6 +824,11 @@ def compute_goal_score(
             #   Kimi: „Прекъсва се. goal_score се ражда от измерените оси;
             #          GOAL_PROGRESS_REVIEW е самооценка, не вход."
             self_reference = (metric == "goal_score")
+            if axis_name in SELF_AXES and not self_reference:
+                raise ValueError(
+                    f"{axis_name} is a self/machine axis (goal_score_calculator.SELF_AXES): "
+                    f"it describes the machine, not the world, and may not be scored "
+                    f"into goal_score. Remove it from config/target_config.json.")
             current_val, origin = ((None, None) if self_reference
                                    else (_resolve_metric_origin(metric, trends, last_obs)
                                          if metric else (None, None)))

@@ -126,6 +126,13 @@ def _find_latest_web_intel_dir() -> pathlib.Path | None:
     return None
 
 
+def _is_self_axis(axis) -> bool:
+    """goal_score_calculator.SELF_AXES is the one list; a page about the machine
+    itself never reaches the public repo."""
+    from goal_score_calculator import SELF_AXES
+    return str(axis) in SELF_AXES
+
+
 def publish_cycle(web_intel_dir: pathlib.Path = None):
     """
     Публикува последните синтези в GitHub.
@@ -159,6 +166,11 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
         try:
             data = json.loads(text)
             axis = data.get("axis", json_file.stem)
+            if _is_self_axis(axis):
+                # The self-model is not published (C4 F, 26 Sep 2026).
+                print(f"[GitHub] SELF {axis}: not published (self-model only)")
+                dropped += 1
+                continue
             md = _format_as_markdown(axis, data, date)
             gh_path = f"reports/{date}/{axis.lower()}.md"
             _push_file(gh_path, md, f"[{date}] {axis} update")
@@ -280,6 +292,8 @@ def _publish_daily_index(date: str, web_intel_dir: pathlib.Path):
             summary = data
             continue
         axis = data.get("axis", json_file.stem)
+        if _is_self_axis(axis):
+            continue
         # get_field, not data.get: severity and problem live under "analysis".
         # Reading the root only is what made every published index say the
         # system knew nothing about all 26 axes.

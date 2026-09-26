@@ -127,10 +127,18 @@ def _measured_axis_scores():
 def read_current_scores():
     master = _load_json(MASTER_SNAP, {})
     measured = _measured_axis_scores()
+    from goal_score_calculator import SELF_AXES
     scores = {}
     sources = {}
+    self_scores = {}
     for axis, snap in master.get("snapshots", {}).items():
         if not isinstance(snap, dict):
+            continue
+        if axis in SELF_AXES:
+            # The self-model keeps it; no world aggregate sees it (C4 F).
+            s = _axis_score(snap, axis)
+            if s is not None:
+                self_scores[axis] = round(s, 2)
             continue
         if axis in measured:
             scores[axis] = measured[axis]
@@ -144,6 +152,7 @@ def read_current_scores():
         n_meas = sum(1 for v in sources.values() if v == "measured")
         print(f"[FEEDBACK] axis scores: {n_meas} measured / {len(sources) - n_meas} LLM-level")
     read_current_scores.last_sources = sources  # exposed for the history snapshot
+    read_current_scores.last_self = self_scores
     return scores
 
 def read_baseline():
@@ -229,6 +238,9 @@ def save_score_snapshot(current):
     sources = getattr(read_current_scores, "last_sources", None)
     if sources:
         entry["score_sources"] = sources  # audit: which number is a measurement, which is an LLM opinion
+    self_scores = getattr(read_current_scores, "last_self", None)
+    if self_scores:
+        entry["self_scores"] = self_scores  # the self-model; never averaged with the world
     history.append(entry)
     _save_json(SCORES_FILE, history[-500:])
 

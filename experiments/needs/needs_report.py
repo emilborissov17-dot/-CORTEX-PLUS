@@ -780,12 +780,18 @@ def push_rationale() -> str:
     L = ["🧠 CORTEX — дневен rationale"]
     try:  # композит + посока + САЛИЕНТНОСТ: системата сама казва кое мръдна най-много
         hist = _load(REPO / "memory" / "goal_score_history.json", [])
+        # Rows written before 26 Sep 2026 (C4 F) still carry BODY_SCAN and the
+        # other self axes inside "scores"; the average is over the world only.
+        from goal_score_calculator import SELF_AXES as _SELF
+
+        def _world(e):
+            return {a: v for a, v in (e.get("scores") or {}).items() if a not in _SELF}
         if hist:
-            cur = hist[-1].get("scores", {})
+            cur = _world(hist[-1])
             avg = round(sum(cur.values()) / max(len(cur), 1), 1)
             line = f"Средно по осите: {avg}/100"
             if len(hist) > 1:
-                prev = hist[-2].get("scores", {})
+                prev = _world(hist[-2])
                 pavg = round(sum(prev.values()) / max(len(prev), 1), 1)
                 line += f" (вчера {pavg}, Δ{avg - pavg:+.1f})"
                 movers = sorted(((a, cur[a] - prev[a]) for a in cur if a in prev),

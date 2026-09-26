@@ -41,6 +41,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 import github_publisher as gp
+from goal_score_calculator import SELF_AXES
 
 WEB_INTEL = REPO / "memory" / "web_intelligence"
 
@@ -88,6 +89,9 @@ def test_the_index_reports_the_severity_the_axis_page_reports(monkeypatch):
     for f in _axis_files(d):
         data = json.loads(f.read_text(encoding="utf-8"))
         axis = data.get("axis", f.stem)
+        if axis in SELF_AXES:       # withheld from the public index since C4 F
+            assert f"[{axis}]" not in index, f"self axis {axis} reached the index"
+            continue
         severity = gp.get_field(data, "severity")
         if not severity:
             continue
@@ -189,7 +193,10 @@ def test_the_summary_file_is_not_listed_as_an_axis(monkeypatch):
         "problem and produced a permanent UNKNOWN row")
 
     master = json.loads((d / "master_web_intel.json").read_text(encoding="utf-8"))
-    assert len(rows) == master.get("axes_covered"), (
+    # Self-axis pages are withheld since 26 Sep 2026 (C4 F); the run still covered them.
+    n_self = sum(1 for f in _axis_files(d)
+                 if json.loads(f.read_text(encoding="utf-8")).get("axis", f.stem) in SELF_AXES)
+    assert len(rows) == master.get("axes_covered") - n_self, (
         f"the table has {len(rows)} rows but the run covered "
         f"{master.get('axes_covered')} axes — the count the README states")
 
