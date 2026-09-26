@@ -446,7 +446,8 @@ def arm_of_value(knob: dict, value) -> str | None:
     return None
 
 
-def register(spec: dict, store: pathlib.Path | None = None) -> dict:
+def register(spec: dict, store: pathlib.Path | None = None,
+             improvements: pathlib.Path | None = None) -> dict:
     """Записва опита ПРЕДИ да е започнал, или отказва с причини."""
     ok, reasons = validate(spec)
     record = {
@@ -491,7 +492,7 @@ def register(spec: dict, store: pathlib.Path | None = None) -> dict:
     _write_json(store or STORE, blob)
 
     if ok and record.get("knob_is_guarded"):
-        propose_human_arm(record)
+        propose_human_arm(record, improvements=improvements)
     return record
 
 

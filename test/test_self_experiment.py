@@ -108,6 +108,15 @@ def test_a_knob_pointed_at_the_wrong_file_is_rejected():
 # (b) the guarded file is never written
 # --------------------------------------------------------------------------- #
 
+@pytest.fixture(autouse=True)
+def _no_live_proposal_queue(tmp_path, monkeypatch):
+    """register() proposes the human arm into IMPROVEMENTS. On 26 Sep 2026 the
+    registering test wrote that row into the live memory/improvement_proposals.json
+    (the conftest live-write net caught it): it only wrote when the live queue did
+    not already hold the row, so it passed for as long as the live file hid it."""
+    monkeypatch.setattr(sx, "IMPROVEMENTS", tmp_path / "live_improvements_redirect.json")
+
+
 def test_overlay_set_refuses_a_guarded_knob():
     with pytest.raises(PermissionError):
         sx.overlay_set("step_ceiling", 1500)
