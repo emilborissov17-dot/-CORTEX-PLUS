@@ -88,6 +88,15 @@
         "no human signature: a resolution is computed, not authored - the signature check does not apply"
       ],
       "_resolutions_ratified": "Emil, chat, 2026-09-26 ('да').",
+      "requires_all_for_revisions": [
+        "row_unchanged: sha256 of the row file bytes == the row's seal row_sha256 == Emil's row signature row_sha256",
+        "dated: revisions numbered 1..n, each dated before the row's window opens",
+        "signature: every revision that changes resolution semantics or wording Emil signed carries Emil's signature on its revision_sha256; baseline and label restatements need none",
+        "metta: MeTTa witness on the row, RF1-RF6, 0 contradictions; unevaluated rules, missing inputs or a silent engine refuse",
+        "seal: the revisions file's seal verifies and the Merkle root chain verifies (ok=True)",
+        "prev_step: == the row's Merkle root (the root in <row>.seal.json)"
+      ],
+      "_revisions_basis": "Emil, C4 B instruction, 2026-09-26: revisions are append-only, row bytes unchanged, dated before 2026-10-01; revisions changing resolution semantics or signed wording need his SIGN on the revision hash; baseline/label restatements publish without signature. The six checks above are Claude's reading of that instruction and are not yet ratified line by line.",
       "_ratified": "Emil, chat, 2026-09-25 (task #9b). Checks and RF1-RF6 as he wrote them; RF4 reads the threshold from config/ucdp_constants.json."
     }
   }

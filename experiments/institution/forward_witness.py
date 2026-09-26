@@ -47,11 +47,22 @@ def canonical(obj) -> bytes:
     return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
 
 
-def rf7_facts(row: dict, resolution: dict | None) -> dict | None:
+def rf7_facts(row: dict, resolution: dict | None, forward_dir: Path | None = None) -> dict | None:
+    """RF7 facts. Since C4 B also the assumption: the one the resolution applied
+    must be the one in force for the row (signed, experiments/institution/revisions.py),
+    byte for byte - a resolver that ignores a signed assumption, or claims one that
+    was never signed, contradicts RF7 the same way a changed filter does."""
     if not isinstance(resolution, dict) or "filter" not in resolution or "condition" not in row:
         return None
+    from experiments.institution import revisions as rv
+    registered = rv.assumption(row["id"], forward_dir) if row.get("id") else None
+
+    def _h(x):
+        return "none" if x is None else hashlib.sha256(canonical(x)).hexdigest()
     return {"filter_sha256": hashlib.sha256(canonical(resolution["filter"])).hexdigest(),
-            "condition_sha256": hashlib.sha256(canonical(row["condition"])).hexdigest()}
+            "condition_sha256": hashlib.sha256(canonical(row["condition"])).hexdigest(),
+            "assumption_sha256_resolution": _h(resolution.get("assumption")),
+            "assumption_sha256_registered": _h(registered)}
 _THR = re.compile(r"\s*(<|>=)\s*(\d+(?:\.\d+)?)\s*")
 
 
@@ -209,7 +220,8 @@ def python_reference(rule: str, f: dict) -> bool | None:
         return all(f[k + "_row"] == f[k + ("_data" if k == "as_of" else "_recomputed")]
                    for k in ("as_of", "total", "mean_x100", "hits", "months", "p_x10000"))
     if rule == "RF7":
-        return f["filter_sha256"] == f["condition_sha256"]
+        return (f["filter_sha256"] == f["condition_sha256"]
+                and f["assumption_sha256_resolution"] == f["assumption_sha256_registered"])
     raise KeyError(rule)
 
 
@@ -233,7 +245,7 @@ def witness(row_id: str, write: bool = True, engine=hyperon, mode: str = "row",
     if mode == "resolution":
         rule_set = RESOLUTION_RULES
         row = json.loads((fdir / f"{row_id}.json").read_text(encoding="utf-8"))
-        facts["RF7"] = rf7_facts(row, resolution)
+        facts["RF7"] = rf7_facts(row, resolution, fdir)
     eng = engine(facts)
     rules, contradictions, not_evaluated = {}, [], []
     for r in rule_set:

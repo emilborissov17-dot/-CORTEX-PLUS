@@ -75,12 +75,20 @@ class UcdpClient:
             raise ResolverError(f"release check for {version} failed: {e}") from e
 
     def events(self, version: str, condition: dict) -> list:
+        return self._paged(version, {"Dyad": condition["dyad_new_id"],
+                                     "TypeOfViolence": condition["type_of_violence"]})
+
+    def events_any(self, version: str, query: dict) -> list:
+        """Every event of the query (no dyad filter) - the assumption check needs
+        the dyads the row did NOT register."""
+        return self._paged(version, query)
+
+    def _paged(self, version: str, query: dict) -> list:
         rows, page = [], 0
         while True:
             self.requests += 1
             try:
-                p = self.uc.api_get(version, page=page, pagesize=1000, query={
-                    "Dyad": condition["dyad_new_id"], "TypeOfViolence": condition["type_of_violence"]})
+                p = self.uc.api_get(version, page=page, pagesize=1000, query=query)
             except self.uc.UcdpUnavailable as e:
                 raise ResolverError(f"events of {version} failed: {e}") from e
             rows += p["Result"]
@@ -122,6 +130,29 @@ def compute(rows: list, condition: dict) -> tuple[float, int]:
     lo, hi = condition["date_start_from"], condition["date_start_to"]
     sel = [r for r in rows if fr.matches(r, condition) and lo <= str(r["date_start"])[:10] <= hi]
     return float(sum(float(r["best"]) for r in sel)), len(sel)
+
+
+def assumption_evidence(rows: list, condition: dict, a: dict) -> dict:
+    """{dyad_new_id: {dyad_name, events, best}} for window events with the
+    assumption's side_a, whose side_b names one of its patterns, coded to a dyad
+    OTHER than the registered one. Empty = the assumption holds."""
+    lo, hi = condition["date_start_from"], condition["date_start_to"]
+    out: dict = {}
+    for r in rows:
+        if str(r.get("dyad_new_id")) == str(a["registered_dyad_new_id"]):
+            continue
+        if str(r.get("type_of_violence")) != str(condition["type_of_violence"]):
+            continue
+        if not lo <= str(r.get("date_start"))[:10] <= hi:
+            continue
+        if str(r.get("side_a")) != a["side_a"]:
+            continue
+        if not any(p in str(r.get("side_b", "")) for p in a["side_b_patterns"]):
+            continue
+        d = out.setdefault(str(r["dyad_new_id"]), {"dyad_name": r.get("dyad_name"), "events": 0, "best": 0.0})
+        d["events"] += 1
+        d["best"] += float(r.get("best") or 0)
+    return out
 
 
 def verdict_for(value: float, condition: dict) -> str:
@@ -182,6 +213,19 @@ def resolve_row(row_path: Path, client, today: date | None = None, roots_log: Pa
                 rec = {**base, "release_id": version, "released": True, "as_of": f"ucdp:{version}", "value": value,
                        "verdict": verdict_for(value, cond), "events_count": n,
                        "request_count": client.requests}
+                # A SIGNED assumption (revisions.py) is checked on the same release.
+                # The filter stays the row's condition - RF7 compares them - and
+                # the other dyad goes into the evidence, never into the count.
+                from experiments.institution import revisions as rv
+                a = rv.assumption(row["id"], row_path.parent)
+                if a is not None:
+                    ev = assumption_evidence(client.events_any(version, {
+                        "Country": a["country_gwno"], "TypeOfViolence": cond["type_of_violence"]}), cond, a)
+                    rec["assumption"] = a
+                    rec["assumption_evidence"] = ev
+                    rec["request_count"] = client.requests
+                    if ev:
+                        rec["verdict"] = rv.ASSUMPTION_BROKEN
                 out["action"] = "RESOLVED"
         else:
             late = date.fromisoformat(spec["source_late_if_no_release_by"])
@@ -213,7 +257,8 @@ def resolve_row(row_path: Path, client, today: date | None = None, roots_log: Pa
         return out
 
 
-def seal_resolutions(log: Path, roots_log: Path | None = None) -> dict:
+def seal_resolutions(log: Path, roots_log: Path | None = None,
+                     kind: str = "institution0_resolution") -> dict:
     import merkle_memory as mm
     rl = Path(roots_log or ROOTS_LOG)
     prev = None
@@ -227,7 +272,7 @@ def seal_resolutions(log: Path, roots_log: Path | None = None) -> dict:
     rl.parent.mkdir(parents=True, exist_ok=True)
     with rl.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps({"root": s["root"], "ts": s["ts"], "cycle_id": f"institution0:{log.name}",
-                             "kind": "institution0_resolution", "file": log.name,
+                             "kind": kind, "file": log.name,
                              "row_sha256": s["row_sha256"], "leaf_count": 1, "prev_root": prev,
                              "writer": s["writer"]}, ensure_ascii=False) + "\n")
     (log.parent / (log.name.replace(".jsonl", ".seal.json"))).write_text(json.dumps(s, indent=2) + "\n",

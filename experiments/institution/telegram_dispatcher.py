@@ -172,8 +172,17 @@ def run() -> dict:
     signed = []
     for _u, text in sign:
         import approve_reader                                   # noqa: E402
-        signed.append(approve_reader.apply_signature(text, token, chat_id,
-                                                     update_id=_u.get("update_id")))
+        res = approve_reader.apply_signature(text, token, chat_id, update_id=_u.get("update_id"))
+        # C4 B: a revision signature that completes a row's set publishes the
+        # revisions and the page through the notary. Fail-open: the signature
+        # stands even if publishing is refused or deferred (the ledger says which).
+        if res.get("ok") and res.get("revision"):
+            try:
+                from experiments.institution import revisions as rv   # noqa: E402
+                res["publish"] = rv.publish_if_ready(res["row_id"])
+            except Exception as e:  # noqa: BLE001
+                res["publish"] = {"outcome": "error", "why": "%s: %s" % (type(e).__name__, e)}
+        signed.append(res)
 
     # The offset is written ONCE, by this file, after both readers have had the
     # updates. approve_reader.apply_updates no longer writes it when called from

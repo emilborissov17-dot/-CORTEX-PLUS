@@ -164,9 +164,11 @@ check("count recorded on the report", REP.get("_one_tap_sent") == 2)
 
 sent.clear()
 N.PUSH_STATE.write_text("{}", encoding="utf-8")
-N._push_status({"ts": "t", "state": {},
-                "items": [{"domain": "BODY", "severity": "high", "need": "x"}]})
-check("no approval items -> brief only, zero extras", len(sent) == 1)
+_st = N._push_status({"ts": "t", "state": {},
+                      "items": [{"domain": "BODY", "severity": "high", "need": "x"}]})
+# C4 E (26 Sep 2026): only sign requests reach Telegram; high needs without an
+# approval stay in memory/needs_brief.md.
+check("no approval items -> nothing sent (files only)", len(sent) == 0 and _st == "skip:no_actionable")
 
 # an extra that fails must not downgrade a delivered push
 sent.clear()

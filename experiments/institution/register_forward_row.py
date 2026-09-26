@@ -72,10 +72,14 @@ def seal_row(row_id: str) -> dict:
 
 def section(row: dict, s: dict) -> list:
     """One row's part of the page."""
+    from experiments.institution import revisions as rv
     c, r, b = row["condition"], row["resolution"], row["baseline"]
     where = (f"whole country ({c['country']})" if c["adm_1"] == "ALL"
              else "adm_1 in " + ", ".join(repr(a) for a in c["adm_1"]))
-    label = f" — {row['label']}" if row.get("label") else ""
+    # The label in force: a restated label (revisions.py) wins over the row's own.
+    shown_label = next((x["value"] for x in reversed(rv.in_force(row["id"])) if x.get("field") == "label"),
+                       row.get("label"))
+    label = f" — {shown_label}" if shown_label else ""
     a_, b_ = b["a_mean_monthly_best_pre_commitment"], b["b_p_not_kept_post_commitment"]
     return [
         f"## {row['id']}{label} — {row['commitment']['title']} ({row['commitment']['date']})", "",
@@ -102,6 +106,7 @@ def section(row: dict, s: dict) -> list:
         f"**Seal.** Merkle root `{s['root']}` over the exact bytes of `{s['file']}` "
         f"(sha256 `{s['row_sha256']}`, {s['row_bytes']} bytes) + previous root "
         f"`{s['prev_root']}` + writer {json.dumps(s['writer'])}.", "",
+        *rv.page_lines(row),
     ]
 
 
@@ -122,10 +127,22 @@ def page_all() -> str:
     rows = published_rows()
     if not rows:
         raise SystemExit("[F] no sealed and signed row to put on the page")
+    from experiments.institution import revisions as rv
     first = rows[0][0]
-    lines = ["# Institution 0 — forward rows", "", *[f"> {t}" for t in first["sentences"]], ""]
+    lines = ["# Institution 0 — forward rows", "", *[f"> {t}" for t in rv.effective_sentences(first)], ""]
     for row, s in rows:
         lines += section(row, s)
+    plain = [r for r, _s in rows]
+    h_all, n_all = rv.hit_rate(plain)
+    h_ns, n_ns = rv.hit_rate(plain, exclude_label="SENTINEL")
+
+    def _rate(h, n):
+        return f"{h}/{n} = {h / n:.2f}" if n else "no resolved row yet (0/0)"
+    lines += ["## Hit rate", "",
+              "A hit: the baseline's call - NOT KEPT if its p_not_kept (Laplace where restated) is at "
+              "least 0.5, else KEPT - equals the newest KEPT / NOT KEPT resolution.", "",
+              f"- all rows: {_rate(h_all, n_all)}",
+              f"- without SENTINEL rows: {_rate(h_ns, n_ns)}", ""]
     retro = next((r["retrospective"] for r, _s in rows if r["retrospective"].get("rows")), None)
     if retro:
         lines += ["## Retrospective rows (method validation, as_of ucdp:26.0.8)", "", retro["method"], "",

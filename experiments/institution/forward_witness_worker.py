@@ -55,7 +55,8 @@ def program(rule, f):
                    EQ(f["hits_row"], f["hits_recomputed"]), EQ(f["months_row"], f["months_recomputed"]),
                    EQ(f["p_x10000_row"], f["p_x10000_recomputed"]))
     if rule == "RF7":
-        return EQ(f["filter_sha256"], f["condition_sha256"])
+        return AND(EQ(f["filter_sha256"], f["condition_sha256"]),
+                   EQ(f["assumption_sha256_resolution"], f["assumption_sha256_registered"]))
     raise KeyError(rule)
 
 

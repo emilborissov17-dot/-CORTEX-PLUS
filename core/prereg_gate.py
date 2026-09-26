@@ -26,7 +26,19 @@ not authored:
                refuse (check "unevaluated", as for rows)
   seal         the resolutions file's seal verifies; the Merkle root chain verifies
   prev_step    == the row's Merkle root (<row>.seal.json "root")
-CHECKS_RESOLUTION holds them; each has a mutation test. Nothing here grants a level on its own: core/notary.may_act
+CHECKS_RESOLUTION holds them; each has a mutation test.
+
+REVISION FORM (C4 B, 26 Sep 2026): for a target <row>.revisions.jsonl the class
+checks the append-only revisions beside a row (experiments/institution/revisions.py):
+  row_unchanged  sha256(row bytes) == the row's seal == Emil's row signature
+  dated          revisions numbered 1..n, each dated before the row's window opens
+  signature      every revision that changes resolution semantics or signed wording
+                 carries Emil's signature on its revision_sha256; restatements
+                 (baseline, label) need none
+  metta / unevaluated  the row's RF1-RF6 witness, as for rows
+  seal           the revisions file's seal verifies; the Merkle root chain verifies
+  prev_step      == the row's Merkle root
+CHECKS_REVISION holds them; each has a mutation test. Nothing here grants a level on its own: core/notary.may_act
 consults it only after its ordinary vector has refused, and never above a ceiling.
 """
 from __future__ import annotations
@@ -61,6 +73,81 @@ def is_resolution(target) -> bool:
     return str(target).endswith(RESOLUTION_SUFFIX)
 
 
+REVISION_SUFFIX = ".revisions.jsonl"
+
+
+def is_revision(target) -> bool:
+    return str(target).endswith(REVISION_SUFFIX)
+
+
+def context_revision(target, prev_step, witness=None, signatures=None, roots_log=None) -> dict:
+    from experiments.institution import forward_rows as fr
+    from experiments.institution import forward_witness as fw
+    from experiments.institution import revisions as rv
+    log = Path(str(target))
+    if not log.is_absolute():
+        log = REPO / log
+    row_id = log.name[:-len(REVISION_SUFFIX)]
+    row_path = log.parent / f"{row_id}.json"
+    revs = [json.loads(l) for l in log.read_text(encoding="utf-8").splitlines() if l.strip()]
+    if not revs:
+        raise ValueError(f"{log.name} holds no revision")
+    ctx = {"mode": "revision", "row_id": row_id, "row_path": row_path, "log": log, "revisions": revs,
+           "row": json.loads(row_path.read_text(encoding="utf-8")), "prev_step": prev_step,
+           "roots_log": Path(roots_log or ROOTS_LOG), "fr": fr, "rv": rv, "signatures": signatures,
+           "row_sha256": hashlib.sha256(row_path.read_bytes()).hexdigest(),
+           "row_signature": fw.latest_signature(row_id, signatures)}
+    ctx["row_seal"] = json.loads((log.parent / f"{row_id}.seal.json").read_text(encoding="utf-8"))
+    try:
+        ctx["seal"] = json.loads((log.parent / f"{row_id}.revisions.seal.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        ctx["seal"] = None
+    ctx["witness"] = witness if witness is not None else fw.witness(
+        row_id, forward_dir=log.parent, signatures=signatures)
+    return ctx
+
+
+def check_rev_row_unchanged(ctx) -> tuple:
+    sig = ctx["row_signature"] or {}
+    if not (ctx["row_sha256"] == ctx["row_seal"].get("row_sha256") == sig.get("row_sha256")):
+        return False, (f"row bytes {ctx['row_sha256'][:16]} != seal {str(ctx['row_seal'].get('row_sha256'))[:16]}"
+                       f" / signature {str(sig.get('row_sha256'))[:16]}")
+    return True, f"row bytes unchanged ({ctx['row_sha256'][:16]})"
+
+
+def check_rev_dated(ctx) -> tuple:
+    start = ctx["row"]["condition"]["date_start_from"]
+    for i, r in enumerate(ctx["revisions"], 1):
+        if r.get("revision") != i:
+            return False, f"revision numbers are not 1..n (line {i} says {r.get('revision')!r})"
+        if not str(r.get("date", "")) or str(r["date"]) >= start:
+            return False, f"R{i} dated {r.get('date')!r}, not before the window {start}"
+    return True, f"{len(ctx['revisions'])} revision(s), all dated before {start}"
+
+
+def check_rev_signature(ctx) -> tuple:
+    rv, row = ctx["rv"], ctx["row"]
+    missing = [f"R{r['revision']}" for r in ctx["revisions"]
+               if rv.needs_signature(r, row) and not rv.signature_for(ctx["row_id"], r, ctx["signatures"])]
+    if missing:
+        return False, f"unsigned revision(s) that change semantics or signed wording: {', '.join(missing)}"
+    return True, "every revision that needs Emil's signature carries it"
+
+
+def check_rev_seal(ctx) -> tuple:
+    seal = ctx["seal"]
+    if not seal:
+        return False, "no seal beside the revisions file"
+    v = ctx["fr"].verify(ctx["log"], seal)
+    if not v["ok"]:
+        return False, f"revisions seal does not verify: {v['why']}"
+    import merkle_memory as mm
+    chain = mm.verify_root_chain(ctx["roots_log"])
+    if not chain["ok"]:
+        return False, f"Merkle root chain does not verify: {chain['why']}"
+    return True, f"revisions seal {seal['root'][:16]} verifies; chain ok ({chain['rows']} rows)"
+
+
 def context_resolution(target, prev_step, witness=None, signatures=None, roots_log=None) -> dict:
     from experiments.institution import forward_rows as fr
     from experiments.institution import forward_witness as fw
@@ -89,8 +176,10 @@ def context_resolution(target, prev_step, witness=None, signatures=None, roots_l
 def check_res_source(ctx) -> tuple:
     r, row = ctx["resolution"], ctx["row"]
     missing = [k for k in COMPUTED_FIELDS if k not in r]
-    if r.get("verdict") in ("KEPT", "NOT_KEPT"):
+    if r.get("verdict") in ("KEPT", "NOT_KEPT", "ASSUMPTION_BROKEN"):
         missing += [k for k in MEASURED_FIELDS if k not in r]
+    if r.get("verdict") == "ASSUMPTION_BROKEN":
+        missing += [k for k in ("assumption", "assumption_evidence") if not r.get(k)]
     if missing:
         return False, f"resolution misses {missing}"
     stage = str(r["stage"]).lower()
@@ -104,7 +193,7 @@ def check_res_release_id(ctx) -> tuple:
     r = ctx["resolution"]
     if not r.get("release_id") or not isinstance(r.get("released"), bool):
         return False, "release_id / released not recorded"
-    if r.get("verdict") in ("KEPT", "NOT_KEPT") and r["released"] is not True:
+    if r.get("verdict") in ("KEPT", "NOT_KEPT", "ASSUMPTION_BROKEN") and r["released"] is not True:
         return False, "a computed verdict from a release not marked released"
     return True, f"release {r['release_id']} (released={r['released']})"
 
@@ -209,6 +298,10 @@ CHECKS = (("signature", check_signature), ("seal", check_seal), ("prev_step", ch
 CHECKS_RESOLUTION = (("source", check_res_source), ("release_id", check_res_release_id),
                      ("metta", check_metta), ("unevaluated", check_unevaluated),
                      ("seal", check_res_seal), ("prev_step", check_res_prev_step))
+CHECKS_REVISION = (("row_unchanged", check_rev_row_unchanged), ("dated", check_rev_dated),
+                   ("signature", check_rev_signature), ("metta", check_metta),
+                   ("unevaluated", check_unevaluated), ("seal", check_rev_seal),
+                   ("prev_step", check_res_prev_step))
 
 
 def evaluate(cls: dict, step: str, target, prev_step, ceiling=None, **kw) -> dict:
@@ -220,11 +313,12 @@ def evaluate(cls: dict, step: str, target, prev_step, ceiling=None, **kw) -> dic
     if ceiling is not None and ceiling < cls["level"]:
         out["failed"].append(("ceiling", f"step capped at {ceiling}"))
         return out
-    resolution = is_resolution(target)
-    out["form"] = "resolution" if resolution else "row"
-    checks = CHECKS_RESOLUTION if resolution else CHECKS
+    form = "revision" if is_revision(target) else "resolution" if is_resolution(target) else "row"
+    out["form"] = form
+    checks = {"revision": CHECKS_REVISION, "resolution": CHECKS_RESOLUTION, "row": CHECKS}[form]
+    make = {"revision": context_revision, "resolution": context_resolution, "row": context}[form]
     try:
-        ctx = (context_resolution if resolution else context)(target, prev_step, **kw)
+        ctx = make(target, prev_step, **kw)
     except Exception as e:  # noqa: BLE001 - a missing input is a refusal
         out["failed"].append(("inputs", f"{type(e).__name__}: {e}"))
         return out

@@ -61,6 +61,8 @@ _NO_RE = re.compile(r"^\s*(?:no|reject|не|откажи)\b[:\s]+([0-9a-fA-F]{3,
 # "SIGN <row_id> <row_sha256>" - the full 64-hex sha of the row file's bytes, as
 # printed in the request message. Nothing else writes signatures.jsonl.
 _SIGN_RE = re.compile(r"^\s*SIGN\s+(F-\d{3})\s+([0-9a-fA-F]{64})\s*$", re.IGNORECASE)
+# A revision beside a row (C4 B): "SIGN F-002 R3 <revision_sha256>".
+_SIGN_REV_RE = re.compile(r"^\s*SIGN\s+(F-\d{3})\s+R(\d+)\s+([0-9a-fA-F]{64})\s*$", re.IGNORECASE)
 SIGNATURES = REPO / "experiments" / "institution" / "signatures.jsonl"
 FORWARD_DIR = REPO / "experiments" / "institution" / "forward"
 DECLINED = REPO / "memory" / "declined_approvals.json"
@@ -461,6 +463,10 @@ def apply_signature(text: str, token, chat_id, update_id=None,
     sha256 of the row file's bytes NOW; a reply for another version of the row, an
     unknown row, or a malformed line writes nothing."""
     import hashlib
+    mr = _SIGN_REV_RE.match(text or "")
+    if mr:
+        return _apply_revision_signature(mr.group(1).upper(), int(mr.group(2)), mr.group(3).lower(),
+                                         token, chat_id, update_id, signatures, forward_dir)
     m = _SIGN_RE.match(text or "")
     if not m:
         _reply(token, chat_id, "SIGN not understood. Reply exactly: SIGN <row_id> <row_sha256>")
@@ -483,6 +489,34 @@ def apply_signature(text: str, token, chat_id, update_id=None,
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     _ledger({"event": "signature", "row_id": row_id, "row_sha256": sha, "ok": True})
     _reply(token, chat_id, f"Signed {row_id} ({sha[:12]}...). The publish still goes through the notary.")
+    return {"ok": True, **rec}
+
+
+def _apply_revision_signature(row_id, n, sha, token, chat_id, update_id=None,
+                              signatures: Path | None = None, forward_dir: Path | None = None) -> dict:
+    """Sign ONE revision: its revision_sha256 must equal the hash of revision n as
+    it stands in <row>.revisions.jsonl NOW. Anything else writes nothing. The
+    record carries no row_sha256, so it can never pass for a row signature."""
+    from experiments.institution import revisions as rv
+    revs = rv.load(row_id, forward_dir or FORWARD_DIR)
+    rev = next((r for r in revs if r.get("revision") == n), None)
+    if rev is None:
+        _reply(token, chat_id, f"SIGN refused: {row_id} has no revision R{n}. Nothing written.")
+        return {"ok": False, "why": "unknown revision", "row_id": row_id, "revision": n}
+    actual = rv.rev_hash(rev)
+    if sha != actual:
+        _reply(token, chat_id, f"SIGN refused: {row_id} R{n} hashes to {actual}, not {sha}. Nothing written.")
+        return {"ok": False, "why": "sha mismatch", "row_id": row_id, "revision": n}
+    rec = {"ts": _now(), "signer": "Emil", "channel": "telegram",
+           "date": datetime.now().astimezone().date().isoformat(),
+           "row_id": row_id, "revision": n, "revision_sha256": sha, "update_id": update_id}
+    path = Path(signatures or SIGNATURES)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    _ledger({"event": "revision_signature", "row_id": row_id, "revision": n, "revision_sha256": sha, "ok": True})
+    _reply(token, chat_id, f"Signed {row_id} R{n} ({sha[:12]}...). It publishes through the notary once "
+                           f"every revision of {row_id} that needs you is signed.")
     return {"ok": True, **rec}
 
 

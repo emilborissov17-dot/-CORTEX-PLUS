@@ -35,7 +35,7 @@ REQUIRED = ("id", "commitment", "registered", "registered_by", "liveness", "cond
 CONDITION_KEYS = ("source", "type_of_violence", "dyad_name", "dyad_new_id", "adm_1",
                   "date_start_from", "date_start_to", "metric", "kept_if", "not_kept_if")
 STAGES = ("PROVISIONAL", "FINAL")
-OUTCOMES = ("KEPT", "NOT_KEPT", "SOURCE_LATE")
+OUTCOMES = ("KEPT", "NOT_KEPT", "SOURCE_LATE", "ASSUMPTION_BROKEN")
 PUBLISH_OUTCOMES = ("delivered", "deferred", "suppressed")
 _VERSION_ONLY = re.compile(r"\s*(UCDP\s+)?GED(\s+Candidate)?\s+\d+(\.\d+)*\s*", re.I)
 
