@@ -4,7 +4,7 @@
 # the 02:00-collectors/03:00-spine night is under way; added 25 Sep 2026), so the
 # cycle's one local model is resident before any cycle asks for it: a cycle never loads
 # a model, and a local call whose model is absent is refused ("warm core absent").
-# WakeToRun is OFF - the warm core must not wake a sleeping laptop.
+# WakeToRun is ON since 26 Sep 2026 (Emil: unattended nights) - the core is loaded before 03:00 even if the laptop sleeps.
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\install_warm_core_task.ps1
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\install_warm_core_task.ps1 -Show
@@ -30,9 +30,9 @@ $action = New-ScheduledTaskAction -Execute "powershell.exe" `
     -WorkingDirectory $repo
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 10)
-$settings.WakeToRun = $false
+$settings.WakeToRun = $true
 $logon = New-ScheduledTaskTrigger -AtLogOn -User "$env:USERDOMAIN\$env:USERNAME"
 $daily = New-ScheduledTaskTrigger -Daily -At "02:50"
 
 Register-ScheduledTask -TaskName $name -Action $action -Trigger @($logon, $daily) -Settings $settings -Force | Out-Null
-Write-Output "${name}: registered (at logon + daily 02:50), WakeToRun off"
+Write-Output "${name}: registered (at logon + daily 02:50), WakeToRun on"

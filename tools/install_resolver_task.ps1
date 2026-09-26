@@ -3,7 +3,7 @@
 # Monthly on the 5th and the 22nd at 06:00, every month, running tools\run_resolver.ps1
 # (resolver under the witness, role "resolver", through launch_detached). schtasks.exe
 # /SC MONTHLY takes one day only, so the trigger is built through the Task Scheduler
-# COM API: one monthly trigger, DaysOfMonth = 5 and 22. WakeToRun off.
+# COM API: one monthly trigger, DaysOfMonth = 5 and 22. WakeToRun ON (Emil, 26 Sep 2026: unattended nights).
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -File tools\install_resolver_task.ps1
 $ErrorActionPreference = "Stop"
@@ -14,7 +14,7 @@ $svc.Connect()
 $def = $svc.NewTask(0)
 $def.RegistrationInfo.Description = "Institution 0 forward-row resolver (resolve_forward_rows.py --publish), witnessed as role=resolver."
 $def.Settings.StartWhenAvailable = $true
-$def.Settings.WakeToRun = $false
+$def.Settings.WakeToRun = $true
 $def.Settings.DisallowStartIfOnBatteries = $false
 $def.Settings.StopIfGoingOnBatteries = $false
 $def.Settings.ExecutionTimeLimit = "PT1H"
