@@ -566,8 +566,14 @@ ALARM, NOTICE = "alarm", "notice"
 LEVEL_PREFIX = {ALARM: "🚨 CORTEX: ", NOTICE: "CORTEX · "}
 
 
+# Message classes allowed through quiet hours (Emil, 26 Sep 2026, C2c): only the
+# morning digest, which is the report he asked for. Everything else still waits.
+QUIET_HOURS_ALLOWED_CLASSES = ("morning_digest",)
+
+
 def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
-                trigger: str | None = None, *, level: str = ALARM) -> str:
+                trigger: str | None = None, *, level: str = ALARM,
+                cls: str | None = None) -> str:
     """15 Aug 2026 — THE DEAD-SYSTEM ALARM.
 
     ПРОМЕНЕНО (15 авг, вечер): в тихите часове НЕ буди. Записва събитието за
@@ -592,7 +598,8 @@ def alarm_human(subject: str, detail: str, dedup_key: str | None = None,
     # A cycle started by hand is one he is sitting in front of, waiting for; a
     # per-phase report that arrives tomorrow morning is useless to him. So the
     # quiet window is skipped when trigger=MANUAL and only then.
-    if _quiet_now() and str(trigger or "").upper() != "MANUAL":
+    if (_quiet_now() and str(trigger or "").upper() != "MANUAL"
+            and cls not in QUIET_HOURS_ALLOWED_CLASSES):
         return "deferred"           # спи човекът; сутринта ще прочете всичко
     try:
         cfg = json.loads(NOTIFY_CHANNEL.read_text(encoding="utf-8"))
