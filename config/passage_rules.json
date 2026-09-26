@@ -79,6 +79,15 @@
         "metta: MeTTa witness on the row, rules RF1-RF6 all evaluated, 0 contradictions",
         "unevaluated: any rule not evaluated, any missing input, or a silent engine refuses"
       ],
+      "requires_all_for_resolutions": [
+        "source: computed from the source named in the row (resolution.source == row.resolution[stage].source; every field present, fail-closed)",
+        "release_id: recorded (the UCDP version probed; released true|false)",
+        "metta: RF1-RF7 on the row and the resolution, 0 contradictions, none unevaluated, engines agree",
+        "seal: the resolutions file's seal verifies and the Merkle root chain verifies (ok=True)",
+        "prev_step: == the row's Merkle root (the root in <row>.seal.json)",
+        "no human signature: a resolution is computed, not authored - the signature check does not apply"
+      ],
+      "_resolutions_ratified": "Emil, chat, 2026-09-26 ('да').",
       "_ratified": "Emil, chat, 2026-09-25 (task #9b). Checks and RF1-RF6 as he wrote them; RF4 reads the threshold from config/ucdp_constants.json."
     }
   }

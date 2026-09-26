@@ -167,6 +167,13 @@ def test_the_ratified_values_have_not_moved():
     c = rules["classes"]["human_signed_preregistration"]
     assert (c["step"], c["target_glob"], c["level"], len(c["requires_all"])) == (
         "github_publish", "experiments/institution/forward/*", 2, 5)
+    # task #30: a resolution is computed, not authored - the signature check is
+    # replaced for *.resolutions.jsonl targets; still five checks, RF7 included.
+    # Ratified by Emil 2026-09-26: six items, the sixth being that NO signature is required.
+    r = c["requires_all_for_resolutions"]
+    assert len(r) == 6 and [x.split(":")[0] for x in r] == [
+        "source", "release_id", "metta", "seal", "prev_step", "no human signature"]
+    assert "RF1-RF7" in r[2] and "Merkle root" in r[4]
 
 
 def test_the_cooling_off_is_still_stated_where_the_refusal_is_built():

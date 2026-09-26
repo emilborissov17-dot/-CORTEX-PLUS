@@ -293,7 +293,9 @@ def api_get(version: str, page: int = 0, pagesize: int = 1000,
     except urllib.error.HTTPError as e:
         row["status"] = e.code
         row["error"] = e.read()[:200].decode("utf-8", "replace")
-        raise UcdpUnavailable("API %s -> HTTP %s: %s" % (url, e.code, row["error"])) from e
+        err = UcdpUnavailable("API %s -> HTTP %s: %s" % (url, e.code, row["error"]))
+        err.status, err.body = e.code, row["error"]     # the resolver tells "not released" apart
+        raise err from e
     except OSError as e:
         row["error"] = "%s: %s" % (type(e).__name__, e)
         raise UcdpUnavailable("API %s unreachable: %s" % (url, row["error"])) from e

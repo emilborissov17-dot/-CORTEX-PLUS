@@ -78,6 +78,22 @@ def schema_problems(row: dict) -> list:
     return out
 
 
+def matches(ev: dict, condition: dict) -> bool:
+    """One UCDP event against a row's condition - the ONE filter the resolver and the
+    witness's RF6 share. adm_1 "ALL" means the whole of condition["country"]; "ALL"
+    without a country is refused (ValueError), never read as "anywhere"."""
+    if str(ev["type_of_violence"]) != str(condition["type_of_violence"]):
+        return False
+    if str(ev["dyad_new_id"]) != str(condition["dyad_new_id"]):
+        return False
+    adm = condition["adm_1"]
+    if adm == "ALL":
+        if not condition.get("country"):
+            raise ValueError("adm_1 ALL needs condition.country")
+        return ev["country"] == condition["country"]
+    return ev["adm_1"] in set(adm)
+
+
 def _digest(row_bytes: bytes, prev_root, writer) -> str:
     h = hashlib.sha256()
     h.update(b"row\0" + len(row_bytes).to_bytes(8, "big") + row_bytes)

@@ -11,6 +11,9 @@ RF4 the row's threshold equals the UCDP constant read from config/ucdp_constants
 RF5 sha256(row bytes) == seal.row_sha256 == signature.row_sha256.
 RF6 baselines (a) and (b), recomputed from the local UCDP release files named by the
     row's as_of, match the row.
+RF7 (task #30, resolution mode only) resolution.filter == row.condition byte-for-byte:
+    the canonical JSON bytes of the two are equal. A resolution mode run without a
+    resolution cannot evaluate RF7 -> REFUSE.
 
 The Python reference is the spec; hyperon (forward_witness_worker.py in venv312_metta)
 is the second opinion, and engines_agree is recorded per rule. Rule: any rule not
@@ -37,6 +40,18 @@ OUT_DIR = REPO / "memory"
 WORKER = HERE / "forward_witness_worker.py"
 SIDECAR_PY = REPO / "venv312_metta" / "Scripts" / "python.exe"
 RULES = ("RF1", "RF2", "RF3", "RF4", "RF5", "RF6")
+RESOLUTION_RULES = RULES + ("RF7",)
+
+
+def canonical(obj) -> bytes:
+    return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
+def rf7_facts(row: dict, resolution: dict | None) -> dict | None:
+    if not isinstance(resolution, dict) or "filter" not in resolution or "condition" not in row:
+        return None
+    return {"filter_sha256": hashlib.sha256(canonical(resolution["filter"])).hexdigest(),
+            "condition_sha256": hashlib.sha256(canonical(row["condition"])).hexdigest()}
 _THR = re.compile(r"\s*(<|>=)\s*(\d+(?:\.\d+)?)\s*")
 
 
@@ -79,9 +94,8 @@ def recompute_baselines(row: dict, threshold: float, data_dir: Path | None = Non
         for r in uc._read_csv(ddir / name):
             by_id[r["id"]] = r
     c = row["condition"]
-    adm = set(c["adm_1"])
-    sel = [r for r in by_id.values() if r["type_of_violence"] == str(c["type_of_violence"])
-           and r["dyad_new_id"] == str(c["dyad_new_id"]) and r["adm_1"] in adm]
+    from experiments.institution import forward_rows as fr
+    sel = [r for r in by_id.values() if fr.matches(r, c)]
     a_lo, a_hi = [s.strip() for s in b["a_mean_monthly_best_pre_commitment"]["window"].split("..")]
     total = sum(float(r["best"]) for r in sel if a_lo <= r["date_start"][:10] <= a_hi)
     m = re.match(r"\s*(\d{4})-(\d{2})\s*\.\.\s*(\d{4})-(\d{2})", b["b_p_not_kept_post_commitment"]["window"])
@@ -194,6 +208,8 @@ def python_reference(rule: str, f: dict) -> bool | None:
     if rule == "RF6":
         return all(f[k + "_row"] == f[k + ("_data" if k == "as_of" else "_recomputed")]
                    for k in ("as_of", "total", "mean_x100", "hits", "months", "p_x10000"))
+    if rule == "RF7":
+        return f["filter_sha256"] == f["condition_sha256"]
     raise KeyError(rule)
 
 
@@ -208,12 +224,19 @@ def hyperon(facts: dict, timeout: int = 120) -> dict:
         return {"ok": False, "error": f"{type(e).__name__}: {e}"}
 
 
-def witness(row_id: str, write: bool = True, engine=hyperon, **paths) -> dict:
+def witness(row_id: str, write: bool = True, engine=hyperon, mode: str = "row",
+            resolution: dict | None = None, **paths) -> dict:
+    """mode "row": RF1-RF6. mode "resolution": RF1-RF7 on the row + that resolution."""
     fdir = Path(paths.get("forward_dir") or FORWARD_DIR)
     facts = facts_for(row_id, fdir, paths.get("signatures"), paths.get("data_dir"))
+    rule_set = RULES
+    if mode == "resolution":
+        rule_set = RESOLUTION_RULES
+        row = json.loads((fdir / f"{row_id}.json").read_text(encoding="utf-8"))
+        facts["RF7"] = rf7_facts(row, resolution)
     eng = engine(facts)
     rules, contradictions, not_evaluated = {}, [], []
-    for r in RULES:
+    for r in rule_set:
         py = python_reference(r, facts.get(r))
         hy = (eng.get("results") or {}).get(r, "not_evaluated") if eng.get("ok") else "not_evaluated"
         agree = (py is not None and hy != "not_evaluated" and py == hy)
@@ -228,7 +251,7 @@ def witness(row_id: str, write: bool = True, engine=hyperon, **paths) -> dict:
            "; ".join(x for x in (f"not evaluated: {','.join(not_evaluated)}" if not_evaluated else "",
                                  f"contradicted: {','.join(contradictions)}" if contradictions else "",
                                  "engines disagree" if not engines_agree and not not_evaluated else "") if x))
-    out = {"ts": datetime.now(timezone.utc).isoformat(), "row_id": row_id,
+    out = {"ts": datetime.now(timezone.utc).isoformat(), "row_id": row_id, "mode": mode,
            "row_sha256": hashlib.sha256((fdir / f"{row_id}.json").read_bytes()).hexdigest(),
            "rules": rules, "contradictions": contradictions, "not_evaluated": not_evaluated,
            "engines_agree": engines_agree,
@@ -236,7 +259,8 @@ def witness(row_id: str, write: bool = True, engine=hyperon, **paths) -> dict:
                        "error": eng.get("error"), "programs": eng.get("programs")},
            "verdict": verdict, "why": why}
     if write:
-        p = Path(paths.get("out_dir") or OUT_DIR) / f"metta_forward_{row_id}.json"
+        suffix = "" if mode == "row" else ".resolution"
+        p = Path(paths.get("out_dir") or OUT_DIR) / f"metta_forward_{row_id}{suffix}.json"
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return out
