@@ -11,6 +11,35 @@ from datetime import datetime, timezone
 
 from core.llm_text import refuse_llm_text   # task #29
 
+
+# ── THE DAILY PROOF CARRIES THE CYCLE'S LOCAL DATE (26 Sep 2026) ────────────────
+# The collectors run at 02:04 Europe/Sofia, which is still the previous day in
+# UTC, and web_intelligence names its folder by the UTC date - so the night of
+# 26 Sep was published as "[2026-09-25] Daily index". The folder stays where the
+# data is read from; the published label is the cycle's local date.
+def _last_sunday(year: int, month: int) -> int:
+    import calendar
+    last = calendar.monthrange(year, month)[1]
+    return max(d for d in range(last - 6, last + 1)
+               if datetime(year, month, d).weekday() == 6)
+
+
+def cycle_date(now_utc: datetime | None = None) -> str:
+    """YYYY-MM-DD in Europe/Sofia. zoneinfo when tzdata is present; otherwise the
+    EU rule (EET UTC+2; EEST UTC+3 from 01:00 UTC on the last Sunday of March to
+    01:00 UTC on the last Sunday of October). test_publisher_local_date pins both."""
+    from datetime import timedelta
+    now_utc = (now_utc or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    try:
+        from zoneinfo import ZoneInfo
+        return now_utc.astimezone(ZoneInfo("Europe/Sofia")).date().isoformat()
+    except Exception:  # noqa: BLE001 - no tzdata on this machine
+        y = now_utc.year
+        start = datetime(y, 3, _last_sunday(y, 3), 1, tzinfo=timezone.utc)
+        end = datetime(y, 10, _last_sunday(y, 10), 1, tzinfo=timezone.utc)
+        offset = 3 if start <= now_utc < end else 2
+        return (now_utc + timedelta(hours=offset)).date().isoformat()
+
 GITHUB_API    = "https://api.github.com"
 REPO_OWNER    = "emilborissov17-dot"
 REPO_NAME     = "cortex-civilization-watch"
@@ -109,8 +138,9 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
             return
         print(f"[GitHub] Публикувам данни от: {web_intel_dir.name}")
 
-    # Използвай датата от папката (не непременно днес)
-    date = web_intel_dir.name
+    # The label is the cycle's LOCAL date (Europe/Sofia); the folder - named by the
+    # UTC date web_intelligence wrote it on - is only where the data is read from.
+    date = cycle_date()
 
     published = 0
     errors = 0
@@ -247,6 +277,7 @@ def _publish_daily_index(date: str, web_intel_dir: pathlib.Path):
         axes.append((axis, severity, problem))
 
     md = f"# CORTEX++ Daily Report — {date}\n\n"
+    md += f"*Cycle date {date} (Europe/Sofia); data folder {web_intel_dir.name} (UTC date of collection).*\n\n"
     md += "> An autonomous system monitoring 25 axes of civilization toward dignity, sustainability and long-term survival of intelligent life.\n\n"
     if summary:
         crit = summary.get("critical_axes") or []
@@ -355,7 +386,7 @@ def publish_verified_hypotheses() -> int:
     if not assessed:
         print("[GitHub] verified_hypotheses -> 0 assessed hypotheses to publish")
         return 0
-    date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date = cycle_date()
     states = [(h, _resolution_state(h)) for h in assessed]
     expired = [h for h, (st, _d) in states if st == EXPIRED]
 
