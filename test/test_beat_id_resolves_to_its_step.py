@@ -16,7 +16,7 @@ two real steps.
 
 WHAT IT DID AND DID NOT COST. It did NOT mis-key the watchdog. supervisor
 .ceiling_for() takes beat["step"], the NAME, and config/scheduler.json's
-step_ceilings_sec has seventeen keys, all names and no fractional ids — the
+step_ceilings_sec had seventeen keys (sixteen since 26 Sep 2026), all names and no fractional ids — the
 step_index is carried for the log and nothing else. The triage report that ranked
 this first said otherwise; it repeated the old test's docstring instead of reading
 ceiling_for, and this file records the correction.

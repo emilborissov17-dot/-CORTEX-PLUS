@@ -241,7 +241,6 @@ STEPS = [
     ("resolve_ideas", "20.2", "Съди хипотезите на пулса срещу наблюдаваната серия; приложение само, никога редакция на idea_stream.",
      ["memory/idea_resolutions.jsonl"], False),
     ("session_update", "21", "Обновява записа на сесията.", [], False),
-    ("daily_analysis", "22", "Дневен анализ.", [], False),
     ("data_scout", "22.5", "Търси нови източници; последен, за да не се бие за LLM лимита.",
      ["memory/discovered_data_sources.json"], False),
     ("continuous_learning", "23", "Учи от цикъла.",

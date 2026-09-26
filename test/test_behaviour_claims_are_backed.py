@@ -8,7 +8,7 @@ THE INCIDENT, 19 September 2026. test_heartbeat_coverage's docstring said:
 
 Every identifier in it was real. The RELATION was invented. supervisor
 .ceiling_for() keys on beat["step"] — the NAME — and config/scheduler.json
-carries seventeen ceiling keys, all names and zero fractional ids. The sentence
+carried seventeen ceiling keys (sixteen since 26 Sep 2026), all names and zero fractional ids. The sentence
 was lifted into a triage report as rank-1 evidence and a whole command was
 planned against it before anyone read ceiling_for.
 

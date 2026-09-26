@@ -83,7 +83,8 @@ def test_the_fallback_is_what_was_actually_in_force_before():
 def test_the_config_still_parses_and_kept_every_ceiling():
     """A scheduler.json that does not parse reverts every step ceiling to the
     defaults, silently, inside load_config."""
-    assert len(LIVE_CFG["step_ceilings_sec"]) == 17
+    # 16 since 26 Sep 2026: the daily_analysis ceiling left with the step (C4 A).
+    assert len(LIVE_CFG["step_ceilings_sec"]) == 16
     assert LIVE_CFG["daily_hour"] == 3 and LIVE_CFG["catchup_grace_hours"] == 20
 
 

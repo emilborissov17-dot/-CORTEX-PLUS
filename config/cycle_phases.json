@@ -342,10 +342,6 @@
           "index": "21"
         },
         {
-          "name": "daily_analysis",
-          "index": "22"
-        },
-        {
           "name": "data_scout",
           "index": "22.5"
         },

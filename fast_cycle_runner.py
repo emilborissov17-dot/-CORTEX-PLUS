@@ -3425,10 +3425,10 @@ def main():
         _update()
     _run("session_updater", _session_updater)
 
-    # ── 22. Daily analysis ──
-    beat("daily_analysis", "22")
-    _run("daily_analysis", lambda: __import__(
-        "agents.core.daily_analysis_agent", fromlist=["main"]).main())
+    # daily_analysis (was step 22) — REMOVED FROM THE NIGHT, 26 Sep 2026 (C4 A).
+    # It stayed in the spine only as the exp-001 arm; exp-001 is closed. The code
+    # stays in agents/core/daily_analysis_agent.py (run_daily.bat still runs it by
+    # hand) until the risk-ledger conversion, which is postponed.
 
     # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
     beat("data_scout", "22.5")

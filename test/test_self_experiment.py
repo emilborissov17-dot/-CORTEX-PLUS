@@ -675,3 +675,73 @@ def test_a_guarded_verdict_is_labelled_observational():
     free["knob_is_guarded"] = False
     v2 = sx.verdict(free)
     assert v2["randomised"] is True and "OBSERVATIONAL" not in v2["why"]
+
+
+# --------------------------------------------------------------------------- #
+# (k) closing without adoption, and saying so when nothing is registered
+#     (C4 A, 26 Sep 2026: exp-001 closed)
+# --------------------------------------------------------------------------- #
+
+def _resolved_store(tmp_path) -> pathlib.Path:
+    """A store holding exp-001 as the live file held it before closing: RESOLVED,
+    arithmetic winner b."""
+    blob = json.loads(STORE_FIXTURE.read_text(encoding="utf-8"))
+    exp = next(e for e in blob["experiments"]
+               if e["id"] == "exp-001-daily-analysis-ceiling")
+    exp["state"] = sx.RESOLVED
+    exp["verdict"] = {"decided": True, "winner": "b", "why": "kills 0.25 vs 0.0"}
+    store = tmp_path / "exp.json"
+    store.write_text(json.dumps(blob), encoding="utf-8")
+    return store
+
+
+def test_close_replaces_the_verdict_and_keeps_the_arithmetic(tmp_path):
+    store = _resolved_store(tmp_path)
+    exp = sx.close("exp-001-daily-analysis-ceiling", "closed — reason", store=store)
+    assert exp["state"] == sx.CLOSED
+    assert exp["verdict"]["why"] == "closed — reason"
+    assert exp["verdict"]["winner"] is None
+    assert exp["superseded_verdict"]["winner"] == "b"
+    on_disk = json.loads(store.read_text(encoding="utf-8"))["experiments"]
+    assert any(e["state"] == sx.CLOSED for e in on_disk)
+
+
+def test_close_refuses_an_unknown_id_and_an_empty_reason(tmp_path):
+    store = _resolved_store(tmp_path)
+    with pytest.raises(KeyError):
+        sx.close("exp-999", "why", store=store)
+    with pytest.raises(ValueError):
+        sx.close("exp-001-daily-analysis-ceiling", "  ", store=store)
+
+
+def test_a_closed_experiment_is_never_adopted(tmp_path):
+    """NEGATIVE CONTROL: a CLOSED record that still carried a winner must not
+    reach the proposal queue. Removing the CLOSED guard in adopt() fails this."""
+    improvements = tmp_path / "improvement_proposals.json"
+    improvements.write_text(json.dumps({"proposals": []}), encoding="utf-8")
+    exp = copy.deepcopy(sx.FIRST)
+    exp.update(state=sx.CLOSED, verdict={"decided": True, "winner": "b"})
+    res = sx.adopt(exp, improvements=improvements)
+    assert res["proposed"] is False
+    assert json.loads(improvements.read_text(encoding="utf-8"))["proposals"] == []
+
+
+def test_the_step_says_no_registered_experiment_when_none_is_running(
+        tmp_path, monkeypatch, capsys):
+    """A closed experiment is not running. The step states that, out loud, and
+    does not read the ledger or write the store."""
+    store = _resolved_store(tmp_path)
+    sx.close("exp-001-daily-analysis-ceiling", "closed", store=store)
+    monkeypatch.setattr(sx, "STORE", store)
+    before = store.read_text(encoding="utf-8")
+    monkeypatch.setattr(sx, "last_closed_cycle",
+                        lambda *a, **k: pytest.fail("read the ledger with nothing to observe"))
+    assert sx.observe_all() == []
+    assert sx.NO_EXPERIMENT in capsys.readouterr().out
+    assert store.read_text(encoding="utf-8") == before
+
+
+def test_an_empty_store_also_says_no_registered_experiment(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(sx, "STORE", tmp_path / "absent.json")
+    assert sx.observe_all() == []
+    assert "no registered experiment" in capsys.readouterr().out

@@ -64,8 +64,6 @@ KNOWN_EDGES = {
         "self_modifier writes patches with a model; never listed as an edge step",
     ("agents.body.growth_planner", "core.groq_backend"):
         "growth_planner; core.phase_evidence reads growth_plan_latest.json (C3b STOP)",
-    ("agents.core.daily_analysis_agent", "core.groq_backend"):
-        "daily_analysis stays in the spine: the exp-001 arm",
     ("core.constancy", "core.brain"):
         "constancy_and_constellation; brain_reconsider and cycle_report read its output the same night",
     ("core.reconsider", "core.brain"):

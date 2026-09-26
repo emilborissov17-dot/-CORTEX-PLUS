@@ -194,10 +194,16 @@ def _selftest() -> int:
               ("draw is balanced", sorted(draw(7, 6)) == ["a"] * 6 + ["b"] * 6),
               ("different seeds differ", draw(7, 6) != draw(8, 6))]
     live = None
+    if not SCHEDULE.exists():
+        print("  INTEGRATION: INERT — retired 26 Sep 2026 with exp-001; no schedule file, --apply writes nothing")
     try:
+        if not SCHEDULE.exists():
+            raise LookupError("retired")
         live = status(load())
         checks.append((f"live schedule loads (signed={live['signed']}, tampered={live['tampered']}, "
                        f"applied={live['applied']}/{live['length']})", not live["tampered"]))
+    except LookupError:
+        pass
     except Exception as exc:  # noqa: BLE001
         checks.append((f"live schedule loads ({exc})", False))
     ok = True
@@ -211,16 +217,30 @@ def _selftest() -> int:
     return 0 if ok else 1
 
 
-if __name__ == "__main__":
-    if "--selftest" in sys.argv:
-        sys.exit(_selftest())
+NO_SCHEDULE = {"verdict": "NO_SCHEDULE", "written": False,
+               "why": ("config/self_experiment_schedule.json is absent — sched-001 was retired "
+                       "with exp-001 on 26 Sep 2026; nothing is applied")}
+
+
+def main(argv: list[str]) -> int:
+    if "--selftest" in argv:
+        return _selftest()
+    if not SCHEDULE.exists():
+        # RETIRED, not broken: said out loud, and nothing touches config/scheduler.json.
+        print(json.dumps(NO_SCHEDULE, ensure_ascii=False))
+        return 0
     sched = load()
     if "--draw" in sys.argv:
         print(json.dumps({"seed": sched["seed"], "n_per_arm": sched["n_per_arm"],
                           "sequence": draw(sched["seed"], sched["n_per_arm"])}, ensure_ascii=False))
-        sys.exit(0)
-    if "--apply" in sys.argv:
+        return 0
+    if "--apply" in argv:
         out = apply(sched, REPO / sched["file"])
         print(json.dumps(out, ensure_ascii=False))
-        sys.exit({"APPLIED": 0, "RESTORED": 0, "DONE": 0, "UNSIGNED": 2, "TAMPERED": 3}.get(out["verdict"], 1))
+        return {"APPLIED": 0, "RESTORED": 0, "DONE": 0, "UNSIGNED": 2, "TAMPERED": 3}.get(out["verdict"], 1)
     print(json.dumps(status(sched), ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

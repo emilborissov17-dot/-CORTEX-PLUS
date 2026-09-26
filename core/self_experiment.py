@@ -67,6 +67,11 @@ REGISTERED = "REGISTERED"
 BLOCKED_ON_HUMAN = "BLOCKED_ON_HUMAN"
 RESOLVED = "RESOLVED"
 REJECTED = "REJECTED"
+# Затворен от човек, без осиновяване: аритметиката е запазена под
+# `superseded_verdict`, но присъдата е причината за затварянето.
+CLOSED = "CLOSED"
+
+NO_EXPERIMENT = "no registered experiment"
 
 LOWER_BETTER, HIGHER_BETTER = "lower_better", "higher_better"
 
@@ -679,6 +684,8 @@ def adopt(exp: dict, improvements: pathlib.Path | None = None) -> dict:
     промяна в постоянна настройка е решение с последствия, и то минава през
     човек — същият канал като всяко друго предложение, със същия часовник.
     """
+    if exp.get("state") == CLOSED:
+        return {"proposed": False, "why": "closed without adoption"}
     v = exp.get("verdict") or {}
     if not v.get("decided") or not v.get("winner"):
         return {"proposed": False, "why": "no winner to adopt"}
@@ -708,6 +715,31 @@ def adopt(exp: dict, improvements: pathlib.Path | None = None) -> dict:
     blob["proposals"] = rows
     _write_json(path, blob)
     return {"proposed": True, "adopt": f"{key}={win}"}
+
+
+def close(exp_id: str, why: str, store: pathlib.Path | None = None) -> dict:
+    """Затваря опит БЕЗ осиновяване. Присъдата става причината; аритметиката
+    остава под `superseded_verdict`, за да се вижда какво е било отхвърлено.
+
+    Хвърля KeyError за непознат id — затваряне на опит, който го няма, не е
+    нищо, което да се върне като успех.
+    """
+    if not str(why or "").strip():
+        raise ValueError("a closing verdict needs a reason")
+    path = store or STORE
+    blob = _read_json(path, {"experiments": []})
+    for exp in blob.get("experiments", []):
+        if exp.get("id") == exp_id:
+            break
+    else:
+        raise KeyError(f"no experiment {exp_id!r} in {path}")
+    if exp.get("state") != CLOSED:
+        exp["superseded_verdict"] = exp.get("verdict")
+    exp["state"] = CLOSED
+    exp["closed_utc"] = _now()
+    exp["verdict"] = {"decided": True, "winner": None, "closed": True, "why": why}
+    _write_json(path, blob)
+    return exp
 
 
 # ---------------------------------------------------------------------------
@@ -911,6 +943,11 @@ def observe_all(store: pathlib.Path | None = None) -> list:
     cycle_id, така че един цикъл дава точно едно наблюдение колкото пъти и да
     бъде извикано.
     """
+    if not running():
+        # Казва се на глас: празен изход не се различава от стъпка, която
+        # изобщо не е вървяла.
+        print(f"[EXPERIMENT] {NO_EXPERIMENT}")
+        return []
     cid, since, until, ordinal = last_closed_cycle()
     terminal = _terminal_event(cid)
     if not cid:
@@ -1061,6 +1098,12 @@ if __name__ == "__main__":
     if "--register-first" in sys.argv:
         rec = register_first()
         print(json.dumps(rec, ensure_ascii=False, indent=2))
+        sys.exit(0)
+    if "--close" in sys.argv:
+        i = sys.argv.index("--close")
+        rec = close(sys.argv[i + 1], sys.argv[i + 2])
+        print(json.dumps({k: rec.get(k) for k in ("id", "state", "closed_utc", "verdict")},
+                         ensure_ascii=False, indent=2))
         sys.exit(0)
     if "--observe" in sys.argv:
         observe_all()

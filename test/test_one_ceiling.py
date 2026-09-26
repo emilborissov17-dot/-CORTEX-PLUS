@@ -78,7 +78,7 @@ def test_survival_may_not_widen_a_ceiling(monkeypatch):
     monkeypatch.setattr(sm, "p50_ceiling",
                         lambda step, baseline=None, ceilings=None: (99_999.0, "p50"))
     ceilings = CFG["step_ceilings_sec"]
-    for step in ("daily_analysis", "web_intelligence"):
+    for step in ("self_observer", "web_intelligence"):
         assert sb.effective_ceiling(step, ceilings) == float(int(ceilings[step])), (
             "a p50 above the human ceiling raised it; config/scheduler.json's "
             "README forbids a system widening its own limit")
@@ -149,5 +149,5 @@ def test_a_broken_survival_lookup_falls_back_to_the_human_number(monkeypatch):
 
     monkeypatch.setattr(sm, "resolve", _boom)
     ceilings = CFG["step_ceilings_sec"]
-    assert sb.effective_ceiling("daily_analysis", ceilings) == \
-        float(int(ceilings["daily_analysis"]))
+    assert sb.effective_ceiling("self_observer", ceilings) == \
+        float(int(ceilings["self_observer"]))

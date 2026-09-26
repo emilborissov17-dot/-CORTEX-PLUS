@@ -119,12 +119,24 @@ def test_self_experiment_uses_the_log_before_the_mtime(tmp_path, monkeypatch):
     assert v == 900 and "signed schedule" in basis
 
 
-def test_the_live_schedule_is_consistent_and_unsigned_until_a_human_signs():
-    s = ss.load()
-    st = ss.status(s)
-    assert st["tampered"] is False and st["length"] == 2 * s["n_per_arm"]
-    assert s["arms"] == {"a": 900, "b": 1500} and s["key"] == "step_ceilings_sec.daily_analysis"
-    # not asserting signed: that is the human's move, and a test must not make it for them
+def test_the_live_schedule_is_retired():
+    """sched-001 was retired with exp-001 on 26 Sep 2026 (C4 A). If the file comes
+    back, the 02:50 task would start writing config/scheduler.json again."""
+    assert not ss.SCHEDULE.exists(), f"{ss.SCHEDULE} is back — the retired knob is live again"
+
+
+def test_apply_without_a_schedule_writes_nothing_and_says_so(tmp_path, monkeypatch, capsys):
+    """NEGATIVE CONTROL for the retirement: no schedule file -> NO_SCHEDULE, exit 0,
+    the guarded file untouched. Removing the exists() guard in main() makes load()
+    raise, and this test fails."""
+    target = _target(tmp_path)
+    before = target.read_text(encoding="utf-8")
+    monkeypatch.setattr(ss, "SCHEDULE", tmp_path / "absent.json")
+    monkeypatch.setattr(ss, "REPO", tmp_path)
+    assert ss.main(["signed_schedule.py", "--apply"]) == 0
+    out = json.loads(capsys.readouterr().out)
+    assert out["verdict"] == "NO_SCHEDULE" and out["written"] is False
+    assert target.read_text(encoding="utf-8") == before
 
 
 # ── the band is read, not mirrored (11 Sep 2026) ─────────────────────────────
@@ -156,16 +168,7 @@ def test_the_signed_file_cannot_widen_its_own_band():
     signature — even a valid one — can only choose AMONG values a human already
     bounded. An arm outside it is refused with the value named, and nothing is
     written."""
-    sched = ss.load()
+    sched = _sched()
     lo, hi = ss._bands()[sched["knob"]]
     for v in list(sched["arms"].values()) + [sched["restore_value"]]:
         assert lo <= v <= hi, f"the live signed schedule carries {v}, outside {lo}..{hi}"
-
-
-def test_the_live_schedule_is_signed_and_untampered():
-    """The state the scheduled task depends on. If this fails the 02:50 task is
-    writing nothing every night, which is safe but silent."""
-    st = ss.status(ss.load())
-    assert st["signed"] is True, "the live schedule is unsigned — --apply refuses nightly"
-    assert st["tampered"] is False, "the sequence on file is not what the seed derives"
-    assert st["length"] == 12 and len(set(st["expected"])) == 2
