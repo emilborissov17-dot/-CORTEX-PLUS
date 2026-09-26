@@ -178,8 +178,8 @@ def run() -> dict:
         # stands even if publishing is refused or deferred (the ledger says which).
         if res.get("ok") and res.get("revision"):
             try:
-                from experiments.institution import revisions as rv   # noqa: E402
-                res["publish"] = rv.publish_if_ready(res["row_id"])
+                from experiments.institution import publish_revisions as pr   # noqa: E402
+                res["publish"] = pr.publish_if_ready(res["row_id"])
             except Exception as e:  # noqa: BLE001
                 res["publish"] = {"outcome": "error", "why": "%s: %s" % (type(e).__name__, e)}
         signed.append(res)

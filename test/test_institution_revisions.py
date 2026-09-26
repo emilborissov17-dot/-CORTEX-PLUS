@@ -358,6 +358,7 @@ def test_the_sealed_revision_bytes_are_lf_and_are_what_is_published(fdir, monkey
     monkeypatch.setattr(fr, "PUBLISH_LEDGER", fdir.parent / "ledger.jsonl")
     from experiments.institution import register_forward_row as reg
     monkeypatch.setattr(reg, "page_all", lambda: "page")
-    rv.publish("F-002", fdir)
+    from experiments.institution import publish_revisions as pr
+    pr.publish("F-002", fdir)
     body = published["institution0/F-002.revisions.jsonl"].encode("utf-8")
     assert fr._digest(body, s["prev_root"], s["writer"]) == s["root"], "the published file does not verify"

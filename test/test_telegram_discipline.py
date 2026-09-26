@@ -168,7 +168,7 @@ EXPECTED_TELEGRAM_CALLS = {
     ("supervisor.py", "alarm"),
     ("core/alarm_bands.py", "new_risks"),
     ("experiments/institution/register_forward_row.py", "sign_request"),
-    ("experiments/institution/revisions.py", "sign_request"),      # C4 B revision SIGN requests
+    ("experiments/institution/publish_revisions.py", "sign_request"),      # C4 B revision SIGN requests
     ("tools/morning_digest.py", "morning_digest"),
 }
 
