@@ -70,6 +70,7 @@ IMMEDIATE_KINDS = frozenset({"autopsy", "reconsider", "cycle_review", "cycle_rep
 DIGEST_KINDS = frozenset({"constancy", "cycle_plan", "constellation"})
 
 COLD_START_TAIL = 5
+SEEN_WINDOW = 2000
 
 IMMEDIATE, DIGEST, SKIP = "IMMEDIATE", "DIGEST", "SKIP"
 
@@ -226,18 +227,25 @@ def render_digest(rows: list[tuple[dict, dict]]) -> str:
 def relay(journal_path=None, cursor_path=None, sender=None,
           dry_run: bool = False) -> dict:
     """Send what is new. The cursor advances ONLY on a clean send."""
-    rows = read_journal(journal_path)
+    all_rows = read_journal(journal_path)
+    # THE MEMORY IS THE LAST SEEN_WINDOW ROWS OF THE JOURNAL, BY JOURNAL ORDER (26 Sep
+    # 2026). The cursor used to keep sorted(seen)[-2000:] - the 2000 largest HASHES,
+    # not the 2000 newest rows - so once the journal passed 2000 rows, every row
+    # whose hash sorted low was forgotten and sent again as new. Rows older than the
+    # window are not looked at, so nothing forgotten can come back.
+    rows = all_rows[-SEEN_WINDOW:]
+    window = {content_hash(r) for r in rows}
     cur = load_cursor(cursor_path)
     seen = set(cur.get("sent_hashes", []))
     cold = not cur.get("initialised")
 
     skipped_cold = 0
-    if cold and len(rows) > COLD_START_TAIL:
-        skipped_cold = len(rows) - COLD_START_TAIL
+    if cold and len(all_rows) > COLD_START_TAIL:
+        skipped_cold = len(all_rows) - COLD_START_TAIL
         # MARK THE SKIPPED HISTORY AS SEEN, or the cold start merely DELAYS the
         # flood: the second run finds 245 unsent rows and posts every one. The
         # first version did exactly that, and the test for it went red.
-        seen.update(content_hash(r) for r in rows[:skipped_cold])
+        seen.update(content_hash(r) for r in rows[:-COLD_START_TAIL])
         rows = rows[-COLD_START_TAIL:]
 
     immediate, digest, skipped = [], [], 0
@@ -281,7 +289,7 @@ def relay(journal_path=None, cursor_path=None, sender=None,
     if not dry_run:
         cur["initialised"] = True
         cur["last_run"] = _now()
-        cur["sent_hashes"] = sorted(seen)[-2000:]
+        cur["sent_hashes"] = sorted(seen & window)
         if skipped_cold:
             cur["cold_start_skipped"] = skipped_cold
         save_cursor(cur, cursor_path)

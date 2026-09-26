@@ -176,6 +176,27 @@ def test_the_second_run_is_not_a_cold_start(tmp_path):
     assert len(sent) == first, "the second run re-sent what it had already sent"
 
 
+def test_a_journal_longer_than_the_memory_does_not_resend_its_past(tmp_path):
+    """26 Sep 2026: the cursor kept sorted(seen)[-2000:], the 2000 largest HASHES, so
+    past 2000 rows the low-sorting half of the history came back as new. Mutation:
+    restore that line and the second run sends again."""
+    kind = sorted(relay.IMMEDIATE_KINDS)[0]
+    j = _journal(tmp_path, [{"ts": f"t{i}", "kind": kind, "summary": f"row {i}"} for i in range(2600)])
+    cursor = tmp_path / "cursor.json"
+    sent, sender = _capture()
+    relay.relay(journal_path=j, cursor_path=cursor, sender=sender)
+    first = len(sent)
+    assert first <= relay.COLD_START_TAIL
+    relay.relay(journal_path=j, cursor_path=cursor, sender=sender)
+    assert len(sent) == first, f"re-sent {len(sent) - first} old row(s)"
+    held = len(json.loads(cursor.read_text(encoding="utf-8"))["sent_hashes"])
+    assert held <= relay.SEEN_WINDOW, f"the cursor grows with the journal: {held} hashes"
+    with j.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"ts": "new", "kind": kind, "summary": "a new row"}) + chr(10))
+    relay.relay(journal_path=j, cursor_path=cursor, sender=sender)
+    assert len(sent) == first + 1, "a genuinely new row must still go out"
+
+
 # ---------------------------------------------------------------------------
 # (c) Routing
 # ---------------------------------------------------------------------------
