@@ -593,7 +593,24 @@ def _archive(obs: dict, outcome: str, reason: str, provenance: dict | None) -> N
         print(f"  [PROPOSAL_ARCHIVE] FAILED ({type(e).__name__}: {e})")
 
 
-def save_proposals(observations: list):
+# A proposal without these cannot be deduplicated, judged or acted on. A model
+# that drops one gets its proposal REFUSED with the field named and counted —
+# 26 Sep 2026: a proposal without "problem" raised KeyError here and failed the
+# whole step (cycle 2026-09-26 11:50, E_PROPOSE PARTIAL).
+REQUIRED_FIELDS = ("problem", "component", "solution", "measurable_goal")
+
+
+def _missing_fields(obs) -> list:
+    """Required fields that are absent or not a non-empty string. A non-object
+    item misses all of them."""
+    if not isinstance(obs, dict):
+        return list(REQUIRED_FIELDS)
+    return [f for f in REQUIRED_FIELDS
+            if not isinstance(obs.get(f), str) or not obs[f].strip()]
+
+
+def save_proposals(observations: list) -> dict:
+    """Returns {"added", "refused", "refused_fields": {field: count}}."""
     from alignment.civilization_guard import evaluate_proposal_alignment
     proposals_path = BASE_DIR / "memory" / "improvement_proposals.json"
 
@@ -614,10 +631,24 @@ def save_proposals(observations: list):
         print(f"  [PROPOSALS] Изчистени {removed_old} стари (>{MAX_AGE_DAYS}д)")
 
     # ── Fuzzy дедупликация по първите 80 символа ─────────────────────────────
-    existing_problems = {p["problem"][:80] for p in data["proposals"]}
+    existing_problems = {p["problem"][:80] for p in data["proposals"]
+                         if isinstance(p, dict) and isinstance(p.get("problem"), str)}
 
     added = 0
+    refused = 0
+    refused_fields: dict = {}
     for obs in observations:
+        missing = _missing_fields(obs)
+        if missing:
+            refused += 1
+            for f in missing:
+                refused_fields[f] = refused_fields.get(f, 0) + 1
+            why = f"REFUSED: missing required field(s) {', '.join(missing)}"
+            if isinstance(obs, dict):
+                _archive(obs, _PA.BLOCKED, why, obs.pop("_provenance", None))
+            print(f"  [GUARD] ⛔ {why} — {str(obs)[:80]}")
+            continue
+
         # ── THE ARCHIVE, UPSTREAM OF EVERY LOSSY PATH (17 Aug 2026) ──────────
         # This loop is the single chokepoint every proposal passes through, and
         # until today three of its four exits led nowhere: the dedup `continue`
@@ -664,6 +695,9 @@ def save_proposals(observations: list):
 
     proposals_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"  [GUARD] {added} нови proposals добавени. Общо: {len(data['proposals'])}/{MAX_PROPOSALS}")
+    print(f"  [GUARD] refused {refused} malformed proposal(s)"
+          + (f": {refused_fields}" if refused else ""))
+    return {"added": added, "refused": refused, "refused_fields": refused_fields}
 
 
 if __name__ == "__main__":

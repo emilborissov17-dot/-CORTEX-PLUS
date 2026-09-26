@@ -185,9 +185,12 @@ def test_a_nonsense_proposal_is_kept_too(sandbox, monkeypatch):
     monkeypatch.setattr(guard, "evaluate_proposal_alignment", _allow)
     so.save_proposals([_proposal("", component="", solution="")])
     body = _archive_text(sandbox)
-    assert "ACCEPTED" in body and "(none recorded)" in body, (
+    # Since 26 Sep 2026 (C4 C) an empty proposal is REFUSED for its missing
+    # required fields — refused, and still kept, with the reason.
+    assert "BLOCKED" in body and "REFUSED: missing required field" in body, (
         "an empty/nonsense proposal was silently skipped; curating the archive "
         "is exactly what it must not do")
+    assert _live(sandbox) == []
 
 
 def test_what_the_seven_day_cutoff_deletes_still_exists_in_the_archive(sandbox, monkeypatch):
