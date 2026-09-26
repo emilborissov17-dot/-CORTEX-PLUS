@@ -70,20 +70,24 @@ def seal_row(row_id: str) -> dict:
     return s
 
 
-def page(row: dict, s: dict) -> str:
+def section(row: dict, s: dict) -> list:
+    """One row's part of the page."""
     c, r, b = row["condition"], row["resolution"], row["baseline"]
-    lines = [
-        "# Institution 0 — forward rows", "",
-        *[f"> {t}" for t in row["sentences"]], "",
-        f"## {row['id']} — {row['commitment']['title']} ({row['commitment']['date']})", "",
+    where = (f"whole country ({c['country']})" if c["adm_1"] == "ALL"
+             else "adm_1 in " + ", ".join(repr(a) for a in c["adm_1"]))
+    label = f" — {row['label']}" if row.get("label") else ""
+    a_, b_ = b["a_mean_monthly_best_pre_commitment"], b["b_p_not_kept_post_commitment"]
+    return [
+        f"## {row['id']}{label} — {row['commitment']['title']} ({row['commitment']['date']})", "",
+        *([f"*{row['successor']}*", ""] if row.get("successor") else []),
         f"Registered {row['registered']} by {row['registered_by']}. Liveness: {row['liveness']}.",
         f"Lane I-1: {row['lane']['I-1']}.", "",
         "**Condition (UCDP GED).** "
         f"type_of_violence = {c['type_of_violence']} ({c['type_of_violence_means']}); "
-        f"dyad \"{c['dyad_name']}\" (dyad_new_id {c['dyad_new_id']}); "
-        f"adm_1 in {', '.join(repr(a) for a in c['adm_1'])}; "
+        f"dyad \"{c['dyad_name']}\" (dyad_new_id {c['dyad_new_id']}); {where}; "
         f"date_start {c['date_start_from']} .. {c['date_start_to']}; metric {c['metric']}; "
         f"KEPT if {c['kept_if']}, NOT KEPT if {c['not_kept_if']}.", "",
+        *([f"*{c['dyad_note']}*", ""] if row.get("label") == "PROXY" else []),
         "**Resolution.** Appended, never overwritten; OPEN until FINAL.",
         f"- PROVISIONAL: {r['provisional']['source']} (expected {r['provisional']['expected']}); "
         f"resolve by {r['provisional']['resolve_by']}; SOURCE_LATE if no release by "
@@ -91,28 +95,47 @@ def page(row: dict, s: dict) -> str:
         f"- FINAL: {r['final']['source']} ({r['final']['expected']}); resolve by "
         f"{r['final']['resolve_by']}; SOURCE_LATE if no such release by "
         f"{r['final']['source_late_if_no_release_by']}.", "",
-        f"**Baseline (as_of {b['as_of']}).** Pre-commitment {b['a_mean_monthly_best_pre_commitment']['window']}: "
-        f"mean {b['a_mean_monthly_best_pre_commitment']['mean_per_month']} fatalities/month "
-        f"({b['a_mean_monthly_best_pre_commitment']['note']}). Post-commitment "
-        f"{b['b_p_not_kept_post_commitment']['window']}: "
-        f"{b['b_p_not_kept_post_commitment']['months_at_or_above_25']} of "
-        f"{b['b_p_not_kept_post_commitment']['months']} months at or above 25 -> p_not_kept = "
-        f"{b['b_p_not_kept_post_commitment']['p_not_kept']}.", "",
-        "## Retrospective rows (method validation, as_of ucdp:26.0.8)", "",
-        row["retrospective"]["method"], "",
-        "| commitment | party | events | months with event | civilian deaths | verdict |",
-        "|---|---|---:|---:|---:|---|",
-        *[f"| {x['commitment']} | {x['party']} | {x['events']} | {x['months_with_event']} | "
-          f"{x['civilian_deaths']} | {x['verdict']}{' (' + x['label'] + ')' if x.get('label') else ''} |"
-          for x in row["retrospective"]["rows"]], "",
-        "## Seal", "",
-        f"Merkle root `{s['root']}` over the exact bytes of `{s['file']}` "
+        f"**Baseline (as_of {b['as_of']}).** Pre-commitment {a_['window']}: mean "
+        f"{a_['mean_per_month']} fatalities/month ({a_['note']}). Post-commitment {b_['window']}: "
+        f"{b_['months_at_or_above_25']} of {b_['months']} months at or above the threshold -> "
+        f"p_not_kept = {b_['p_not_kept']}." + (f" {b_['note']}" if b_.get("note") else ""), "",
+        f"**Seal.** Merkle root `{s['root']}` over the exact bytes of `{s['file']}` "
         f"(sha256 `{s['row_sha256']}`, {s['row_bytes']} bytes) + previous root "
         f"`{s['prev_root']}` + writer {json.dumps(s['writer'])}.", "",
-        "## Citation", "",
-        f"- Provisional source: {row['citation']['provisional_source']}",
-        f"- Final source: {row['citation']['final_source']}", "",
     ]
+
+
+def published_rows() -> list:
+    """(row, seal) for every row that is sealed and signed - the rows the page lists."""
+    from experiments.institution import forward_witness as fw
+    out = []
+    for p in sorted(fr.FORWARD_DIR.glob("F-*.json")):
+        if p.name.count(".") != 1:
+            continue
+        sp = fr.FORWARD_DIR / f"{p.stem}.seal.json"
+        if sp.exists() and fw.latest_signature(p.stem):
+            out.append((json.loads(p.read_text(encoding="utf-8")), json.loads(sp.read_text(encoding="utf-8"))))
+    return out
+
+
+def page_all() -> str:
+    rows = published_rows()
+    if not rows:
+        raise SystemExit("[F] no sealed and signed row to put on the page")
+    first = rows[0][0]
+    lines = ["# Institution 0 — forward rows", "", *[f"> {t}" for t in first["sentences"]], ""]
+    for row, s in rows:
+        lines += section(row, s)
+    retro = next((r["retrospective"] for r, _s in rows if r["retrospective"].get("rows")), None)
+    if retro:
+        lines += ["## Retrospective rows (method validation, as_of ucdp:26.0.8)", "", retro["method"], "",
+                  "| commitment | party | events | months with event | civilian deaths | verdict |",
+                  "|---|---|---:|---:|---:|---|",
+                  *[f"| {x['commitment']} | {x['party']} | {x['events']} | {x['months_with_event']} | "
+                    f"{x['civilian_deaths']} | {x['verdict']}{' (' + x['label'] + ')' if x.get('label') else ''} |"
+                    for x in retro["rows"]], ""]
+    lines += ["## Citation", "", f"- Provisional source: {first['citation']['provisional_source']}",
+              f"- Final source: {first['citation']['final_source']}", ""]
     return "\n".join(lines)
 
 
@@ -135,7 +158,7 @@ def publish(row_id: str) -> int:
         return 3
     row = json.loads(path.read_text(encoding="utf-8"))
     files = {f"institution0/{row_id}.json": json.dumps({"seal": s, "row": row}, ensure_ascii=False, indent=2) + "\n",
-             "institution0/INSTITUTION_0.md": page(row, s)}
+             "institution0/INSTITUTION_0.md": page_all()}
     try:
         import github_publisher as gp
         written = gp.publish_institution0(files, f"institution0: register forward row {row_id} (root {s['root'][:12]})")
@@ -151,8 +174,14 @@ def publish(row_id: str) -> int:
     return 0
 
 
-SIGN_LINE = {"F-001": "F-001 - Doha Declaration (DRC and AFC/M23), October 2026, "
-                      "state-based fatalities >= 25 in North and South Kivu"}
+def sign_line(row: dict) -> str:
+    """What Emil signs, in one line: row id, commitment, dyad, window, threshold."""
+    c = row["condition"]
+    where = f"whole of {c['country']}" if c["adm_1"] == "ALL" else " and ".join(c["adm_1"])
+    label = f" [{row['label']}]" if row.get("label") else ""
+    return (f"{row['id']}{label} - {row['commitment']['title']} ({row['commitment']['date']}); "
+            f"dyad {c['dyad_name']} ({c['dyad_new_id']}); {where}; October 2026; "
+            f"state-based fatalities {c['not_kept_if']} = NOT KEPT")
 
 
 def request_signature(row_id: str) -> str:
@@ -160,8 +189,9 @@ def request_signature(row_id: str) -> str:
     format. Returns alarm_human's status; anything but "delivered" is a STOP."""
     import hashlib
     import supervisor
-    sha = hashlib.sha256((fr.FORWARD_DIR / f"{row_id}.json").read_bytes()).hexdigest()
-    detail = "\n".join([f"You are signing: {SIGN_LINE[row_id]}",
+    raw = (fr.FORWARD_DIR / f"{row_id}.json").read_bytes()
+    sha = hashlib.sha256(raw).hexdigest()
+    detail = "\n".join([f"You are signing: {sign_line(json.loads(raw.decode('utf-8')))}",
                         f"row_sha256: {sha}",
                         "Reply exactly:",
                         f"SIGN {row_id} {sha}"])

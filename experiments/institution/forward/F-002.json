@@ -1,0 +1,176 @@
+{
+  "id": "F-002",
+  "kind": "institution0_forward_row",
+  "commitment": {
+    "register_id": "sudan_jeddah_2023",
+    "title": "Jeddah Declaration of Commitment to Protect the Civilians of Sudan",
+    "date": "2023-05-11",
+    "text": "The Parties commit to... ensure the protection of civilians at all times, to allow and facilitate the rapid and unimpeded passage of humanitarian relief, and to refrain from any attack that may cause civilian casualties or damage to civilian objects.",
+    "register": "config/commitments.json (status confirmed_by_emil_2026-09-18)"
+  },
+  "registered": "2026-09-26",
+  "registered_by": "Emil, chat 2026-09-26 ('да')",
+  "liveness": "pending Emil's SIGN",
+  "condition": {
+    "source": "UCDP GED",
+    "type_of_violence": 1,
+    "type_of_violence_means": "state-based armed conflict",
+    "dyad_name": "Government of Sudan - SFA",
+    "dyad_new_id": 18621,
+    "dyad_note": "SUCCESSOR dyad. Verified via the authenticated API on 2026-09-26 (26.0.8, Dyad=18621: 'Government of Sudan - SFA', side_a 'Government of Sudan', side_b 'SFA', country 'Sudan'); present in GED 26.1 and Candidate 26.01.26.06. The Jeddah signatory's dyad 'Government of Sudan - RSF' (17497) has no events after 2025-02; from 2025-02 UCDP codes the war as dyad 18621. Whole country: adm_1 'ALL' with country 'Sudan' (events with adm_1 null included).",
+    "adm_1": "ALL",
+    "date_start_from": "2026-10-01",
+    "date_start_to": "2026-10-31",
+    "metric": "sum(best)",
+    "kept_if": "< 25",
+    "not_kept_if": ">= 25",
+    "country": "Sudan"
+  },
+  "resolution": {
+    "provisional": {
+      "stage": "PROVISIONAL",
+      "source": "UCDP Candidate Events Dataset, monthly release 26.0.10",
+      "expected": "around 2026-11-20 (UCDP extracts candidate data on the 20th of every month)",
+      "resolve_by": "release date + 14 days",
+      "source_late_if_no_release_by": "2026-12-31"
+    },
+    "final": {
+      "stage": "FINAL",
+      "source": "the first UCDP GED annual release whose coverage includes 2026-10",
+      "expected": "GED 27.1, around June 2027 - an expectation, not the rule",
+      "resolve_by": "release date + 14 days",
+      "source_late_if_no_release_by": "2027-09-30"
+    },
+    "append_only": true,
+    "resolutions_file": "experiments/institution/forward/F-001.resolutions.jsonl",
+    "status": "OPEN",
+    "status_rule": "OPEN until a FINAL resolution is appended; resolutions are appended, never overwritten"
+  },
+  "baseline": {
+    "as_of": "ucdp:26.0.8",
+    "data": "GED 26.1 + Candidate 26.01.26.06 + 26.0.7 + 26.0.8, merged by event id, later release wins",
+    "filter": "type_of_violence=1, dyad_new_id=18621, country Sudan (all adm_1), by date_start",
+    "a_mean_monthly_best_pre_commitment": {
+      "window": "2022-05-11 .. 2023-05-10",
+      "total_best": 0,
+      "mean_per_month": 0.0,
+      "rule": "total over the 365-day window / 12",
+      "by_month": {
+        "2022-05": 0,
+        "2022-06": 0,
+        "2022-07": 0,
+        "2022-08": 0,
+        "2022-09": 0,
+        "2022-10": 0,
+        "2022-11": 0,
+        "2022-12": 0,
+        "2023-01": 0,
+        "2023-02": 0,
+        "2023-03": 0,
+        "2023-04": 0,
+        "2023-05": 0
+      },
+      "note": "0 because dyad 18621 did not exist before 2025-02 - not because there was no fighting."
+    },
+    "b_p_not_kept_post_commitment": {
+      "window": "2023-06 .. 2026-08 (39 calendar months)",
+      "months_at_or_above_25": 19,
+      "months": 39,
+      "p_not_kept": 0.4872,
+      "by_month": {
+        "2023-06": 0,
+        "2023-07": 0,
+        "2023-08": 0,
+        "2023-09": 0,
+        "2023-10": 0,
+        "2023-11": 0,
+        "2023-12": 0,
+        "2024-01": 0,
+        "2024-02": 0,
+        "2024-03": 0,
+        "2024-04": 0,
+        "2024-05": 0,
+        "2024-06": 0,
+        "2024-07": 0,
+        "2024-08": 0,
+        "2024-09": 0,
+        "2024-10": 0,
+        "2024-11": 0,
+        "2024-12": 0,
+        "2025-01": 0,
+        "2025-02": 123,
+        "2025-03": 637,
+        "2025-04": 2361,
+        "2025-05": 1966,
+        "2025-06": 308,
+        "2025-07": 649,
+        "2025-08": 936,
+        "2025-09": 696,
+        "2025-10": 1408,
+        "2025-11": 602,
+        "2025-12": 567,
+        "2026-01": 734,
+        "2026-02": 306,
+        "2026-03": 814,
+        "2026-04": 405,
+        "2026-05": 230,
+        "2026-06": 195,
+        "2026-07": 244,
+        "2026-08": 204
+      },
+      "threshold_source": "config/ucdp_constants.json battle_related_deaths_threshold = 25",
+      "note": "The 20 zero months 2023-06..2025-01 are before the SFA string existed; see successor_reference."
+    },
+    "successor_reference": {
+      "not_checked_by_RF6": true,
+      "predecessor_dyad": "Government of Sudan - RSF (17497)",
+      "predecessor_a_2022_05_11_2023_05_10_total": 7647,
+      "predecessor_a_by_month": {
+        "2023-04": 7346,
+        "2023-05": 301
+      },
+      "predecessor_b_by_month": {
+        "2023-06": 323,
+        "2023-07": 344,
+        "2023-08": 439,
+        "2023-09": 375,
+        "2023-10": 404,
+        "2023-11": 963,
+        "2023-12": 370,
+        "2024-01": 224,
+        "2024-02": 76,
+        "2024-03": 121,
+        "2024-04": 201,
+        "2024-05": 392,
+        "2024-06": 620,
+        "2024-07": 409,
+        "2024-08": 313,
+        "2024-09": 555,
+        "2024-10": 658,
+        "2024-11": 439,
+        "2024-12": 672,
+        "2025-01": 1435,
+        "2025-02": 501
+      },
+      "sfa_period": "from 2025-02: 19 of 19 months >= 25 on dyad 18621"
+    }
+  },
+  "sentences": [
+    "Counts, not causes. Attribution is UCDP's, not ours.",
+    "Each fatality counted here is a person whose life ended in violence that a signed commitment promised would stop; we count the events because dignity itself cannot be scored, and the count is not the goal — the absence of the events is."
+  ],
+  "citation": {
+    "provisional_source": "Hegre, Håvard, Mihai Croicu, Kristine Eck, and Stina Högbladh, July 2020. Introducing the UCDP Candidate Events Dataset Research & Politics doi: 10.1177/2053168020935257",
+    "final_source": "Sundberg, Ralph, and Erik Melander, 2013, “Introducing the UCDP Georeferenced Event Dataset”, Journal of Peace Research, vol.50, no.4, 523-532",
+    "read_from": "config/ucdp_citation.json (read 2026-09-25)"
+  },
+  "lane": {
+    "I-1": "pre-registered; OPEN; no measurement yet"
+  },
+  "retrospective": {
+    "role": "see F-001.retrospective - the same register rows, as_of ucdp:26.0.8"
+  },
+  "draft": false,
+  "label": "SUCCESSOR",
+  "successor": "RSF, signatory at Jeddah, is the leading component of SFA as UCDP codes it; the link is confirmed by Emil, not by UCDP"
+}

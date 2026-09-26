@@ -1,0 +1,14 @@
+{
+  "root": "42ebb2ff0b5b70f97ffef68794fc79fa568b4a1d839cf618b26481238c80b937",
+  "prev_root": "26c0e80d80a870e516bfe6cb4aad165bab2d7006b8dbfb3e3c08e45e30e8d7a1",
+  "writer": {
+    "pid": 105684,
+    "process": "register_forward_row.py",
+    "commit": "01b536d7241e77dc2de0ce75be5a8a46ea978aa9"
+  },
+  "row_sha256": "6eb1d8114764025098294657388a40b99f93f6522974fd805a47b5651d3882e9",
+  "row_bytes": 5132,
+  "row_id": "F-003",
+  "file": "experiments/institution/forward/F-003.json",
+  "ts": "2026-09-26T07:20:34.315963+00:00"
+}
