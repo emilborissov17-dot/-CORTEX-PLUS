@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-test/test_self_observer_required_fields.py — a malformed model proposal is REFUSED,
+test/test_proposal_required_fields.py — a malformed model proposal is REFUSED,
 named and counted; the step neither crashes nor silently skips (C4 C, 26 Sep 2026).
 
 The cycle of 26 Sep 2026 11:50 failed self_observer with KeyError: 'problem' in
