@@ -111,24 +111,10 @@ PYTHON      = BASE / "venv" / "Scripts" / "python.exe"
 CYCLE_LOG_DIR   = BASE / "memory" / "cycle_logs"
 CYCLE_LOG_KEEP  = 14      # ~two weeks; a cycle log is a few hundred KB
 
-# The cycle's EXIT CODE, written by memory/cycle_reaper.py — not by this file.
-# The supervisor only passes the path down to the reaper it spawns, because a
-# tick that waited for the exit code would have to wait out the whole cycle.
-# See memory/cycle_reaper.py for why one integer was worth a second process:
-# on 17 Aug 2026 a cycle died and four explanations survived the autopsy purely
-# because Popen's handle was discarded before anyone read a number off it.
-CYCLE_EXIT_PATH = BASE / "memory" / "cycle_exit.json"
-# The durable companion to the single slot above. CYCLE_EXIT_PATH holds only the
-# LATEST exit code — every cycle overwrites the last — so eight of the nine exit
-# codes between 23 and 27 Aug 2026 no longer existed anywhere. Both are passed
-# down explicitly, for the same reason: the reaper is detached and cannot be
-# monkeypatched from inside a test.
-CYCLE_EXIT_LOG = BASE / "memory" / "cycle_exits.jsonl"
-# How long the reaper waits, after the cycle is gone, for a killer to sign the
-# heartbeat before it concludes nobody will. A watchdog kill signs within
-# milliseconds; this is slack, not a budget. A knob because the end-to-end test
-# would otherwise spend it waiting for a signature it knows will never come.
-REAPER_SETTLE_SEC = 8.0
+# The cycle's exit code is recorded by the witness (tools/cycle_witness.ps1),
+# the cycle's parent. memory/cycle_reaper.py, the sibling process that recorded
+# it before 24 Sep 2026, was retired from the spawn path that day and deleted
+# on 26 Sep 2026 with its tests; nothing read its files but itself and tests.
 
 # ── THE WITNESS (24 Sep 2026) ────────────────────────────────────────────────
 # The cycle is no longer spawned by this tick directly. tools/cycle_witness.ps1 is
@@ -1781,51 +1767,6 @@ def prune_cycle_logs(keep: int = CYCLE_LOG_KEEP) -> int:
     return n
 
 
-def _spawn_reaper(python: str, pid: int, cycle_id: str) -> Optional[int]:
-    """Start the detached process that will record how `pid` ended. Never raises.
-
-    RETIRED FROM THE SPAWN PATH 24 Sep 2026. spawn_cycle no longer calls this;
-    tools/cycle_witness.ps1 records the exit code as the cycle's parent. On 23-24
-    Sep the reaper — a sibling Python process from the same tick — vanished with
-    the cycle six times out of six and recorded nothing. The function and
-    memory/cycle_reaper.py are kept (not deleted) for their tests and for a
-    manual re-enable; nothing in production calls them.
-
-    WHY THIS IS NOT `proc.wait()` IN THE TICK: the tick exits in milliseconds and
-    the cycle runs for ninety minutes. Waiting here would turn the supervisor into
-    the cycle. So the wait is moved into its own process, which holds a handle to
-    the cycle and outlives us both. memory/cycle_reaper.py explains the rest.
-
-    The two output paths are passed EXPLICITLY rather than left to the reaper's
-    defaults. The reaper is detached, so no test fixture can monkeypatch inside
-    it; handing it this process's own (redirectable) constants is the only way a
-    sandboxed test can keep it out of live memory/.
-
-    A reaper that fails to start costs us the exit code and nothing else — the
-    cycle is already running and must not be endangered by its own bookkeeping.
-    """
-    try:
-        proc = subprocess.Popen(
-            [python, "-m", "memory.cycle_reaper",
-             "--pid", str(pid),
-             "--cycle-id", str(cycle_id),
-             "--exit-record", str(CYCLE_EXIT_PATH),
-             "--exit-log", str(CYCLE_EXIT_LOG),
-             "--night-log", str(NIGHT_LOG),
-             "--settle-sec", str(REAPER_SETTLE_SEC)],
-            cwd=str(BASE), env={**os.environ, "PYTHONIOENCODING": "utf-8"},
-            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            creationflags=(getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
-                           | getattr(subprocess, "DETACHED_PROCESS", 0)),
-        )
-        return proc.pid
-    except Exception as e:
-        log(f"reaper failed to start for pid={pid}: {type(e).__name__}: {e} "
-            f"— the cycle runs, but its exit code will be lost")
-        return None
-
-
 def _warm_core_preflight() -> str:
     """Before a spawn: the warm core resident, loaded once if absent.
 
@@ -2109,15 +2050,23 @@ def _spawn_witnessed(argv: list, log_file: Path, cycle_id: str, env: dict,
     except Exception as e:
         log(f"WITNESS: failed to start ({type(e).__name__}: {e})")
         return None
+    # From here on a process EXISTS: nothing below may cost the caller its pid, or
+    # the next tick starts a second cycle on top of this one (test_cycle_logs).
     row = _wait_witness_start(cycle_id, WITNESS_START_WAIT_SEC)
     if row is None:
-        log(f"WITNESS {w.pid}: no start row for {cycle_id} within "
-            f"{WITNESS_START_WAIT_SEC:.0f}s — the lock gets the witness pid")
+        try:
+            log(f"WITNESS {w.pid}: no start row for {cycle_id} within "
+                f"{WITNESS_START_WAIT_SEC:.0f}s — the lock gets the witness pid")
+        except Exception:  # noqa: BLE001
+            pass
         return w.pid
     pid = row.get("cycle_pid") or row.get("launcher_pid") or w.pid
-    log(f"WITNESS {w.pid} started cycle {cycle_id}: cycle_pid={row.get('cycle_pid')} "
-        f"({row.get('cycle_pid_source')}), launcher_pid={row.get('launcher_pid')} "
-        f"-> {witness_log_path()}")
+    try:
+        log(f"WITNESS {w.pid} started cycle {cycle_id}: cycle_pid={row.get('cycle_pid')} "
+            f"({row.get('cycle_pid_source')}), launcher_pid={row.get('launcher_pid')} "
+            f"-> {witness_log_path()}")
+    except Exception:  # noqa: BLE001
+        pass
     return int(pid)
 
 

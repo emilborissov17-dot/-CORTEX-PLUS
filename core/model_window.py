@@ -184,10 +184,8 @@ def ensure_core(url: str = None) -> dict:
 
 def restore_core(after_model: str, url: str = None) -> dict | None:
     """After a call to a model other than the core, OUTSIDE a cycle: unload that
-    model and put the core back (25 Sep 2026). On a 4 GB card any second model
-    evicts the core; the night of 24-25 Sep lost it to five qwen3:8b calls from
-    source_registration and a qwen2.5:3b load, and the 03:04 cycle ran with 178
-    "warm core absent" refusals. None when there was nothing to restore."""
+    model and put the core back (25 Sep 2026). None when there was nothing to
+    restore."""
     if in_cycle() or not after_model or after_model == cycle_local_model():
         return None
     try:
@@ -243,11 +241,9 @@ def _set_keep_alive(model: str, keep_alive, url: str = OLLAMA_URL,
                     timeout: float = 300.0) -> bool:
     """Load (or unload, with keep_alive=0) a model without generating anything.
 
-    THE CYCLE NEVER LOADS A MODEL (24 Sep 2026, task #8 part 1). The warm core -
-    tools/ollama_serve.ps1 -WarmCore, run by the CORTEX_WarmCore task at logon and
-    at startup - holds cycle_local_model() resident with keep_alive -1. Inside a
-    cycle every load through here is refused by name and returns False, and the
-    warm core's model is never unloaded by the cycle.
+    THE CYCLE NEVER LOADS A MODEL (24 Sep 2026, task #8 part 1). Inside a cycle
+    every load through here is refused by name and returns False, and the warm
+    core's model is never unloaded by the cycle.
 
     An /api/chat with an empty message list is Ollama's documented way to change
     residency alone. Returns True on HTTP 200. Never raises: residency management

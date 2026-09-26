@@ -66,9 +66,13 @@ def test_the_live_config_carries_the_approved_ceiling():
 
 
 def test_the_ceiling_is_not_the_restart_budget():
-    assert LIVE_CFG["max_restarts_per_day"] == 2
-    assert sup.refusal_budget(LIVE_CFG) != LIVE_CFG["max_restarts_per_day"], (
-        "a refused night would spend the budget that recovers a real death")
+    """Since 24 Sep 2026 there is NO daily restart cap (Emil: max_restarts_per_day
+    null; a restart is gated on the witness instead). The refusal ceiling must
+    still exist on its own - it is not derived from the restart budget, which is
+    now absent."""
+    assert LIVE_CFG["max_restarts_per_day"] is None
+    assert sup.refusal_budget(LIVE_CFG) == 3, (
+        "with no restart cap the refusal ceiling must still be its own number")
 
 
 def test_the_fallback_is_what_was_actually_in_force_before():

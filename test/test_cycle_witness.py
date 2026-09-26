@@ -280,8 +280,6 @@ def test_the_real_spawn_path_starts_the_witness_and_it_reports(tmp_path, monkeyp
     monkeypatch.setattr(sup, "RUNNER", child)
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
     monkeypatch.setattr(sup, "LOG_PATH", tmp_path / "supervisor.log")
-    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
-    monkeypatch.setattr(sup, "CYCLE_EXIT_LOG", tmp_path / "cycle_exits.jsonl")
     monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
     assert sup._witness_available(), "powershell.exe or tools/cycle_witness.ps1 missing"
     wl = sup.witness_log_path()

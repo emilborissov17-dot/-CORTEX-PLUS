@@ -148,8 +148,10 @@ def _seal(tmp_path, completions):
         "completions": {"SPY": completions, "GLD": [], "UUP": []}}), encoding="utf-8")
     out = tmp_path / "bet.json"
     r = subprocess.run(
+        # --deadline D: the fixture's session is fixed, not "the next session after
+        # today" - without it the test began failing when the calendar passed D.
         [sys.executable, str(REPO / "tools" / "market_bet.py"), "--grounded",
-         "--dry-run", str(dry), "--out", str(out), "--allow-overwrite"],
+         "--dry-run", str(dry), "--out", str(out), "--allow-overwrite", "--deadline", D],
         capture_output=True, text=True, cwd=str(REPO),
         env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     assert out.exists(), r.stdout + r.stderr

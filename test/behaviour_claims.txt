@@ -669,3 +669,24 @@ core/observation_record.py 09eae6cde6e5  # BACKED: test_panel_yields_one_record_
 core/observation_record.py 58b3f6af531b  # BACKED: test_panel_yields_one_record_per_cell.test_the_panel_yields_more_than_one_record_each_a_distinct_cell — 38 records from the committed body; mutation-proved by collapsing to one
 core/quote_gate.py 22957a98759c  # BACKED: test_panel_yields_one_record_per_cell.test_every_record_passes_the_gate_against_the_same_body — all 38 VERIFIED, which is exactly what _NUM's colon rule made impossible
 test/test_panel_yields_one_record_per_cell.py 1cb91e59cb19  # BACKED: test_panel_yields_one_record_per_cell.test_a_source_with_no_entity_path_yields_zero_records_and_one_refusal and ..._no_period_path_also_yields_zero; mutation-proved by removing the refusal
+# 26 Sep 2026 (C2d): each line below names the assertion that goes red when its sentence stops being true.
+test/test_cycle_logs.py 2da6ddc6f449  # BACKED: test_cycle_logs.test_stale_lock_reason_is_neutral asserts no 'lost power' and the pid in both reasons
+test/test_cycle_witness.py e026df19607d  # BACKED: test_cycle_witness.test_the_real_spawn_path_starts_the_witness_and_it_reports runs the real spawn path
+test/test_cycle_witness.py d91d82dc651d  # BACKED: test_cycle_witness.test_the_runner_raises_the_night_code_after_main checks the order in the AST
+test/test_gemini_budget_and_usage.py d4a319194d0b  # BACKED: test_gemini_budget_and_usage.test_provenance_row_carries_the_token_fields
+test/test_no_8b_in_cycle.py 292c42c2cc19  # BACKED: test_no_8b_in_cycle.test_inside_a_cycle_the_model_sent_to_ollama_is_never_8b
+test/test_provenance_model_id.py cbe07ee07729  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door + test_claims_backed_26sep.test_post_writes_one_row_on_every_path
+test/test_spine_llm_reach.py 78cc733314cc  # BACKED: test_spine_llm_reach.test_the_spine_reaches_the_llm_stack_only_through_named_edges is that definition
+test/test_survival_wiring.py cf85dcc3ca2e  # BACKED: test_survival_wiring.test_a_witnessed_unexplained_death_latches_the_survival_profile
+test/test_warm_core_restore.py 57b932d35aa9  # BACKED: test_warm_core_restore: preflight_loads/does_nothing, 8b_outside_a_cycle_ends_with_the_core_restored, source_registration_asks_the_core
+core/groq_backend.py 852a01d0a74b  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door
+core/groq_backend.py 2f53258191b0  # BACKED: test_claims_backed_26sep.test_post_writes_one_row_on_every_path (ok, HTTP 500, empty reply, exception)
+core/llm_door.py 6bc411fed0c1  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door
+core/llm_door.py 296819bc410a  # BACKED: test_claims_backed_26sep.test_reply_facts_read_every_dialect
+core/llm_door.py b6e3f075994b  # BACKED: test_llm_dead_legs.test_a_dead_leg_is_probed_once_a_night_then_skipped_with_one_row
+core/llm_door.py e1d0e008cbf3  # BACKED: test_llm_timeouts.test_recompute_is_max_floor_or_p95_times_1_5_over_ok_untruncated_rows reads the written file back
+core/llm_door.py 98da502d03a2  # BACKED: test_llm_timeouts.test_recompute_is_max_floor... + test_claims_backed_26sep.test_the_runner_recomputes_the_timeouts_at_boot
+core/llm_door.py 3937a43e691d  # BACKED: test_warm_core.test_in_a_cycle_an_absent_model_is_refused_and_nothing_is_loaded
+core/model_window.py 997b71b4c5a9  # BACKED: test_warm_core.test_model_window_loads_nothing_inside_a_cycle
+core/redact.py 4ac20bb14d8a  # BACKED: test_claims_backed_26sep.test_mask_secrets_masks_exactly_what_redact_redacts
+core/redact.py 238eb8282219  # BACKED: test_log_masking.test_the_llm_failure_print_goes_through_the_mask + test_a_gemini_key_in_a_url_keeps_at_most_four_chars

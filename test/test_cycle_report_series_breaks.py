@@ -22,7 +22,6 @@ sys.path.insert(0, str(REPO))
 
 from core import cycle_report, phase_tracker  # noqa: E402
 
-# The exact shape of the 17 Sep records (config/series_breaks.json, id below).
 INSTRUMENT = {
     "id": "2026-09-17-energy-total-final-not-electricity", "break_kind": "instrument",
     "date_utc": "2026-09-17", "rule": "1.3", "cause": "ENERGY series swapped",

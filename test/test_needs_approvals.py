@@ -156,8 +156,10 @@ check("one extra per APPROVAL item — the high-only item gets none",
       texts[1:] == ["OK 5dad", "OK 0a38"])
 check("each extra is EXACTLY the reply text and nothing else",
       all(t == t.strip() and t.startswith("OK ") and "\n" not in t for t in texts[1:]))
+# The hint's wording changed when the decline option was added ("приеми: OK 5dad
+# ... откажи: NO 5dad"); what must hold is that the exact reply text stays in the brief.
 check("the inline hint stays in the brief (extras are an addition, not a move)",
-      "(reply: OK 5dad)" in texts[0])
+      "OK 5dad" in texts[0] and "NO 5dad" in texts[0])
 check("count recorded on the report", REP.get("_one_tap_sent") == 2)
 
 sent.clear()

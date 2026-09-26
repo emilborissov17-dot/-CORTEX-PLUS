@@ -115,7 +115,10 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # UNBACKED count above has not moved all day.
     # 641 on 21 Sep: the observation-record shape added six, all backed.
     # The UNBACKED count above has still not moved.
-    assert len(accepted) <= 641, (
+    # 661 on 26 Sep (C2d, "suite green"): twenty added, ALL BACKED - each names the
+    # test that goes red when its sentence stops being true; four more sentences
+    # were deleted as false or untestable. The UNBACKED count above did not move.
+    assert len(accepted) <= 661, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

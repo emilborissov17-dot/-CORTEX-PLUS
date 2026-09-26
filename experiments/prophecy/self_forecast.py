@@ -87,7 +87,6 @@ if str(REPO) not in sys.path:
 import prophecy_ledger as pl  # noqa: E402
 
 EXISTENCE_LEDGER = REPO / "memory" / "existence_ledger.jsonl"
-CYCLE_LOGS_DIR = REPO / "memory" / "cycle_logs"
 
 RECENT_WINDOW = 7          # nights that count as "recent self-state"
 MIN_HISTORY = 3            # fewer finished cycles than this -> note_pending, not a coin
@@ -99,17 +98,14 @@ SURVIVE_KIND = "self_survive"
 SCORED_KINDS = KINDS + (SURVIVE_KIND,)
 TERMINAL = ("CYCLE_FINISHED", "CYCLE_DIED", "CYCLE_KILLED")
 
-# The one line a failed step leaves in the cycle log, e.g.
-#   [FAST_CYCLE] merkle_to_training -> FAILED: cannot unpack non-iterable Mapping object
-_STEP_FAILED = re.compile(r"^\[FAST_CYCLE\] ([A-Za-z0-9_]+) -> FAILED\b", re.M)
-# The same line, with whatever the exception said after the colon. ONE regex pair
-# in ONE module: experiments/needs/needs_report.py reads the cycle logs for ITEM 70
-# through the functions below rather than carrying a second copy of this pattern,
-# because two parsers of one log format are two things that can disagree about what
-# "FAILED" means (the merkle_to_training defect was exactly two readers of one
-# contract drifting apart).
-_STEP_FAILED_WHY = re.compile(
-    r"^\[FAST_CYCLE\] ([A-Za-z0-9_]+) -> FAILED:?\s*(.*)$", re.M)
+# A FAILED STEP IS A CONTRACT VERDICT, NOT A WORD IN THE LOG (26 Sep 2026, C2d).
+# Until then this module read "[FAST_CYCLE] <step> -> FAILED" out of the cycle log -
+# the substring rule core/cycle_report dropped on 25 Sep after self_observer and
+# data_scout were counted as failed on "cloud re-probe FAILED". A step failed when
+# its step contract (core/step_contract) says RAISED; the windows live in
+# memory/steps/<cycle>_steps.jsonl and memory/step_contract_latest.json.
+STEPS_DIR = REPO / "memory" / "steps"
+CONTRACT_WINDOW = REPO / "memory" / "step_contract_latest.json"
 
 
 class Refused(RuntimeError):
@@ -169,62 +165,83 @@ def cycle_is_running(events: list[dict]) -> bool:
 
 # ── cycle logs: which steps FAILED on which night ─────────────────────────────
 
-def _log_for_cycle(cycle_id: str, logs_dir: Path = CYCLE_LOGS_DIR) -> Optional[Path]:
-    """cycle_id '2026-09-10T03:04:02.271866+03:00' -> memory/cycle_logs/cycle_2026-09-10_0304*.log"""
-    if not cycle_id or not logs_dir.exists():
-        return None
-    m = re.match(r"(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})", str(cycle_id))
-    if not m:
-        return None
-    stem = f"cycle_{m.group(1)}_{m.group(2)}{m.group(3)}"
-    hits = sorted(logs_dir.glob(stem + "*.log"))
-    return hits[0] if hits else None
+def _safe(cycle_id: str) -> str:
+    return "".join(c if (c.isalnum() or c in "-_.") else "_" for c in str(cycle_id))
 
 
-def failed_steps_in_log(path: Path) -> Optional[dict]:
-    """{step name -> the exception text it printed} for one cycle log, or None if
-    the log cannot be read. The single reader of the '-> FAILED' line format; see
-    _STEP_FAILED_WHY. A step that failed more than once in a night keeps the LAST
-    message, which is the one a reader would see at the bottom of the log."""
+def _window(report_path: Optional[Path]) -> tuple:
     try:
-        text = path.read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return None
-    return {step: (why or "").strip() for step, why in _STEP_FAILED_WHY.findall(text)}
+        blob = json.loads(Path(report_path or CONTRACT_WINDOW).read_text(encoding="utf-8"))
+        return blob.get("cycle_id"), list(blob.get("steps") or [])
+    except Exception:  # noqa: BLE001
+        return None, None
 
 
-def failed_steps(cycle_id: str, logs_dir: Path = CYCLE_LOGS_DIR) -> Optional[set]:
-    """Set of step names that wrote '-> FAILED' in that night's log; None if no log."""
-    p = _log_for_cycle(cycle_id, logs_dir)
-    if p is None:
-        return None
-    d = failed_steps_in_log(p)
-    return None if d is None else set(d)
+def contract_failures(rows: list) -> dict:
+    """{step -> what its contract said} for every RAISED contract in one night."""
+    try:
+        from core.cycle_map import ALIASES
+    except Exception:  # noqa: BLE001
+        ALIASES = {}
+    out = {}
+    for r in rows or []:
+        if r.get("verdict") == "RAISED":
+            out[ALIASES.get(r.get("step"), r.get("step"))] = str(r.get("error") or r.get("why") or "").strip()
+    return out
 
 
-def repeated_step_failures(logs_dir: Path = CYCLE_LOGS_DIR, nights: int = 2) -> dict:
-    """Steps that wrote '-> FAILED' in EVERY one of the last `nights` cycle logs.
+def contract_nights(steps_dir: Path = STEPS_DIR, report_path: Optional[Path] = None) -> list:
+    """[(night key, contract rows)], oldest first: every archived window plus the
+    active one when it is not archived yet. Pre-cycle-id windows are skipped."""
+    out = {}
+    if Path(steps_dir).exists():
+        for f in sorted(Path(steps_dir).glob("*_steps.jsonl")):
+            if f.name.startswith("pre-cycle-id"):
+                continue
+            rows = []
+            for line in f.read_text(encoding="utf-8", errors="replace").splitlines():
+                if line.strip():
+                    try:
+                        rows.append(json.loads(line))
+                    except ValueError:
+                        return []          # an unreadable window is unknowable, not innocent
+            out[f.name[:-len("_steps.jsonl")]] = rows
+    cid, rows = _window(report_path)
+    if cid and rows is not None and _safe(cid) not in out:
+        out[_safe(cid)] = rows
+    return sorted(out.items())
+
+
+def failed_steps(cycle_id: str, steps_dir: Path = STEPS_DIR,
+                 report_path: Optional[Path] = None) -> Optional[set]:
+    """Step names whose contract said RAISED that night; None when the night has no
+    contract record. The same judgement as the cycle's exit code
+    (core.cycle_report.failed_steps)."""
+    from core.cycle_report import failed_steps as _fs
+    got = _fs(cycle_id, Path(report_path or CONTRACT_WINDOW), Path(steps_dir))
+    return None if got is None else set(got)
+
+
+def repeated_step_failures(steps_dir: Path = STEPS_DIR, nights: int = 2,
+                           report_path: Optional[Path] = None) -> dict:
+    """Steps whose contract said RAISED in EVERY one of the last `nights` nights.
 
     ITEM 70, Kimi 3 Sep: "Трябва да спре моделът 'логнал съм FAILED, значи съм си
-    свършил работата'." Measured from memory/cycle_logs/, never from memory or from
-    a status file that could itself be stale.
+    свършил работата'." Measured from the step contracts (memory/steps/ and the
+    active window), never from a log line.
 
-    Returns {step: [message per night, oldest first]}. EMPTY IS THE NORMAL ANSWER
-    and is not a failure of this function: fewer than `nights` logs on disk, or no
-    step failing in all of them, both yield {}. The forbidden behaviour is
-    reporting a step because it failed ONCE — a single bad night is not a pattern,
-    and paging on it is how a channel gets muted."""
-    logs = sorted(logs_dir.glob("cycle_*.log")) if logs_dir.exists() else []
-    if len(logs) < nights:
+    Returns {step: [what the contract said per night, oldest first]}. EMPTY IS THE
+    NORMAL ANSWER: fewer than `nights` nights on record, or no step failing in all
+    of them, both yield {}. A single bad night is not a pattern."""
+    per = contract_nights(steps_dir, report_path)
+    if len(per) < nights:
         return {}
-    recent = logs[-nights:]
-    per_night = [failed_steps_in_log(p) for p in recent]
-    if any(d is None for d in per_night):
-        return {}                     # an unreadable log is unknowable, not innocent
-    common = set(per_night[0])
-    for d in per_night[1:]:
+    recent = [contract_failures(rows) for _k, rows in per[-nights:]]
+    common = set(recent[0])
+    for d in recent[1:]:
         common &= set(d)
-    return {step: [d[step] for d in per_night] for step in sorted(common)}
+    return {step: [d[step] for d in recent] for step in sorted(common)}
+
 
 
 # ── the forecasts ────────────────────────────────────────────────────────────
@@ -235,7 +252,7 @@ def _laplace(seq: list[int]) -> float:
     return round((sum(seq) + 1) / (len(seq) + 2), 4)
 
 
-def build_forecasts(events: list[dict], logs_dir: Path = CYCLE_LOGS_DIR) -> dict:
+def build_forecasts(events: list[dict], steps_dir: Path = STEPS_DIR) -> dict:
     """Pure: returns what WOULD be sealed. Raises Refused on the two refusals."""
     if cycle_is_running(events):
         raise Refused("a cycle is running (CYCLE_STARTED with no terminal event) — "
@@ -273,8 +290,8 @@ def build_forecasts(events: list[dict], logs_dir: Path = CYCLE_LOGS_DIR) -> dict
 
     # Per-step: only steps that FAILED at least once in the recent logs.
     # A night with no log is unknowable and is dropped from BOTH rates.
-    rec_sets = [(c, failed_steps(c["cycle_id"], logs_dir)) for c in recent]
-    all_sets = [(c, failed_steps(c["cycle_id"], logs_dir)) for c in fin]
+    rec_sets = [(c, failed_steps(c["cycle_id"], steps_dir)) for c in recent]
+    all_sets = [(c, failed_steps(c["cycle_id"], steps_dir)) for c in fin]
     rec_known = [s for _, s in rec_sets if s is not None]
     all_known = [s for _, s in all_sets if s is not None]
     candidates = set().union(*rec_known) if rec_known else set()
@@ -289,10 +306,10 @@ def build_forecasts(events: list[dict], logs_dir: Path = CYCLE_LOGS_DIR) -> dict
     return out
 
 
-def cmd_predict(events: Optional[list[dict]] = None, logs_dir: Path = CYCLE_LOGS_DIR) -> list[dict]:
+def cmd_predict(events: Optional[list[dict]] = None, steps_dir: Path = STEPS_DIR) -> list[dict]:
     events = read_existence() if events is None else events
     try:
-        fc = build_forecasts(events, logs_dir)
+        fc = build_forecasts(events, steps_dir)
     except Refused as why:
         print(json.dumps({"REFUSED": str(why), "sealed": 0}, ensure_ascii=False, indent=2))
         raise
@@ -383,7 +400,7 @@ def _terminal_for(cycle_id: str, events: list[dict]) -> Optional[str]:
     return None
 
 
-def cmd_score(events: Optional[list[dict]] = None, logs_dir: Path = CYCLE_LOGS_DIR) -> int:
+def cmd_score(events: Optional[list[dict]] = None, steps_dir: Path = STEPS_DIR) -> int:
     events = read_existence() if events is None else events
     fin = finished_cycles(events)
     records = pl.read_all()
@@ -423,7 +440,7 @@ def cmd_score(events: Optional[list[dict]] = None, logs_dir: Path = CYCLE_LOGS_D
                                 learner_err=_brier(p["learner"], actual),
                                 baseline_err=_brier(p["baseline"], actual), rule="brier")
         elif kind == "self_step_fail":
-            fs = failed_steps(c["cycle_id"], logs_dir)
+            fs = failed_steps(c["cycle_id"], steps_dir)
             if fs is None:
                 pl.note_pending(p["target_id"], "no cycle log for the scored night — step "
                                 "outcome unknowable; left open", step=p.get("step"),
@@ -464,7 +481,7 @@ def _selftest() -> int:
     checks = []
     ev = read_existence()
     checks.append(("memory/existence_ledger.jsonl readable", bool(ev)))
-    checks.append(("memory/cycle_logs/ exists", CYCLE_LOGS_DIR.exists()))
+    checks.append(("memory/steps/ exists", STEPS_DIR.exists()))
     checks.append(("prophecy_ledger chain valid", pl.verify().get("valid", False)))
     try:
         fc = build_forecasts(ev)

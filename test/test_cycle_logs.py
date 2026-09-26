@@ -32,13 +32,8 @@ import supervisor as sup
 @pytest.fixture
 def log_dir(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
-    # spawn_cycle also starts a detached reaper, which writes the child's exit
-    # code to CYCLE_EXIT_PATH and appends to NIGHT_LOG. Both are handed to it on
-    # the command line precisely so this line can keep it out of live memory/ —
-    # without it these tests would append a fabricated CYCLE_EXIT to the real
-    # night log, which is the 16 Aug 2026 accident all over again.
-    monkeypatch.setattr(sup, "CYCLE_EXIT_PATH", tmp_path / "cycle_exit.json")
-    monkeypatch.setattr(sup, "CYCLE_EXIT_LOG", tmp_path / "cycle_exits.jsonl")
+    # NIGHT_LOG stays in the sandbox: without it these tests would append
+    # fabricated events to the real night log - the 16 Aug 2026 accident again.
     monkeypatch.setattr(sup, "NIGHT_LOG", tmp_path / "night_events.jsonl")
     return tmp_path / "cycle_logs"
 
@@ -178,18 +173,26 @@ def test_stale_lock_reason_is_neutral():
     supervisor cannot make. Before that fix, the most common cause of a stale lock
     was a cycle finishing PERFECTLY, and the message called that power loss.
 
-    A stale lock with no CYCLE_FINISHED now reads as a DEATH (the honest fact: the
-    cycle did not finish) and is retried — but the wording still refuses to guess
-    the CAUSE. It names the dead pid; it never claims power loss over a crash.
+    A stale lock with no CYCLE_FINISHED reads as a DEATH (the honest fact: the
+    cycle did not finish). Since 24 Sep 2026 what happens next is gated on the
+    witness: no exit row -> CYCLE_DEATH_UNEXPLAINED, not restarted; an integer exit
+    code -> DEAD_LOCK_RETRY. In both the wording refuses to guess the CAUSE: it
+    names the dead pid and never claims power loss over a crash.
     """
     now = datetime.now().astimezone()
     lock = {"pid": 3688, "cycle_id": "c1", "started_utc": now.isoformat()}
-    cfg = {"daily_hour": 3, "grace_hours": 20, "max_restarts_per_day": 2}
+    cfg = {"daily_hour": 3, "grace_hours": 20}
 
-    action = sup.decide(now, {"last_run_date": None}, None, lock, cfg,
-                        lock_pid_alive=False, lock_cycle_finished=False)
+    unexplained = sup.decide(now, {"last_run_date": None}, None, lock, cfg,
+                             lock_pid_alive=False, lock_cycle_finished=False)
+    explained = sup.decide(now, {"last_run_date": None}, None, lock, cfg,
+                           lock_pid_alive=False, lock_cycle_finished=False,
+                           witness_exit={"event": "exit", "cycle_id": "c1", "exit_code": 1,
+                                         "exit_code_hex": "0x00000001", "meaning": "python error"})
 
-    assert action.kind == sup.DEAD_LOCK_RETRY
-    assert "lost power" not in action.reason
-    assert "DIED without finishing" in action.reason
-    assert "3688" in action.reason
+    assert unexplained.kind == sup.DEATH_UNEXPLAINED
+    assert explained.kind == sup.DEAD_LOCK_RETRY
+    for action in (unexplained, explained):
+        assert "lost power" not in action.reason
+        assert "DIED without finishing" in action.reason
+        assert "3688" in action.reason

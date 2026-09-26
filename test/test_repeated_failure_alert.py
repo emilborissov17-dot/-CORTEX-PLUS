@@ -16,14 +16,15 @@ TWO BIASES, DOUBLE DEFENSE (claude/NORM_TWO_BIASES_DOUBLE_DEFENSE_7SEP.md):
   produce nothing, and that is correct. The forbidden fallback is a need raised
   from a single night, which is how a channel gets muted.
 
-  BIAS 2, least resistance: detect it from a status file or from memory instead of
-  from the logs. The thing being detected is a subsystem whose own report of itself
-  is wrong, so only memory/cycle_logs/ can be the source. A second copy of the
-  '-> FAILED' parser would be the same defect in another place, so the parser is
-  self_forecast's and there is exactly one.
+  BIAS 2, least resistance: detect it from a word in a log line. Since 26 Sep 2026
+  the source is the step contracts (memory/steps/ and the active window) - the
+  verdict RAISED, the same judgement as the cycle's exit code; "cloud re-probe
+  FAILED" in a step's output is not a failed step. The reader is self_forecast's
+  and there is exactly one.
 
 The happy path is last. Each guard has a mutation test that fails if it is removed.
-No test reads or writes the real memory/cycle_logs/ or the real needs files.
+No test reads or writes the real memory/steps/, the real contract window or the
+real needs files.
 """
 from __future__ import annotations
 
@@ -51,14 +52,18 @@ nr = _load(REPO / "experiments" / "needs" / "needs_report.py", "needs_report")
 
 
 def _log(d: Path, day: int, failures: dict):
-    """One cycle log with the real line format the runner prints."""
-    body = ["[FAST_CYCLE] cycle start", "[FAST_CYCLE] web_intel -> ok"]
-    for step, why in failures.items():
-        body.append(f"[FAST_CYCLE] {step} -> FAILED: {why}")
-    body.append("[FAST_CYCLE] CYCLE_FINISHED")
-    p = d / f"cycle_2026-09-{day:02d}_030402.log"
-    p.write_text("\n".join(body) + "\n", encoding="utf-8")
+    """One night's step-contract window, named as step_contract.open_cycle names it."""
+    import json as _json
+    rows = [{"step": "web_intel", "verdict": "OK"}]
+    rows += [{"step": step, "verdict": "RAISED", "error": why} for step, why in failures.items()]
+    p = d / f"2026-09-{day:02d}T03_04_02_03_00_steps.jsonl"
+    p.write_text("\n".join(_json.dumps(r) for r in rows) + "\n", encoding="utf-8")
     return p
+
+
+@pytest.fixture(autouse=True)
+def _no_live_contract_window(tmp_path, monkeypatch):
+    monkeypatch.setattr(sf, "CONTRACT_WINDOW", tmp_path / "no_window.json")
 
 
 @pytest.fixture
@@ -141,9 +146,21 @@ def test_the_one_parser_is_shared_not_copied(logs):
     """failed_steps() (used by the prophecy self-forecast) and failed_steps_in_log()
     (used by the alert) must agree on every log, because they are one reader. If a
     second parser is ever introduced this is where the disagreement shows."""
-    p = _log(logs, 10, {"merkle_to_training": "boom", "data_scout": "bang"})
-    assert set(sf.failed_steps_in_log(p)) == {"merkle_to_training", "data_scout"}
-    assert sf.failed_steps("2026-09-10T03:04:02+03:00", logs) == set(sf.failed_steps_in_log(p))
+    _log(logs, 10, {"merkle_to_training": "boom", "data_scout": "bang"})
+    rows = dict(sf.contract_nights(logs))["2026-09-10T03_04_02_03_00"]
+    assert set(sf.contract_failures(rows)) == {"merkle_to_training", "data_scout"}
+    assert sf.failed_steps("2026-09-10T03:04:02+03:00", logs) == set(sf.contract_failures(rows))
+
+
+def test_the_word_failed_in_a_contract_that_did_not_raise_is_not_a_failure(logs):
+    """26 Sep 2026: self_observer and data_scout were DEGRADED with "cloud re-probe
+    FAILED" in their output; a contract that did not RAISE is not a failed step."""
+    import json as _json
+    for day in (9, 10):
+        (logs / f"2026-09-{day:02d}T03_04_02_03_00_steps.jsonl").write_text(
+            _json.dumps({"step": "self_observer", "verdict": "DEGRADED",
+                         "why": "[BUDGET] cloud re-probe FAILED"}) + "\n", encoding="utf-8")
+    assert sf.repeated_step_failures(logs, nights=2) == {}
 
 
 # ── the need that reaches the human ──────────────────────────────────────────
@@ -183,7 +200,7 @@ def test_mutation_without_the_intersection_a_single_night_would_page(logs):
     negative control becomes an alert — which is the muted-channel failure."""
     _log(logs, 9, {"merkle_to_training": "boom"})
     _log(logs, 10, {"data_scout": "bang"})
-    per_night = [sf.failed_steps_in_log(p) for p in sorted(logs.glob("cycle_*.log"))]
+    per_night = [sf.contract_failures(rows) for _k, rows in sf.contract_nights(logs)]
     union = set().union(*[set(d) for d in per_night])
     assert union == {"merkle_to_training", "data_scout"}
     assert sf.repeated_step_failures(logs, nights=2) == {}, \

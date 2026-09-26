@@ -41,6 +41,11 @@ sb = _load("scoreboard")
 
 # ── fixtures: a private ledger per test, never the real one ─────────────────
 
+@pytest.fixture(autouse=True)
+def _no_live_contract_window(tmp_path, monkeypatch):
+    monkeypatch.setattr(sf, "CONTRACT_WINDOW", tmp_path / "no_window.json")
+
+
 @pytest.fixture
 def ledger(tmp_path, monkeypatch):
     path = tmp_path / "prophecy_ledger.jsonl"
@@ -67,11 +72,16 @@ def _history(n=5):
 
 
 def _logs(tmp_path, days, failing=("merkle_to_training",)):
-    d = tmp_path / "cycle_logs"
+    """One step-contract window per night, named as step_contract.open_cycle names
+    it (the cycle ids of _fin); a failing step is a RAISED contract."""
+    import json as _json
+    d = tmp_path / "steps"
     d.mkdir(exist_ok=True)
     for day in days:
-        body = "[STEP] x\n" + "".join(f"[FAST_CYCLE] {s} -> FAILED: boom\n" for s in failing)
-        (d / f"cycle_2026-09-{day:02d}_030402.log").write_text(body, encoding="utf-8")
+        rows = [{"step": "x", "verdict": "OK"}] + [{"step": s, "verdict": "RAISED", "error": "boom"}
+                                                    for s in failing]
+        (d / f"2026-09-{day:02d}T03_04_02.000000_03_00_steps.jsonl").write_text(
+            "\n".join(_json.dumps(r) for r in rows) + "\n", encoding="utf-8")
     return d
 
 
@@ -262,7 +272,7 @@ def test_predict_never_seals_self_survive(ledger, tmp_path):
     """The 09:00 run must not guess a number that is computed at 03:04."""
     ev = _history(5)
     _logs(tmp_path, range(1, 6))
-    sf.cmd_predict(events=ev, logs_dir=tmp_path / "cycle_logs")
+    sf.cmd_predict(events=ev, steps_dir=tmp_path / "cycle_logs")
     kinds = {r.get("target_kind") for r in pl.read_all() if r.get("event") == pl.PREDICTION}
     assert sf.SURVIVE_KIND not in kinds and kinds
 
