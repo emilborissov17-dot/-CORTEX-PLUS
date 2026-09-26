@@ -220,7 +220,9 @@ def append(row_id: str, rev: dict, forward_dir: Path | None = None, today: date 
         if e.get("field") == rev.get("field") and canonical(e.get("value")) == canonical(rev.get("value")):
             raise RevisionRefused(f"{row_id}: revision r{e.get('revision')} already says this")
     rec = {"row_id": row_id, "revision": len(existing) + 1, "date": day, **rev}
-    with log_path(row_id, fdir).open("a", encoding="utf-8") as fh:
+    # newline="\n": the seal hashes these exact bytes, and Windows text mode
+    # would write CRLF that git (eol=lf) and the publisher never carry.
+    with log_path(row_id, fdir).open("a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     if hashlib.sha256(row_file.read_bytes()).hexdigest() != before:
         raise RuntimeError(f"{row_id}: the row's bytes changed while a revision was appended")
@@ -301,7 +303,7 @@ def publish(row_id: str, forward_dir: Path | None = None) -> dict:
         fr.record_publish(row_id, "suppressed", f"notary.may_act refused the revisions: {why}",
                           {"revisions_root": s["root"]})
         return {"outcome": "suppressed", "why": why}
-    files = {f"institution0/{log.name}": log.read_text(encoding="utf-8"),
+    files = {f"institution0/{log.name}": log.read_bytes().decode("utf-8"),   # the sealed bytes, exactly
              f"institution0/{sealp.name}": sealp.read_text(encoding="utf-8"),
              "institution0/INSTITUTION_0.md": reg.page_all()}
     try:

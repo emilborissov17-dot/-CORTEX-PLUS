@@ -339,3 +339,25 @@ def test_the_page_reports_the_hit_rate_with_and_without_sentinel_rows(fdir, monk
     # F-001 p 0.7692 -> call NOT_KEPT, a hit; F-002 p 0.4872 -> call KEPT, a miss
     assert rv.hit_rate(rows, fdir) == (1, 2)
     assert rv.hit_rate(rows, fdir, exclude_label="SENTINEL") == (1, 1)
+
+
+def test_the_sealed_revision_bytes_are_lf_and_are_what_is_published(fdir, monkeypatch):
+    """The seal hashes exact bytes. A CRLF written by Windows text mode is bytes git
+    (eol=lf) and the publisher never carry, so the public seal would not verify."""
+    rv.append("F-002", _rest("A"), fdir, TODAY)
+    rv.append("F-002", _rest("B"), fdir, TODAY)
+    raw = rv.log_path("F-002", fdir).read_bytes()
+    assert b"\r" not in raw
+    s = rv.seal("F-002", fdir, fdir.parent / "roots.jsonl")
+    published = {}
+    import github_publisher as gp
+    monkeypatch.setattr(gp, "publish_institution0", lambda files, msg: published.update(files) or [])
+    from core import notary
+    monkeypatch.setattr(notary, "may_act", lambda *a, **k: (True, "test"))
+    from experiments.institution import forward_rows as fr
+    monkeypatch.setattr(fr, "PUBLISH_LEDGER", fdir.parent / "ledger.jsonl")
+    from experiments.institution import register_forward_row as reg
+    monkeypatch.setattr(reg, "page_all", lambda: "page")
+    rv.publish("F-002", fdir)
+    body = published["institution0/F-002.revisions.jsonl"].encode("utf-8")
+    assert fr._digest(body, s["prev_root"], s["writer"]) == s["root"], "the published file does not verify"

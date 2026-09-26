@@ -126,7 +126,7 @@ def append_resolution(log: Path, row_id: str, stage: str, outcome: str, as_of: s
     rec = {"ts": datetime.now(timezone.utc).isoformat(), "row_id": row_id, "stage": stage,
            "outcome": outcome, "as_of": as_of, "value": value, "note": note}
     Path(log).parent.mkdir(parents=True, exist_ok=True)
-    with Path(log).open("a", encoding="utf-8") as fh:
+    with Path(log).open("a", encoding="utf-8", newline="\n") as fh:     # sealed bytes: LF only
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     return rec
 

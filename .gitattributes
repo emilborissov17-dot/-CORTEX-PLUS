@@ -6,6 +6,9 @@
 *.json text eol=lf
 *.md   text eol=lf
 *.txt  text eol=lf
+# Sealed append-only logs beside Institution 0 rows: the Merkle seal hashes their
+# exact bytes, so the working copy must hold the same LF bytes the repo holds.
+experiments/institution/forward/*.jsonl text eol=lf
 
 # Windows scripts MUST stay CRLF or they can break.
 *.cmd  text eol=crlf

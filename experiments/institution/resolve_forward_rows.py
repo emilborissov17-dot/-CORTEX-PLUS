@@ -173,7 +173,7 @@ def _resolved_stages(log: Path) -> set:
 
 
 def _append(log: Path, rec: dict) -> None:
-    with log.open("a", encoding="utf-8") as fh:
+    with log.open("a", encoding="utf-8", newline="\n") as fh:     # sealed bytes: LF only
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
@@ -292,7 +292,7 @@ def publish_resolutions(row_id: str, log: Path) -> dict:
     seal = (log.parent / log.name.replace(".jsonl", ".seal.json")).read_text(encoding="utf-8")
     try:
         import github_publisher as gp
-        written = gp.publish_institution0({f"institution0/{log.name}": log.read_text(encoding="utf-8"),
+        written = gp.publish_institution0({f"institution0/{log.name}": log.read_bytes().decode("utf-8"),
                                            f"institution0/{log.name.replace('.jsonl', '.seal.json')}": seal},
                                           f"institution0: resolution for {row_id}")
     except Exception as e:  # noqa: BLE001
