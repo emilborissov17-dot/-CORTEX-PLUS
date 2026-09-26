@@ -608,7 +608,7 @@ test/test_trace_schema.py 0dc7f260ada1  # fr.REPO is pointed at tmp_path so the 
 test/test_trace_schema.py 12ef1f115075  # A StepContract span, the way _run() writes it.
 test/test_trace_schema.py 1b21ec91939d  # An exception in an audit hook fails the OPERATION, not the hook — any open(), anywhere in the process, including the supervisor's own writes.
 test/test_trace_schema.py 28d7abb9646d  # Nothing writes to the live memory/cycle_trace.
-test/test_trace_schema.py 5b29d0bdb969  # The trace writes step:internet_agent; cycle_map knows internet_intelligence.
+test/test_trace_schema.py ee57f50341fb  # BACKED: test_trace_schema.test_the_report_matches_run_labels_to_their_step_names (the test that carries it)
 test/test_trace_schema.py 8de87af27c6d  # THE DEFECT: a ContextVar is per-context, so a worker thread reads the default.
 test/test_transcript_fetch.py c1939cd87c40  # --------------------------------------------------------------------------- (c) Cross-cycle cache — SANITY: cached video = zero network calls --------
 test/test_transcript_fetch.py cd1659ac0141  # SANITY: a cached video costs ZERO network calls.

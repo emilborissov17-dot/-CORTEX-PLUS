@@ -31,8 +31,7 @@ EDGE_STEPS = {
     "hyperclaw", "hyperclaw_plan", "cortexstrategist", "read_the_mirror", "brain_debrief",
     "brain_reconsider", "auto_levels",
     # retired (the list of 24 Sep)
-    "llm_self_review_axes", "internet_intelligence", "planetary_potential", "energy_review",
-    "self_awareness", "session_update", "daily_analysis", "growth_planner",
+    "session_update", "daily_analysis", "growth_planner",
     "action_recommendations", "cortex_scan",
 }
 

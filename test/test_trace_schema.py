@@ -368,24 +368,24 @@ def test_a_repeating_event_is_still_written_while_it_repeats(rec, monkeypatch):
 # ── 9. the report resolves _run labels to step names ─────────────────────────
 
 def test_the_report_matches_run_labels_to_their_step_names(tmp_path):
-    """The trace writes step:internet_agent; cycle_map knows internet_intelligence.
+    """The trace writes step:cosmos_snapshots_agent; cycle_map knows cosmos_snapshots.
     Matching by string made the report say '1 of 75' on a cycle where two steps
     had left spans."""
     from tools import trace_report as tr
-    assert tr._canonical("internet_agent") == "internet_intelligence"
+    assert tr._canonical("cosmos_snapshots_agent") == "cosmos_snapshots"
     assert tr._canonical("body_scanner") == "body_scan"
     assert tr._canonical("daily_tier") == "daily_tier"
 
     rows = [{"k": "head", "cycle_id": "x", "t0": "2026-09-13T00:00:00Z",
              "trace_id": "c" * 32, "pid": 1, "py": "3", "channels": []},
-            {"k": "open", "sp": "s1", "pa": None, "name": "step:internet_agent",
+            {"k": "open", "sp": "s1", "pa": None, "name": "step:cosmos_snapshots_agent",
              "t": 0.0, "attr": {}},
-            {"k": "span", "sp": "s1", "pa": None, "name": "step:internet_agent",
+            {"k": "span", "sp": "s1", "pa": None, "name": "step:cosmos_snapshots_agent",
              "t": 0.0, "t_end": 100.0, "ms": 100000, "st": "OK", "attr": {}}]
     p = tmp_path / "aliased.jsonl"
     p.write_text(chr(10).join(json.dumps(r) for r in rows) + chr(10), encoding="utf-8")
     f = tr.fold(tr.load(p))
-    assert f["ms_by_step"].get("internet_intelligence") == 100000, (
+    assert f["ms_by_step"].get("cosmos_snapshots") == 100000, (
         f"the label was not resolved: {dict(f['ms_by_step'])}")
 
 

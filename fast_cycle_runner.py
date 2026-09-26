@@ -1362,50 +1362,6 @@ def read_collector(name: str) -> dict:
                     "изходът му е четен с това ниво")
     return v
 
-def refresh_llm_axes():
-    # 21 авг 2026: GENERAL_SELF_REVIEW излезе оттук заедно с осата. Тази стъпка
-    # викаше core.cortex_reasoner.self_review(), който взимаше думата на облачен
-    # модел за самия CORTEX ("HIGH"/"MEDIUM"/"LOW"), превеждаше я в 85/55/25 и я
-    # подаваше на continuous_learner като СКОР. Тоест системата се оценяваше сама
-    # с число, което после пътуваше като измерване. Самонаблюдението вече върви
-    # през core/self_mirror.py и не произвежда нито едно число за композита.
-    axes = [
-        {
-            "axis": "GOAL_PROGRESS_REVIEW",
-            "folder": "goal_progress",
-            "domain": "cosmos",
-            "prompt": (
-                "You are CORTEX++ AGI working toward: sustainable civilization, "
-                "dignity for all, AGI in transparent service of humanity. "
-                "Generate JSON for GOAL_PROGRESS_REVIEW. Include: "
-                "current_level (LOW/MEDIUM/HIGH), overall_progress_pct (0-100), "
-                "progress_by_domain dict (HUMAN/PLANET/CIVILIZATION/COSMOS each 0-100), "
-                "main_bottlenecks list, next_actions list. Return ONLY valid JSON."
-            ),
-        },
-        {
-            "axis": "LONG_TERM_FUTURE_REVIEW",
-            "folder": "long_term_future",
-            "domain": "cosmos",
-            "prompt": (
-                "Generate fresh JSON for LONG_TERM_FUTURE_REVIEW "
-                "(existential risks: nuclear, AGI misalignment, biorisks, climate collapse). "
-                "Include: current_level, xrisk_score (0-100, lower=safer), "
-                "main_risks list, trends list. Return ONLY valid JSON."
-            ),
-        },
-    ]
-    for cfg in axes:
-        print(f"[FAST_CYCLE] refreshing {cfg['axis']}...")
-        if cfg.get("use_reasoner"):
-            from core.cortex_reasoner import self_review
-            snap = self_review()
-        else:
-            snap = _llm(cfg["prompt"])
-        path = _write_snapshot(cfg["axis"], cfg["folder"], cfg["domain"], snap)
-        print(f"[FAST_CYCLE] wrote {cfg['axis']} -> {path}")
-    _free_ollama()
-
 def run_trend_tracker():
     print("[FAST_CYCLE] running trend_tracker...")
     r = subprocess.run(
@@ -2923,10 +2879,10 @@ def main():
         except Exception as e:
             print(f"[FAST_CYCLE] grounding_verdicts -> FAILED: {type(e).__name__}: {e}")
 
-    # ── 2.75. LLM self-review оси — оценка СЛЕД сетивата (преместена от 2) ──
-    beat("llm_self_review_axes", "2.75")
-    refresh_llm_axes()
-    update_master()
+    # 2.75 llm_self_review_axes, 4 internet_intelligence, 9 planetary_potential,
+    # 10 energy_review and 11 self_awareness were DELETED on 26 Sep 2026 (C3b), with
+    # their code: no live code read what they wrote. The two cosmos snapshots 2.75
+    # wrote are rewritten by cosmos_snapshots at 8 the same night.
 
     # ── 3. Trend tracker ──
     beat("trend_tracker", "3")
@@ -2939,17 +2895,6 @@ def main():
     _run("cortex_strategist_agent", lambda: __import__(
         "agents.cortex_strategist.cortex_strategist_agent", fromlist=["run"]).run(), free_after=True)
     _strategist_to_proposals()
-
-    # ── 4. Internet intelligence ──
-    beat("internet_intelligence", "4")
-    # READS THE PANTRY. Does not fetch, does not open a browser, spawns nothing.
-    # run() used to be called here: 1441.7s, 32 child processes and 311 outbound
-    # connections inside the night of 12 Sep, on a machine that died of memory
-    # three times on 13 Sep. The fetching belongs to the day; the night reads what
-    # the day left, and an empty pantry is an answer it prints and walks past.
-    _run("internet_agent", lambda: __import__(
-        "agents.internet.internet_agent", fromlist=["read_pantry"]).read_pantry(),
-        free_after=True)
 
     # ── 5. Civilization snapshots ──
     beat("civilization_snapshots", "5")
@@ -2970,23 +2915,6 @@ def main():
     beat("cosmos_snapshots", "8")
     _run("cosmos_snapshots_agent", lambda: __import__(
         "agents.cosmos.cosmos_snapshots_agent_qwen", fromlist=["main"]).main(), free_after=True)
-
-    # ── 9. Planetary potential ──
-    beat("planetary_potential", "9")
-    _run("planetary_potential_agent", lambda: __import__(
-        "agents.planet.planetary_potential_review_agent_qwen", fromlist=["main"]).main(), free_after=True)
-
-    # ── 10. Energy review ──
-    beat("energy_review", "10")
-    _run("energy_review_agent", lambda: __import__(
-        "agents.energy.energy_review_agent_qwen", fromlist=["main"]).main(), free_after=True)
-
-    # ── 11. Self awareness ──
-    beat("self_awareness", "11")
-    def _self_awareness():
-        from agents.self.self_awareness_agent import SelfAwarenessAgent
-        SelfAwarenessAgent().run()
-    _run("self_awareness_agent", _self_awareness, free_after=True)
 
     # ── 12. Update master след всички snapshots ──
     beat("update_master", "12")

@@ -311,7 +311,15 @@ def test_the_explanation_can_never_change_the_decision():
     assert "except Exception" in tail, tail
     assert "blindness check failed" in tail, (
         "the blindness check swallows its own failure silently")
-    assert "return False" in tail, "the refusal must still be returned"
+    # The refusal is the function's last word: may_act ends in `return False, refusal`.
+    # A fixed character window broke on 25 Sep 2026 when the passage class was added
+    # between the two, so the check reads the AST, not a slice of text.
+    import ast
+    fn = next(n for n in ast.walk(ast.parse(src)) if isinstance(n, ast.FunctionDef) and n.name == "may_act")
+    last = fn.body[-1]
+    assert (isinstance(last, ast.Return) and isinstance(last.value, ast.Tuple)
+            and getattr(last.value.elts[0], "value", None) is False
+            and getattr(last.value.elts[1], "id", None) == "refusal"), "the refusal must still be returned"
 
 
 def test_a_declared_verifier_scores_above_unknown():

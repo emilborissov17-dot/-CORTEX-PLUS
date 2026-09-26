@@ -82,13 +82,10 @@ STEPS = [
     # който metta_check.observe() лови. (15 авг 2026)
     ("grounding_ledger", "2.7", "Записва котва срещу дневен прокси. Само записва — присъдата е на source_trust.",
      ["memory/grounding_ledger.jsonl"], False),
-    ("llm_self_review_axes", "2.75", "LLM преглед по ос СЛЕД сетивата: ниво + разсъждение върху ДНЕШНИТЕ данни.",
-     [], False),
     ("trend_tracker", "3", "Посоката на всяка ос през времето.",
      ["memory/trends_latest.json"], False),
     ("cortexstrategist", "3.5", "Стратегическа преценка ПРЕДИ снимките да изядат дневния токен бюджет.",
      [], False),
-    ("internet_intelligence", "4", "Интернет агент.", [], False),
     ("civilization_snapshots", "5", "7-те оси на Цивилизация -> снимки.",
      ["snapshots/civilization"], False),
     ("planet_snapshots", "6", "7-те оси на Планета -> снимки.",
@@ -97,10 +94,6 @@ STEPS = [
      ["snapshots/human"], False),
     ("cosmos_snapshots", "8", "6-те оси на Космос -> снимки.",
      ["snapshots/cosmos"], False),
-    ("planetary_potential", "9", "Преглед на планетарния потенциал.", [], False),
-    ("energy_review", "10", "Енергиен преглед.", [], False),
-    ("self_awareness", "11", "Агент за самоосъзнаване.",
-     ["memory/self_profile.json", "memory/self_narrative_latest.txt"], False),
     ("update_master", "12", "Слива всичко в master snapshot.",
      ["snapshots/master"], True),
     ("system_hypergraph", "12.3", "Строи хиперграфа на системата.", [], False),
@@ -323,18 +316,14 @@ STEPS = [
 # с имената на стъпките. За да важи отчетът и за миналото:
 ALIASES = {
     "web_intelligence_agent": "web_intelligence",
-    "internet_agent": "internet_intelligence",
     "civilization_snapshots_agent": "civilization_snapshots",
     "planet_snapshots_agent": "planet_snapshots",
     "human_snapshots_agent": "human_snapshots",
     "cosmos_snapshots_agent": "cosmos_snapshots",
-    "planetary_potential_agent": "planetary_potential",
-    "energy_review_agent": "energy_review",
     "cortex_strategist_agent": "cortexstrategist",
     "body_scanner": "body_scan",
     "sensorium": "sensorium_ingest",
     "hyperclaw_orchestrator": "hyperclaw",
-    "self_awareness_agent": "self_awareness",
     # ── ДВЕ ИМЕНА, КОИТО СА ПРОСТО ПРЕИМЕНУВАНИЯ (23 авг 2026) ─────────────
     # _run() ги вика така, beat() ги обявява иначе. Едно към едно, значи псевдоним.
     "session_updater": "session_update",

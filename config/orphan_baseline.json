@@ -120,46 +120,6 @@
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
       "reason": "RECORDED, NOT DIAGNOSED"
     },
-    "agents/planet/planetary_potential_review_agent_qwen.py::safe_read_text": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::load_planetary_snapshots": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::next_review_index": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::build_context_block": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::format_snapshots_for_prompt": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::strip_to_planetary_markdown": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::build_prompt": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::wrap_in_protocol": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::write_planetary_review": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
-    "agents/planet/planetary_potential_review_agent_qwen.py::main": {
-      "verdict": "CALLED_ONLY_IN_OWN_MODULE",
-      "reason": "RECORDED, NOT DIAGNOSED"
-    },
     "civilization_state_review_agent_qwen.py::load_latest_planet_review": {
       "verdict": "CALLED_ONLY_IN_OWN_MODULE",
       "reason": "RECORDED, NOT DIAGNOSED"

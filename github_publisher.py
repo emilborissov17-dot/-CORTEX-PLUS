@@ -144,10 +144,20 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
 
     published = 0
     errors = 0
+    dropped = 0
 
     for json_file in sorted(web_intel_dir.rglob("*.json")):
+        # A review file listed and gone before it is read is DROPPED, not an error
+        # and not the end of the run (26 Sep 2026, C3b: five review producers were
+        # deleted from the cycle, and a page that is not there is not a failure).
         try:
-            data = json.loads(json_file.read_text(encoding="utf-8"))
+            text = json_file.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            print(f"[GitHub] DROPPED {json_file.name}: missing")
+            dropped += 1
+            continue
+        try:
+            data = json.loads(text)
             axis = data.get("axis", json_file.stem)
             md = _format_as_markdown(axis, data, date)
             gh_path = f"reports/{date}/{axis.lower()}.md"
@@ -163,7 +173,8 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
     except Exception as e:
         print(f"[GitHub] FAIL Daily index: {e}")
 
-    print(f"[GitHub] Публикувани: {published} | Грешки: {errors}")
+    print(f"[GitHub] Публикувани: {published} | Грешки: {errors} | Пропуснати: {dropped}")
+    return {"published": published, "errors": errors, "dropped": dropped}
 
 
 # The web_intelligence writer puts its verdict under "analysis", but older files

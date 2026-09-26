@@ -200,7 +200,9 @@ def test_the_checkpoint_call_sits_on_the_completed_path(runner):
 # records a blackbox begin/end and its failures reach the phase report.
 # The ratchet only moves down; this is the first step off the list since
 # the limit was set.
-UNCOVERED_STEP_LIMIT = 30
+# 30 -> 29 on 2026-09-26: llm_self_review_axes, an uncovered step, was
+# deleted from the cycle with its code (C3b).
+UNCOVERED_STEP_LIMIT = 29
 
 
 def test_the_uncovered_steps_are_counted_and_not_growing():

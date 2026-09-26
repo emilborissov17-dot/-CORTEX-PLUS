@@ -227,8 +227,8 @@ def test_a_single_run_is_not_enough_for_a_percentile():
 
 def test_budget_finds_history_filed_under_the_agent_label():
     """The baseline is keyed by _run() labels, the cycle map by step names."""
-    baseline = {"internet_agent": {"runs": [{"seconds": s} for s in (100, 200)]}}
-    b = budget_for("internet_intelligence", baseline=baseline,
+    baseline = {"cosmos_snapshots_agent": {"runs": [{"seconds": s} for s in (100, 200)]}}
+    b = budget_for("cosmos_snapshots", baseline=baseline,
                    ceilings={"_default": 100000})
 
     assert b.source == "p95", "step name failed to find its own history via ALIASES"

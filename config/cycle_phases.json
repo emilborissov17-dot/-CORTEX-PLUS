@@ -1,5 +1,5 @@
 {
-  "_what_this_is": "The 52 beat() names of fast_cycle_runner.py, grouped into 7 phases so that a failure costs one phase instead of a whole cycle. Generated from the beat() calls themselves, not transcribed: see test/test_cycle_phases_cover_every_step.py, which re-parses the runner and fails if this file and the code disagree.",
+  "_what_this_is": "The beat() names of fast_cycle_runner.py, grouped into 7 phases so that a failure costs one phase instead of a whole cycle. Generated from the beat() calls themselves, not transcribed: see test/test_cycle_phases_cover_every_step.py, which re-parses the runner and fails if this file and the code disagree.",
   "_identity_is_the_index_not_the_name": "body_scan runs TWICE — at index 0 inside A_ORIENT (is this machine healthy enough to start?) and again at index 13 inside E_PROPOSE (what shall we do about the body?). 53 beat() calls carry 52 distinct names. A phase map keyed by name alone could not represent that, so every step here is identified by (name, index).",
   "_requires": "Files that must EXIST and BELONG TO THIS CYCLE before the phase may start. Belonging is not the same as existing: a file from last night exists and is worthless. --from checks both and refuses rather than guessing.",
   "_produces": "Files the phase must leave behind. A phase that raised nothing but produced nothing is PARTIAL, not DONE. This list is what lets the report contradict the steps.",
@@ -59,7 +59,7 @@
       "purpose": "Reach the outside world. Everything downstream is an opinion about what this phase fetched.",
       "index_range": [
         "1",
-        "4"
+        "3.5"
       ],
       "steps": [
         {
@@ -91,20 +91,12 @@
           "index": "2.7"
         },
         {
-          "name": "llm_self_review_axes",
-          "index": "2.75"
-        },
-        {
           "name": "trend_tracker",
           "index": "3"
         },
         {
           "name": "cortexstrategist",
           "index": "3.5"
-        },
-        {
-          "name": "internet_intelligence",
-          "index": "4"
         }
       ],
       "requires": [
@@ -127,7 +119,7 @@
       "purpose": "Turn what was sensed into one snapshot per domain. Reads B, writes the four trees.",
       "index_range": [
         "5",
-        "11"
+        "8"
       ],
       "steps": [
         {
@@ -145,18 +137,6 @@
         {
           "name": "cosmos_snapshots",
           "index": "8"
-        },
-        {
-          "name": "planetary_potential",
-          "index": "9"
-        },
-        {
-          "name": "energy_review",
-          "index": "10"
-        },
-        {
-          "name": "self_awareness",
-          "index": "11"
         }
       ],
       "requires": [
