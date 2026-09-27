@@ -169,6 +169,7 @@ EXPECTED_TELEGRAM_CALLS = {
     ("core/alarm_bands.py", "new_risks"),
     ("experiments/institution/register_forward_row.py", "sign_request"),
     ("experiments/institution/publish_revisions.py", "sign_request"),      # C4 B revision SIGN requests
+    ("experiments/institution/deliver.py", "alarm"),                    # 27 Sep: published bytes do not verify
     ("tools/morning_digest.py", "morning_digest"),
 }
 

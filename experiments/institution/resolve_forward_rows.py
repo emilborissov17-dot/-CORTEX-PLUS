@@ -259,25 +259,7 @@ def resolve_row(row_path: Path, client, today: date | None = None, roots_log: Pa
 
 def seal_resolutions(log: Path, roots_log: Path | None = None,
                      kind: str = "institution0_resolution") -> dict:
-    import merkle_memory as mm
-    rl = Path(roots_log or ROOTS_LOG)
-    prev = None
-    try:
-        lines = [l for l in rl.read_text(encoding="utf-8").splitlines() if l.strip()]
-        prev = json.loads(lines[-1])["root"] if lines else None
-    except FileNotFoundError:
-        pass
-    s = fr.seal(log, prev, mm.writer_identity())
-    s.update({"file": log.name, "ts": datetime.now(timezone.utc).isoformat()})
-    rl.parent.mkdir(parents=True, exist_ok=True)
-    with rl.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps({"root": s["root"], "ts": s["ts"], "cycle_id": f"institution0:{log.name}",
-                             "kind": kind, "file": log.name,
-                             "row_sha256": s["row_sha256"], "leaf_count": 1, "prev_root": prev,
-                             "writer": s["writer"]}, ensure_ascii=False) + "\n")
-    (log.parent / (log.name.replace(".jsonl", ".seal.json"))).write_text(json.dumps(s, indent=2) + "\n",
-                                                                        encoding="utf-8")
-    return s
+    return fr.seal_log(log, roots_log or ROOTS_LOG, kind)
 
 
 def publish_resolutions(row_id: str, log: Path) -> dict:
@@ -289,18 +271,16 @@ def publish_resolutions(row_id: str, log: Path) -> dict:
     if not ok:
         fr.record_publish(row_id, "suppressed", f"notary.may_act refused the resolution: {why}")
         return {"outcome": "suppressed", "why": why}
-    seal = (log.parent / log.name.replace(".jsonl", ".seal.json")).read_text(encoding="utf-8")
-    try:
-        import github_publisher as gp
-        written = gp.publish_institution0({f"institution0/{log.name}": log.read_bytes().decode("utf-8"),
-                                           f"institution0/{log.name.replace('.jsonl', '.seal.json')}": seal},
-                                          f"institution0: resolution for {row_id}")
-    except Exception as e:  # noqa: BLE001
-        fr.record_publish(row_id, "deferred", f"{type(e).__name__}: {e}", {"notary": why})
-        return {"outcome": "deferred", "why": str(e)}
-    fr.record_publish(row_id, "delivered", "resolution published", {
-        "notary": why, "files": [w.get("path") for w in written],
-        "commit_shas": [w.get("commit_sha") for w in written]})
+    sealp = log.parent / log.name.replace(".jsonl", ".seal.json")
+    seal = sealp.read_text(encoding="utf-8")
+    from experiments.institution.deliver import deliver
+    rec = deliver(row_id, {f"institution0/{log.name}": log.read_bytes().decode("utf-8"),
+                           f"institution0/{sealp.name}": seal},
+                  f"institution0: resolution for {row_id}",
+                  expected={f"institution0/{log.name}": json.loads(seal)["row_sha256"]},
+                  detail={"notary": why}, reason="resolution published")
+    if rec["outcome"] != "delivered":
+        return {"outcome": rec["outcome"], "why": rec["reason"]}
     return {"outcome": "delivered", "notary": why}
 
 

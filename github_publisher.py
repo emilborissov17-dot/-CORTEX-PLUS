@@ -6,6 +6,7 @@ import json
 import os
 import pathlib
 import base64
+import hashlib
 import requests
 from datetime import datetime, timezone
 
@@ -478,15 +479,77 @@ def publish_synthesis():
     return list(PUBLISHED)
 
 
-def publish_institution0(files: dict, message: str) -> list:
+class PublishMismatch(RuntimeError):
+    """Raised AFTER an Institution 0 push when a file read back from GitHub does
+    not hash to what it must. The push happened; the publish is NOT delivered.
+    Carries `mismatches` (one dict per bad file) and `written` (every push)."""
+
+    def __init__(self, mismatches: list, written: list):
+        self.mismatches, self.written = mismatches, written
+        super().__init__("; ".join(f"{m['path']}: {m['why']}" for m in mismatches))
+
+
+def _fetch_bytes(path: str, ref: str | None) -> bytes:
+    """The exact bytes GitHub holds for `path` at `ref` (a commit sha), raw media type."""
+    url = f"{GITHUB_API}/repos/{REPO_OWNER}/{REPO_NAME}/contents/{path}"
+    r = requests.get(url, headers={**_headers(), "Accept": "application/vnd.github.raw"},
+                     params={"ref": ref} if ref else None, timeout=30)
+    r.raise_for_status()
+    return r.content
+
+
+def verify_published(files: dict, written: list, expected: dict | None = None) -> list:
+    """Fetch every written file back at its own commit, hash the exact bytes and
+    compare with `expected[path]` (a seal's row_sha256) or, for a file without a
+    seal, with the hash of the bytes that were sent. Annotates each `written`
+    entry with fetched_sha256 / expected_sha256; returns the mismatches. A fetch
+    that fails is a mismatch: an unread file is not a verified one."""
+    expected = expected or {}
+    bad = []
+    for w in written:
+        path = w["path"]
+        want = expected.get(path) or hashlib.sha256(files[path].encode("utf-8")).hexdigest()
+        w["expected_sha256"] = want
+        try:
+            raw = _fetch_bytes(path, w.get("commit_sha"))
+        except Exception as e:                                   # noqa: BLE001
+            bad.append({"path": path, "why": f"fetch-back failed: {type(e).__name__}: {e}",
+                        "expected_sha256": want})
+            continue
+        got = hashlib.sha256(raw).hexdigest()
+        w["fetched_sha256"], w["fetched_bytes"] = got, len(raw)
+        if got != want:
+            bad.append({"path": path, "why": f"fetched bytes hash to {got}, expected {want}",
+                        "expected_sha256": want, "fetched_sha256": got})
+    return bad
+
+
+def publish_institution0(files: dict, message: str, expected: dict | None = None) -> list:
     """Institution 0 files (forward rows and their page), {path: text}. Independent
     of goal_score. The caller gates it through core.notary.may_act first
-    (experiments/institution/register_forward_row.py). Returns what was written,
-    with commit shas; raises on the first failed push."""
+    (experiments/institution/register_forward_row.py).
+
+    `expected` maps a path to the sha256 its bytes are sealed under. A file whose
+    local bytes do not hash to it is refused BEFORE anything is pushed (ValueError).
+    After the pushes every file is read back from GitHub and hashed; any mismatch
+    raises PublishMismatch - the caller records FAILED, never delivered. Returns
+    what was written, with commit shas and the fetched hashes; raises on the
+    first failed push."""
+    expected = expected or {}
+    for path, want in expected.items():
+        if path not in files:
+            raise ValueError(f"expected hash for {path} but it is not among the files")
+        have = hashlib.sha256(files[path].encode("utf-8")).hexdigest()
+        if have != want:
+            raise ValueError(f"{path}: local bytes hash to {have}, sealed as {want}; nothing pushed")
     PUBLISHED.clear()
     for path, content in files.items():
         _push_file(path, content, message)
-    return list(PUBLISHED)
+    written = list(PUBLISHED)
+    bad = verify_published(files, written, expected)
+    if bad:
+        raise PublishMismatch(bad, written)
+    return written
 
 
 def publish_vision():

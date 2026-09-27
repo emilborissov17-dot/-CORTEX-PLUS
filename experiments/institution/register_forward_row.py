@@ -12,9 +12,10 @@ experiments/institution/register_forward_row.py — seal, gate and publish one f
            kept beside the row as forward/<row>.seal.json.
 --publish  core.notary.may_act("github_publish") first. A refusal is recorded as
            `suppressed` with the notary's words and the run stops - there is no
-           bypass. Otherwise institution0/<row>.json (seal + row) and
-           institution0/INSTITUTION_0.md go through github_publisher; `delivered` with
-           the commit shas, or `deferred` with the error.
+           bypass. Otherwise institution0/<row>.json (the exact sealed bytes),
+           institution0/<row>.seal.json and institution0/INSTITUTION_0.md go through
+           forward_rows.deliver: `delivered` only when every file read back from
+           GitHub verifies, `failed` (+ alarm) when one does not, `deferred` on error.
 """
 from __future__ import annotations
 
@@ -123,6 +124,31 @@ def published_rows() -> list:
     return out
 
 
+ENVELOPE_NOTE = ("Until 27 Sep the row files were published as {row, seal} envelopes; on 27 Sep they "
+                 "were replaced by the exact sealed bytes; no row hash changed.")
+
+
+def verify_section(rows: list) -> list:
+    """'How to verify': the commands, and the expected sha256 of every row file and
+    every revisions file, taken from their seals (row_sha256)."""
+    table = ["| file | expected sha256 (from its seal) |", "|---|---|"]
+    for row, s in rows:
+        table.append(f"| `{row['id']}.json` | `{s['row_sha256']}` |")
+        rsp = fr.FORWARD_DIR / f"{row['id']}.revisions.seal.json"
+        if rsp.exists():
+            rs = json.loads(rsp.read_text(encoding="utf-8"))
+            table.append(f"| `{row['id']}.revisions.jsonl` | `{rs['row_sha256']}` |")
+    return ["## How to verify", "",
+            "Every row file in this folder is the exact byte sequence its seal was computed over, and "
+            "every `.seal.json` beside it carries that file's `row_sha256`. Hash the file you downloaded "
+            "and compare. Download the raw file (the `Raw` button, or `raw.githubusercontent.com`); a "
+            "git checkout that rewrites line endings (`core.autocrlf=true`) changes the bytes.", "",
+            "```sh", "sha256sum F-001.json", "```", "",
+            "```powershell", "Get-FileHash F-001.json -Algorithm SHA256   # prints the hash in upper case", "```", "",
+            *table, "",
+            ENVELOPE_NOTE, ""]
+
+
 def page_all() -> str:
     rows = published_rows()
     if not rows:
@@ -151,6 +177,7 @@ def page_all() -> str:
                   *[f"| {x['commitment']} | {x['party']} | {x['events']} | {x['months_with_event']} | "
                     f"{x['civilian_deaths']} | {x['verdict']}{' (' + x['label'] + ')' if x.get('label') else ''} |"
                     for x in retro["rows"]], ""]
+    lines += verify_section(rows)
     lines += ["## Citation", "", f"- Provisional source: {first['citation']['provisional_source']}",
               f"- Final source: {first['citation']['final_source']}", ""]
     return "\n".join(lines)
@@ -173,22 +200,21 @@ def publish(row_id: str) -> int:
                           {"root": s["root"]})
         print(f"[F] {row_id}: SUPPRESSED by the notary - {why}")
         return 3
-    row = json.loads(path.read_text(encoding="utf-8"))
-    files = {f"institution0/{row_id}.json": json.dumps({"seal": s, "row": row}, ensure_ascii=False, indent=2) + "\n",
+    # The row goes out as ITS OWN SEALED BYTES (27 Sep 2026), not wrapped in a
+    # {seal, row} envelope, so anyone can sha256 the published file and compare it
+    # with the seal's row_sha256. The seal goes beside it as LF text - the bytes
+    # git holds (the working copy is CRLF where write_text made it; nothing hashes a seal).
+    files = {f"institution0/{row_id}.json": path.read_bytes().decode("utf-8"),
+             f"institution0/{row_id}.seal.json": (fr.FORWARD_DIR / f"{row_id}.seal.json").read_text(encoding="utf-8"),
              "institution0/INSTITUTION_0.md": page_all()}
-    try:
-        import github_publisher as gp
-        written = gp.publish_institution0(files, f"institution0: register forward row {row_id} (root {s['root'][:12]})")
-    except Exception as e:  # noqa: BLE001
-        fr.record_publish(row_id, "deferred", f"{type(e).__name__}: {e}", {"root": s["root"], "notary": why})
-        print(f"[F] {row_id}: DEFERRED - {type(e).__name__}: {e}")
-        return 4
-    fr.record_publish(row_id, "delivered", "published", {
-        "root": s["root"], "notary": why,
-        "files": [w.get("path") for w in written], "commit_shas": [w.get("commit_sha") for w in written]})
-    for w in written:
-        print(f"[F] {row_id}: delivered {w.get('path')} commit {w.get('commit_sha')} HTTP {w.get('status')}")
-    return 0
+    from experiments.institution.deliver import deliver
+    rec = deliver(row_id, files, f"institution0: register forward row {row_id} (root {s['root'][:12]})",
+                  expected={f"institution0/{row_id}.json": s["row_sha256"]},
+                  detail={"root": s["root"], "notary": why})
+    print(f"[F] {row_id}: {rec['outcome'].upper()} - {rec['reason']}")
+    for p_, c_ in zip(rec.get("files", []), rec.get("commit_shas", [])):
+        print(f"[F] {row_id}:   {p_} commit {c_}")
+    return {"delivered": 0, "deferred": 4, "failed": 6}[rec["outcome"]]
 
 
 def sign_line(row: dict) -> str:

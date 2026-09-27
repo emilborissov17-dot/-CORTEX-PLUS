@@ -72,16 +72,13 @@ def publish(row_id: str, forward_dir: Path | None = None) -> dict:
     files = {f"institution0/{log.name}": log.read_bytes().decode("utf-8"),   # the sealed bytes, exactly
              f"institution0/{sealp.name}": sealp.read_text(encoding="utf-8"),
              "institution0/INSTITUTION_0.md": reg.page_all()}
-    try:
-        import github_publisher as gp
-        written = gp.publish_institution0(files, f"institution0: revisions of {row_id} (root {s['root'][:12]})")
-    except Exception as e:  # noqa: BLE001
-        fr.record_publish(row_id, "deferred", f"{type(e).__name__}: {e}", {"revisions_root": s["root"]})
-        return {"outcome": "deferred", "why": f"{type(e).__name__}: {e}"}
-    fr.record_publish(row_id, "delivered", "revisions published", {
-        "revisions_root": s["root"], "notary": why, "files": [w.get("path") for w in written],
-        "commit_shas": [w.get("commit_sha") for w in written]})
-    return {"outcome": "delivered", "notary": why, "commits": [w.get("commit_sha") for w in written]}
+    from experiments.institution.deliver import deliver
+    rec = deliver(row_id, files, f"institution0: revisions of {row_id} (root {s['root'][:12]})",
+                  expected={f"institution0/{log.name}": s["row_sha256"]},
+                  detail={"revisions_root": s["root"], "notary": why}, reason="revisions published")
+    if rec["outcome"] != "delivered":
+        return {"outcome": rec["outcome"], "why": rec["reason"]}
+    return {"outcome": "delivered", "notary": why, "commits": rec["commit_shas"]}
 
 
 def publish_if_ready(row_id: str, forward_dir: Path | None = None) -> dict:

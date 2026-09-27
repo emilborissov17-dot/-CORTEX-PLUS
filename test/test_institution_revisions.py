@@ -351,7 +351,7 @@ def test_the_sealed_revision_bytes_are_lf_and_are_what_is_published(fdir, monkey
     s = rv.seal("F-002", fdir, fdir.parent / "roots.jsonl")
     published = {}
     import github_publisher as gp
-    monkeypatch.setattr(gp, "publish_institution0", lambda files, msg: published.update(files) or [])
+    monkeypatch.setattr(gp, "publish_institution0", lambda files, msg, **kw: published.update(files) or [])
     from core import notary
     monkeypatch.setattr(notary, "may_act", lambda *a, **k: (True, "test"))
     from experiments.institution import forward_rows as fr

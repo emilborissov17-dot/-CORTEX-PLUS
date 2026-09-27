@@ -234,8 +234,8 @@ def append(row_id: str, rev: dict, forward_dir: Path | None = None, today: date 
 
 
 def seal(row_id: str, forward_dir: Path | None = None, roots_log: Path | None = None) -> dict:
-    from experiments.institution import resolve_forward_rows as rr
-    return rr.seal_resolutions(log_path(row_id, forward_dir), roots_log, kind="institution0_revision")
+    from experiments.institution import forward_rows as fr
+    return fr.seal_log(log_path(row_id, forward_dir), roots_log, kind="institution0_revision")
 
 
 def apply_c4b(forward_dir: Path | None = None, today: date | None = None,

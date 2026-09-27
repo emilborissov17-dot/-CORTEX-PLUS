@@ -29,6 +29,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 FORWARD_DIR = HERE / "forward"
 PUBLISH_LEDGER = HERE / "publish_ledger.jsonl"
+ROOTS_LOG = HERE.parents[1] / "memory" / "merkle_roots.jsonl"
 
 REQUIRED = ("id", "commitment", "registered", "registered_by", "liveness", "condition",
             "resolution", "baseline", "sentences", "citation", "lane", "retrospective")
@@ -36,7 +37,7 @@ CONDITION_KEYS = ("source", "type_of_violence", "dyad_name", "dyad_new_id", "adm
                   "date_start_from", "date_start_to", "metric", "kept_if", "not_kept_if")
 STAGES = ("PROVISIONAL", "FINAL")
 OUTCOMES = ("KEPT", "NOT_KEPT", "SOURCE_LATE", "ASSUMPTION_BROKEN")
-PUBLISH_OUTCOMES = ("delivered", "deferred", "suppressed")
+PUBLISH_OUTCOMES = ("delivered", "deferred", "suppressed", "failed")
 _VERSION_ONLY = re.compile(r"\s*(UCDP\s+)?GED(\s+Candidate)?\s+\d+(\.\d+)*\s*", re.I)
 
 
@@ -151,3 +152,30 @@ def record_publish(row_id: str, outcome: str, reason: str, detail: dict | None =
     with p.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     return rec
+
+
+def seal_log(log: Path, roots_log: Path | None = None,
+             kind: str = "institution0_resolution") -> dict:
+    """Seal an append-only log (resolutions, revisions) and chain its root into
+    memory/merkle_roots.jsonl. Lives here, not in resolve_forward_rows (27 Sep 2026),
+    so revisions.seal - which the passage gate imports - does not import the
+    resolver and, through it, the publisher's alarm path."""
+    import merkle_memory as mm
+    rl = Path(roots_log or ROOTS_LOG)
+    prev = None
+    try:
+        lines = [l for l in rl.read_text(encoding="utf-8").splitlines() if l.strip()]
+        prev = json.loads(lines[-1])["root"] if lines else None
+    except FileNotFoundError:
+        pass
+    s = seal(log, prev, mm.writer_identity())
+    s.update({"file": log.name, "ts": datetime.now(timezone.utc).isoformat()})
+    rl.parent.mkdir(parents=True, exist_ok=True)
+    with rl.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"root": s["root"], "ts": s["ts"], "cycle_id": f"institution0:{log.name}",
+                             "kind": kind, "file": log.name,
+                             "row_sha256": s["row_sha256"], "leaf_count": 1, "prev_root": prev,
+                             "writer": s["writer"]}, ensure_ascii=False) + "\n")
+    (log.parent / (log.name.replace(".jsonl", ".seal.json"))).write_text(json.dumps(s, indent=2) + "\n",
+                                                                        encoding="utf-8")
+    return s
