@@ -362,3 +362,6 @@ memory/acled_credentials.txt
 memory/*credential*
 memory/*secret*
 memory/acled_token.json
+
+# D0 feasibility downloads (27 Sep 2026): clones, checkpoints, UCDP/VIEWS files - never committed
+data/external/
