@@ -3,7 +3,7 @@
 """
 test/test_metta_parallel.py — THE SECOND COLUMN MUST BE ABLE TO OBJECT.
 
-THE LIVE FACT THIS IS BUILT ON
+THE FACT THIS IS BUILT ON (frozen in test/fixtures/metta_parallel/ on 1 Oct 2026)
 -------------------------------
 20 August 2026, the same axis on the same night:
 
@@ -41,6 +41,37 @@ from core import metta_parallel as mp
 REPO = pathlib.Path(__file__).resolve().parents[1]
 
 CLIMATE = "CLIMATE_GLOBAL_RISK_REVIEW"
+FIX = REPO / "test" / "fixtures" / "metta_parallel"
+import sys  # noqa: E402
+sys.path.insert(0, str(REPO / "test"))
+import _live_net  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _fixtures_only(monkeypatch, tmp_path):
+    """C-OC-3 Part 5: every test here reads the frozen fixture (built 1 Oct 2026
+    from the live files, CLIMATE held at level LOW vs score 0.8185) and writes to
+    tmp. THE NET: a read of memory/, snapshots/ or cortex_memory/ RAISES."""
+    monkeypatch.setattr(mp, "FEEDS", FIX / "axis_feeds.json")
+    monkeypatch.setattr(mp, "GOAL_SCORE", FIX / "goal_score.json")
+    monkeypatch.setattr(mp, "AUTO_LEVELS", FIX / "auto_levels.json")
+    monkeypatch.setattr(mp, "OUT", tmp_path / "metta_assessment_latest.json")
+    attempts = _live_net.install(monkeypatch)
+    yield attempts
+    _live_net.check(attempts)
+
+
+def test_mutation_the_net_raises_on_a_live_read(_fixtures_only):
+    with pytest.raises(AssertionError, match="read live data"):
+        (REPO / "memory" / "auto_levels.json").read_text(encoding="utf-8")
+    _fixtures_only.clear()                       # the attempt was the point of this test
+
+
+def test_mutation_a_swallowed_live_read_is_still_recorded(_fixtures_only, monkeypatch):
+    monkeypatch.setattr(mp, "AUTO_LEVELS", REPO / "memory" / "auto_levels.json")
+    mp.gather_facts()                            # gather_facts swallows read errors
+    assert _fixtures_only, "a swallowed live read went unrecorded"
+    _fixtures_only.clear()
 
 
 def _fact(axis, **kw):
@@ -55,11 +86,6 @@ def _fact(axis, **kw):
 # (a) THE LIVE PROOF
 # ---------------------------------------------------------------------------
 
-# LIVE_STATE (19 Sep 2026): asserts today's computed level (auto_levels now says HIGH, not LOW).
-# pytest.ini: a gating test must be deterministic; this is an
-# operational monitor, so tools/live_monitor.py runs it and the
-# gate (-m "not live_state") does not.
-@pytest.mark.live_state
 def test_the_live_climate_fact_is_what_we_think_it_is():
     """Guard the premise. If auto_levels or goal_score changes shape, the proof
     below would pass or fail for reasons unrelated to the rule."""
@@ -72,9 +98,8 @@ def test_the_live_climate_fact_is_what_we_think_it_is():
     assert climate["measured"] is True
 
 
-@pytest.mark.live_state
 def test_r3_fires_on_the_live_climate_contradiction():
-    """THE REQUIRED PROOF, on real data, not a fixture."""
+    """THE REQUIRED PROOF, on the real files frozen as a fixture on 1 Oct 2026."""
     facts = mp.gather_facts()
     fired = mp.evaluate_python(facts)
 
@@ -86,11 +111,6 @@ def test_r3_fires_on_the_live_climate_contradiction():
     )
 
 
-# LIVE_STATE (19 Sep 2026): reads today's level output; the key it wants is absent for that axis today.
-# pytest.ini: a gating test must be deterministic; this is an
-# operational monitor, so tools/live_monitor.py runs it and the
-# gate (-m "not live_state") does not.
-@pytest.mark.live_state
 def test_the_disagreement_states_both_readings():
     """An operator must not have to open two files to see the contradiction."""
     facts = mp.gather_facts()
@@ -102,7 +122,6 @@ def test_the_disagreement_states_both_readings():
     assert "LOW" in entry["says"] and "81.85" in entry["says"]
 
 
-@pytest.mark.live_state
 def test_hyperon_and_the_reference_agree_on_live_data():
     """If the sidecar is present, the MeTTa program must derive what the
     reference derives. A second engine that quietly differs is worse than none."""
@@ -125,7 +144,6 @@ def test_hyperon_and_the_reference_agree_on_live_data():
 # (b) An empty second opinion must not erase a firing first one
 # ---------------------------------------------------------------------------
 
-@pytest.mark.live_state
 def test_an_empty_hyperon_result_does_not_erase_the_reference(monkeypatch):
     """THE SECOND NEGATIVE CONTROL. hyperon returns nothing; the reference
     fires. The output must keep the firings and say the engines disagreed."""
@@ -255,8 +273,11 @@ def test_the_bridge_no_longer_mocks():
     )
 
 
-def test_d_score_phase_report_carries_the_disagreements(tmp_path):
+def test_d_score_phase_report_carries_the_disagreements(tmp_path, monkeypatch):
+    from core import phase_report as pr
     from core.phase_report import PhaseReport
+    monkeypatch.setattr(pr, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
+    mp.write(mp.assess(prefer_hyperon=False))          # the nightly step's output, from the fixture, into tmp
     with PhaseReport("D_SCORE", "cid", base_dir=tmp_path) as rep:
         rep.step_ok("scoring_engine")
     report = json.loads(rep.path().read_text(encoding="utf-8"))
@@ -267,8 +288,10 @@ def test_d_score_phase_report_carries_the_disagreements(tmp_path):
     assert any(d["axis"] == CLIMATE for d in report["symbolic_disagreements"])
 
 
-def test_other_phases_do_not_carry_them(tmp_path):
+def test_other_phases_do_not_carry_them(tmp_path, monkeypatch):
+    from core import phase_report as pr
     from core.phase_report import PhaseReport
+    monkeypatch.setattr(pr, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
     with PhaseReport("B_SENSE", "cid", base_dir=tmp_path) as rep:
         rep.step_ok("web_intelligence")
     assert "symbolic_disagreements" not in json.loads(

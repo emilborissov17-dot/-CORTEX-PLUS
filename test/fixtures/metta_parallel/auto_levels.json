@@ -1,0 +1,63 @@
+{
+ "ECONOMY_WORK_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "EDUCATION_CULTURE_REVIEW": {
+  "level": "HIGH"
+ },
+ "GOVERNANCE_INSTITUTIONS_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "INEQUALITY_POVERTY_REVIEW": {
+  "level": "HIGH"
+ },
+ "INFRASTRUCTURE_CITIES_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "TECHNOLOGY_AI_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "TECHNOLOGY_INFRA_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "COSMIC_RESOURCES_REVIEW": {
+  "level": "HIGH"
+ },
+ "SPACE_INFRASTRUCTURE_REVIEW": {
+  "level": "HIGH"
+ },
+ "COGNITION_LEARNING_REVIEW": {
+  "level": "HIGH"
+ },
+ "CULTURE_MEDIA_REVIEW": {
+  "level": "MEDIUM"
+ },
+ "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL": {
+  "level": "MEDIUM"
+ },
+ "HUMAN_WELL_BEING_REVIEW": {
+  "level": "HIGH"
+ },
+ "SOCIAL_RELATIONS_REVIEW": {
+  "level": "LOW"
+ },
+ "CLIMATE_GLOBAL_RISK_REVIEW": {
+  "level": "LOW"
+ },
+ "ECOSYSTEMS_BIODIVERSITY_REVIEW": {
+  "level": "HIGH"
+ },
+ "ENERGY_REVIEW": {
+  "level": "LOW"
+ },
+ "FOOD_REVIEW": {
+  "level": "LOW"
+ },
+ "MATERIALS_WASTE_REVIEW": {
+  "level": "HIGH"
+ },
+ "WATER_REVIEW": {
+  "level": "HIGH"
+ },
+ "_fixture": "levels of memory/auto_levels.json, 2026-10-01; CLIMATE frozen at LOW (the contradiction R3 must see)"
+}

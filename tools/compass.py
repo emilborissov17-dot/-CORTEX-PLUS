@@ -21,7 +21,7 @@ compass() and writes the file itself, so --write stays the human path and the
 runner does not depend on argv.
 
 FOUR NEEDLES, AND ONE OF THEM NOW REFUSES ON PURPOSE. K2 reports NOT_WIRED: see
-the block above K2_NOT_WIRED_UNTIL for the ruling, the objection to the ruling,
+the block above K2_NOT_WIRED_REASON for the ruling, the objection to the ruling,
 and the measurement behind both.
 
 A FIFTH ENTRY THAT IS NOT A NEEDLE (ITEM 45, 30 Aug 2026). The live monitor
@@ -103,29 +103,25 @@ VERIFIED, UNVERIFIED = "VERIFIED", "UNVERIFIED"
 #      placeholder becomes a recurring to-do that never graduates to
 #      computation."
 #
-# That is the failure mode this pair of constants is shaped against.
-# test_compass_wired.py binds them TOGETHER: it fails on or after the date, and
-# it fails if the date moves while the reason string does not. A bare date bump
-# leaves the test red. Moving the date therefore costs a sentence saying why the
-# world-check STILL cannot be written — and a person who has to write that
-# sentence three times is a person who eventually writes the check instead.
-K2_NOT_WIRED_UNTIL = "2026-10-01"
+# 1 OCT 2026 (C-OC-3): THE DATE IS GONE, AND A FACT REPLACED IT. The objection
+# above was right about dates. K2_NOT_WIRED_UNTIL is deleted; the refusal now
+# rests on one fact about the code, and test_compass_wired asserts that fact
+# from agents/axis/axis_feed.py itself. The day the nightly axis feed reads
+# atoms or trusted feed rows, that test goes red — on the event, not on a day.
 K2_NOT_WIRED_REASON = (
-    "The TRUSTED label does change behaviour, and the thing it changes never "
-    "runs. Measured 2026-08-29 by reading the code, not by counting matches: "
-    "scripts/openclaw_axis_worker.py:313 sets row['measured'] = (state == "
-    "TRUSTED), which decides whether a reading is appended to "
-    "openclaw_queue/external_feeds.jsonl or diverted to external_shadow.jsonl, "
-    "and _peer_for() at :255-286 reads that same file back for the incumbent "
-    "value every contradiction check is made against. So the label is wired to "
-    "something. But that module has NO production caller: an untruncated search "
-    "returns its own docstring, two comments in core/, one cockpit string, "
-    "docs/MODULE_MAP, and three test files — nothing in any cycle, phase or "
-    "scheduled task invokes run(). The label therefore gates a code path the "
-    "system never takes on its own. A count of promotions into a path nothing "
-    "walks is not a measurement of trust earned. Withdrawing this status needs "
-    "the DMZ worker wired into the cycle, so that being TRUSTED changes what "
-    "the running system does — not a later date."
+    "Being TRUSTED changes which file a reading lands in, and the nightly cycle "
+    "reads neither that file nor the atoms. Checked 2026-10-01 from the code, "
+    "not by counting matches: scripts/openclaw_axis_worker.py decides from the "
+    "TRUSTED state whether a reading is written to "
+    "openclaw_queue/external_feeds.jsonl, and its cards become measurement "
+    "atoms through core/card_intake. But step 12.68 of the nightly cycle, "
+    "agents/axis/axis_feed.py, builds every axis number from "
+    "config/target_config.json and snapshots/master/goal_score_latest.json "
+    "only: it imports neither core.atoms nor core.knowledge and names neither "
+    "external_feeds.jsonl nor verified_observations.jsonl. So a promotion to "
+    "TRUSTED changes nothing the cycle computes, and counting promotions would "
+    "count a word, not trust earned. Withdrawing this status needs axis_feed "
+    "(or whatever replaces it) to read the atoms or the trusted rows."
 )
 
 # What _consumers() looks for each run. The claim above is a census taken by
@@ -208,10 +204,9 @@ def _consumers() -> dict:
 
     WHAT THIS CANNOT ANSWER, said here so the number is not over-read: a file
     appearing under `production` is a reader, not necessarily a REACHED one.
-    The DMZ worker genuinely reads external_feeds.jsonl and genuinely has no
-    production caller. Whether a reader is itself wired is the orphan scanner's
-    question, and K2_NOT_WIRED_REASON carries the answer for this one because it
-    was established by hand.
+    Whether a reader is itself reached by the cycle is the orphan scanner's
+    question; for the nightly axis feed, test_compass_wired answers it from the
+    code.
 
     NO MODULE FILENAME APPEARS IN THIS DOCSTRING, and that is deliberate rather
     than stylistic. The orphan scanner's NAMED_ONLY_AS_A_STRING verdict fires on
@@ -306,9 +301,8 @@ def k2() -> dict:
     consumers = _consumers()
     why = (f"NOT_WIRED, not unmeasured. {len(promo)} promotion(s) are really "
            f"recorded in this ledger and they are counted below; what is withheld "
-           f"is the headline. {K2_NOT_WIRED_REASON} Reviewed on "
-           f"{K2_NOT_WIRED_UNTIL} — see K2_NOT_WIRED_REASON, and the objection "
-           f"to this whole shape quoted verbatim above it.")
+           f"is the headline. {K2_NOT_WIRED_REASON} See the objection to this "
+           f"whole shape, quoted verbatim above K2_NOT_WIRED_REASON.")
     if promo and not withdraw:
         why += (" Trust has also NEVER been withdrawn from any source here; a "
                 "needle that can only rise would be measuring exposure, not "
@@ -317,8 +311,7 @@ def k2() -> dict:
                    value=None,
                    detail={"promotions": len(promo), "withdrawals": len(withdraw),
                            "last_promotion_ts": last, "last_transition_ts": last_any,
-                           "rows_total": len(rows), "consumers": consumers,
-                           "not_wired_until": K2_NOT_WIRED_UNTIL},
+                           "rows_total": len(rows), "consumers": consumers},
                    why=why, status=NOT_WIRED)
 
 
@@ -475,7 +468,7 @@ def main(argv=None) -> int:
         print(f"  {n['needle']}  {v:<12} {n.get('status','?'):<18} {n['means']}")
         print(f"        source {n['source']}  age {n.get('age_hours')}h")
         for k in ("measured_weight", "total_weight", "promotions", "withdrawals",
-                  "last_promotion_ts", "last_transition_ts", "not_wired_until",
+                  "last_promotion_ts", "last_transition_ts",
                   "conclusions_total", "single_source",
                   "coverage", "coverage_floor_required", "best_coverage_seen",
                   "flat_baseline_heldout", "beats_flat_baseline", "epoch", "domains"):

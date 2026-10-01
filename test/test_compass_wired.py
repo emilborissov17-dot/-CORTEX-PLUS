@@ -12,24 +12,22 @@ TRUSTED that no consumer reads is not a source earning trust - it is a source
 receiving a word." So K2 reports NOT_WIRED — value withheld, every diagnostic
 kept.
 
-WHAT THIS FILE MOSTLY DEFENDS IS THE EXPIRY, because a placeholder is the thing
-most likely to quietly become permanent. Kimi's own objection to its own ruling:
+WHAT THIS FILE DEFENDED UNTIL 1 OCT 2026 WAS AN EXPIRY DATE. Kimi's objection
+to its own ruling was that a date invites a bump:
 
     "A constant with an expiry is still a constant, not a measurement... expiry
      day likely produces a date bump or removal rather than a real check - the
      placeholder becomes a recurring to-do that never graduates to computation."
 
-test_the_expiry_cannot_be_bumped_without_saying_why is that objection turned
-into a gate. It holds a recorded (date, reason-digest) PAIR. Moving the date
-while leaving the reason alone leaves this test red, so a bump costs a sentence
-explaining why the world-check still cannot be written. Somebody made to write
-that sentence three times writes the check instead.
+C-OC-3 (1 Oct 2026) removed the date. The refusal now rests on one fact about
+the code, and this file asserts it: the nightly axis feed
+(agents/axis/axis_feed.py, step 12.68) reads neither the atoms nor the trusted
+feed rows. The day it does, test_the_nightly_axis_feed_reads_no_atoms_and_no_trusted_rows
+goes red, and K2's refusal has to be withdrawn or rewritten.
 """
 from __future__ import annotations
 
 import ast
-import datetime as dt
-import hashlib
 import json
 import pathlib
 import sys
@@ -41,66 +39,63 @@ if str(BASE) not in sys.path:
 from tools import compass as C  # noqa: E402
 
 
-# ── THE EXPIRY ─────────────────────────────────────────────────────────────
-#
-# THE RECORDED PAIR. Both halves are pinned here, in the test, on purpose: a
-# constant that guards itself guards nothing. Changing tools/compass.py alone
-# turns this red, which is the entire mechanism.
-KNOWN_UNTIL = "2026-10-01"
-KNOWN_REASON_SHA = "c670c5b5d918f0c6fd9124d50f34a11c6f9aa39ea2fc97234b65e2fdf377522f"
+# ── THE FACT K2 RESTS ON (replaced the expiry date, C-OC-3, 1 Oct 2026) ──────
+AXIS_FEED = BASE / "agents" / "axis" / "axis_feed.py"
+ATOM_MODULES = {"core.atoms", "core.knowledge", "core.card_intake"}
+TRUSTED_ROWS = ("external_feeds.jsonl", "verified_observations.jsonl", "atoms")
 
 
-def _sha(s: str) -> str:
-    return hashlib.sha256(s.encode("utf-8")).hexdigest()
+def axis_feed_reads(path: pathlib.Path = AXIS_FEED) -> dict:
+    """What the nightly axis feed's CODE reaches for: imported modules and every
+    string constant (file names live in strings). Docstrings are skipped."""
+    tree = ast.parse(path.read_text(encoding="utf-8"))
+    doc_nodes = set()
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Module, ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)):
+            body = getattr(node, "body", [])
+            if body and isinstance(body[0], ast.Expr) and isinstance(getattr(body[0], "value", None), ast.Constant):
+                doc_nodes.add(id(body[0].value))
+    mods = {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
+    mods |= {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom) and n.module}
+    mods |= {n.args[0].value for n in ast.walk(tree) if isinstance(n, ast.Call)
+             and getattr(n.func, "id", getattr(n.func, "attr", None)) in ("__import__", "import_module")
+             and n.args and isinstance(n.args[0], ast.Constant)}
+    strings = {n.value for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)
+               and id(n) not in doc_nodes}
+    return {"modules": mods, "strings": strings}
 
 
-def test_the_expiry_has_not_passed():
-    """On or after the date, this goes red and stays red until somebody decides.
-
-    It is deliberately not a warning. A warning about a placeholder is read
-    exactly as often as the placeholder is — never.
-    """
-    until = dt.date.fromisoformat(C.K2_NOT_WIRED_UNTIL)
-    today = dt.date.today()
-    assert today < until, (
-        f"K2_NOT_WIRED_UNTIL = {C.K2_NOT_WIRED_UNTIL} and today is {today}.\n"
-        f"The review is due. Three honest outcomes, in order of preference:\n"
-        f"  1. WIRE IT. The DMZ worker (scripts/openclaw_axis_worker.py) has no\n"
-        f"     production caller; give it one, and being TRUSTED starts changing\n"
-        f"     what the running system does. Then delete NOT_WIRED from k2().\n"
-        f"  2. Decide K2 is the wrong needle and replace it, saying so.\n"
-        f"  3. Move the date AND rewrite K2_NOT_WIRED_REASON to say why the\n"
-        f"     world-check still cannot be written, then update KNOWN_UNTIL and\n"
-        f"     KNOWN_REASON_SHA here. A bare date bump will not pass.\n"
-        f"Kimi predicted outcome 3 and called it the failure mode. Prove it wrong.")
+def test_the_nightly_axis_feed_reads_no_atoms_and_no_trusted_rows():
+    """K2_NOT_WIRED_REASON says this; here it is checked against the code. RED
+    means the refusal's ground is gone: wire K2, or rewrite its reason."""
+    r = axis_feed_reads()
+    assert not r["modules"] & ATOM_MODULES, f"axis_feed now imports {r['modules'] & ATOM_MODULES}"
+    hits = sorted(s for s in r["strings"] for t in TRUSTED_ROWS if t in s)
+    assert not hits, f"axis_feed now names {hits}"
 
 
-def test_the_expiry_cannot_be_bumped_without_saying_why():
-    """The date and the reason move TOGETHER or not at all.
+def test_mutation_an_axis_feed_that_reads_atoms_is_seen(tmp_path):
+    src = AXIS_FEED.read_text(encoding="utf-8")
+    mutated = tmp_path / "axis_feed.py"
+    mutated.write_text(src + "\nfrom core import atoms as _a\nROWS = BASE / 'openclaw_queue' / 'external_feeds.jsonl'\n",
+                       encoding="utf-8")
+    r = axis_feed_reads(mutated)
+    assert "core" in r["modules"] or "core.atoms" in r["modules"]
+    assert any("external_feeds.jsonl" in s for s in r["strings"])
 
-    This is the shape Kimi's objection asked for. A date is cheap to change; a
-    sentence explaining a second failure to build the real check is not, and the
-    cost is the point.
-    """
-    date_moved = C.K2_NOT_WIRED_UNTIL != KNOWN_UNTIL
-    reason_moved = _sha(C.K2_NOT_WIRED_REASON) != KNOWN_REASON_SHA
 
-    if date_moved and not reason_moved:
-        raise AssertionError(
-            f"K2_NOT_WIRED_UNTIL moved from {KNOWN_UNTIL} to "
-            f"{C.K2_NOT_WIRED_UNTIL} and K2_NOT_WIRED_REASON did not change one "
-            f"character.\nThat is the exact move this test exists to stop: "
-            f"'expiry day likely produces a date bump... the placeholder becomes "
-            f"a recurring to-do that never graduates to computation.'\n"
-            f"Rewrite the reason to say why the world-check STILL cannot be "
-            f"written, then update KNOWN_UNTIL and KNOWN_REASON_SHA here.")
+def test_the_nightly_step_is_that_axis_feed():
+    """The fact above is about the module the cycle runs at 12.68 — check the
+    runner still calls agents.axis.axis_feed, or the fact is about a dead file."""
+    runner = (BASE / "fast_cycle_runner.py").read_text(encoding="utf-8")
+    tree = ast.parse(runner)
+    called = {n.args[0].value for n in ast.walk(tree) if isinstance(n, ast.Call)
+              and getattr(n.func, "id", None) == "__import__" and n.args and isinstance(n.args[0], ast.Constant)}
+    assert "agents.axis.axis_feed" in called
 
-    if reason_moved and not date_moved:
-        raise AssertionError(
-            "K2_NOT_WIRED_REASON changed while K2_NOT_WIRED_UNTIL stayed at "
-            f"{KNOWN_UNTIL}.\nIf the reason is now different the review clock "
-            "should restart from the new argument, or the needle should be "
-            "wired. Update KNOWN_REASON_SHA here with the date you intend.")
+
+def test_the_date_is_gone():
+    assert not hasattr(C, "K2_NOT_WIRED_UNTIL"), "K2 has an expiry date again"
 
 
 def test_the_reason_is_a_finding_and_not_a_promise():
@@ -108,6 +103,7 @@ def test_the_reason_is_a_finding_and_not_a_promise():
     the measurement it rests on, so a reader can check it rather than trust it."""
     r = C.K2_NOT_WIRED_REASON
     assert "openclaw_axis_worker" in r, "the reason names no module"
+    assert "agents/axis/axis_feed.py" in r, "the reason does not name the module whose code it rests on"
     assert "external_feeds.jsonl" in r, "the reason names no artifact"
     assert any(ch.isdigit() for ch in r), "the reason cites no line or date"
     assert len(r) > 400, (

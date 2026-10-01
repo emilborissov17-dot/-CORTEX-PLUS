@@ -30,6 +30,25 @@ sys.path.insert(0, str(REPO))
 import core.belief_revision as BR      # noqa: E402
 import core.hypothesis_intake as HI    # noqa: E402
 
+_REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_REPO / "test"))
+import _live_net  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _no_live_reads(monkeypatch):
+    """C-OC-3 Part 5: test/_live_net.py — a read of memory/, snapshots/ or
+    cortex_memory/ raises, and is recorded so a swallowed raise still fails."""
+    attempts = _live_net.install(monkeypatch)
+    yield attempts
+    _live_net.check(attempts)
+
+
+def test_mutation_the_net_raises_on_a_live_read(_no_live_reads):
+    with pytest.raises(AssertionError, match="read live data"):
+        (_REPO / "cortex_memory" / "hypotheses" / "resolved.json").read_text(encoding="utf-8")
+    _no_live_reads.clear()                       # the attempt was the point of this test
+
 
 def _resolved(tmp_path: Path, rows: list) -> Path:
     p = tmp_path / "resolved.json"
@@ -205,20 +224,44 @@ def test_an_unscoreable_axis_is_refused_by_name(tmp_path):
     assert "UNSCOREABLE" in rec["refusals"][0]["why"]
 
 
-# LIVE_STATE (19 Sep 2026): counts hypotheses in the live store, which has grown since June (asserted 0, found 11).
-# pytest.ini: a gating test must be deterministic; this is an
-# operational monitor, so tools/live_monitor.py runs it and the
-# gate (-m "not live_state") does not.
-@pytest.mark.live_state
-def test_the_two_june_hypotheses_are_skipped_rather_than_mislearned(tmp_path):
-    """The live resolved.json rows predate intervals and methods entirely. They must
-    not be folded in at some invented width. RESTORED 4 Sep 2026 after an edit
-    dropped it."""
-    rec = BR.run(write=False, state_path=tmp_path / "s.json",
-                 ledger_path=tmp_path / "l.jsonl")
-    assert rec["revisions"] == 0
-    assert rec["resolved_seen"] >= 2
+JUNE = Path(__file__).resolve().parent / "fixtures" / "belief_revision" / "june_resolved.json"
 
+
+def test_the_two_june_hypotheses_are_skipped_rather_than_mislearned(tmp_path):
+    """The June resolved.json rows predate intervals and methods entirely. They must
+    not be folded in at some invented width. RESTORED 4 Sep 2026 after an edit
+    dropped it. FIXTURE since 1 Oct 2026 (C-OC-3 Part 5): the two rows were copied
+    from cortex_memory/hypotheses/resolved.json into
+    test/fixtures/belief_revision/june_resolved.json, so the live store's growth
+    no longer changes the answer."""
+    rec = BR.run(write=False, state_path=tmp_path / "s.json", ledger_path=tmp_path / "l.jsonl",
+                 resolved_path=JUNE, archive=tmp_path / "archive")
+    assert rec["resolved_seen"] == 2
+    assert rec["revisions"] == 0
+    # what keeps them out, in BR.run's order: both rows are status "unresolvable"
+    # (the evaluator moved them without ground truth); neither names a method
+    assert rec["skipped"]["unresolvable"] == 2
+
+
+def _june_mutated(tmp_path, **change):
+    rows = json.loads(JUNE.read_text(encoding="utf-8"))
+    for r in rows:
+        r.update(change)
+    p = tmp_path / "june_mutated.json"
+    p.write_text(json.dumps(rows), encoding="utf-8")
+    return BR.run(write=False, state_path=tmp_path / "s.json", ledger_path=tmp_path / "l.jsonl",
+                  resolved_path=p, archive=tmp_path / "archive")
+
+
+def test_mutation_without_the_unresolvable_status_the_method_check_still_holds(tmp_path):
+    rec = _june_mutated(tmp_path, status="resolved")
+    assert rec["skipped"]["unresolvable"] == 0 and rec["skipped"]["unknown_method"] == 2
+    assert rec["revisions"] == 0
+
+
+def test_mutation_without_both_guards_june_gets_past_them(tmp_path):
+    rec = _june_mutated(tmp_path, status="resolved", method=BR.METHODS[1])
+    assert rec["skipped"]["unresolvable"] == 0 and rec["skipped"]["unknown_method"] == 0
 
 
 # ── the record ────────────────────────────────────────────────────────────────
