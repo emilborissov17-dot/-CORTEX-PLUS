@@ -82,7 +82,7 @@ def test_mark_served_counts_and_never_changes_the_status(p):
 def test_satisfied_is_recorded_with_the_items_shown(p):
     nid = _served(p)
     reply = json.dumps({"verdicts": [{"id": nid, "verdict": "SATISFIED", "question": None, "why": "it answers it"}]})
-    rv = bn.review(think=lambda q, ev: {"text": reply, "sec": 0.1}, paths=p,
+    rv = bn.review(think=lambda q, ev: {"text": reply, "sec": 0.1}, paths=p, linked={},
                    read=lambda q, k: [{"type": "statement", "text": "UNHCR: 1.2 million returned in 2026."}])
     assert rv["verdicts"] == [{"id": nid, "verdict": "SATISFIED", "recorded": True}]
     assert "1.2 million" in rv["shown_text"] and _needs(p)[0]["status"] == "SATISFIED"
@@ -93,7 +93,7 @@ def test_still_open_keeps_the_need_with_the_reformulated_question(p):
     nid = _served(p)
     reply = json.dumps({"verdicts": [{"id": nid, "verdict": "STILL_OPEN", "question": "Returns to Syria from Turkey, 2026?",
                                       "why": "nothing came back"}]})
-    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [], linked={})
     n = _needs(p)[0]
     assert n["status"] == "STILL_OPEN" and n["question"] == "Returns to Syria from Turkey, 2026?"
     assert n["questions"][0] == NEED["question"]
@@ -102,33 +102,33 @@ def test_still_open_keeps_the_need_with_the_reformulated_question(p):
 def test_wrong_question_closes_it(p):
     nid = _served(p)
     reply = json.dumps({"verdicts": [{"id": nid, "verdict": "WRONG_QUESTION", "why": "the axis counts stock"}]})
-    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [], linked={})
     assert _needs(p)[0]["status"] == "WRONG_QUESTION"
 
 
 def test_a_garbled_review_changes_nothing_and_is_recorded(p):
     _served(p)
-    rv = bn.review(think=lambda q, ev: {"text": "looks fine to me"}, paths=p, read=lambda q, k: [])
+    rv = bn.review(think=lambda q, ev: {"text": "looks fine to me"}, paths=p, read=lambda q, k: [], linked={})
     assert rv["silence"]["raw"] == "looks fine to me" and _needs(p)[0]["status"] == "OPEN"
 
 
 def test_a_verdict_outside_the_three_is_not_recorded(p):
     nid = _served(p)
     reply = json.dumps({"verdicts": [{"id": nid, "verdict": "PROBABLY", "why": "?"}]})
-    rv = bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    rv = bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [], linked={})
     assert rv["verdicts"][0]["recorded"] is False and _needs(p)[0]["status"] == "OPEN"
 
 
 def test_an_unserved_need_is_not_shown_for_review(p):
     _emit(p, [NEED])
-    rv = bn.review(think=lambda q, ev: {"text": "{}"}, paths=p, read=lambda q, k: [])
+    rv = bn.review(think=lambda q, ev: {"text": "{}"}, paths=p, read=lambda q, k: [], linked={})
     assert rv["shown"] == 0
 
 
 def test_re_asking_a_wrong_question_reopens_it_and_keeps_its_history(p):
     nid = _served(p)
     reply = json.dumps({"verdicts": [{"id": nid, "verdict": "WRONG_QUESTION", "why": "too general"}]})
-    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [], linked={})
     _emit(p, [NEED])
     n = [x for x in _needs(p) if x["id"] == nid][0]
     assert n["status"] == "OPEN" and [v["verdict"] for v in n["verdicts"]] == ["WRONG_QUESTION"]
@@ -145,3 +145,26 @@ def test_no_finder_module_exists_and_nothing_imports_one():
         mods = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom) and n.module}
         names = {a.name for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names}
         assert gone not in names and not any(gone in m for m in mods), f.name
+
+
+def test_what_was_fetched_for_the_need_is_shown_first(p):
+    nid = _served(p)
+    linked = {nid: [{"type": "statement", "text": "FETCHED FOR THIS NEED", "id": "s-own", "linked": True}]}
+    rv = bn.review(think=lambda q, ev: {"text": "{}"}, paths=p, linked=linked,
+                   read=lambda q, k: [{"type": "statement", "text": "an unrelated transcript fragment", "id": "s-x"}])
+    assert [i["text"] for i in rv["items"][nid]] == ["FETCHED FOR THIS NEED", "an unrelated transcript fragment"]
+
+
+def test_mutation_without_the_linked_first_rule_the_fragment_leads(p):
+    nid = _served(p)
+    rv = bn.review(think=lambda q, ev: {"text": "{}"}, paths=p, linked={},
+                   read=lambda q, k: [{"type": "statement", "text": "an unrelated transcript fragment", "id": "s-x"}])
+    assert rv["items"][nid][0]["text"] == "an unrelated transcript fragment"
+
+
+def test_linked_statements_indexes_records_by_need_id(monkeypatch):
+    from core import knowledge as kn
+    monkeypatch.setattr(kn, "statements", lambda store=None: [
+        {"id": "s1", "sentence": "for the need", "need_id": "BN-1"},
+        {"id": "s2", "sentence": "for nothing"}])
+    assert bn.linked_statements() == {"BN-1": [{"type": "statement", "text": "for the need", "id": "s1", "linked": True}]}

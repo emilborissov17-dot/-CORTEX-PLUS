@@ -695,3 +695,5 @@ core/brain_needs.py bc95f4100f58  # BACKED: test_needs_and_finder.test_the_whole
 core/space.py c0521811d171  # BACKED: test_space.test_a_failing_engine_raises_and_there_is_no_fallback
 core/space.py b182e0ba6dbc  # BACKED: test_space.test_a_failing_engine_raises_and_there_is_no_fallback
 core/turn.py b94e7574eb8d  # BACKED: test_turn.test_a_double_take_is_refused, test_an_unexplained_failure_does_not_hand_over, test_no_exit_row_does_not_hand_over, test_the_nightly_cycle_blocks_both_turns
+core/brain_needs.py 417d1399821a  # BACKED: test_brain_needs_review.test_linked_statements_indexes_records_by_need_id
+core/symbols.py a0d87cae301e  # BACKED: test_symbols_and_brain_turn.test_an_expression_the_engine_cannot_parse_is_refused, test_an_argument_not_in_the_sentence_is_refused_by_name, test_an_unknown_head_is_accepted_and_counted

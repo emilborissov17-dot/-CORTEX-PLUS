@@ -109,6 +109,11 @@ def get(url: str, timeout: float = TIMEOUT_S, headers: Optional[dict] = None, *,
     anything the standard forbids; network errors propagate as they are."""
     if method != "GET":
         raise FetchRefused(f"method {method} is not GET")
+    from core import turn as _turn
+    if _turn.state().get("holder") == _turn.BRAIN:
+        # C-TURN-1 Part 3a: the brain's turn has no network (Emil R31: it works only
+        # with collected, prepared and approved information)
+        raise FetchRefused("the baton is BRAIN: no fetch in the brain's turn")
     hdrs = {"User-Agent": USER_AGENT}
     for k, v in (headers or {}).items():
         if k.lower() in FORBIDDEN_HEADERS:

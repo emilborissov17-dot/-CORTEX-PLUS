@@ -257,3 +257,33 @@ def test_selftest_reports_and_writes_nothing(monkeypatch, tmp_path):
     r = fs.selftest()
     assert r["ok"] and r["integrations"]["worker fetches through fetch_standard.get"] == "LIVE"
     assert not list(tmp_path.iterdir())
+
+
+@pytest.fixture(autouse=True)
+def _baton_in_tmp(tmp_path, monkeypatch):
+    from core import turn
+    monkeypatch.setattr(turn, "STATE", tmp_path / "turn.json")
+
+
+def test_no_fetch_happens_in_the_brains_turn(tmp_path):
+    from core import turn
+    turn.take(turn.BRAIN)
+    sess = Session(Resp())
+    with pytest.raises(fs.FetchRefused, match="baton is BRAIN"):
+        fs.get("https://example.org/a", session=sess, resolve=PUBLIC, clock=NoWait())
+    assert sess.sent == [], "a request went out in the brain's turn"
+
+
+def test_mutation_without_the_baton_check_the_fetch_would_go_out(tmp_path, monkeypatch):
+    from core import turn
+    turn.take(turn.BRAIN)
+    monkeypatch.setattr(turn, "state", lambda path=None: {"holder": None})
+    out, sess = _get("https://example.org/a")
+    assert sess.sent and out["status"] == 200
+
+
+def test_the_agents_turn_may_fetch(tmp_path):
+    from core import turn
+    turn.take(turn.AGENTS)
+    out, sess = _get("https://example.org/a")
+    assert out["status"] == 200

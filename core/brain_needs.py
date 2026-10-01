@@ -191,20 +191,37 @@ def briefing(paths=None, derived: Optional[list] = None) -> dict:
         T.append(f"- {ident[1:4]}: was {cf.get('value')} ({cf.get('period')}), now {ident[4] if len(ident) > 4 else '?'}")
         M.append(f"(changed {_m(ident[1] if len(ident) > 1 else '')} {_m(cf.get('value'))} "
                  f"{_m(ident[4] if len(ident) > 4 else '')})")
+    T, line_ids = number_lines(T)
     facts_text = "\n".join(T)      # the copy check compares against the FACTS, not the brain's own past needs
     T.append("\nYOUR PREVIOUS NEEDS AND WHAT HAPPENED:" + ("" if mine else " none yet"))
     for n in mine[-10:]:
-        T.append(f"- [{n['status']}] {n['question']} (searched {n.get('searched', 0)} time(s), "
+        T.append(f"- [{n['id']}] [{n['status']}] {n['question']} (searched {n.get('searched', 0)} time(s), "
                  f"gained {n.get('gained_statements', 0)} statement(s))")
         M.append(f"(prior-need {_m(n['id'])} {_m(n['question'])} {_m(n['status'])})")
     text = "\n".join(T)
     metta = "\n".join(M)
     sha = hashlib.sha256((text + "\n" + metta).encode("utf-8")).hexdigest()
-    b = {"utc": _now(), "sha256": sha, "text": text, "facts_text": facts_text, "metta": metta,
+    b = {"utc": _now(), "sha256": sha, "text": text, "facts_text": facts_text, "metta": metta, "line_ids": line_ids,
          "facts": {"subgoals": sg, "grounded": top, "contradictions": con, "forward": fwd,
                    "changed": len(ch), "prior_needs": len(mine)}}
     _append(_p(paths, "briefings"), b)
     return b
+
+
+def number_lines(lines: list) -> tuple:
+    """Every fact line (a "- " item or an indented expression) gets an id [L<n>]
+    the brain can point at; headings stay as they are. -> (lines, {id: line})."""
+    out, ids, n = [], {}, 0
+    for line in lines:
+        st = line.lstrip()
+        if st.startswith("- ") or st.startswith("("):
+            n += 1
+            lid = f"L{n}"
+            ids[lid] = st
+            out.append(line[: len(line) - len(st)] + f"[{lid}] " + st)
+        else:
+            out.append(line)
+    return out, ids
 
 
 # ── 2. ask ──────────────────────────────────────────────────────────────────
@@ -215,7 +232,9 @@ QUESTION = (
     '"why_subgoal": "<exactly one of the five sub-goal names>", '
     '"about": {"place": <string or null>, "actor": <string or null>, "period": <string or null>}, '
     '"kind": "FIND | VERIFY | EXPLAIN", '
-    '"would_change": "<what you would do differently if it were answered>"}]}')
+    '"would_change": "<what you would do differently if it were answered>", '
+    '"from_line": "<the [L..] id of the briefing line this need arises from, or none>", '
+    '"expects": "<one line: what you expect the search to bring back>"}]}')
 
 
 def _think(question: str, evidence: str) -> dict:
@@ -272,6 +291,13 @@ def check_form(need, briefing_text: str, satisfied_questions: set, five: list) -
     return None
 
 
+def _anchor(v, line_ids: dict) -> str:
+    """The brain's from_line as given, normalised to "L<n>"; "none" when it gave
+    none. Nothing is refused for it; the board counts anchored vs unanchored."""
+    s = str(v or "").strip().strip("[]")
+    return s if s in line_ids else ("none" if not s or s.lower() == "none" else f"unknown:{s}")
+
+
 def _id(origin: str, text: str) -> str:
     return ("BN-" if origin == "brain" else "EN-") + hashlib.sha256(_norm(text).encode("utf-8")).hexdigest()[:10]
 
@@ -318,7 +344,9 @@ def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dic
                 reopened.append(old)
                 continue
             rec = {"id": nid, "origin": "brain", "briefing_sha256": b["sha256"], "created_utc": _now(),
-                   "status": OPEN, **{k: n.get(k) for k in ("question", "why_subgoal", "about", "kind", "would_change")}}
+                   "status": OPEN, **{k: n.get(k) for k in ("question", "why_subgoal", "about", "kind", "would_change",
+                                                               "expects")},
+                   "from_line": _anchor(n.get("from_line"), b.get("line_ids") or {})}
             by_id[nid] = rec
             accepted.append(rec)
     for n in (engine or []):
@@ -370,7 +398,19 @@ REVIEW_QUESTION = (
     '"why": "<one sentence>"}]}')
 
 
-def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optional[Callable] = None) -> dict:
+def linked_statements(store=None) -> dict:
+    """need_id -> statements ingested for that need (core.knowledge records carry need_id)."""
+    from core import knowledge as kn
+    out: dict = {}
+    for r in kn.statements(store):
+        if r.get("need_id"):
+            out.setdefault(r["need_id"], []).append({"type": "statement", "text": r.get("sentence"), "id": r.get("id"),
+                                                     "linked": True})
+    return out
+
+
+def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optional[Callable] = None,
+           linked: Optional[dict] = None) -> dict:
     """Show the brain, for each of its open needs that has been searched, the top k
     items core.knowledge returns for its question; record its verdict per need.
     Code records the verdict and never overrules it; an unparseable reply or a
@@ -381,10 +421,13 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
     mine = [n for n in doc.get("needs", []) if n.get("origin") == "brain"
             and n.get("status") in (OPEN, STILL_OPEN) and n.get("searched", 0) > 0]
     if not mine:
-        return {"shown": 0, "verdicts": [], "silence": None}
-    blocks = []
+        return {"shown": 0, "verdicts": [], "silence": None, "items": {}}
+    blocks, shown_items = [], {}
+    linked = linked if linked is not None else linked_statements()
     for n in mine:
-        items = read(n["question"], k)
+        own = (linked.get(n["id"]) or [])[:k]
+        items = own + [it for it in read(n["question"], k) if it.get("id") not in {o.get("id") for o in own}][:k - len(own)]
+        shown_items[n["id"]] = items
         _append(_p(paths, "ledger"), {"event": "SHOWN", "ts": _now(), "need_id": n["id"], "items": len(items)})
         lines = [f"  {i + 1}. [{it.get('type')}] {str(it.get('text'))[:300]}" for i, it in enumerate(items)]
         blocks.append(f"NEED {n['id']}: {n['question']}\n" + ("\n".join(lines) if lines else "  (nothing returned)"))
@@ -409,7 +452,8 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
         sil = {"utc": _now(), "raw": raw, "why": "empty reply" if not raw else "reply is not parseable JSON"}
         _append(_p(paths, "log"), {"event": "REVIEW_SILENCE", **sil})
         _append(_p(paths, "ledger"), {"event": "REVIEW_SILENCE", "ts": _now(), "origin": "brain", "why": sil["why"]})
-        return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": [], "silence": sil, "sec": sec}
+        return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": [], "silence": sil, "sec": sec,
+                "items": shown_items}
     by_id = {n["id"]: n for n in doc["needs"]}
     recorded = []
     for v in parsed:
@@ -429,7 +473,8 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
         _append(_p(paths, "ledger"), {"event": verdict, "ts": _now(), "need_id": nid, "why": v.get("why")})
         recorded.append({"id": nid, "verdict": verdict, "recorded": True})
     _save_needs(doc, paths)
-    return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": recorded, "silence": None, "sec": sec}
+    return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": recorded, "silence": None, "sec": sec,
+            "items": shown_items}
 
 
 # ── the guard: never while the model is someone else's ──────────────────────

@@ -1,0 +1,119 @@
+# -*- coding: utf-8 -*-
+"""scripts/turn_brain.py — the brain's turn (C-TURN-1 Part 3; Emil R31).
+
+Run through tools/cycle_witness.ps1 by scripts/turns_loop.py. No network: while
+the baton is BRAIN, core.fetch_standard refuses every fetch.
+
+Order:
+  1. build the space (core.space.build) and run the rules (core.space.derive);
+  2. the briefing (core.brain_needs.briefing) with what the space derived, its
+     fact lines numbered;
+  3. the brain's needs (cortex-l1b-3b), and the engine's needs from the space;
+  4. its verdicts on its previous needs, shown first what was fetched for each;
+  5. symbols for what it was shown (core.symbols, at most 20 statements);
+  6. what it expects back, per open need, into memory/expectations.jsonl;
+  7. memory/turn_result.json {summary, open_needs, cause} for the loop, which
+     hands the baton to AGENTS once the witness has the exit row.
+
+Exit codes: 0 done; 2 the space engine (hyperon) did not run — the cause is
+named in turn_result.json, so the loop may hand over; anything else is
+unexplained and the baton stays (core.turn.hand_over).
+
+    venv\\Scripts\\python.exe scripts\\turn_brain.py
+    venv\\Scripts\\python.exe scripts\\turn_brain.py --selftest
+"""
+from __future__ import annotations
+
+import json
+import sys
+import time
+from pathlib import Path
+from typing import Callable, Optional
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+RESULT = REPO / "memory" / "turn_result.json"
+EXPECT = REPO / "memory" / "expectations.jsonl"
+
+
+def _now() -> str:
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+
+def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, busy: Optional[Callable] = None,
+        bn_paths=None, space_paths=None, sym_paths=None, read=None, linked=None,
+        result_path=None, expect_path=None, turn_path=None) -> dict:
+    from core import brain_needs as bn
+    from core import space as sp
+    from core import symbols
+    from core import turn
+    turn.take(turn.BRAIN, turn_path, why="the brain's turn")
+    t0 = time.time()
+    out = {"started_utc": _now()}
+    try:
+        b0 = sp.build(space_paths)
+        d = sp.derive(space_paths, engine=engine)
+    except sp.SpaceEngineFailed as exc:
+        res = {"utc": _now(), "summary": f"brain turn stopped: the space engine did not run ({exc})",
+               "open_needs": None, "cause": f"hyperon did not run: {exc}", "seconds": round(time.time() - t0, 1)}
+        _write(result_path or RESULT, res)
+        return {**out, **res, "exit": 2}
+    out["space"] = {"base": b0["expressions"], "build_seconds": b0["seconds"], "derived": d["derived"],
+                    "by_rule": d["by_rule"], "engine_seconds": d["seconds"]}
+    derived = d["expressions"]
+    b = bn.briefing(bn_paths, derived)
+    why = (busy or bn.model_busy)()
+    if why:
+        em = bn.emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, bn_paths, sp.needs_from(derived))
+        out.update({"model_skipped": why, "needs": em, "review": None, "symbols": None})
+    else:
+        reply = bn.ask(b, think)
+        em = bn.emit(b, reply, bn_paths, sp.needs_from(derived))
+        rv = bn.review(think, bn_paths, read=read, linked=linked)
+        items = [{"id": it.get("id"), "text": it.get("text")} for its in (rv.get("items") or {}).values()
+                 for it in its if it.get("type") == "statement"]
+        sy = symbols.propose(items, think, engine=engine, paths=sym_paths)
+        out.update({"reply": reply, "needs": em, "review": rv, "symbols": sy})
+    doc = bn.load_needs(bn_paths)
+    open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
+    ep = Path(expect_path or EXPECT)
+    ep.parent.mkdir(parents=True, exist_ok=True)
+    with ep.open("a", encoding="utf-8", newline="\n") as fh:
+        for n in open_:
+            if n.get("origin") == "brain":
+                fh.write(json.dumps({"ts": _now(), "need_id": n["id"], "expects": n.get("expects")},
+                                    ensure_ascii=False) + "\n")
+    res = {"utc": _now(), "open_needs": len(open_), "cause": None, "seconds": round(time.time() - t0, 1),
+           "summary": f"brain turn: {len(open_)} open need(s) "
+                      f"({sum(1 for n in open_ if n.get('origin') == 'brain')} brain, "
+                      f"{sum(1 for n in open_ if n.get('origin') == 'engine')} engine); "
+                      f"space {out['space']['base']} base / {out['space']['derived']} derived"}
+    _write(result_path or RESULT, res)
+    return {**out, **res, "exit": 0}
+
+
+def _write(p, doc: dict) -> None:
+    p = Path(p)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(doc, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
+
+
+def selftest() -> dict:
+    from core import turn
+    return {"integrations": {"core.turn baton": f"holder {turn.state().get('holder')}",
+                             "memory/turn_result.json": "LIVE" if RESULT.exists() else "INERT (no brain turn yet)"},
+            "ok": True}
+
+
+def main() -> int:
+    if "--selftest" in sys.argv:
+        print(json.dumps(selftest(), indent=2))
+        return 0
+    r = run()
+    print(json.dumps({k: v for k, v in r.items() if k not in ("review", "reply", "symbols", "needs")},
+                     indent=1, ensure_ascii=False, default=str))
+    return r["exit"]
+
+
+if __name__ == "__main__":
+    sys.exit(main())

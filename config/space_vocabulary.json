@@ -1,0 +1,9 @@
+{
+  "_what_this_is": [
+    "SUGGESTED heads for the expressions the brain proposes for text (C-TURN-1 Part 3c).",
+    "The list is OPEN (Emil R27): a head not listed here is accepted and recorded in",
+    "memory/space/new_relations.jsonl with its count. Nothing is refused for its head."
+  ],
+  "suggested_heads": ["event", "claim", "commits", "causes", "increases", "decreases", "located-in", "part-of",
+                      "affects-group", "says"]
+}

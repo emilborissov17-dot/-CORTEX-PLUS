@@ -333,9 +333,15 @@ def premises(x) -> list:
     return [a for a in x[1:] if isinstance(a, str) and (a.startswith("a-") or re.fullmatch(r"F-\d+", a))]
 
 
+_SYMBOL = re.compile(r"[A-Za-z][A-Za-z0-9_\-]*")
+
+
 def render(x) -> str:
+    """Back to MeTTa text. The HEAD of an expression is a bare symbol (parse()
+    unquotes strings, so a head given as "says" and as says render alike)."""
     if isinstance(x, list):
-        return "(" + " ".join(render(a) for a in x) + ")"
+        head = x[0] if x and isinstance(x[0], str) and _SYMBOL.fullmatch(x[0]) else None
+        return "(" + " ".join([head] + [render(a) for a in x[1:]] if head else [render(a) for a in x]) + ")"
     if isinstance(x, float):
         return repr(x)
     if x in ("VERIFY", "FIND") or x in DERIVED_HEADS or x in ("contradiction", "unverified", "uncovered", "lacks-evidence"):
