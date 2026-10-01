@@ -187,6 +187,19 @@ def declaration_problems(source: dict) -> list:
     return out
 
 
+def card_eligible(row: dict, state: str) -> bool:
+    """C-OC-2 (1 Oct 2026): WHO GETS A CARD, separated from who enters the composite.
+
+    The lifecycle ladder decides what is MEASURED (the composite) and still
+    demotes. A card is one reading the gate judges alone against its own page, so
+    it needs a full declaration, a quote and a period — and a source the ladder
+    has DEMOTED makes none. Ladder state otherwise does not gate the card: five
+    identical fetches of an annual figure prove nothing the first did not."""
+    from core import source_lifecycle as _life
+    return (not row.get("undeclared") and bool(row.get("quote")) and bool(row.get("period"))
+            and state != _life.DEMOTED)
+
+
 def subcategory_problem(source: dict) -> str | None:
     """A DECLARED subcategory that does not resolve is a refusal, by name."""
     sub = source.get("subcategory")
@@ -715,7 +728,7 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     own_state = lifecycle_state is None
     lstate = life.load() if own_state else lifecycle_state
 
-    feeds, shadows, refusals, cards = [], [], [], []
+    feeds, declared, shadows, refusals, cards = [], [], [], [], []
     for source in sources:
         sid = source.get("id") or "<unnamed>"
         axis = source.get("axis")
@@ -737,22 +750,27 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             # source (no subcategory, place, real unit, or a period in the same
             # record) is stored as SHADOW with the missing field named.
             row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
-            row["status"] = "PRESENT" if row["measured"] else "SHADOW"
+            # C-OC-2: the CARD is gated by card_eligible(), not by the ladder.
+            # Three stored populations: PRESENT (measured, the composite reads
+            # it), DECLARED (carded, not measured), SHADOW (neither).
+            eligible = card_eligible(row, rec["state"])
+            row["status"] = "PRESENT" if row["measured"] else ("DECLARED" if eligible else "SHADOW")
             if rec["state"] == life.TRUSTED and row["undeclared"]:
                 print(f"[DMZ] undeclared {sid:<31} -> SHADOW: {'; '.join(row['undeclared'])}")
-            (feeds if row["measured"] else shadows).append(row)
-            # A CARD ONLY FOR A TRUSTED READING. The module's own rule two lines
-            # up is that a candidate's number is stored beside the trusted ones
-            # and is NOT a measurement; a card is a claim to be judged and
-            # filed into memory/verified_observations.jsonl, so a shadow row
-            # must not become one. Shadows and refusals keep their files.
             if row["measured"]:
+                feeds.append(row)
+            elif eligible:
+                declared.append(row)
+            else:
+                shadows.append(row)
+            # A CARD for every eligible reading. A shadow row never becomes one.
+            if eligible:
                 card = card_from_row(row)
                 if card is not None:
                     cards.append(card)
                 else:
                     print(f"[DMZ] no card  {sid:<34} {row.get('quote_missing')}")
-            mark = "OK     " if row["measured"] else "shadow "
+            mark = {"PRESENT": "OK     ", "DECLARED": "declare", "SHADOW": "shadow "}[row["status"]]
             print(f"[DMZ] {mark}{sid:<34} {str(axis):<28} "
                   f"{row['value']} {row['unit'] or ''} [{rec['state']}]")
         except Refused as exc:
@@ -767,7 +785,7 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
 
     if not dry_run:
         q.mkdir(parents=True, exist_ok=True)
-        for rows, name in ((feeds, FEEDS.name), (shadows, SHADOWS.name),
+        for rows, name in ((feeds, FEEDS.name), (declared + shadows, SHADOWS.name),
                            (refusals, REFUSALS.name)):
             if rows:
                 with open(q / name, "a", encoding="utf-8") as fh:
@@ -789,7 +807,7 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             life.save(lstate)
 
     counts = life.summary(lstate)
-    print(f"[DMZ] {len(feeds)} trusted / {len(shadows)} shadow / "
+    print(f"[DMZ] {len(feeds)} trusted / {len(declared)} declared / {len(shadows)} shadow / "
           f"{len(refusals)} refused / {len(cards)} card(s) of {len(sources)} sources "
           f"({counts[life.TRUSTED]} TRUSTED, {counts[life.CANDIDATE]} CANDIDATE, "
           f"{counts[life.DEMOTED]} DEMOTED)"
@@ -800,9 +818,10 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     net_sources = [s for s in sources if str(s.get("url", "")).lower().startswith(("http://", "https://"))]
     net_fail = [r for r in refusals if r.get("network")
                 and str(r.get("url", "")).lower().startswith(("http://", "https://"))]
-    network_down = bool(net_sources) and not feeds and not shadows and len(net_fail) == len(net_sources)
+    network_down = (bool(net_sources) and not feeds and not declared and not shadows
+                    and len(net_fail) == len(net_sources))
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
-            "shadows": shadows, "refusals": refusals, "cards": cards,
+            "declared": declared, "shadows": shadows, "refusals": refusals, "cards": cards,
             "lifecycle": counts, "network_down": network_down}
 
 
@@ -884,6 +903,7 @@ def main() -> int:
                "seconds": round(time.time() - started, 1),
                "sources": result["sources"],
                "trusted": len(result["feeds"]),
+               "declared": len(result.get("declared", [])),
                "shadow": len(result["shadows"]),
                "refused": len(result["refusals"]),
                "cards": len(result["cards"]),

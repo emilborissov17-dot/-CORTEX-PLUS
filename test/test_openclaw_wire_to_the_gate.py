@@ -179,13 +179,14 @@ def test_the_workers_card_directory_is_the_gates_inbox():
         f"the worker writes cards to {W.CARDS} and the gate reads {ci.INBOX}")
 
 
-def _run(tmp_path, state, **kw):
+def _run(tmp_path, state, sources=None, **kw):
     """ISOLATED, the same three redirects test_openclaw_axis_worker.py uses.
 
     Without them a test fetches the machine's live discovery list and promotes
     or demotes real sources in memory/source_lifecycle_ledger.jsonl — the 16 Aug
     2026 incident, in a new place."""
-    return W.run(sources_path=_sources_file(tmp_path), queue_dir=tmp_path,
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    return W.run(sources_path=_sources_file(tmp_path, sources), queue_dir=tmp_path,
                  discovered_path=pathlib.Path("does-not-exist.json"),
                  lifecycle_state=state,
                  ledger=tmp_path.parent / "lifecycle_ledger.jsonl", **kw)
@@ -231,9 +232,9 @@ def test_what_the_worker_wrote_is_what_the_gate_judges(tmp_path):
     assert rows[0]["record"]["key"] == SOURCE["key"]
 
 
-def _sources_file(tmp_path) -> pathlib.Path:
+def _sources_file(tmp_path, sources=None) -> pathlib.Path:
     p = tmp_path / "sources.json"
-    p.write_text(json.dumps({"timeout_sec": 5, "sources": [SOURCE]}),
+    p.write_text(json.dumps({"timeout_sec": 5, "sources": sources if sources is not None else [SOURCE]}),
                  encoding="utf-8")
     return p
 
@@ -328,18 +329,23 @@ def test_the_spelling_is_the_one_the_registry_already_carries():
 # ── shadows and refusals stay where they are ────────────────────────────────
 
 def test_a_shadow_row_never_becomes_a_card(tmp_path):
-    """The module's own rule: a candidate's number is stored beside the trusted
-    ones and is NOT a measurement. A card is a claim to be filed into
-    memory/verified_observations.jsonl, so an untrusted source must not make
-    one."""
-    res = _run(tmp_path, {}, getter=_getter(USGS_BODY))
-    assert res["shadows"] and not res["feeds"], (
-        "a first observation should still be a CANDIDATE; the lifecycle moved")
+    """REWRITTEN 1 Oct 2026 (C-OC-2 ruling). A candidate's number is still NOT a
+    measurement (it never enters the composite), but a FULLY DECLARED candidate
+    now makes a card on its first clean fetch: the gate judges a card alone. What
+    must never become a card is a SHADOW row — an undeclared source."""
+    undeclared = {k: v for k, v in SOURCE.items() if k not in ("subcategory", "place", "period_path")}
+    res = _run(tmp_path, {}, getter=_getter(USGS_BODY), sources=[undeclared])
+    assert res["shadows"] and not res["feeds"] and not res["declared"]
     assert res["cards"] == [], (
         f"{len(res['cards'])} card(s) from {len(res['shadows'])} shadow row(s) "
-        f"— an untrusted number would enter memory/verified_observations.jsonl")
+        f"— an undeclared number would enter memory/verified_observations.jsonl")
     assert not (tmp_path / "cards").exists(), (
         "the card directory was created for a run that produced no cards")
+
+    # the declared source on its FIRST fetch: DECLARED, carded, not measured
+    first = _run(tmp_path / "declared", {}, getter=_getter(USGS_BODY))
+    assert not first["feeds"] and first["declared"] and first["declared"][0]["status"] == "DECLARED"
+    assert len(first["cards"]) == 1
 
     # ...and once the same source is TRUSTED, the card appears. Without this
     # half the test above passes on a worker that never writes a card at all.
