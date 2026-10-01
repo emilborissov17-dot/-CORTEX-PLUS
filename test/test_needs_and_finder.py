@@ -156,6 +156,6 @@ def test_the_chain_runs_worker_then_finder_then_judge():
 
 def test_mutation_a_chain_without_the_finder_is_seen(tmp_path):
     bat = tmp_path / "c.bat"
-    bat.write_text("rem openclaw_finder.py in a comment\n%PY% scripts\openclaw_axis_worker.py\n%PY% core\card_intake.py\n",
-                   encoding="utf-8")
+    lines = ["rem openclaw_finder.py in a comment", r"%PY% scripts\openclaw_axis_worker.py", r"%PY% core\card_intake.py"]
+    bat.write_text(chr(10).join(lines) + chr(10), encoding="utf-8")
     assert fin.chain_steps(bat) == ["openclaw_axis_worker.py", "card_intake.py"]
