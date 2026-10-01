@@ -65,51 +65,44 @@ def trusted(monkeypatch, tmp_path):
     return run_with
 
 
-# ── 1a: a source must declare subcategory, place, unit, period ───────────────
+# ── 1a, REWRITTEN 1 Oct 2026 (C-OC-3, Emil R27) ─────────────────────────────
+# A declaration is a LABEL, not a gate. A source missing one still yields a card
+# (the gate judges the quote); the missing piece is named in `undeclared` and the
+# card carries how each label is known ("unknown").
 @pytest.mark.parametrize("drop", ["subcategory", "place", "unit", "period_path"])
-def test_a_trusted_source_missing_a_declaration_goes_to_shadow_and_names_it(trusted, drop):
+def test_a_source_missing_a_declaration_is_still_carded_and_names_it(trusted, drop):
     src = {k: v for k, v in GOOD.items() if k != drop}
     r = trusted([src], FOREST_WLD)
-    assert not r["feeds"] and not r["cards"], "an undeclared source produced a measurement"
-    assert len(r["shadows"]) == 1
-    assert any(drop.split("_")[0] in p for p in r["shadows"][0]["undeclared"]), r["shadows"][0]["undeclared"]
+    assert len(r["cards"]) == 1, "a missing label kept a reading out"
+    row = (r["feeds"] + r["carded"])[0]
+    assert any(drop.split("_")[0] in p for p in row["undeclared"]), row["undeclared"]
 
 
-def test_unit_unknown_is_not_a_unit(trusted):
+def test_unit_unknown_is_a_label_not_a_refusal(trusted):
     r = trusted([{**GOOD, "unit": "unknown"}], FOREST_WLD)
-    assert not r["cards"] and r["shadows"][0]["undeclared"]
+    assert len(r["cards"]) == 1 and r["cards"][0]["unit"] == "unknown" and r["cards"][0]["unit_how"] == "unknown"
 
 
-def test_an_unresolvable_subcategory_is_refused_by_name(trusted):
+def test_an_unresolvable_subcategory_is_a_dropped_label_not_a_refusal(trusted):
     r = trusted([{**GOOD, "subcategory": "Z9.9"}], FOREST_WLD)
-    assert not r["feeds"] and not r["shadows"] and not r["cards"]
-    assert "Z9.9" in r["refusals"][0]["reason"]
+    assert not r["refusals"] and len(r["cards"]) == 1
+    assert r["cards"][0]["subcategory"] is None
 
 
-def test_a_place_that_is_not_iso3_wld_or_a_named_point_is_undeclared(trusted):
-    r = trusted([{**GOOD, "place": "the world"}], FOREST_WLD)
-    assert not r["cards"]
-
-
-def test_a_period_in_another_record_is_undeclared(trusted):
+def test_a_period_in_another_record_is_a_missing_label(trusted):
     r = trusted([{**GOOD, "period_path": "0.lastupdated"}], FOREST_WLD)
-    assert not r["cards"]
-    assert any("same record" in p for p in r["shadows"][0]["undeclared"])
+    assert len(r["cards"]) == 1 and r["cards"][0]["period"] is None
+    row = (r["feeds"] + r["carded"])[0]
+    assert any("same record" in p for p in row["undeclared"])
 
 
 def test_a_fully_declared_source_produces_a_card_with_subcategory_place_period(trusted):
     r = trusted([GOOD], FOREST_WLD)
-    assert len(r["cards"]) == 1, (r["shadows"], r["refusals"])
+    assert len(r["cards"]) == 1, (r["stored"], r["refusals"])
     c = r["cards"][0]
     assert (c["subcategory"], c["place"], c["period"]) == ("C2.1", "WLD", "2023")
+    assert (c["place_how"], c["period_how"], c["subcategory_how"]) == ("declared", "same_record", "declared")
     assert c["value"] == pytest.approx(31.0951828663057)
-
-
-def test_mutation_without_the_declaration_guard_the_undeclared_source_would_be_carded(trusted, monkeypatch):
-    monkeypatch.setattr(w, "declaration_problems", lambda src: [])
-    src = {k: v for k, v in GOOD.items() if k != "subcategory"}
-    r = trusted([src], FOREST_WLD)
-    assert r["cards"], "the guard is not what kept the card out"
 
 
 # ── 1b: the World Bank header is not an observation ──────────────────────────
@@ -134,16 +127,16 @@ def test_mutation_without_the_header_guard_17490_would_be_read(monkeypatch):
     assert row["value"] == 17490.0
 
 
-# ── 1c: cards carry subcategory/place/period; old card keys do not move ───────
-def test_card_fields_and_gate_require_the_three_new_fields():
-    for f in ("subcategory", "place", "period"):
-        assert f in w.CARD_FIELDS and f in qg.REQUIRED
+# ── 1c, REWRITTEN 1 Oct 2026 (C-OC-3): the gate is back to the six ─────────
+def test_the_gate_requires_the_six_and_the_card_carries_the_labels():
+    assert qg.REQUIRED == ("axis", "key", "value", "unit", "url", "quote")
+    for f in ("subcategory", "place", "period", "period_how"):
+        assert f in w.CARD_FIELDS and f not in qg.REQUIRED
 
 
-def test_a_card_without_the_new_fields_is_malformed_at_the_gate():
-    old = {"axis": "A", "key": "k", "value": 1.0, "unit": "u", "url": "http://x", "quote": "1"}
-    v = qg.judge(old, "1")
-    assert v["verdict"] == "MALFORMED" and set(v["missing"]) >= {"subcategory", "place", "period"}
+def test_a_card_without_the_labels_is_judged_on_its_quote():
+    old = {"axis": "A", "key": "k", "value": 1.0, "unit": "unknown", "url": "http://x", "quote": "1"}
+    assert qg.judge(old, "1")["verdict"] == "ACCEPTED"
 
 
 OLD_CARD = {"axis": "COGNITION_LEARNING_REVIEW", "key": "Youth literacy rate (ages 15-24) %",

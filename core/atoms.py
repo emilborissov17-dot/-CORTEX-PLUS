@@ -12,8 +12,8 @@ core/atoms.py — an accepted card becomes ONE ATOM in its subcategory folder
                           Never incremented: an increment drifts from the files
                           the first time anything else touches them.
 
-THE FOLDER IS core.taxonomy.folder_for(subcategory). A card is an atom only if it
-names a subcategory; a card without one is NOT migrated and the caller counts it.
+THE FOLDER IS core.taxonomy.folder_for(subcategory). A card without a subcategory is
+filed under atoms/_unplaced/ (C-OC-3): unplaced is a label, not a refusal.
 
 REFUSAL (AtomRefused, raised): a subcategory that does not resolve, a domain-E
 (system) subcategory on an external card, or a card missing value/unit/place/
@@ -89,33 +89,41 @@ def _source_class(org, url) -> tuple:
     return prov.reporter_class({"org": org, "url": url})
 
 
+UNPLACED = "_unplaced"
+
+
 def atom_of(row: dict) -> dict:
-    """The atom for one accepted row. Raises AtomRefused; never fills a gap."""
+    """The atom for one accepted row (C-OC-3). A measurement needs a numeric
+    value; everything else is a LABEL with how it is known. A subcategory that
+    does not resolve, or one in domain E, is a wrong label: dropped to unplaced,
+    never a reason to refuse the reading."""
     from core import taxonomy as tx
     rec = row.get("record") or {}
-    sub = rec.get("subcategory")
-    try:
-        r = tx.subcategory(sub)
-    except tx.TaxonomyError as exc:
-        raise AtomRefused(f"subcategory {sub!r} does not resolve: {exc}") from exc
-    if r["domain"] == tx.SYSTEM_DOMAIN:
-        raise AtomRefused(f"{sub} is domain E (the system itself); an external card is not one")
-    missing = [f for f in REQUIRED if rec.get(f) in (None, "")]
-    if missing:
-        raise AtomRefused(f"card {row.get('card_key')} lacks {missing}")
     try:
         value = float(rec["value"])
-    except (TypeError, ValueError) as exc:
+    except (TypeError, ValueError, KeyError) as exc:
         raise AtomRefused(f"value {rec.get('value')!r} is not a number") from exc
+    sub, sub_how = rec.get("subcategory"), rec.get("subcategory_how") or ("declared" if rec.get("subcategory") else "unknown")
+    if sub:
+        try:
+            if tx.subcategory(sub)["domain"] == tx.SYSTEM_DOMAIN:
+                sub, sub_how = None, "dropped: domain E is the system itself"
+        except tx.TaxonomyError:
+            sub, sub_how = None, f"dropped: {rec.get('subcategory')!r} does not resolve"
     src = _source_for(rec.get("url"), rec.get("key"))
     cls, why = _source_class(src.get("org") if src else None, rec.get("url"))
+    period = rec.get("period")
+    how = rec.get("period_how") or ("unknown" if period in (None, "") else None)
     return {
-        "subcategory": sub, "key": rec.get("key"), "value": value, "unit": rec["unit"],
-        "place": rec["place"],
-        "period": (_utc_day(rec["period"]) if rec.get("period_how") == "window_end_day" and _epoch_day(rec["period"])
-                   else str(rec["period"])),
-        "period_how": rec.get("period_how"),
-        "raw_period": str(rec["period"]),
+        "subcategory": sub, "subcategory_how": sub_how,
+        "key": rec.get("key"), "value": value,
+        "unit": rec.get("unit") if rec.get("unit") not in (None, "") else "unknown",
+        "unit_how": rec.get("unit_how") or ("declared" if rec.get("unit") not in (None, "", "unknown") else "unknown"),
+        "place": rec.get("place"), "place_how": rec.get("place_how") or ("declared" if rec.get("place") else "unknown"),
+        "period": (None if period in (None, "") else
+                   _utc_day(period) if how == "window_end_day" and _epoch_day(period) else str(period)),
+        "period_how": how,
+        "raw_period": None if period in (None, "") else str(period),
         "source_id": src.get("id") if src else None,
         "source_id_missing": None if src else "no entry in config/openclaw_sources.json has this (url, key)",
         "source_class": cls, "source_class_why": why,
@@ -125,8 +133,9 @@ def atom_of(row: dict) -> dict:
 
 
 def metta_line(a: dict) -> str:
-    return ("(obs " + " ".join([_metta_str(a["subcategory"]), _metta_str(a["key"]), _metta_str(a["place"]),
-                                _metta_str(a["period"]), _metta_num(a["value"]), _metta_str(a["unit"]),
+    return ("(obs " + " ".join([_metta_str(a["subcategory"] or "unplaced"), _metta_str(a["key"]),
+                                _metta_str(a["place"] or "unknown"), _metta_str(a["period"] or "unknown"),
+                                _metta_num(a["value"]), _metta_str(a["unit"] or "unknown"),
                                 _metta_str(a["source_class"]), _metta_str(a["quote_hash"])]) + ")")
 
 
@@ -215,10 +224,8 @@ def write(row: dict, root: Optional[Path] = None) -> dict:
     root = Path(root or ROOT)
     if row.get("verdict") != "ACCEPTED":
         return {"written": False, "why": f"verdict {row.get('verdict')!r} is not ACCEPTED"}
-    if not (row.get("record") or {}).get("subcategory"):
-        return {"written": False, "why": "card carries no subcategory — not migrated"}
     a = atom_of(row)
-    folder = root / tx.folder_for(a["subcategory"]).split("/", 1)[1]
+    folder = (root / tx.folder_for(a["subcategory"]).split("/", 1)[1]) if a["subcategory"] else root / UNPLACED
     folder.mkdir(parents=True, exist_ok=True)
     jf = folder / f"{_key_file(a['key'])}.jsonl"
     mf = folder / f"{_key_file(a['key'])}.metta"

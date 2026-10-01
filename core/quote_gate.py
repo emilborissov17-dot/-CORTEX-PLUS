@@ -61,7 +61,9 @@ from typing import Callable, Optional
 # for a claim its card states — which subcategory, which place, which period.
 # Cards judged before that keep their card_key (the hash of their own bytes) and
 # stay skipped; a card produced from now on without the three is MALFORMED.
-REQUIRED = ("axis", "key", "value", "unit", "url", "quote", "subcategory", "place", "period")
+# C-OC-3 (Emil, R27, 1 Oct 2026): back to the six. subcategory/place/period are
+# LABELS a card may carry, never a condition for judging it; unit may be "unknown".
+REQUIRED = ("axis", "key", "value", "unit", "url", "quote")
 # standalone numbers only: "2.23" in "2025 2.23 0.11" yes; "00" in "T00:00:00" no
 _NUM = re.compile(r"(?<![\w:./\-])-?\d+(?:[.,]\d+)?(?![\w:./\-])")
 _WS = re.compile(r"\s+")

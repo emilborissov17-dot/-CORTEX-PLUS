@@ -178,6 +178,10 @@ def declaration_problems(source: dict) -> list:
         out.append(f"unit: {source.get('unit')!r} is not a unit")
     path = str(source.get("path") or "")
     pp = period_path_of(source)
+    if source.get("parallel"):
+        # value and period come from PARALLEL ARRAYS by a declared entity index
+        # (C-OC-3): the spec itself declares both, so no path/period_path applies.
+        return out
     if "#len" in path.split("."):
         out.append("path: counts a list (#len) — there is no record to quote or to date")
     if not pp:
@@ -188,16 +192,11 @@ def declaration_problems(source: dict) -> list:
 
 
 def card_eligible(row: dict, state: str) -> bool:
-    """C-OC-2 (1 Oct 2026): WHO GETS A CARD, separated from who enters the composite.
-
-    The lifecycle ladder decides what is MEASURED (the composite) and still
-    demotes. A card is one reading the gate judges alone against its own page, so
-    it needs a full declaration, a quote and a period — and a source the ladder
-    has DEMOTED makes none. Ladder state otherwise does not gate the card: five
-    identical fetches of an annual figure prove nothing the first did not."""
-    from core import source_lifecycle as _life
-    return (not row.get("undeclared") and bool(row.get("quote")) and bool(row.get("period"))
-            and state != _life.DEMOTED)
+    """C-OC-3 (Emil, R27): one criterion, and it is on us. A reading becomes a
+    card when we can QUOTE it from the page; the gate then checks the quote is
+    really there. No declaration, period, place, unit or ladder history is
+    required — those are labels."""
+    return bool(row.get("quote"))
 
 
 def subcategory_problem(source: dict) -> str | None:
@@ -386,10 +385,11 @@ def walk(payload, path: str):
 # change per run or carry no meaning for the gate. They stay in the feed, the
 # shadow and the refusal files, which is where a reader looking for them goes.
 CARD_FIELDS = ("axis", "key", "value", "unit", "url", "quote", "data_date",
-               "subcategory", "place", "period", "period_how")
+               "subcategory", "place", "period", "period_how",
+               "place_how", "unit_how", "subcategory_how")
 # Card fields that are LABELS about how a value is known, not observation dates.
 # test_the_spelling_is_the_one_the_registry_already_carries skips exactly these.
-CARD_LABEL_FIELDS = ("period_how",)
+CARD_LABEL_FIELDS = ("period_how", "place_how", "unit_how", "subcategory_how", "subcategory", "place")
 
 _QUOTE_WIDTH = 90
 
@@ -563,21 +563,18 @@ def as_number(value, where: str) -> float:
 # One source
 # ---------------------------------------------------------------------------
 
-def fetch_one(source: dict, timeout: int, getter=None) -> dict:
-    """Returns a feed row, or raises Refused with the reason."""
-    sid = source.get("id") or "<unnamed>"
-    url = source.get("url")
-    if not url:
-        raise Refused(f"{sid}: no url in the allowlist entry")
+class NoMeasurement(Exception):
+    """The page was fetched (and enters the store as statements), but no number
+    could be read at the declared path. NOT a refusal of the page (C-OC-3)."""
 
+
+def get_page(source: dict, timeout: int, getter=None) -> dict:
+    """One GET. -> {status, payload (parsed JSON or None), raw, err, network,
+    latency, content_type}. A non-JSON body is NOT an error: it is a page."""
+    url = source.get("url")
     t0 = time.time()
-    raw = None
-    network = False
+    raw, payload, err, status, network, ctype = None, None, None, None, False, ""
     if getter is not None:
-        # THREE OR FOUR, and the fourth is the raw body text. A getter that
-        # hands back only a parsed object cannot be quoted from — there is no
-        # page left to quote — so such a row gets no card and says why. The
-        # live path below always has the text.
         try:
             got = getter(url, timeout)
         except Exception as exc:  # noqa: BLE001
@@ -590,90 +587,118 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
     else:
         import requests
         try:
-            r = requests.get(url, timeout=timeout,
-                             headers={"User-Agent": "CORTEX-DMZ-worker/1.0"})
-            status = r.status_code
-            err = None
-            raw = r.text
+            r = requests.get(url, timeout=timeout, headers={"User-Agent": "CORTEX-DMZ-worker/1.0"})
+            status, raw, ctype = r.status_code, r.text, r.headers.get("content-type", "")
             try:
                 payload = json.loads(raw)
-            except Exception:
-                payload, err = None, f"body is not JSON ({raw[:60]!r})"
+            except Exception:  # noqa: BLE001
+                payload = None
         except Exception as exc:  # noqa: BLE001
-            status, payload, err = None, None, f"{type(exc).__name__}: {exc}"
+            status, err = None, f"{type(exc).__name__}: {exc}"
             network = is_network_error(exc)
-    latency = round(time.time() - t0, 3)
+    return {"status": status, "payload": payload, "raw": raw, "err": err, "network": network,
+            "latency": round(time.time() - t0, 3), "content_type": ctype}
 
-    if err:
-        raise Refused(f"{sid}: {err}", network=network)
-    if status != 200:
-        raise Refused(f"{sid}: HTTP {status}")
 
+def _parallel_reading(source: dict, payload) -> tuple:
+    """Value and period from PARALLEL ARRAYS (values[i], periods[i], entities[i]),
+    as Our World in Data serves them: the entity is declared, the newest period
+    for that entity is taken. -> (value, period)."""
+    spec = source["parallel"]
+    vals, pers, ents = (walk(payload, spec["values"]), walk(payload, spec["periods"]),
+                        walk(payload, spec["entities"]))
+    if not (isinstance(vals, list) and isinstance(pers, list) and isinstance(ents, list)
+            and len(vals) == len(pers) == len(ents)):
+        raise NoMeasurement("parallel arrays missing or of unequal length")
+    idx = [i for i, e in enumerate(ents) if e == spec["entity"]]
+    if not idx:
+        raise NoMeasurement(f"entity {spec['entity']!r} not in the arrays")
+    i = max(idx, key=lambda n: pers[n])
+    return vals[i], pers[i]
+
+
+def fetch_one(source: dict, timeout: int, getter=None, page: dict | None = None) -> dict:
+    """The MEASUREMENT read from one page. Raises Refused for an unreachable page
+    or for a LABEL that contradicts the page's own structure (the World Bank
+    header count named as an indicator); raises NoMeasurement when no number is
+    at the declared path. Neither stops the page from entering as statements."""
+    sid = source.get("id") or "<unnamed>"
+    url = source.get("url")
+    if not url:
+        raise Refused(f"{sid}: no url")
+    page = page or get_page(source, timeout, getter)
+    if page["err"]:
+        raise Refused(f"{sid}: {page['err']}", network=page["network"])
+    if page["status"] != 200:
+        raise Refused(f"{sid}: HTTP {page['status']}")
+    payload, raw = page["payload"], page["raw"]
     path = source.get("path", "")
-    header = worldbank_header_problem(payload, path)
-    if header:
-        raise Refused(f"{sid}: {header} (path {path!r})")
-    value = as_number(walk(payload, path), f"{sid} at path {path!r}")
-
-    # THE PERIOD, walked from the SAME record. A period that does not resolve is
-    # a declaration problem (the row goes to shadow), not a refusal of the number.
-    undeclared = declaration_problems(source)
-    period, pp = None, period_path_of(source)
-    period_how = None
-    if pp and not any(u.startswith("period_path") for u in undeclared):
+    undeclared = declaration_problems(source)        # LABELS missing, never a gate
+    period, period_how = None, "unknown"
+    if source.get("parallel"):
+        if payload is None:
+            raise NoMeasurement("body is not JSON")
+        v, per = _parallel_reading(source, payload)
         try:
-            got_p = walk(payload, pp)
+            value = as_number(v, f"{sid} parallel value")
         except Refused as exc:
-            undeclared.append(f"period_path: {pp!r} did not resolve ({exc})")
-        else:
-            if isinstance(got_p, bool) or not isinstance(got_p, (str, int)) or not str(got_p).strip():
-                undeclared.append(f"period_path: {pp!r} resolved to {type(got_p).__name__} "
-                                  f"{str(got_p)[:30]!r}, not a period")
+            raise NoMeasurement(str(exc))
+        period, period_how = str(per), "parallel_index"
+        quote = quote_from_body(raw, value)
+        computed = False
+    else:
+        if payload is None:
+            raise NoMeasurement("body is not JSON: no path to walk (the page still enters as statements)")
+        header = worldbank_header_problem(payload, path)
+        if header:
+            raise Refused(f"{sid}: {header} (path {path!r})")
+        try:
+            value = as_number(walk(payload, path), f"{sid} at path {path!r}")
+        except Refused as exc:
+            raise NoMeasurement(str(exc))
+        pp = period_path_of(source)
+        if pp and not any(u.startswith("period_path") for u in undeclared):
+            try:
+                got_p = walk(payload, pp)
+            except Refused as exc:
+                undeclared.append(f"period_path: {pp!r} did not resolve ({exc})")
             else:
-                # C-OC-3 Part 0: a period read from the feed's own clock
-                # (generated / updated / fetched / ts) is a processing time. For a
-                # rolling-window count it names the window's END DAY; otherwise it
-                # is kept as a label and never enters an atom's identity.
-                from core.atoms import classify_period
-                period, period_how = classify_period(pp, str(got_p).strip(),
-                                                     rolling=bool(source.get("rolling_window")))
-
-    # A COMPUTED VALUE CANNOT BE QUOTED, and pretending otherwise is how the
-    # first live run produced three cards whose quotes were coincidences.
-    # '#len' does not READ a number off the body; it counts the body's own
-    # structure, so the number appears nowhere in the bytes and every match is
-    # an accident of decimal digits. celestrak (250 objects) escaped only
-    # because no "250" happened to be in its body; the three EONET counts did
-    # not, and quoted a latitude and a magnitude array instead.
-    computed = "#len" in path.split(".")
-    quote = None if computed else quote_from_record(raw, payload, path, value)
-    data_date, date_missing = observation_date(payload, source)
-
+                if isinstance(got_p, bool) or not isinstance(got_p, (str, int)) or not str(got_p).strip():
+                    undeclared.append(f"period_path: {pp!r} resolved to {type(got_p).__name__}, not a period")
+                else:
+                    # C-OC-3 Part 0: a period from the feed's own clock is a
+                    # processing time (or a rolling window's end day).
+                    from core.atoms import classify_period
+                    period, period_how = classify_period(pp, str(got_p).strip(),
+                                                         rolling=bool(source.get("rolling_window")))
+        # A COMPUTED VALUE ('#len') CANNOT BE QUOTED: it appears nowhere in the bytes.
+        computed = "#len" in path.split(".")
+        quote = None if computed else quote_from_record(raw, payload, path, value)
+        if quote is None and not computed:
+            # the walked record did not contain it verbatim; fall back to the page
+            q2 = quote_from_body(raw, value)
+            if q2 is not None:
+                quote, period_how = q2, period_how
+    data_date, date_missing = observation_date(payload, source) if payload is not None else (None, "no JSON")
+    unit = source.get("unit")
     return {
-        "ts": _now(),
-        "source_id": sid,
-        "axis": source.get("axis"),
-        "key": source.get("key"),
-        "value": value,
-        "unit": source.get("unit"),
-        "org": source.get("org"),
-        "url": url,
-        "path": source.get("path"),
-        "latency_s": latency,
+        "ts": _now(), "source_id": sid, "axis": source.get("axis") or "UNPLACED",
+        "key": source.get("key") or sid, "value": value,
+        "unit": unit if unit not in (None, "") else "unknown",
+        "org": source.get("org"), "url": url, "path": path, "latency_s": page["latency"],
         "status": "PRESENT",
-        # for the card, and for a human reading the feed row beside it
         "quote": quote,
         "quote_missing": None if quote else (
-            f"the value is COUNTED from the body's structure (path {path!r}), so "
-            f"it appears nowhere in it verbatim and cannot be quoted" if computed
-            else "no raw response text" if not raw else
-            f"the value {value!r} is not in the walked record verbatim"),
-        "data_date": data_date,
-        "data_date_missing": date_missing,
+            f"the value is COUNTED from the body's structure (path {path!r}) and cannot be quoted" if computed
+            else "no raw response text" if not raw else f"the value {value!r} is not on the page verbatim"),
+        "data_date": data_date, "data_date_missing": date_missing,
         "subcategory": source.get("subcategory"),
         "place": source.get("place"),
         "period": period,
         "period_how": period_how,
+        "place_how": "declared" if source.get("place") else "unknown",
+        "unit_how": "declared" if unit not in (None, "", "unknown") else "unknown",
+        "subcategory_how": "declared" if source.get("subcategory") else "unknown",
         "undeclared": undeclared,
     }
 
@@ -731,7 +756,13 @@ def _peer_for(axis: str, key: str, queue_dir: pathlib.Path) -> float | None:
 
 
 def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
-        discovered_path=None, lifecycle_state=None, ledger=None) -> dict:
+        discovered_path=None, lifecycle_state=None, ledger=None, ingest=None) -> dict:
+    """One pass. C-OC-3: EVERY fetched page enters the store as statements (via
+    `ingest`, which main() passes as core.knowledge.ingest; a library or test
+    call passes nothing and nothing is written). In addition, a number read at
+    the declared path becomes a card for the gate. Only two refusals remain, both
+    of OUR claim: a quote not on the page (the gate) and a label that
+    contradicts the page's own structure (the World Bank header)."""
     from core import source_lifecycle as life
 
     sources, timeout = all_sources(sources_path, discovered_path)
@@ -739,75 +770,79 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     own_state = lifecycle_state is None
     lstate = life.load() if own_state else lifecycle_state
 
-    feeds, declared, shadows, refusals, cards = [], [], [], [], []
+    feeds, carded, stored, refusals, unreachable, cards = [], [], [], [], [], []
+    pages = {"ingested": 0, "skipped_same_content": 0, "statements_added": 0,
+             "page_only": 0, "needs": []}
     for source in sources:
         sid = source.get("id") or "<unnamed>"
         axis = source.get("axis")
-        try:
-            sub_bad = subcategory_problem(source)
-            if sub_bad:
-                raise Refused(f"{sid}: {sub_bad}")
-            row = fetch_one(source, timeout, getter)
-            rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
-                               peer=_peer_for(axis, source.get('key'), q),
-                               state=lstate, ledger=ledger)
-            row["trust"] = rec["state"]
-            row["origin"] = source.get("origin")
-            # ── ONLY A TRUSTED SOURCE IS A MEASUREMENT ─────────────────────
-            # A candidate's number is stored beside the trusted ones and marked,
-            # so it can be compared later — but it is not measured, and nothing
-            # downstream may read it as one.
-            # C-OC-1: TRUSTED by the lifecycle is not enough. An undeclared
-            # source (no subcategory, place, real unit, or a period in the same
-            # record) is stored as SHADOW with the missing field named.
-            row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
-            # C-OC-2: the CARD is gated by card_eligible(), not by the ladder.
-            # Three stored populations: PRESENT (measured, the composite reads
-            # it), DECLARED (carded, not measured), SHADOW (neither).
-            eligible = card_eligible(row, rec["state"])
-            row["status"] = "PRESENT" if row["measured"] else ("DECLARED" if eligible else "SHADOW")
-            if rec["state"] == life.TRUSTED and row["undeclared"]:
-                print(f"[DMZ] undeclared {sid:<31} -> SHADOW: {'; '.join(row['undeclared'])}")
-            if row["measured"]:
-                feeds.append(row)
-            elif eligible:
-                declared.append(row)
+        sub_bad = subcategory_problem(source)
+        if sub_bad:
+            # a wrong LABEL is dropped, the source is not
+            source = {**source, "subcategory": None}
+        page = get_page(source, timeout, getter)
+        if page["err"] or page["status"] != 200:
+            reason = page["err"] or f"HTTP {page['status']}"
+            life.observe(sid, axis=axis, ok=False, reason=reason, state=lstate, ledger=ledger)
+            unreachable.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
+                                "url": source.get("url"), "status": "UNREACHABLE", "reason": f"{sid}: {reason}",
+                                "network": bool(page["network"])})
+            print(f"[DMZ] UNREACHABLE {sid:<30} {reason[:120]}")
+            continue
+        # ── the page, WHOLE, into the store the brain reads ────────────────
+        if ingest is not None and not dry_run:
+            from core import knowledge as _kn
+            try:
+                text, form = _kn.body_to_text(page["raw"], page["payload"], page["content_type"])
+            except _kn.FlattenLostValue as exc:
+                text, form = page["raw"] or "", f"raw_text ({exc})"
+            if form == "pdf_unreadable":
+                pages["needs"].append({"source_id": sid, "need": "a PDF reader (none installed)"})
             else:
-                shadows.append(row)
-            # A CARD for every eligible reading. A shadow row never becomes one.
-            if eligible:
-                card = card_from_row(row)
-                if card is not None:
-                    cards.append(card)
+                rep = ingest(sid, text, url=source.get("url", ""), origin="web")
+                if rep.get("outcome") == "SKIPPED_SAME_CONTENT":
+                    pages["skipped_same_content"] += 1
                 else:
-                    print(f"[DMZ] no card  {sid:<34} {row.get('quote_missing')}")
-            mark = {"PRESENT": "OK     ", "DECLARED": "declare", "SHADOW": "shadow "}[row["status"]]
-            print(f"[DMZ] {mark}{sid:<34} {str(axis):<28} "
-                  f"{row['value']} {row['unit'] or ''} [{rec['state']}]")
+                    pages["ingested"] += 1
+                    pages["statements_added"] += rep.get("added", 0)
+        # ── and, in addition, the measurement ─────────────────────────────
+        try:
+            row = fetch_one(source, timeout, page=page)
+        except NoMeasurement as exc:
+            pages["page_only"] += 1
+            stored.append({"ts": _now(), "source_id": sid, "url": source.get("url"),
+                           "status": "STORED", "reason": str(exc)})
+            continue
         except Refused as exc:
-            life.observe(sid, axis=axis, ok=False, reason=str(exc),
-                         state=lstate, ledger=ledger)
-            refusals.append({"ts": _now(), "source_id": sid, "axis": axis,
-                             "key": source.get("key"), "url": source.get("url"),
-                             "path": source.get("path"), "origin": source.get("origin"),
-                             "status": "REFUSED", "reason": str(exc),
-                             "network": bool(getattr(exc, "network", False))})
-            print(f"[DMZ] REFUSED {sid:<34} {exc}")
+            refusals.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
+                             "url": source.get("url"), "path": source.get("path"),
+                             "status": "LABEL_REFUSED", "reason": str(exc), "network": False})
+            print(f"[DMZ] LABEL REFUSED {sid:<28} {exc} — the page itself entered as statements")
+            continue
+        rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
+                           peer=_peer_for(axis, source.get('key'), q), state=lstate, ledger=ledger)
+        row["trust"] = rec["state"]
+        row["origin"] = source.get("origin")
+        # The COMPOSITE still reads only TRUSTED and declared readings.
+        row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
+        eligible = card_eligible(row, rec["state"])
+        row["status"] = "PRESENT" if row["measured"] else ("CARDED" if eligible else "STORED")
+        (feeds if row["measured"] else carded if eligible else stored).append(row)
+        if eligible:
+            card = card_from_row(row)
+            if card is not None:
+                cards.append(card)
+        print(f"[DMZ] {row['status']:<8}{sid:<34} {row['value']} {row['unit'] or ''} [{rec['state']}]")
 
     if not dry_run:
         q.mkdir(parents=True, exist_ok=True)
-        for rows, name in ((feeds, FEEDS.name), (declared + shadows, SHADOWS.name),
-                           (refusals, REFUSALS.name)):
+        for rows, name in ((feeds, FEEDS.name), (carded + stored, SHADOWS.name),
+                           (refusals + unreachable, REFUSALS.name)):
             if rows:
                 with open(q / name, "a", encoding="utf-8") as fh:
                     for row in rows:
                         fh.write(json.dumps(row, ensure_ascii=False) + "\n")
         if cards:
-            # INTO THE GATE'S OWN INBOX. core.card_intake.judge_inbox globs
-            # <inbox>/*.jsonl, so the name only has to end in .jsonl and say
-            # which day it came from; the date here is the FETCH day, which is
-            # what a filename is for, and it is deliberately not the card's
-            # observation date.
             cards_dir = q / CARDS.name
             cards_dir.mkdir(parents=True, exist_ok=True)
             day = datetime.now(timezone.utc).date().isoformat()
@@ -818,21 +853,19 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             life.save(lstate)
 
     counts = life.summary(lstate)
-    print(f"[DMZ] {len(feeds)} trusted / {len(declared)} declared / {len(shadows)} shadow / "
-          f"{len(refusals)} refused / {len(cards)} card(s) of {len(sources)} sources "
-          f"({counts[life.TRUSTED]} TRUSTED, {counts[life.CANDIDATE]} CANDIDATE, "
-          f"{counts[life.DEMOTED]} DEMOTED)"
+    print(f"[DMZ] {len(feeds)} trusted / {len(carded)} carded / {len(stored)} stored / "
+          f"{len(refusals)} label-refused / {len(unreachable)} unreachable / {len(cards)} card(s) of "
+          f"{len(sources)} sources; pages ingested {pages['ingested']} (+{pages['statements_added']} statements), "
+          f"same content {pages['skipped_same_content']}"
           f"{' — DRY RUN, nothing written' if dry_run else ''}")
-    # A DEAD NETWORK IS NOT 25 BAD SOURCES (05:50, 1 Oct 2026: 25 of 25 refused in
-    # 0.3 s, DNS down). network_down = nothing fetched, and every source that is
-    # fetched over http(s) failed on the network.
     net_sources = [s for s in sources if str(s.get("url", "")).lower().startswith(("http://", "https://"))]
-    net_fail = [r for r in refusals if r.get("network")
+    net_fail = [r for r in unreachable if r.get("network")
                 and str(r.get("url", "")).lower().startswith(("http://", "https://"))]
-    network_down = (bool(net_sources) and not feeds and not declared and not shadows
+    network_down = (bool(net_sources) and not feeds and not carded and not stored
                     and len(net_fail) == len(net_sources))
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
-            "declared": declared, "shadows": shadows, "refusals": refusals, "cards": cards,
+            "carded": carded, "declared": carded, "stored": stored, "shadows": stored,
+            "refusals": refusals, "unreachable": unreachable, "cards": cards, "pages": pages,
             "lifecycle": counts, "network_down": network_down}
 
 
@@ -882,8 +915,9 @@ def main() -> int:
     _task_row({"task": TASK_NAME, "event": "start", "run_id": run_id,
                "ts": _now(), "pid": os.getpid(), "dry_run": bool(a.dry_run)})
     try:
+        from core import knowledge as _kn
         result = run_with_retry(lambda: run(pathlib.Path(a.sources) if a.sources else None,
-                                            dry_run=a.dry_run))
+                                            dry_run=a.dry_run, ingest=_kn.ingest))
     except BaseException as exc:                                  # noqa: BLE001
         # A CRASH IS A FINISH, recorded with its reason and then RE-RAISED.
         # Nothing is swallowed here; what must stay unrecorded is a process that
@@ -914,9 +948,14 @@ def main() -> int:
                "seconds": round(time.time() - started, 1),
                "sources": result["sources"],
                "trusted": len(result["feeds"]),
-               "declared": len(result.get("declared", [])),
-               "shadow": len(result["shadows"]),
-               "refused": len(result["refusals"]),
+               "carded": len(result.get("carded", [])),
+               "stored": len(result.get("stored", [])),
+               "label_refused": len(result["refusals"]),
+               "unreachable": len(result.get("unreachable", [])),
+               "pages_ingested": (result.get("pages") or {}).get("ingested", 0),
+               "statements_added": (result.get("pages") or {}).get("statements_added", 0),
+               "pages_same_content": (result.get("pages") or {}).get("skipped_same_content", 0),
+               "needs": (result.get("pages") or {}).get("needs", []),
                "cards": len(result["cards"]),
                "network_down": bool(result.get("network_down")),
                "retried": bool(result.get("retried"))})

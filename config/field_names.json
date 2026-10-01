@@ -106,6 +106,19 @@
           "registered": "1 Oct 2026, for tools/taxonomy_coverage.py; found by reading the snapshot, not invented"
         },
         {
+          "spelling": "period",
+          "shape": "iso_date",
+          "means": "the period the reading itself refers to, on an openclaw card and on a measurement atom (atoms/**.jsonl); how it is known is in the sibling label period_how (same_record, parallel_index, window_end_day, processing_time, unknown)",
+          "found_in": "openclaw_queue/cards/*.jsonl and atoms/**/*.jsonl",
+          "example": "2023",
+          "written_by": [
+            "scripts/openclaw_axis_worker.py",
+            "core/atoms.py"
+          ],
+          "caveat": "the value is a year ('2023'), a day ('2026-10-01') or a datetime; tools/ask.py parses the day and datetime forms and reports a bare year as unparsable rather than guessing it",
+          "registered": "1 Oct 2026 (C-OC-3): until then `period` was one of the gate's REQUIRED fields and so was never checked as a date spelling"
+        },
+        {
           "spelling": "temp_anomaly_year",
           "shape": "year",
           "means": "observation year of the temperature anomaly",

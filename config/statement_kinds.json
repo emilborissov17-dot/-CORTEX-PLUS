@@ -1,0 +1,10 @@
+{
+  "_what_this_is": "Rules core.knowledge.kind_of() uses to LABEL a statement after intake (C-OC-3 Part 1d, 1 Oct 2026). First match wins, in this order. A label orders; it never removes: a sentence that matches nothing is kind 'other', which is valid and is stored and retrieved like any other.",
+  "_kinds": ["definition", "measurement", "event", "claim", "other"],
+  "rules": [
+    {"kind": "definition", "pattern": "\\b(is defined as|refers to|is the (share|number|percentage|proportion) of|means that|is a measure of)\\b"},
+    {"kind": "measurement", "pattern": "(\\bvalue=-?\\d|\\d[\\d,.]*\\s*(%|percent|per cent|ppm|ppb|km|kg|tonnes?|people|persons|deaths|usd|\\$|years|per 1,?000|per 100,?000)|\\b(rate|share|index|count|total|average|median)\\b[^.]{0,40}\\d)"},
+    {"kind": "event", "pattern": "\\b(killed|died|launched|struck|erupted|flooded|announced|signed|declared|elected|attacked|occurred|happened|earthquake|ceasefire|outbreak)\\b"},
+    {"kind": "claim", "pattern": "\\b(said|says|claims?|according to|reported|argues?|believes?|warned|will|should|must|expects?)\\b"}
+  ]
+}

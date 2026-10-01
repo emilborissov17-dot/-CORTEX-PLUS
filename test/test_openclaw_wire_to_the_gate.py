@@ -329,23 +329,17 @@ def test_the_spelling_is_the_one_the_registry_already_carries():
 # ── shadows and refusals stay where they are ────────────────────────────────
 
 def test_a_shadow_row_never_becomes_a_card(tmp_path):
-    """REWRITTEN 1 Oct 2026 (C-OC-2 ruling). A candidate's number is still NOT a
-    measurement (it never enters the composite), but a FULLY DECLARED candidate
-    now makes a card on its first clean fetch: the gate judges a card alone. What
-    must never become a card is a SHADOW row — an undeclared source."""
+    """REWRITTEN AGAIN 1 Oct 2026 (C-OC-3, Emil R27). A declaration is a label,
+    so an undeclared source with a QUOTABLE value is carded. What never becomes
+    a card is a reading we cannot quote: no raw page text, no quote, no card."""
     undeclared = {k: v for k, v in SOURCE.items() if k not in ("subcategory", "place", "period_path")}
     res = _run(tmp_path, {}, getter=_getter(USGS_BODY), sources=[undeclared])
-    assert res["shadows"] and not res["feeds"] and not res["declared"]
-    assert res["cards"] == [], (
-        f"{len(res['cards'])} card(s) from {len(res['shadows'])} shadow row(s) "
-        f"— an undeclared number would enter memory/verified_observations.jsonl")
-    assert not (tmp_path / "cards").exists(), (
-        "the card directory was created for a run that produced no cards")
+    assert len(res["cards"]) == 1 and not res["feeds"], "an undeclared but quotable reading was kept out"
 
-    # the declared source on its FIRST fetch: DECLARED, carded, not measured
-    first = _run(tmp_path / "declared", {}, getter=_getter(USGS_BODY))
-    assert not first["feeds"] and first["declared"] and first["declared"][0]["status"] == "DECLARED"
-    assert len(first["cards"]) == 1
+    no_text = _run(tmp_path / "no_text", {}, getter=lambda url, t: (200, json.loads(USGS_BODY), None))
+    assert no_text["cards"] == [] and no_text["stored"], "a reading with no page text was carded"
+    assert not (tmp_path / "no_text" / "cards").exists(), (
+        "the card directory was created for a run that produced no cards")
 
     # ...and once the same source is TRUSTED, the card appears. Without this
     # half the test above passes on a worker that never writes a card at all.

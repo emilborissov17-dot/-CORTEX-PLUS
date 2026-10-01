@@ -41,28 +41,43 @@ def root(tmp_path, monkeypatch):
     return tmp_path / "atoms"
 
 
-# ── refusals ────────────────────────────────────────────────────────────────
-def test_a_card_without_a_subcategory_is_not_migrated(root):
+# ── REWRITTEN 1 Oct 2026 (C-OC-3, Emil R27): labels, not refusals ───────────
+def test_a_card_without_a_subcategory_is_filed_unplaced(root):
     rec = {k: v for k, v in REC.items() if k != "subcategory"}
     out = at.write(_row(rec), root=root)
-    assert out["written"] is False and "subcategory" in out["why"]
-    assert not any(root.rglob("*.jsonl")) if root.exists() else True
+    assert out["written"] is True and out["path"].startswith("_unplaced/")
+    assert list(at.read(root=root))[0]["subcategory_how"] == "unknown"
 
 
-def test_an_unresolvable_subcategory_raises(root):
+def test_an_unresolvable_subcategory_is_a_dropped_label(root):
+    out = at.write(_row(dict(REC, subcategory="Z9.9")), root=root)
+    assert out["written"] is True and out["path"].startswith("_unplaced/")
+    assert "does not resolve" in list(at.read(root=root))[0]["subcategory_how"]
+
+
+def test_a_domain_e_subcategory_on_an_external_card_is_dropped_not_filed_in_e(root):
+    out = at.write(_row(dict(REC, subcategory="E1.3")), root=root)
+    assert out["written"] is True and not out["path"].startswith("E/")
+
+
+def test_only_a_value_that_is_not_a_number_is_refused(root):
     with pytest.raises(at.AtomRefused):
-        at.write(_row(dict(REC, subcategory="Z9.9")), root=root)
+        at.write(_row({k: v for k, v in REC.items() if k != "value"}), root=root)
+    for drop in ("place", "period", "unit"):
+        out = at.write(_row({k: v for k, v in REC.items() if k != drop}, key=f"ck-{drop}"), root=root)
+        assert out["written"] is True or out.get("seen_again"), drop
 
 
-def test_a_domain_e_subcategory_is_refused_for_an_external_card(root):
+def test_mutation_requiring_a_place_would_refuse_a_reading_with_none(root, monkeypatch):
+    real = at.atom_of
+
+    def strict(row):
+        if not (row.get("record") or {}).get("place"):
+            raise at.AtomRefused("place required")
+        return real(row)
+    monkeypatch.setattr(at, "atom_of", strict)
     with pytest.raises(at.AtomRefused):
-        at.write(_row(dict(REC, subcategory="E1.3")), root=root)
-
-
-def test_a_missing_value_place_or_period_raises(root):
-    for drop in ("value", "place", "period", "unit"):
-        with pytest.raises(at.AtomRefused):
-            at.write(_row({k: v for k, v in REC.items() if k != drop}), root=root)
+        at.write(_row({k: v for k, v in REC.items() if k != "place"}), root=root)
 
 
 # ── the atom ────────────────────────────────────────────────────────────────
@@ -157,9 +172,8 @@ def test_judge_inbox_writes_an_atom_for_an_accepted_card_and_counts_the_rest(tmp
                                    encoding="utf-8")
     c = ci.judge_inbox(inbox=inbox, fetch=lambda u: page, accepted_path=tmp_path / "acc.jsonl",
                        refused_path=tmp_path / "ref.jsonl", atoms_root=root)
-    assert c["atoms_written"] == 1
-    # the card without a subcategory is MALFORMED at the gate now, so it never reaches atoms
-    assert c["accepted"] == 1
+    # C-OC-3: the card without a subcategory is judged on its quote and filed unplaced
+    assert c["accepted"] == 2 and c["atoms_written"] == 2
     assert (root / "MANIFEST.json").exists()
 
 

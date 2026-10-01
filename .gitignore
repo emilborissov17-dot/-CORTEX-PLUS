@@ -370,3 +370,6 @@ data/external/
 # Only the folder marker is tracked; MANIFEST.json and every atom file are not.
 atoms/*
 !atoms/.gitkeep
+# C-OC-3: statement vectors and labels (derived, rebuildable)
+memory/knowledge/
+memory/statements.jsonl

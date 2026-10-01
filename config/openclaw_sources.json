@@ -1091,6 +1091,29 @@
         "value": 71.0,
         "period": "2023"
       }
+    },
+    {
+      "id": "owid:1228789:WLD",
+      "subcategory": "A2.5",
+      "axis": "TAXONOMY:A2.5",
+      "key": "disaster_deaths",
+      "unit": "people",
+      "place": "WLD",
+      "url": "https://api.ourworldindata.org/v1/indicators/1228789.data.json",
+      "parallel": {
+        "values": "values",
+        "periods": "years",
+        "entities": "entities",
+        "entity": 355
+      },
+      "org": "Our World in Data (EM-DAT, CRED / UCLouvain)",
+      "why": "Deaths - All disasters (EM-DAT via OWID). Found by finder arm D in C-OC-2 Part 2; value and year sit in parallel arrays, read by the declared entity index (355 = World, code OWID_WRL, from 1228789.metadata.json), how=parallel_index.",
+      "_verified": {
+        "fetched": "2026-10-01, C-OC-3 Part 1",
+        "value": 1930,
+        "period": "2026",
+        "note": "the newest World row is 2026, a partial year"
+      }
     }
   ],
   "_record_declarations": [

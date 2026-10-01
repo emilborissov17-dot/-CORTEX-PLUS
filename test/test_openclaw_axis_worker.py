@@ -99,20 +99,20 @@ def test_a_missing_key_refusal_lists_what_was_there():
 
 def test_the_refusal_is_written_down_with_its_reason(tmp_path):
     """A source that has quietly rotted must look different from one nobody
-    asked."""
+    asked. REWRITTEN 1 Oct 2026 (C-OC-3): a path that misses is not a refusal of
+    the PAGE — the page is stored; only no measurement is read, and why is kept."""
     src = {**SRC, "path": "count.total.missing"}
     result = run(sources_path=_sources_file(tmp_path, [src]),
                  queue_dir=tmp_path / "q",
                  getter=getter_returning({"count": 24}))
 
-    assert result["feeds"] == []
-    assert len(result["refusals"]) == 1
-
-    rows = _read(tmp_path / "q" / "external_refusals.jsonl")
+    assert result["feeds"] == [] and result["refusals"] == [] and result["cards"] == []
+    assert len(result["stored"]) == 1
+    rows = _read(tmp_path / "q" / "external_shadow.jsonl")
     assert len(rows) == 1
-    assert rows[0]["status"] == "REFUSED"
+    assert rows[0]["status"] == "STORED"
     assert rows[0]["source_id"] == "s1"
-    assert rows[0]["url"] == SRC["url"], "the refusal keeps the url it failed on"
+    assert rows[0]["url"] == SRC["url"], "the row keeps the url it failed on"
     assert "cannot descend into int" in rows[0]["reason"]
     assert not (tmp_path / "q" / "external_feeds.jsonl").exists(), (
         "a refused source must not also write a feed"
@@ -141,15 +141,16 @@ def test_a_string_that_looks_like_a_number_is_still_a_string(tmp_path):
     result = run(sources_path=_sources_file(tmp_path, [SRC]),
                  queue_dir=tmp_path / "q",
                  getter=getter_returning({"count": "24"}))
-    assert result["feeds"] == []
-    assert "expected a number, got str" in result["refusals"][0]["reason"]
+    assert result["feeds"] == [] and result["cards"] == []
+    assert "expected a number, got str" in result["stored"][0]["reason"]
 
 
 def test_a_non_200_response_is_refused(tmp_path):
     result = run(sources_path=_sources_file(tmp_path, [SRC]),
                  queue_dir=tmp_path / "q",
                  getter=getter_returning(None, status=503))
-    assert "HTTP 503" in result["refusals"][0]["reason"]
+    assert result["refusals"] == []
+    assert "HTTP 503" in result["unreachable"][0]["reason"]
 
 
 def test_an_unreachable_host_is_refused_not_raised(tmp_path):
@@ -157,16 +158,19 @@ def test_an_unreachable_host_is_refused_not_raised(tmp_path):
                  queue_dir=tmp_path / "q",
                  getter=getter_returning(None, status=None,
                                          err="ConnectionError: no route"))
-    assert "ConnectionError" in result["refusals"][0]["reason"]
+    assert "ConnectionError" in result["unreachable"][0]["reason"]
 
 
-def test_an_html_error_page_is_refused(tmp_path):
-    """A 200 with an HTML body is the classic captive-portal / maintenance page."""
+def test_an_html_page_is_stored_not_refused(tmp_path):
+    """REWRITTEN 1 Oct 2026 (C-OC-3): an HTML page is a page. It yields no
+    number at a JSON path, so no card — but it is not refused, and its text
+    enters the store (the ingest call is checked in test_open_criterion)."""
+    html = "<html><body><p>Maintenance tonight.</p></body></html>"
     result = run(sources_path=_sources_file(tmp_path, [SRC]),
                  queue_dir=tmp_path / "q",
-                 getter=getter_returning(None, status=200,
-                                         err="body is not JSON ('<html>...')"))
-    assert "not JSON" in result["refusals"][0]["reason"]
+                 getter=lambda url, t: (200, None, None, html))
+    assert result["refusals"] == [] and result["unreachable"] == [] and result["cards"] == []
+    assert "not JSON" in result["stored"][0]["reason"]
 
 
 # ---------------------------------------------------------------------------
@@ -191,7 +195,7 @@ def test_a_real_number_becomes_a_SHADOW_row_on_first_sight(tmp_path):
     assert row["axis"] == "AX" and row["key"] == "k"
     assert row["trust"] == "CANDIDATE"
     assert row["measured"] is False
-    assert row["status"] == "SHADOW"
+    assert row["status"] == "STORED", "no raw text, so no quote, so no card: stored"
     assert not (tmp_path / "q" / "external_feeds.jsonl").exists()
 
 
@@ -255,8 +259,10 @@ def test_the_shipped_allowlist_is_well_formed():
     assert timeout > 0
     assert len(sources) >= 4
     for s in sources:
-        for field in ("id", "axis", "key", "url", "path"):
+        for field in ("id", "axis", "key", "url"):
             assert s.get(field), f"{s.get('id')} is missing {field}"
+        # C-OC-3: a parallel-array source declares `parallel` in place of `path`
+        assert s.get("path") or s.get("parallel"), f"{s.get('id')} has neither path nor parallel"
         assert s["url"].startswith("https://"), f"{s['id']} is not https"
 
 
