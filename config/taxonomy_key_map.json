@@ -1,0 +1,1379 @@
+{
+  "_meta": {
+    "what": "Every live key the repo measures, mapped to ONE subcategory of config/taxonomy.json.",
+    "generated_by": "tools/build_taxonomy_key_map.py (explicit rule table RULES; no model call)",
+    "generated_utc": "2026-10-01T09:19:28+00:00",
+    "taxonomy_counts": {
+      "domains": 5,
+      "categories": 25,
+      "subcategories": 123
+    },
+    "sources": {
+      "target_config": {
+        "path": "config/target_config.json",
+        "keys": 17
+      },
+      "metric_details": {
+        "path": "snapshots/master/goal_score_latest.json",
+        "keys": 17
+      },
+      "daily_tier": {
+        "path": "memory/daily_tier.jsonl",
+        "keys": 70
+      },
+      "composed": {
+        "path": "memory/composed_indicators.json",
+        "keys": 72
+      },
+      "openclaw": {
+        "path": "config/openclaw_sources.json",
+        "keys": 4
+      },
+      "somatic": {
+        "path": "cockpit/somatic.py",
+        "keys": 25
+      }
+    },
+    "live_keys": 188,
+    "mapped": 153,
+    "unmapped": 35,
+    "rules_for_keys_not_live_today": []
+  },
+  "keys": {
+    "renewable_energy_pct": {
+      "subcategory": "C3.3",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "safe_water_access_pct": {
+      "subcategory": "A1.2",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "food_insecurity_pct": {
+      "subcategory": "A1.1",
+      "rule": "food insecurity prevalence; A1.1 wants severe_food_insecurity_pct",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "adjusted_net_savings_pct": {
+      "subcategory": "B3.7",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "co2_ppm_mauna_loa": {
+      "subcategory": "C1.1",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "forest_area_pct": {
+      "subcategory": "C2.1",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "protected_terrestrial_area_pct": {
+      "subcategory": "C2.5",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "gdp_growth_pct": {
+      "subcategory": "B3.1",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "extreme_poverty_rate_pct": {
+      "subcategory": "A2.3",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "urbanization_pct": {
+      "subcategory": "B4.6",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "governance_institutions_score_global": {
+      "subcategory": "B2.1",
+      "rule": "CORTEX composite of WGI RL/CC(/GE) and V-Dem corr/rule (wellbeing_country.py); rule of law is the one component present in BOTH governance composites and in BOTH sources. JUDGEMENT CALL, flagged: the composite also carries corruption, and the 'rights' axis carries no rights indicator at all",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "child_mortality_per_1000": {
+      "subcategory": "A1.5",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "refugee_population": {
+      "subcategory": "A2.2",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "governance_rights_score_global": {
+      "subcategory": "B2.1",
+      "rule": "CORTEX composite of WGI RL/CC(/GE) and V-Dem corr/rule (wellbeing_country.py); rule of law is the one component present in BOTH governance composites and in BOTH sources. JUDGEMENT CALL, flagged: the composite also carries corruption, and the 'rights' axis carries no rights indicator at all",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "primary_completion_rate": {
+      "subcategory": "A5.1",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "literacy_rate_youth_pct": {
+      "subcategory": "A5.1",
+      "rule": "the subcategory's own wanted_keys names this indicator",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "goal_score": {
+      "subcategory": "E3.1",
+      "rule": "the system's own composite distance to the goal; E3.1 wants goal_distance",
+      "sources": [
+        "target_config",
+        "metric_details"
+      ]
+    },
+    "co2.co2_ppm": {
+      "subcategory": "C1.1",
+      "rule": "atmospheric CO2 concentration",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "co2.co2_ppm_1yr_ago": {
+      "subcategory": "C1.1",
+      "rule": "atmospheric CO2 concentration, one year earlier",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "co2.co2_annual_increase": {
+      "subcategory": "C1.1",
+      "rule": "annual increase of atmospheric CO2",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "temperature.temp_anomaly_c": {
+      "subcategory": "C1.3",
+      "rule": "global temperature anomaly; C1.3 wants global_temp_anomaly",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "sea_level.sea_level_rise_mm": {
+      "subcategory": "C1.4",
+      "rule": "sea level rise; C1.4 wants sea_level_rise_mm",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "quakes.quake_m45_count": {
+      "subcategory": "C5.1",
+      "rule": "M4.5+ earthquakes; C5.1 wants quake_m45_count",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "food.undernourishment_pct": {
+      "subcategory": "A1.1",
+      "rule": "undernourishment; A1.1 wants undernourishment_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "food.food_insecurity_moderate_severe_pct": {
+      "subcategory": "A1.1",
+      "rule": "food insecurity prevalence",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "waste.resource_depletion_pct_gni": {
+      "subcategory": "B3.7",
+      "rule": "resource depletion: a resource-based indicator",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "waste.natural_resources_rents_pct": {
+      "subcategory": "B3.7",
+      "rule": "natural resource rents: a resource-based indicator",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "waste.adjusted_net_savings_pct": {
+      "subcategory": "B3.7",
+      "rule": "same indicator as adjusted_net_savings_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "waste.fossil_fuel_consumption_pct": {
+      "subcategory": "C3.3",
+      "rule": "fossil share of energy consumption",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.population_billions": {
+      "subcategory": "B7.1",
+      "rule": "population size; B7.1 wants population",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.poverty_190_pct": {
+      "subcategory": "A2.3",
+      "rule": "extreme poverty headcount",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.life_expectancy": {
+      "subcategory": "A1.5",
+      "rule": "life expectancy; A1.5 wants life_expectancy",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.infant_mortality_per1k": {
+      "subcategory": "A1.5",
+      "rule": "infant mortality: staying alive",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.gini_mean": {
+      "subcategory": "A4.5",
+      "rule": "Gini; A4.5 wants gini",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.forest_area_pct": {
+      "subcategory": "C2.1",
+      "rule": "same indicator as forest_area_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.renewable_elec_pct": {
+      "subcategory": "C3.3",
+      "rule": "renewable share of electricity",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.safe_water_access_pct": {
+      "subcategory": "A1.2",
+      "rule": "same indicator as safe_water_access_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.literacy_rate_adult_pct": {
+      "subcategory": "A5.1",
+      "rule": "adult literacy: education",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.threatened_mammals_no": {
+      "subcategory": "C2.2",
+      "rule": "threatened species count; C2.2 wants threatened_species",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.protected_terrestrial_area_pct": {
+      "subcategory": "C2.5",
+      "rule": "same indicator as protected_terrestrial_area_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.primary_completion_rate": {
+      "subcategory": "A5.1",
+      "rule": "same indicator as primary_completion_rate, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "displaced.refugees_millions": {
+      "subcategory": "A2.2",
+      "rule": "refugees; A2.2 wants refugee_population",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "displaced.asylum_seekers_millions": {
+      "subcategory": "A2.2",
+      "rule": "UNHCR displacement stock",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "displaced.idps_millions": {
+      "subcategory": "A2.2",
+      "rule": "internally displaced; A2.2 wants internally_displaced",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "displaced.stateless_millions": {
+      "subcategory": "A2.2",
+      "rule": "stateless; A2.2 wants stateless_population",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "economy.unemployment_pct": {
+      "subcategory": "A2.3",
+      "rule": "unemployment; A2.3 wants unemployment_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "economy.gdp_per_capita_ppp_usd": {
+      "subcategory": "B3.1",
+      "rule": "output per person: production",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "economy.gdp_growth_annual_pct": {
+      "subcategory": "B3.1",
+      "rule": "same indicator as gdp_growth_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "economy.labour_force_participation_pct": {
+      "subcategory": "B3.1",
+      "rule": "labour force participation: employment",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "economy.industry_value_added_pct_gdp": {
+      "subcategory": "B3.1",
+      "rule": "industry share of output: production",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "cities.internet_users_pct": {
+      "subcategory": "A5.2",
+      "rule": "internet users; A5.2 wants internet_access_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "cities.electricity_access_pct": {
+      "subcategory": "A1.4",
+      "rule": "electricity access; A1.4 wants electricity_access_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "cities.urban_population_pct": {
+      "subcategory": "B7.4",
+      "rule": "urban population share; B7.4 wants urban_population_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "cities.urban_growth_annual_pct": {
+      "subcategory": "B7.4",
+      "rule": "urban population growth: urbanization of population",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "cities.roads_paved_pct": {
+      "subcategory": "B4.1",
+      "rule": "paved roads share: transport infrastructure",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "governance.ge_est": {
+      "subcategory": "B2.5",
+      "rule": "WGI Government Effectiveness estimate: state capacity and services",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "governance.cc_est": {
+      "subcategory": "B2.2",
+      "rule": "WGI Control of Corruption estimate",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "governance.rl_est": {
+      "subcategory": "B2.1",
+      "rule": "WGI Rule of Law estimate",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "tech_infra.broadband_per100": {
+      "subcategory": "B4.3",
+      "rule": "fixed broadband subscriptions; B4.3 wants broadband_access_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "tech_infra.mobile_subscriptions_per100": {
+      "subcategory": "B4.3",
+      "rule": "mobile subscriptions; B4.3 wants mobile_coverage_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "tech_infra.secure_internet_servers_per1m": {
+      "subcategory": "B4.3",
+      "rule": "secure internet servers: digital infrastructure",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "ai_activity.arxiv_ai_papers_total": {
+      "subcategory": "B6.2",
+      "rule": "count of AI research papers: activity in AI",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "conflicts.active_armed_conflicts": {
+      "subcategory": "B1.1",
+      "rule": "UCDP count of active armed conflicts",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "nuclear.nuclear_warheads_total": {
+      "subcategory": "B1.4",
+      "rule": "total warheads; B1.4 wants nuclear_warheads",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "nuclear.nuclear_warheads_deployed": {
+      "subcategory": "D1.1",
+      "rule": "deployed warheads; D1.1 wants nuclear_warheads_deployed",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "nuclear.nuclear_warheads_on_alert": {
+      "subcategory": "D1.1",
+      "rule": "warheads on high alert: nuclear existential risk posture",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "neo.neo_close_approaches_90d": {
+      "subcategory": "D1.5",
+      "rule": "near-Earth object close approaches; D1.5 wants near_earth_object_close_approaches",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "neo.neo_within_lunar_dist_90d": {
+      "subcategory": "D1.5",
+      "rule": "near-Earth objects within lunar distance",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "ai_activity.github_ai_repos_total": {
+      "subcategory": "B6.2",
+      "rule": "count of public AI repositories: activity in AI",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "food.food_insecurity_severe_pct": {
+      "subcategory": "A1.1",
+      "rule": "severe food insecurity; A1.1 wants severe_food_insecurity_pct",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.poverty_intl_line_pct": {
+      "subcategory": "A2.3",
+      "rule": "extreme poverty headcount at the international line",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.under5_mortality_per1k": {
+      "subcategory": "A1.5",
+      "rule": "under-5 mortality; A1.5 wants child_mortality_per_1000",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.renewable_energy_pct": {
+      "subcategory": "C3.3",
+      "rule": "same indicator as renewable_energy_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "world_bank.literacy_rate_youth_pct": {
+      "subcategory": "A5.1",
+      "rule": "same indicator as literacy_rate_youth_pct, under another name",
+      "sources": [
+        "daily_tier"
+      ]
+    },
+    "gi_noaa_co2": {
+      "subcategory": "C1.1",
+      "rule": "same indicator as co2.co2_ppm, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "noaa_gml_daily": {
+      "subcategory": "C1.1",
+      "rule": "NOAA GML global daily CO2 trend",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gdacs_orange_red_current": {
+      "subcategory": "A2.5",
+      "rule": "GDACS orange/red disaster alerts: disasters affecting people",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_54947": {
+      "subcategory": "C5.3",
+      "rule": "NASA EONET wildfires events; C5.3 wants wildfire_events",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_temp_anomaly": {
+      "subcategory": "C1.3",
+      "rule": "same indicator as temperature.temp_anomaly_c, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_sea_level": {
+      "subcategory": "C1.4",
+      "rule": "same indicator as sea_level.sea_level_rise_mm, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_safe_water_access_pct": {
+      "subcategory": "A1.2",
+      "rule": "same indicator as world_bank.safe_water_access_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_27965": {
+      "subcategory": "C3.1",
+      "rule": "World Bank ER.H2O.INTR.PC; C3.1 wants freshwater_per_capita",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_60365": {
+      "subcategory": "C5.2",
+      "rule": "NASA EONET floods events; C5.2 wants flood_events",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_undernourishment_pct": {
+      "subcategory": "A1.1",
+      "rule": "same indicator as food.undernourishment_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_food_insecurity_severe_pct": {
+      "subcategory": "A1.1",
+      "rule": "same indicator as food.food_insecurity_severe_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_40653": {
+      "subcategory": "C5.2",
+      "rule": "NASA EONET severeStorms events; C5.2 wants severe_storm_events",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_renewable_energy_pct": {
+      "subcategory": "C3.3",
+      "rule": "same indicator as world_bank.renewable_energy_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_69607": {
+      "subcategory": "C5.2",
+      "rule": "NASA EONET severeStorms events (same URL as promoted_40653)",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_fossil_fuel_consumption_pct": {
+      "subcategory": "C3.3",
+      "rule": "same indicator as waste.fossil_fuel_consumption_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_refugees_millions": {
+      "subcategory": "A2.2",
+      "rule": "same indicator as displaced.refugees_millions, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_idps_millions": {
+      "subcategory": "A2.2",
+      "rule": "same indicator as displaced.idps_millions, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_asylum_millions": {
+      "subcategory": "A2.2",
+      "rule": "same indicator as displaced.asylum_seekers_millions, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_96302": {
+      "subcategory": "B1.1",
+      "rule": "same indicator as conflicts.active_armed_conflicts, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "wbg_rights_score": {
+      "subcategory": "B2.1",
+      "rule": "same indicator as governance_rights_score_global, under another name; CORTEX composite of WGI RL/CC(/GE) and V-Dem corr/rule (wellbeing_country.py); rule of law is the one component present in BOTH governance composites and in BOTH sources. JUDGEMENT CALL, flagged: the composite also carries corruption, and the 'rights' axis carries no rights indicator at all",
+      "sources": [
+        "composed"
+      ]
+    },
+    "wbg_institutions_score": {
+      "subcategory": "B2.1",
+      "rule": "same indicator as governance_institutions_score_global, under another name; CORTEX composite of WGI RL/CC(/GE) and V-Dem corr/rule (wellbeing_country.py); rule of law is the one component present in BOTH governance composites and in BOTH sources. JUDGEMENT CALL, flagged: the composite also carries corruption, and the 'rights' axis carries no rights indicator at all",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_gov_effectiveness": {
+      "subcategory": "B2.5",
+      "rule": "same indicator as governance.ge_est, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_rule_of_law": {
+      "subcategory": "B2.1",
+      "rule": "same indicator as governance.rl_est, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_control_corruption": {
+      "subcategory": "B2.2",
+      "rule": "same indicator as governance.cc_est, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_gdp_growth": {
+      "subcategory": "B3.1",
+      "rule": "same indicator as economy.gdp_growth_annual_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_unemployment": {
+      "subcategory": "A2.3",
+      "rule": "same indicator as economy.unemployment_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_gdp_per_capita": {
+      "subcategory": "B3.1",
+      "rule": "same indicator as economy.gdp_per_capita_ppp_usd, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_under5_mortality": {
+      "subcategory": "A1.5",
+      "rule": "same indicator as world_bank.under5_mortality_per1k, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_life_expectancy": {
+      "subcategory": "A1.5",
+      "rule": "same indicator as world_bank.life_expectancy, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_arxiv_ai_papers": {
+      "subcategory": "B6.2",
+      "rule": "same indicator as ai_activity.arxiv_ai_papers_total, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_github_ai_repos": {
+      "subcategory": "B6.2",
+      "rule": "same indicator as ai_activity.github_ai_repos_total, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_broadband": {
+      "subcategory": "B4.3",
+      "rule": "same indicator as tech_infra.broadband_per100, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_mobile_subs": {
+      "subcategory": "B4.3",
+      "rule": "same indicator as tech_infra.mobile_subscriptions_per100, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_secure_servers": {
+      "subcategory": "B4.3",
+      "rule": "same indicator as tech_infra.secure_internet_servers_per1m, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_poverty_intl_line": {
+      "subcategory": "A2.3",
+      "rule": "same indicator as world_bank.poverty_intl_line_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_gini": {
+      "subcategory": "A4.5",
+      "rule": "same indicator as world_bank.gini_mean, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_urban_pct": {
+      "subcategory": "B7.4",
+      "rule": "same indicator as cities.urban_population_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_electricity_access": {
+      "subcategory": "A1.4",
+      "rule": "same indicator as cities.electricity_access_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_internet_users": {
+      "subcategory": "A5.2",
+      "rule": "same indicator as cities.internet_users_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_literacy_youth": {
+      "subcategory": "A5.1",
+      "rule": "same indicator as world_bank.literacy_rate_youth_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_literacy_adult_edu": {
+      "subcategory": "A5.1",
+      "rule": "same indicator as world_bank.literacy_rate_adult_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_forest_area": {
+      "subcategory": "C2.1",
+      "rule": "same indicator as world_bank.forest_area_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_threatened_mammals": {
+      "subcategory": "C2.2",
+      "rule": "same indicator as world_bank.threatened_mammals_no, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_adjusted_net_savings": {
+      "subcategory": "B3.7",
+      "rule": "same indicator as waste.adjusted_net_savings_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_resource_depletion": {
+      "subcategory": "B3.7",
+      "rule": "same indicator as waste.resource_depletion_pct_gni, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "promoted_39428": {
+      "subcategory": "C5.1",
+      "rule": "USGS M4.5+ earthquakes, past day",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_forest_area_potential": {
+      "subcategory": "C2.1",
+      "rule": "same indicator as world_bank.forest_area_pct, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_neo_close_approaches": {
+      "subcategory": "D1.5",
+      "rule": "same indicator as neo.neo_close_approaches_90d, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "usgs_quakes_daily": {
+      "subcategory": "C5.1",
+      "rule": "USGS all earthquakes, past day",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_neo_lunar_dist": {
+      "subcategory": "D1.5",
+      "rule": "same indicator as neo.neo_within_lunar_dist_90d, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_nuclear_total": {
+      "subcategory": "B1.4",
+      "rule": "same indicator as nuclear.nuclear_warheads_total, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_nuclear_deployed": {
+      "subcategory": "D1.1",
+      "rule": "same indicator as nuclear.nuclear_warheads_deployed, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "gi_nuclear_on_alert": {
+      "subcategory": "D1.1",
+      "rule": "same indicator as nuclear.nuclear_warheads_on_alert, under another name",
+      "sources": [
+        "composed"
+      ]
+    },
+    "celestrak_launched_last_30d": {
+      "subcategory": "D2.1",
+      "rule": "objects launched in the last 30 days: access to space",
+      "sources": [
+        "composed"
+      ]
+    },
+    "celestrak_geostationary": {
+      "subcategory": "D2.2",
+      "rule": "objects in geostationary orbit: orbital infrastructure",
+      "sources": [
+        "composed"
+      ]
+    },
+    "swpc_kp_daily_max": {
+      "subcategory": "D1.5",
+      "rule": "NOAA SWPC planetary Kp: geomagnetic storms; D1.5 wants solar_storm_events",
+      "sources": [
+        "composed"
+      ]
+    },
+    "quakes_m45_last_24h": {
+      "subcategory": "C5.1",
+      "rule": "USGS M4.5+ count, last 24 h",
+      "sources": [
+        "openclaw"
+      ]
+    },
+    "objects_launched_last_30d": {
+      "subcategory": "D2.1",
+      "rule": "same indicator as celestrak_launched_last_30d, under another name",
+      "sources": [
+        "openclaw"
+      ]
+    },
+    "battery_percent": {
+      "subcategory": "E1.1",
+      "rule": "battery charge",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "power_plugged": {
+      "subcategory": "E1.1",
+      "rule": "on mains power or not",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "gpu_temp_c": {
+      "subcategory": "E1.2",
+      "rule": "GPU temperature",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "gpu_power_w": {
+      "subcategory": "E1.1",
+      "rule": "GPU power draw",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "gpu_util_pct": {
+      "subcategory": "E1.3",
+      "rule": "GPU utilisation",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "gpu_mem_used_mb": {
+      "subcategory": "E1.4",
+      "rule": "GPU memory used",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "cpu_percent": {
+      "subcategory": "E1.3",
+      "rule": "CPU utilisation",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "cpu_freq_mhz": {
+      "subcategory": "E1.3",
+      "rule": "CPU clock",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "load_1": {
+      "subcategory": "E1.3",
+      "rule": "1-minute load",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "ram_percent": {
+      "subcategory": "E1.4",
+      "rule": "RAM used share",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "ram_used_gb": {
+      "subcategory": "E1.4",
+      "rule": "RAM used",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "swap_percent": {
+      "subcategory": "E1.4",
+      "rule": "swap used share",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "page_faults": {
+      "subcategory": "E1.4",
+      "rule": "page faults",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "disk_read_mb": {
+      "subcategory": "E1.5",
+      "rule": "disk read volume",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "disk_write_mb": {
+      "subcategory": "E1.5",
+      "rule": "disk write volume",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "net_sent_mb": {
+      "subcategory": "E1.6",
+      "rule": "network bytes sent",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "net_recv_mb": {
+      "subcategory": "E1.6",
+      "rule": "network bytes received",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "wifi_signal_pct": {
+      "subcategory": "E1.6",
+      "rule": "Wi-Fi signal",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "gateway_ping_ms": {
+      "subcategory": "E1.6",
+      "rule": "gateway round trip",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "connections": {
+      "subcategory": "E1.6",
+      "rule": "open network connections",
+      "sources": [
+        "somatic"
+      ]
+    },
+    "event_log_errors_24h": {
+      "subcategory": "E1.10",
+      "rule": "Windows event-log errors, 24 h",
+      "sources": [
+        "somatic"
+      ]
+    }
+  },
+  "unmapped": [
+    {
+      "key": "markets.spy_adjclose",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "an equity fund price; no subcategory measures equity markets"
+    },
+    {
+      "key": "markets.gld_adjclose",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "a gold fund price; no subcategory wants it"
+    },
+    {
+      "key": "markets.uup_adjclose",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "a dollar-index fund price; no subcategory wants it"
+    },
+    {
+      "key": "biodiversity.species_observations_30d",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "GBIF observation count measures observer effort, not species state"
+    },
+    {
+      "key": "food.food_production_index",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "an index of output; A1.1 wants a price index, not production"
+    },
+    {
+      "key": "food.agriculture_pct_gdp",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "economic structure; no subcategory wants it"
+    },
+    {
+      "key": "food.cereal_yield_kg_per_ha",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "productivity, not food security, land or prices"
+    },
+    {
+      "key": "tech_infra.high_tech_exports_pct_manuf",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "trade composition; B3.4 wants balance and dependency"
+    },
+    {
+      "key": "exoplanets.confirmed_exoplanets",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "no subcategory measures astronomy discovery"
+    },
+    {
+      "key": "media.news_tone_avg_1month",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "GDELT tone of coverage is not press freedom, ownership, censorship or disinformation"
+    },
+    {
+      "key": "media.news_tone_latest",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "GDELT tone of coverage is not press freedom, ownership, censorship or disinformation"
+    },
+    {
+      "key": "media.news_tone_min",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "GDELT tone of coverage is not press freedom, ownership, censorship or disinformation"
+    },
+    {
+      "key": "media.news_tone_max",
+      "sources": [
+        "daily_tier"
+      ],
+      "why": "GDELT tone of coverage is not press freedom, ownership, censorship or disinformation"
+    },
+    {
+      "key": "promoted_11883",
+      "sources": [
+        "composed"
+      ],
+      "why": "discharge of one US river gauge measures no global subcategory"
+    },
+    {
+      "key": "promoted_35258",
+      "sources": [
+        "composed"
+      ],
+      "why": "evapotranspiration over one point in the US corn belt measures no subcategory"
+    },
+    {
+      "key": "gi_cereal_yield_kg_per_ha",
+      "sources": [
+        "composed"
+      ],
+      "why": "productivity, not food security, land or prices"
+    },
+    {
+      "key": "gi_food_production_index",
+      "sources": [
+        "composed"
+      ],
+      "why": "an index of output; A1.1 wants a price index, not production"
+    },
+    {
+      "key": "promoted_34826",
+      "sources": [
+        "composed"
+      ],
+      "why": "solar radiation over one point in Germany measures no subcategory"
+    },
+    {
+      "key": "promoted_40232",
+      "sources": [
+        "composed"
+      ],
+      "why": "a COUNT of WHO GHE indicator codes in a catalogue, not a health measurement"
+    },
+    {
+      "key": "promoted_61568",
+      "sources": [
+        "composed"
+      ],
+      "why": "a COUNT of WHO HIV indicator codes in a catalogue, not a health measurement"
+    },
+    {
+      "key": "promoted_84957",
+      "sources": [
+        "composed"
+      ],
+      "why": "a row count of an OWID vaccination file, not a vaccination rate"
+    },
+    {
+      "key": "promoted_78396",
+      "sources": [
+        "composed"
+      ],
+      "why": "a metadata count from the Nobel API, not a measurement of rights"
+    },
+    {
+      "key": "fred_dgs10",
+      "sources": [
+        "composed"
+      ],
+      "why": "a sovereign bond yield; B3.3 wants public debt and debt distress, not yields"
+    },
+    {
+      "key": "ecb_eurusd",
+      "sources": [
+        "composed"
+      ],
+      "why": "an exchange rate; no subcategory wants it"
+    },
+    {
+      "key": "eonet_sealakeice",
+      "sources": [
+        "composed"
+      ],
+      "why": "a count of sea/lake ice EVENTS is not sea-ice extent"
+    },
+    {
+      "key": "gi_species_observations",
+      "sources": [
+        "composed"
+      ],
+      "why": "GBIF observation count measures observer effort, not species state"
+    },
+    {
+      "key": "gi_confirmed_exoplanets",
+      "sources": [
+        "composed"
+      ],
+      "why": "no subcategory measures astronomy discovery"
+    },
+    {
+      "key": "gi_self_fresh_metrics",
+      "sources": [
+        "composed"
+      ],
+      "why": "the system's own refresh count; E2.1 wants subcategories_seen, not this"
+    },
+    {
+      "key": "gi_self_carried_metrics",
+      "sources": [
+        "composed"
+      ],
+      "why": "the system's own carry count; E2.1 wants subcategories_seen, not this"
+    },
+    {
+      "key": "surface_temp_c_sofia",
+      "sources": [
+        "openclaw"
+      ],
+      "why": "weather at one city measures no global subcategory"
+    },
+    {
+      "key": "this_path_does_not_exist",
+      "sources": [
+        "openclaw"
+      ],
+      "why": "a deliberately broken seed source"
+    },
+    {
+      "key": "uptime_hours",
+      "sources": [
+        "somatic"
+      ],
+      "why": "machine uptime fits no E1 subcategory by name"
+    },
+    {
+      "key": "open_handles",
+      "sources": [
+        "somatic"
+      ],
+      "why": "OS handle count fits no E1 subcategory by name"
+    },
+    {
+      "key": "idle_seconds",
+      "sources": [
+        "somatic"
+      ],
+      "why": "user idle time: Periphery is not defined precisely enough to claim it"
+    },
+    {
+      "key": "brightness_pct",
+      "sources": [
+        "somatic"
+      ],
+      "why": "screen brightness: 'Optic' is not defined precisely enough to claim it"
+    }
+  ]
+}

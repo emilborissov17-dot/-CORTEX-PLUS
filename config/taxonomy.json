@@ -1,0 +1,1809 @@
+{
+  "_meta": {
+    "file": "config/taxonomy.json",
+    "version": "2.0-draft",
+    "written": "2026-10-01",
+    "written_by": "Claude (cloud session) through the linked folder, on Emil's order R25",
+    "status": "DRAFT - not ratified by Emil, not attacked by Kimi. NOT LOADED BY ANY CODE YET: a loader and tests must be added in the same commit that tracks this file.",
+    "shape": "domain -> category -> subcategory -> wanted_keys. A subcategory is a BUNDLE, never one number.",
+    "wanted_keys": "names of indicators the subcategory needs. They are WANTS, not live keys. The mapping of live keys to subcategories lives in config/taxonomy_key_map.json (to be generated from the repo, not written by hand).",
+    "candidate_sources": "names only, NOT verified by any fetch.",
+    "atom_fields": [
+      "value",
+      "unit",
+      "place",
+      "period",
+      "group",
+      "actor",
+      "source_id",
+      "source_class",
+      "quote_hash"
+    ],
+    "source_classes_authority": "config/reporter_independence.json (four classes; no fifth)",
+    "seen_rule": "a subcategory is SEEN when its bundle has one state key, one change key (monthly or faster where the world publishes it) and one independent or adversarial source",
+    "replaces": "config/domains_tree.json (33 subdomains, Feb 2026)",
+    "system_domain_rule": "domain E is never mixed into any world-facing number",
+    "counts": {
+      "domains": 5,
+      "categories": 25,
+      "subcategories": 123
+    }
+  },
+  "domains": [
+    {
+      "id": "A",
+      "name_en": "THE PERSON",
+      "name_bg": "Човекът",
+      "categories": [
+        {
+          "id": "A1",
+          "name_en": "SURVIVAL",
+          "name_bg": "Оцеляване",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "A1.1",
+              "name_en": "Food",
+              "name_bg": "Храна",
+              "wanted_keys": [
+                "severe_food_insecurity_pct",
+                "undernourishment_pct",
+                "child_stunting_pct",
+                "child_wasting_pct",
+                "ipc_phase3plus_population",
+                "food_price_index"
+              ],
+              "candidate_sources": [
+                "FAO",
+                "FEWS NET/IPC",
+                "WFP",
+                "UNICEF"
+              ]
+            },
+            {
+              "id": "A1.2",
+              "name_en": "Water and sanitation",
+              "name_bg": "Вода и санитария",
+              "wanted_keys": [
+                "safe_water_access_pct",
+                "safe_sanitation_pct",
+                "waterborne_deaths"
+              ],
+              "candidate_sources": [
+                "WHO/UNICEF JMP"
+              ]
+            },
+            {
+              "id": "A1.3",
+              "name_en": "Shelter",
+              "name_bg": "Подслон",
+              "wanted_keys": [
+                "homeless_population",
+                "slum_population_pct",
+                "overcrowding_pct",
+                "forced_evictions",
+                "housing_cost_burden_pct"
+              ],
+              "candidate_sources": [
+                "UN-Habitat",
+                "OECD"
+              ]
+            },
+            {
+              "id": "A1.4",
+              "name_en": "Household energy",
+              "name_bg": "Енергия за дома",
+              "wanted_keys": [
+                "electricity_access_pct",
+                "clean_cooking_access_pct",
+                "energy_poverty_pct"
+              ],
+              "candidate_sources": [
+                "IEA",
+                "World Bank"
+              ]
+            },
+            {
+              "id": "A1.5",
+              "name_en": "Staying alive",
+              "name_bg": "Оставане жив",
+              "wanted_keys": [
+                "child_mortality_per_1000",
+                "maternal_mortality_per_100k",
+                "life_expectancy",
+                "outbreak_events",
+                "vaccination_coverage_pct",
+                "primary_care_access_pct",
+                "air_pollution_deaths"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "UNICEF",
+                "IHME"
+              ]
+            }
+          ],
+          "maslow_level": "physiological"
+        },
+        {
+          "id": "A2",
+          "name_en": "SAFETY",
+          "name_bg": "Сигурност",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "A2.1",
+              "name_en": "Physical safety",
+              "name_bg": "Физическа сигурност",
+              "wanted_keys": [
+                "homicide_rate",
+                "conflict_deaths_by_country_actor",
+                "violence_against_women",
+                "violence_against_children",
+                "state_violence_events"
+              ],
+              "candidate_sources": [
+                "UCDP",
+                "ACLED",
+                "UNODC"
+              ]
+            },
+            {
+              "id": "A2.2",
+              "name_en": "Displacement",
+              "name_bg": "Прогонване",
+              "wanted_keys": [
+                "refugee_population",
+                "internally_displaced",
+                "stateless_population",
+                "returns"
+              ],
+              "candidate_sources": [
+                "UNHCR",
+                "IDMC"
+              ]
+            },
+            {
+              "id": "A2.3",
+              "name_en": "Economic security",
+              "name_bg": "Икономическа сигурност",
+              "wanted_keys": [
+                "extreme_poverty_rate_pct",
+                "unemployment_pct",
+                "precarious_work_pct",
+                "social_protection_coverage_pct",
+                "household_debt",
+                "basic_basket_price"
+              ],
+              "candidate_sources": [
+                "World Bank",
+                "ILO"
+              ]
+            },
+            {
+              "id": "A2.4",
+              "name_en": "Legal security",
+              "name_bg": "Правна сигурност",
+              "wanted_keys": [
+                "arbitrary_detention",
+                "pretrial_detention_share",
+                "access_to_justice",
+                "land_property_rights"
+              ],
+              "candidate_sources": [
+                "WJP",
+                "UNODC",
+                "OHCHR"
+              ]
+            },
+            {
+              "id": "A2.5",
+              "name_en": "Safety from disasters",
+              "name_bg": "Сигурност от бедствия",
+              "wanted_keys": [
+                "disaster_deaths",
+                "people_affected",
+                "disaster_losses",
+                "early_warning_coverage"
+              ],
+              "candidate_sources": [
+                "EM-DAT",
+                "GDACS",
+                "UNDRR"
+              ]
+            },
+            {
+              "id": "A2.6",
+              "name_en": "Health security",
+              "name_bg": "Здравна сигурност",
+              "wanted_keys": [
+                "health_coverage_index",
+                "catastrophic_health_spending_pct",
+                "medicine_shortages"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "World Bank"
+              ]
+            }
+          ],
+          "maslow_level": "safety"
+        },
+        {
+          "id": "A3",
+          "name_en": "BELONGING",
+          "name_bg": "Принадлежност",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "A3.1",
+              "name_en": "Family and community",
+              "name_bg": "Семейство и общност",
+              "wanted_keys": [
+                "loneliness_pct",
+                "social_support_pct",
+                "interpersonal_trust_pct"
+              ],
+              "candidate_sources": [
+                "Gallup",
+                "World Values Survey"
+              ]
+            },
+            {
+              "id": "A3.2",
+              "name_en": "Exclusion and discrimination",
+              "name_bg": "Изключване и дискриминация",
+              "wanted_keys": [
+                "discrimination_by_group",
+                "hate_crimes"
+              ],
+              "candidate_sources": [
+                "OHCHR",
+                "UN Women"
+              ]
+            },
+            {
+              "id": "A3.3",
+              "name_en": "Participation",
+              "name_bg": "Участие",
+              "wanted_keys": [
+                "voter_turnout",
+                "freedom_of_association",
+                "civic_space"
+              ],
+              "candidate_sources": [
+                "V-Dem",
+                "CIVICUS"
+              ]
+            },
+            {
+              "id": "A3.4",
+              "name_en": "Migration and integration",
+              "name_bg": "Миграция и интеграция",
+              "wanted_keys": [
+                "migrant_deaths_on_routes",
+                "migrant_detention",
+                "migrant_access_to_services"
+              ],
+              "candidate_sources": [
+                "IOM"
+              ]
+            }
+          ],
+          "maslow_level": "belonging"
+        },
+        {
+          "id": "A4",
+          "name_en": "DIGNITY AND RECOGNITION",
+          "name_bg": "Достойнство и признание",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "A4.1",
+              "name_en": "Rights and freedoms",
+              "name_bg": "Права и свободи",
+              "wanted_keys": [
+                "freedom_of_expression",
+                "press_freedom",
+                "freedom_of_belief",
+                "freedom_of_movement"
+              ],
+              "candidate_sources": [
+                "V-Dem",
+                "RSF",
+                "Freedom House"
+              ]
+            },
+            {
+              "id": "A4.2",
+              "name_en": "Equality before the law",
+              "name_bg": "Равенство пред закона",
+              "wanted_keys": [
+                "unequal_treatment",
+                "impunity"
+              ],
+              "candidate_sources": [
+                "WJP"
+              ]
+            },
+            {
+              "id": "A4.3",
+              "name_en": "Dignified work",
+              "name_bg": "Достоен труд",
+              "wanted_keys": [
+                "forced_labour",
+                "child_labour",
+                "fatal_work_injuries",
+                "wages_below_subsistence",
+                "working_hours"
+              ],
+              "candidate_sources": [
+                "ILO"
+              ]
+            },
+            {
+              "id": "A4.4",
+              "name_en": "Humiliation by institutions",
+              "name_bg": "Унижение от институции",
+              "wanted_keys": [
+                "torture_ill_treatment",
+                "prison_conditions",
+                "bribery_for_public_service"
+              ],
+              "candidate_sources": [
+                "OHCHR",
+                "Transparency International"
+              ]
+            },
+            {
+              "id": "A4.5",
+              "name_en": "Inequality",
+              "name_bg": "Неравенство",
+              "wanted_keys": [
+                "income_share_top10",
+                "wealth_share_top1",
+                "gini",
+                "gender_gap",
+                "regional_gap"
+              ],
+              "candidate_sources": [
+                "WID",
+                "World Bank",
+                "UNDP"
+              ]
+            }
+          ],
+          "maslow_level": "esteem"
+        },
+        {
+          "id": "A5",
+          "name_en": "DEVELOPMENT OF POTENTIAL",
+          "name_bg": "Развитие на потенциала",
+          "subgoal": "KNOWLEDGE_UNDERSTANDING",
+          "subcategories": [
+            {
+              "id": "A5.1",
+              "name_en": "Education",
+              "name_bg": "Образование",
+              "wanted_keys": [
+                "primary_completion_rate",
+                "literacy_rate_youth_pct",
+                "learning_outcomes",
+                "children_out_of_school",
+                "tertiary_enrolment"
+              ],
+              "candidate_sources": [
+                "UNESCO UIS",
+                "OECD PISA"
+              ]
+            },
+            {
+              "id": "A5.2",
+              "name_en": "Knowledge and truth",
+              "name_bg": "Знание и истина",
+              "wanted_keys": [
+                "internet_access_pct",
+                "freedom_of_information",
+                "disinformation_exposure"
+              ],
+              "candidate_sources": [
+                "ITU",
+                "V-Dem"
+              ]
+            },
+            {
+              "id": "A5.3",
+              "name_en": "Culture and creativity",
+              "name_bg": "Култура и творчество",
+              "wanted_keys": [
+                "cultural_participation",
+                "languages_at_risk",
+                "access_to_libraries_arts"
+              ],
+              "candidate_sources": [
+                "UNESCO"
+              ]
+            },
+            {
+              "id": "A5.4",
+              "name_en": "Mental health and meaning",
+              "name_bg": "Психично здраве и смисъл",
+              "wanted_keys": [
+                "depression_anxiety_burden",
+                "suicide_rate",
+                "addiction_burden",
+                "life_satisfaction"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "IHME",
+                "Gallup"
+              ]
+            },
+            {
+              "id": "A5.5",
+              "name_en": "Body",
+              "name_bg": "Тяло",
+              "wanted_keys": [
+                "diet_quality",
+                "physical_activity",
+                "chronic_disease_burden",
+                "healthy_life_expectancy"
+              ],
+              "candidate_sources": [
+                "WHO"
+              ]
+            },
+            {
+              "id": "A5.6",
+              "name_en": "Free time and autonomy",
+              "name_bg": "Свободно време и автономия",
+              "wanted_keys": [
+                "working_time",
+                "unpaid_care_burden",
+                "youth_neet_pct"
+              ],
+              "candidate_sources": [
+                "ILO",
+                "UN Women"
+              ]
+            }
+          ],
+          "maslow_level": "self_actualization"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name_en": "SOCIETY AND CIVILIZATION",
+      "name_bg": "Общество и цивилизация",
+      "categories": [
+        {
+          "id": "B1",
+          "name_en": "PEACE AND WAR",
+          "name_bg": "Мир и война",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B1.1",
+              "name_en": "Armed conflicts and deaths",
+              "name_bg": "Конфликти и жертви",
+              "wanted_keys": [
+                "conflict_events",
+                "battle_deaths",
+                "civilian_deaths"
+              ],
+              "candidate_sources": [
+                "UCDP",
+                "ACLED"
+              ]
+            },
+            {
+              "id": "B1.2",
+              "name_en": "Agreements kept or broken",
+              "name_bg": "Спазени и нарушени споразумения",
+              "wanted_keys": [
+                "commitments_registered",
+                "commitments_kept",
+                "commitments_broken"
+              ],
+              "candidate_sources": [
+                "UCDP",
+                "Institution 0 register"
+              ]
+            },
+            {
+              "id": "B1.3",
+              "name_en": "Military spending and arms",
+              "name_bg": "Военни разходи и оръжия",
+              "wanted_keys": [
+                "military_spending",
+                "arms_transfers"
+              ],
+              "candidate_sources": [
+                "SIPRI"
+              ]
+            },
+            {
+              "id": "B1.4",
+              "name_en": "Nuclear and mass-destruction weapons",
+              "name_bg": "Ядрени и оръжия за масово унищожение",
+              "wanted_keys": [
+                "nuclear_warheads",
+                "wmd_incidents"
+              ],
+              "candidate_sources": [
+                "SIPRI"
+              ]
+            },
+            {
+              "id": "B1.5",
+              "name_en": "Terrorism and political violence",
+              "name_bg": "Тероризъм и политическо насилие",
+              "wanted_keys": [
+                "terror_attacks",
+                "political_violence_deaths"
+              ],
+              "candidate_sources": [
+                "ACLED",
+                "GTD"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B2",
+          "name_en": "GOVERNANCE AND INSTITUTIONS",
+          "name_bg": "Управление и институции",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B2.1",
+              "name_en": "Rule of law",
+              "name_bg": "Върховенство на закона",
+              "wanted_keys": [
+                "rule_of_law_index"
+              ],
+              "candidate_sources": [
+                "WJP",
+                "V-Dem"
+              ]
+            },
+            {
+              "id": "B2.2",
+              "name_en": "Corruption",
+              "name_bg": "Корупция",
+              "wanted_keys": [
+                "corruption_index",
+                "bribery_incidence"
+              ],
+              "candidate_sources": [
+                "Transparency International"
+              ]
+            },
+            {
+              "id": "B2.3",
+              "name_en": "Democracy and autocratization",
+              "name_bg": "Демокрация и автократизация",
+              "wanted_keys": [
+                "electoral_democracy_index",
+                "autocratization_episodes"
+              ],
+              "candidate_sources": [
+                "V-Dem"
+              ]
+            },
+            {
+              "id": "B2.4",
+              "name_en": "Transparency",
+              "name_bg": "Прозрачност",
+              "wanted_keys": [
+                "open_budget_index",
+                "access_to_information"
+              ],
+              "candidate_sources": [
+                "Open Budget Survey"
+              ]
+            },
+            {
+              "id": "B2.5",
+              "name_en": "State capacity and services",
+              "name_bg": "Капацитет на държавата",
+              "wanted_keys": [
+                "state_capacity",
+                "public_service_delivery"
+              ],
+              "candidate_sources": [
+                "World Bank"
+              ]
+            },
+            {
+              "id": "B2.6",
+              "name_en": "Public commitments kept",
+              "name_bg": "Спазени обществени обещания",
+              "wanted_keys": [
+                "public_commitments_kept",
+                "public_commitments_broken"
+              ],
+              "candidate_sources": [
+                "Institution 0 register"
+              ]
+            },
+            {
+              "id": "B2.7",
+              "name_en": "International institutions",
+              "name_bg": "Международни институции",
+              "wanted_keys": [
+                "treaty_ratifications",
+                "un_resolutions_compliance"
+              ],
+              "candidate_sources": [
+                "UN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B3",
+          "name_en": "ECONOMY AND DISTRIBUTION",
+          "name_bg": "Икономика и разпределение",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B3.1",
+              "name_en": "Production and employment",
+              "name_bg": "Производство и труд",
+              "wanted_keys": [
+                "gdp_growth_pct",
+                "employment_rate"
+              ],
+              "candidate_sources": [
+                "World Bank",
+                "ILO"
+              ]
+            },
+            {
+              "id": "B3.2",
+              "name_en": "Prices and cost of living",
+              "name_bg": "Цени и издръжка",
+              "wanted_keys": [
+                "inflation_pct",
+                "food_price_index",
+                "energy_price_index"
+              ],
+              "candidate_sources": [
+                "IMF",
+                "FAO"
+              ]
+            },
+            {
+              "id": "B3.3",
+              "name_en": "Debt and financial stability",
+              "name_bg": "Дълг и финансова стабилност",
+              "wanted_keys": [
+                "public_debt_pct_gdp",
+                "debt_distress_countries"
+              ],
+              "candidate_sources": [
+                "IMF",
+                "World Bank"
+              ]
+            },
+            {
+              "id": "B3.4",
+              "name_en": "Trade and dependency",
+              "name_bg": "Търговия и зависимост",
+              "wanted_keys": [
+                "trade_balance",
+                "import_dependency"
+              ],
+              "candidate_sources": [
+                "UNCTAD"
+              ]
+            },
+            {
+              "id": "B3.5",
+              "name_en": "Concentration of wealth and markets",
+              "name_bg": "Концентрация на богатство и пазари",
+              "wanted_keys": [
+                "wealth_share_top1",
+                "market_concentration"
+              ],
+              "candidate_sources": [
+                "WID"
+              ]
+            },
+            {
+              "id": "B3.6",
+              "name_en": "Artificial scarcity",
+              "name_bg": "Изкуствен недостиг",
+              "wanted_keys": [
+                "food_loss_waste_pct",
+                "vacant_housing_pct"
+              ],
+              "candidate_sources": [
+                "FAO",
+                "national statistics"
+              ]
+            },
+            {
+              "id": "B3.7",
+              "name_en": "Resource-based indicators",
+              "name_bg": "Ресурсни показатели",
+              "wanted_keys": [
+                "material_footprint_per_capita",
+                "adjusted_net_savings_pct"
+              ],
+              "candidate_sources": [
+                "UNEP",
+                "World Bank"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B4",
+          "name_en": "INFRASTRUCTURE AND CITIES",
+          "name_bg": "Инфраструктура и градове",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B4.1",
+              "name_en": "Transport",
+              "name_bg": "Транспорт",
+              "wanted_keys": [
+                "transport_access",
+                "road_deaths"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "World Bank"
+              ]
+            },
+            {
+              "id": "B4.2",
+              "name_en": "Housing stock",
+              "name_bg": "Жилищен фонд",
+              "wanted_keys": [
+                "housing_stock",
+                "housing_quality"
+              ],
+              "candidate_sources": [
+                "UN-Habitat"
+              ]
+            },
+            {
+              "id": "B4.3",
+              "name_en": "Digital connectivity",
+              "name_bg": "Цифрова свързаност",
+              "wanted_keys": [
+                "broadband_access_pct",
+                "mobile_coverage_pct"
+              ],
+              "candidate_sources": [
+                "ITU"
+              ]
+            },
+            {
+              "id": "B4.4",
+              "name_en": "Energy grids",
+              "name_bg": "Енергийни мрежи",
+              "wanted_keys": [
+                "grid_reliability",
+                "power_outages"
+              ],
+              "candidate_sources": [
+                "IEA"
+              ]
+            },
+            {
+              "id": "B4.5",
+              "name_en": "Water systems",
+              "name_bg": "Водни системи",
+              "wanted_keys": [
+                "water_infrastructure_loss",
+                "wastewater_treated_pct"
+              ],
+              "candidate_sources": [
+                "UN-Water"
+              ]
+            },
+            {
+              "id": "B4.6",
+              "name_en": "Urban resilience",
+              "name_bg": "Устойчивост на градовете",
+              "wanted_keys": [
+                "urbanization_pct",
+                "urban_risk_exposure"
+              ],
+              "candidate_sources": [
+                "UN-Habitat"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B5",
+          "name_en": "INFORMATION, MEDIA, MANIPULATION",
+          "name_bg": "Информация, медии, манипулация",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B5.1",
+              "name_en": "Press freedom",
+              "name_bg": "Свобода на печата",
+              "wanted_keys": [
+                "press_freedom_score",
+                "journalists_killed",
+                "journalists_jailed"
+              ],
+              "candidate_sources": [
+                "RSF",
+                "CPJ"
+              ]
+            },
+            {
+              "id": "B5.2",
+              "name_en": "Media ownership",
+              "name_bg": "Собственост на медии",
+              "wanted_keys": [
+                "media_ownership_concentration"
+              ],
+              "candidate_sources": [
+                "Media Ownership Monitor"
+              ]
+            },
+            {
+              "id": "B5.3",
+              "name_en": "Censorship and internet shutdowns",
+              "name_bg": "Цензура и спирания на интернет",
+              "wanted_keys": [
+                "internet_shutdowns",
+                "censorship_events"
+              ],
+              "candidate_sources": [
+                "IODA",
+                "AccessNow"
+              ]
+            },
+            {
+              "id": "B5.4",
+              "name_en": "Propaganda and disinformation",
+              "name_bg": "Пропаганда и дезинформация",
+              "wanted_keys": [
+                "state_disinformation_index"
+              ],
+              "candidate_sources": [
+                "V-Dem"
+              ]
+            },
+            {
+              "id": "B5.5",
+              "name_en": "Surveillance",
+              "name_bg": "Наблюдение",
+              "wanted_keys": [
+                "surveillance_laws",
+                "spyware_incidents"
+              ],
+              "candidate_sources": [
+                "Citizen Lab"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B6",
+          "name_en": "SCIENCE AND TECHNOLOGY",
+          "name_bg": "Наука и технологии",
+          "subgoal": "KNOWLEDGE_UNDERSTANDING",
+          "subcategories": [
+            {
+              "id": "B6.1",
+              "name_en": "Research and open science",
+              "name_bg": "Изследвания и отворена наука",
+              "wanted_keys": [
+                "rd_spending_pct_gdp",
+                "open_access_share"
+              ],
+              "candidate_sources": [
+                "UNESCO",
+                "OECD"
+              ]
+            },
+            {
+              "id": "B6.2",
+              "name_en": "AI",
+              "name_bg": "Изкуствен интелект",
+              "wanted_keys": [
+                "ai_incidents",
+                "ai_compute_concentration",
+                "ai_governance_measures"
+              ],
+              "candidate_sources": [
+                "AI Incident Database"
+              ]
+            },
+            {
+              "id": "B6.3",
+              "name_en": "Biotechnology",
+              "name_bg": "Биотехнологии",
+              "wanted_keys": [
+                "biosafety_incidents",
+                "biotech_governance"
+              ],
+              "candidate_sources": [
+                "WHO"
+              ]
+            },
+            {
+              "id": "B6.4",
+              "name_en": "Access to technology",
+              "name_bg": "Достъп до технологии",
+              "wanted_keys": [
+                "technology_access_gap"
+              ],
+              "candidate_sources": [
+                "ITU",
+                "World Bank"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B7",
+          "name_en": "POPULATION AND MOVEMENT",
+          "name_bg": "Население и движение",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B7.1",
+              "name_en": "Size and age structure",
+              "name_bg": "Брой и възрастова структура",
+              "wanted_keys": [
+                "population",
+                "dependency_ratio"
+              ],
+              "candidate_sources": [
+                "UN DESA"
+              ]
+            },
+            {
+              "id": "B7.2",
+              "name_en": "Fertility and mortality",
+              "name_bg": "Раждаемост и смъртност",
+              "wanted_keys": [
+                "fertility_rate",
+                "crude_death_rate"
+              ],
+              "candidate_sources": [
+                "UN DESA"
+              ]
+            },
+            {
+              "id": "B7.3",
+              "name_en": "Migration flows",
+              "name_bg": "Миграционни потоци",
+              "wanted_keys": [
+                "net_migration"
+              ],
+              "candidate_sources": [
+                "UN DESA",
+                "IOM"
+              ]
+            },
+            {
+              "id": "B7.4",
+              "name_en": "Urbanization",
+              "name_bg": "Урбанизация",
+              "wanted_keys": [
+                "urban_population_pct"
+              ],
+              "candidate_sources": [
+                "UN DESA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "B8",
+          "name_en": "HEALTH SYSTEMS",
+          "name_bg": "Здравни системи",
+          "subgoal": "CIVILIZATIONAL_STABILITY",
+          "subcategories": [
+            {
+              "id": "B8.1",
+              "name_en": "Workforce and capacity",
+              "name_bg": "Кадри и капацитет",
+              "wanted_keys": [
+                "health_workers_per_10k",
+                "hospital_beds_per_10k"
+              ],
+              "candidate_sources": [
+                "WHO"
+              ]
+            },
+            {
+              "id": "B8.2",
+              "name_en": "Pandemic preparedness",
+              "name_bg": "Готовност за пандемии",
+              "wanted_keys": [
+                "ihr_capacity_score"
+              ],
+              "candidate_sources": [
+                "WHO"
+              ]
+            },
+            {
+              "id": "B8.3",
+              "name_en": "Medicines and vaccines supply",
+              "name_bg": "Лекарства и ваксини",
+              "wanted_keys": [
+                "essential_medicines_availability",
+                "vaccine_supply"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "UNICEF"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name_en": "THE PLANET",
+      "name_bg": "Планетата",
+      "categories": [
+        {
+          "id": "C1",
+          "name_en": "CLIMATE",
+          "name_bg": "Климат",
+          "subgoal": "HEALTHY_ENVIRONMENTS",
+          "subcategories": [
+            {
+              "id": "C1.1",
+              "name_en": "Greenhouse-gas concentrations",
+              "name_bg": "Концентрации на парникови газове",
+              "wanted_keys": [
+                "co2_ppm_mauna_loa",
+                "ch4_ppb"
+              ],
+              "candidate_sources": [
+                "NOAA"
+              ]
+            },
+            {
+              "id": "C1.2",
+              "name_en": "Emissions",
+              "name_bg": "Емисии",
+              "wanted_keys": [
+                "co2_emissions_by_country",
+                "emissions_by_sector"
+              ],
+              "candidate_sources": [
+                "Global Carbon Project"
+              ]
+            },
+            {
+              "id": "C1.3",
+              "name_en": "Temperature of air and ocean",
+              "name_bg": "Температура на въздух и океан",
+              "wanted_keys": [
+                "global_temp_anomaly",
+                "sea_surface_temp_anomaly"
+              ],
+              "candidate_sources": [
+                "Copernicus",
+                "NASA"
+              ]
+            },
+            {
+              "id": "C1.4",
+              "name_en": "Ice and sea level",
+              "name_bg": "Лед и морско равнище",
+              "wanted_keys": [
+                "sea_ice_extent",
+                "sea_level_rise_mm"
+              ],
+              "candidate_sources": [
+                "NSIDC",
+                "NASA"
+              ]
+            },
+            {
+              "id": "C1.5",
+              "name_en": "Extreme events",
+              "name_bg": "Екстремни явления",
+              "wanted_keys": [
+                "extreme_weather_events"
+              ],
+              "candidate_sources": [
+                "GDACS",
+                "EONET"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C2",
+          "name_en": "LIVING NATURE",
+          "name_bg": "Жива природа",
+          "subgoal": "HEALTHY_ENVIRONMENTS",
+          "subcategories": [
+            {
+              "id": "C2.1",
+              "name_en": "Forests",
+              "name_bg": "Гори",
+              "wanted_keys": [
+                "forest_area_pct",
+                "tree_cover_loss"
+              ],
+              "candidate_sources": [
+                "Global Forest Watch",
+                "FAO"
+              ]
+            },
+            {
+              "id": "C2.2",
+              "name_en": "Species and extinction risk",
+              "name_bg": "Видове и риск от изчезване",
+              "wanted_keys": [
+                "red_list_index",
+                "threatened_species"
+              ],
+              "candidate_sources": [
+                "IUCN"
+              ]
+            },
+            {
+              "id": "C2.3",
+              "name_en": "Oceans and fisheries",
+              "name_bg": "Океани и риболов",
+              "wanted_keys": [
+                "overfished_stocks_pct",
+                "ocean_acidity"
+              ],
+              "candidate_sources": [
+                "FAO"
+              ]
+            },
+            {
+              "id": "C2.4",
+              "name_en": "Soils",
+              "name_bg": "Почви",
+              "wanted_keys": [
+                "land_degradation_pct"
+              ],
+              "candidate_sources": [
+                "UNCCD"
+              ]
+            },
+            {
+              "id": "C2.5",
+              "name_en": "Protected areas",
+              "name_bg": "Защитени територии",
+              "wanted_keys": [
+                "protected_terrestrial_area_pct",
+                "protected_marine_area_pct"
+              ],
+              "candidate_sources": [
+                "Protected Planet"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C3",
+          "name_en": "RESOURCES AND FLOWS",
+          "name_bg": "Ресурси и потоци",
+          "subgoal": "SUSTAINABLE_RESOURCES",
+          "subcategories": [
+            {
+              "id": "C3.1",
+              "name_en": "Fresh water",
+              "name_bg": "Сладка вода",
+              "wanted_keys": [
+                "water_stress_pct",
+                "freshwater_per_capita"
+              ],
+              "candidate_sources": [
+                "FAO AQUASTAT"
+              ]
+            },
+            {
+              "id": "C3.2",
+              "name_en": "Land",
+              "name_bg": "Земя",
+              "wanted_keys": [
+                "arable_land_per_capita"
+              ],
+              "candidate_sources": [
+                "FAO"
+              ]
+            },
+            {
+              "id": "C3.3",
+              "name_en": "Energy",
+              "name_bg": "Енергия",
+              "wanted_keys": [
+                "renewable_energy_pct",
+                "primary_energy_supply",
+                "fossil_reserves"
+              ],
+              "candidate_sources": [
+                "IEA"
+              ]
+            },
+            {
+              "id": "C3.4",
+              "name_en": "Minerals",
+              "name_bg": "Минерали",
+              "wanted_keys": [
+                "critical_minerals_supply"
+              ],
+              "candidate_sources": [
+                "USGS"
+              ]
+            },
+            {
+              "id": "C3.5",
+              "name_en": "Waste and circularity",
+              "name_bg": "Отпадъци и кръгови потоци",
+              "wanted_keys": [
+                "waste_per_capita",
+                "recycling_rate_pct",
+                "circularity_rate_pct"
+              ],
+              "candidate_sources": [
+                "UNEP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C4",
+          "name_en": "POLLUTION",
+          "name_bg": "Замърсяване",
+          "subgoal": "HEALTHY_ENVIRONMENTS",
+          "subcategories": [
+            {
+              "id": "C4.1",
+              "name_en": "Air",
+              "name_bg": "Въздух",
+              "wanted_keys": [
+                "pm25_exposure"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "OpenAQ"
+              ]
+            },
+            {
+              "id": "C4.2",
+              "name_en": "Water",
+              "name_bg": "Вода",
+              "wanted_keys": [
+                "water_quality_index"
+              ],
+              "candidate_sources": [
+                "UNEP"
+              ]
+            },
+            {
+              "id": "C4.3",
+              "name_en": "Plastics",
+              "name_bg": "Пластмаси",
+              "wanted_keys": [
+                "plastic_waste_leakage"
+              ],
+              "candidate_sources": [
+                "UNEP"
+              ]
+            },
+            {
+              "id": "C4.4",
+              "name_en": "Chemicals, nitrogen, phosphorus",
+              "name_bg": "Химикали, азот, фосфор",
+              "wanted_keys": [
+                "nitrogen_surplus",
+                "chemical_incidents"
+              ],
+              "candidate_sources": [
+                "UNEP",
+                "FAO"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C5",
+          "name_en": "NATURAL HAZARDS",
+          "name_bg": "Природни опасности",
+          "subgoal": "SAFETY",
+          "subcategories": [
+            {
+              "id": "C5.1",
+              "name_en": "Geophysical",
+              "name_bg": "Геофизични",
+              "wanted_keys": [
+                "quake_m45_count",
+                "volcanic_eruptions"
+              ],
+              "candidate_sources": [
+                "USGS"
+              ]
+            },
+            {
+              "id": "C5.2",
+              "name_en": "Floods, droughts, storms",
+              "name_bg": "Наводнения, суши, бури",
+              "wanted_keys": [
+                "flood_events",
+                "drought_area",
+                "severe_storm_events"
+              ],
+              "candidate_sources": [
+                "GDACS",
+                "EONET"
+              ]
+            },
+            {
+              "id": "C5.3",
+              "name_en": "Wildfires",
+              "name_bg": "Пожари",
+              "wanted_keys": [
+                "wildfire_events",
+                "burned_area"
+              ],
+              "candidate_sources": [
+                "NASA FIRMS",
+                "GDACS"
+              ]
+            },
+            {
+              "id": "C5.4",
+              "name_en": "Biological",
+              "name_bg": "Биологични",
+              "wanted_keys": [
+                "zoonotic_spillover_events"
+              ],
+              "candidate_sources": [
+                "WHO",
+                "WOAH"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "C6",
+          "name_en": "CARRYING CAPACITY",
+          "name_bg": "Носеща способност",
+          "subgoal": "HEALTHY_ENVIRONMENTS",
+          "subcategories": [
+            {
+              "id": "C6.1",
+              "name_en": "Planetary boundaries",
+              "name_bg": "Планетарни граници",
+              "wanted_keys": [
+                "planetary_boundaries_crossed"
+              ],
+              "candidate_sources": [
+                "Stockholm Resilience Centre"
+              ]
+            },
+            {
+              "id": "C6.2",
+              "name_en": "Footprint against biocapacity",
+              "name_bg": "Отпечатък срещу биокапацитет",
+              "wanted_keys": [
+                "ecological_footprint_ratio"
+              ],
+              "candidate_sources": [
+                "Global Footprint Network"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "name_en": "THE LONG FUTURE AND THE COSMOS",
+      "name_bg": "Дългото бъдеще и космосът",
+      "categories": [
+        {
+          "id": "D1",
+          "name_en": "EXISTENTIAL RISKS",
+          "name_bg": "Екзистенциални рискове",
+          "subgoal": "SAFETY",
+          "subcategories": [
+            {
+              "id": "D1.1",
+              "name_en": "Nuclear",
+              "name_bg": "Ядрен",
+              "wanted_keys": [
+                "nuclear_warheads_deployed",
+                "nuclear_treaty_status"
+              ],
+              "candidate_sources": [
+                "SIPRI"
+              ]
+            },
+            {
+              "id": "D1.2",
+              "name_en": "Pandemics",
+              "name_bg": "Пандемии",
+              "wanted_keys": [
+                "pandemic_potential_outbreaks",
+                "high_containment_lab_incidents"
+              ],
+              "candidate_sources": [
+                "WHO"
+              ]
+            },
+            {
+              "id": "D1.3",
+              "name_en": "AI",
+              "name_bg": "Изкуствен интелект",
+              "wanted_keys": [
+                "frontier_ai_incidents",
+                "ai_safety_commitments"
+              ],
+              "candidate_sources": [
+                "AI Incident Database"
+              ]
+            },
+            {
+              "id": "D1.4",
+              "name_en": "Climate tipping points",
+              "name_bg": "Климатични точки на прелом",
+              "wanted_keys": [
+                "tipping_elements_status"
+              ],
+              "candidate_sources": [
+                "IPCC"
+              ]
+            },
+            {
+              "id": "D1.5",
+              "name_en": "Cosmic",
+              "name_bg": "Космически",
+              "wanted_keys": [
+                "near_earth_object_close_approaches",
+                "solar_storm_events"
+              ],
+              "candidate_sources": [
+                "NASA CNEOS",
+                "NOAA SWPC"
+              ]
+            },
+            {
+              "id": "D1.6",
+              "name_en": "Geological",
+              "name_bg": "Геоложки",
+              "wanted_keys": [
+                "supervolcano_unrest"
+              ],
+              "candidate_sources": [
+                "USGS"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "D2",
+          "name_en": "SPACE",
+          "name_bg": "Космос",
+          "subgoal": "SAFETY",
+          "subcategories": [
+            {
+              "id": "D2.1",
+              "name_en": "Access to space",
+              "name_bg": "Достъп до космоса",
+              "wanted_keys": [
+                "orbital_launches"
+              ],
+              "candidate_sources": [
+                "CelesTrak"
+              ]
+            },
+            {
+              "id": "D2.2",
+              "name_en": "Orbital infrastructure and debris",
+              "name_bg": "Орбитална инфраструктура и отломки",
+              "wanted_keys": [
+                "active_satellites",
+                "tracked_debris"
+              ],
+              "candidate_sources": [
+                "CelesTrak",
+                "ESA"
+              ]
+            },
+            {
+              "id": "D2.3",
+              "name_en": "Space resources",
+              "name_bg": "Космически ресурси",
+              "wanted_keys": [
+                "space_resource_missions"
+              ],
+              "candidate_sources": [
+                "NASA",
+                "ESA"
+              ]
+            },
+            {
+              "id": "D2.4",
+              "name_en": "Planetary defence",
+              "name_bg": "Планетарна защита",
+              "wanted_keys": [
+                "neo_survey_completeness"
+              ],
+              "candidate_sources": [
+                "NASA CNEOS"
+              ]
+            },
+            {
+              "id": "D2.5",
+              "name_en": "Living off Earth",
+              "name_bg": "Живот извън Земята",
+              "wanted_keys": [
+                "humans_in_orbit",
+                "off_earth_habitat_days"
+              ],
+              "candidate_sources": [
+                "NASA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "D3",
+          "name_en": "KNOWLEDGE FOR FUTURE GENERATIONS",
+          "name_bg": "Знание за бъдещите поколения",
+          "subgoal": "KNOWLEDGE_UNDERSTANDING",
+          "subcategories": [
+            {
+              "id": "D3.1",
+              "name_en": "Preservation of knowledge",
+              "name_bg": "Съхранение на знанието",
+              "wanted_keys": [
+                "knowledge_preservation_status"
+              ],
+              "candidate_sources": [
+                "UNESCO"
+              ]
+            },
+            {
+              "id": "D3.2",
+              "name_en": "Resilience of critical systems",
+              "name_bg": "Устойчивост на критичните системи",
+              "wanted_keys": [
+                "critical_system_failures"
+              ],
+              "candidate_sources": [
+                "national reports"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "name_en": "THE SYSTEM ITSELF",
+      "name_bg": "Самата система",
+      "categories": [
+        {
+          "id": "E1",
+          "name_en": "BODY",
+          "name_bg": "Тяло",
+          "subgoal": "SYSTEM",
+          "subcategories": [
+            {
+              "id": "E1.1",
+              "name_en": "Energy",
+              "name_bg": "Енергия",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.2",
+              "name_en": "Thermal",
+              "name_bg": "Температура",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.3",
+              "name_en": "Compute",
+              "name_bg": "Изчисление",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.4",
+              "name_en": "Memory",
+              "name_bg": "Памет",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.5",
+              "name_en": "Storage",
+              "name_bg": "Съхранение",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.6",
+              "name_en": "Network",
+              "name_bg": "Мрежа",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.7",
+              "name_en": "Periphery",
+              "name_bg": "Периферия",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.8",
+              "name_en": "Acoustic",
+              "name_bg": "Звук",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.9",
+              "name_en": "Optic",
+              "name_bg": "Светлина",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            },
+            {
+              "id": "E1.10",
+              "name_en": "Logs",
+              "name_bg": "Логове",
+              "wanted_keys": [],
+              "candidate_sources": [
+                "cockpit/somatic.py"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "E2",
+          "name_en": "MIND",
+          "name_bg": "Ум",
+          "subgoal": "SYSTEM",
+          "subcategories": [
+            {
+              "id": "E2.1",
+              "name_en": "Coverage of this tree",
+              "name_bg": "Покритие на дървото",
+              "wanted_keys": [
+                "subcategories_seen"
+              ],
+              "candidate_sources": [
+                "tools/taxonomy_coverage.py"
+              ]
+            },
+            {
+              "id": "E2.2",
+              "name_en": "Forecast accuracy and calibration",
+              "name_bg": "Точност и калибрация",
+              "wanted_keys": [
+                "forecast_error_vs_baseline",
+                "interval_coverage"
+              ],
+              "candidate_sources": [
+                "prophecy ledger"
+              ]
+            },
+            {
+              "id": "E2.3",
+              "name_en": "Learning",
+              "name_bg": "Учене",
+              "wanted_keys": [
+                "learner_margin_over_baseline"
+              ],
+              "candidate_sources": [
+                "learner_progress"
+              ]
+            },
+            {
+              "id": "E2.4",
+              "name_en": "Requests asked and answered",
+              "name_bg": "Заявки и отговори",
+              "wanted_keys": [
+                "requests_emitted",
+                "requests_with_effect"
+              ],
+              "candidate_sources": [
+                "request ledger"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "E3",
+          "name_en": "SPIRIT",
+          "name_bg": "Дух",
+          "subgoal": "SYSTEM",
+          "subcategories": [
+            {
+              "id": "E3.1",
+              "name_en": "Distance to the goal",
+              "name_bg": "Разстояние до целта",
+              "wanted_keys": [
+                "goal_coverage",
+                "goal_distance"
+              ],
+              "candidate_sources": [
+                "goal_score"
+              ]
+            },
+            {
+              "id": "E3.2",
+              "name_en": "Boundaries kept",
+              "name_bg": "Спазени граници",
+              "wanted_keys": [
+                "boundary_violations"
+              ],
+              "candidate_sources": [
+                "witness"
+              ]
+            },
+            {
+              "id": "E3.3",
+              "name_en": "Autonomy record",
+              "name_bg": "Запис на автономията",
+              "wanted_keys": [
+                "patches_admitted",
+                "patches_refused",
+                "patches_reverted"
+              ],
+              "candidate_sources": [
+                "notary"
+              ]
+            },
+            {
+              "id": "E3.4",
+              "name_en": "Own promises kept",
+              "name_bg": "Спазени собствени обещания",
+              "wanted_keys": [
+                "preregistrations_resolved",
+                "preregistrations_broken"
+              ],
+              "candidate_sources": [
+                "Institution 0 register"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
