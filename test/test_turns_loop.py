@@ -101,3 +101,15 @@ def test_main_never_probes_a_pid_with_os_kill():
     calls = {f"{n.func.value.id}.{n.func.attr}" for n in ast.walk(tree) if isinstance(n, ast.Call)
              and isinstance(n.func, ast.Attribute) and isinstance(n.func.value, ast.Name)}
     assert "os.kill" not in calls, "os.kill(pid, 0) terminates the process on Windows"
+
+
+def test_the_turns_own_cause_reaches_hand_over_even_when_the_witness_returns_0(p):
+    """1 Oct 2026, 18:38: the witness process returned 0 while the turn exited 2
+    with a named cause; the loop passed no cause and the baton stuck."""
+    def run(holder, cycle_id):
+        p["witness"][cycle_id] = {"exit_code": 2}
+        p["result"].write_text(json.dumps({"utc": "9999-12-31T00:00:00Z", "summary": "stopped",
+                                           "cause": "hyperon did not run"}), encoding="utf-8")
+        return 0                                   # the witness's own exit code
+    r = _loop(p, run, max_turns=1)
+    assert r["turns"][0]["handed"], "the named cause did not reach hand_over"

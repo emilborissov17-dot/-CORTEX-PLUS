@@ -90,7 +90,9 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
         rc = run_turn(holder, cycle_id)
         res = _result_since(started, result_path)
         h = (hand or turn.hand_over)(nxt, res.get("summary") or f"{holder} turn ended rc={rc}", cycle_id,
-                                     cause=(res.get("cause") if rc != 0 else None), path=turn_path, log_path=log_path)
+                                     # the turn's own named cause, whatever the witness PROCESS returned:
+                                     # hand_over judges the exit code from the witness's exit row
+                                     cause=res.get("cause"), path=turn_path, log_path=log_path)
         done.append({"holder": holder, "cycle_id": cycle_id, "rc": rc, "seconds": round(time.time() - t0, 1),
                      "handed": h.get("handed"), "summary": res.get("summary")})
         if not h.get("handed"):

@@ -278,6 +278,15 @@ def parse(expr: str):
     return one()
 
 
+def engine_program(base: str, proposed: str, rules: str) -> str:
+    """What hyperon runs: base WITHOUT its (statement ...) lines, the brain's
+    proposed expressions, the rules. No rule reads a statement line, and with the
+    labels written there were ~130k of them: base.metta held 132,261 expressions
+    and hyperon 0.2.10 panicked (1 Oct 2026, 18:38). base.metta keeps them all."""
+    kept = [l for l in base.splitlines() if not l.startswith("(statement ")]
+    return "\n".join(kept) + "\n" + proposed + "\n" + rules
+
+
 def derive(paths=None, engine: Optional[Callable] = None) -> dict:
     d = Path(_p(paths, "dir"))
     base = (d / "base.metta").read_text(encoding="utf-8")
@@ -285,7 +294,7 @@ def derive(paths=None, engine: Optional[Callable] = None) -> dict:
     prop = proposed.read_text(encoding="utf-8") if proposed.exists() else ""
     rules = Path(_p(paths, "rules")).read_text(encoding="utf-8")
     t0 = time.time()
-    raw = (engine or hyperon_engine)(base + "\n" + prop + "\n" + rules)
+    raw = (engine or hyperon_engine)(engine_program(base, prop, rules))
     secs = round(time.time() - t0, 2)
     seen, derived = set(), []
     for e in raw:

@@ -218,3 +218,27 @@ def test_stale_sources_are_handed_to_maintenance(tmp_path):
     _derive(tmp_path, STALE)
     h = json.loads((tmp_path / "space" / "stale_for_maintenance.json").read_text(encoding="utf-8"))
     assert h == {"atoms": ["a-1", "a-3"], "sources": ["s"]}
+
+
+def test_statement_lines_stay_in_base_but_are_not_sent_to_the_engine(tmp_path):
+    """1 Oct 2026, 18:38: with the statement labels written, base.metta held 132,261
+    expressions and hyperon panicked. No rule reads (statement ...); the engine gets
+    every other line."""
+    sent = []
+    d = tmp_path / "space"
+    d.mkdir()
+    (d / "base.metta").write_text('(statement "s1" "A1.1" "who.int")\n(obs "a-1" "A1.1" "k" "WLD" "2024" 1.0 "u" "s")\n',
+                                  encoding="utf-8")
+    (tmp_path / "r.metta").write_text("", encoding="utf-8")
+    sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"},
+              engine=lambda prog: sent.append(prog) or [])
+    assert "(obs " in sent[0] and "(statement " not in sent[0]
+    assert "(statement " in (d / "base.metta").read_text(encoding="utf-8")
+
+
+def test_mutation_sending_everything_would_include_the_statements(tmp_path):
+    d = tmp_path / "space"
+    d.mkdir()
+    base = '(statement "s1" "A1.1" "who.int")\n'
+    (d / "base.metta").write_text(base, encoding="utf-8")
+    assert "(statement " in base and "(statement " not in sp.engine_program(base, "", "")
