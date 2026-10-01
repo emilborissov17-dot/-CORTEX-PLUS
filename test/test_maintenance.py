@@ -112,3 +112,16 @@ def test_the_taxonomy_field_is_renamed_and_its_writer_stated():
     raw = json.dumps(doc)
     assert '"candidate_sources"' not in raw
     assert "source_hints_unverified" in doc["_meta"] and "Claude" in doc["_meta"]["source_hints_unverified"]
+
+
+def test_a_source_listed_twice_is_one_cell(p):
+    cells = mt.cells(sources=SOURCES + [{"id": "s1", "url": "https://s1.org/again"}])
+    ids = [c["cell"] for c in cells]
+    assert len(ids) == len(set(ids))
+
+
+def test_a_refused_source_says_so_and_is_not_fetched(p):
+    worker = lambda s: {"cards": [], "refusals": [{"reason": "World Bank header, not an observation"}]}
+    r = _run(p, 5, worker=worker)
+    src = [x for x in r["rows"] if x["cell"].startswith("src:")]
+    assert all(x["verdict"] == "LABEL_REFUSED" and "header" in x["why"] for x in src)

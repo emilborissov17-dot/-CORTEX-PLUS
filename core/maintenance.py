@@ -59,7 +59,11 @@ def cells(tree: Optional[dict] = None, sources: Optional[list] = None) -> list:
     if sources is None:
         from scripts.openclaw_axis_worker import all_sources
         sources, _ = all_sources()
-    out += [{"cell": f"src:{s['id']}", "kind": "source", "source": s} for s in sources if s.get("id")]
+    seen = set()
+    for s in sources:
+        if s.get("id") and s["id"] not in seen:          # a source listed twice is one cell
+            seen.add(s["id"])
+            out.append({"cell": f"src:{s['id']}", "kind": "source", "source": s})
     return out
 
 
@@ -126,6 +130,8 @@ def _work_source(cell, worker_run) -> dict:
     r = worker_run(cell["source"])
     if r.get("unreachable"):
         return {"verdict": "NOTHING_FOUND", "why": r["unreachable"][0].get("reason")}
+    if r.get("refusals") and not r.get("cards"):
+        return {"verdict": "LABEL_REFUSED", "why": r["refusals"][0].get("reason")}
     return {"verdict": "FETCHED", "cards": len(r.get("cards") or []),
             "note": "UNCHANGED/CHANGED is registered by core.atoms.write when card_intake judges the card"}
 
