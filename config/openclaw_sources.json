@@ -1,17 +1,24 @@
 {
   "_what_this_is": [
-    "Sources the DMZ fetch worker (scripts/openclaw_axis_worker.py) may reach.",
-    "One entry = one URL, one path into its JSON, one axis+key it feeds.",
+    "THE SEED: where the search for sources STARTS, not a fence around it.",
+    "Ruled by Emil 1 Oct 2026 (R27, command C-OC-3): sources are not a fixed list.",
+    "One entry = one URL and, where a number is wanted, one path (or a `parallel`",
+    "spec) into its JSON plus the key and subcategory it is offered for.",
     "",
-    "THIS FILE IS THE ALLOWLIST. The worker fetches nothing that is not named",
-    "here, so widening what CORTEX reaches from the outside world is a human",
-    "edit to a config file, not a decision a model can make at runtime.",
-    "docs/OPENCLAW_INTEGRATION_DESIGN.md: 'Неизвестното = изисква одобрение.'"
+    "WHAT REPLACED THE ALLOWLIST is the fetch standard in core/fetch_standard.py:",
+    "GET only; no credentials, cookies, auth headers or form posts; no private,",
+    "loopback or LAN address; body <= 5 MB; timeout 30 s; one request per host",
+    "per 2 s. Each rule has a mutation test in test/test_fetch_standard.py.",
+    "A source is parked after 3 consecutive failures and retried when a need",
+    "names it."
   ],
   "_the_contract": [
-    "Whatever the path resolves to must be a finite number. A string, a null, a",
-    "list, a bool — all refused, by name, into external_refusals.jsonl. The",
-    "number is what crosses the boundary; nothing else does."
+    "ONE CRITERION, and it is on us: what we attribute to a source must really be",
+    "in that source. Every fetched page enters the statement store whole; a number",
+    "read at the declared path ALSO becomes a card. Two refusals remain, both of",
+    "our claim: a quote not on the page (core/quote_gate.py) and a label that",
+    "contradicts the page's own structure (the World Bank header count). Tests:",
+    "test/test_open_criterion.py."
   ],
   "_data_date_path": [
     "OPTIONAL, and only where the payload REALLY carries the reading's own date.",

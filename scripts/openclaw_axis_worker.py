@@ -585,14 +585,18 @@ def get_page(source: dict, timeout: int, getter=None) -> dict:
         else:
             status, payload, err = got
     else:
-        import requests
+        # the fetch standard (C-OC-3 Part 2): GET only, no credentials or cookies,
+        # no private/loopback/LAN address on any hop, <= 5 MB, <= 30 s, 2 s per host
+        from core import fetch_standard as _fs
         try:
-            r = requests.get(url, timeout=timeout, headers={"User-Agent": "CORTEX-DMZ-worker/1.0"})
-            status, raw, ctype = r.status_code, r.text, r.headers.get("content-type", "")
+            got = _fs.get(url, timeout=min(timeout, _fs.TIMEOUT_S))
+            status, raw, ctype = got["status"], got["raw"], got["content_type"]
             try:
                 payload = json.loads(raw)
             except Exception:  # noqa: BLE001
                 payload = None
+        except _fs.FetchRefused as exc:
+            status, err = None, f"REFUSED_BY_FETCH_STANDARD: {exc}"
         except Exception as exc:  # noqa: BLE001
             status, err = None, f"{type(exc).__name__}: {exc}"
             network = is_network_error(exc)
@@ -756,7 +760,8 @@ def _peer_for(axis: str, key: str, queue_dir: pathlib.Path) -> float | None:
 
 
 def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
-        discovered_path=None, lifecycle_state=None, ledger=None, ingest=None) -> dict:
+        discovered_path=None, lifecycle_state=None, ledger=None, ingest=None,
+        parking=None, wanted=None) -> dict:
     """One pass. C-OC-3: EVERY fetched page enters the store as statements (via
     `ingest`, which main() passes as core.knowledge.ingest; a library or test
     call passes nothing and nothing is written). In addition, a number read at
@@ -770,7 +775,9 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     own_state = lifecycle_state is None
     lstate = life.load() if own_state else lifecycle_state
 
-    feeds, carded, stored, refusals, unreachable, cards = [], [], [], [], [], []
+    from core import fetch_standard as _fs
+    wanted = set(wanted or ())
+    feeds, carded, stored, refusals, unreachable, cards, parked = [], [], [], [], [], [], []
     pages = {"ingested": 0, "skipped_same_content": 0, "statements_added": 0,
              "page_only": 0, "needs": []}
     for source in sources:
@@ -780,7 +787,17 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
         if sub_bad:
             # a wrong LABEL is dropped, the source is not
             source = {**source, "subcategory": None}
+        # PARKED after 3 consecutive failures; a need that names it unparks it
+        if parking is not None and _fs.is_parked(sid, parking):
+            if sid in wanted:
+                _fs.unpark(sid, "named by a need", parking)
+            else:
+                parked.append({"ts": _now(), "source_id": sid, "status": "PARKED"})
+                continue
         page = get_page(source, timeout, getter)
+        if parking is not None:
+            _fs.record(sid, ok=not page["err"] and page["status"] == 200,
+                       err=page["err"] or f"HTTP {page['status']}", path=parking)
         if page["err"] or page["status"] != 200:
             reason = page["err"] or f"HTTP {page['status']}"
             life.observe(sid, axis=axis, ok=False, reason=reason, state=lstate, ledger=ledger)
@@ -865,7 +882,7 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
                     and len(net_fail) == len(net_sources))
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
             "carded": carded, "declared": carded, "stored": stored, "shadows": stored,
-            "refusals": refusals, "unreachable": unreachable, "cards": cards, "pages": pages,
+            "refusals": refusals, "unreachable": unreachable, "parked": parked, "cards": cards, "pages": pages,
             "lifecycle": counts, "network_down": network_down}
 
 
@@ -916,8 +933,10 @@ def main() -> int:
                "ts": _now(), "pid": os.getpid(), "dry_run": bool(a.dry_run)})
     try:
         from core import knowledge as _kn
+        from core import fetch_standard as _fs_main
         result = run_with_retry(lambda: run(pathlib.Path(a.sources) if a.sources else None,
-                                            dry_run=a.dry_run, ingest=_kn.ingest))
+                                            dry_run=a.dry_run, ingest=_kn.ingest,
+                                            parking=_fs_main.PARKING))
     except BaseException as exc:                                  # noqa: BLE001
         # A CRASH IS A FINISH, recorded with its reason and then RE-RAISED.
         # Nothing is swallowed here; what must stay unrecorded is a process that
@@ -952,6 +971,7 @@ def main() -> int:
                "stored": len(result.get("stored", [])),
                "label_refused": len(result["refusals"]),
                "unreachable": len(result.get("unreachable", [])),
+               "parked": len(result.get("parked", [])),
                "pages_ingested": (result.get("pages") or {}).get("ingested", 0),
                "statements_added": (result.get("pages") or {}).get("statements_added", 0),
                "pages_same_content": (result.get("pages") or {}).get("skipped_same_content", 0),

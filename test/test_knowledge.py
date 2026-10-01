@@ -184,3 +184,62 @@ def test_embed_pending_checkpoints_so_a_killed_run_keeps_its_vectors(paths):
                          ids_path=paths["ids"])
     ids, mat = kn.load_vectors(paths["vec"], paths["ids"])
     assert len(ids) == 256 * 20 == mat.shape[0]
+
+
+# ── existing caches (Part 2) ────────────────────────────────────────────────
+def _caches(tmp_path):
+    wi = tmp_path / "wi" / "2026-09-30" / "planet"; wi.mkdir(parents=True)
+    item = {"title": "Sea ice hits a record low", "summary": "Antarctic winter ice peaked early.",
+            "link": "https://nsidc.org/a"}
+    (wi / "x_web_intel.json").write_text(json.dumps({"raw_items": [item], "analysis": {
+        "problem": "MODEL SAID THIS"}}), encoding="utf-8")
+    wi2 = tmp_path / "wi" / "2026-10-01"; wi2.mkdir(parents=True)
+    (wi2 / "y_web_intel.json").write_text(json.dumps({"raw_items": [item]}), encoding="utf-8")   # same article again
+    news = tmp_path / "news" / "2026-10-01"; news.mkdir(parents=True)
+    (news / "e.json").write_text(json.dumps({"rss": [{"title": "Grid model opened", "snippet": "A tool.",
+                                                      "url": "https://t.org/g"}], "podcast": "A talk on AI."}),
+                                 encoding="utf-8")
+    (news / "broken.json").write_text("{not json", encoding="utf-8")
+    tr = tmp_path / "tr"; tr.mkdir()
+    (tr / "v1.json").write_text(json.dumps({"video_id": "v1", "transcript": "Hello there. Bye now."}),
+                                encoding="utf-8")
+    bs = tmp_path / "bs"; bs.mkdir()
+    (bs / "c.json").write_text(json.dumps({"metric": "conflicts", "value": 56, "source_url": "https://ucdp.uu.se/"}),
+                               encoding="utf-8")
+    return {"web_intelligence": tmp_path / "wi", "news": tmp_path / "news", "transcript_cache": tr,
+            "browse_sources": bs}
+
+
+def test_caches_ingest_per_item_with_counts_per_origin(paths, tmp_path):
+    roots = _caches(tmp_path)
+    r = kn.ingest_caches(roots=roots, store=paths["store"], seen_path=paths["seen"])
+    assert r["web_intelligence"]["items"] == 2 and r["web_intelligence"]["skipped_same_content"] == 1
+    assert r["news"]["items"] == 2 and r["news"]["unreadable_files"] == 1
+    assert r["transcript_cache"]["statements_added"] == 2 and r["browse_sources"]["statements_added"] >= 1
+    recs = kn.statements(paths["store"])
+    sents = " ".join(x["sentence"] for x in recs)
+    assert "MODEL SAID THIS" not in sents, "a model's analysis was stored as a source's words"
+    assert {x["host"] for x in recs if "Sea ice" in x["sentence"]} == {"nsidc.org"}
+    again = kn.ingest_caches(roots=roots, store=paths["store"], seen_path=paths["seen"])
+    assert sum(v["statements_added"] for v in again.values()) == 0, "a second pass wrote something twice"
+
+
+def test_a_transcript_ingested_before_under_its_path_is_held(paths, tmp_path):
+    roots = _caches(tmp_path)
+    from core import statements as st
+    sid = (roots["transcript_cache"] / "v1.json").as_posix()
+    rep = st.ingest_text(sid, "Hello there. Bye now.", origin="transcript")   # as statements.py --ingest did:
+    with paths["store"].open("a", encoding="utf-8") as fh:                     # straight to the store
+        for rec in rep["records"]:
+            fh.write(json.dumps(rec) + chr(10))
+    r = kn.ingest_caches(origins=["transcript_cache"], roots=roots, store=paths["store"], seen_path=paths["seen"])
+    assert r["transcript_cache"]["statements_added"] == 0 and r["transcript_cache"]["already_held"] == 2
+
+
+def test_ingest_batch_writes_the_seen_index_once(paths, monkeypatch):
+    writes = []
+    real = Path.write_text
+    monkeypatch.setattr(Path, "write_text", lambda self, *a, **k: (writes.append(self), real(self, *a, **k))[1])
+    kn.ingest_batch(({"source_id": f"s{i}", "text": f"Line {i}."} for i in range(50)),
+                    store=paths["store"], seen_path=paths["seen"])
+    assert writes.count(paths["seen"]) == 1

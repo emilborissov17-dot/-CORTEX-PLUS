@@ -196,11 +196,47 @@ def ingest(source_id: str, text: str, url: str = "", origin: str = "web",
            store: Optional[Path] = None, seen_path: Optional[Path] = None, extra: Optional[dict] = None) -> dict:
     """Every sentence of `text` into the store, unless this exact content from this
     source was ingested before. Returns counts; never refuses a page for its form."""
-    from core import statements as st
-    store = Path(store or STORE)
     seen_path = Path(seen_path or SEEN_CONTENT)
-    h = hashlib.sha256(f"{source_id}|{text}".encode("utf-8")).hexdigest()
     seen = _read_json(seen_path, {})
+    out = _ingest_one(source_id, text, url, origin, Path(store or STORE), seen, extra)
+    if out["outcome"] != "SKIPPED_SAME_CONTENT":
+        seen_path.parent.mkdir(parents=True, exist_ok=True)
+        seen_path.write_text(json.dumps(seen, ensure_ascii=False), encoding="utf-8")
+    return out
+
+
+def ingest_batch(items, store: Optional[Path] = None, seen_path: Optional[Path] = None) -> dict:
+    """Many (source_id, text, url, origin) at once: the seen-content index is read
+    once and written once, not once per item."""
+    store, seen_path = Path(store or STORE), Path(seen_path or SEEN_CONTENT)
+    seen = _read_json(seen_path, {})
+    tot = {"items": 0, "new_content": 0, "skipped_same_content": 0, "statements_added": 0,
+           "already_held": 0, "lost_text": 0}
+    for it in items:
+        tot["items"] += 1
+        try:
+            r = _ingest_one(it["source_id"], it["text"], it.get("url", ""), it.get("origin", "web"), store, seen,
+                            it.get("extra"))
+        except Exception as exc:                                     # noqa: BLE001
+            if type(exc).__name__ != "SegmentationLostText":
+                raise
+            tot["lost_text"] += 1
+            continue
+        if r["outcome"] == "SKIPPED_SAME_CONTENT":
+            tot["skipped_same_content"] += 1
+            continue
+        tot["new_content"] += 1
+        tot["statements_added"] += r["added"]
+        tot["already_held"] += r.get("already_held", 0)
+    seen_path.parent.mkdir(parents=True, exist_ok=True)
+    seen_path.write_text(json.dumps(seen, ensure_ascii=False), encoding="utf-8")
+    return tot
+
+
+def _ingest_one(source_id: str, text: str, url: str, origin: str, store: Path, seen: dict,
+                extra: Optional[dict] = None) -> dict:
+    from core import statements as st
+    h = hashlib.sha256(f"{source_id}|{text}".encode("utf-8")).hexdigest()
     if h in seen:
         return {"source_id": source_id, "outcome": "SKIPPED_SAME_CONTENT", "added": 0}
     rep = st.ingest_text(source_id, text, url=url, origin=origin,
@@ -217,10 +253,92 @@ def ingest(source_id: str, text: str, url: str = "", origin: str = "web",
     before.update(r["sentence"] for r in new_recs)
     seen[h] = {"source_id": source_id, "url": url, "origin": origin, "sentences": rep["sentences"],
                "added": len(new_recs), "ts": _now()}
-    seen_path.parent.mkdir(parents=True, exist_ok=True)
-    seen_path.write_text(json.dumps(seen, ensure_ascii=False), encoding="utf-8")
     return {"source_id": source_id, "outcome": rep["outcome"], "added": len(new_recs),
             "already_held": rep["sentences"] - len(new_recs), "segmentation": rep.get("segmentation")}
+
+
+# ── existing caches (C-OC-3 Part 2) ─────────────────────────────────────────
+# Each ITEM is ingested under its own url, so one article seen in many daily
+# files is one source and its sentences are held once. A model's own `analysis`
+# block is NOT a source's words and is not ingested.
+CACHES = {
+    "web_intelligence": REPO / "memory" / "web_intelligence",
+    "transcript_cache": REPO / "memory" / "transcript_cache",
+    "news": REPO / "news",
+    "browse_sources": REPO / "memory" / "browse_sources",
+}
+_ITEM_LISTS = ("raw_items", "youtube_items", "rss", "gdelt", "github_repos", "arxiv_papers")
+
+
+def _item_text(it: dict) -> str:
+    parts = [str(it.get(k)).strip() for k in ("title", "summary", "snippet", "description", "text")
+             if it.get(k)]
+    return ". ".join(p.rstrip(".") for p in parts) + ("." if parts else "")
+
+
+def cache_items(origin: str, root: Optional[Path] = None):
+    """Yield {source_id, text, url, origin} for one cache. Unreadable files are
+    yielded as {"unreadable": path} so they are counted, not lost."""
+    root = Path(root or CACHES[origin])
+    files = sorted(root.rglob("*.json")) if root.exists() else []
+    for f in files:
+        try:
+            blob = json.loads(f.read_text(encoding="utf-8", errors="replace"))
+        except (OSError, ValueError):
+            yield {"unreadable": str(f)}
+            continue
+        try:
+            rel = f.resolve().relative_to(REPO).as_posix()
+        except ValueError:
+            rel = f.as_posix()
+        if origin == "transcript_cache":
+            # the source_id core/statements.py --ingest already used, so the
+            # transcripts ingested before are recognised as held
+            if not isinstance(blob, dict):
+                continue
+            text, vid = blob.get("transcript") or "", blob.get("video_id")
+            if text:
+                yield {"source_id": rel, "text": text, "origin": "transcript",
+                       "url": f"https://www.youtube.com/watch?v={vid}" if vid else ""}
+            continue
+        if origin == "browse_sources":
+            yield {"source_id": rel, "text": flatten_json(blob), "origin": "browse_source",
+                   "url": (blob.get("source_url") or "") if isinstance(blob, dict) else ""}
+            continue
+        if not isinstance(blob, dict):
+            continue
+        for key in _ITEM_LISTS:
+            for i, it in enumerate(blob.get(key) or []):
+                if not isinstance(it, dict):
+                    continue
+                text = _item_text(it)
+                if not text:
+                    continue
+                url = it.get("link") or it.get("url") or ""
+                yield {"source_id": f"url:{url}" if url else f"{rel}#{key}{i}", "text": text,
+                       "url": url, "origin": origin}
+        if isinstance(blob.get("podcast"), str) and blob["podcast"].strip():
+            yield {"source_id": f"{rel}#podcast", "text": blob["podcast"], "url": "", "origin": origin}
+
+
+def ingest_caches(origins=None, roots: Optional[dict] = None, store=None, seen_path=None) -> dict:
+    """Counts per origin."""
+    out = {}
+    for origin in origins or CACHES:
+        unreadable = []
+
+        def items():
+            for it in cache_items(origin, (roots or {}).get(origin)):
+                if "unreadable" in it:
+                    unreadable.append(it["unreadable"])
+                    continue
+                yield it
+        t0 = time.time()
+        tot = ingest_batch(items(), store=store, seen_path=seen_path)
+        tot["unreadable_files"] = len(unreadable)
+        tot["seconds"] = round(time.time() - t0, 1)
+        out[origin] = tot
+    return out
 
 
 _HELD: dict = {}
@@ -493,6 +611,9 @@ if __name__ == "__main__":
         print(json.dumps(embed_pending()), flush=True)
         if "--label" not in sys.argv:
             sys.exit(0)
+    if "--ingest-caches" in sys.argv:
+        print(json.dumps(ingest_caches(), indent=1))
+        sys.exit(0)
     if "--label" in sys.argv:
         print(json.dumps(label_all()))
         sys.exit(0)
