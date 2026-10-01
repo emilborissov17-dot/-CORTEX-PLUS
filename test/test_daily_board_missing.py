@@ -188,7 +188,9 @@ def repo(tmp_path: Path) -> Path:
         "totals": {"world": {"seen": 2, "of": 105}, "system_E": {"seen": 0, "of": 18},
                    "overall": {"seen": 2, "of": 123},
                    "atoms": {"world": {"with_atoms": 1, "of": 105}},
-                   "current": {"world": {"current": 1, "of": 105}}},
+                   "current": {"world": {"current": 1, "of": 105}},
+                   "knowledge": {"world": {"known": 40, "measured": 1, "current": 1, "seen": 2, "of": 105},
+                                 "per_domain": {}, "statement_labels": "present", "rule": {}}},
         "not_seen_reasons_world": {"no live key is mapped to it": 67}}))
     return tmp_path
 
@@ -413,8 +415,8 @@ def test_an_unreadable_countries_shape_refuses_rather_than_counting_zero(repo: P
 # --------------------------------------------------------------------------- taxonomy coverage row
 def test_taxonomy_row_prints_todays_count_over_123(repo: Path):
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
-    assert r["headline"].startswith("world: SEEN 2/105 · CURRENT 1/105 · ATOMS 1/105")
-    assert "overall SEEN 2/123" in r["headline"] and "E 0/18" in r["headline"]
+    # C-OC-3 Part 4: the row reads totals.knowledge only
+    assert r["headline"] == "world: KNOWN 40/105 · MEASURED 1/105 · CURRENT 1/105 · SEEN 2/105"
     assert r["correction"] == "no"
 
 
@@ -444,19 +446,23 @@ def test_taxonomy_row_from_an_old_file_says_so_and_needs_correction(repo: Path):
     assert "has not been re-run" in r["ran"]
 
 
-def test_taxonomy_row_without_atoms_totals_is_missing_not_zero(repo: Path):
+def test_taxonomy_row_without_knowledge_totals_is_missing_not_zero(repo: Path):
+    """REWRITTEN 1 Oct 2026 (C-OC-3 Part 4): the row reads totals.knowledge; the
+    snapshot totals (atoms, current) are no longer what it shows."""
     p = repo / "memory/taxonomy_coverage_latest.json"
     d = json.loads(p.read_text(encoding="utf-8"))
-    del d["totals"]["atoms"]
+    del d["totals"]["knowledge"]
     _write(p, json.dumps(d))
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
-    assert r["status"] == "MISSING" and "ATOMS" not in r["headline"]
+    assert r["status"] == "MISSING" and "KNOWN" not in r["headline"]
 
 
-def test_taxonomy_row_without_current_totals_is_missing_not_zero(repo: Path):
+@pytest.mark.parametrize("count", ["known", "measured", "current", "seen"])
+def test_taxonomy_row_prints_missing_for_one_absent_count(repo: Path, count: str):
     p = repo / "memory/taxonomy_coverage_latest.json"
     d = json.loads(p.read_text(encoding="utf-8"))
-    del d["totals"]["current"]
+    d["totals"]["knowledge"]["world"][count] = None
     _write(p, json.dumps(d))
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
-    assert r["status"] == "MISSING" and "CURRENT" not in r["headline"]
+    assert f"{count.upper()} MISSING/105" in r["headline"]
+    assert r["headline"].count("MISSING") == 1, "one absent count took the others with it"

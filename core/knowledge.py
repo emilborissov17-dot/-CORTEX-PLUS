@@ -576,6 +576,100 @@ def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=No
     return items[:k]
 
 
+# ── coverage, through this module only (C-OC-3 Part 4) ──────────────────────
+CHANGE_MAX_AGE_DAYS = 45
+INDEPENDENT = ("independent", "adversarial")
+
+
+def subcategory_counts(labels_path=None, atoms_root=None) -> tuple:
+    """({sub_id: {"statements": n | None, "measurements": [atoms]}}, labels_present).
+    statements is None everywhere when the statement labels have not been computed:
+    an absent count is MISSING, never a zero."""
+    from core import atoms as _atoms
+    lp = Path(labels_path or LABELS)
+    labels = (_read_json(lp, {}) or {}).get("labels") if lp.exists() else None
+    out: dict = {}
+    if labels is not None:
+        for lab in labels.values():
+            s = lab.get("subcategory")
+            if s and s not in ("unplaced", "pending_vector"):
+                out.setdefault(s, {"statements": 0, "measurements": []})["statements"] += 1
+    for a in _atoms.read(root=atoms_root):
+        s = a.get("subcategory")
+        if s:
+            out.setdefault(s, {"statements": 0 if labels is not None else None, "measurements": []})
+            out[s]["measurements"].append(a)
+    return out, labels is not None
+
+
+def _key_seen(rows: list, today) -> bool:
+    """STATE + CHANGE + SOURCE on ONE key: a numeric value, a day-dated period at
+    most CHANGE_MAX_AGE_DAYS old, and an independent or adversarial source."""
+    from datetime import date
+    from core import atoms as _atoms
+    state = any(isinstance(a.get("value"), (int, float)) for a in rows)
+    change = False
+    for a in rows:
+        if _atoms.period_granularity(a.get("period")) == "day":
+            try:
+                change |= (today - date.fromisoformat(str(a["period"])[:10])).days <= CHANGE_MAX_AGE_DAYS
+            except ValueError:
+                pass
+    source = any(a.get("source_class") in INDEPENDENT for a in rows)
+    return state and change and source
+
+
+def coverage(today, labels_path=None, atoms_root=None, tree=None) -> dict:
+    """KNOWN · MEASURED · CURRENT · SEEN per world subcategory and in total.
+      KNOWN    at least one statement or measurement (MISSING while labels are absent)
+      MEASURED at least one measurement atom
+      CURRENT  at least one atom whose period is inside its granularity's bound
+      SEEN     one key carries STATE + CHANGE + SOURCE (see _key_seen)"""
+    from core import atoms as _atoms
+    from core import taxonomy as tx
+    tree = tree or tx.load()
+    counts, labels_present = subcategory_counts(labels_path, atoms_root)
+    per_sub, per_domain = {}, {}
+    for s in tx.world_subcategories(tree):
+        c = counts.get(s["id"], {"statements": 0 if labels_present else None, "measurements": []})
+        atoms = c["measurements"]
+        by_key: dict = {}
+        for a in atoms:
+            by_key.setdefault(a.get("key"), []).append(a)
+        row = {"statements": c["statements"], "measurements": len(atoms),
+               "measured": bool(atoms),
+               "current": any(_atoms.period_is_current(a.get("period"), today) for a in atoms),
+               "seen": any(_key_seen(rows, today) for rows in by_key.values())}
+        row["known"] = (None if c["statements"] is None and not atoms
+                        else bool(atoms) or bool(c["statements"]))
+        per_sub[s["id"]] = row
+        d = per_domain.setdefault(s["domain"], {"known": 0, "measured": 0, "current": 0, "seen": 0, "of": 0,
+                                                "known_missing": 0})
+        d["of"] += 1
+        for k in ("measured", "current", "seen"):
+            d[k] += int(row[k])
+        if row["known"] is None:
+            d["known_missing"] += 1
+        else:
+            d["known"] += int(row["known"])
+    n = len(per_sub)
+
+    def total(k):
+        if k == "known" and not labels_present:
+            return None                     # MISSING: statement labels not computed
+        return sum(1 for r in per_sub.values() if r[k])
+    return {"world": {k: total(k) for k in ("known", "measured", "current", "seen")} | {"of": n},
+            "per_domain": per_domain, "per_subcategory": per_sub,
+            "statement_labels": "present" if labels_present else "MISSING",
+            "rule": {"KNOWN": "at least one statement (by its subcategory label) or measurement atom",
+                     "MEASURED": "at least one non-retracted measurement atom",
+                     "CURRENT": f"an atom whose period is day-dated <= {_atoms.CURRENT_DAY_DAYS} d old, month-dated "
+                                f"<= {_atoms.CURRENT_MONTH_DAYS} d after the month ends, or year-dated >= this "
+                                f"year - {_atoms.CURRENT_YEAR_BACK}",
+                     "SEEN": f"one key with a numeric value, a day-dated period <= {CHANGE_MAX_AGE_DAYS} d old "
+                             f"and an independent or adversarial source class"}}
+
+
 # ── selftest ────────────────────────────────────────────────────────────────
 def selftest() -> dict:
     res = {"integrations": {}}
@@ -597,7 +691,9 @@ def selftest() -> dict:
     res["integrations"]["worker ingests every fetched page"] = (
         "LIVE" if "ingest" in inspect.signature(_w.run).parameters and passes else "INERT")
     cov = (REPO / "tools" / "taxonomy_coverage.py").read_text(encoding="utf-8")
-    res["integrations"]["coverage reads through core.knowledge"] = "LIVE" if "knowledge" in cov else "INERT"
+    board = (REPO / "tools" / "daily_board.py").read_text(encoding="utf-8")
+    res["integrations"]["coverage reads through core.knowledge"] = (
+        "LIVE" if "kn.coverage(" in cov and 't["knowledge"]["world"]' in board else "INERT")
     res["ok"] = KINDS.exists()
     return res
 

@@ -815,27 +815,30 @@ def row_taxonomy(repo: Path, now: datetime) -> dict:
     doc = _json(src)
     t = doc.get("totals") if isinstance(doc, dict) else None
     try:
-        world, sysE, overall = t["world"], t["system_E"], t["overall"]
-        atoms_w = t["atoms"]["world"]
-        cur_w = t["current"]["world"]
-        nums = [world["seen"], world["of"], sysE["seen"], sysE["of"], overall["seen"], overall["of"],
-                atoms_w["with_atoms"], atoms_w["of"], cur_w["current"], cur_w["of"]]
+        kw = t["knowledge"]["world"]
+        of = kw["of"]
+        counts = [kw["known"], kw["measured"], kw["current"], kw["seen"]]
     except (TypeError, KeyError):
-        raise SourceMissing(src, "no totals.world / system_E / overall / atoms.world / current.world")
-    if not all(isinstance(x, int) and not isinstance(x, bool) for x in nums):
-        raise SourceMissing(src, "a total is not an integer")
+        raise SourceMissing(src, "no totals.knowledge.world (C-OC-3: the board reads through core.knowledge)")
+    if not isinstance(of, int) or isinstance(of, bool):
+        raise SourceMissing(src, "totals.knowledge.world.of is not an integer")
+    # a count that is absent is MISSING on the board — never a zero
+    shown = ["MISSING" if (c is None or not isinstance(c, int) or isinstance(c, bool)) else c for c in counts]
     gen = doc.get("generated_utc")
     age = _age_days(gen, now)
     if age is None:
         raise SourceMissing(src, "generated_utc unreadable")
     stale = age > 1.0
-    head = ("world: SEEN {}/{} · CURRENT {}/{} · ATOMS {}/{} — overall SEEN {}/{} (count over all 123); "
-            "E {}/{} separate, never in the world total".format(
-                world["seen"], world["of"], cur_w["current"], cur_w["of"], atoms_w["with_atoms"], atoms_w["of"],
-                overall["seen"], overall["of"], sysE["seen"], sysE["of"]))
+    head = "world: KNOWN {}/{of} · MEASURED {}/{of} · CURRENT {}/{of} · SEEN {}/{of}".format(*shown, of=of)
     reasons = doc.get("not_seen_reasons_world") or {}
-    detail = ["- statistic: subcategories meeting STATE + CHANGE + SOURCE "
-              "(rule in tools/taxonomy_coverage.py), from {}".format(SOURCES["taxonomy"][0])]
+    rule = t["knowledge"].get("rule") or {}
+    detail = ["- {}: {}".format(k, v) for k, v in rule.items()]
+    detail += ["- per domain: " + "; ".join(
+        "{} KNOWN {}/{} MEASURED {} CURRENT {} SEEN {}".format(
+            d, "MISSING" if v.get("known_missing") else v.get("known"), v.get("of"), v.get("measured"),
+            v.get("current"), v.get("seen"))
+        for d, v in sorted((t["knowledge"].get("per_domain") or {}).items()))]
+    detail += ["- statement labels: {}".format(t["knowledge"].get("statement_labels"))]
     detail += ["- NOT SEEN (world): {} × {}".format(n, r)
                for r, n in sorted(reasons.items(), key=lambda kv: -kv[1])]
     return {

@@ -70,23 +70,12 @@ def _maslow_by_category(tree: dict) -> dict:
 
 
 def counts_by_subcategory(labels_path=None, atoms_root=None) -> dict:
-    """{sub_id: {"statements": n, "measurements": n}} through the brain's readers."""
-    from core import atoms as _atoms
+    """{sub_id: {"statements": n, "measurements": n}} from core.knowledge.subcategory_counts,
+    the one counter coverage uses too. Absent statement labels count as 0 HERE
+    (ranking only); the board shows them as MISSING."""
     from core import knowledge as kn
-    lp = Path(labels_path or kn.LABELS)
-    labels = {}
-    if lp.exists():
-        labels = (json.loads(lp.read_text(encoding="utf-8")) or {}).get("labels", {})
-    out: dict = {}
-    for lab in labels.values():
-        s = lab.get("subcategory")
-        if s:
-            out.setdefault(s, {"statements": 0, "measurements": 0})["statements"] += 1
-    for a in _atoms.read(root=atoms_root):
-        s = a.get("subcategory")
-        if s:
-            out.setdefault(s, {"statements": 0, "measurements": 0})["measurements"] += 1
-    return out
+    raw, _present = kn.subcategory_counts(labels_path, atoms_root)
+    return {s: {"statements": v["statements"] or 0, "measurements": len(v["measurements"])} for s, v in raw.items()}
 
 
 def world(counts: dict, tree: Optional[dict] = None) -> list:

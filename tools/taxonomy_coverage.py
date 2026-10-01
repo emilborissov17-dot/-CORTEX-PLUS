@@ -68,6 +68,7 @@ REPORT_DIR = REPO / "claude" / "reports"
 GLOBAL_REL = "snapshots/master/global_indicators_latest.json"
 
 CHANGE_MAX_AGE_DAYS = 45      # a monthly series plus publication lag
+from core.atoms import CURRENT_DAY_DAYS, CURRENT_MONTH_DAYS, CURRENT_YEAR_BACK  # noqa: E402,F401
 DAY_SHAPES = ("iso_date", "iso_datetime")
 INDEPENDENT = ("independent", "adversarial")
 
@@ -76,9 +77,6 @@ FAIL_STATE = "STATE: no key with a value"
 FAIL_CHANGE = f"CHANGE: no key with a day-resolution observation <= {CHANGE_MAX_AGE_DAYS} d old"
 FAIL_SOURCE = "SOURCE: no independent or adversarial source"
 FAIL_SPLIT = "ONE KEY: STATE, CHANGE and SOURCE each hold, but only on different keys"
-CURRENT_DAY_DAYS = 45
-CURRENT_MONTH_DAYS = 120
-CURRENT_YEAR_BACK = 3
 
 
 class Refused(SystemExit):
@@ -286,45 +284,9 @@ def key_holds_all(rows: list) -> bool:
     return is_state_key(rows) and is_change_key(rows) and is_independent_key(rows)
 
 
-# ── CURRENT: from the period's own granularity, never declared by hand ───────
-_YEAR = re.compile(r"^\d{4}$")
-_MONTH = re.compile(r"^\d{4}-\d{2}$")
-_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}([T ].*)?$")
-
-
-def period_granularity(period) -> str | None:
-    p = str(period or "").strip()
-    if _YEAR.match(p):
-        return "year"
-    if _MONTH.match(p):
-        return "month"
-    if _DAY.match(p):
-        return "day"
-    return None
-
-
-def period_is_current(period, today) -> bool:
-    """day-dated <= CURRENT_DAY_DAYS old; month-dated <= CURRENT_MONTH_DAYS after
-    the month's LAST day; year-dated >= this year - CURRENT_YEAR_BACK. An
-    unclassifiable period (epoch ms, 'Q3 2026') is never current."""
-    import calendar
-    from datetime import date
-    g, p = period_granularity(period), str(period).strip()
-    if g == "year":
-        return int(p) >= today.year - CURRENT_YEAR_BACK
-    if g == "month":
-        y, m = int(p[:4]), int(p[5:7])
-        if not 1 <= m <= 12:
-            return False
-        end = date(y, m, calendar.monthrange(y, m)[1])
-        return 0 <= (today - end).days <= CURRENT_MONTH_DAYS or end > today
-    if g == "day":
-        try:
-            d = date.fromisoformat(p[:10])
-        except ValueError:
-            return False
-        return (today - d).days <= CURRENT_DAY_DAYS
-    return False
+# ── CURRENT: the period helpers live in core/atoms.py (C-OC-3 Part 4), one copy;
+# re-exported here under the names this tool always had.
+from core.atoms import period_granularity, period_is_current  # noqa: E402,F401
 
 
 def current_totals(tree: dict, today, root=None) -> dict:
@@ -428,6 +390,13 @@ def run(now=None) -> dict:
     cov = coverage(key_map, evidence, tree)
     cov["totals"]["atoms"] = atoms_totals(tree)
     cov["totals"]["current"] = current_totals(tree, now.date())
+    # THE HEADLINE (C-OC-3 Part 4): KNOWN · MEASURED · CURRENT · SEEN, read
+    # through core.knowledge only. The snapshot-evidence SEEN above is kept as a
+    # diagnostic and is no longer what the board shows.
+    from core import knowledge as kn
+    kcov = kn.coverage(now.date(), tree=tree)
+    cov["totals"]["knowledge"] = {k: kcov[k] for k in ("world", "per_domain", "statement_labels", "rule")}
+    cov["knowledge_per_subcategory"] = kcov["per_subcategory"]
     cov.update({
         "generated_utc": now.isoformat(timespec="seconds"),
         "rule": {"STATE": "at least one key with a finite numeric value",
@@ -455,7 +424,11 @@ def render(cov: dict) -> str:
     t = cov["totals"]
     L = [f"# TAXONOMY COVERAGE — {cov['generated_utc'][:10]}", "",
          f"Generated {cov['generated_utc']} by `tools/taxonomy_coverage.py`. Read-only over the repo.", "",
-         "## Totals", "",
+         "## Totals — through core.knowledge (the board's numbers)", "",
+         *[f"- **{n}: {('MISSING' if t['knowledge']['world'][n.lower()] is None else t['knowledge']['world'][n.lower()])}"
+           f"/{t['knowledge']['world']['of']}** — {t['knowledge']['rule'][n]}"
+           for n in ("KNOWN", "MEASURED", "CURRENT", "SEEN")],
+         "", "## Legacy snapshot-evidence totals (diagnostic, not on the board)", "",
          f"- **World (A-D): SEEN {t['world']['seen']}/{t['world']['of']}**",
          f"- Domain E (the system itself), separate, never in the world total: "
          f"SEEN {t['system_E']['seen']}/{t['system_E']['of']}",
@@ -529,7 +502,14 @@ def main(argv) -> int:
         print(str(e))
         return 2
     t = cov["totals"]
-    print(f"SEEN world {t['world']['seen']}/{t['world']['of']} · E {t['system_E']['seen']}/"
+    k = t["knowledge"]["world"]
+    print("KNOWLEDGE world: " + " · ".join(
+        f"{name} {'MISSING' if k[name.lower()] is None else k[name.lower()]}/{k['of']}"
+        for name in ("KNOWN", "MEASURED", "CURRENT", "SEEN")))
+    for d, v in sorted(t["knowledge"]["per_domain"].items()):
+        print(f"  domain {d}: KNOWN {v['known'] if not v['known_missing'] else 'MISSING'}/{v['of']} · MEASURED "
+              f"{v['measured']}/{v['of']} · CURRENT {v['current']}/{v['of']} · SEEN {v['seen']}/{v['of']}")
+    print(f"legacy snapshot-evidence SEEN world {t['world']['seen']}/{t['world']['of']} · E {t['system_E']['seen']}/"
           f"{t['system_E']['of']} (separate) · overall {t['overall']['seen']}/{t['overall']['of']}"
           f" · CURRENT world {t['current']['world']['current']}/{t['current']['world']['of']}"
           f" · ATOMS world {t['atoms']['world']['with_atoms']}/{t['atoms']['world']['of']}")

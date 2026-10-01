@@ -271,6 +271,52 @@ def _collapse(lines: list, gone: set) -> list:
     return list(by_id.values())
 
 
+# ── how current a period is, from its own granularity (moved here from
+# tools/taxonomy_coverage.py, C-OC-3 Part 4: coverage reads through core.knowledge,
+# which reads atoms) ─────────────────────────────────────────────────────────
+CURRENT_DAY_DAYS = 45
+CURRENT_MONTH_DAYS = 120
+CURRENT_YEAR_BACK = 3
+_YEAR = re.compile(r"^\d{4}$")
+_MONTH = re.compile(r"^\d{4}-\d{2}$")
+_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}([T ].*)?$")
+
+
+def period_granularity(period) -> str | None:
+    p = str(period or "").strip()
+    if _YEAR.match(p):
+        return "year"
+    if _MONTH.match(p):
+        return "month"
+    if _DAY.match(p):
+        return "day"
+    return None
+
+
+def period_is_current(period, today) -> bool:
+    """day-dated <= CURRENT_DAY_DAYS old; month-dated <= CURRENT_MONTH_DAYS after
+    the month's LAST day; year-dated >= this year - CURRENT_YEAR_BACK. An
+    unclassifiable period (epoch ms, 'Q3 2026') is never current."""
+    import calendar
+    from datetime import date
+    g, p = period_granularity(period), str(period).strip()
+    if g == "year":
+        return int(p) >= today.year - CURRENT_YEAR_BACK
+    if g == "month":
+        y, m = int(p[:4]), int(p[5:7])
+        if not 1 <= m <= 12:
+            return False
+        end = date(y, m, calendar.monthrange(y, m)[1])
+        return 0 <= (today - end).days <= CURRENT_MONTH_DAYS or end > today
+    if g == "day":
+        try:
+            d = date.fromisoformat(p[:10])
+        except ValueError:
+            return False
+        return (today - d).days <= CURRENT_DAY_DAYS
+    return False
+
+
 def read(root: Optional[Path] = None, subcategory: Optional[str] = None) -> Iterator[dict]:
     """Every observation on disk, ONCE, minus retracted card_keys. The one way to
     read atoms; duplicates on disk collapse by identity_of()."""
