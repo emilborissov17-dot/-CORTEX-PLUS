@@ -1,0 +1,35 @@
+{
+ "category": "C3",
+ "name": "RESOURCES AND FLOWS",
+ "domain": "C",
+ "subgoal": "SUSTAINABLE_RESOURCES",
+ "subcategories": [
+  {
+   "id": "C3.1",
+   "name": "Fresh water"
+  },
+  {
+   "id": "C3.2",
+   "name": "Land"
+  },
+  {
+   "id": "C3.3",
+   "name": "Energy"
+  },
+  {
+   "id": "C3.4",
+   "name": "Minerals"
+  },
+  {
+   "id": "C3.5",
+   "name": "Waste and circularity"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/C3.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

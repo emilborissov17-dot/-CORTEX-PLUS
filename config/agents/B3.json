@@ -1,0 +1,43 @@
+{
+ "category": "B3",
+ "name": "ECONOMY AND DISTRIBUTION",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B3.1",
+   "name": "Production and employment"
+  },
+  {
+   "id": "B3.2",
+   "name": "Prices and cost of living"
+  },
+  {
+   "id": "B3.3",
+   "name": "Debt and financial stability"
+  },
+  {
+   "id": "B3.4",
+   "name": "Trade and dependency"
+  },
+  {
+   "id": "B3.5",
+   "name": "Concentration of wealth and markets"
+  },
+  {
+   "id": "B3.6",
+   "name": "Artificial scarcity"
+  },
+  {
+   "id": "B3.7",
+   "name": "Resource-based indicators"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B3.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

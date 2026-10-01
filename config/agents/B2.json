@@ -1,0 +1,43 @@
+{
+ "category": "B2",
+ "name": "GOVERNANCE AND INSTITUTIONS",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B2.1",
+   "name": "Rule of law"
+  },
+  {
+   "id": "B2.2",
+   "name": "Corruption"
+  },
+  {
+   "id": "B2.3",
+   "name": "Democracy and autocratization"
+  },
+  {
+   "id": "B2.4",
+   "name": "Transparency"
+  },
+  {
+   "id": "B2.5",
+   "name": "State capacity and services"
+  },
+  {
+   "id": "B2.6",
+   "name": "Public commitments kept"
+  },
+  {
+   "id": "B2.7",
+   "name": "International institutions"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B2.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

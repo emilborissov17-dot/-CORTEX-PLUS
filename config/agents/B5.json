@@ -1,0 +1,35 @@
+{
+ "category": "B5",
+ "name": "INFORMATION, MEDIA, MANIPULATION",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B5.1",
+   "name": "Press freedom"
+  },
+  {
+   "id": "B5.2",
+   "name": "Media ownership"
+  },
+  {
+   "id": "B5.3",
+   "name": "Censorship and internet shutdowns"
+  },
+  {
+   "id": "B5.4",
+   "name": "Propaganda and disinformation"
+  },
+  {
+   "id": "B5.5",
+   "name": "Surveillance"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B5.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

@@ -1,0 +1,35 @@
+{
+ "category": "B1",
+ "name": "PEACE AND WAR",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B1.1",
+   "name": "Armed conflicts and deaths"
+  },
+  {
+   "id": "B1.2",
+   "name": "Agreements kept or broken"
+  },
+  {
+   "id": "B1.3",
+   "name": "Military spending and arms"
+  },
+  {
+   "id": "B1.4",
+   "name": "Nuclear and mass-destruction weapons"
+  },
+  {
+   "id": "B1.5",
+   "name": "Terrorism and political violence"
+  }
+ ],
+ "openclaw_agent": "b1-peace-and-war",
+ "browser_profile": "b1-peace-and-war",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B1.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

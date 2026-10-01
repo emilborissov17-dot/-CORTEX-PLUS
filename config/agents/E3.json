@@ -1,0 +1,31 @@
+{
+ "category": "E3",
+ "name": "SPIRIT",
+ "domain": "E",
+ "subgoal": "SYSTEM",
+ "subcategories": [
+  {
+   "id": "E3.1",
+   "name": "Distance to the goal"
+  },
+  {
+   "id": "E3.2",
+   "name": "Boundaries kept"
+  },
+  {
+   "id": "E3.3",
+   "name": "Autonomy record"
+  },
+  {
+   "id": "E3.4",
+   "name": "Own promises kept"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/E3.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

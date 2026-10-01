@@ -1,0 +1,35 @@
+{
+ "category": "A4",
+ "name": "DIGNITY AND RECOGNITION",
+ "domain": "A",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "A4.1",
+   "name": "Rights and freedoms"
+  },
+  {
+   "id": "A4.2",
+   "name": "Equality before the law"
+  },
+  {
+   "id": "A4.3",
+   "name": "Dignified work"
+  },
+  {
+   "id": "A4.4",
+   "name": "Humiliation by institutions"
+  },
+  {
+   "id": "A4.5",
+   "name": "Inequality"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/A4.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

@@ -1,0 +1,55 @@
+{
+ "category": "E1",
+ "name": "BODY",
+ "domain": "E",
+ "subgoal": "SYSTEM",
+ "subcategories": [
+  {
+   "id": "E1.1",
+   "name": "Energy"
+  },
+  {
+   "id": "E1.2",
+   "name": "Thermal"
+  },
+  {
+   "id": "E1.3",
+   "name": "Compute"
+  },
+  {
+   "id": "E1.4",
+   "name": "Memory"
+  },
+  {
+   "id": "E1.5",
+   "name": "Storage"
+  },
+  {
+   "id": "E1.6",
+   "name": "Network"
+  },
+  {
+   "id": "E1.7",
+   "name": "Periphery"
+  },
+  {
+   "id": "E1.8",
+   "name": "Acoustic"
+  },
+  {
+   "id": "E1.9",
+   "name": "Optic"
+  },
+  {
+   "id": "E1.10",
+   "name": "Logs"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/E1.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

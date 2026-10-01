@@ -1,0 +1,31 @@
+{
+ "category": "C5",
+ "name": "NATURAL HAZARDS",
+ "domain": "C",
+ "subgoal": "SAFETY",
+ "subcategories": [
+  {
+   "id": "C5.1",
+   "name": "Geophysical"
+  },
+  {
+   "id": "C5.2",
+   "name": "Floods, droughts, storms"
+  },
+  {
+   "id": "C5.3",
+   "name": "Wildfires"
+  },
+  {
+   "id": "C5.4",
+   "name": "Biological"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/C5.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

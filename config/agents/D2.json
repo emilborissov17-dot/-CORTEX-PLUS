@@ -1,0 +1,35 @@
+{
+ "category": "D2",
+ "name": "SPACE",
+ "domain": "D",
+ "subgoal": "SAFETY",
+ "subcategories": [
+  {
+   "id": "D2.1",
+   "name": "Access to space"
+  },
+  {
+   "id": "D2.2",
+   "name": "Orbital infrastructure and debris"
+  },
+  {
+   "id": "D2.3",
+   "name": "Space resources"
+  },
+  {
+   "id": "D2.4",
+   "name": "Planetary defence"
+  },
+  {
+   "id": "D2.5",
+   "name": "Living off Earth"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/D2.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

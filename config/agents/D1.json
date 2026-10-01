@@ -1,0 +1,39 @@
+{
+ "category": "D1",
+ "name": "EXISTENTIAL RISKS",
+ "domain": "D",
+ "subgoal": "SAFETY",
+ "subcategories": [
+  {
+   "id": "D1.1",
+   "name": "Nuclear"
+  },
+  {
+   "id": "D1.2",
+   "name": "Pandemics"
+  },
+  {
+   "id": "D1.3",
+   "name": "AI"
+  },
+  {
+   "id": "D1.4",
+   "name": "Climate tipping points"
+  },
+  {
+   "id": "D1.5",
+   "name": "Cosmic"
+  },
+  {
+   "id": "D1.6",
+   "name": "Geological"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/D1.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

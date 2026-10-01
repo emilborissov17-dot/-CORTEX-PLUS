@@ -1,0 +1,35 @@
+{
+ "category": "C2",
+ "name": "LIVING NATURE",
+ "domain": "C",
+ "subgoal": "HEALTHY_ENVIRONMENTS",
+ "subcategories": [
+  {
+   "id": "C2.1",
+   "name": "Forests"
+  },
+  {
+   "id": "C2.2",
+   "name": "Species and extinction risk"
+  },
+  {
+   "id": "C2.3",
+   "name": "Oceans and fisheries"
+  },
+  {
+   "id": "C2.4",
+   "name": "Soils"
+  },
+  {
+   "id": "C2.5",
+   "name": "Protected areas"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/C2.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

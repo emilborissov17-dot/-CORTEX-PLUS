@@ -1,0 +1,35 @@
+{
+ "category": "C1",
+ "name": "CLIMATE",
+ "domain": "C",
+ "subgoal": "HEALTHY_ENVIRONMENTS",
+ "subcategories": [
+  {
+   "id": "C1.1",
+   "name": "Greenhouse-gas concentrations"
+  },
+  {
+   "id": "C1.2",
+   "name": "Emissions"
+  },
+  {
+   "id": "C1.3",
+   "name": "Temperature of air and ocean"
+  },
+  {
+   "id": "C1.4",
+   "name": "Ice and sea level"
+  },
+  {
+   "id": "C1.5",
+   "name": "Extreme events"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/C1.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

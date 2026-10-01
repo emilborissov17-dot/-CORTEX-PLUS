@@ -1,0 +1,35 @@
+{
+ "category": "A1",
+ "name": "SURVIVAL",
+ "domain": "A",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "A1.1",
+   "name": "Food"
+  },
+  {
+   "id": "A1.2",
+   "name": "Water and sanitation"
+  },
+  {
+   "id": "A1.3",
+   "name": "Shelter"
+  },
+  {
+   "id": "A1.4",
+   "name": "Household energy"
+  },
+  {
+   "id": "A1.5",
+   "name": "Staying alive"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/A1.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

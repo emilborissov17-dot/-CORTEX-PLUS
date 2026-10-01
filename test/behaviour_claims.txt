@@ -697,3 +697,4 @@ core/space.py b182e0ba6dbc  # BACKED: test_space.test_a_failing_engine_raises_an
 core/turn.py b94e7574eb8d  # BACKED: test_turn.test_a_double_take_is_refused, test_an_unexplained_failure_does_not_hand_over, test_no_exit_row_does_not_hand_over, test_the_nightly_cycle_blocks_both_turns
 core/brain_needs.py 417d1399821a  # BACKED: test_brain_needs_review.test_linked_statements_indexes_records_by_need_id
 core/symbols.py a0d87cae301e  # BACKED: test_symbols_and_brain_turn.test_an_expression_the_engine_cannot_parse_is_refused, test_an_argument_not_in_the_sentence_is_refused_by_name, test_an_unknown_head_is_accepted_and_counted
+test/test_turn_agents.py 0078ad2248ea  # BACKED: the _no_live autouse fixture of test_turn_agents (teardown _live_net.check), which caught serve() writing pages to memory/ before pages_dir was threaded through

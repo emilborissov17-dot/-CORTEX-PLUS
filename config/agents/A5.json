@@ -1,0 +1,39 @@
+{
+ "category": "A5",
+ "name": "DEVELOPMENT OF POTENTIAL",
+ "domain": "A",
+ "subgoal": "KNOWLEDGE_UNDERSTANDING",
+ "subcategories": [
+  {
+   "id": "A5.1",
+   "name": "Education"
+  },
+  {
+   "id": "A5.2",
+   "name": "Knowledge and truth"
+  },
+  {
+   "id": "A5.3",
+   "name": "Culture and creativity"
+  },
+  {
+   "id": "A5.4",
+   "name": "Mental health and meaning"
+  },
+  {
+   "id": "A5.5",
+   "name": "Body"
+  },
+  {
+   "id": "A5.6",
+   "name": "Free time and autonomy"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/A5.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

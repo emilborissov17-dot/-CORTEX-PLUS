@@ -1,0 +1,27 @@
+{
+ "category": "B8",
+ "name": "HEALTH SYSTEMS",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B8.1",
+   "name": "Workforce and capacity"
+  },
+  {
+   "id": "B8.2",
+   "name": "Pandemic preparedness"
+  },
+  {
+   "id": "B8.3",
+   "name": "Medicines and vaccines supply"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B8.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

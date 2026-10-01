@@ -1,0 +1,39 @@
+{
+ "category": "B4",
+ "name": "INFRASTRUCTURE AND CITIES",
+ "domain": "B",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "B4.1",
+   "name": "Transport"
+  },
+  {
+   "id": "B4.2",
+   "name": "Housing stock"
+  },
+  {
+   "id": "B4.3",
+   "name": "Digital connectivity"
+  },
+  {
+   "id": "B4.4",
+   "name": "Energy grids"
+  },
+  {
+   "id": "B4.5",
+   "name": "Water systems"
+  },
+  {
+   "id": "B4.6",
+   "name": "Urban resilience"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B4.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

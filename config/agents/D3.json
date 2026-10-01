@@ -1,0 +1,23 @@
+{
+ "category": "D3",
+ "name": "KNOWLEDGE FOR FUTURE GENERATIONS",
+ "domain": "D",
+ "subgoal": "KNOWLEDGE_UNDERSTANDING",
+ "subcategories": [
+  {
+   "id": "D3.1",
+   "name": "Preservation of knowledge"
+  },
+  {
+   "id": "D3.2",
+   "name": "Resilience of critical systems"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/D3.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

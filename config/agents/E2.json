@@ -1,0 +1,31 @@
+{
+ "category": "E2",
+ "name": "MIND",
+ "domain": "E",
+ "subgoal": "SYSTEM",
+ "subcategories": [
+  {
+   "id": "E2.1",
+   "name": "Coverage of this tree"
+  },
+  {
+   "id": "E2.2",
+   "name": "Forecast accuracy and calibration"
+  },
+  {
+   "id": "E2.3",
+   "name": "Learning"
+  },
+  {
+   "id": "E2.4",
+   "name": "Requests asked and answered"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/E2.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

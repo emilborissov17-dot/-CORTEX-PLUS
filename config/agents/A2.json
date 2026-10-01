@@ -1,0 +1,39 @@
+{
+ "category": "A2",
+ "name": "SAFETY",
+ "domain": "A",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "A2.1",
+   "name": "Physical safety"
+  },
+  {
+   "id": "A2.2",
+   "name": "Displacement"
+  },
+  {
+   "id": "A2.3",
+   "name": "Economic security"
+  },
+  {
+   "id": "A2.4",
+   "name": "Legal security"
+  },
+  {
+   "id": "A2.5",
+   "name": "Safety from disasters"
+  },
+  {
+   "id": "A2.6",
+   "name": "Health security"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/A2.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

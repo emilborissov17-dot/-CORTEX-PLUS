@@ -1,0 +1,31 @@
+{
+ "category": "A3",
+ "name": "BELONGING",
+ "domain": "A",
+ "subgoal": "CIVILIZATIONAL_STABILITY",
+ "subcategories": [
+  {
+   "id": "A3.1",
+   "name": "Family and community"
+  },
+  {
+   "id": "A3.2",
+   "name": "Exclusion and discrimination"
+  },
+  {
+   "id": "A3.3",
+   "name": "Participation"
+  },
+  {
+   "id": "A3.4",
+   "name": "Migration and integration"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/A3.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}

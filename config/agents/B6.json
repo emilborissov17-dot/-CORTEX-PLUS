@@ -1,0 +1,31 @@
+{
+ "category": "B6",
+ "name": "SCIENCE AND TECHNOLOGY",
+ "domain": "B",
+ "subgoal": "KNOWLEDGE_UNDERSTANDING",
+ "subcategories": [
+  {
+   "id": "B6.1",
+   "name": "Research and open science"
+  },
+  {
+   "id": "B6.2",
+   "name": "AI"
+  },
+  {
+   "id": "B6.3",
+   "name": "Biotechnology"
+  },
+  {
+   "id": "B6.4",
+   "name": "Access to technology"
+  }
+ ],
+ "openclaw_agent": null,
+ "browser_profile": "openclaw",
+ "searcher_model": "none: direct browser calls through the OpenClaw gateway (C-TURN-1 4b, R33: the cheapest option that finished)",
+ "skills": [],
+ "plugins": [],
+ "learned": "memory/agents/B6.json",
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+}
