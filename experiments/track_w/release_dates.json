@@ -1,0 +1,2217 @@
+{
+  "_what": "Release date per data version for leak guards G1 (GED) and G2 (VIEWS). UNPROVEN versions are EXCLUDED: no origin may read them.",
+  "_built_by": "experiments/track_w/build_prereg_inputs.py",
+  "rows": [
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "2.0",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged20-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "3.0",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged30-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "4.0",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged40-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "4.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged41-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "5.0",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged50-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "17.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged171-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "18.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged181-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "19.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged191-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "20.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged201-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "21.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged211-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "22.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged221-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "23.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged231-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "24.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged241-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "25.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged251-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_annual",
+      "version": "26.1",
+      "file_url": "https://ucdp.uu.se/downloads/ged/ged261-csv.zip",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "18.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v18_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "19.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v19_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.01.20.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_01_20_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.01.20.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_01_20_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.01.20.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_01_20_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "20.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v20_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.01.21.03",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_01_21_03.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.01.21.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_01_21_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.01.21.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_01_21_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.01.21.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_01_21_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "21.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v21_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.01.22.03",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_01_22_03.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.01.22.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_01_22_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.01.22.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_01_22_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.01.22.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_01_22_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "22.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v22_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.01.23.04",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_01_23_04.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.01.23.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_01_23_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.01.23.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_01_23_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.01.23.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_01_23_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "23.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v23_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.01.24.03",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_01_24_03.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.01.24.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_01_24_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.01.24.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_01_24_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.01.24.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_01_24_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "24.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v24_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.01.25.03",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_01_25_03.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.01.25.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_01_25_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.01.25.09",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_01_25_09.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.01.25.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_01_25_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.10",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_10.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.11",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_11.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.12",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_12.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "25.0.9",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v25_0_9.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.01.26.03",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_01_26_03.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.01.26.06",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_01_26_06.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.1",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_1.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.2",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_2.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.3",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_3.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.4",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_4.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.5",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_5.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.6",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_6.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.7",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_7.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "UCDP_GED_candidate",
+      "version": "26.0.8",
+      "file_url": "https://ucdp.uu.se/downloads/candidateged/GEDEvent_v26_0_8.csv",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "why_unproven": "no release date is stated on https://ucdp.uu.se/downloads/ or https://ucdp.uu.se/downloads/olddw.html (saved as data/external/ucdp/downloads_index.html and olddw.html). The HTTP Last-Modified header is a proxy for upload time, not a release date, and is not used."
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "d_2021_02_01",
+      "file_url": "https://api.viewsforecasting.org/d_2021_02_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-02",
+      "why_unproven": "the wiki states '2021-02', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_02_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_02_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-02",
+      "why_unproven": "the wiki states '2021-02', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_03_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_03_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-03",
+      "why_unproven": "the wiki states '2021-03', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_04_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_04_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-04",
+      "why_unproven": "the wiki states '2021-04', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_05_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_05_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-05",
+      "why_unproven": "the wiki states '2021-05', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_06_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_06_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-06",
+      "why_unproven": "the wiki states '2021-06', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_07_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_07_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-07",
+      "why_unproven": "the wiki states '2021-07', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_08_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_08_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-08",
+      "why_unproven": "the wiki states '2021-08', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_09_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_09_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-09",
+      "why_unproven": "the wiki states '2021-09', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_10_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_10_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-10",
+      "why_unproven": "the wiki states '2021-10', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_11_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_11_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-11",
+      "why_unproven": "the wiki states '2021-11', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_2021_12_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_2021_12_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-12",
+      "why_unproven": "the wiki states '2021-12', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_data_2021_10_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_data_2021_10_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-10",
+      "why_unproven": "the wiki states '2021-10', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "escwa_features_2021_05_01",
+      "file_url": "https://api.viewsforecasting.org/escwa_features_2021_05_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": null,
+      "why_unproven": "absent from the wiki's 'Conflict prediction datasets' table"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "f_2021_06_01",
+      "file_url": "https://api.viewsforecasting.org/f_2021_06_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-06",
+      "why_unproven": "the wiki states '2021-06', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2021_12_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2021_12_t01",
+      "release_date": "2023-04-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_00_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_00_t01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": null,
+      "why_unproven": "absent from the wiki's 'Conflict prediction datasets' table"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_01_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_01_t01",
+      "release_date": "2022-07-18",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_02_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_02_t01",
+      "release_date": "2022-07-18",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_03_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_03_t01",
+      "release_date": "2022-07-18",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_04_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_04_t01",
+      "release_date": "2022-07-18",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_05_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_05_t01",
+      "release_date": "2022-07-18",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_06_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_06_t01",
+      "release_date": "2022-07-20",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_07_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_07_t01",
+      "release_date": "2022-08-29",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_08_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_08_t01",
+      "release_date": "2022-10-10",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_09_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_09_t01",
+      "release_date": "2022-10-31",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_10_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_10_t01",
+      "release_date": "2022-11-24",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_11_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_11_t01",
+      "release_date": "2022-12-22",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2022_12_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2022_12_t01",
+      "release_date": "2023-01-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2023_00_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2023_00_t01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": null,
+      "why_unproven": "absent from the wiki's 'Conflict prediction datasets' table"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2023_01_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2023_01_t01",
+      "release_date": "2023-04-06",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2023_02_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2023_02_t01",
+      "release_date": "2023-04-06",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities001_2023_03_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities001_2023_03_t01",
+      "release_date": "2023-04-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_04_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_04_t01",
+      "release_date": "2023-06-09",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_05_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_05_t01",
+      "release_date": "2023-07-09",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_06_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_06_t01",
+      "release_date": "2023-07-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_07_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_07_t01",
+      "release_date": "2023-08-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_08_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_08_t01",
+      "release_date": "2023-10-03",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_09_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_09_t01",
+      "release_date": "2023-11-02",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_09_t02",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_09_t02",
+      "release_date": "2023-12-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_10_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_10_t01",
+      "release_date": "2023-12-06",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_10_t02",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_10_t02",
+      "release_date": "2023-12-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_11_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_11_t01",
+      "release_date": "2023-12-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2023_12_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2023_12_t01",
+      "release_date": "2024-01-31",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_01_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_01_t01",
+      "release_date": "2024-03-01",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_02_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_02_t01",
+      "release_date": "2024-04-01",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_03_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_03_t01",
+      "release_date": "2024-05-03",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_04_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_04_t01",
+      "release_date": "2024-05-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_05_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_05_t01",
+      "release_date": "2024-06-26",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_06_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_06_t01",
+      "release_date": "2024-07-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_07_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_07_t01",
+      "release_date": "2024-08-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_08_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_08_t01",
+      "release_date": "2024-09-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_09_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_09_t01",
+      "release_date": "2024-10-31",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_10_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_10_t01",
+      "release_date": "2024-11-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_11_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_11_t01",
+      "release_date": "2025-01-11",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2024_12_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2024_12_t01",
+      "release_date": "2025-01-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_01_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_01_t01",
+      "release_date": "2025-02-24",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_02_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_02_t01",
+      "release_date": "2025-03-28",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_03_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_03_t01",
+      "release_date": "2025-07-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_04_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_04_t01",
+      "release_date": "2025-07-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_05_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_05_t01",
+      "release_date": "2025-07-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_06_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_06_t01",
+      "release_date": "2025-07-23",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_07_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_07_t01",
+      "release_date": "2025-08-29",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_08_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_08_t01",
+      "release_date": "2025-09-26",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_09_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_09_t01",
+      "release_date": "2025-10-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities002_2025_10_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities002_2025_10_t01",
+      "release_date": "2025-11-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2025_10_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2025_10_t01",
+      "release_date": "2025-11-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2025_11_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2025_11_t01",
+      "release_date": "2025-12-28",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2025_12_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2025_12_t01",
+      "release_date": "2026-01-30",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_01_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_01_t01",
+      "release_date": "2026-02-25",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_02_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_02_t01",
+      "release_date": "2026-03-31",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_03_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_03_t01",
+      "release_date": "2026-04-28",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_04_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_04_t01",
+      "release_date": "2026-05-28",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_05_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_05_t01",
+      "release_date": "2026-06-29",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_06_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_06_t01",
+      "release_date": "2026-07-27",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_07_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_07_t01",
+      "release_date": "2026-08-26",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "fatalities003_2026_08_t01",
+      "file_url": "https://api.viewsforecasting.org/fatalities003_2026_08_t01",
+      "release_date": "2026-09-25",
+      "proof": {
+        "file": "data/external/views/wiki_Available-datasets.md",
+        "sha256": "7b7568695487cc32a3e503432eb0994bc674044fc85af6c51eaff32ca1cf4789",
+        "url": "https://raw.githubusercontent.com/wiki/prio-data/views_api/Available-datasets.md",
+        "page": "https://github.com/prio-data/views_api/wiki/Available-datasets",
+        "strength": "publisher's own statement in a mutable GitHub wiki; not a machine-verified embargo"
+      }
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "predictors_fatalities002_2025_12",
+      "file_url": "https://api.viewsforecasting.org/predictors_fatalities002_2025_12",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": null,
+      "why_unproven": "absent from the wiki's 'Conflict prediction datasets' table"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "predictors_fatalities003_0000_00",
+      "file_url": "https://api.viewsforecasting.org/predictors_fatalities003_0000_00",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": null,
+      "why_unproven": "absent from the wiki's 'Conflict prediction datasets' table"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_01_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_01_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-01",
+      "why_unproven": "the wiki states '2021-01', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_02_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_02_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-02",
+      "why_unproven": "the wiki states '2021-02', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_03_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_03_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-03",
+      "why_unproven": "the wiki states '2021-03', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_04_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_04_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-04",
+      "why_unproven": "the wiki states '2021-04', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_05_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_05_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-05",
+      "why_unproven": "the wiki states '2021-05', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_06_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_06_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-06",
+      "why_unproven": "the wiki states '2021-06', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_07_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_07_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-07",
+      "why_unproven": "the wiki states '2021-07', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_08_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_08_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-08",
+      "why_unproven": "the wiki states '2021-08', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_09_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_09_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-09",
+      "why_unproven": "the wiki states '2021-09', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_10_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_10_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-10",
+      "why_unproven": "the wiki states '2021-10', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_11_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_11_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-11",
+      "why_unproven": "the wiki states '2021-11', which is not a calendar day"
+    },
+    {
+      "kind": "VIEWS_vintage",
+      "version": "r_2021_12_01",
+      "file_url": "https://api.viewsforecasting.org/r_2021_12_01",
+      "release_date": "UNPROVEN",
+      "proof": null,
+      "stated_in_wiki": "2021-12",
+      "why_unproven": "the wiki states '2021-12', which is not a calendar day"
+    }
+  ]
+}

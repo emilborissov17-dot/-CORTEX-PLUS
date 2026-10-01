@@ -1,0 +1,603 @@
+{
+  "id": "D1-W",
+  "status": "DRAFT - NOT SEALED, NOT SIGNED, NOT PUBLISHED; under review",
+  "drafted": "2026-10-01",
+  "computes_nothing": "no fit, no forecast and no score exists or is computed by this pre-registration",
+  "target": {
+    "source": "UCDP GED",
+    "type_of_violence": 1,
+    "type_of_violence_means": "state-based violence",
+    "measure": "best-estimate fatalities (column best)",
+    "aggregation": "summed per country-month"
+  },
+  "origins": {
+    "rule": "every 3 months from 2015-01 to 2024-12",
+    "first": "2015-01",
+    "last": "2024-10",
+    "step_months": 3,
+    "count": 40
+  },
+  "horizons_months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "arms": {
+    "a_no_change": "last observed month carried forward; predictive interval from that country's own past no-change errors observed strictly before the origin",
+    "b_ets": "ETS",
+    "c_views": "VIEWS, only vintages whose documented release date is on or before the origin",
+    "d_learner_L_v1": "regularised negative-binomial GLM on lagged fatalities with country intercepts, refit at each origin on data available at that origin",
+    "no_other_learner": true,
+    "out_of_scope": [
+      "a combiner",
+      "program search"
+    ]
+  },
+  "metrics": [
+    "CRPS per horizon",
+    "coverage of the 80% interval"
+  ],
+  "pass_rule": {
+    "rule": "L v1 CRPS <= no-change CRPS at horizons 1-3 on at least 60% of the frozen countries AND 80% coverage within +-10 points",
+    "horizons": [
+      1,
+      2,
+      3
+    ],
+    "min_share_of_frozen_countries": 0.6,
+    "coverage_nominal": 0.8,
+    "coverage_tolerance_points": 10,
+    "views": "reported as secondary"
+  },
+  "kill_rules": [
+    "no machine-verified embargo = no W number is ever published",
+    "L v1 not beating no-change on the frozen list = the L v1 class is recorded dead, one honest loss, no retune-and-extend"
+  ],
+  "leak_guards": {
+    "rule": "each enforced by code with a test before any number exists",
+    "G1": "version-date join: at origin t only a GED version released on or before t may be read",
+    "G2": "VIEWS vintage filter by release date",
+    "G3": "one assembler; any row with source_date > origin aborts the run",
+    "release_dates_file": "experiments/track_w/release_dates.json",
+    "unproven_versions": "excluded"
+  },
+  "holdout": {
+    "origins_from": "2024-01",
+    "origins": [
+      "2024-01",
+      "2024-04",
+      "2024-07",
+      "2024-10"
+    ],
+    "rule": "write-once, scored once after the architecture is frozen, published whatever they say"
+  },
+  "surrogate_null": "the same pipeline run on each country's series with months permuted within country; L v1 must beat its own null",
+  "attached_rules_frozen_now": {
+    "point_6": "retrain L on the error ledger with recency-weighted vs shuffled-error sampling vs no retrain on hold-out origins; demonstrated only if recency-weighted reduces CRPS at horizons 3-12 and shuffled does not",
+    "point_11": "coverage outside the band at 3 consecutive origins triggers an automatic, logged switch of model class; demonstrated only if it fires on real data, coverage returns to the band, and it does not fire on shuffled-error controls"
+  },
+  "publication": "every result is published win or lose",
+  "frozen_country_list": {
+    "criterion": "UCDP GED 26.1, type_of_violence == 1, best summed per (country_id, month of date_start); a month counts when the sum >= 1; country kept when it has >= 40 counting months from 1989-01 on",
+    "source_file": "data/external/ucdp/ged261-csv.zip",
+    "source_sha256": "8c941d84954e555ee2e54f40fa04d9203bf1e2f962203d0a9930966c4947c667",
+    "count": 56,
+    "list_sha256": "59f8a77b18dd16c29b51b35d04be1736169b35367a321fa6bab55c06b254d0d6",
+    "list_sha256_is_over": "json.dumps(countries, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')",
+    "countries": [
+      {
+        "country_id": 750,
+        "country": [
+          "India"
+        ],
+        "months_with_ge1_state_based_fatality": 442,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 700,
+        "country": [
+          "Afghanistan"
+        ],
+        "months_with_ge1_state_based_fatality": 436,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 840,
+        "country": [
+          "Philippines"
+        ],
+        "months_with_ge1_state_based_fatality": 422,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 100,
+        "country": [
+          "Colombia"
+        ],
+        "months_with_ge1_state_based_fatality": 417,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 640,
+        "country": [
+          "Turkey"
+        ],
+        "months_with_ge1_state_based_fatality": 389,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 645,
+        "country": [
+          "Iraq"
+        ],
+        "months_with_ge1_state_based_fatality": 378,
+        "first_month": "1989-01",
+        "last_month": "2025-11"
+      },
+      {
+        "country_id": 775,
+        "country": [
+          "Myanmar (Burma)"
+        ],
+        "months_with_ge1_state_based_fatality": 345,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 625,
+        "country": [
+          "Sudan"
+        ],
+        "months_with_ge1_state_based_fatality": 338,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 770,
+        "country": [
+          "Pakistan"
+        ],
+        "months_with_ge1_state_based_fatality": 336,
+        "first_month": "1990-02",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 615,
+        "country": [
+          "Algeria"
+        ],
+        "months_with_ge1_state_based_fatality": 333,
+        "first_month": "1990-12",
+        "last_month": "2024-07"
+      },
+      {
+        "country_id": 365,
+        "country": [
+          "Russia (Soviet Union)"
+        ],
+        "months_with_ge1_state_based_fatality": 324,
+        "first_month": "1990-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 666,
+        "country": [
+          "Israel"
+        ],
+        "months_with_ge1_state_based_fatality": 316,
+        "first_month": "1989-05",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 520,
+        "country": [
+          "Somalia"
+        ],
+        "months_with_ge1_state_based_fatality": 291,
+        "first_month": "1989-03",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 490,
+        "country": [
+          "DR Congo (Zaire)"
+        ],
+        "months_with_ge1_state_based_fatality": 281,
+        "first_month": "1994-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 800,
+        "country": [
+          "Thailand"
+        ],
+        "months_with_ge1_state_based_fatality": 268,
+        "first_month": "1989-07",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 850,
+        "country": [
+          "Indonesia"
+        ],
+        "months_with_ge1_state_based_fatality": 223,
+        "first_month": "1989-04",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 780,
+        "country": [
+          "Sri Lanka"
+        ],
+        "months_with_ge1_state_based_fatality": 217,
+        "first_month": "1989-01",
+        "last_month": "2009-07"
+      },
+      {
+        "country_id": 678,
+        "country": [
+          "Yemen (North Yemen)"
+        ],
+        "months_with_ge1_state_based_fatality": 212,
+        "first_month": "1994-02",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 475,
+        "country": [
+          "Nigeria"
+        ],
+        "months_with_ge1_state_based_fatality": 190,
+        "first_month": "2003-12",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 432,
+        "country": [
+          "Mali"
+        ],
+        "months_with_ge1_state_based_fatality": 188,
+        "first_month": "1990-06",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 630,
+        "country": [
+          "Iran"
+        ],
+        "months_with_ge1_state_based_fatality": 186,
+        "first_month": "1990-05",
+        "last_month": "2025-11"
+      },
+      {
+        "country_id": 660,
+        "country": [
+          "Lebanon"
+        ],
+        "months_with_ge1_state_based_fatality": 185,
+        "first_month": "1989-02",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 373,
+        "country": [
+          "Azerbaijan"
+        ],
+        "months_with_ge1_state_based_fatality": 183,
+        "first_month": "1991-12",
+        "last_month": "2023-09"
+      },
+      {
+        "country_id": 516,
+        "country": [
+          "Burundi"
+        ],
+        "months_with_ge1_state_based_fatality": 181,
+        "first_month": "1990-08",
+        "last_month": "2024-02"
+      },
+      {
+        "country_id": 135,
+        "country": [
+          "Peru"
+        ],
+        "months_with_ge1_state_based_fatality": 177,
+        "first_month": "1989-01",
+        "last_month": "2023-09"
+      },
+      {
+        "country_id": 530,
+        "country": [
+          "Ethiopia"
+        ],
+        "months_with_ge1_state_based_fatality": 177,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 652,
+        "country": [
+          "Syria"
+        ],
+        "months_with_ge1_state_based_fatality": 177,
+        "first_month": "2001-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 540,
+        "country": [
+          "Angola"
+        ],
+        "months_with_ge1_state_based_fatality": 172,
+        "first_month": "1989-01",
+        "last_month": "2025-05"
+      },
+      {
+        "country_id": 500,
+        "country": [
+          "Uganda"
+        ],
+        "months_with_ge1_state_based_fatality": 168,
+        "first_month": "1989-04",
+        "last_month": "2025-06"
+      },
+      {
+        "country_id": 651,
+        "country": [
+          "Egypt"
+        ],
+        "months_with_ge1_state_based_fatality": 167,
+        "first_month": "1992-08",
+        "last_month": "2025-07"
+      },
+      {
+        "country_id": 436,
+        "country": [
+          "Niger"
+        ],
+        "months_with_ge1_state_based_fatality": 150,
+        "first_month": "1991-10",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 541,
+        "country": [
+          "Mozambique"
+        ],
+        "months_with_ge1_state_based_fatality": 149,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 369,
+        "country": [
+          "Ukraine"
+        ],
+        "months_with_ge1_state_based_fatality": 144,
+        "first_month": "2014-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 471,
+        "country": [
+          "Cameroon"
+        ],
+        "months_with_ge1_state_based_fatality": 144,
+        "first_month": "1994-02",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 482,
+        "country": [
+          "Central African Republic"
+        ],
+        "months_with_ge1_state_based_fatality": 137,
+        "first_month": "2001-05",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 501,
+        "country": [
+          "Kenya"
+        ],
+        "months_with_ge1_state_based_fatality": 118,
+        "first_month": "1999-01",
+        "last_month": "2025-11"
+      },
+      {
+        "country_id": 790,
+        "country": [
+          "Nepal"
+        ],
+        "months_with_ge1_state_based_fatality": 116,
+        "first_month": "1996-02",
+        "last_month": "2009-12"
+      },
+      {
+        "country_id": 771,
+        "country": [
+          "Bangladesh"
+        ],
+        "months_with_ge1_state_based_fatality": 113,
+        "first_month": "1989-06",
+        "last_month": "2024-02"
+      },
+      {
+        "country_id": 483,
+        "country": [
+          "Chad"
+        ],
+        "months_with_ge1_state_based_fatality": 110,
+        "first_month": "1989-02",
+        "last_month": "2025-07"
+      },
+      {
+        "country_id": 451,
+        "country": [
+          "Sierra Leone"
+        ],
+        "months_with_ge1_state_based_fatality": 108,
+        "first_month": "1991-03",
+        "last_month": "2001-12"
+      },
+      {
+        "country_id": 626,
+        "country": [
+          "South Sudan"
+        ],
+        "months_with_ge1_state_based_fatality": 107,
+        "first_month": "2011-08",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 439,
+        "country": [
+          "Burkina Faso"
+        ],
+        "months_with_ge1_state_based_fatality": 96,
+        "first_month": "2017-07",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 230,
+        "country": [
+          "Spain"
+        ],
+        "months_with_ge1_state_based_fatality": 86,
+        "first_month": "1989-04",
+        "last_month": "2009-07"
+      },
+      {
+        "country_id": 811,
+        "country": [
+          "Cambodia (Kampuchea)"
+        ],
+        "months_with_ge1_state_based_fatality": 86,
+        "first_month": "1989-01",
+        "last_month": "2025-12"
+      },
+      {
+        "country_id": 702,
+        "country": [
+          "Tajikistan"
+        ],
+        "months_with_ge1_state_based_fatality": 85,
+        "first_month": "1992-05",
+        "last_month": "2022-09"
+      },
+      {
+        "country_id": 433,
+        "country": [
+          "Senegal"
+        ],
+        "months_with_ge1_state_based_fatality": 84,
+        "first_month": "1990-01",
+        "last_month": "2013-04"
+      },
+      {
+        "country_id": 90,
+        "country": [
+          "Guatemala"
+        ],
+        "months_with_ge1_state_based_fatality": 78,
+        "first_month": "1989-01",
+        "last_month": "1996-11"
+      },
+      {
+        "country_id": 620,
+        "country": [
+          "Libya"
+        ],
+        "months_with_ge1_state_based_fatality": 77,
+        "first_month": "2011-02",
+        "last_month": "2024-06"
+      },
+      {
+        "country_id": 616,
+        "country": [
+          "Tunisia"
+        ],
+        "months_with_ge1_state_based_fatality": 70,
+        "first_month": "2011-05",
+        "last_month": "2023-12"
+      },
+      {
+        "country_id": 517,
+        "country": [
+          "Rwanda"
+        ],
+        "months_with_ge1_state_based_fatality": 58,
+        "first_month": "1990-10",
+        "last_month": "2025-01"
+      },
+      {
+        "country_id": 200,
+        "country": [
+          "United Kingdom"
+        ],
+        "months_with_ge1_state_based_fatality": 57,
+        "first_month": "1989-01",
+        "last_month": "2019-11"
+      },
+      {
+        "country_id": 670,
+        "country": [
+          "Saudi Arabia"
+        ],
+        "months_with_ge1_state_based_fatality": 51,
+        "first_month": "1991-01",
+        "last_month": "2025-03"
+      },
+      {
+        "country_id": 484,
+        "country": [
+          "Congo"
+        ],
+        "months_with_ge1_state_based_fatality": 48,
+        "first_month": "1993-11",
+        "last_month": "2022-05"
+      },
+      {
+        "country_id": 346,
+        "country": [
+          "Bosnia-Herzegovina"
+        ],
+        "months_with_ge1_state_based_fatality": 45,
+        "first_month": "1992-04",
+        "last_month": "1995-12"
+      },
+      {
+        "country_id": 371,
+        "country": [
+          "Armenia"
+        ],
+        "months_with_ge1_state_based_fatality": 44,
+        "first_month": "1992-02",
+        "last_month": "2023-12"
+      },
+      {
+        "country_id": 910,
+        "country": [
+          "Papua New Guinea"
+        ],
+        "months_with_ge1_state_based_fatality": 42,
+        "first_month": "1989-01",
+        "last_month": "1997-11"
+      }
+    ]
+  }
+}
