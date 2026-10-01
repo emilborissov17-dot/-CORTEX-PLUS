@@ -33,6 +33,7 @@ from typing import Callable, Optional
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 RESULT = REPO / "memory" / "turn_result.json"
+RECORDS = REPO / "memory" / "turns"
 EXPECT = REPO / "memory" / "expectations.jsonl"
 
 
@@ -42,7 +43,9 @@ def _now() -> str:
 
 def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, busy: Optional[Callable] = None,
         bn_paths=None, space_paths=None, sym_paths=None, read=None, linked=None,
-        result_path=None, expect_path=None, turn_path=None) -> dict:
+        result_path=None, expect_path=None, turn_path=None, records_dir=None) -> dict:
+    """Also keeps the WHOLE turn — raw replies, needs accepted and refused, verdicts,
+    symbols — in memory/turns/brain_<started>.json, so a turn can be read back verbatim."""
     from core import brain_needs as bn
     from core import space as sp
     from core import symbols
@@ -89,7 +92,9 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
                       f"{sum(1 for n in open_ if n.get('origin') == 'engine')} engine); "
                       f"space {out['space']['base']} base / {out['space']['derived']} derived"}
     _write(result_path or RESULT, res)
-    return {**out, **res, "exit": 0}
+    record = {**out, **res, "exit": 0}
+    _write(Path(records_dir or RECORDS) / f"brain_{out['started_utc'].replace(':', '')}.json", record)
+    return record
 
 
 def _write(p, doc: dict) -> None:

@@ -70,7 +70,7 @@ def t(tmp_path, monkeypatch):
                       profiles_dir=prof, learned_dir=tmp_path / "learned", atom_sub={},
                       feeds=lambda: {"worker": {"rc": 0}}, restore=lambda: {"reloaded": False, "seconds": 0.0},
                       maintenance=lambda n, s: (cells.append(n) or {"worked": 0, "rows": []}),
-                      pages_dir=tmp_path / "pages")
+                      pages_dir=tmp_path / "pages", records_dir=tmp_path / "records")
     return {"go": go, "seen": seen, "cells": cells, "tmp": tmp_path}
 
 

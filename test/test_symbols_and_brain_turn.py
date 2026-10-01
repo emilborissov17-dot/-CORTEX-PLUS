@@ -150,7 +150,8 @@ def test_the_brain_turn_runs_in_order_and_writes_its_result(turn_paths):
     calls = []
     r = tb.run(think=_model(calls), engine=lambda prog: [], busy=lambda: None, bn_paths=turn_paths["bn"],
                space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
-               result_path=turn_paths["result"], expect_path=turn_paths["expect"])
+               result_path=turn_paths["result"], expect_path=turn_paths["expect"],
+               records_dir=turn_paths["result"].parent / "records")
     assert r["exit"] == 0 and r["open_needs"] == 1 and r["space"]["base"] > 0
     assert calls[0].startswith("Read the briefing"), "the needs were not asked first"
     need = json.loads(turn_paths["bn"]["needs"].read_text(encoding="utf-8"))["needs"][0]
@@ -166,7 +167,7 @@ def test_a_failed_engine_stops_the_turn_with_a_named_cause(turn_paths):
         raise sp.SpaceEngineFailed("hyperon exit 1")
     r = tb.run(think=_model([]), engine=broken, busy=lambda: None, bn_paths=turn_paths["bn"],
                space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], result_path=turn_paths["result"],
-               expect_path=turn_paths["expect"])
+               expect_path=turn_paths["expect"], records_dir=turn_paths["result"].parent / "records")
     assert r["exit"] == 2 and "hyperon" in json.loads(turn_paths["result"].read_text(encoding="utf-8"))["cause"]
 
 
@@ -181,3 +182,13 @@ def test_the_briefing_numbers_its_fact_lines():
     from core import brain_needs as bn
     lines, ids = bn.number_lines(["HEADING:", "- a fact", "    (expr)", "other"])
     assert lines == ["HEADING:", "[L1] - a fact", "    [L2] (expr)", "other"] and ids == {"L1": "- a fact", "L2": "(expr)"}
+
+
+def test_the_whole_brain_turn_is_kept_for_reading_back(turn_paths):
+    from scripts import turn_brain as tb
+    tb.run(think=_model([]), engine=lambda prog: [], busy=lambda: None, bn_paths=turn_paths["bn"],
+           space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
+           result_path=turn_paths["result"], expect_path=turn_paths["expect"],
+           records_dir=turn_paths["result"].parent / "records")
+    rec = json.loads(next((turn_paths["result"].parent / "records").glob("brain_*.json")).read_text(encoding="utf-8"))
+    assert "How many refugees" in rec["reply"]["raw"] and rec["needs"]["accepted"]

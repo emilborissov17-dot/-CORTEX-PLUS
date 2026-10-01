@@ -28,6 +28,7 @@ from typing import Callable, Optional
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 RESULT = REPO / "memory" / "turn_result.json"
+RECORDS = REPO / "memory" / "turns"
 LEDGER = REPO / "memory" / "vertical_ledger.jsonl"
 FAIL_STREAK = 3
 
@@ -53,7 +54,7 @@ def _atom_subcategories() -> dict:
 def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = None, maintenance_n: int = 10,
         bn_paths=None, ledger_path=None, result_path=None, turn_path=None, profiles_dir=None, learned_dir=None,
         feeds: Optional[Callable] = None, restore: Optional[Callable] = None, atom_sub: Optional[dict] = None,
-        maintenance: Optional[Callable] = None, pages_dir=None) -> dict:
+        maintenance: Optional[Callable] = None, pages_dir=None, records_dir=None) -> dict:
     from core import agent_profiles as ap
     from core import brain_needs as bn
     from core import turn
@@ -130,6 +131,10 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
     p = Path(result_path or RESULT)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(res, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
+    rd = Path(records_dir or RECORDS)
+    rd.mkdir(parents=True, exist_ok=True)
+    (rd / f"agents_{res['utc'].replace(':', '')}.json").write_text(
+        json.dumps(res, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
     return {**res, "exit": 0}
 
 
