@@ -14,6 +14,16 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 from core import brain_needs as bn  # noqa: E402
+sys.path.insert(0, str(REPO / "test"))
+import _live_net  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _no_live_reads(monkeypatch):
+    """test/_live_net.py: a read of memory/, snapshots/ or cortex_memory/ raises and is recorded."""
+    attempts = _live_net.install(monkeypatch)
+    yield attempts
+    _live_net.check(attempts)
 
 FIVE = ["CIVILIZATIONAL_STABILITY", "HEALTHY_ENVIRONMENTS", "KNOWLEDGE_UNDERSTANDING", "SAFETY", "SUSTAINABLE_RESOURCES"]
 GROUNDED = {"ranking": [{"axis": "SOCIAL_RELATIONS_REVIEW", "key": "refugee_population", "value": 29429000.0,
@@ -38,6 +48,7 @@ def paths(tmp_path, monkeypatch):
     fw = tmp_path / "forward"; fw.mkdir()
     (fw / "F-001.json").write_text(json.dumps(FORWARD), encoding="utf-8")
     return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
+            "ledger": tmp_path / "ledger.jsonl",
             "briefings": tmp_path / "briefings.jsonl", "grounded": tmp_path / "grounded.json",
             "forward_glob": str(fw / "F-[0-9]*.json"), "obs_log": tmp_path / "obs.jsonl",
             "atoms_root": tmp_path / "atoms"}
@@ -192,3 +203,20 @@ def test_the_forward_glob_reads_rows_not_seals(paths):
     fw = Path(paths["forward_glob"]).parent
     (fw / "F-001.seal.json").write_text(json.dumps({"id": "F-001", "seal": "x"}), encoding="utf-8")
     assert [f["row"] for f in bn.forward_rows(paths)] == ["F-001"]
+
+
+def test_a_paths_dict_missing_a_key_raises_instead_of_writing_live(paths):
+    partial = {k: v for k, v in paths.items() if k != "ledger"}
+    with pytest.raises(bn.PathMissing):
+        _run(partial, GOOD)
+
+
+def test_mutation_a_lenient_lookup_would_fall_back_to_the_live_path(monkeypatch):
+    lenient = lambda paths, k: (paths or {}).get(k, bn.PATHS[k])
+    assert lenient({"needs": "x"}, "ledger") == bn.PATHS["ledger"]
+
+
+def test_mutation_the_net_catches_a_write_to_the_live_ledger(_no_live_reads):
+    with pytest.raises(AssertionError, match="read live data"):
+        bn._append(bn.PATHS["ledger"], {"event": "x"})
+    _no_live_reads.clear()

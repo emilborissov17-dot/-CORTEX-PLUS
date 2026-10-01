@@ -40,7 +40,6 @@ core/body_sensorium.py ac8a90e88915  # ── REQUIRES ────────�
 core/body_sensorium.py f4ea20072a77  # ── FOOTPRINT ─────────────────────────────────────────────────────────────── What tick() writes. core/step_contract.py measures a step by the files it
 core/brain.py 0398f2900ef3  # READS THE ENGLISH LAW NOW (23 Aug 2026), and the labels around it are English too.
 core/brain.py 439d8d134aa9  # BATCHED (23 Aug 2026). 63 step-log writes on the last sealed cycle.
-core/brain.py 4e1013755066  # BATCHED (23 Aug 2026). 143 writes on the last sealed cycle.
 core/brain.py 68d9648d119b  # So below MIN_POOL clean entries the block falls back to hand-written English format anchors from config/few_shot_seed.json, and SAYS SO in the block.
 core/brain.py d05b19d65eca  # The tempting way to wire that in is to retag it "cortex-l1b:3b" so _fast_model() picks it — and that is exactly wrong: that function returns the small
 core/brain.py f542537b7341  # ── THE FULL DICT GOES INTO payload, NOT ONLY INTO A TRUNCATED SUMMARY ── summary is capped at 400 chars for the human-readable memory recall (_memory(
@@ -127,7 +126,6 @@ core/global_indicators.py 9539f8648287  # The key now names the CONCEPT and the 
 core/global_indicators.py db12d9a6c323  # Prefers the explicit UCDP_LOCAL_CSV path; otherwise globs UCDP_LOCAL_DIR for any *.csv whose name starts with 'ucdpprioconflict' (case-insensitively) 
 core/groq_backend.py 48b578f7cb76  # THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads memory/llm_provenance.jsonl (success, truncation, 429s, latency) an
 core/groq_backend.py 5e5719938599  # It served 440 calls 15-18 Aug with the best median reply of the four, then returned 402 payment_required on every completion from ~22 Aug.
-core/groq_backend.py 839ffecaf45d  # The cloud half of the same 143-writes-a-night provenance stream as core/brain.py.
 core/groq_backend.py ac896e674891  # This file only READS it, only accepts known keys, and falls back to the default below if the file is absent, stale, or malformed.
 core/groq_backend.py e544b7c18496  # Outside it, handing step_budget a callable that loads 8b would evict the pinned 3b mid-step — the exact churn core/model_window.py exists to stop — an
 core/groq_backend.py e76dd691e2a1  # That is the shape of all six internet_intelligence kills in the existence ledger. core/step_budget.py spends the step's budget B in thirds and never b
@@ -155,7 +153,6 @@ core/language_gate.py 58a50c4dc5df  # NEVER RAISES. `sender(subject, detail)` is
 core/language_gate.py 9eb42d1bd99a  # Read the previous stamp BEFORE overwriting it, or the rate limit resets itself every time it fires.
 core/language_gate.py eaf2b0e25887  # Text with no letters at all passes with NO_LETTERS: a summary that is pure numbers has no language to be wrong about, and rejecting it would quietly e
 core/language_gate.py eca72354be5b  # Today nothing routes free-stream text into the journal — core/reaction.py writes memory/reactions.jsonl, and this census reads memory/brain_journal.js
-core/learn_world.py 6f3cab825597  # Writes memory/learn_world_latest.json (the step's promised artifact).
 core/level_reconciler.py 6f5a9583f65b  # WHAT IT FIXES -------------- auto_levels writes a level word per axis from its own thresholds. goal_score_calculator writes a 0..1 score per axis from
 core/level_reconciler.py b66f0de41242  # Which is correct and reads backwards to a person, because the axis is NAMED for risk.
 core/level_reconciler.py ef91481c6624  # On an ordinary axis this is the word itself; on a _RISK_ axis it carries the translation, because "ниво HIGH" on an axis called GLOBAL_RISK reads as d
@@ -196,7 +193,6 @@ core/phase_report.py 5d95b96013ff  # It needs a refusal recorded for THIS phase 
 core/phase_report.py 677eb41aa448  # This module writes down what it actually left: memory/phase_reports/<cycle_id>/<PHASE>.json The verdict is not a summary of whether the steps raised.
 core/phase_report.py 9b633093cba1  # Called from core.phase_tracker.note_refusal(), which the runner's _witness_or_refuse() calls at each of its three refusal returns.
 core/phase_report.py a9916d399cc5  # Earlier it rendered one as "5326.0s AFTER", which handled the defect instead of removing it; now produces_check emits null for anything not older than
-core/phase_tracker.py 8df5ad9d98e3  # The runner already records who started the cycle in memory/cycle_origin.json; ask it instead of asserting.
 core/prediction_resolutions.py 32546651cf7d  # THE RISK IS REAL AND IS NAMED HERE RATHER THAN DISCOVERED LATER: two records of what the system predicted about an axis can drift apart.
 core/prediction_resolutions.py 821dde902ef0  # Per CLAUDE.md, a module that writes a ledger needs an explicit --write. record_prediction() and record_resolution() return the row they WOULD append u
 core/proposal_intake.py b6e699529b22  # ── SCALE: is this a POSSIBLE number for this indicator? (3b, 6 Sep 2026) ──── A delta that parses is not yet a delta that could happen.
@@ -244,7 +240,6 @@ core/survival_gate.py 4a0906e87a51  # The ledger event is CYCLE_REFUSED_SURVIVAL
 core/survival_gate.py 8df4858d59dd  # NO ACTUATOR IS FIRED FROM HERE YET, and the constant that claimed otherwise has been removed rather than left to read as wiring. core/disk_actuator.py
 core/survival_gate.py d0b67b452f03  # When it refuses it has ALREADY written the ledger line and fired the siren; `on_refuse` (default sys.exit) then stops the process.
 core/survival_gate.py ec6ac2ec0875  # The third mechanical effect of the homeostatic layer. notice is recorded and nothing else happens. action fires an actuator that tries to move the val
-core/survival_mode.py 7c5f199e58ef  # Two independent triggers, either sufficient: * restarts for `today` have reached max_restarts_per_day * a `failure` block is recorded for `today` The 
 core/survival_mode.py cf32d9613c67  # WHAT CLEARS IT IS EVIDENCE, NOT TIME. fast_cycle_runner calls clear() when a cycle reaches its last step.
 core/three_columns.py 464eb049c6fb  # NEVER raises, never hides.
 core/three_columns.py 6204d6b91213  # No voice is ever deleted, and falsified_by_physical keeps writing track records either way.
@@ -356,14 +351,9 @@ test/test_cycle_checkpoint_resume.py 8758895e24ac  # The harness below walks a l
 test/test_cycle_checkpoint_resume.py 9af633bc5ec3  # A checkpoint on disk changes NOTHING unless --resume is passed.
 test/test_cycle_log_survives_kill.py 4f5cf726a93c  # Spawn a REAL child through spawn_cycle, watch its lines reach disk WHILE IT IS STILL ALIVE (which only happens because the env forces unbuffered write
 test/test_cycle_logs.py b0668d6e6c09  # A 70-minute run that hit dozens of LLM calls left NO record of any of it: no traceback if it died, no backend fallback lines, no "finish_reason=length
-test/test_cycle_logs.py fca3e865c793  # spawn_cycle also starts a detached reaper, which writes the child's exit code to CYCLE_EXIT_PATH and appends to NIGHT_LOG.
 test/test_cycle_phases_cover_every_step.py f2b16e73dc52  # 53 beat() calls carrying 52 distinct names — the duplicate is body_scan, which genuinely runs twice.
 test/test_cycle_profile.py 20329e140943  # A filter that excludes nothing reads in a log exactly like a filter that is working. venv\Scripts\python.exe -m pytest test/test_cycle_profile.py -v
 test/test_cycle_profile.py ece3f4e14360  # The nightly cycle runs at 03:00, which this module calls NIGHT with big_model_allowed False.
-test/test_cycle_reaper.py 243fbcc0485e  # What spawn_cycle actually passes to CreateProcess.
-test/test_cycle_reaper.py 56a509d3fc8e  # Sink 2 — the night log, in the shape core/cycle_report.py reads.
-test/test_cycle_reaper.py 8395fde9b6de  # The kill is only distinguishable because the watchdog SIGNS the heartbeat; the reaper reads that signature after the process is gone.
-test/test_cycle_reaper.py df9ea753c3f5  # Write a heartbeat directly, without beat(). beat() also calls core.brain.attend(), which makes a real HTTP call to a local model.
 test/test_cycle_vector.py 84807b85bbf1  # This is the wire, and these are the assertions that keep it honest: * one line per cycle end, 29 measurable keys; * a dimension that could not be meas
 test/test_daily_board_missing.py 6f7a95ade57b  # ROW_SOURCES is what the tests delete; db.SOURCES is what the board reads.
 test/test_daily_board_missing.py 75741145efad  # Every path here is also in db.SOURCES, and test_the_source_table_and_this_table_agree holds the two together.
@@ -398,8 +388,6 @@ test/test_enum_migration.py 4808d3a5911c  # Read from the FILE, not from inspect
 test/test_escalation_evidence.py 744ed6f4f397  # ---------- approve_reader refuses to sign incomplete evidence ----------
 test/test_escalation_evidence.py aa1b86abc7b8  # ---------- the raw signal carries the numbers; nothing can propose without them ---------- (since the split, the pulse only EMITS — the watchdog propo
 test/test_eval_harness.py fab7d1c3d79f  # Records whether the adapter is on, so a stubbed example_nll can return a different number for base and adapted.
-test/test_exit_log_is_durable.py 11192218bb45  # Adding EXIT_LOG made four existing tests append fabricated records ('test-cycle', 'CYCLE-B', ended_by=death) to the real memory/cycle_exits.jsonl, bec
-test/test_exit_log_is_durable.py 71696c2bfeb4  # The exit code survives the next cycle. memory/cycle_exit.json is a single slot: every reaped cycle overwrites the last.
 test/test_extraordinary_cycle.py 9f42d5ddee86  # So the chain is: pulse PROPOSES -> needs report surfaces "OK <id>" -> Emil replies -> approve_reader (the ONLY authorised writer) writes the superviso
 test/test_extraordinary_cycle.py b20174940a35  # PULSE PROPOSES, never writes the supervisor's file ---------- Since the split the PULSE cannot propose at all — the watchdog does, from the raw signal
 test/test_f1_self_grading_retired.py d17bd20c4a18  # ── 1. make_predictions is a no-op: writes nothing, grades nothing ───────────
@@ -433,7 +421,6 @@ test/test_institution0.py 9a631164c0de  # Nothing here reads data/ucdp/ or reach
 test/test_internet_truncation.py 73530d2624cd  # ── the aggregate counts UNKNOWN apart from LOW ────────────────────────────
 test/test_internet_truncation.py 807a620f9397  # call_llm_json raises TruncatedJSONError, as it does after its own retry.
 test/test_internet_truncation.py a92bb96ec130  # HONEST GAP, stated rather than papered over: conftest's _no_live_writes covers _GUARDED_TREES = ("memory", "config"). news/ is NOT among them, so writ
-test/test_interoception.py 415a171b5adb  # After self_mirror, because it reads what self_mirror just wrote.
 test/test_irreversible_boundary_holds.py 10335f7aadaf  # Stamp every artifact self_observer produces at FULL — the best its new declaration could ever yield — and execute_patches is still refused.
 test/test_irreversible_boundary_holds.py 21e56b335ceb  # Change the parametrize above to [N.FULL] — or to anything >= IRREVERSIBLE_MIN — and this test goes RED: with a raised ceiling and perfect provenance, 
 test/test_irreversible_boundary_holds.py def7a83d7491  # This test runs the REAL vector, so on a machine where the MeTTa sidecar is down the weakest link is the witness and the refusal is attributed to it — 
@@ -522,7 +509,6 @@ test/test_quarantine_triage.py 684302bfe147  # That patch writes agents/registry
 test/test_rank_runner.py c82c0f0c1d91  # ════════════════════════════════════════════════════════════════════════════ FAILURE MODE 4 — OOM falls back to unbatched, never to a shorter sequence
 test/test_reaction.py 9ac0f228601d  # The three the command names: * a fixture stream produces a stored record containing BOTH lines and answer; * a non-English answer is DISPLAYED and is 
 test/test_reaction.py e5c04f56f7fc  # AND THE FREE STREAM GOES SOMEWHERE ELSE. react() writes one file per answer (COMMAND 33 part 8), so without this every test in this file writes fabric
-test/test_reaper_records_its_own_death.py 407a72c0b58e  # Everything here writes to tmp_path via --exit-record, --exit-log and --night-log.
 test/test_receptors.py f8fb6e9e9908  # 3 calibration ticks: the 1st sets the baseline and the 2nd is suppressed as warmup; by the 3rd, ticks >= calibration_ticks and it is live.
 test/test_redact.py 376bea2222e5  # WHAT NO OUTPUT MEANS: redact() returning the text unchanged with {} hits is the normal answer for almost every line the system ever writes.
 test/test_redact.py c300a1d453d3  # FAIL-OPEN. core/durable.py exists so a record is not lost; a guard that raises inside it would defeat the file it is protecting.
@@ -533,7 +519,6 @@ test/test_refusal_leaves_an_experience.py 6bc1655cc6e6  # Three modules read it:
 test/test_refusal_leaves_an_experience.py 74cee0587f9a  # Count a refusal as an ERROR and containment working reads as the system breaking — one point of pain per night for doing the right thing, and a succes
 test/test_refusal_leaves_an_experience.py d05dd3d252a8  # Verified in the code: agents/core/self_observer.py writes development_journal.json and improvement_proposals.json, and nothing else.
 test/test_registration_contract.py 7ff7900160aa  # A flat row passes five clean observations with CV 0, is promoted to TRUSTED, and then the April revision lands and the machine reads a correct number 
-test/test_repeated_failure_alert.py 56d11f9dd15e  # No test reads or writes the real memory/cycle_logs/ or the real needs files.
 test/test_resolve_ideas_wired.py f105af1cff59  # It grades ideas against memory/axis_history.json, which trend_tracker writes at index 3.
 test/test_resume_flag.py 71b4e55eb977  # Only a supervisor RESTART passes the flag. * a resume needs to be TOLD which cycle it continues.
 test/test_resume_flag.py abe56de83288  # StepContract takes two snapshots of 4853 files and writes memory/step_contract_*.json — live state, which test/conftest.py rightly fails on.
@@ -586,7 +571,6 @@ test/test_step_contracts.py 0e8eb5405b90  # --also-latest writes into a file fou
 test/test_step_contracts.py a7e69d71dce9  # IN THE ORDER A REAL TRACE WRITES THEM.
 test/test_step_contracts.py dd48083808c8  # THE ONE THAT MATTERS. facade_self_check reads scorers and prints.
 test/test_suite_gate.py 41ea7e281ff6  # So the guard records ABSENT as a state and compares against it.
-test/test_supervisor.py 01c1e4bd9e3a  # The autopsy is MOCKED, not removed (Kimi: „Мокнете, не заглушавайте") — the branch still calls it, and the call is asserted below.
 test/test_supervisor.py 0c214b8b9d49  # The capability is removed rather than the call stubbed. 2. test_the_sandbox_covers_every_writable_path_in_the_supervisor below reads the module's own 
 test/test_supervisor.py 10aaa24d1c65  # Backdate the heartbeat on disk so the cycle reads as SILENT.
 test/test_supervisor.py 27a008961aa0  # tick() appends one telemetry row per call (core/body_sensorium.py).
@@ -617,9 +601,6 @@ test/test_trigger_watchdog.py 598271bd73ac  # ---------- 1. the pulse emits a SI
 test/test_trigger_watchdog.py 6a30f53a4c4e  # After: the pulse emits raw numbers and stops. trigger_watchdog reads them, applies thresholds it never computes, RE-DERIVES any cited penumbra leaf ha
 test/test_truncation_budgets.py d466a02717e1  # utf-8-sig: agents/internet/internet_agent.py carries a UTF-8 BOM, and ast.parse refuses U+FEFF as a non-printable character.
 test/test_usgs_quakes.py 131aa49603e2  # Registered in this same commit, so this reads the LIVE trends.json — no temp file, no injection.
-test/test_verifier_inputs.py 1dd49f65e9fb  # It reads NOTHING locally on the cycle path. internet_intelligence agents/internet/internet_agent.py reads only its own outputs and caches — memory/you
-test/test_verifier_inputs.py 359f10f31ad8  # Verifiers that cannot say what they read. for_step() returns None for 'nobody wrote a declaration' and [] for 'a declaration exists and is empty or br
-test/test_verifier_inputs.py 8b0620ab254b  # Neither reads any local file whose age means anything: browser_scout AST census of experiments/browser_scout/scout.py: one write_text (its own output)
 test/test_voluntary_halt.py 5d8824bf63eb  # If that clause goes, a halt becomes an unhandled BaseException and the supervisor reads a corpse.
 test/test_withheld_composite_consumers.py 11e653703af3  # ── 4. goal_prophecy refuses rather than forecasting nothing ─────────────────
 test/test_withheld_composite_consumers.py fbc96175080e  # The defect this guards: 0.0 in the goal_score series reads forever after as 'the world scored zero that day', and drags every average and every foreca
@@ -659,7 +640,6 @@ test/test_ask.py 0cc0455497d6  # BACKED: test_ask.test_an_aliased_import_is_stil
 # ── 20 Sep 2026, the fetch/judge chain. Backed, each naming its test.
 core/card_intake.py 164d8ffeb784  # BACKED: test_openclaw_wire_to_the_gate.test_a_chain_whose_judge_dies_is_still_reported_unfinished builds exactly that row set and asserts only card_intake comes back
 core/card_intake.py 6e69b0e03022  # BACKED: test_openclaw_wire_to_the_gate.test_a_chain_whose_judge_dies_is_still_reported_unfinished drives both tasks through core.task_runs and asserts the pairing
-core/card_intake.py fe17b46cdf9b  # BACKED: test_openclaw_wire_to_the_gate.test_exactly_one_caller_owns_the_judge counts the callers in every .bat and fails at two; test_the_chain_exports_the_shared_id_before_it_runs_anything pins the export
 test/test_openclaw_wire_to_the_gate.py 33898245d8e1  # BACKED: test_openclaw_wire_to_the_gate.test_a_number_inside_a_longer_number_is_not_a_quote and test_the_worker_never_emits_a_quote_the_gate_would_refuse both fail if the colon rule stops holding
 
 # ── 21 Sep 2026, the observation record shape. Each names its test.
@@ -690,7 +670,6 @@ core/llm_door.py 3937a43e691d  # BACKED: test_warm_core.test_in_a_cycle_an_absen
 core/model_window.py 997b71b4c5a9  # BACKED: test_warm_core.test_model_window_loads_nothing_inside_a_cycle
 core/redact.py 4ac20bb14d8a  # BACKED: test_claims_backed_26sep.test_mask_secrets_masks_exactly_what_redact_redacts
 core/redact.py 238eb8282219  # BACKED: test_log_masking.test_the_llm_failure_print_goes_through_the_mask + test_a_gemini_key_in_a_url_keeps_at_most_four_chars
-test/_live_net.py 1b0f82359a0b  # BACKED: test_metta_parallel.test_mutation_a_swallowed_live_read_is_still_recorded and test_mutation_the_net_raises_on_a_live_read
 test/test_belief_revision.py 7905a717ae79  # BACKED: test_belief_revision.test_mutation_the_net_raises_on_a_live_read
 test/test_compass_wired.py b64daef55b28  # BACKED: test_compass_wired.test_the_nightly_axis_feed_reads_no_atoms_and_no_trusted_rows
 test/test_compass_wired.py 1b51260039a1  # BACKED: test_compass_wired.test_the_nightly_step_is_that_axis_feed
@@ -708,3 +687,8 @@ core/atoms.py 2cd5557e7347  # BACKED: test_atoms_identity.test_a_second_fetch_wi
 core/card_intake.py 65085140fc7b  # BACKED: test_observation_retractions.test_only_core_card_intake_opens_the_observations_file and test_mutation_a_module_that_opens_it_directly_is_caught
 core/fetch_standard.py ff03d0bb2682  # BACKED: test_fetch_standard.test_only_get_goes_out and the other rule tests there, each with a mutation
 test/test_observation_log.py f5746041e343  # BACKED: test_observation_log.test_an_unchanged_reading_logs_unchanged_and_writes_no_atom, test_a_changed_reading_carries_changed_from_and_logs_changed, test_a_first_reading_logs_new
+test/_live_net.py 768693528cbc  # BACKED: test_brain_needs.test_mutation_the_net_catches_a_write_to_the_live_ledger, test_metta_parallel.test_mutation_a_swallowed_live_read_is_still_recorded
+test/test_brain_needs.py d95fd33a252b  # BACKED: test_brain_needs.test_mutation_the_net_catches_a_write_to_the_live_ledger
+test/test_needs_and_finder.py 4e020ae3637d  # BACKED: the _no_live autouse fixture of test_needs_and_finder (teardown _live_net.check) and test_brain_needs.test_mutation_the_net_catches_a_write_to_the_live_ledger
+core/brain_needs.py a72e4d0589e5  # BACKED: test_brain_needs.test_a_paths_dict_missing_a_key_raises_instead_of_writing_live
+core/brain_needs.py bc95f4100f58  # BACKED: test_needs_and_finder.test_the_whole_loop_ledger_and_link, test_a_garbled_review_changes_nothing_and_is_recorded, test_a_verdict_outside_the_three_is_not_recorded

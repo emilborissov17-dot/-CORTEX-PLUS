@@ -2,10 +2,10 @@
 """scripts/openclaw_finder.py — search for what the system needs, fetch what the
 search returns, put the pages in the store the brain reads (C-OC-3 Part 3).
 
-NO MODEL ANYWHERE IN THIS PATH. The needs are ranked by core/needs.py (counts and
-a config order), the query is built from the need's own words, the search is the
-repo's own (web_intelligence_agent._ddg_search — ddgs — with its GDELT fallback),
-and every fetch goes through core/fetch_standard.
+NO MODEL ANYWHERE IN THIS PATH. The needs come from memory/brain_needs.json
+(core/brain_needs.py, C-NEED-1): the brain's own first, then the engine's. The
+search is the repo's own (web_intelligence_agent._ddg_search — ddgs — with its
+GDELT fallback), and every fetch goes through core/fetch_standard.
 
 Chain: openclaw_axis_worker -> openclaw_finder -> card_intake.
 
@@ -73,31 +73,43 @@ def _fetch(url: str, getter=None) -> dict:
             "err": None if g["status"] == 200 else f"HTTP {g['status']}"}
 
 
+def query_for(need: dict) -> str:
+    """For a brain need the query IS the brain's question, plus place, actor and
+    period when it gave them. Not a template."""
+    about = need.get("about") or {}
+    extra = [str(about[k]) for k in ("place", "actor", "period") if about.get(k)
+             and str(about[k]).lower() not in need["question"].lower()]
+    return " ".join([need["question"]] + extra)
+
+
 def run(n: int = 5, per_need: int = 4, search=None, getter=None, ledger=None, store=None, seen_path=None,
-        needs_out=None, composer_path=None, labels_path=None, atoms_root=None, parking=None, tree=None) -> dict:
+        needs_path=None, parking=None) -> dict:
+    """Serve the open needs of memory/brain_needs.json: the brain's first, then the
+    engine's. A need with no results stays OPEN; only the brain's verdict
+    (core.brain_needs.review) closes it."""
+    from core import brain_needs as bn
     from core import fetch_standard as fs
     from core import knowledge as kn
-    from core import needs
     search = search or repo_search
     ledger = ledger or LEDGER
-    doc = needs.rebuild(out=needs_out, composer_path=composer_path, labels_path=labels_path,
-                        atoms_root=atoms_root, tree=tree)
-    _row(ledger, event="EMITTED", needs=len(doc["needs"]),
-         declared=sum(1 for x in doc["needs"] if x["tier"] == "declared"))
-    taken = doc["needs"][:n]
-    out = {"emitted": len(doc["needs"]), "taken": [], "statements_added": 0, "fetched": 0, "unreachable": 0}
+    paths = {"needs": needs_path} if needs_path else None
+    doc = bn.load_needs(paths)
+    open_ = [x for x in doc.get("needs", []) if x.get("status") in (bn.OPEN, bn.STILL_OPEN)]
+    open_.sort(key=lambda x: 0 if x.get("origin") == "brain" else 1)          # brain first, stable otherwise
+    taken = open_[:n]
+    out = {"open": len(open_), "taken": [], "statements_added": 0, "fetched": 0, "unreachable": 0}
     for need in taken:
-        nid = need["need_id"]
-        _row(ledger, event="TAKEN", need_id=nid, rank=need["rank"], query=need["query"])
+        nid, q = need["id"], query_for(need)
+        _row(ledger, event="TAKEN", need_id=nid, origin=need.get("origin"), query=q)
         for sid in (need.get("source_ids") or []) if parking is not None else []:
             fs.unpark(sid, f"named by need {nid}", parking)
         try:
-            hits = search(need["query"], per_need)
+            hits = search(q, per_need)
         except Exception as exc:                                     # noqa: BLE001
             hits = []
-            _row(ledger, event="NO_RESULTS", need_id=nid, query=need["query"], why=f"{type(exc).__name__}: {exc}")
+            _row(ledger, event="NO_RESULTS", need_id=nid, query=q, why=f"{type(exc).__name__}: {exc}")
         else:
-            _row(ledger, event="SEARCHED" if hits else "NO_RESULTS", need_id=nid, query=need["query"], n=len(hits))
+            _row(ledger, event="SEARCHED" if hits else "NO_RESULTS", need_id=nid, query=q, n=len(hits))
         got, gained = 0, 0
         for h in hits[:per_need]:
             url = h["url"]
@@ -106,7 +118,6 @@ def run(n: int = 5, per_need: int = 4, search=None, getter=None, ledger=None, st
                 out["unreachable"] += 1
                 _row(ledger, event="UNREACHABLE", need_id=nid, url=url, why=page["err"])
                 continue
-            got += 1
             try:
                 text, form = kn.body_to_text(page["raw"], page["payload"], page["content_type"])
             except kn.FlattenLostValue as exc:
@@ -114,14 +125,17 @@ def run(n: int = 5, per_need: int = 4, search=None, getter=None, ledger=None, st
             if form == "pdf_unreadable":
                 _row(ledger, event="UNREACHABLE", need_id=nid, url=url, why="a PDF reader (none installed)")
                 continue
-            r = kn.ingest(f"url:{url}", text, url=url, origin="finder", store=store, seen_path=seen_path)
-            gained += r["added"]
+            got += 1
+            r = kn.ingest(f"url:{url}", text, url=url, origin="finder", store=store, seen_path=seen_path,
+                          extra={"need_id": nid})
+            gained += r.get("added", 0)
         _row(ledger, event="FETCHED", need_id=nid, n=got)
-        _row(ledger, event="GAINED", need_id=nid, statements=gained)
+        _row(ledger, event="GAINED", need_id=nid, statements=gained, measurements=0)
+        bn.mark_served(nid, q, len(hits), got, gained, paths)
         out["fetched"] += got
         out["statements_added"] += gained
-        out["taken"].append({"need_id": nid, "query": need["query"], "hits": len(hits), "fetched": got,
-                             "gained": gained})
+        out["taken"].append({"need_id": nid, "origin": need.get("origin"), "query": q, "hits": len(hits),
+                             "fetched": got, "gained": gained})
     return out
 
 

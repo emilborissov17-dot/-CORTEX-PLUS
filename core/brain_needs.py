@@ -46,6 +46,7 @@ PATHS = {
     "needs": MEM / "brain_needs.json",
     "refused": MEM / "brain_needs_refused.jsonl",
     "log": MEM / "brain_needs_log.jsonl",
+    "ledger": MEM / "vertical_ledger.jsonl",
     "briefings": MEM / "brain_briefings.jsonl",
     "grounded": MEM / "orchestration_grounded_latest.json",
     "forward_glob": str(REPO / "experiments" / "institution" / "forward" / "F-[0-9]*.json"),
@@ -63,8 +64,19 @@ def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+class PathMissing(KeyError):
+    """A caller that passes its own paths must pass ALL of them."""
+
+
 def _p(paths: Optional[dict], k: str):
-    return (paths or {}).get(k, PATHS[k])
+    """Live path when no paths are given; otherwise the caller's, and a missing key
+    RAISES — never a silent fall back to memory/ (1 Oct 2026: a test fixture
+    without "ledger" wrote 29 rows into the live vertical ledger this way)."""
+    if paths is None:
+        return PATHS[k]
+    if k not in paths:
+        raise PathMissing(f"paths given without {k!r}")
+    return paths[k]
 
 
 def _read(p, default):
@@ -281,6 +293,7 @@ def engine_needs(b: dict) -> list:
         q = (f"Verify {c['key']} for {c['place']}, period {c['period']}: {c['value_1']} ({c['source_1']}) vs "
              f"{c['value_2']} ({c['source_2']}), from a source independent of both")
         out.append({"question": q, "kind": "VERIFY", "why_subgoal": None,
+                    "source_ids": [s for s in (c["source_1"], c["source_2"]) if s],
                     "about": {"place": c["place"], "actor": None, "period": c["period"]}, "would_change": None})
     for f in b["facts"]["forward"]:
         place = ", ".join(f["place"]) if isinstance(f["place"], list) else f["place"]
@@ -330,13 +343,100 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
     ordered = ([n for n in by_id.values() if n["origin"] == "brain"] +
                [n for n in by_id.values() if n["origin"] == "engine"])
     out = {"briefing_sha256": b["sha256"], "briefing_utc": b["utc"], "silence": silence, "needs": ordered}
-    Path(_p(paths, "needs")).parent.mkdir(parents=True, exist_ok=True)
-    Path(_p(paths, "needs")).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
+    _save_needs(out, paths)
     for r in accepted:
-        _append(_p(paths, "log"), {"event": "EMITTED", "utc": _now(), "need_id": r["id"], "origin": r["origin"],
-                                   "question": r["question"]})
+        _append(_p(paths, "ledger"), {"event": "EMITTED", "ts": _now(), "need_id": r["id"], "origin": r["origin"],
+                                      "question": r["question"]})
     return {"accepted": accepted, "refused": refused, "silence": silence, "open": sum(
         1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
+
+
+def _save_needs(doc: dict, paths=None) -> None:
+    Path(_p(paths, "needs")).parent.mkdir(parents=True, exist_ok=True)
+    Path(_p(paths, "needs")).write_text(json.dumps(doc, indent=1, ensure_ascii=False), encoding="utf-8")
+
+
+def mark_served(need_id: str, query: str, hits: int, fetched: int, gained: int, paths=None) -> None:
+    """The finder's account on the need itself; the status is NOT touched."""
+    doc = load_needs(paths)
+    for n in doc.get("needs", []):
+        if n["id"] == need_id:
+            n["searched"] = n.get("searched", 0) + 1
+            n["last_query"] = query
+            n["last_hits"], n["last_fetched"] = hits, fetched
+            n["gained_statements"] = n.get("gained_statements", 0) + gained
+    _save_needs(doc, paths)
+
+
+# ── 6. the brain is told what came back, and judges its own needs ───────────
+VERDICTS = (SATISFIED, STILL_OPEN, WRONG_QUESTION)
+REVIEW_QUESTION = (
+    "Earlier you said you needed to know the things below. For each, the store now "
+    "returns the items listed under it. Judge each of YOUR needs. Answer ONLY with JSON:\n"
+    '{"verdicts": [{"id": "<the need id>", "verdict": "SATISFIED | STILL_OPEN | WRONG_QUESTION", '
+    '"question": "<if STILL_OPEN: the question reformulated in your words, else null>", '
+    '"why": "<one sentence>"}]}')
+
+
+def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optional[Callable] = None) -> dict:
+    """Show the brain, for each of its open needs that has been searched, the top k
+    items core.knowledge returns for its question; record its verdict per need.
+    Code records the verdict and never overrules it; an unparseable reply or a
+    verdict outside the three leaves the need as it was, and says so."""
+    from core import knowledge as kn
+    read = read or (lambda q, kk: kn.read(q, k=kk))
+    doc = load_needs(paths)
+    mine = [n for n in doc.get("needs", []) if n.get("origin") == "brain"
+            and n.get("status") in (OPEN, STILL_OPEN) and n.get("searched", 0) > 0]
+    if not mine:
+        return {"shown": 0, "verdicts": [], "silence": None}
+    blocks = []
+    for n in mine:
+        items = read(n["question"], k)
+        _append(_p(paths, "ledger"), {"event": "SHOWN", "ts": _now(), "need_id": n["id"], "items": len(items)})
+        lines = [f"  {i + 1}. [{it.get('type')}] {str(it.get('text'))[:300]}" for i, it in enumerate(items)]
+        blocks.append(f"NEED {n['id']}: {n['question']}\n" + ("\n".join(lines) if lines else "  (nothing returned)"))
+    shown = "\n\n".join(blocks)
+    t0 = time.time()
+    try:
+        r = (think or _think)(REVIEW_QUESTION, shown)
+    except Exception as exc:                                         # noqa: BLE001
+        r = {"text": None, "error": f"{type(exc).__name__}: {exc}"}
+    raw = (r or {}).get("text")
+    parsed = None
+    if raw:
+        s = raw.strip()
+        i, j = s.find("{"), s.rfind("}")
+        try:
+            d = json.loads(s[i:j + 1]) if i >= 0 and j > i else None
+            parsed = d.get("verdicts") if isinstance(d, dict) else None
+        except ValueError:
+            parsed = None
+    sec = (r or {}).get("sec", round(time.time() - t0, 1))
+    if not isinstance(parsed, list):
+        sil = {"utc": _now(), "raw": raw, "why": "empty reply" if not raw else "reply is not parseable JSON"}
+        _append(_p(paths, "log"), {"event": "REVIEW_SILENCE", **sil})
+        return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": [], "silence": sil, "sec": sec}
+    by_id = {n["id"]: n for n in doc["needs"]}
+    recorded = []
+    for v in parsed:
+        if not isinstance(v, dict):
+            continue
+        nid, verdict = v.get("id"), v.get("verdict")
+        n = by_id.get(nid)
+        if n is None or n not in mine or verdict not in VERDICTS:
+            recorded.append({"id": nid, "verdict": verdict, "recorded": False,
+                             "why_not": "unknown need id" if n is None or n not in mine else "verdict not one of three"})
+            continue
+        n.setdefault("verdicts", []).append({"utc": _now(), "verdict": verdict, "why": v.get("why")})
+        n["status"] = verdict
+        if verdict == STILL_OPEN and isinstance(v.get("question"), str) and v["question"].strip():
+            n.setdefault("questions", [n["question"]]).append(v["question"].strip())
+            n["question"] = v["question"].strip()
+        _append(_p(paths, "ledger"), {"event": verdict, "ts": _now(), "need_id": nid, "why": v.get("why")})
+        recorded.append({"id": nid, "verdict": verdict, "recorded": True})
+    _save_needs(doc, paths)
+    return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": recorded, "silence": None, "sec": sec}
 
 
 # ── the guard: never while the model is someone else's ──────────────────────
@@ -357,15 +457,19 @@ def model_busy() -> Optional[str]:
     return None
 
 
-def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] = None) -> dict:
-    b = briefing(paths)
+def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] = None,
+        read: Optional[Callable] = None) -> dict:
+    """One cognition step: the brain judges what came back for its searched needs
+    (review), then a new briefing and its new needs."""
     why = (busy or model_busy)()
+    rv = None if why else review(think, paths, read=read)
+    b = briefing(paths)
     if why:
         _append(_p(paths, "log"), {"event": "MODEL_SKIPPED", "utc": _now(), "why": why, "briefing_sha256": b["sha256"]})
         res = emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, paths)
-        return {"briefing": b, "reply": None, "skipped": why, **res}
+        return {"briefing": b, "reply": None, "review": None, "skipped": why, **res}
     reply = ask(b, think)
-    return {"briefing": b, "reply": reply, **emit(b, reply, paths)}
+    return {"briefing": b, "reply": reply, "review": rv, **emit(b, reply, paths)}
 
 
 def selftest() -> dict:

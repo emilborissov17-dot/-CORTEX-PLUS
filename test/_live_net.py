@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """test/_live_net.py — the mechanical net behind "tests never read live data"
 (C-OC-3 Part 5). install() makes any read under memory/, snapshots/ or
-cortex_memory/ RAISE, and records the attempt, so a module that swallows the
+cortex_memory/ — read OR write — RAISE, and records the attempt, so a module that swallows the
 raise in its own try/except still fails the test at teardown (check()).
 """
 from __future__ import annotations
@@ -12,7 +12,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 LIVE_DIRS = ("memory", "snapshots", "cortex_memory")
-_READS = ("read_text", "read_bytes", "iterdir", "glob", "rglob", "exists", "is_dir", "is_file", "stat")
+_READS = ("read_text", "read_bytes", "iterdir", "glob", "rglob", "exists", "is_dir", "is_file", "stat",
+          "open", "write_text", "write_bytes", "mkdir", "touch", "unlink")
 
 
 def is_live(path) -> bool:
