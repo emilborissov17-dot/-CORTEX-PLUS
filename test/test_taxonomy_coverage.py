@@ -126,3 +126,22 @@ def test_an_unreadable_key_map_is_a_refusal_not_an_empty_report(tmp_path, monkey
     monkeypatch.setattr(tx, "KEY_MAP", p)
     with pytest.raises(tc.Refused):
         tc.run(NOW)
+
+
+# ── ATOMS n/105 ─────────────────────────────────────────────────────────────
+def test_atoms_count_world_only_and_skips_retracted(tmp_path, monkeypatch):
+    import json as _j
+    from core import atoms as at
+    from core import card_intake as ci
+    monkeypatch.setattr(ci, "RETRACTIONS", tmp_path / "ret.jsonl")
+    monkeypatch.setattr(ci, "ACCEPTED", tmp_path / "acc.jsonl")
+    root = tmp_path / "atoms"
+    rec = {"axis": "TAXONOMY:C2.1", "key": "forest_area_pct", "value": 31.0, "unit": "pct", "url": "https://x",
+           "quote": "31.0", "subcategory": "C2.1", "place": "WLD", "period": "2023"}
+    row = {"card_key": "k1", "judged_utc": "t", "verdict": "ACCEPTED", "record": rec}
+    ci.ACCEPTED.write_text(_j.dumps(row) + chr(10), encoding="utf-8")
+    at.write(row, root=root)
+    t1 = tc.atoms_totals(tx.load(), root=root)
+    assert t1["world"] == {"with_atoms": 1, "of": 105} and t1["system_E"]["with_atoms"] == 0
+    ci.retract("k1", reason="test", by="test")
+    assert tc.atoms_totals(tx.load(), root=root)["world"]["with_atoms"] == 0

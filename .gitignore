@@ -365,3 +365,8 @@ memory/acled_token.json
 
 # D0 feasibility downloads (27 Sep 2026): clones, checkpoints, UCDP/VIEWS files - never committed
 data/external/
+
+# C-OC-1 Part 4 (1 Oct 2026): atoms are runtime data written by core/atoms.py.
+# Only the folder marker is tracked; MANIFEST.json and every atom file are not.
+atoms/*
+!atoms/.gitkeep

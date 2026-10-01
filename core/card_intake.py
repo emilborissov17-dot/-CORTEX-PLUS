@@ -140,10 +140,24 @@ def _append(p: Path, rec: dict) -> None:
         fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
+def _atoms_root_for(accepted_path: Path, atoms_root: Optional[Path]) -> Optional[Path]:
+    """WHERE ATOMS GO. The live atoms/ only when the judge is writing the LIVE
+    observations file; any other accepted_path (a test, a replay) files its atoms
+    beside it. Found 1 Oct 2026: tests that judged into tmp_path wrote fixture
+    atoms into the repo's live atoms/ because the default ignored accepted_path."""
+    if atoms_root is not None:
+        return Path(atoms_root)
+    if Path(accepted_path).resolve() == ACCEPTED.resolve():
+        return None                          # core.atoms.ROOT
+    return Path(accepted_path).parent / "atoms"
+
+
 def judge_inbox(inbox: Path = INBOX, fetch: Callable[[str], Optional[str]] = qg._fetch,
-                dry: bool = False, accepted_path: Path = ACCEPTED, refused_path: Path = REFUSED) -> dict:
+                dry: bool = False, accepted_path: Path = ACCEPTED, refused_path: Path = REFUSED,
+                atoms_root: Optional[Path] = None) -> dict:
     seen = {r.get("card_key") for r in _read_jsonl(accepted_path)} | {r.get("card_key") for r in _read_jsonl(refused_path)}
-    counts = {"accepted": 0, "null_with_reason": 0, "refused": 0, "self_report": 0, "open": 0, "skipped": 0}
+    counts = {"accepted": 0, "null_with_reason": 0, "refused": 0, "self_report": 0, "open": 0, "skipped": 0,
+              "atoms_written": 0, "atoms_not_migrated": 0, "atoms_refused": 0}
     for f in sorted(inbox.glob("*.jsonl")) if inbox.exists() else []:
         for rec in _read_jsonl(f):
             k = _key(rec)
@@ -171,6 +185,21 @@ def judge_inbox(inbox: Path = INBOX, fetch: Callable[[str], Optional[str]] = qg.
                 continue
             if not dry:
                 _append(accepted_path if v in OK_VERDICTS else refused_path, out)
+                if v == "ACCEPTED":
+                    # C-OC-1 Part 4: an accepted card becomes one atom in its
+                    # subcategory folder. A card without a subcategory is NOT
+                    # migrated and is counted; a refusal is counted and named.
+                    from core import atoms as _atoms
+                    try:
+                        res = _atoms.write(out, root=_atoms_root_for(accepted_path, atoms_root))
+                    except _atoms.AtomRefused as exc:
+                        counts["atoms_refused"] += 1
+                        print(json.dumps({"card": rec.get("card"), "atom_refused": str(exc)}, ensure_ascii=False))
+                    else:
+                        if res["written"]:
+                            counts["atoms_written"] += 1
+                        elif "not migrated" in res.get("why", ""):
+                            counts["atoms_not_migrated"] += 1
             seen.add(k)
             if v == "ACCEPTED":
                 counts["accepted"] += 1

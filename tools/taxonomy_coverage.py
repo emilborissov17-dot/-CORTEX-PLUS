@@ -320,6 +320,26 @@ def coverage(key_map: dict, evidence: dict, tree: dict) -> dict:
     }
 
 
+def atoms_totals(tree: dict, root=None) -> dict:
+    """ATOMS n/105: world subcategories with at least one NON-RETRACTED atom on
+    disk (core.atoms.compute_manifest, recomputed from the files). Domain E is
+    counted apart, as for SEEN."""
+    from core import atoms as _atoms
+    live = set(_atoms.compute_manifest(root)["subcategories_with_live_atoms"])
+    subs = tx.subcategories(tree)
+    world = [s for s in subs if s["domain"] != tx.SYSTEM_DOMAIN]
+    per = {}
+    for s in subs:
+        d = per.setdefault(s["domain"], {"with_atoms": 0, "of": 0})
+        d["of"] += 1
+        d["with_atoms"] += int(s["id"] in live)
+    return {"world": {"with_atoms": sum(s["id"] in live for s in world), "of": len(world)},
+            "system_E": {"with_atoms": sum(s["id"] in live for s in subs if s["domain"] == tx.SYSTEM_DOMAIN),
+                         "of": sum(1 for s in subs if s["domain"] == tx.SYSTEM_DOMAIN)},
+            "per_domain": per,
+            "rule": "a subcategory counts when atoms/ holds at least one atom whose card_key is not retracted"}
+
+
 # ── run / write ──────────────────────────────────────────────────────────────
 def run(now=None) -> dict:
     now = now or datetime.now(timezone.utc)
@@ -332,6 +352,7 @@ def run(now=None) -> dict:
     key_map = km_doc["keys"]
     evidence, unusable = build_evidence(key_map, now)
     cov = coverage(key_map, evidence, tree)
+    cov["totals"]["atoms"] = atoms_totals(tree)
     cov.update({
         "generated_utc": now.isoformat(timespec="seconds"),
         "rule": {"STATE": "at least one key with a finite numeric value",
@@ -363,7 +384,9 @@ def render(cov: dict) -> str:
          f"- **World (A-D): SEEN {t['world']['seen']}/{t['world']['of']}**",
          f"- Domain E (the system itself), separate, never in the world total: "
          f"SEEN {t['system_E']['seen']}/{t['system_E']['of']}",
-         f"- Overall (plain count over all 123): SEEN {t['overall']['seen']}/{t['overall']['of']}", "",
+         f"- Overall (plain count over all 123): SEEN {t['overall']['seen']}/{t['overall']['of']}",
+         f"- **ATOMS (world): {t['atoms']['world']['with_atoms']}/{t['atoms']['world']['of']}** "
+         f"subcategories with at least one non-retracted atom on disk", "",
          "| domain | SEEN | of |", "|---|---:|---:|"]
     for d, v in sorted(t["per_domain"].items()):
         L.append(f"| {d}{' (system, separate)' if d == tx.SYSTEM_DOMAIN else ''} | {v['seen']} | {v['of']} |")
@@ -430,7 +453,8 @@ def main(argv) -> int:
         return 2
     t = cov["totals"]
     print(f"SEEN world {t['world']['seen']}/{t['world']['of']} · E {t['system_E']['seen']}/"
-          f"{t['system_E']['of']} (separate) · overall {t['overall']['seen']}/{t['overall']['of']}")
+          f"{t['system_E']['of']} (separate) · overall {t['overall']['seen']}/{t['overall']['of']}"
+          f" · ATOMS world {t['atoms']['world']['with_atoms']}/{t['atoms']['world']['of']}")
     for r, n in sorted(cov["not_seen_reasons_world"].items(), key=lambda x: -x[1]):
         print(f"  NOT SEEN (world) {n:>3}  {r}")
     if cov["unusable_evidence_files"]:

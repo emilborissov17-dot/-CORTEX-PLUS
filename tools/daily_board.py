@@ -816,9 +816,11 @@ def row_taxonomy(repo: Path, now: datetime) -> dict:
     t = doc.get("totals") if isinstance(doc, dict) else None
     try:
         world, sysE, overall = t["world"], t["system_E"], t["overall"]
-        nums = [world["seen"], world["of"], sysE["seen"], sysE["of"], overall["seen"], overall["of"]]
+        atoms_w = t["atoms"]["world"]
+        nums = [world["seen"], world["of"], sysE["seen"], sysE["of"], overall["seen"], overall["of"],
+                atoms_w["with_atoms"], atoms_w["of"]]
     except (TypeError, KeyError):
-        raise SourceMissing(src, "no totals.world / totals.system_E / totals.overall")
+        raise SourceMissing(src, "no totals.world / totals.system_E / totals.overall / totals.atoms.world")
     if not all(isinstance(x, int) and not isinstance(x, bool) for x in nums):
         raise SourceMissing(src, "a total is not an integer")
     gen = doc.get("generated_utc")
@@ -827,8 +829,8 @@ def row_taxonomy(repo: Path, now: datetime) -> dict:
         raise SourceMissing(src, "generated_utc unreadable")
     stale = age > 1.0
     head = ("SEEN {}/{} overall (count over all 123) · world {}/{} · E {}/{} separate, never in the "
-            "world total".format(overall["seen"], overall["of"], world["seen"], world["of"],
-                                 sysE["seen"], sysE["of"]))
+            "world total · ATOMS {}/{} world".format(overall["seen"], overall["of"], world["seen"], world["of"],
+                                                    sysE["seen"], sysE["of"], atoms_w["with_atoms"], atoms_w["of"]))
     reasons = doc.get("not_seen_reasons_world") or {}
     detail = ["- statistic: subcategories meeting STATE + CHANGE + SOURCE "
               "(rule in tools/taxonomy_coverage.py), from {}".format(SOURCES["taxonomy"][0])]

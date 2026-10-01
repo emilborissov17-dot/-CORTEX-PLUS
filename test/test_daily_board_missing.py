@@ -186,7 +186,8 @@ def repo(tmp_path: Path) -> Path:
     _write(tmp_path / "memory/taxonomy_coverage_latest.json", json.dumps({
         "generated_utc": TODAY + "T08:55:00+00:00",
         "totals": {"world": {"seen": 2, "of": 105}, "system_E": {"seen": 0, "of": 18},
-                   "overall": {"seen": 2, "of": 123}},
+                   "overall": {"seen": 2, "of": 123},
+                   "atoms": {"world": {"with_atoms": 1, "of": 105}}},
         "not_seen_reasons_world": {"no live key is mapped to it": 67}}))
     return tmp_path
 
@@ -413,6 +414,7 @@ def test_taxonomy_row_prints_todays_count_over_123(repo: Path):
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
     assert r["headline"].startswith("SEEN 2/123 overall")
     assert "world 2/105" in r["headline"] and "E 0/18" in r["headline"]
+    assert "ATOMS 1/105" in r["headline"]
     assert r["correction"] == "no"
 
 
@@ -440,3 +442,12 @@ def test_taxonomy_row_from_an_old_file_says_so_and_needs_correction(repo: Path):
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
     assert r["correction"] == "yes" and "not regenerated today" in r["why"]
     assert "has not been re-run" in r["ran"]
+
+
+def test_taxonomy_row_without_atoms_totals_is_missing_not_zero(repo: Path):
+    p = repo / "memory/taxonomy_coverage_latest.json"
+    d = json.loads(p.read_text(encoding="utf-8"))
+    del d["totals"]["atoms"]
+    _write(p, json.dumps(d))
+    r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
+    assert r["status"] == "MISSING" and "ATOMS" not in r["headline"]

@@ -265,16 +265,24 @@ def test_the_eonet_candidate_from_31_july_is_reachable_and_shadow_fetching():
     )
 
 
-def test_the_discovered_sources_outnumber_the_seed():
-    """The point of deleting the allowlist. If this ever inverts, discovery has
-    stopped feeding the worker and it is a hand-written list again."""
-    from scripts.openclaw_axis_worker import all_sources, load_sources
+def test_discovery_still_feeds_the_worker():
+    """The point of deleting the allowlist: discovery must keep feeding the worker.
+
+    REWRITTEN 1 Oct 2026 (C-OC-1). This asserted that discovered sources
+    OUTNUMBER the seed. Part 3 of that command added 56 hand-declared seeds, each
+    verified by one live fetch, one per taxonomy subcategory it can serve — so the
+    seed is now larger by design, and the ratio no longer says anything about
+    discovery. What the ratio stood for still holds and is asserted directly:
+    every active JSON source data_scout found reaches the worker's source list.
+    (Under C-OC-1 an undeclared discovered source is fetched but stays SHADOW.)"""
+    from scripts.openclaw_axis_worker import all_sources, load_discovered
 
     sources, _ = all_sources()
-    seed, _ = load_sources()
-    scout = [s for s in sources if s.get("origin") == "data_scout"]
-
-    assert len(scout) > len(seed), f"{len(scout)} discovered vs {len(seed)} seed"
+    found = load_discovered()
+    reached = {s["id"] for s in sources if s.get("origin") == "data_scout"}
+    assert found, "data_scout's file yielded no active JSON source"
+    missing = [s["id"] for s in found if s["id"] not in reached]
+    assert not missing, f"discovered but never fetched: {missing}"
 
 
 # 11 --------------------------------------------------------------------------

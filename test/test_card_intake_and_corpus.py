@@ -44,7 +44,10 @@ def _setup(tmp_path):
 def test_only_the_world_confirmed_enters_accepted(tmp_path):
     inbox, acc, ref = _setup(tmp_path)
     c = ci.judge_inbox(inbox, fetch=_fetch, accepted_path=acc, refused_path=ref)
-    assert c == {"accepted": 1, "null_with_reason": 1, "refused": 2, "self_report": 0, "open": 1, "skipped": 0}
+    assert c == {"accepted": 1, "null_with_reason": 1, "refused": 2, "self_report": 0, "open": 1, "skipped": 0,
+                 "atoms_written": 1, "atoms_not_migrated": 0, "atoms_refused": 0}
+    # the atom went beside the tmp observations file, never into the repo's atoms/
+    assert any((tmp_path / "atoms").rglob("*.jsonl"))
     accepted = [json.loads(l) for l in acc.read_text().splitlines()]
     assert {a["record"]["card"] for a in accepted} == {5, 2}
     refused = [json.loads(l) for l in ref.read_text().splitlines()]
