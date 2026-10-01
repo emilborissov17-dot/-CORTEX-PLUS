@@ -143,6 +143,21 @@ def blocked(cycle: Optional[Callable] = None, body: Optional[Callable] = None, l
     return why
 
 
+def bat_steps(path) -> list:
+    """The scripts a .bat file EXECUTES, in order: its `%PY% x.py` and `%PY% -m pkg.x`
+    lines (as x.py), never its comments."""
+    out = []
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        tok = line.strip().split()
+        if len(tok) < 2 or tok[0] != "%PY%":
+            continue
+        if tok[1] == "-m" and len(tok) > 2:
+            out.append(tok[2].rsplit(".", 1)[-1] + ".py")
+        else:
+            out.append(tok[1].replace(chr(92), "/").rsplit("/", 1)[-1])
+    return out
+
+
 def selftest() -> dict:
     res = {"integrations": {
         "memory/turn.json": f"LIVE (holder {state().get('holder')}, seq {state().get('seq')})" if STATE.exists()

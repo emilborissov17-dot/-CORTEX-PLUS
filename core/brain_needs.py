@@ -57,6 +57,7 @@ MODEL = "cortex-l1b-3b:latest"
 KINDS = ("FIND", "VERIFY", "EXPLAIN")
 OPEN, SATISFIED, STILL_OPEN, WRONG_QUESTION, SILENCE = "OPEN", "SATISFIED", "STILL_OPEN", "WRONG_QUESTION", "SILENCE"
 MAX_NEEDS = 5
+NO_SEARCHER = "no searcher: the Python finder was removed on Emil's order; OpenClaw search not built yet"
 TOP_GROUNDED = 5
 
 
@@ -335,6 +336,7 @@ def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dic
     for r in accepted:
         _append(_p(paths, "ledger"), {"event": "EMITTED", "ts": _now(), "need_id": r["id"], "origin": r["origin"],
                                       "question": r["question"]})
+        _append(_p(paths, "ledger"), {"event": "NO_SEARCHER", "ts": _now(), "need_id": r["id"], "why": NO_SEARCHER})
     for r in reopened:
         _append(_p(paths, "ledger"), {"event": "REOPENED", "ts": _now(), "need_id": r["id"], "was": r["reopened"][-1]["was"]})
     return {"accepted": accepted, "refused": refused, "reopened": reopened, "silence": silence, "open": sum(
@@ -486,8 +488,7 @@ def selftest() -> dict:
         res["integrations"][f"model {MODEL}"] = "LIVE" if MODEL in brain.models() else "INERT (not installed)"
     except Exception as exc:                                         # noqa: BLE001
         res["integrations"][f"model {MODEL}"] = f"INERT ({type(exc).__name__})"
-    finder = (REPO / "scripts" / "openclaw_finder.py").read_text(encoding="utf-8")
-    res["integrations"]["finder serves brain needs"] = "LIVE" if "brain_needs" in finder else "INERT"
+    res["integrations"]["searcher for brain and engine needs"] = "INERT (" + NO_SEARCHER + ")"
     res["ok"] = True
     return res
 

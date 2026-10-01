@@ -1,0 +1,147 @@
+# -*- coding: utf-8 -*-
+"""test/test_brain_needs_review.py — the brain is told what came back for its
+needs and judges them (C-NEED-1 Part 3c, kept when the Python finder was deleted
+on Emil's R34). A need is marked served with core.brain_needs.mark_served — the
+call any searcher makes; there is no searcher in these tests.
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+sys.path.insert(0, str(REPO / "test"))
+import _live_net  # noqa: E402
+from core import brain_needs as bn  # noqa: E402
+
+FIVE = ["CIVILIZATIONAL_STABILITY", "HEALTHY_ENVIRONMENTS", "KNOWLEDGE_UNDERSTANDING", "SAFETY", "SUSTAINABLE_RESOURCES"]
+NEED = {"question": "How many refugees returned to Syria in 2026?", "why_subgoal": "SAFETY",
+        "about": {"place": "Syria", "actor": "UNHCR", "period": "2026"}, "kind": "FIND",
+        "would_change": "I would lower the refugee threat"}
+
+
+@pytest.fixture(autouse=True)
+def _no_live(monkeypatch):
+    attempts = _live_net.install(monkeypatch)
+    yield attempts
+    _live_net.check(attempts)
+
+
+@pytest.fixture
+def p(tmp_path, monkeypatch):
+    from core import card_intake as ci
+    from core import taxonomy as tx
+    monkeypatch.setattr(ci, "RETRACTIONS", tmp_path / "retractions.jsonl")
+    monkeypatch.setattr(tx, "subgoal_names", lambda target_path=None: set(FIVE))
+    (tmp_path / "grounded.json").write_text(json.dumps({"ranking": []}), encoding="utf-8")
+    return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
+            "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
+            "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
+
+
+def _emit(p, needs):
+    reply = json.dumps({"needs": needs})
+    return bn.run(think=lambda q, ev: {"text": reply, "model": "stub", "sec": 0.1}, paths=p,
+                  busy=lambda: None, read=lambda q, k: [], space_run=lambda: [])
+
+
+def _needs(p):
+    return json.loads(p["needs"].read_text(encoding="utf-8"))["needs"]
+
+
+def _ledger(p):
+    return [json.loads(l) for l in p["ledger"].read_text(encoding="utf-8").splitlines()]
+
+
+def _served(p):
+    _emit(p, [NEED])
+    nid = _needs(p)[0]["id"]
+    bn.mark_served(nid, NEED["question"], 1, 1, 2, p)
+    return nid
+
+
+def test_a_new_need_says_there_is_no_searcher(p):
+    _emit(p, [NEED])
+    nid = _needs(p)[0]["id"]
+    rows = [r for r in _ledger(p) if r.get("need_id") == nid]
+    assert [r["event"] for r in rows] == ["EMITTED", "NO_SEARCHER"]
+    assert "Python finder was removed" in rows[1]["why"] and _needs(p)[0]["status"] == "OPEN"
+
+
+def test_mark_served_counts_and_never_changes_the_status(p):
+    nid = _served(p)
+    n = _needs(p)[0]
+    assert (n["searched"], n["gained_statements"], n["status"]) == (1, 2, "OPEN")
+
+
+def test_satisfied_is_recorded_with_the_items_shown(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "SATISFIED", "question": None, "why": "it answers it"}]})
+    rv = bn.review(think=lambda q, ev: {"text": reply, "sec": 0.1}, paths=p,
+                   read=lambda q, k: [{"type": "statement", "text": "UNHCR: 1.2 million returned in 2026."}])
+    assert rv["verdicts"] == [{"id": nid, "verdict": "SATISFIED", "recorded": True}]
+    assert "1.2 million" in rv["shown_text"] and _needs(p)[0]["status"] == "SATISFIED"
+    assert [r["event"] for r in _ledger(p) if r.get("need_id") == nid][-2:] == ["SHOWN", "SATISFIED"]
+
+
+def test_still_open_keeps_the_need_with_the_reformulated_question(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "STILL_OPEN", "question": "Returns to Syria from Turkey, 2026?",
+                                      "why": "nothing came back"}]})
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    n = _needs(p)[0]
+    assert n["status"] == "STILL_OPEN" and n["question"] == "Returns to Syria from Turkey, 2026?"
+    assert n["questions"][0] == NEED["question"]
+
+
+def test_wrong_question_closes_it(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "WRONG_QUESTION", "why": "the axis counts stock"}]})
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    assert _needs(p)[0]["status"] == "WRONG_QUESTION"
+
+
+def test_a_garbled_review_changes_nothing_and_is_recorded(p):
+    _served(p)
+    rv = bn.review(think=lambda q, ev: {"text": "looks fine to me"}, paths=p, read=lambda q, k: [])
+    assert rv["silence"]["raw"] == "looks fine to me" and _needs(p)[0]["status"] == "OPEN"
+
+
+def test_a_verdict_outside_the_three_is_not_recorded(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "PROBABLY", "why": "?"}]})
+    rv = bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    assert rv["verdicts"][0]["recorded"] is False and _needs(p)[0]["status"] == "OPEN"
+
+
+def test_an_unserved_need_is_not_shown_for_review(p):
+    _emit(p, [NEED])
+    rv = bn.review(think=lambda q, ev: {"text": "{}"}, paths=p, read=lambda q, k: [])
+    assert rv["shown"] == 0
+
+
+def test_re_asking_a_wrong_question_reopens_it_and_keeps_its_history(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "WRONG_QUESTION", "why": "too general"}]})
+    bn.review(think=lambda q, ev: {"text": reply}, paths=p, read=lambda q, k: [])
+    _emit(p, [NEED])
+    n = [x for x in _needs(p) if x["id"] == nid][0]
+    assert n["status"] == "OPEN" and [v["verdict"] for v in n["verdicts"]] == ["WRONG_QUESTION"]
+    assert len(n["reopened"]) == 1 and n["searched"] == 1
+    assert [r["event"] for r in _ledger(p) if r.get("need_id") == nid][-1] == "REOPENED"
+
+
+def test_no_finder_module_exists_and_nothing_imports_one():
+    import ast
+    gone = "openclaw" + "_finder"                      # the deleted module's name, assembled
+    assert not (REPO / "scripts" / f"{gone}.py").exists()
+    for f in list((REPO / "core").glob("*.py")) + list((REPO / "scripts").glob("*.py")):
+        tree = ast.parse(f.read_text(encoding="utf-8"))
+        mods = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom) and n.module}
+        names = {a.name for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom)) for a in n.names}
+        assert gone not in names and not any(gone in m for m in mods), f.name

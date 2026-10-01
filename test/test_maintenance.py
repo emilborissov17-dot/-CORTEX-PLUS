@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """test/test_maintenance.py — maintenance is rotation, not priority (C-NEED-1 Part 1).
-Search, getter and the per-source worker are injected; state, log and store are
+The searcher and the per-source worker are injected; state and log are
 under tmp_path.
 """
 from __future__ import annotations
@@ -29,10 +29,10 @@ def p(tmp_path, monkeypatch):
             "seen": tmp_path / "seen.json", "stale": tmp_path / "stale.json"}
 
 
-def _run(p, n, search=None, getter=None, worker=None):
-    return mt.run(n=n, search=search or (lambda q, k: []), getter=getter,
+def _run(p, n, search=None, worker=None):
+    return mt.run(n=n, search=search,
                   worker_run=worker or (lambda s: {"cards": [{}]}), state_path=p["state"], log_path=p["log"],
-                  store=p["store"], seen_path=p["seen"], sources=SOURCES, stale_path=p["stale"])
+                  sources=SOURCES, stale_path=p["stale"])
 
 
 def _log(p):
@@ -76,19 +76,26 @@ def test_mutation_without_the_tried_check_a_query_repeats_inside_a_rotation():
     assert mt.query_for(sub, st2) == "Thing 1 alpha pct"
 
 
-def test_nothing_found_is_logged_with_the_queries_tried(p):
+def test_without_a_searcher_a_subcategory_cell_says_so(p):
     _run(p, 5)
     row = [r for r in _log(p) if r["cell"] == "sub:A1.1"][0]
-    assert row["verdict"] == "NOTHING_FOUND" and row["queries"] == ["Thing 1 alpha pct"]
+    assert row["verdict"] == "NO_SEARCHER" and row["queries"] == ["Thing 1 alpha pct"]
+    assert "Python finder was removed" in row["why"]
 
 
-def test_new_text_is_changed_and_the_same_text_again_is_unchanged(p, monkeypatch):
-    search = lambda q, k: [{"url": "https://w.org/basin"}]
-    getter = lambda u, t: (200, None, None, PAGE)
+def test_mutation_a_stand_in_searcher_would_hide_the_absence(p):
+    _run(p, 5, search=lambda cell, q: {"pages": 0})
+    row = [r for r in _log(p) if r["cell"] == "sub:A1.1"][0]
+    assert row["verdict"] == "NOTHING_FOUND", "with any searcher the cell stops saying NO_SEARCHER"
+
+
+def test_a_searcher_that_gains_text_is_changed_and_one_that_gains_none_is_unchanged(p, monkeypatch):
+    results = iter([{"pages": 1, "statements_added": 4}, {"pages": 1, "statements_added": 0}])
     clock = iter(f"2026-10-0{d}T00:00:00Z" for d in range(1, 10))
     monkeypatch.setattr(mt, "_now", lambda: next(clock))
+    search = lambda cell, q: next(results) if cell["cell"] == "sub:A1.1" else {"pages": 0}
     for _ in range(8):                                    # A1.1 is 3rd of 5 cells: back on pass 8
-        _run(p, 1, search, getter)
+        _run(p, 1, search)
     rows = [r for r in _log(p) if r["cell"] == "sub:A1.1"]
     assert [r["verdict"] for r in rows] == ["CHANGED", "UNCHANGED"]
 

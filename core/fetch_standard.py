@@ -204,9 +204,6 @@ def selftest() -> dict:
     res["integrations"]["worker fetches through fetch_standard.get"] = (
         "LIVE" if "fetch_standard" in src and "_fs.get(" in src else "INERT")
     res["integrations"]["worker parks after 3 failures"] = "LIVE" if "_fs.record(" in src else "INERT"
-    finder = REPO / "scripts" / "openclaw_finder.py"
-    res["integrations"]["finder unparks a named source"] = (
-        "LIVE" if finder.exists() and "unpark(" in finder.read_text(encoding="utf-8") else "INERT")
     res["integrations"]["memory/fetch_parking.json"] = (
         f"LIVE ({len(_load(PARKING))} sources)" if PARKING.exists() else "INERT (no failure recorded yet)")
     res["checks"] = {

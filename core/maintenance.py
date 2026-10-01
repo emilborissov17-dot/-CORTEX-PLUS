@@ -102,34 +102,24 @@ def _q(sub: dict, key: str) -> str:
     return f"{sub['name_en']} {key.replace('_', ' ')}".strip()
 
 
-def _work_subcategory(cell, st, search, getter, store, seen_path, per_cell) -> dict:
-    from core import knowledge as kn
-    from scripts import openclaw_finder as fin
+NO_SEARCHER = "no searcher: the Python finder was removed on Emil's order; OpenClaw search not built yet"
+
+
+def _work_subcategory(cell, st, search) -> dict:
+    """A subcategory cell is SEARCHED by the searcher it is given. Until OpenClaw
+    search exists (C-TURN-1 Part 4) there is none: the cell is logged NO_SEARCHER
+    with the query it would have used, and nothing else stands in."""
     q = query_for(cell["sub"], st)
+    if search is None:
+        return {"verdict": "NO_SEARCHER", "queries": [q], "why": NO_SEARCHER}
     st.setdefault("tried", []).append(q)
     try:
-        hits = search(q, per_cell)
+        res = search(cell, q)
     except Exception as exc:                                         # noqa: BLE001
         return {"verdict": "NOTHING_FOUND", "queries": [q], "why": f"{type(exc).__name__}: {exc}"}
-    added = held = pages = 0
-    for h in hits[:per_cell]:
-        page = fin._fetch(h["url"], getter)
-        if not page["ok"]:
-            continue
-        try:
-            text, form = kn.body_to_text(page["raw"], page["payload"], page["content_type"])
-        except kn.FlattenLostValue:
-            text, form = page["raw"] or "", "raw_text"
-        if form == "pdf_unreadable" or not text.strip():
-            continue
-        pages += 1
-        r = kn.ingest(f"url:{h['url']}", text, url=h["url"], origin="maintenance", store=store, seen_path=seen_path)
-        added += r.get("added", 0)
-        held += r.get("already_held", 0) + (1 if r.get("outcome") == "SKIPPED_SAME_CONTENT" else 0)
-    if not pages:
-        return {"verdict": "NOTHING_FOUND", "queries": [q], "hits": len(hits)}
-    return {"verdict": "CHANGED" if added else "UNCHANGED", "queries": [q], "pages": pages,
-            "statements_added": added, "already_held": held}
+    if not res.get("pages"):
+        return {"verdict": "NOTHING_FOUND", "queries": [q], **res}
+    return {"verdict": "CHANGED" if res.get("statements_added") else "UNCHANGED", "queries": [q], **res}
 
 
 def _work_source(cell, worker_run) -> dict:
@@ -153,12 +143,11 @@ def _live_worker_run(source: dict) -> dict:
         return w.run(seed, discovered_path=Path(d) / "none.json", ingest=kn.ingest, parking=fs.PARKING)
 
 
-def run(n: int = 10, per_cell: int = 3, search: Optional[Callable] = None, getter=None,
-        worker_run: Optional[Callable] = None, state_path=None, log_path=None, store=None, seen_path=None,
-        tree=None, sources=None, stale_path=None) -> dict:
+def run(n: int = 10, search: Optional[Callable] = None, worker_run: Optional[Callable] = None,
+        state_path=None, log_path=None, tree=None, sources=None, stale_path=None) -> dict:
+    """`search(cell, query) -> {pages, statements_added, ...}` is the searcher; None
+    means there is none (and the subcategory cells say so)."""
     from core import atoms as at
-    from scripts import openclaw_finder as fin
-    search = search or fin.repo_search
     worker_run = worker_run or _live_worker_run
     sp = Path(state_path or STATE)
     lp = Path(log_path or at.OBS_LOG)
@@ -168,7 +157,7 @@ def run(n: int = 10, per_cell: int = 3, search: Optional[Callable] = None, gette
     taken, out = q[:n], []
     for c in taken:
         st = state.setdefault(c["cell"], {})
-        res = (_work_subcategory(c, st, search, getter, store, seen_path, per_cell) if c["kind"] == "subcategory"
+        res = (_work_subcategory(c, st, search) if c["kind"] == "subcategory"
                else _work_source(c, worker_run))
         st["last_worked_utc"] = _now()
         st["last_verdict"] = res["verdict"]
@@ -186,12 +175,10 @@ def selftest() -> dict:
         "memory/maintenance_state.json": f"LIVE ({len(_load(STATE))} cells worked)" if STATE.exists()
         else "INERT (never ran)"}}
     chain = REPO / "tools" / "openclaw_chain.bat"
-    try:
-        from scripts.openclaw_finder import chain_steps
-        res["integrations"]["chain runs core.maintenance"] = (
-            "LIVE" if "maintenance" in " ".join(chain_steps(chain)) else "INERT (not in tools/openclaw_chain.bat)")
-    except Exception as exc:                                         # noqa: BLE001
-        res["integrations"]["chain runs core.maintenance"] = f"INERT ({type(exc).__name__})"
+    from core.turn import bat_steps
+    res["integrations"]["chain runs core.maintenance"] = (
+        "LIVE" if "maintenance.py" in bat_steps(chain) else "INERT (not in tools/openclaw_chain.bat)")
+    res["integrations"]["searcher for subcategory cells"] = "INERT (" + NO_SEARCHER + ")"
     res["ok"] = True
     return res
 
