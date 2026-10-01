@@ -519,14 +519,17 @@ def mark_served(need_id: str, query: str, hits: int, fetched: int, gained: int, 
 VERDICTS = (SATISFIED, STILL_OPEN, WRONG_QUESTION)
 
 
-def linked_statements(store=None) -> dict:
+def linked_statements(store=None, regions_path=None) -> dict:
     """need_id -> statements ingested for that need (core.knowledge records carry need_id)."""
     from core import knowledge as kn
+    idx = kn.region_index(regions_path)
     out: dict = {}
     for r in kn.statements(store):
         if r.get("need_id"):
             out.setdefault(r["need_id"], []).append({"type": "statement", "text": r.get("sentence"), "id": r.get("id"),
-                                                     "linked": True})
+                                                     "linked": True, "region": kn.region_of(r, idx)})
+    for v in out.values():                       # main before furniture (C-BRAIN-1 3b); nothing removed
+        v.sort(key=lambda x: kn.REGION_ORDER.get(x.get("region"), 1))
     return out
 
 

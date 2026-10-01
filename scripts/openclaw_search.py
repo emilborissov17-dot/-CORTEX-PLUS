@@ -47,7 +47,9 @@ _PDF_JS = ("async () => { const r = await fetch(location.href); const b = new Ui
            "let s = ''; for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768)); "
            "return JSON.stringify({status: r.status, type: r.headers.get('content-type'), b64: btoa(s)}); }")
 _TEXT_JS = ("() => JSON.stringify({title: document.title, url: location.href, "
-            "text: document.body ? document.body.innerText : ''})")
+            "text: document.body ? document.body.innerText : '', "
+            "html: document.documentElement ? document.documentElement.outerHTML : ''})")
+HTML_CAP = 5 * 1024 * 1024
 
 
 class OpenClawFailed(RuntimeError):
@@ -154,14 +156,22 @@ def is_captcha(page: dict) -> bool:
     return bool(CAPTCHA.search(f"{page.get('title') or ''}\n{(page.get('text') or '')[:3000]}"))
 
 
-def store_page(url: str, text: str, need_id: str, tool_raw: dict, pages_dir=None) -> dict:
+def store_page(url: str, text: str, need_id: str, tool_raw: dict, pages_dir=None, html: Optional[str] = None,
+               ledger=None) -> dict:
+    """The page as the browser tool returned it: text (what statements come from)
+    and, beside it, the HTML (used only to label regions). HTML over HTML_CAP is
+    not stored and HTML_TOO_LARGE is logged."""
     sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
     d = Path(pages_dir or PAGES)
     d.mkdir(parents=True, exist_ok=True)
-    (d / f"{sha}.json").write_text(json.dumps({"url": url, "sha256": sha, "need_id": need_id, "stored_utc": _now(),
-                                               "text": text, "tool_result": tool_raw}, ensure_ascii=False),
-                                   encoding="utf-8")
-    return {"url": url, "sha256": sha}
+    doc = {"url": url, "sha256": sha, "need_id": need_id, "stored_utc": _now(), "text": text, "tool_result": tool_raw}
+    if html is not None:
+        if len(html.encode("utf-8")) <= HTML_CAP:
+            doc["html"] = html
+        elif ledger is not None:
+            ledger({"event": "HTML_TOO_LARGE", "need_id": need_id, "url": url, "bytes": len(html.encode("utf-8"))})
+    (d / f"{sha}.json").write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    return {"url": url, "sha256": sha, "html": "html" in doc}
 
 
 def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, results: int = RESULTS_PER_NEED,
@@ -214,8 +224,16 @@ def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, res
             out["hosts_captcha"].append(_host(url))
             ledger({"event": "CAPTCHA", "need_id": need_id, "host": _host(url), "url": url})
             continue
-        st = store_page(url, text, need_id, raw, pages_dir)
-        res = ingest(f"url:{url}", text, url=url, origin="openclaw", extra={"need_id": need_id, "page_sha256": st["sha256"]})
+        html = page.get("html") if isinstance(page.get("html"), str) else None
+        st = store_page(url, text, need_id, {k: v for k, v in (raw or {}).items() if k != "result"}, pages_dir,
+                        html=html, ledger=ledger)
+        extra = {"need_id": need_id, "page_sha256": st["sha256"]}
+        if st["html"]:
+            from core import knowledge as kn
+            extra["main_text"] = kn.main_text(html)
+        res = ingest(f"url:{url}", text, url=url, origin="openclaw", extra=extra)
+        if res.get("main_unknown"):
+            ledger({"event": "MAIN_UNKNOWN", "need_id": need_id, "url": url})
         out["pages"] += 1
         out["statements_added"] += res.get("added", 0)
         if res.get("added"):
@@ -270,6 +288,61 @@ def pending_pdf_needs(ledger_rows: list) -> list:
     return out
 
 
+def _on_page(sentence: str, text: str) -> bool:
+    from core import knowledge as kn
+    return kn._squash(sentence) in kn._squash(text)
+
+
+def relabel_pages(need_ids: list, browser, store=None, out=None) -> dict:
+    """C-BRAIN-1 3c: the pages a need's statements came from, re-opened through the
+    browser, and each statement labelled main / furniture from the page's HTML now.
+    Written to the region index (core.knowledge.REGIONS), never into the store.
+    "unknown" stays when: the page is a PDF (no HTML), it did not open, it has no
+    HTML, or the sentence is no longer on the page — a label is never guessed."""
+    from core import knowledge as kn
+    ids = set(need_ids)
+    by_url: dict = {}
+    for r in kn.statements(store):
+        if r.get("need_id") in ids:
+            by_url.setdefault(r.get("url"), []).append(r)
+    labels, pages = {}, {}
+    for url, recs in by_url.items():
+        row = {"need_id": recs[0].get("need_id"), "statements": len(recs)}
+        pages[url] = row
+        if str(url).lower().endswith(".pdf") or any(r.get("origin") == "openclaw-pdf" for r in recs):
+            row["why"] = "a PDF: no HTML"
+            continue
+        try:
+            page = (browser.read(url) or {}).get("page") or {}
+        except Exception as exc:                                         # noqa: BLE001
+            page, row["error"] = {}, f"{type(exc).__name__}: {exc}"[:200]
+        html, text = page.get("html"), page.get("text") or ""
+        if not page:
+            row["why"] = "the page did not open"
+            continue
+        if not isinstance(html, str) or not html:
+            row["why"] = "no HTML returned"
+            continue
+        main = kn.main_text(html)
+        here = [dict(r) for r in recs if _on_page(r["sentence"], text)]
+        row["main_unknown"] = kn.label_regions(here, main)
+        row["not_on_page_now"] = len(recs) - len(here)
+        for r in here:
+            labels[r["id"]] = r["region"]
+        row.update({k: sum(1 for r in here if r["region"] == k) for k in ("main", "furniture")})
+    p = Path(out or kn.REGIONS)
+    doc = kn._read_json(p, {}) if p.exists() else {}
+    doc.setdefault("regions", {}).update(labels)
+    doc.setdefault("pages", {}).update(pages)
+    doc["utc"] = _now()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    n = sum(len(v) for v in by_url.values())
+    counts = {k: sum(1 for v in labels.values() if v == k) for k in ("main", "furniture")}
+    counts["unknown"] = n - counts["main"] - counts["furniture"]
+    return {"counts": counts, "pages": pages}
+
+
 def selftest() -> dict:
     res = {"integrations": {}}
     try:
@@ -297,6 +370,12 @@ def main() -> int:
         s = b.search(q)
         print(json.dumps({"seconds": round(time.time() - t0, 1), "captcha": is_captcha(s["page"]),
                           "links": [unwrap(l["url"]) for l in s["links"][:5]]}, indent=1))
+        return 0
+    if "--relabel" in sys.argv:                  # --relabel BN-1,BN-2: re-open their pages, label regions
+        b = OpenClawBrowser()
+        t0 = time.time()
+        r = relabel_pages(sys.argv[sys.argv.index("--relabel") + 1].split(","), b)
+        print(json.dumps({"seconds": round(time.time() - t0, 1), **r}, indent=1, ensure_ascii=False))
         return 0
     print(__doc__)
     return 0

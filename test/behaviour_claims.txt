@@ -699,3 +699,4 @@ test/test_action_gate.py d35cf5273b24  # Every test passes explicit tmp_path-der
 test/test_ask.py ebeeadbaf67a  # BACKED: test_ask.test_an_aliased_import_is_still_the_same_function builds a repo whose only call is `_ls()` from `import load_specs as _ls` and fails if that call is not found
 test/test_only_openclaw_carries_its_name.py 70b687c9601c  # BACKED: test_only_openclaw_carries_its_name.test_openclaw_queue_is_the_only_exception and test_every_code_file_named_openclaw_calls_openclaw
 core/card_intake.py 916d6f36d381  # BACKED: test_data_feed_wire_to_the_gate.test_exactly_one_caller_owns_the_judge and test_the_chain_exports_the_shared_id_before_it_runs_anything
+core/knowledge.py b91984276a62  # BACKED: test/test_page_regions.py::test_an_empty_extraction_labels_all_main_and_says_main_unknown

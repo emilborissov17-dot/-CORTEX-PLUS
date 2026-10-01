@@ -170,7 +170,9 @@ def test_mutation_without_the_linked_first_rule_the_fragment_leads(p):
 
 def test_linked_statements_indexes_records_by_need_id(monkeypatch):
     from core import knowledge as kn
+    monkeypatch.setattr(kn, "region_index", lambda path=None: {})
     monkeypatch.setattr(kn, "statements", lambda store=None: [
         {"id": "s1", "sentence": "for the need", "need_id": "BN-1"},
         {"id": "s2", "sentence": "for nothing"}])
-    assert bn.linked_statements() == {"BN-1": [{"type": "statement", "text": "for the need", "id": "s1", "linked": True}]}
+    assert bn.linked_statements() == {"BN-1": [{"type": "statement", "text": "for the need", "id": "s1", "linked": True,
+                                                "region": "unknown"}]}

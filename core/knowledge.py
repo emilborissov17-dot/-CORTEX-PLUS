@@ -264,15 +264,48 @@ def ingest_batch(items, store: Optional[Path] = None, seen_path: Optional[Path] 
     return tot
 
 
+def main_text(html: str) -> str:
+    """The page's main content by trafilatura (C-BRAIN-1 P2); "" when it finds none."""
+    try:
+        import trafilatura
+        return trafilatura.extract(html, include_comments=False, include_tables=True, favor_recall=True) or ""
+    except Exception:                                                # noqa: BLE001
+        return ""
+
+
+_WS = re.compile(r"\s+")
+
+
+def _squash(s: str) -> str:
+    return _WS.sub(" ", s or "").strip().lower()
+
+
+def label_regions(records: list, main: str) -> bool:
+    """Every record gets region "main" (its text is inside the extracted main text)
+    or "furniture". An empty extraction labels every record "main" and returns
+    True (MAIN_UNKNOWN). Records are labelled, never dropped (R27)."""
+    m = _squash(main)
+    if not m:
+        for r in records:
+            r["region"] = "main"
+        return True
+    for r in records:
+        r["region"] = "main" if _squash(r.get("sentence")) in m else "furniture"
+    return False
+
+
 def _ingest_one(source_id: str, text: str, url: str, origin: str, store: Path, seen: dict,
                 extra: Optional[dict] = None) -> dict:
     from core import statements as st
+    extra = dict(extra or {})
+    main = extra.pop("main_text", None)                 # used to LABEL, never stored per record
     h = hashlib.sha256(f"{source_id}|{text}".encode("utf-8")).hexdigest()
     if h in seen:
         return {"source_id": source_id, "outcome": "SKIPPED_SAME_CONTENT", "added": 0}
     rep = st.ingest_text(source_id, text, url=url, origin=origin,
                          extra={"host": host_of(url), "content_sha256": h, **(extra or {})},
                          mode="line" if (extra or {}).get("granularity") == "record" else None)
+    main_unknown = label_regions(rep["records"], main) if main is not None else None
     # a CHANGED page from the same source repeats most of its sentences (a live
     # feed with one new row): those were written from the earlier page and are
     # not written again. Repeats inside ONE page are kept — that page is whole.
@@ -286,7 +319,9 @@ def _ingest_one(source_id: str, text: str, url: str, origin: str, store: Path, s
     seen[h] = {"source_id": source_id, "url": url, "origin": origin, "sentences": rep["sentences"],
                "added": len(new_recs), "ts": _now()}
     return {"source_id": source_id, "outcome": rep["outcome"], "added": len(new_recs),
-            "already_held": rep["sentences"] - len(new_recs), "segmentation": rep.get("segmentation")}
+            "already_held": rep["sentences"] - len(new_recs), "segmentation": rep.get("segmentation"),
+            "main_unknown": main_unknown,
+            "regions": {k: sum(1 for r in new_recs if r.get("region") == k) for k in ("main", "furniture")}}
 
 
 # ── existing caches (C-OC-3 Part 2) ─────────────────────────────────────────
@@ -550,6 +585,19 @@ def _tok(s: str) -> set:
 
 
 FIELD_INDEX = KDIR / "granularity_field.json"
+REGIONS = KDIR / "regions.json"            # region labels given AFTER ingest (pages re-opened for their HTML)
+REGION_ORDER = {"main": 0, "unknown": 1, "furniture": 2}
+
+
+def region_index(path=None) -> dict:
+    p = Path(path or REGIONS)
+    return (_read_json(p, {}) or {}).get("regions", {}) if p.exists() else {}
+
+
+def region_of(rec: dict, idx: Optional[dict] = None) -> str:
+    """"main" | "furniture" from the record or the index; "unknown" for a page
+    stored without its HTML — never guessed from the text (C-BRAIN-1 3c)."""
+    return rec.get("region") or (idx or {}).get(rec.get("id")) or "unknown"
 _PATH = re.compile(r"^((?:\$|[\w\-]+)(?:\.[\w\-]+)*): ")
 
 
@@ -614,7 +662,8 @@ def collapse_fields(items: list, field_index: dict) -> list:
 
 
 def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=None, ids_path=None,
-         labels_path=None, atoms_root=None, with_vectors: bool = True, field_index: Optional[dict] = None) -> list:
+         labels_path=None, atoms_root=None, with_vectors: bool = True, field_index: Optional[dict] = None,
+         need_id: Optional[str] = None, regions: Optional[dict] = None) -> list:
     """Statements and measurement atoms for a need, ordered by relevance then
     corroboration. `need` is a subcategory id or free text. Every item is
     returned with whatever labels it has; nothing is withheld for a missing one."""
@@ -653,7 +702,8 @@ def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=No
         items.append({"type": "statement", "relevance": round(rel, 4),
                       "corroborated_by": lab.get("corroborated_by", 0), "labels": lab,
                       "id": r["id"], "text": r["sentence"], "url": r.get("url"), "origin": r.get("origin"),
-                      "source_id": r.get("source_id")})
+                      "source_id": r.get("source_id"), "need_id": r.get("need_id"),
+                      "region": region_of(r, regions)})
     atoms = list(_atoms.read(root=atoms_root))
     contra = contradictions(atoms)
     for a in atoms:
@@ -670,8 +720,19 @@ def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=No
                       "source_id": a.get("source_id")})
     if field_index is None:
         field_index = (_read_json(FIELD_INDEX, {}) or {}).get("rows", {}) if FIELD_INDEX.exists() else {}
+    if regions is None:
+        regions = region_index()
+        for x in items:
+            if x.get("type") == "statement" and x.get("region") == "unknown":
+                x["region"] = regions.get(x.get("id"), "unknown")
     items = collapse_fields(items, field_index)
     items.sort(key=lambda x: (-x["relevance"], -x["corroborated_by"]))
+    if need_id:
+        # C-BRAIN-1 3b: what was fetched FOR this need first, main before furniture; then the rest.
+        # An order, not a filter: every item is still there.
+        own = [x for x in items if x.get("need_id") == need_id]
+        own.sort(key=lambda x: REGION_ORDER.get(x.get("region"), 1))
+        items = own + [x for x in items if x.get("need_id") != need_id]
     return items[:k]
 
 
