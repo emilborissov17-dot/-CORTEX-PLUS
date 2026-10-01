@@ -54,8 +54,21 @@ def paths(tmp_path, monkeypatch):
             "atoms_root": tmp_path / "atoms"}
 
 
+def _full(n):
+    """A need as the schema-bound reply carries it: every field present."""
+    return {"about": {"place": None, "actor": None, "period": None}, "kind": "FIND", "would_change": "w",
+            "from_line": "none", "expects": "e", **n}
+
+
 def _model(reply):
-    return lambda q, ev: {"text": reply if isinstance(reply, str) else json.dumps(reply), "model": "stub", "sec": 0.1}
+    """think(prompt, evidence, schema): a str is a reply that is not JSON (UNREADABLE);
+    a dict is a schema-valid reply."""
+    def think(q, ev, schema):
+        if isinstance(reply, str):
+            return {"unreadable": "not JSON", "raw": reply, "model": "stub", "sec": 0.1}
+        d = {"needs": [_full(n) for n in reply["needs"]]}
+        return {"data": d, "raw": json.dumps(d), "model": "stub", "sec": 0.1}
+    return think
 
 
 DERIVED = [["lacks-evidence", "F-001", "Nord Kivu province"],
@@ -63,7 +76,8 @@ DERIVED = [["lacks-evidence", "F-001", "Nord Kivu province"],
 
 
 def _run(paths, reply, derived=DERIVED):
-    return bn.run(think=_model(reply), paths=paths, busy=lambda: None, space_run=lambda: derived)
+    return bn.run(think=_model(reply), paths=paths, busy=lambda: None, space_run=lambda: derived,
+                  read=lambda q, k: [], linked={})
 
 
 def test_the_briefing_carries_every_fact_and_its_sha(paths):
@@ -92,12 +106,13 @@ def test_garbage_is_silence_with_the_raw_reply_and_no_need_is_invented(paths):
 
 
 def test_an_empty_reply_is_silence(paths):
-    r = bn.run(think=lambda q, ev: None, paths=paths, busy=lambda: None, space_run=lambda: DERIVED)
-    assert r["silence"]["why"] == "empty reply"
+    r = bn.run(think=lambda q, ev, sc: None, paths=paths, busy=lambda: None, space_run=lambda: DERIVED)
+    assert r["silence"]["why"] == "UNREADABLE: no reply"
 
 
 def test_mutation_a_default_need_on_silence_would_be_caught(paths, monkeypatch):
-    monkeypatch.setattr(bn, "parse_reply", lambda raw: [{"question": "What should I know?", "why_subgoal": "SAFETY"}])
+    monkeypatch.setattr(bn, "bound", lambda r, schema: ({"needs": [_full({"question": "What should I know?",
+                                                                          "why_subgoal": "SAFETY"})]}, "garbage", None))
     _run(paths, "garbage")
     doc = json.loads(paths["needs"].read_text(encoding="utf-8"))
     assert any(n["origin"] == "brain" for n in doc["needs"]), "the mutation did not invent a need"
@@ -138,11 +153,20 @@ def test_identical_to_a_satisfied_need_is_refused(paths):
     assert r["refused"][0]["reason"] == "identical to a need already SATISFIED"
 
 
-def test_more_than_five_are_refused_beyond_the_fifth(paths):
+def test_more_than_five_is_unreadable_by_the_schema(paths):
+    # C-BRAIN-1 2a: the schema carries maxItems 5, so a sixth need makes the reply
+    # UNREADABLE as a whole; nothing in it is accepted
     many = {"needs": [{**GOOD["needs"][0], "question": f"Question number {i} about refugees?"} for i in range(7)]}
     r = _run(paths, many)
-    assert len([a for a in r["accepted"] if a["origin"] == "brain"]) == 5
-    assert [x["reason"] for x in r["refused"]] == ["over the limit of 5 needs"] * 2
+    assert not [a for a in r["accepted"] if a["origin"] == "brain"]
+    assert r["silence"]["why"].startswith("UNREADABLE: schema-invalid")
+
+
+def test_the_sixth_need_is_still_refused_if_it_got_past_the_schema(paths, monkeypatch):
+    monkeypatch.setattr(bn, "_schema_problem", lambda d, schema: None)
+    many = {"needs": [{**GOOD["needs"][0], "question": f"Question number {i} about refugees?"} for i in range(7)]}
+    r = _run(paths, many)
+    assert [x["reason"] for x in r["refused"]][-2:] == ["over the limit of 5 needs"] * 2
 
 
 def test_value_is_never_judged_an_odd_but_well_formed_need_is_kept(paths):
@@ -153,7 +177,7 @@ def test_value_is_never_judged_an_odd_but_well_formed_need_is_kept(paths):
 
 def test_the_model_step_is_skipped_and_logged_when_busy(paths):
     called = []
-    r = bn.run(think=lambda q, ev: called.append(1), paths=paths, busy=lambda: "the big cycle is running",
+    r = bn.run(think=lambda q, ev, sc: called.append(1), paths=paths, busy=lambda: "the big cycle is running",
                space_run=lambda: DERIVED)
     assert called == [] and r["skipped"] == "the big cycle is running"
     log = [json.loads(l) for l in paths["log"].read_text(encoding="utf-8").splitlines()]
@@ -170,7 +194,7 @@ def test_an_open_need_is_not_duplicated_by_a_second_pass(paths):
 def test_restating_an_open_need_is_not_a_copy_of_the_briefing(paths):
     _run(paths, GOOD)
     r = _run(paths, GOOD)
-    assert not r["refused"], "the brain's own previous question was refused as a copy of the briefing"
+    assert "question is a copy of the briefing" not in [x["reason"] for x in r["refused"]],         "the brain's own previous question was refused as a copy of the briefing"
 
 
 def test_the_forward_glob_reads_rows_not_seals(paths):

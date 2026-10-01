@@ -80,7 +80,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
 
     atom_sub = atom_sub if atom_sub is not None else _atom_subcategories()
     doc = bn.load_needs(bn_paths)
-    open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
+    open_ = bn.searchable(doc.get("needs", []))          # a parent is never searched (C-BRAIN-1 2b)
     open_.sort(key=lambda n: 0 if n.get("origin") == "brain" else 1)
     per_need, streak = [], 0
     for n in open_:

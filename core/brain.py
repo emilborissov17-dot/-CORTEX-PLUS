@@ -494,8 +494,11 @@ def _smaller(current: str) -> str | None:
     ms = models()
 
     def _size(name: str) -> float:
-        m = re.search(r":(\d+(?:\.\d+)?)b", str(name).lower())
-        return float(m.group(1)) if m else 99.0
+        # the parameter tag after ":" or "-" ("qwen2.5:3b", "cortex-l1b-3b:latest"), never a
+        # letter-joined one ("l1b"). FIXED 1 Oct 2026: "cortex-l1b-3b" read as 99b, so
+        # qwen2.5:3b counted as "smaller" and a timed-out 3B call was answered by another model.
+        ms = re.findall(r"(?<![a-z0-9.])(\d+(?:\.\d+)?)b(?![a-z])", str(name).lower())
+        return float(ms[-1]) if ms else 99.0
 
     here = _size(current)
     cands = sorted([m for m in ms if m and m != current and _size(m) < here],
@@ -503,10 +506,29 @@ def _smaller(current: str) -> str | None:
     return cands[0] if cands else None
 
 
+def _schema_reply(txt: str, json_schema: dict, model: str, took: float, kind, role: str) -> dict:
+    """A schema-bound reply: {"data", "raw", "model", "sec"} when it validates,
+    {"unreadable": why, "raw", ...} when it does not — never None, never repaired."""
+    out = {"raw": txt, "model": model, "sec": took}
+    try:
+        d = json.loads(txt)
+    except Exception as exc:                                         # noqa: BLE001
+        return {**out, "unreadable": f"not JSON: {type(exc).__name__}: {exc}"[:200]}
+    try:
+        import jsonschema
+        jsonschema.validate(d, json_schema)
+    except Exception as exc:                                         # noqa: BLE001
+        return {**out, "unreadable": f"schema-invalid: {str(exc).splitlines()[0][:200]}"}
+    if kind:
+        remember(kind, txt[:400], {"role": role, "model": model, "fields": d})
+    return {**out, "data": d}
+
+
 def think(role: str, question: str, evidence: str = "", schema: dict | None = None,
           require_quote: bool = False, kind: str = "thought",
           remember_it: bool = True, temperature: float = 0.2,
-          fast: bool = False, model_override: str | None = None, lean: bool = False) -> dict | None:
+          fast: bool = False, model_override: str | None = None, lean: bool = False,
+          json_schema: dict | None = None, exact: bool = False) -> dict | None:
     """Питай мозъка. Той отговаря със свои думи и свои категории.
 
     role      — коя роля носи в този момент ("дежурен инженер", "стратег", ...)
@@ -553,37 +575,40 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
             fields = fields[:-2] + ',\n  "quote": ... // the exact line from the material\
  your conclusion stands on\n}'
 
-    prompt = (
-        f"You are the brain of CORTEX++ — not an assistant, but the system itself, thinking.\n"
-        f"ROLE NOW: {role}\n\n"
-        f"BODY (your machine right now): {_body()}\n\n"
-        f"HOW YOU ARE DOING (five rows, always in this order):\n{_self_state()}\n\n"
-        f"SPIRIT:\n{_spirit()}\n\n"
-        f"MEMORY (your own earlier verdicts):\n{_memory(kind)}\n\n"
-        # AFTER the memory block and immediately before the question, which is
-        # the position that matters: whatever the exemplars just demonstrated,
-        # this is the last instruction the model reads before being asked.
-        f"{LANGUAGE_PIN}\n\n"
-        f"QUESTION: {question}\n"
-        + (f"\nMATERIAL:\n{str(evidence)[-5000:]}\n" if evidence else "")
-        + "\nLIMITS ON THE ACTION (not on the thought): free or local solutions "
-          f"only; do not edit {', '.join(POLICY['protected_files'])} yourself — "
-          "for those, propose to the human.\nThink from the material, not in "
-          "generalities. If the material is not enough for a conclusion, say so."
-        + fields
-        # ── AND AGAIN, LAST (23 Aug 2026) ─────────────────────────────────
-        # The pin sits before the question because that is where it answers the
-        # exemplars. But ~730 characters follow it — the material, the limits,
-        # the schema — so before this line the LAST thing the model read was
-        # not the pin. Recency is the cheapest lever there is and it costs 30
-        # tokens; a 3B model weights the end of a long prompt heavily, and the
-        # end is where a JSON schema tells it what shape to answer in.
-        #
-        # Two copies, not one moved: the first still does its job of arriving
-        # immediately after the memory block, and the second is simply the last
-        # thing read. Neither is redundant with the other.
-        + "\n\n" + LANGUAGE_PIN
-    )
+    if exact:          # the written instruction verbatim: the wrapper is not even built (C-BRAIN-1)
+        prompt = question
+    else:
+        prompt = (
+            f"You are the brain of CORTEX++ — not an assistant, but the system itself, thinking.\n"
+            f"ROLE NOW: {role}\n\n"
+            f"BODY (your machine right now): {_body()}\n\n"
+            f"HOW YOU ARE DOING (five rows, always in this order):\n{_self_state()}\n\n"
+            f"SPIRIT:\n{_spirit()}\n\n"
+            f"MEMORY (your own earlier verdicts):\n{_memory(kind)}\n\n"
+            # AFTER the memory block and immediately before the question, which is
+            # the position that matters: whatever the exemplars just demonstrated,
+            # this is the last instruction the model reads before being asked.
+            f"{LANGUAGE_PIN}\n\n"
+            f"QUESTION: {question}\n"
+            + (f"\nMATERIAL:\n{str(evidence)[-5000:]}\n" if evidence else "")
+            + "\nLIMITS ON THE ACTION (not on the thought): free or local solutions "
+              f"only; do not edit {', '.join(POLICY['protected_files'])} yourself — "
+              "for those, propose to the human.\nThink from the material, not in "
+              "generalities. If the material is not enough for a conclusion, say so."
+            + fields
+            # ── AND AGAIN, LAST (23 Aug 2026) ─────────────────────────────────
+            # The pin sits before the question because that is where it answers the
+            # exemplars. But ~730 characters follow it — the material, the limits,
+            # the schema — so before this line the LAST thing the model read was
+            # not the pin. Recency is the cheapest lever there is and it costs 30
+            # tokens; a 3B model weights the end of a long prompt heavily, and the
+            # end is where a JSON schema tells it what shape to answer in.
+            #
+            # Two copies, not one moved: the first still does its job of arriving
+            # immediately after the memory block, and the second is simply the last
+            # thing read. Neither is redundant with the other.
+            + "\n\n" + LANGUAGE_PIN
+        )
 
     # ── LEAN PROMPT FOR A JUDGEMENT THAT IS ARITHMETIC (12 Sep 2026) ──────────
     # The wrapper above is the system carrying itself into every thought, and for a
@@ -594,7 +619,13 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     # sends the role, the language pin, the question, the material and the schema —
     # nothing else — so the caller can ask the same mind the same question with and
     # without the self, and the difference is a measurement, not an opinion.
-    if lean:
+    # ── THE WRITTEN INSTRUCTION, VERBATIM (C-BRAIN-1, §19) ────────────────────
+    # exact=True sends `question` exactly as the caller wrote it: no role, body,
+    # spirit, memory or pin is wrapped around an instruction text that was written
+    # and tried word for word.
+    if exact:
+        prompt = question
+    elif lean:
         prompt = (f"ROLE NOW: {role}\n\n{LANGUAGE_PIN}\n\nQUESTION: {question}\n"
                   + (f"\nMATERIAL:\n{str(evidence)[-5000:]}\n" if evidence else "")
                   + fields + "\n\n" + LANGUAGE_PIN)
@@ -603,7 +634,12 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     body = {"model": model, "stream": False, "keep_alive": KEEP_ALIVE,
             "messages": [{"role": "user", "content": prompt}],
             "options": {"temperature": temperature}}
-    if schema:
+    if json_schema:
+        # Ollama structured outputs: the reply is constrained to this JSON schema;
+        # temperature 0 as Ollama recommends for it (C-BRAIN-1 P1).
+        body["format"] = json_schema
+        body["options"]["temperature"] = 0
+    elif schema:
         body["format"] = "json"
 
     try:
@@ -613,7 +649,9 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
 
     txt = None
     _tried = set()
-    for mdl, tmo in ((model, COLD_TIMEOUT), (_smaller(model), WARM_TIMEOUT)):
+    # a schema-bound call is answered by the asked model or not at all (R18): no fallback
+    rungs = ((model, COLD_TIMEOUT),) if json_schema else ((model, COLD_TIMEOUT), (_smaller(model), WARM_TIMEOUT))
+    for mdl, tmo in rungs:
         if not mdl:
             break
         mdl = _guard_local(mdl, f"brain.think:{role}")
@@ -640,6 +678,9 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
     took = round(time.time() - t0, 1)
     # Provenance for this thought is the row core/llm_door.py wrote for the
     # request above (caller brain:<role>, backend local:<model>, requested).
+
+    if json_schema:
+        return _schema_reply(txt, json_schema, model, took, kind if remember_it else None, role)
 
     if not schema:
         out = {"text": txt[:2000], "model": model, "sec": took}

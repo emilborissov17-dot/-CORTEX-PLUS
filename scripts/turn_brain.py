@@ -8,9 +8,12 @@ Order:
   1. build the space (core.space.build) and run the rules (core.space.derive);
   2. the briefing (core.brain_needs.briefing) with what the space derived, its
      fact lines numbered;
-  3. the brain's needs (cortex-l1b-3b), and the engine's needs from the space;
-  4. its verdicts on its previous needs, shown first what was fetched for each;
-  5. symbols for what it was shown (core.symbols, at most 20 statements);
+  3. its verdicts on its open parents and searched needs (TEXT C, one call per
+     question), shown first what was fetched for each; STILL_OPEN with a narrower
+     question makes a child need (C-BRAIN-1 Part 2);
+  4. the brain's needs (cortex-l1b-3b, schema-bound), asked only for the
+     sub-goals with no open parent, and the engine's needs from the space;
+  5. symbols for what it was shown (core.symbols, TEXT B per sentence, at most 20);
   6. what it expects back, per open need, into memory/expectations.jsonl;
   7. memory/turn_result.json {summary, open_needs, cause} for the loop, which
      hands the baton to AGENTS once the witness has the exit row.
@@ -70,13 +73,17 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
         em = bn.emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, bn_paths, sp.needs_from(derived))
         out.update({"model_skipped": why, "needs": em, "review": None, "symbols": None})
     else:
-        reply = bn.ask(b, think)
-        em = bn.emit(b, reply, bn_paths, sp.needs_from(derived))
+        # C-BRAIN-1 Part 2: old needs get their role; review FIRST (TEXT C, one call per
+        # question), so a parent it closes frees its sub-goal; then the needs question,
+        # only for the sub-goals with no open parent; then TEXT B per sentence shown.
+        out["roles_given"] = bn.adopt_roles(bn_paths)
         rv = bn.review(think, bn_paths, read=read, linked=linked)
+        reply, free = bn.ask_free(b, think, bn_paths)
+        em = bn.emit(b, reply, bn_paths, sp.needs_from(derived), free)
         items = [{"id": it.get("id"), "text": it.get("text")} for its in (rv.get("items") or {}).values()
                  for it in its if it.get("type") == "statement"]
         sy = symbols.propose(items, think, engine=engine, paths=sym_paths)
-        out.update({"reply": reply, "needs": em, "review": rv, "symbols": sy})
+        out.update({"reply": reply, "free_subgoals": free, "needs": em, "review": rv, "symbols": sy})
     doc = bn.load_needs(bn_paths)
     open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
     ep = Path(expect_path or EXPECT)

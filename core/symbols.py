@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 """core/symbols.py — the brain proposes expressions for the text it was shown
-(C-TURN-1 Part 3c).
+(C-TURN-1 Part 3c; C-BRAIN-1 Part 2: one call per sentence, TEXT B verbatim).
 
-For at most 20 statements per brain turn, cortex-l1b-3b (through core.brain.think)
-proposes one expression each, e.g. (located-in "Goma" "Nord Kivu"). Two checks,
-both by code, and nothing else:
-  1. SPAN: every argument is a literal span of the statement's sentence, or a
-     number that appears in it;
-  2. PARSE: the repo's hyperon parses the expression (core.space.hyperon_engine).
+For at most 20 statements per brain turn, cortex-l1b-3b (through core.brain.think,
+schema-bound, temperature 0) is asked TEXT B (core/brain_texts.py) once per
+sentence and answers {"head", "args"}. Checks, all by code, and nothing else:
+  1. HEAD: one word (a MeTTa symbol);
+  2. SPAN: every argument is a literal span of the sentence, or a number in it;
+  3. WHOLE: no argument is the whole sentence (TEXT B forbids it; the span check
+     alone lets it through — C-BRAIN-1 Part 1 trial);
+  4. PARSE: the repo's hyperon parses the expression (core.space.hyperon_engine).
 The head is free: config/space_vocabulary.json only SUGGESTS heads; an unknown
 head is accepted and counted in memory/space/new_relations.jsonl.
-Accepted  -> memory/space/proposed.metta as (proposed "<statement id>" "cortex-l1b-3b" <expr>),
-             in the space on the next turn, told apart from base by the label.
-Refused   -> memory/space/proposed_refused.jsonl with the reason.
-SILENCE   -> an empty or unparseable reply is recorded with its raw text; no
-             expression is invented.
+Accepted   -> memory/space/proposed.metta as (proposed "<statement id>" "cortex-l1b-3b" <expr>).
+Refused    -> memory/space/proposed_refused.jsonl with the reason.
+NONE       -> head "NONE": the sentence states nothing; counted, nothing written.
+UNREADABLE -> a schema-invalid reply, recorded with its raw text; no expression
+              is invented.
 
     venv\\Scripts\\python.exe -m core.symbols --selftest
 """
@@ -31,16 +33,10 @@ REPO = Path(__file__).resolve().parents[1]
 SPACE = REPO / "memory" / "space"
 PATHS = {"proposed": SPACE / "proposed.metta", "refused": SPACE / "proposed_refused.jsonl",
          "new_relations": SPACE / "new_relations.jsonl", "log": SPACE / "symbols_log.jsonl",
-         "vocabulary": REPO / "config" / "space_vocabulary.json"}
+         "vocabulary": REPO / "config" / "space_vocabulary.json",
+         "ledger": REPO / "memory" / "vertical_ledger.jsonl"}
 MODEL = "cortex-l1b-3b:latest"
 MAX_PER_TURN = 20
-
-QUESTION = (
-    "For each numbered sentence below, propose ONE expression that states what it says, in the form "
-    "(head \"argument\" \"argument\" ...). Every argument must be copied EXACTLY from that sentence, or be a "
-    "number that appears in it. Suggested heads (you may use another): {heads}. "
-    'Answer ONLY with JSON: {{"proposals": [{{"statement": "<the id in brackets>", "expression": "(...)"}}]}}')
-
 
 class PathMissing(KeyError):
     pass
@@ -103,88 +99,98 @@ def _engine_parses(expr_text: str, engine: Callable) -> Optional[str]:
         return f"the engine did not parse it: {exc}"
 
 
-def _think(question: str, evidence: str) -> dict:
-    from core import brain
-    return brain.think("symbols for what I was shown", question, evidence=evidence, schema=None,
-                       model_override=MODEL, kind="symbols")
+def whole_sentence(expr, sentence: str) -> Optional[str]:
+    """TEXT B: "Never use the whole sentence as an argument." """
+    strip = lambda x: re.sub(r"[\s.!?;:,]+$", "", re.sub(r"\s+", " ", str(x)).strip())  # noqa: E731
+    return ("an argument is the whole sentence"
+            if any(isinstance(a, str) and strip(a) == strip(sentence) for a in expr[1:]) else None)
 
 
-def propose(items: list, think: Optional[Callable] = None, engine: Optional[Callable] = None, paths=None) -> dict:
-    """items: [{"id": statement id, "text": sentence}] (at most MAX_PER_TURN are used)."""
+def head_problem(head) -> Optional[str]:
     from core import space as sp
-    engine = engine or sp.hyperon_engine
-    items = [i for i in items if i.get("id") and i.get("text")][:MAX_PER_TURN]
-    if not items:
-        return {"asked": 0, "accepted": [], "refused": [], "silence": None, "new_heads": {}}
-    vocab = json.loads(Path(_p(paths, "vocabulary")).read_text(encoding="utf-8")).get("suggested_heads", [])
-    by_id = {i["id"]: i["text"] for i in items}
-    evidence = "\n".join(f"[{i['id']}] {i['text']}" for i in items)
-    t0 = time.time()
-    try:
-        r = (think or _think)(QUESTION.format(heads=", ".join(vocab)), evidence)
-    except Exception as exc:                                         # noqa: BLE001
-        r = {"text": None, "error": f"{type(exc).__name__}: {exc}"}
-    raw = (r or {}).get("text")
-    sec = (r or {}).get("sec", round(time.time() - t0, 1))
-    props = None
-    if raw:
-        s = raw.strip()
-        i, j = s.find("{"), s.rfind("}")
-        try:
-            d = json.loads(s[i:j + 1]) if i >= 0 and j > i else None
-            props = d.get("proposals") if isinstance(d, dict) else None
-        except ValueError:
-            props = None
-    if not isinstance(props, list):
-        sil = {"event": "SILENCE", "raw": raw, "why": "empty reply" if not raw else "reply is not parseable JSON",
-               "asked": len(items)}
-        _append(_p(paths, "log"), sil)
-        return {"asked": len(items), "accepted": [], "refused": [], "silence": sil, "new_heads": {}, "sec": sec,
-                "raw": raw}
-    accepted, refused, new_heads = [], [], {}
-    known_counts = {}
+    return None if isinstance(head, str) and sp._SYMBOL.fullmatch(head) else f"the head {head!r} is not one word"
+
+
+def _think(prompt: str, evidence: str, schema: dict) -> Optional[dict]:
+    from core import brain
+    return brain.think("symbols for what I was shown", prompt, evidence=evidence, json_schema=schema,
+                       exact=True, model_override=MODEL, kind="symbols")
+
+
+def _known_counts(paths) -> dict:
+    out = {}
     nr = Path(_p(paths, "new_relations"))
     if nr.exists():
         for line in nr.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 row = json.loads(line)
-                known_counts[row["head"]] = row["count"]
-    for pr in props:
-        sid = (pr or {}).get("statement") if isinstance(pr, dict) else None
-        sid = str(sid or "").strip("[] ")
-        text = (pr or {}).get("expression") if isinstance(pr, dict) else None
-        why = None
-        if sid not in by_id:
-            why = f"statement {sid!r} was not one of those shown"
-        elif not isinstance(text, str) or not text.strip().startswith("("):
-            why = "the expression is not (head ...)"
-        else:
-            try:
-                expr = sp.parse(text.strip())
-            except (IndexError, ValueError):
-                expr, why = None, "the expression does not parse as an s-expression"
-            if why is None:
-                why = span_problem(expr, by_id[sid]) or _engine_parses(sp.render(expr), engine)
+                out[row["head"]] = row["count"]
+    return out
+
+
+def propose(items: list, think: Optional[Callable] = None, engine: Optional[Callable] = None, paths=None) -> dict:
+    """items: [{"id": statement id, "text": sentence}] (at most MAX_PER_TURN are used).
+    TEXT B once per sentence. -> per-call record with the raw reply."""
+    from core import brain_needs as bn
+    from core import brain_texts as T
+    from core import space as sp
+    engine = engine or sp.hyperon_engine
+    items = [i for i in items if i.get("id") and i.get("text")][:MAX_PER_TURN]
+    out = {"asked": len(items), "accepted": [], "refused": [], "none": [], "unreadable": [], "new_heads": {},
+           "calls": []}
+    if not items:
+        return out
+    vocab = json.loads(Path(_p(paths, "vocabulary")).read_text(encoding="utf-8")).get("suggested_heads", [])
+    heads = ", ".join(vocab)
+    known = _known_counts(paths)
+    t0 = time.time()
+    for it in items:
+        sid, sentence = it["id"], it["text"]
+        try:
+            r = (think or _think)(T.TEXT_B.format(heads=heads, sentence=sentence), "", T.SCHEMA_B)
+        except Exception as exc:                                         # noqa: BLE001
+            r = {"unreadable": f"{type(exc).__name__}: {exc}", "raw": None}
+        d, raw, why = bn.bound(r, T.SCHEMA_B)
+        call = {"statement": sid, "sentence": sentence, "raw": raw, "sec": (r or {}).get("sec")}
+        out["calls"].append(call)
+        if d is None:
+            row = {"event": "UNREADABLE", "what": "symbols", "statement": sid, "why": why, "raw": raw}
+            _append(_p(paths, "log"), row)
+            _append(_p(paths, "ledger"), row)
+            out["unreadable"].append(row)
+            call["outcome"] = "UNREADABLE"
+            continue
+        if d["head"] == "NONE":
+            out["none"].append(sid)
+            call["outcome"] = "NONE"
+            continue
+        expr = [d["head"]] + [float(a) if isinstance(a, (int, float)) and not isinstance(a, bool) else a
+                              for a in d["args"]]
+        why = (head_problem(expr[0]) or span_problem(expr, sentence) or whole_sentence(expr, sentence)
+               or _engine_parses(sp.render(expr), engine))
         if why:
-            row = {"statement": sid, "expression": text, "reason": why}
-            refused.append(row)
+            row = {"statement": sid, "expression": raw, "reason": why}
+            out["refused"].append(row)
             _append(_p(paths, "refused"), row)
+            call["outcome"] = f"REFUSED: {why}"
             continue
         head = expr[0]
         if head not in vocab:
-            known_counts[head] = known_counts.get(head, 0) + 1
-            new_heads[head] = known_counts[head]
-            _append(nr, {"head": head, "count": known_counts[head], "statement": sid})
+            known[head] = known.get(head, 0) + 1
+            out["new_heads"][head] = known[head]
+            _append(_p(paths, "new_relations"), {"head": head, "count": known[head], "statement": sid})
         line = f'(proposed "{sid}" "{MODEL.split(":")[0]}" {sp.render(expr)})'
         pp = Path(_p(paths, "proposed"))
         pp.parent.mkdir(parents=True, exist_ok=True)
         with pp.open("a", encoding="utf-8", newline="\n") as fh:
             fh.write(f"; proposed-by {MODEL} for statement {sid} at {_now()}\n{line}\n")
-        accepted.append({"statement": sid, "expression": sp.render(expr), "head": head})
-    _append(_p(paths, "log"), {"event": "PROPOSED", "asked": len(items), "accepted": len(accepted),
-                               "refused": len(refused), "new_heads": new_heads})
-    return {"asked": len(items), "accepted": accepted, "refused": refused, "silence": None, "new_heads": new_heads,
-            "sec": sec, "raw": raw}
+        out["accepted"].append({"statement": sid, "expression": sp.render(expr), "head": head})
+        call["outcome"] = "ACCEPTED"
+    out["sec"] = round(time.time() - t0, 1)
+    _append(_p(paths, "log"), {"event": "PROPOSED", "asked": len(items), "accepted": len(out["accepted"]),
+                               "refused": len(out["refused"]), "none": len(out["none"]),
+                               "unreadable": len(out["unreadable"]), "new_heads": out["new_heads"]})
+    return out
 
 
 def selftest() -> dict:

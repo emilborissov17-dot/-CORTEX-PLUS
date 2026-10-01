@@ -923,14 +923,23 @@ def row_brain_needs(repo: Path, now: datetime) -> dict:
     satisfied = sum(1 for r in rows if r.get("event") == "SATISFIED")
     silence = sum(1 for r in rows if r.get("event") in ("SILENCE", "REVIEW_SILENCE"))
     skipped = sum(1 for r in rows if r.get("event") == "MODEL_SKIPPED")
-    ran = emitted + served + satisfied + silence + skipped > 0
+    # C-BRAIN-1 Part 2: a schema-invalid reply (needs, review or symbols), a child need
+    # made from a narrower question, and a narrower question that repeated one held
+    unread = sum(1 for r in rows if r.get("event") == "UNREADABLE")
+    children = sum(1 for r in rows if r.get("event") == "CHILD")
+    repeat = sum(1 for r in rows if r.get("event") == "REPEAT")
+    n_ev = emitted + served + satisfied + silence + skipped + unread + children + repeat
+    ran = n_ev > 0
     return {
         "id": "brainneeds", "name": "Brain needs",
-        "ran": "{} brain-need event(s) on {}".format(emitted + served + satisfied + silence + skipped, today),
-        "headline": "BRAIN NEEDS emitted {} · served {} · satisfied {} · silence {}".format(
-            emitted, served, satisfied, silence),
+        "ran": "{} brain-need event(s) on {}".format(n_ev, today),
+        "headline": ("BRAIN NEEDS emitted {} · served {} · satisfied {} · silence {} · unreadable {} · "
+                     "children {} · repeat {}").format(emitted, served, satisfied, silence, unread, children, repeat),
         "detail": ["- counted over rows of {} whose ts falls on {}".format(SOURCES["brainneeds"][0], today),
-                   "- model step skipped (cycle live or 8b window open): {}".format(skipped)],
+                   "- model step skipped (cycle live or 8b window open): {}".format(skipped),
+                   "- unreadable by what: {}".format(", ".join(
+                       "{} {}".format(w, sum(1 for r in rows if r.get("event") == "UNREADABLE" and r.get("what") == w))
+                       for w in ("needs", "review", "symbols")))],
         "correction": "no" if ran else "yes",
         "why": "the brain stated or was asked for its needs today" if ran else "no brain-need event today",
         "sources": [SOURCES["brainneeds"][0]],

@@ -237,41 +237,72 @@ QUESTION = (
     '"expects": "<one line: what you expect the search to bring back>"}]}')
 
 
-def _think(question: str, evidence: str) -> dict:
+_S = {"type": "string"}
+_SN = {"type": ["string", "null"]}
+SCHEMA_NEEDS = {"type": "object", "properties": {"needs": {"type": "array", "maxItems": MAX_NEEDS, "items": {
+    "type": "object", "properties": {
+        "question": _S, "why_subgoal": _S,
+        "about": {"type": "object", "properties": {"place": _SN, "actor": _SN, "period": _SN},
+                  "required": ["place", "actor", "period"]},
+        "kind": {"type": "string", "enum": list(KINDS)}, "would_change": _S, "from_line": _S, "expects": _S},
+    "required": ["question", "why_subgoal", "about", "kind", "would_change", "from_line", "expects"]}}},
+    "required": ["needs"]}
+
+
+def _think(prompt: str, evidence: str, schema: dict) -> Optional[dict]:
+    """The one door, schema-bound at temperature 0 (C-BRAIN-1 2a). With no evidence
+    the prompt is a written instruction text and goes out verbatim (exact)."""
     from core import brain
-    return brain.think("what I need to know", question, evidence=evidence, schema=None,
+    role = "what I need to know" if schema is SCHEMA_NEEDS else "did it answer my question"
+    return brain.think(role, prompt, evidence=evidence, json_schema=schema, exact=not evidence,
                        model_override=MODEL, kind="brain_needs", lean=False)
 
 
-def ask(b: dict, think: Optional[Callable] = None) -> dict:
-    """-> {"raw": text or None, "parsed": list or None, "model", "sec"}."""
-    t0 = time.time()
+def _schema_problem(d, schema: dict) -> Optional[str]:
     try:
-        r = (think or _think)(QUESTION, b["text"])
+        import jsonschema
+        jsonschema.validate(d, schema)
+        return None
     except Exception as exc:                                         # noqa: BLE001
-        return {"raw": None, "parsed": None, "error": f"{type(exc).__name__}: {exc}", "sec": round(time.time() - t0, 1)}
-    raw = (r or {}).get("text")
-    out = {"raw": raw, "parsed": None, "model": (r or {}).get("model"), "sec": (r or {}).get("sec", round(time.time() - t0, 1))}
-    if raw:
-        out["parsed"] = parse_reply(raw)
-    return out
+        return f"schema-invalid: {str(exc).splitlines()[0][:200]}"
 
 
-def parse_reply(raw: str):
-    """The needs list from a reply, or None. Never invents an entry."""
-    s = raw.strip()
-    for opener, closer in (("{", "}"), ("[", "]")):
-        i, j = s.find(opener), s.rfind(closer)
-        if i < 0 or j <= i:
-            continue
-        try:
-            d = json.loads(s[i:j + 1])
-        except ValueError:
-            continue
-        lst = d.get("needs") if isinstance(d, dict) else d
-        if isinstance(lst, list):
-            return lst
-    return None
+def bound(r: Optional[dict], schema: dict) -> tuple:
+    """-> (data or None, raw, why unreadable or None). The reply is validated
+    AGAIN here, so a door that let a bad reply through cannot make it readable."""
+    if not r:
+        return None, None, "no reply"
+    raw = r.get("raw")
+    if r.get("unreadable"):
+        return None, raw, r["unreadable"]
+    if "data" not in r:
+        return None, raw, "no data in the reply"
+    why = _schema_problem(r["data"], schema)
+    return (None, raw, why) if why else (r["data"], raw, None)
+
+
+def unreadable(what: str, why: str, raw, paths=None, **extra) -> dict:
+    """A schema-invalid reply is recorded UNREADABLE with its raw text; nothing is
+    put in its place. The board counts these rows."""
+    row = {"event": "UNREADABLE", "ts": _now(), "what": what, "why": why, "raw": raw, **extra}
+    _append(_p(paths, "log"), row)
+    _append(_p(paths, "ledger"), row)
+    return row
+
+
+def ask(b: dict, think: Optional[Callable] = None, free: Optional[list] = None) -> dict:
+    """-> {"raw", "parsed": list or None, "unreadable": why or None, "model", "sec"}.
+    `free`: the sub-goals with no open parent — told to the brain as data."""
+    t0 = time.time()
+    ev = b["text"] + ("" if free is None else "\n\nSUB-GOALS WITH NO OPEN PARENT: " + ", ".join(free))
+    try:
+        r = (think or _think)(QUESTION, ev, SCHEMA_NEEDS)
+    except Exception as exc:                                         # noqa: BLE001
+        return {"raw": None, "parsed": None, "unreadable": f"{type(exc).__name__}: {exc}",
+                "sec": round(time.time() - t0, 1)}
+    d, raw, why = bound(r, SCHEMA_NEEDS)
+    return {"raw": raw, "parsed": d["needs"] if d else None, "unreadable": why, "model": (r or {}).get("model"),
+            "sec": (r or {}).get("sec", round(time.time() - t0, 1))}
 
 
 # ── 3. form ─────────────────────────────────────────────────────────────────
@@ -302,21 +333,104 @@ def _id(origin: str, text: str) -> str:
     return ("BN-" if origin == "brain" else "EN-") + hashlib.sha256(_norm(text).encode("utf-8")).hexdigest()[:10]
 
 
+# ── parents and children (C-BRAIN-1 2b) ─────────────────────────────────────
+PARENT, CHILD, DIRECT = "parent", "child", "direct"
+
+
+def is_general(n: dict) -> bool:
+    """No place, actor or period, or from_line "none"."""
+    about = n.get("about") if isinstance(n.get("about"), dict) else {}
+    return not any(about.get(k) for k in ("place", "actor", "period")) or str(n.get("from_line")) == "none"
+
+
+def _is_parent(n: dict) -> bool:
+    return n.get("origin") == "brain" and n.get("role") == PARENT
+
+
+def searchable(ns: list) -> list:
+    """The open needs a searcher may take: a parent is never searched verbatim."""
+    return [n for n in ns if n.get("status") in (OPEN, STILL_OPEN) and not _is_parent(n)]
+
+
+def _held_questions(doc: dict) -> set:
+    out = set()
+    for n in doc.get("needs", []):
+        out.add(_norm(n.get("question")))
+        out.update(_norm(q) for q in n.get("questions") or [])
+    return out
+
+
+def adopt_roles(paths=None) -> int:
+    """A brain need written before roles existed gets one by the same rule."""
+    doc = load_needs(paths)
+    n_new = 0
+    for n in doc.get("needs", []):
+        if n.get("origin") == "brain" and not n.get("role"):
+            n["role"] = PARENT if is_general(n) else DIRECT
+            n_new += 1
+            if n["role"] == PARENT:
+                n.setdefault("none_why", None)
+                _append(_p(paths, "ledger"), {"event": "MADE_PARENT", "ts": _now(), "need_id": n["id"],
+                                              "why": "general: no place, actor or period, or from_line none"})
+    if n_new:
+        _save_needs(doc, paths)
+    return n_new
+
+
+def free_subgoals(five: list, paths=None) -> list:
+    """The sub-goals with no OPEN parent (2d)."""
+    held = {n.get("why_subgoal") for n in load_needs(paths).get("needs", [])
+            if _is_parent(n) and n.get("status") in (OPEN, STILL_OPEN)}
+    return [s for s in five if s not in held]
+
+
+def add_child(doc: dict, parent: dict, question: str, paths=None) -> Optional[dict]:
+    """A narrower question becomes a CHILD of `parent`; one already held anywhere
+    (any need's question or its history) is REPEAT and not added. The parent,
+    once narrowed, is a parent: it is not searched again."""
+    q = question.strip()
+    if _norm(q) in _held_questions(doc):
+        _append(_p(paths, "ledger"), {"event": "REPEAT", "ts": _now(), "parent": parent["id"], "question": q})
+        return None
+    rec = {"id": _id("brain", q), "origin": "brain", "role": CHILD, "parent": parent["id"],
+           "briefing_sha256": parent.get("briefing_sha256"), "created_utc": _now(), "status": OPEN,
+           "question": q, "why_subgoal": parent.get("why_subgoal"), "about": None, "kind": "FIND",
+           "would_change": None, "expects": None, "from_line": "none"}
+    doc["needs"].append(rec)
+    parent.setdefault("children", []).append(rec["id"])
+    if parent.get("role") != PARENT:
+        parent["role"] = PARENT
+        _append(_p(paths, "ledger"), {"event": "MADE_PARENT", "ts": _now(), "need_id": parent["id"],
+                                      "why": "narrowed by review"})
+    _append(_p(paths, "ledger"), {"event": "CHILD", "ts": _now(), "need_id": rec["id"], "parent": parent["id"],
+                                  "question": q})
+    return rec
+
+
 # ── 4. engine needs come from the space (core/space.py, C-TURN-1 Part 1d) ───
 # The Python path that computed them here was run side by side with the space on
 # one fixture (they agreed) and then removed.
 
 
 # ── 5. emit ─────────────────────────────────────────────────────────────────
-def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dict:
-    """`engine` = core.space.needs_from(derived): the engine's needs, with premises."""
+def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = None,
+         free: Optional[list] = None) -> dict:
+    """`engine` = core.space.needs_from(derived): the engine's needs, with premises.
+    `reply` None: the question was not asked (every sub-goal has an open parent).
+    `free`: a need for a sub-goal outside it is refused (2d)."""
     doc = load_needs(paths)
     needs = doc.get("needs", [])
     by_id = {n["id"]: n for n in needs}
     five = b["facts"]["subgoals"]
     satisfied = {_norm(n["question"]) for n in needs if n.get("status") == SATISFIED}
-    accepted, refused, silence, reopened = [], [], None, []
-    if reply.get("parsed") is None or (isinstance(reply.get("parsed"), list) and not reply["parsed"]):
+    accepted, refused, silence, reopened, repeats = [], [], None, [], []
+    if reply is None:
+        pass
+    elif reply.get("unreadable") and reply.get("parsed") is None:
+        silence = {"utc": _now(), "briefing_sha256": b["sha256"], "raw": reply.get("raw"),
+                   "why": f"UNREADABLE: {reply['unreadable']}"}
+        unreadable("needs", reply["unreadable"], reply.get("raw"), paths, briefing_sha256=b["sha256"])
+    elif reply.get("parsed") is None or (isinstance(reply.get("parsed"), list) and not reply["parsed"]):
         silence = {"utc": _now(), "briefing_sha256": b["sha256"], "raw": reply.get("raw"),
                    "error": reply.get("error"), "why": "empty reply" if not reply.get("raw") else
                    ("no needs in the reply" if reply.get("parsed") == [] else "reply is not parseable JSON")}
@@ -325,12 +439,20 @@ def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dic
     else:
         for i, n in enumerate(reply["parsed"]):
             why = "over the limit of 5 needs" if i >= MAX_NEEDS else check_form(n, b["facts_text"], satisfied, five)
+            if not why and free is not None and n.get("why_subgoal") in five and n.get("why_subgoal") not in free:
+                why = f"sub-goal {n.get('why_subgoal')} already has an open parent"
             if why:
                 row = {"utc": _now(), "briefing_sha256": b["sha256"], "reason": why, "need": n}
                 refused.append(row)
                 _append(_p(paths, "refused"), row)
                 continue
             nid = _id("brain", n["question"])
+            if nid in by_id and _is_parent(by_id[nid]):
+                # a parent is never re-emitted, whatever its status (C-BRAIN-1 2b)
+                _append(_p(paths, "ledger"), {"event": "REPEAT", "ts": _now(), "need_id": nid,
+                                              "why": "the question of a parent asked again"})
+                repeats.append(nid)
+                continue
             if nid in by_id and by_id[nid]["status"] in (OPEN, STILL_OPEN):
                 continue                                          # already open: not duplicated
             if nid in by_id:
@@ -347,6 +469,11 @@ def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dic
                    "status": OPEN, **{k: n.get(k) for k in ("question", "why_subgoal", "about", "kind", "would_change",
                                                                "expects")},
                    "from_line": _anchor(n.get("from_line"), b.get("line_ids") or {})}
+            rec["role"] = PARENT if is_general(rec) else DIRECT
+            if rec["role"] == PARENT:
+                # none_why is TEXT A's field; TEXT A failed its trial (C-BRAIN-1 Part 1) and is not
+                # asked, so a parent is narrowed only by review (TEXT C) and none_why stays null
+                rec["none_why"] = None
             by_id[nid] = rec
             accepted.append(rec)
     for n in (engine or []):
@@ -367,8 +494,8 @@ def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dic
         _append(_p(paths, "ledger"), {"event": "NO_SEARCHER", "ts": _now(), "need_id": r["id"], "why": NO_SEARCHER})
     for r in reopened:
         _append(_p(paths, "ledger"), {"event": "REOPENED", "ts": _now(), "need_id": r["id"], "was": r["reopened"][-1]["was"]})
-    return {"accepted": accepted, "refused": refused, "reopened": reopened, "silence": silence, "open": sum(
-        1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
+    return {"accepted": accepted, "refused": refused, "reopened": reopened, "repeats": repeats, "silence": silence,
+            "open": sum(1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
 
 
 def _save_needs(doc: dict, paths=None) -> None:
@@ -390,12 +517,6 @@ def mark_served(need_id: str, query: str, hits: int, fetched: int, gained: int, 
 
 # ── 6. the brain is told what came back, and judges its own needs ───────────
 VERDICTS = (SATISFIED, STILL_OPEN, WRONG_QUESTION)
-REVIEW_QUESTION = (
-    "Earlier you said you needed to know the things below. For each, the store now "
-    "returns the items listed under it. Judge each of YOUR needs. Answer ONLY with JSON:\n"
-    '{"verdicts": [{"id": "<the need id>", "verdict": "SATISFIED | STILL_OPEN | WRONG_QUESTION", '
-    '"question": "<if STILL_OPEN: the question reformulated in your words, else null>", '
-    '"why": "<one sentence>"}]}')
 
 
 def linked_statements(store=None) -> dict:
@@ -411,70 +532,57 @@ def linked_statements(store=None) -> dict:
 
 def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optional[Callable] = None,
            linked: Optional[dict] = None) -> dict:
-    """Show the brain, for each of its open needs that has been searched, the top k
-    items core.knowledge returns for its question; record its verdict per need.
-    Code records the verdict and never overrules it; an unparseable reply or a
-    verdict outside the three leaves the need as it was, and says so."""
+    """TEXT C, ONE call per question (C-BRAIN-1 2c), for every open parent and every
+    open need that has been searched. Shown: what was fetched for the need first,
+    then what the store returns for its question, k items in all. Code records the
+    verdict and never overrules it. STILL_OPEN with a narrower question creates a
+    CHILD (or a REPEAT); an UNREADABLE reply leaves the need as it was."""
+    from core import brain_texts as T
     from core import knowledge as kn
     read = read or (lambda q, kk: kn.read(q, k=kk))
     doc = load_needs(paths)
-    mine = [n for n in doc.get("needs", []) if n.get("origin") == "brain"
-            and n.get("status") in (OPEN, STILL_OPEN) and n.get("searched", 0) > 0]
+    mine = [n for n in doc.get("needs", []) if n.get("origin") == "brain" and n.get("status") in (OPEN, STILL_OPEN)
+            and (_is_parent(n) or n.get("searched", 0) > 0)]
     if not mine:
-        return {"shown": 0, "verdicts": [], "silence": None, "items": {}}
-    blocks, shown_items = [], {}
+        return {"shown": 0, "verdicts": [], "calls": [], "items": {}}
     linked = linked if linked is not None else linked_statements()
+    calls, recorded, shown_items, t0 = [], [], {}, time.time()
     for n in mine:
         own = (linked.get(n["id"]) or [])[:k]
         items = own + [it for it in read(n["question"], k) if it.get("id") not in {o.get("id") for o in own}][:k - len(own)]
         shown_items[n["id"]] = items
         _append(_p(paths, "ledger"), {"event": "SHOWN", "ts": _now(), "need_id": n["id"], "items": len(items)})
-        lines = [f"  {i + 1}. [{it.get('type')}] {str(it.get('text'))[:300]}" for i, it in enumerate(items)]
-        blocks.append(f"NEED {n['id']}: {n['question']}\n" + ("\n".join(lines) if lines else "  (nothing returned)"))
-    shown = "\n\n".join(blocks)
-    t0 = time.time()
-    try:
-        r = (think or _think)(REVIEW_QUESTION, shown)
-    except Exception as exc:                                         # noqa: BLE001
-        r = {"text": None, "error": f"{type(exc).__name__}: {exc}"}
-    raw = (r or {}).get("text")
-    parsed = None
-    if raw:
-        s = raw.strip()
-        i, j = s.find("{"), s.rfind("}")
+        lines = "\n".join(f'- "{str(it.get("text"))[:300]}"' for it in items) or "(nothing came back)"
+        prompt = T.TEXT_C.format(question=n["question"], items=lines)
         try:
-            d = json.loads(s[i:j + 1]) if i >= 0 and j > i else None
-            parsed = d.get("verdicts") if isinstance(d, dict) else None
-        except ValueError:
-            parsed = None
-    sec = (r or {}).get("sec", round(time.time() - t0, 1))
-    if not isinstance(parsed, list):
-        sil = {"utc": _now(), "raw": raw, "why": "empty reply" if not raw else "reply is not parseable JSON"}
-        _append(_p(paths, "log"), {"event": "REVIEW_SILENCE", **sil})
-        _append(_p(paths, "ledger"), {"event": "REVIEW_SILENCE", "ts": _now(), "origin": "brain", "why": sil["why"]})
-        return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": [], "silence": sil, "sec": sec,
-                "items": shown_items}
-    by_id = {n["id"]: n for n in doc["needs"]}
-    recorded = []
-    for v in parsed:
-        if not isinstance(v, dict):
+            r = (think or _think)(prompt, "", T.SCHEMA_C)
+        except Exception as exc:                                         # noqa: BLE001
+            r = {"unreadable": f"{type(exc).__name__}: {exc}", "raw": None}
+        d, raw, why = bound(r, T.SCHEMA_C)
+        call = {"need_id": n["id"], "role": n.get("role"), "question": n["question"], "shown": lines, "raw": raw,
+                "sec": (r or {}).get("sec")}
+        calls.append(call)
+        if d is None:
+            unreadable("review", why, raw, paths, need_id=n["id"])
+            call["unreadable"] = why
+            recorded.append({"id": n["id"], "verdict": None, "recorded": False, "why_not": why})
             continue
-        nid, verdict = v.get("id"), v.get("verdict")
-        n = by_id.get(nid)
-        if n is None or n not in mine or verdict not in VERDICTS:
-            recorded.append({"id": nid, "verdict": verdict, "recorded": False,
-                             "why_not": "unknown need id" if n is None or n not in mine else "verdict not one of three"})
-            continue
-        n.setdefault("verdicts", []).append({"utc": _now(), "verdict": verdict, "why": v.get("why")})
+        verdict = d["verdict"]
+        n.setdefault("verdicts", []).append({"utc": _now(), "verdict": verdict, "why": d.get("why"),
+                                             "narrower_question": d.get("narrower_question")})
         n["status"] = verdict
-        if verdict == STILL_OPEN and isinstance(v.get("question"), str) and v["question"].strip():
-            n.setdefault("questions", [n["question"]]).append(v["question"].strip())
-            n["question"] = v["question"].strip()
-        _append(_p(paths, "ledger"), {"event": verdict, "ts": _now(), "need_id": nid, "why": v.get("why")})
-        recorded.append({"id": nid, "verdict": verdict, "recorded": True})
+        _append(_p(paths, "ledger"), {"event": verdict, "ts": _now(), "need_id": n["id"], "why": d.get("why")})
+        call["verdict"] = verdict
+        nq = d.get("narrower_question")
+        if verdict == STILL_OPEN and isinstance(nq, str) and nq.strip():
+            ch = add_child(doc, n, nq, paths)
+            call["child"] = ch["id"] if ch else None
+            call["repeat"] = ch is None
+        recorded.append({"id": n["id"], "verdict": verdict, "recorded": True})
     _save_needs(doc, paths)
-    return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": recorded, "silence": None, "sec": sec,
-            "items": shown_items}
+    return {"shown": len(mine), "verdicts": recorded, "calls": calls, "items": shown_items,
+            "sec": round(time.time() - t0, 1)}
+
 
 
 # ── the guard: never while the model is someone else's ──────────────────────
@@ -502,13 +610,15 @@ def _live_space() -> list:
 
 
 def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] = None,
-        read: Optional[Callable] = None, space_run: Optional[Callable] = None) -> dict:
-    """One cognition step: the brain judges what came back for its searched needs
-    (review), the space is rebuilt and derived, then a new briefing and its needs.
+        read: Optional[Callable] = None, space_run: Optional[Callable] = None, linked: Optional[dict] = None) -> dict:
+    """One cognition step: old needs get their role; the brain judges what came back
+    (review, TEXT C per question); the space is rebuilt and derived; a new briefing,
+    and the needs QUESTION only for the sub-goals with no open parent (2d).
     core.space.SpaceEngineFailed propagates: the step stops and says so."""
     from core import space as sp
     why = (busy or model_busy)()
-    rv = None if why else review(think, paths, read=read)
+    adopt_roles(paths)
+    rv = None if why else review(think, paths, read=read, linked=linked)
     derived = (space_run or _live_space)()
     engine = sp.needs_from(derived)
     b = briefing(paths, derived)
@@ -517,8 +627,20 @@ def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] =
         _append(_p(paths, "ledger"), {"event": "MODEL_SKIPPED", "ts": _now(), "origin": "brain", "why": why})
         res = emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, paths, engine)
         return {"briefing": b, "reply": None, "review": None, "skipped": why, **res}
-    reply = ask(b, think)
-    return {"briefing": b, "reply": reply, "review": rv, "derived": len(derived), **emit(b, reply, paths, engine)}
+    reply, free = ask_free(b, think, paths)
+    return {"briefing": b, "reply": reply, "review": rv, "derived": len(derived), "free": free,
+            **emit(b, reply, paths, engine, free)}
+
+
+def ask_free(b: dict, think: Optional[Callable] = None, paths=None) -> tuple:
+    """-> (reply or None, free sub-goals). None and ASK_SKIPPED when every sub-goal
+    has an open parent: the question is not asked at all."""
+    free = free_subgoals(b["facts"]["subgoals"], paths)
+    if not free:
+        _append(_p(paths, "ledger"), {"event": "ASK_SKIPPED", "ts": _now(), "origin": "brain",
+                                      "why": "every sub-goal has an open parent"})
+        return None, free
+    return ask(b, think, free), free
 
 
 def selftest() -> dict:

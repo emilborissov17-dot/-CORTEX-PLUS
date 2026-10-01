@@ -33,76 +33,110 @@ def sp_paths(tmp_path):
     v = tmp_path / "vocab.json"
     v.write_text(json.dumps({"suggested_heads": ["event", "says", "located-in"]}), encoding="utf-8")
     return {"proposed": tmp_path / "proposed.metta", "refused": tmp_path / "refused.jsonl",
-            "new_relations": tmp_path / "new.jsonl", "log": tmp_path / "log.jsonl", "vocabulary": v}
+            "new_relations": tmp_path / "new.jsonl", "log": tmp_path / "log.jsonl", "vocabulary": v,
+            "ledger": tmp_path / "sym_ledger.jsonl"}
 
 
 def _ok_engine(program):
     return ["ok"]
 
 
-def _propose(sp_paths, proposals, engine=_ok_engine, raw=None):
-    text = raw if raw is not None else json.dumps({"proposals": proposals})
-    return symbols.propose(ITEMS, think=lambda q, ev: {"text": text, "sec": 0.1}, engine=engine, paths=sp_paths)
+def _propose(sp_paths, head=None, args=None, engine=_ok_engine, reply=None, items=None, calls=None):
+    """TEXT B is asked once per sentence; the stub answers {"head", "args"} (or `reply` as given)."""
+    def think(prompt, evidence, schema):
+        if calls is not None:
+            calls.append({"prompt": prompt, "evidence": evidence, "schema": schema})
+        if reply is not None:
+            return reply
+        d = {"head": head, "args": args or []}
+        return {"data": d, "raw": json.dumps(d), "sec": 0.1}
+    return symbols.propose(items or ITEMS, think=think, engine=engine, paths=sp_paths)
 
 
 def _jsonl(p):
     return [json.loads(l) for l in Path(p).read_text(encoding="utf-8").splitlines()] if Path(p).exists() else []
 
 
-# ── 3e ──────────────────────────────────────────────────────────────────────
+# ── 3e / C-BRAIN-1 Part 2 ───────────────────────────────────────────────────
+def test_text_b_is_asked_once_per_sentence_verbatim_and_schema_bound(sp_paths):
+    from core import brain_texts as T
+    calls = []
+    items = ITEMS + [{"id": "s-2", "text": "Skip to content"}]
+    _propose(sp_paths, "NONE", [], items=items, calls=calls)
+    assert [c["prompt"] for c in calls] == [T.TEXT_B.format(heads="event, says, located-in", sentence=SENT),
+                                            T.TEXT_B.format(heads="event, says, located-in", sentence="Skip to content")]
+    assert all(c["schema"] is T.SCHEMA_B and c["evidence"] == "" for c in calls)
+
+
+def test_at_most_twenty_sentences_are_asked(sp_paths):
+    calls = []
+    _propose(sp_paths, "NONE", [], items=[{"id": f"s-{i}", "text": SENT} for i in range(25)], calls=calls)
+    assert len(calls) == symbols.MAX_PER_TURN == 20
+
+
 def test_a_well_formed_proposal_is_accepted_and_labelled(sp_paths):
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(says "UNHCR" "1.2 million refugees returned to Syria")'}])
+    r = _propose(sp_paths, "says", ["UNHCR", "1.2 million refugees returned to Syria"])
     assert r["accepted"] and not r["refused"]
     text = sp_paths["proposed"].read_text(encoding="utf-8")
     assert '(proposed "s-1" "cortex-l1b-3b" (says "UNHCR" "1.2 million refugees returned to Syria"))' in text
 
 
 def test_an_argument_not_in_the_sentence_is_refused_by_name(sp_paths):
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(located-in "Damascus" "Syria")'}])
+    r = _propose(sp_paths, "located-in", ["Damascus", "Syria"])
     assert r["refused"][0]["reason"] == "argument 'Damascus' is not a span of the sentence"
     assert _jsonl(sp_paths["refused"])[0]["reason"].startswith("argument 'Damascus'")
 
 
 def test_a_number_must_appear_in_the_sentence(sp_paths):
-    assert _propose(sp_paths, [{"statement": "s-1", "expression": '(event "returned" 2026)'}])["accepted"]
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(event "returned" 2027)'}])
+    assert _propose(sp_paths, "event", ["returned", 2026])["accepted"]
+    r = _propose(sp_paths, "event", ["returned", 2027])
     assert r["refused"][0]["reason"] == "the number 2027 is not in the sentence"
 
 
 def test_mutation_without_the_span_check_an_invented_argument_is_accepted(sp_paths, monkeypatch):
     monkeypatch.setattr(symbols, "span_problem", lambda expr, sentence: None)
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(located-in "Damascus" "Syria")'}])
-    assert r["accepted"]
+    assert _propose(sp_paths, "located-in", ["Damascus", "Syria"])["accepted"]
+
+
+def test_the_whole_sentence_as_an_argument_is_refused(sp_paths):
+    r = _propose(sp_paths, "says", [SENT.rstrip(".")])
+    assert r["refused"][0]["reason"] == "an argument is the whole sentence"
+
+
+def test_mutation_without_the_whole_sentence_check_it_is_accepted(sp_paths, monkeypatch):
+    monkeypatch.setattr(symbols, "whole_sentence", lambda expr, sentence: None)
+    assert _propose(sp_paths, "says", [SENT.rstrip(".")])["accepted"]
+
+
+def test_a_head_of_two_words_is_refused(sp_paths):
+    r = _propose(sp_paths, "located in", ["Syria"])
+    assert r["refused"][0]["reason"] == "the head 'located in' is not one word"
 
 
 def test_an_unknown_head_is_accepted_and_counted(sp_paths):
-    _propose(sp_paths, [{"statement": "s-1", "expression": '(returns-to "refugees" "Syria")'}])
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(returns-to "UNHCR" "Syria")'}])
+    _propose(sp_paths, "returns-to", ["refugees", "Syria"])
+    r = _propose(sp_paths, "returns-to", ["UNHCR", "Syria"])
     assert r["accepted"] and r["new_heads"] == {"returns-to": 2}
     assert [x["count"] for x in _jsonl(sp_paths["new_relations"])] == [1, 2]
-
-
-def test_an_unparseable_expression_is_refused(sp_paths):
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": 'says "UNHCR"'}])
-    assert r["refused"][0]["reason"] == "the expression is not (head ...)"
 
 
 def test_an_expression_the_engine_cannot_parse_is_refused(sp_paths):
     def picky(program):
         raise sp.SpaceEngineFailed("Parse error")
-    r = _propose(sp_paths, [{"statement": "s-1", "expression": '(says "UNHCR")'}], engine=picky)
+    r = _propose(sp_paths, "says", ["UNHCR"], engine=picky)
     assert r["refused"][0]["reason"].startswith("the engine did not parse it")
 
 
-def test_silence_stays_silence(sp_paths):
-    r = _propose(sp_paths, [], raw="I see refugees.")
-    assert r["silence"]["raw"] == "I see refugees." and not r["accepted"]
-    assert not sp_paths["proposed"].exists(), "an expression was invented from silence"
+def test_an_unreadable_reply_is_recorded_with_its_raw_text_and_invents_nothing(sp_paths):
+    r = _propose(sp_paths, reply={"unreadable": "not JSON", "raw": "I see refugees.", "sec": 1})
+    assert r["unreadable"][0]["raw"] == "I see refugees." and not r["accepted"]
+    assert not sp_paths["proposed"].exists(), "an expression was invented from an unreadable reply"
+    assert _jsonl(sp_paths["ledger"])[0]["event"] == "UNREADABLE"
 
 
-def test_a_statement_not_shown_is_refused(sp_paths):
-    r = _propose(sp_paths, [{"statement": "s-99", "expression": '(says "UNHCR")'}])
-    assert r["refused"][0]["reason"] == "statement 's-99' was not one of those shown"
+def test_none_is_counted_and_nothing_is_written(sp_paths):
+    r = _propose(sp_paths, "NONE", [], items=[{"id": "s-2", "text": "Skip to content"}])
+    assert r["none"] == ["s-2"] and not r["accepted"] and not sp_paths["proposed"].exists()
 
 
 # ── the turn in order ───────────────────────────────────────────────────────
@@ -135,13 +169,20 @@ def turn_paths(tmp_path, monkeypatch, sp_paths):
 
 
 def _model(calls):
-    def think(q, ev):
+    from core import brain_needs as bn
+    from core import brain_texts as T
+
+    def think(q, ev, schema):
         calls.append(q[:40])
-        if "What do YOU need" in q:
-            return {"text": json.dumps({"needs": [{"question": "How many refugees returned to Syria in 2026?",
-                                                    "why_subgoal": "SAFETY", "from_line": "L1",
-                                                    "expects": "a UNHCR count for 2026"}]}), "sec": 0.1}
-        return {"text": "{}", "sec": 0.1}
+        if schema is bn.SCHEMA_NEEDS:
+            d = {"needs": [{"question": "How many refugees returned to Syria in 2026?", "why_subgoal": "SAFETY",
+                            "about": {"place": "Syria", "actor": None, "period": "2026"}, "kind": "FIND",
+                            "would_change": "w", "from_line": "L1", "expects": "a UNHCR count for 2026"}]}
+        elif schema is T.SCHEMA_C:
+            d = {"verdict": "STILL_OPEN", "narrower_question": None, "why": "w"}
+        else:
+            d = {"head": "NONE", "args": []}
+        return {"data": d, "raw": json.dumps(d), "sec": 0.1}
     return think
 
 
