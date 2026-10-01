@@ -94,6 +94,18 @@
           "registered_also_in": "core/provenance.py:121 OBSERVED_FIELD"
         },
         {
+          "spelling": "last_date",
+          "shape": "iso_date",
+          "means": "the UTC day the section's values describe: for quakes the day whose M4.5+ events were counted, for markets the newest trading day among the closes",
+          "found_in": "snapshots/master/global_indicators_latest.json (sections quakes and markets)",
+          "example": "2026-09-30",
+          "occurrences_in_snapshot": 2,
+          "written_by": [
+            "core/global_indicators.py"
+          ],
+          "registered": "1 Oct 2026, for tools/taxonomy_coverage.py; found by reading the snapshot, not invented"
+        },
+        {
           "spelling": "temp_anomaly_year",
           "shape": "year",
           "means": "observation year of the temperature anomaly",

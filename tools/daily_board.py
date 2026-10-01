@@ -85,6 +85,7 @@ SOURCES: dict[str, list[str]] = {
     "axesfed": ["snapshots/master/goal_score_latest.json",
                 "config/target_config.json",
                 "output/wellbeing_all_countries.json"],
+    "taxonomy": ["memory/taxonomy_coverage_latest.json"],
 }
 
 # ---------------------------------------------------------------------------
@@ -801,6 +802,49 @@ def row_axes_fed(repo: Path, now: datetime) -> dict:
 
 
 
+def row_taxonomy(repo: Path, now: datetime) -> dict:
+    """Row 9 — taxonomy coverage: subcategories SEEN of 123.
+
+    Read from memory/taxonomy_coverage_latest.json, which tools/taxonomy_coverage.py
+    writes. The headline is today's file's own count; yesterday's comes from the
+    previous board's machine block like every other row and is never recomputed.
+    A file with the wrong shape is MISSING, never a zero. A file not regenerated
+    today is printed with its age and answers "needs correction: yes".
+    """
+    src = repo / SOURCES["taxonomy"][0]
+    doc = _json(src)
+    t = doc.get("totals") if isinstance(doc, dict) else None
+    try:
+        world, sysE, overall = t["world"], t["system_E"], t["overall"]
+        nums = [world["seen"], world["of"], sysE["seen"], sysE["of"], overall["seen"], overall["of"]]
+    except (TypeError, KeyError):
+        raise SourceMissing(src, "no totals.world / totals.system_E / totals.overall")
+    if not all(isinstance(x, int) and not isinstance(x, bool) for x in nums):
+        raise SourceMissing(src, "a total is not an integer")
+    gen = doc.get("generated_utc")
+    age = _age_days(gen, now)
+    if age is None:
+        raise SourceMissing(src, "generated_utc unreadable")
+    stale = age > 1.0
+    head = ("SEEN {}/{} overall (count over all 123) · world {}/{} · E {}/{} separate, never in the "
+            "world total".format(overall["seen"], overall["of"], world["seen"], world["of"],
+                                 sysE["seen"], sysE["of"]))
+    reasons = doc.get("not_seen_reasons_world") or {}
+    detail = ["- statistic: subcategories meeting STATE + CHANGE + SOURCE "
+              "(rule in tools/taxonomy_coverage.py), from {}".format(SOURCES["taxonomy"][0])]
+    detail += ["- NOT SEEN (world): {} × {}".format(n, r)
+               for r, n in sorted(reasons.items(), key=lambda kv: -kv[1])]
+    return {
+        "id": "taxonomy", "name": "Taxonomy coverage",
+        "ran": _ran(gen, now, "tools/taxonomy_coverage.py"),
+        "headline": head, "detail": detail,
+        "correction": "yes" if stale else "no",
+        "why": ("coverage file is {:.2f} d old — not regenerated today".format(age) if stale
+                else "coverage file regenerated {:.2f} d ago".format(age)),
+        "sources": [SOURCES["taxonomy"][0]],
+    }
+
+
 BUILDERS = [
     ("t1", "T1 transfer test", row_t1),
     ("probe", "Brain probe (scanner)", row_probe),
@@ -810,6 +854,7 @@ BUILDERS = [
     ("local", "Local brain alive", row_local),
     ("institution0", "institution #0 (witness stage)", row_institution0),
     ("axesfed", "axes fed", row_axes_fed),
+    ("taxonomy", "Taxonomy coverage", row_taxonomy),
 ]
 
 

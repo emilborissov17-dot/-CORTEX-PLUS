@@ -233,6 +233,10 @@ call :step "institution0"          "%PY% tools\institution0_morning.py --write" 
 REM --- The reply to last morning's message. Its own offset file, its own parser;
 REM --- it never touches approve_reader's, whose refusal boundary is a feature.
 call :step "institution0_witness"  "%PY% experiments\institution\witness_reader.py"          no
+REM --- TAXONOMY COVERAGE (1 Oct 2026): subcategories SEEN of 123, written to
+REM --- memory\taxonomy_coverage_latest.json, which daily_board row "Taxonomy coverage"
+REM --- reads. BEFORE daily_board for that reason. No refusal path: REFUSAL_OK stays no.
+call :step "taxonomy_coverage"     "%PY% tools\taxonomy_coverage.py --write"              no
 call :step "daily_board"           "%PY% tools\daily_board.py --write"                       no
 
 REM --- THE PER-STEP TRACE PAGE, and why it is rendered HERE and not in the

@@ -58,6 +58,7 @@ ROW_SOURCES = [
     ("axesfed", "snapshots/master/goal_score_latest.json"),
     ("axesfed", "config/target_config.json"),
     ("axesfed", "output/wellbeing_all_countries.json"),
+    ("taxonomy", "memory/taxonomy_coverage_latest.json"),
 ]
 
 
@@ -181,6 +182,12 @@ def repo(tmp_path: Path) -> Path:
         "countries": [{"iso2": "AA", "completeness": "16/17 real, 1 null, 0 suspect"},
                       {"iso2": "BB", "completeness": "3/17 real, 14 null, 0 suspect"},
                       {"iso2": "CC", "completeness": "2/17 real, 15 null, 0 suspect"}]}))
+    # taxonomy coverage: today's file, written this morning.
+    _write(tmp_path / "memory/taxonomy_coverage_latest.json", json.dumps({
+        "generated_utc": TODAY + "T08:55:00+00:00",
+        "totals": {"world": {"seen": 2, "of": 105}, "system_E": {"seen": 0, "of": 18},
+                   "overall": {"seen": 2, "of": 123}},
+        "not_seen_reasons_world": {"no live key is mapped to it": 67}}))
     return tmp_path
 
 
@@ -399,3 +406,37 @@ def test_an_unreadable_countries_shape_refuses_rather_than_counting_zero(repo: P
     row = _by_id(db.build_rows(repo, NOW))["axesfed"]
     assert row["status"] == "MISSING"
     assert "not a list or an object" in row["why"], row["why"]
+
+
+# --------------------------------------------------------------------------- taxonomy coverage row
+def test_taxonomy_row_prints_todays_count_over_123(repo: Path):
+    r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
+    assert r["headline"].startswith("SEEN 2/123 overall")
+    assert "world 2/105" in r["headline"] and "E 0/18" in r["headline"]
+    assert r["correction"] == "no"
+
+
+@pytest.mark.parametrize("doc", [
+    {"generated_utc": TODAY + "T08:55:00+00:00"},
+    {"generated_utc": TODAY + "T08:55:00+00:00",
+     "totals": {"world": {"seen": "2", "of": 105}, "system_E": {"seen": 0, "of": 18},
+                "overall": {"seen": 2, "of": 123}}},
+    {"generated_utc": "not a date",
+     "totals": {"world": {"seen": 2, "of": 105}, "system_E": {"seen": 0, "of": 18},
+                "overall": {"seen": 2, "of": 123}}},
+])
+def test_taxonomy_row_with_the_wrong_shape_is_missing_not_a_default(repo: Path, doc: dict):
+    _write(repo / "memory/taxonomy_coverage_latest.json", json.dumps(doc))
+    r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
+    assert r["status"] == "MISSING", r["headline"]
+    assert "SEEN" not in r["headline"]
+
+
+def test_taxonomy_row_from_an_old_file_says_so_and_needs_correction(repo: Path):
+    p = repo / "memory/taxonomy_coverage_latest.json"
+    d = json.loads(p.read_text(encoding="utf-8"))
+    d["generated_utc"] = YDAY + "T00:00:00+00:00"
+    _write(p, json.dumps(d))
+    r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
+    assert r["correction"] == "yes" and "not regenerated today" in r["why"]
+    assert "has not been re-run" in r["ran"]

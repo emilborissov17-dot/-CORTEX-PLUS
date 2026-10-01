@@ -49,9 +49,12 @@ class TaxonomyError(Exception):
 
 def _read_json(p: Path) -> dict:
     try:
-        return json.loads(Path(p).read_text(encoding="utf-8"))
+        doc = json.loads(Path(p).read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as e:
         raise TaxonomyError(f"cannot read {p}: {type(e).__name__}: {e}") from e
+    if not isinstance(doc, dict):
+        raise TaxonomyError(f"{p}: top level is {type(doc).__name__}, not an object")
+    return doc
 
 
 def subgoal_names(target_path: Path | None = None) -> set:

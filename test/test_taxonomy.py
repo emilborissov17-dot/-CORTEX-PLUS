@@ -53,6 +53,15 @@ def test_unreadable_file_raises(tmp_path: Path):
         tx.load(p)
 
 
+def test_a_json_list_raises_not_crashes(tmp_path: Path):
+    p = tmp_path / "taxonomy.json"
+    p.write_text("[]", encoding="utf-8")
+    with pytest.raises(tx.TaxonomyError):
+        tx.load(p)
+    with pytest.raises(tx.TaxonomyError):
+        tx.load_key_map(p)
+
+
 def test_missing_file_raises(tmp_path: Path):
     with pytest.raises(tx.TaxonomyError):
         tx.load(tmp_path / "absent.json")
