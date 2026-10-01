@@ -56,9 +56,13 @@ def obs_log_for(root) -> Path:
     """The observation log of an atoms root: memory/observation_log.jsonl for the
     live atoms/, a file BESIDE (never inside: read() walks every *.jsonl under the
     root) any other root — a test, a replay."""
-    if root is None or Path(root).resolve() == ROOT.resolve():
+    # compared with the REAL atoms/ directory, not the module's ROOT: a test that
+    # points ROOT at tmp and writes with root=None must log beside tmp (1 Oct 2026:
+    # test_atoms did exactly that and wrote four rows into the live log).
+    r = Path(root if root is not None else ROOT).resolve()
+    if r == (REPO / "atoms").resolve():
         return OBS_LOG
-    return Path(root).parent / "observation_log.jsonl"
+    return r.parent / "observation_log.jsonl"
 
 
 def _log_observation(root, row: dict) -> None:

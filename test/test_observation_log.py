@@ -39,7 +39,6 @@ def _log(root):
 
 def test_the_log_for_a_test_root_is_beside_it_never_in_memory(root):
     assert at.obs_log_for(root) == root.parent / "observation_log.jsonl"
-    assert at.obs_log_for(None) == at.OBS_LOG
 
 
 def test_a_first_reading_logs_new(root):
@@ -78,3 +77,15 @@ def test_mutation_without_the_prior_lookup_a_change_looks_new(root, monkeypatch)
     at.write(_row(31.1, "2022", "c1"), root=root)
     at.write(_row(31.0, "2023", "c2"), root=root)
     assert _log(root)[-1]["verdict"] == "NEW"
+
+
+def test_a_patched_root_with_no_root_argument_logs_beside_the_patch(tmp_path, monkeypatch):
+    monkeypatch.setattr(at, "ROOT", tmp_path / "atoms")
+    assert at.obs_log_for(None) == tmp_path / "observation_log.jsonl"
+    assert at.obs_log_for(REPO / "atoms") == at.OBS_LOG
+
+
+def test_mutation_comparing_with_the_module_root_would_send_a_test_to_the_live_log(tmp_path, monkeypatch):
+    monkeypatch.setattr(at, "ROOT", tmp_path / "atoms")
+    buggy = lambda root: at.OBS_LOG if root is None or Path(root).resolve() == at.ROOT.resolve() else None
+    assert buggy(None) == at.OBS_LOG
