@@ -147,3 +147,40 @@ def test_mutation_a_worker_run_without_ingest_reports_inert(monkeypatch, tmp_pat
     assert kn.selftest()["integrations"][key] == "LIVE"
     monkeypatch.setattr(w, "run", lambda sources_path, queue_dir=None: None)
     assert kn.selftest()["integrations"][key] == "INERT"
+
+
+def test_a_changed_page_writes_only_its_new_sentences(paths):
+    _ingest(paths, "feed", "Quake A struck. Quake B struck.", "https://a.org/f")
+    r = _ingest(paths, "feed", "Quake A struck. Quake B struck. Quake C struck.", "https://a.org/f")
+    assert (r["added"], r["already_held"]) == (1, 2)
+    sents = [x["sentence"] for x in kn.statements(paths["store"])]
+    assert sorted(sents) == ["Quake A struck.", "Quake B struck.", "Quake C struck."]
+
+
+def test_repeats_inside_one_page_are_kept(paths):
+    r = _ingest(paths, "t", "Yes. Yes. No.", "https://a.org/t")
+    assert r["added"] == 3
+
+
+def test_mutation_without_the_held_check_a_changed_page_writes_twice(paths, monkeypatch):
+    monkeypatch.setattr(kn, "_sentences_of", lambda store: {})
+    _ingest(paths, "feed", "Quake A struck. Quake B struck.", "https://a.org/f")
+    _ingest(paths, "feed", "Quake A struck. Quake B struck. Quake C struck.", "https://a.org/f")
+    assert len(kn.statements(paths["store"])) == 5
+
+
+def test_embed_pending_checkpoints_so_a_killed_run_keeps_its_vectors(paths):
+    text = " ".join(f"Sentence number {chr(97 + i % 26)}{i}." for i in range(256 * 20 + 10))
+    _ingest(paths, "big", text, "https://a.org/b")
+    calls = {"n": 0}
+
+    def dies_after_checkpoint(texts):
+        calls["n"] += 1
+        if calls["n"] > 20:
+            raise RuntimeError("killed")
+        return stub_embed(texts)
+    with pytest.raises(RuntimeError):
+        kn.embed_pending(embed=dies_after_checkpoint, store=paths["store"], vec_path=paths["vec"],
+                         ids_path=paths["ids"])
+    ids, mat = kn.load_vectors(paths["vec"], paths["ids"])
+    assert len(ids) == 256 * 20 == mat.shape[0]

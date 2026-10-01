@@ -205,15 +205,36 @@ def ingest(source_id: str, text: str, url: str = "", origin: str = "web",
         return {"source_id": source_id, "outcome": "SKIPPED_SAME_CONTENT", "added": 0}
     rep = st.ingest_text(source_id, text, url=url, origin=origin,
                          extra={"host": host_of(url), "content_sha256": h, **(extra or {})})
+    # a CHANGED page from the same source repeats most of its sentences (a live
+    # feed with one new row): those were written from the earlier page and are
+    # not written again. Repeats inside ONE page are kept — that page is whole.
+    before = _sentences_of(store).setdefault(source_id, set())
+    new_recs = [r for r in rep["records"] if r["sentence"] not in before]
     store.parent.mkdir(parents=True, exist_ok=True)
     with store.open("a", encoding="utf-8", newline="\n") as fh:
-        for r in rep["records"]:
+        for r in new_recs:
             fh.write(json.dumps(r, ensure_ascii=False) + NL)
-    seen[h] = {"source_id": source_id, "url": url, "origin": origin, "sentences": rep["sentences"], "ts": _now()}
+    before.update(r["sentence"] for r in new_recs)
+    seen[h] = {"source_id": source_id, "url": url, "origin": origin, "sentences": rep["sentences"],
+               "added": len(new_recs), "ts": _now()}
     seen_path.parent.mkdir(parents=True, exist_ok=True)
     seen_path.write_text(json.dumps(seen, ensure_ascii=False), encoding="utf-8")
-    return {"source_id": source_id, "outcome": rep["outcome"], "added": rep["sentences"],
-            "segmentation": rep.get("segmentation")}
+    return {"source_id": source_id, "outcome": rep["outcome"], "added": len(new_recs),
+            "already_held": rep["sentences"] - len(new_recs), "segmentation": rep.get("segmentation")}
+
+
+_HELD: dict = {}
+
+
+def _sentences_of(store: Path) -> dict:
+    """source_id -> sentences already in `store`, read once per process per store."""
+    key = str(Path(store).resolve())
+    if key not in _HELD:
+        idx: dict = {}
+        for r in statements(store):
+            idx.setdefault(r.get("source_id"), set()).add(r.get("sentence"))
+        _HELD[key] = idx
+    return _HELD[key]
 
 
 def statements(store: Optional[Path] = None) -> list:
@@ -261,23 +282,35 @@ def embed_pending(limit: Optional[int] = None, budget_s: Optional[float] = None,
         todo = todo[:limit]
     t0, done = time.time(), 0
     new_ids, new_vecs = [], []
-    for i in range(0, len(todo), 256):
+    def flush():
+        nonlocal mat, new_ids, new_vecs
+        if not new_vecs:
+            return
+        arr = np.asarray(new_vecs, dtype="float32")
+        arr /= np.linalg.norm(arr, axis=1, keepdims=True) + 1e-9
+        mat = arr if mat.shape[0] == 0 else np.vstack([mat, arr])
+        ids.extend(new_ids)
+        vp.parent.mkdir(parents=True, exist_ok=True)
+        np.save(vp, mat)
+        ip.write_text(json.dumps(ids), encoding="utf-8")
+        new_ids, new_vecs = [], []
+
+    for n, i in enumerate(range(0, len(todo), 256), 1):
         chunk = todo[i:i + 256]
         vecs = embed([r["sentence"] for r in chunk])
         new_ids += [r["id"] for r in chunk]
         new_vecs += vecs
         done += len(chunk)
+        if n % 20 == 0:                       # checkpoint: a killed run keeps what it embedded
+            flush()
         if budget_s is not None and time.time() - t0 > budget_s:
             break
-    if new_vecs:
-        arr = np.asarray(new_vecs, dtype="float32")
-        arr /= np.linalg.norm(arr, axis=1, keepdims=True) + 1e-9
-        mat = arr if mat.shape[0] == 0 else np.vstack([mat, arr])
-        vp.parent.mkdir(parents=True, exist_ok=True)
-        np.save(vp, mat)
-        ip.write_text(json.dumps(ids + new_ids), encoding="utf-8")
-    remaining = len([r for r in statements(store) if r["id"] not in set(ids + new_ids)])
-    return {"embedded": done, "seconds": round(time.time() - t0, 1), "remaining": remaining}
+    flush()
+    held = set(ids)
+    remaining = len([r for r in statements(store) if r["id"] not in held])
+    secs = round(time.time() - t0, 1)
+    return {"embedded": done, "seconds": secs, "per_s": round(done / secs, 1) if secs else None,
+            "remaining": remaining}
 
 
 # ── labels ──────────────────────────────────────────────────────────────────
@@ -457,8 +490,9 @@ if __name__ == "__main__":
         print(json.dumps(r, indent=2))
         sys.exit(0 if r["ok"] else 1)
     if "--embed-pending" in sys.argv:
-        print(json.dumps(embed_pending()))
-        sys.exit(0)
+        print(json.dumps(embed_pending()), flush=True)
+        if "--label" not in sys.argv:
+            sys.exit(0)
     if "--label" in sys.argv:
         print(json.dumps(label_all()))
         sys.exit(0)
