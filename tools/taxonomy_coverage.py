@@ -42,6 +42,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -74,6 +75,10 @@ FAIL_NO_KEY = "no live key is mapped to it"
 FAIL_STATE = "STATE: no key with a value"
 FAIL_CHANGE = f"CHANGE: no key with a day-resolution observation <= {CHANGE_MAX_AGE_DAYS} d old"
 FAIL_SOURCE = "SOURCE: no independent or adversarial source"
+FAIL_SPLIT = "ONE KEY: STATE, CHANGE and SOURCE each hold, but only on different keys"
+CURRENT_DAY_DAYS = 45
+CURRENT_MONTH_DAYS = 120
+CURRENT_YEAR_BACK = 3
 
 
 class Refused(SystemExit):
@@ -276,6 +281,73 @@ def is_independent_key(rows: list) -> bool:
     return any(r.get("class") in INDEPENDENT for r in rows)
 
 
+def key_holds_all(rows: list) -> bool:
+    """C-OC-2 (1 Oct 2026): SEEN needs STATE, CHANGE and SOURCE on ONE key."""
+    return is_state_key(rows) and is_change_key(rows) and is_independent_key(rows)
+
+
+# ── CURRENT: from the period's own granularity, never declared by hand ───────
+_YEAR = re.compile(r"^\d{4}$")
+_MONTH = re.compile(r"^\d{4}-\d{2}$")
+_DAY = re.compile(r"^\d{4}-\d{2}-\d{2}([T ].*)?$")
+
+
+def period_granularity(period) -> str | None:
+    p = str(period or "").strip()
+    if _YEAR.match(p):
+        return "year"
+    if _MONTH.match(p):
+        return "month"
+    if _DAY.match(p):
+        return "day"
+    return None
+
+
+def period_is_current(period, today) -> bool:
+    """day-dated <= CURRENT_DAY_DAYS old; month-dated <= CURRENT_MONTH_DAYS after
+    the month's LAST day; year-dated >= this year - CURRENT_YEAR_BACK. An
+    unclassifiable period (epoch ms, 'Q3 2026') is never current."""
+    import calendar
+    from datetime import date
+    g, p = period_granularity(period), str(period).strip()
+    if g == "year":
+        return int(p) >= today.year - CURRENT_YEAR_BACK
+    if g == "month":
+        y, m = int(p[:4]), int(p[5:7])
+        if not 1 <= m <= 12:
+            return False
+        end = date(y, m, calendar.monthrange(y, m)[1])
+        return 0 <= (today - end).days <= CURRENT_MONTH_DAYS or end > today
+    if g == "day":
+        try:
+            d = date.fromisoformat(p[:10])
+        except ValueError:
+            return False
+        return (today - d).days <= CURRENT_DAY_DAYS
+    return False
+
+
+def current_totals(tree: dict, today, root=None) -> dict:
+    """CURRENT n/105: world subcategories with a non-retracted atom whose period
+    is within its granularity's bound (core.atoms.read skips retractions)."""
+    from core import atoms as _atoms
+    live = {a["subcategory"] for a in _atoms.read(root=root) if period_is_current(a.get("period"), today)}
+    subs = tx.subcategories(tree)
+    world = [s for s in subs if s["domain"] != tx.SYSTEM_DOMAIN]
+    per = {}
+    for s in subs:
+        d = per.setdefault(s["domain"], {"current": 0, "of": 0})
+        d["of"] += 1
+        d["current"] += int(s["id"] in live)
+    return {"world": {"current": sum(s["id"] in live for s in world), "of": len(world)},
+            "system_E": {"current": sum(s["id"] in live for s in subs if s["domain"] == tx.SYSTEM_DOMAIN),
+                         "of": sum(1 for s in subs if s["domain"] == tx.SYSTEM_DOMAIN)},
+            "per_domain": per,
+            "rule": (f"a non-retracted atom whose period is day-dated <= {CURRENT_DAY_DAYS} d old, month-dated "
+                     f"<= {CURRENT_MONTH_DAYS} d after the month ends, or year-dated >= this year - "
+                     f"{CURRENT_YEAR_BACK}; granularity read from the period string")}
+
+
 def coverage(key_map: dict, evidence: dict, tree: dict) -> dict:
     by_sub: dict = {}
     for key, entry in key_map.items():
@@ -293,6 +365,8 @@ def coverage(key_map: dict, evidence: dict, tree: dict) -> dict:
                 fails.append(FAIL_CHANGE)
             if not any(is_independent_key(evidence.get(k, [])) for k in keys):
                 fails.append(FAIL_SOURCE)
+            if not fails and not any(key_holds_all(evidence.get(k, [])) for k in keys):
+                fails.append(FAIL_SPLIT)
         subs.append({"id": r["id"], "name": r["name_en"], "domain": r["domain"],
                      "category": r["category"], "seen": not fails, "fails": fails,
                      "keys": [{"key": k, "evidence": evidence.get(k, [])} for k in keys]})
@@ -353,6 +427,7 @@ def run(now=None) -> dict:
     evidence, unusable = build_evidence(key_map, now)
     cov = coverage(key_map, evidence, tree)
     cov["totals"]["atoms"] = atoms_totals(tree)
+    cov["totals"]["current"] = current_totals(tree, now.date())
     cov.update({
         "generated_utc": now.isoformat(timespec="seconds"),
         "rule": {"STATE": "at least one key with a finite numeric value",
@@ -385,6 +460,8 @@ def render(cov: dict) -> str:
          f"- Domain E (the system itself), separate, never in the world total: "
          f"SEEN {t['system_E']['seen']}/{t['system_E']['of']}",
          f"- Overall (plain count over all 123): SEEN {t['overall']['seen']}/{t['overall']['of']}",
+         f"- **CURRENT (world): {t['current']['world']['current']}/{t['current']['world']['of']}** "
+         f"subcategories with a non-retracted atom inside its period's bound",
          f"- **ATOMS (world): {t['atoms']['world']['with_atoms']}/{t['atoms']['world']['of']}** "
          f"subcategories with at least one non-retracted atom on disk", "",
          "| domain | SEEN | of |", "|---|---:|---:|"]
@@ -454,6 +531,7 @@ def main(argv) -> int:
     t = cov["totals"]
     print(f"SEEN world {t['world']['seen']}/{t['world']['of']} · E {t['system_E']['seen']}/"
           f"{t['system_E']['of']} (separate) · overall {t['overall']['seen']}/{t['overall']['of']}"
+          f" · CURRENT world {t['current']['world']['current']}/{t['current']['world']['of']}"
           f" · ATOMS world {t['atoms']['world']['with_atoms']}/{t['atoms']['world']['of']}")
     for r, n in sorted(cov["not_seen_reasons_world"].items(), key=lambda x: -x[1]):
         print(f"  NOT SEEN (world) {n:>3}  {r}")

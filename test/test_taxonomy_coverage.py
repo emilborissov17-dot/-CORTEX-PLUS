@@ -145,3 +145,84 @@ def test_atoms_count_world_only_and_skips_retracted(tmp_path, monkeypatch):
     assert t1["world"] == {"with_atoms": 1, "of": 105} and t1["system_E"]["with_atoms"] == 0
     ci.retract("k1", reason="test", by="test")
     assert tc.atoms_totals(tx.load(), root=root)["world"]["with_atoms"] == 0
+
+
+# ── C-OC-2 Part 4a: the three conditions hold on ONE key ─────────────────────
+def test_c51_split_across_two_keys_is_not_seen():
+    """The live case of 1 Oct 2026: C5.1 had CHANGE on quakes.quake_m45_count
+    (dated, class unknown) and SOURCE on usgs_quakes_daily (independent, no
+    date). Under the one-key rule that is NOT SEEN, and the reason says why."""
+    ev = {"quakes.quake_m45_count": [_row(cls="unknown")],
+          "usgs_quakes_daily": [_row(date=None, cls="independent")]}
+    s = _cov(ev, {"quakes.quake_m45_count": "C5.1", "usgs_quakes_daily": "C5.1"})["C5.1"]
+    assert s["seen"] is False
+    assert s["fails"] == [tc.FAIL_SPLIT]
+
+
+def test_one_key_holding_all_three_is_seen():
+    ev = {"k": [_row()], "other": [_row(date=None, cls="unknown")]}
+    assert _cov(ev, {"k": "C1.1", "other": "C1.1"})["C1.1"]["seen"] is True
+
+
+def test_mutation_any_key_per_condition_would_call_the_split_case_seen(monkeypatch):
+    monkeypatch.setattr(tc, "key_holds_all", lambda rows: True)
+    ev = {"quakes.quake_m45_count": [_row(cls="unknown")],
+          "usgs_quakes_daily": [_row(date=None, cls="independent")]}
+    assert _cov(ev, {"quakes.quake_m45_count": "C5.1", "usgs_quakes_daily": "C5.1"})["C5.1"]["seen"] is True
+
+
+# ── C-OC-2 Part 4b: CURRENT from the period's own granularity ────────────────
+from datetime import date as _date  # noqa: E402
+
+TODAY = _date(2026, 10, 1)
+
+
+@pytest.mark.parametrize("period,expected", [
+    ("2026-08-17", True),            # 45 days before 2026-10-01
+    ("2026-08-16", False),           # 46 days
+    ("2026-08-17T23:59:00", True),   # an ISO datetime is day-dated
+    ("2026-06", True),               # last day 2026-06-30 -> 93 days
+    ("2026-05", False),              # last day 2026-05-31 -> 123 days
+    ("2023", True),                  # this year - 3
+    ("2022", False),                 # this year - 4
+    ("1790857400000", False),        # epoch milliseconds: granularity unknown
+    ("Q3 2026", False),              # unknown shape
+])
+def test_current_bounds_and_off_by_one(period, expected):
+    assert tc.period_is_current(period, TODAY) is expected
+
+
+def test_month_bound_off_by_one_exactly():
+    # 2026-06-03's month ends 2026-06-30; 120 days after is 2026-10-28
+    assert tc.period_is_current("2026-06", _date(2026, 10, 28)) is True
+    assert tc.period_is_current("2026-06", _date(2026, 10, 29)) is False
+
+
+def test_granularity_is_read_from_the_period_never_declared():
+    assert tc.period_granularity("2024") == "year"
+    assert tc.period_granularity("2024-07") == "month"
+    assert tc.period_granularity("2024-07-09") == "day"
+    assert tc.period_granularity("2024-07-09T10:00:00+00:00") == "day"
+    assert tc.period_granularity("1790857400000") is None
+
+
+def test_current_counts_world_atoms_only_and_skips_retracted(tmp_path, monkeypatch):
+    import json as _j
+    from core import atoms as at
+    from core import card_intake as ci
+    monkeypatch.setattr(ci, "RETRACTIONS", tmp_path / "ret.jsonl")
+    monkeypatch.setattr(ci, "ACCEPTED", tmp_path / "acc.jsonl")
+    root = tmp_path / "atoms"
+    def put(key, sub, period, ck):
+        rec = {"axis": f"TAXONOMY:{sub}", "key": key, "value": 1.0, "unit": "u", "url": "https://x/" + key,
+               "quote": "1.0", "subcategory": sub, "place": "WLD", "period": period}
+        row = {"card_key": ck, "judged_utc": "t", "verdict": "ACCEPTED", "record": rec}
+        with ci.ACCEPTED.open("a", encoding="utf-8") as fh:
+            fh.write(_j.dumps(row) + chr(10))
+        at.write(row, root=root)
+    put("a", "C2.1", "2024", "k1")      # current
+    put("b", "C3.3", "2019", "k2")      # stale
+    t = tc.current_totals(tx.load(), TODAY, root=root)
+    assert t["world"] == {"current": 1, "of": 105}
+    ci.retract("k1", reason="test", by="test")
+    assert tc.current_totals(tx.load(), TODAY, root=root)["world"]["current"] == 0

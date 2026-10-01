@@ -187,7 +187,8 @@ def repo(tmp_path: Path) -> Path:
         "generated_utc": TODAY + "T08:55:00+00:00",
         "totals": {"world": {"seen": 2, "of": 105}, "system_E": {"seen": 0, "of": 18},
                    "overall": {"seen": 2, "of": 123},
-                   "atoms": {"world": {"with_atoms": 1, "of": 105}}},
+                   "atoms": {"world": {"with_atoms": 1, "of": 105}},
+                   "current": {"world": {"current": 1, "of": 105}}},
         "not_seen_reasons_world": {"no live key is mapped to it": 67}}))
     return tmp_path
 
@@ -412,9 +413,8 @@ def test_an_unreadable_countries_shape_refuses_rather_than_counting_zero(repo: P
 # --------------------------------------------------------------------------- taxonomy coverage row
 def test_taxonomy_row_prints_todays_count_over_123(repo: Path):
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
-    assert r["headline"].startswith("SEEN 2/123 overall")
-    assert "world 2/105" in r["headline"] and "E 0/18" in r["headline"]
-    assert "ATOMS 1/105" in r["headline"]
+    assert r["headline"].startswith("world: SEEN 2/105 · CURRENT 1/105 · ATOMS 1/105")
+    assert "overall SEEN 2/123" in r["headline"] and "E 0/18" in r["headline"]
     assert r["correction"] == "no"
 
 
@@ -451,3 +451,12 @@ def test_taxonomy_row_without_atoms_totals_is_missing_not_zero(repo: Path):
     _write(p, json.dumps(d))
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
     assert r["status"] == "MISSING" and "ATOMS" not in r["headline"]
+
+
+def test_taxonomy_row_without_current_totals_is_missing_not_zero(repo: Path):
+    p = repo / "memory/taxonomy_coverage_latest.json"
+    d = json.loads(p.read_text(encoding="utf-8"))
+    del d["totals"]["current"]
+    _write(p, json.dumps(d))
+    r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
+    assert r["status"] == "MISSING" and "CURRENT" not in r["headline"]
