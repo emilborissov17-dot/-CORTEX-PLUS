@@ -839,7 +839,7 @@ def row_taxonomy(repo: Path, now: datetime) -> dict:
             v.get("current"), v.get("seen"))
         for d, v in sorted((t["knowledge"].get("per_domain") or {}).items()))]
     detail += ["- statement labels: {}".format(t["knowledge"].get("statement_labels"))]
-    detail += ["- NOT SEEN (world): {} × {}".format(n, r)
+    detail += ["- legacy snapshot evidence, NOT SEEN (world): {} × {}".format(n, r)
                for r, n in sorted(reasons.items(), key=lambda kv: -kv[1])]
     return {
         "id": "taxonomy", "name": "Taxonomy coverage",
