@@ -237,3 +237,16 @@ def test_re_asking_a_wrong_question_reopens_it_and_keeps_its_history(p):
     assert len(n["reopened"]) == 1 and n["searched"] == 1
     ev = [r["event"] for r in _ledger(p) if r.get("need_id") == nid]
     assert ev[-1] == "REOPENED"
+
+
+def test_the_chain_runs_cognition_then_the_judge_then_maintenance():
+    assert fin.chain_steps() == fin.CHAIN
+    assert fin.CHAIN == ["openclaw_axis_worker.py", "brain_needs.py", "openclaw_finder.py", "card_intake.py",
+                         "maintenance.py"]
+
+
+def test_chain_steps_reads_module_lines(tmp_path):
+    bat = tmp_path / "c.bat"
+    bat.write_text(chr(10).join([r"%PY% -m core.brain_needs", r"%PY% scripts\openclaw_finder.py"]) + chr(10),
+                   encoding="utf-8")
+    assert fin.chain_steps(bat) == ["brain_needs.py", "openclaw_finder.py"]

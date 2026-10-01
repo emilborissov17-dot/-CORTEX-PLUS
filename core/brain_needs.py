@@ -317,6 +317,7 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
                    "error": reply.get("error"), "why": "empty reply" if not reply.get("raw") else
                    ("no needs in the reply" if reply.get("parsed") == [] else "reply is not parseable JSON")}
         _append(_p(paths, "log"), {"event": SILENCE, **silence})
+        _append(_p(paths, "ledger"), {"event": "SILENCE", "ts": _now(), "origin": "brain", "why": silence["why"]})
     else:
         for i, n in enumerate(reply["parsed"]):
             why = "over the limit of 5 needs" if i >= MAX_NEEDS else check_form(n, b["facts_text"], satisfied, five)
@@ -428,6 +429,7 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
     if not isinstance(parsed, list):
         sil = {"utc": _now(), "raw": raw, "why": "empty reply" if not raw else "reply is not parseable JSON"}
         _append(_p(paths, "log"), {"event": "REVIEW_SILENCE", **sil})
+        _append(_p(paths, "ledger"), {"event": "REVIEW_SILENCE", "ts": _now(), "origin": "brain", "why": sil["why"]})
         return {"shown": len(mine), "shown_text": shown, "raw": raw, "verdicts": [], "silence": sil, "sec": sec}
     by_id = {n["id"]: n for n in doc["needs"]}
     recorded = []
@@ -478,6 +480,7 @@ def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] =
     b = briefing(paths)
     if why:
         _append(_p(paths, "log"), {"event": "MODEL_SKIPPED", "utc": _now(), "why": why, "briefing_sha256": b["sha256"]})
+        _append(_p(paths, "ledger"), {"event": "MODEL_SKIPPED", "ts": _now(), "origin": "brain", "why": why})
         res = emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, paths)
         return {"briefing": b, "reply": None, "review": None, "skipped": why, **res}
     reply = ask(b, think)

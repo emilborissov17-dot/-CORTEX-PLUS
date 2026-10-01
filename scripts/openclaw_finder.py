@@ -139,12 +139,23 @@ def run(n: int = 5, per_need: int = 4, search=None, getter=None, ledger=None, st
     return out
 
 
+CHAIN = ["openclaw_axis_worker.py", "brain_needs.py", "openclaw_finder.py", "card_intake.py", "maintenance.py"]
+
+
 def chain_steps(path=None) -> list:
     """The scripts tools/openclaw_chain.bat EXECUTES, in order (the %PY% lines,
     never its comments)."""
     p = pathlib.Path(path or REPO / "tools" / "openclaw_chain.bat")
-    return [l.strip().split()[1].replace("\\", "/").rsplit("/", 1)[-1]
-            for l in p.read_text(encoding="utf-8").splitlines() if l.strip().startswith("%PY% ")]
+    out = []
+    for line in p.read_text(encoding="utf-8").splitlines():
+        tok = line.strip().split()
+        if not tok or tok[0] != "%PY%" or len(tok) < 2:
+            continue
+        if tok[1] == "-m" and len(tok) > 2:                       # %PY% -m core.x  ->  x.py
+            out.append(tok[2].rsplit(".", 1)[-1] + ".py")
+        else:
+            out.append(tok[1].replace("\\", "/").rsplit("/", 1)[-1])
+    return out
 
 
 def selftest() -> dict:
@@ -156,7 +167,7 @@ def selftest() -> dict:
     except Exception as exc:                                         # noqa: BLE001
         res["integrations"]["search: web_intelligence_agent"] = f"INERT ({type(exc).__name__})"
     res["integrations"]["chain runs the finder between worker and judge"] = (
-        "LIVE" if chain_steps() == ["openclaw_axis_worker.py", "openclaw_finder.py", "card_intake.py"] else
+        "LIVE" if chain_steps() == CHAIN else
         f"INERT (chain runs {chain_steps()})")
     res["integrations"]["memory/vertical_ledger.jsonl"] = "LIVE" if LEDGER.exists() else "INERT (never ran)"
     res["ok"] = True

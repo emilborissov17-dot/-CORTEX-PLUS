@@ -86,6 +86,9 @@ SOURCES: dict[str, list[str]] = {
                 "config/target_config.json",
                 "output/wellbeing_all_countries.json"],
     "taxonomy": ["memory/taxonomy_coverage_latest.json"],
+    "brainneeds": ["memory/vertical_ledger.jsonl"],
+    "engineneeds": ["memory/vertical_ledger.jsonl"],
+    "maintenance": ["memory/observation_log.jsonl"],
 }
 
 # ---------------------------------------------------------------------------
@@ -852,6 +855,75 @@ def row_taxonomy(repo: Path, now: datetime) -> dict:
     }
 
 
+# ── COGNITION AND MAINTENANCE, KEPT APART (C-NEED-1 Part 5, Emil R29) ────────
+def _today_rows(repo: Path, rid: str, now: datetime) -> tuple:
+    src = repo / SOURCES[rid][0]
+    today = now.date().isoformat()
+    rows = [r for r in _jsonl(src) if str(r.get("ts", ""))[:10] == today]
+    return src, today, rows
+
+
+def row_brain_needs(repo: Path, now: datetime) -> dict:
+    """BRAIN NEEDS emitted / served / satisfied / silence, on the UTC day, from the
+    per-need ledger. Served = a brain need the finder took."""
+    src, today, rows = _today_rows(repo, "brainneeds", now)
+    emitted = sum(1 for r in rows if r.get("event") == "EMITTED" and r.get("origin") == "brain")
+    served = sum(1 for r in rows if r.get("event") == "TAKEN" and str(r.get("need_id", "")).startswith("BN-"))
+    satisfied = sum(1 for r in rows if r.get("event") == "SATISFIED")
+    silence = sum(1 for r in rows if r.get("event") in ("SILENCE", "REVIEW_SILENCE"))
+    skipped = sum(1 for r in rows if r.get("event") == "MODEL_SKIPPED")
+    ran = emitted + served + satisfied + silence + skipped > 0
+    return {
+        "id": "brainneeds", "name": "Brain needs",
+        "ran": "{} brain-need event(s) on {}".format(emitted + served + satisfied + silence + skipped, today),
+        "headline": "BRAIN NEEDS emitted {} · served {} · satisfied {} · silence {}".format(
+            emitted, served, satisfied, silence),
+        "detail": ["- counted over rows of {} whose ts falls on {}".format(SOURCES["brainneeds"][0], today),
+                   "- model step skipped (cycle live or 8b window open): {}".format(skipped)],
+        "correction": "no" if ran else "yes",
+        "why": "the brain stated or was asked for its needs today" if ran else "no brain-need event today",
+        "sources": [SOURCES["brainneeds"][0]],
+    }
+
+
+def row_engine_needs(repo: Path, now: datetime) -> dict:
+    """ENGINE NEEDS emitted / served: contradictions and forward rows turned into
+    needs by code, no model."""
+    src, today, rows = _today_rows(repo, "engineneeds", now)
+    emitted = sum(1 for r in rows if r.get("event") == "EMITTED" and r.get("origin") == "engine")
+    served = sum(1 for r in rows if r.get("event") == "TAKEN" and str(r.get("need_id", "")).startswith("EN-"))
+    return {
+        "id": "engineneeds", "name": "Engine needs",
+        "ran": "{} engine-need event(s) on {}".format(emitted + served, today),
+        "headline": "ENGINE NEEDS emitted {} · served {}".format(emitted, served),
+        "detail": ["- counted over rows of {} whose ts falls on {}".format(SOURCES["engineneeds"][0], today)],
+        "correction": "no",
+        "why": "engine needs exist only when there is a contradiction or an open forward row",
+        "sources": [SOURCES["engineneeds"][0]],
+    }
+
+
+def row_maintenance(repo: Path, now: datetime) -> dict:
+    """MAINTENANCE cells worked / unchanged / changed / nothing found on the UTC
+    day. worked counts core.maintenance rows; unchanged and changed count every
+    re-observation registered that day (core.atoms.write and core.maintenance)."""
+    src, today, rows = _today_rows(repo, "maintenance", now)
+    worked = sum(1 for r in rows if r.get("origin") == "maintenance")
+    unchanged = sum(1 for r in rows if r.get("verdict") == "UNCHANGED")
+    changed = sum(1 for r in rows if r.get("verdict") == "CHANGED")
+    nothing = sum(1 for r in rows if r.get("verdict") == "NOTHING_FOUND")
+    return {
+        "id": "maintenance", "name": "Maintenance",
+        "ran": "{} cell(s) worked on {}".format(worked, today),
+        "headline": "MAINTENANCE cells worked {} · unchanged {} · changed {} · nothing found {}".format(
+            worked, unchanged, changed, nothing),
+        "detail": ["- counted over rows of {} whose ts falls on {}".format(SOURCES["maintenance"][0], today)],
+        "correction": "no" if worked else "yes",
+        "why": "the rotation worked cells today" if worked else "no maintenance cell worked today",
+        "sources": [SOURCES["maintenance"][0]],
+    }
+
+
 BUILDERS = [
     ("t1", "T1 transfer test", row_t1),
     ("probe", "Brain probe (scanner)", row_probe),
@@ -862,6 +934,9 @@ BUILDERS = [
     ("institution0", "institution #0 (witness stage)", row_institution0),
     ("axesfed", "axes fed", row_axes_fed),
     ("taxonomy", "Taxonomy coverage", row_taxonomy),
+    ("brainneeds", "Brain needs", row_brain_needs),
+    ("engineneeds", "Engine needs", row_engine_needs),
+    ("maintenance", "Maintenance", row_maintenance),
 ]
 
 

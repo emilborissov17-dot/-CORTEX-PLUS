@@ -59,6 +59,9 @@ ROW_SOURCES = [
     ("axesfed", "config/target_config.json"),
     ("axesfed", "output/wellbeing_all_countries.json"),
     ("taxonomy", "memory/taxonomy_coverage_latest.json"),
+    ("brainneeds", "memory/vertical_ledger.jsonl"),
+    ("engineneeds", "memory/vertical_ledger.jsonl"),
+    ("maintenance", "memory/observation_log.jsonl"),
 ]
 
 
@@ -182,6 +185,17 @@ def repo(tmp_path: Path) -> Path:
         "countries": [{"iso2": "AA", "completeness": "16/17 real, 1 null, 0 suspect"},
                       {"iso2": "BB", "completeness": "3/17 real, 14 null, 0 suspect"},
                       {"iso2": "CC", "completeness": "2/17 real, 15 null, 0 suspect"}]}))
+    # brain / engine needs and maintenance (C-NEED-1 Part 5): today's rows.
+    _write(tmp_path / "memory/vertical_ledger.jsonl", "\n".join(json.dumps(r) for r in [
+        {"ts": TODAY + "T01:00:00Z", "event": "EMITTED", "origin": "brain", "need_id": "BN-1"},
+        {"ts": TODAY + "T01:00:00Z", "event": "EMITTED", "origin": "engine", "need_id": "EN-1"},
+        {"ts": TODAY + "T01:01:00Z", "event": "TAKEN", "need_id": "BN-1"},
+        {"ts": TODAY + "T02:00:00Z", "event": "SATISFIED", "need_id": "BN-1"},
+        {"ts": YDAY + "T02:00:00Z", "event": "EMITTED", "origin": "brain", "need_id": "BN-0"}]) + "\n")
+    _write(tmp_path / "memory/observation_log.jsonl", "\n".join(json.dumps(r) for r in [
+        {"ts": TODAY + "T03:00:00Z", "origin": "maintenance", "cell": "sub:A1.1", "verdict": "NOTHING_FOUND"},
+        {"ts": TODAY + "T03:00:00Z", "origin": "maintenance", "cell": "sub:A1.2", "verdict": "CHANGED"},
+        {"ts": TODAY + "T04:00:00Z", "verdict": "UNCHANGED", "identity": ["s", "k", "WLD", "2024", 1.0]}]) + "\n")
     # taxonomy coverage: today's file, written this morning.
     _write(tmp_path / "memory/taxonomy_coverage_latest.json", json.dumps({
         "generated_utc": TODAY + "T08:55:00+00:00",
@@ -466,3 +480,11 @@ def test_taxonomy_row_prints_missing_for_one_absent_count(repo: Path, count: str
     r = _by_id(db.build_rows(repo, NOW))["taxonomy"]
     assert f"{count.upper()} MISSING/105" in r["headline"]
     assert r["headline"].count("MISSING") == 1, "one absent count took the others with it"
+
+
+
+def test_cognition_and_maintenance_rows_count_today_only(repo: Path):
+    rows = _by_id(db.build_rows(repo, NOW))
+    assert rows["brainneeds"]["headline"] == "BRAIN NEEDS emitted 1 · served 1 · satisfied 1 · silence 0"
+    assert rows["engineneeds"]["headline"] == "ENGINE NEEDS emitted 1 · served 0"
+    assert rows["maintenance"]["headline"] == "MAINTENANCE cells worked 2 · unchanged 1 · changed 1 · nothing found 1"

@@ -47,7 +47,7 @@ rem with an explicit format string does not care what the short date looks like.
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set "CORTEX_RUN_ID=chain-%%i"
 if not defined CORTEX_RUN_ID set "CORTEX_RUN_ID=chain-unknown-%RANDOM%"
 
-echo [CHAIN] %CORTEX_RUN_ID% step 1/3 openclaw_axis_worker
+echo [CHAIN] %CORTEX_RUN_ID% step 1/5 openclaw_axis_worker
 %PY% scripts\openclaw_axis_worker.py
 set "WORKER_RC=%ERRORLEVEL%"
 
@@ -55,17 +55,31 @@ rem THE JUDGE RUNS EVEN IF THE FETCH RETURNED NON-ZERO, and that is deliberate:
 rem the worker exits 1 when it produced no TRUSTED row, which is an ordinary
 rem night, not a failure - and cards from an earlier batch may still be waiting.
 rem Skipping the judge on a quiet fetch would strand them exactly as the 12:00
-rem schedule did.
-rem C-OC-3 Part 3: the finder searches for the top needs (core/needs.py, no
-rem model) and puts the pages it fetches in the store. It runs between the
-rem fetch and the judge; its exit code does not stop the judge either.
-echo [CHAIN] %CORTEX_RUN_ID% step 2/3 openclaw_finder
+rem schedule did. No step below stops on another step's exit code.
+rem
+rem C-NEED-1 Part 5 (Emil R29): COGNITION, then MAINTENANCE, kept apart.
+rem   brain_needs  the brain judges what came back for its searched needs, then
+rem                states new needs from a fresh briefing (cortex-l1b-3b through
+rem                core.brain.think). Its model step is skipped and logged when a
+rem                cycle is live or the 8b window is open - core.brain_needs.model_busy.
+rem   finder       serves the open needs: the brain's first, then the engine's.
+rem   card_intake  the judge.
+rem   maintenance  the rotation: every cell in turn, oldest-worked first.
+echo [CHAIN] %CORTEX_RUN_ID% step 2/5 brain_needs
+%PY% -m core.brain_needs
+set "NEEDS_RC=%ERRORLEVEL%"
+
+echo [CHAIN] %CORTEX_RUN_ID% step 3/5 openclaw_finder
 %PY% scripts\openclaw_finder.py
 set "FINDER_RC=%ERRORLEVEL%"
 
-echo [CHAIN] %CORTEX_RUN_ID% step 3/3 card_intake (worker rc=%WORKER_RC% finder rc=%FINDER_RC%)
+echo [CHAIN] %CORTEX_RUN_ID% step 4/5 card_intake (worker rc=%WORKER_RC% finder rc=%FINDER_RC%)
 %PY% core\card_intake.py
 set "JUDGE_RC=%ERRORLEVEL%"
 
-echo [CHAIN] %CORTEX_RUN_ID% done: worker rc=%WORKER_RC% finder rc=%FINDER_RC% judge rc=%JUDGE_RC%
+echo [CHAIN] %CORTEX_RUN_ID% step 5/5 maintenance
+%PY% -m core.maintenance
+set "MAINT_RC=%ERRORLEVEL%"
+
+echo [CHAIN] %CORTEX_RUN_ID% done: worker rc=%WORKER_RC% needs rc=%NEEDS_RC% finder rc=%FINDER_RC% judge rc=%JUDGE_RC% maintenance rc=%MAINT_RC%
 endlocal & exit /b %JUDGE_RC%
