@@ -71,9 +71,11 @@ def test_embed_pending_then_label_corroborates_across_hosts_only(paths, monkeypa
     _ingest(paths, "s1", "Rivers flooded the valley.", "https://a.org/x")
     _ingest(paths, "s2", "Rivers flooded the valley.", "https://b.org/y")
     _ingest(paths, "s3", "Rivers flooded the valley.", "https://a.org/z")       # same host as s1
-    e = kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"])
+    e = kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
+                     wait=lambda: None)
     assert e["embedded"] == 3 and e["remaining"] == 0
-    again = kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"])
+    again = kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
+                     wait=lambda: None)
     assert again["embedded"] == 0, "a statement was embedded twice"
     r = kn.label_all(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
                      out=paths["labels"])
@@ -87,7 +89,8 @@ def test_embed_pending_then_label_corroborates_across_hosts_only(paths, monkeypa
 
 def test_a_low_scoring_statement_is_labelled_unplaced_and_still_read(paths, monkeypatch):
     _ingest(paths, "s1", "Zzzq wibble frobnicate.", "https://a.org/x")
-    kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"])
+    kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
+                     wait=lambda: None)
     monkeypatch.setattr(kn, "SUBCAT_THRESHOLD", 0.99)
     kn.label_all(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
                  out=paths["labels"])
@@ -108,7 +111,8 @@ def test_read_returns_statements_and_atoms_together_and_orders_by_corroboration(
         "axis": "A", "key": "forest_area_pct", "value": 31.1, "unit": "pct", "url": "https://w.org",
         "quote": "31.1", "period": "2023", "place": "WLD", "subcategory": "C2.1"}}
     assert at.write(row, root=paths["atoms"])["written"] is True
-    kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"])
+    kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
+                     wait=lambda: None)
     kn.label_all(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
                  out=paths["labels"])
     items = kn.read("forest area", k=10, embed=stub_embed, store=paths["store"], vec_path=paths["vec"], field_index={},
@@ -181,7 +185,7 @@ def test_embed_pending_checkpoints_so_a_killed_run_keeps_its_vectors(paths):
         return stub_embed(texts)
     with pytest.raises(RuntimeError):
         kn.embed_pending(embed=dies_after_checkpoint, store=paths["store"], vec_path=paths["vec"],
-                         ids_path=paths["ids"])
+                         ids_path=paths["ids"], wait=lambda: None)
     ids, mat = kn.load_vectors(paths["vec"], paths["ids"])
     assert len(ids) == 256 * 20 == mat.shape[0]
 

@@ -37,8 +37,36 @@ BRAIN, AGENTS = "BRAIN", "AGENTS"
 HOLDERS = (BRAIN, AGENTS)
 
 
+PORTION = REPO / "config" / "turn_portion.json"
+PORTION_KEYS = ("verify_per_turn", "maintenance_cells_per_turn", "embed_min_free_gb", "extractor_min_free_gb")
+
+
 class TurnRefused(RuntimeError):
     """The baton is held by the other side."""
+
+
+class PortionMissing(KeyError):
+    """config/turn_portion.json lacks a number: refuse, never default."""
+
+
+def portion(path=None) -> dict:
+    """{key: value} from config/turn_portion.json (C-BRAIN-1 Part 5b)."""
+    try:
+        doc = json.loads(Path(path or PORTION).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise PortionMissing(f"{path or PORTION} unreadable: {exc}") from exc
+    out = {}
+    for k in PORTION_KEYS:
+        v = (doc.get(k) or {}).get("value") if isinstance(doc.get(k), dict) else None
+        if not isinstance(v, (int, float)) or isinstance(v, bool):
+            raise PortionMissing(f"{k} has no numeric value in {path or PORTION}")
+        out[k] = v
+    return out
+
+
+def free_gb() -> float:
+    import psutil
+    return psutil.virtual_memory().available / 2 ** 30
 
 
 def _now() -> str:

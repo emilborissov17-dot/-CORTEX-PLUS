@@ -358,6 +358,11 @@ def render(x) -> str:
     return lit(x)
 
 
+def _real(v) -> bool:
+    """A place or period that is there: not empty, not the word none/null."""
+    return v is not None and str(v).strip().lower() not in ("", "none", "null")
+
+
 def needs_from(derived: list) -> list:
     """Engine needs from (need-derived KIND rule ...). The question text is a
     rendering of the expression; the premises travel with the need."""
@@ -366,20 +371,26 @@ def needs_from(derived: list) -> list:
         if x[0] != "need-derived":
             continue
         kind, rule, args = x[1], x[2], x[3:]
-        if rule == "contradiction":
+        if rule in ("contradiction", "unverified"):
             k, p, per = args[:3]
-            q = f"Verify {k} for {p}, period {per}: two sources disagree — from a source independent of both"
+            p, per = (v if _real(v) else None for v in (p, per))
             about = {"place": p, "actor": None, "period": per}
-        elif rule == "unverified":
-            k, p, per = args[:3]
-            q = f"Verify {k} for {p}, period {per}, from an independent source (only a self-reported one holds it)"
-            about = {"place": p, "actor": None, "period": per}
+            if p is None and per is None:
+                # C-BRAIN-1 5e: neither place nor period — nothing to search the web FOR;
+                # the store is asked what the atom's source said (no browser)
+                kind = "LABEL"
+                q = f"Place and period of {k}: the atom carries neither"
+            else:
+                where = (f" for {p}" if p else "") + (f", period {per}" if per else "")
+                q = (f"Verify {k}{where}: two sources disagree — from a source independent of both"
+                     if rule == "contradiction" else
+                     f"Verify {k}{where}, from an independent source (only a self-reported one holds it)")
         elif rule == "uncovered":
             q = f"Find measurements for the sub-goal {args[0]}: no category that serves it has one"
             about = {"place": None, "actor": None, "period": None}
         elif rule == "lacks-evidence":
-            q = f"Find current reports for commitment {args[0]} in {args[1]}"
-            about = {"place": args[1], "actor": None, "period": None}
+            q = f"Find current reports for commitment {args[0]}" + (f" in {args[1]}" if _real(args[1]) else "")
+            about = {"place": args[1] if _real(args[1]) else None, "actor": None, "period": None}
         else:
             q, about = f"{kind} {rule} {' '.join(map(str, args))}", {}
         out.append({"question": q, "kind": kind, "why_subgoal": args[0] if rule == "uncovered" else None,

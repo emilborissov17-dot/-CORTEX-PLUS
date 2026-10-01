@@ -476,14 +476,23 @@ def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = No
                 rec["none_why"] = None
             by_id[nid] = rec
             accepted.append(rec)
+    by_expr = {n.get("expression"): n for n in by_id.values()
+               if n.get("origin") == "engine" and n.get("expression") and n.get("status") in (OPEN, STILL_OPEN)}
     for n in (engine or []):
         nid = _id("engine", n["question"])
         if nid in by_id:
+            continue
+        old = by_expr.get(n.get("expression"))
+        if old is not None:
+            # the same derivation rendered as a new question (C-BRAIN-1 5e): one need, re-worded
+            old.setdefault("questions", [old["question"]]).append(n["question"])
+            old.update({k: n[k] for k in ("question", "kind", "about") if k in n})
             continue
         rec = {"id": nid, "origin": "engine", "briefing_sha256": b["sha256"], "created_utc": _now(),
                "status": OPEN, **n}
         by_id[nid] = rec
         accepted.append(rec)
+    resolved = resolve_engine(by_id.values(), engine, paths) if engine is not None else []
     ordered = ([n for n in by_id.values() if n["origin"] == "brain"] +
                [n for n in by_id.values() if n["origin"] == "engine"])
     out = {"briefing_sha256": b["sha256"], "briefing_utc": b["utc"], "silence": silence, "needs": ordered}
@@ -495,7 +504,28 @@ def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = No
     for r in reopened:
         _append(_p(paths, "ledger"), {"event": "REOPENED", "ts": _now(), "need_id": r["id"], "was": r["reopened"][-1]["was"]})
     return {"accepted": accepted, "refused": refused, "reopened": reopened, "repeats": repeats, "silence": silence,
-            "open": sum(1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
+            "resolved": resolved, "open": sum(1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
+
+
+ENGINE_RESOLVED = "ENGINE_RESOLVED"
+
+
+def resolve_engine(needs, engine: list, paths=None) -> list:
+    """C-BRAIN-1 5d: an open engine need whose derivation no longer fires (its
+    expression is not among this turn's need-derived) is ENGINE_RESOLVED. For a
+    VERIFY that is what an observation from an independent host does: the rule
+    stops deriving it. Code does not close it by time or by having searched."""
+    firing = {n.get("expression") for n in engine}
+    out = []
+    for n in needs:
+        if (n.get("origin") == "engine" and n.get("status") in (OPEN, STILL_OPEN) and n.get("expression")
+                and n["expression"] not in firing):
+            n["status"] = ENGINE_RESOLVED
+            n["resolved_utc"] = _now()
+            _append(_p(paths, "ledger"), {"event": ENGINE_RESOLVED, "ts": _now(), "need_id": n["id"],
+                                          "expression": n["expression"]})
+            out.append(n["id"])
+    return out
 
 
 def _save_needs(doc: dict, paths=None) -> None:
@@ -509,6 +539,7 @@ def mark_served(need_id: str, query: str, hits: int, fetched: int, gained: int, 
     for n in doc.get("needs", []):
         if n["id"] == need_id:
             n["searched"] = n.get("searched", 0) + 1
+            n["last_served_utc"] = _now()           # the rotation: longest-waiting first (C-BRAIN-1 5a)
             n["last_query"] = query
             n["last_hits"], n["last_fetched"] = hits, fetched
             n["gained_statements"] = n.get("gained_statements", 0) + gained

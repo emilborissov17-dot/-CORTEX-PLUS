@@ -454,15 +454,44 @@ def load_vectors(vec_path: Optional[Path] = None, ids_path: Optional[Path] = Non
     return json.loads(ip.read_text(encoding="utf-8")), np.load(vp)
 
 
+def embed_should_wait(holder: Optional[str] = None, free: Optional[float] = None,
+                      floor: Optional[float] = None) -> Optional[str]:
+    """Why the embedding pass must sleep now, or None (C-BRAIN-1 5f i): one heavy
+    thing at a time — not while the agents hold the baton, not under the free-RAM
+    floor of config/turn_portion.json."""
+    from core import turn
+    holder = turn.state().get("holder") if holder is None else holder
+    free = turn.free_gb() if free is None else free
+    floor = turn.portion()["embed_min_free_gb"] if floor is None else floor
+    if holder == turn.AGENTS:
+        return "the agents hold the baton"
+    if free < floor:
+        return f"free RAM {free:.2f} GB is under {floor} GB"
+    return None
+
+
+def _live_wait(poll_s: float = 30.0) -> None:
+    while True:
+        why = embed_should_wait()
+        if why is None:
+            return
+        print(json.dumps({"event": "EMBED_WAITING", "ts": _now(), "why": why}), flush=True)
+        time.sleep(poll_s)
+
+
 def embed_pending(limit: Optional[int] = None, budget_s: Optional[float] = None, embed: Callable = None,
-                  store=None, vec_path=None, ids_path=None) -> dict:
-    """Vectors for statements that have none. Stops at `limit` or `budget_s`."""
+                  store=None, vec_path=None, ids_path=None, wait: Optional[Callable] = None) -> dict:
+    """Vectors for statements that have none. Stops at `limit` or `budget_s`.
+    Statements fetched for a BRAIN need first; `wait()` is called before every
+    chunk (live: sleeps while embed_should_wait says so)."""
     import numpy as np
     embed = embed or embed_texts
+    wait = wait or _live_wait
     vp, ip = Path(vec_path or VECTORS), Path(ids_path or VECTOR_IDS)
     ids, mat = load_vectors(vp, ip)
     have = set(ids)
     todo = [r for r in statements(store) if r["id"] not in have]
+    todo.sort(key=lambda r: 0 if str(r.get("need_id") or "").startswith("BN-") else 1)    # stable: store order kept
     if limit is not None:
         todo = todo[:limit]
     t0, done = time.time(), 0
@@ -481,6 +510,7 @@ def embed_pending(limit: Optional[int] = None, budget_s: Optional[float] = None,
         new_ids, new_vecs = [], []
 
     for n, i in enumerate(range(0, len(todo), 256), 1):
+        wait()
         chunk = todo[i:i + 256]
         vecs = embed([r["sentence"] for r in chunk])
         new_ids += [r["id"] for r in chunk]

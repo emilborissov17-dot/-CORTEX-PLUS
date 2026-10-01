@@ -1,0 +1,23 @@
+{
+  "_what_this_is": [
+    "C-BRAIN-1 Part 5b: the portion one agents turn takes, and the memory thresholds",
+    "for the heavy things (5f). Read by core.turn.portion(); a missing key RAISES.",
+    "Every number carries the measurement it was set from."
+  ],
+  "verify_per_turn": {
+    "value": 10,
+    "why": "the agents turn of 1 Oct 2026 18:42-20:19 UTC took 62 needs at 94.6 s each (mean; median 87 s, from the TAKEN rows of memory/vertical_ledger.jsonl). 59 VERIFY needs were open: all of them = 93 minutes. 10, with the 9 open FIND needs, keeps the turn near 30 minutes; the rest wait, longest-waiting first next turn."
+  },
+  "maintenance_cells_per_turn": {
+    "value": 5,
+    "why": "a maintenance cell is one search at the same ~95 s; 5 cells = about 8 minutes. It was 10 before (--maintenance default), which never ran: the turn crashed at 20:20 after 62 needs."
+  },
+  "embed_min_free_gb": {
+    "value": 1.5,
+    "why": "free RAM fell to 273 MB on 1 Oct 2026 with Chrome (two profiles), Ollama and the embedding pass together. The pass sleeps below 1.5 GB and while the baton is AGENTS."
+  },
+  "extractor_min_free_gb": {
+    "value": 2.0,
+    "why": "GLiNER2 large on CPU (torch) is loaded only in the brain's turn and only with at least 2 GB free; below it: EXTRACTOR_SKIPPED_LOW_MEMORY."
+  }
+}

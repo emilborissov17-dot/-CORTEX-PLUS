@@ -81,6 +81,10 @@ class OpenClawBrowser:
         self.profile, self.timeout_s, self.tab = profile, timeout_s, None
 
     def _call(self, *args) -> dict:
+        if any(a is None for a in args):
+            # 1 Oct 2026 20:20: a tab id of None reached subprocess and the agents turn died
+            # with a TypeError (TURN_STUCK). A missing argument is a failed call, by name.
+            raise OpenClawFailed(f"openclaw browser {args[0] if args else '?'}: a None argument {list(args)!r}")
         cmd = [*openclaw_cmd(), "browser", "--browser-profile", self.profile, "--json", *args]
         try:
             p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace",
@@ -110,10 +114,27 @@ class OpenClawBrowser:
         if self.tab is None:
             self._call("start")
             self.tab = self._call("open", url).get("tabId")
+            if not self.tab:
+                raise OpenClawFailed(f"openclaw browser open {url}: no tab id came back")
         try:
             self._call("wait", "--load", "domcontentloaded", "--target-id", self.tab)
         except OpenClawFailed:
             time.sleep(2.5)
+
+    def alive(self) -> bool:
+        """OpenClaw's own status for this profile: running or not. A failed status call is not alive."""
+        try:
+            return bool(self._call("status").get("running"))
+        except OpenClawFailed:
+            return False
+
+    def start(self) -> None:
+        self.tab = None
+        self._call("start")
+
+    def stop(self) -> None:
+        self.tab = None
+        self._call("stop")
 
     def _eval(self, js: str) -> dict:
         d = self._call("evaluate", "--target-id", self.tab, "--fn", js)

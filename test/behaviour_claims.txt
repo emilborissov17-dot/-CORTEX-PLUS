@@ -700,3 +700,6 @@ test/test_ask.py ebeeadbaf67a  # BACKED: test_ask.test_an_aliased_import_is_stil
 test/test_only_openclaw_carries_its_name.py 70b687c9601c  # BACKED: test_only_openclaw_carries_its_name.test_openclaw_queue_is_the_only_exception and test_every_code_file_named_openclaw_calls_openclaw
 core/card_intake.py 916d6f36d381  # BACKED: test_data_feed_wire_to_the_gate.test_exactly_one_caller_owns_the_judge and test_the_chain_exports_the_shared_id_before_it_runs_anything
 core/knowledge.py b91984276a62  # BACKED: test/test_page_regions.py::test_an_empty_extraction_labels_all_main_and_says_main_unknown
+test/test_turn_portion.py 2ac5317b99e2  # BACKED: test/test_turn_portion.py::test_dead_after_one_start_ends_the_turn_searcher_dead_and_names_the_cause, test_a_portion_file_without_a_number_raises, test_a_none_argument_never_reaches_the_openclaw_cli; injection by the t fixture
+test/test_turn_portion.py e93eb1461069  # BACKED: test/test_turn_portion.py::test_dead_after_one_start_ends_the_turn_searcher_dead_and_names_the_cause, test_a_portion_file_without_a_number_raises, test_a_none_argument_never_reaches_the_openclaw_cli; injection by the t fixture
+core/brain_needs.py c81239af2a0e  # BACKED: test/test_turn_portion.py::test_an_engine_need_closes_when_its_derivation_no_longer_fires

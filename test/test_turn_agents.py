@@ -30,6 +30,15 @@ class FakeBrowser:
     def __init__(self, profile, seen):
         self.profile, self.seen = profile, seen
 
+    def alive(self):
+        return True
+
+    def start(self):
+        pass
+
+    def stop(self):
+        pass
+
     def search(self, query):
         self.seen.append((self.profile, query))
         if "nothing" in query:
@@ -96,7 +105,7 @@ def test_a_need_with_nothing_found_stays_open_and_the_turn_still_ends(t):
 
 def test_the_maintenance_portion_and_the_feeds_run_after_the_needs(t):
     r = t["go"]()
-    assert t["cells"] == [10] and r["feeds"] == {"worker": {"rc": 0}} and r["core_restore"]["reloaded"] is False
+    assert t["cells"] == [5] and r["feeds"] == {"worker": {"rc": 0}} and r["core_restore"]["reloaded"] is False
 
 
 def test_profiles_cover_all_25_categories(tmp_path):
