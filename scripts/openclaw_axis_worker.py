@@ -265,6 +265,18 @@ def load_sources(path: pathlib.Path | None = None) -> tuple[list[dict], int]:
     return cfg.get("sources", []), int(cfg.get("timeout_sec", DEFAULT_TIMEOUT))
 
 
+def is_web_source(src: dict) -> bool:
+    """A discovered source the worker may fetch: a URL-located kind with an http(s)
+    URL. memory/discovered_data_sources.json is shared with the composers, whose
+    kind "file" (url local://snapshots/...) reads a file on this machine; found on
+    1 Oct 2026 failing as InvalidSchema on every worker run."""
+    from core import source_registration as sr
+    rule = sr.KIND_RULES.get(src.get("kind"))
+    if rule is not None and rule.get("location") != "url":
+        return False
+    return str(src.get("url") or "").lower().startswith(("http://", "https://"))
+
+
 def load_discovered(path: pathlib.Path | None = None) -> list[dict]:
     """data_scout's finds, translated into the worker's shape.
 
@@ -288,6 +300,8 @@ def load_discovered(path: pathlib.Path | None = None) -> list[dict]:
                 continue
             if src.get("status") != "active" or src.get("format") != "json":
                 continue
+            if not is_web_source(src):
+                continue                 # a composer's local file is not a web source (C-TURN-1 7c)
             url, extract = src.get("url"), src.get("extract")
             if not url or not extract:
                 continue
