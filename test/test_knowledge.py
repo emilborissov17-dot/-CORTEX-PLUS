@@ -140,7 +140,7 @@ def test_selftest_reports_integrations_without_writing(monkeypatch, tmp_path):
 
 
 def test_mutation_a_worker_run_without_ingest_reports_inert(monkeypatch, tmp_path):
-    from scripts import openclaw_axis_worker as w
+    from scripts import data_feed_reader as w
     import requests
     monkeypatch.setattr(requests, "post", lambda *a, **k: (_ for _ in ()).throw(ConnectionError("offline")))
     key = "worker ingests every fetched page"

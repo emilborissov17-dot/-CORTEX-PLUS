@@ -21,12 +21,12 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from scripts import openclaw_axis_worker as w  # noqa: E402
+from scripts import data_feed_reader as w  # noqa: E402
 from core import knowledge as kn  # noqa: E402
 from core import quote_gate as qg  # noqa: E402
 from core import statements as st  # noqa: E402
 
-FIX = REPO / "test" / "fixtures" / "openclaw"
+FIX = REPO / "test" / "fixtures" / "data_feeds"
 FOREST_ALL = (FIX / "wb_AG.LND.FRST.ZS_country_all.json").read_text(encoding="utf-8")
 FOREST_WLD = (FIX / "wb_AG.LND.FRST.ZS_WLD_mrv1.json").read_text(encoding="utf-8")
 OWID = (FIX / "owid_1228789_reduced.json").read_text(encoding="utf-8")

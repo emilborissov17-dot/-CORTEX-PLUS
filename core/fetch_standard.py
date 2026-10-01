@@ -204,7 +204,7 @@ def unpark(source_id: str, reason: str, path: Optional[Path] = None) -> None:
 def selftest() -> dict:
     import inspect
     res = {"integrations": {}}
-    worker = REPO / "scripts" / "openclaw_axis_worker.py"
+    worker = REPO / "scripts" / "data_feed_reader.py"
     src = worker.read_text(encoding="utf-8") if worker.exists() else ""
     res["integrations"]["worker fetches through fetch_standard.get"] = (
         "LIVE" if "fetch_standard" in src and "_fs.get(" in src else "INERT")

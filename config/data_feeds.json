@@ -1164,7 +1164,7 @@
     "sources were chosen by subcategory of config/taxonomy.json, not for a",
     "target_config axis; naming a target axis they were never designed for would",
     "be an invented relation. Every such seed also declares place, a real unit,",
-    "and a period_path in the same record as path (scripts/openclaw_axis_worker",
+    "and a period_path in the same record as path (scripts/data_feed_reader",
     ".declaration_problems), and entered this file only after one live fetch",
     "returned a finite number and a period from the same record (`_verified`)."
   ]

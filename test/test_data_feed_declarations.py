@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""test/test_openclaw_declarations.py — a source declares what it measures, where
+"""test/test_data_feed_declarations.py — a source declares what it measures, where
 and when; a mislabelled number is refused (1 Oct 2026, command C-OC-1 Part 1).
 
 THE TWO FAILURES THIS FILE EXISTS FOR, both found in memory/verified_observations.jsonl:
@@ -8,7 +8,7 @@ THE TWO FAILURES THIS FILE EXISTS FOR, both found in memory/verified_observation
   * an ISS card whose value is a unix timestamp under a key that says
     "latitude, longitude, altitude".
 Refusals first; every guard has a mutation test showing the refusal is load-bearing.
-Bodies are real captures in test/fixtures/openclaw/ (World Bank, 1 Oct 2026).
+Bodies are real captures in test/fixtures/data_feeds/ (World Bank, 1 Oct 2026).
 """
 from __future__ import annotations
 
@@ -20,11 +20,11 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from scripts import openclaw_axis_worker as w  # noqa: E402
+from scripts import data_feed_reader as w  # noqa: E402
 from core import card_intake as ci  # noqa: E402
 from core import quote_gate as qg  # noqa: E402
 
-FIX = REPO / "test" / "fixtures" / "openclaw"
+FIX = REPO / "test" / "fixtures" / "data_feeds"
 FOREST_ALL = (FIX / "wb_AG.LND.FRST.ZS_country_all.json").read_text(encoding="utf-8")
 FOREST_WLD = (FIX / "wb_AG.LND.FRST.ZS_WLD_mrv1.json").read_text(encoding="utf-8")
 
@@ -224,7 +224,7 @@ def test_finish_row_and_exit_code_say_network_down(monkeypatch, tmp_path):
     down = {"ts": "t", "sources": 2, "feeds": [], "shadows": [], "refusals": [{}, {}], "cards": [],
             "lifecycle": {}, "network_down": True, "retried": True, "first_pass": {"refused": 2}}
     monkeypatch.setattr(w, "run_with_retry", lambda runner, sleep=None: down)
-    monkeypatch.setattr(sys, "argv", ["openclaw_axis_worker.py"])
+    monkeypatch.setattr(sys, "argv", ["data_feed_reader.py"])
     rc = w.main()
     fin = [r for r in rows if r.get("event") == "finish"][0]
     assert fin["network_down"] is True and fin["retried"] is True

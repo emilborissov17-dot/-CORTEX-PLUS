@@ -60,11 +60,11 @@ ALLOWED_BASE_EXCEPTION = {
     # records it and re-raises immediately. Narrowing these to `except
     # Exception` would leave an interrupted run looking exactly like one killed
     # by a reboot, which is the single distinction the file exists to make.
-    ("scripts/openclaw_axis_worker.py",
+    ("scripts/data_feed_reader.py",
      "records the finish row for an interrupted run and RE-RAISES — nothing is "
      "swallowed. run() is not a generator so GeneratorExit cannot arrive, and "
      "the only sys.exit is outside main(), so KeyboardInterrupt is what remains. "
-     "PROVED, not asserted: test_openclaw_wire_to_the_gate::test_the_worker"
+     "PROVED, not asserted: test_data_feed_wire_to_the_gate::test_the_worker"
      "_records_an_interrupt_and_re_raises_it fails if either half is dropped"),
     ("core/card_intake.py",
      "the same handler for the chain's second half, and the same proof: "

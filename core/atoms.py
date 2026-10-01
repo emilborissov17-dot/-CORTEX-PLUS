@@ -24,7 +24,7 @@ A RETRACTION REMOVES NOTHING FROM DISK. memory/observation_retractions.jsonl
 live_lines; the bytes of the atom files never change.
 
 source_id IS NOT ON THE CARD (CARD_FIELDS keeps it off so a card_key never moves),
-so it is resolved by (url, key) against config/openclaw_sources.json; no match
+so it is resolved by (url, key) against config/data_feeds.json; no match
 is written as null with the reason. source_class comes from
 config/reporter_independence.json, CONFIRMED entries only, through the one
 existing lookup (experiments/composers/provenance.reporter_class); otherwise
@@ -77,7 +77,7 @@ def _prior_reading(existing: list, a: dict):
     same = [x for x in existing if x.get("kind", "atom") == "atom"
             and (x.get("source_id"), x.get("key"), x.get("place")) == (a.get("source_id"), a.get("key"), a.get("place"))]
     return max(same, key=lambda x: x.get("judged_utc") or "") if same else None
-SOURCES = REPO / "config" / "openclaw_sources.json"
+SOURCES = REPO / "config" / "data_feeds.json"
 REQUIRED = ("value", "unit", "place", "period")
 _SAFE = re.compile(r"[^A-Za-z0-9_.\-]+")
 
@@ -153,7 +153,7 @@ def atom_of(row: dict) -> dict:
         "period_how": how,
         "raw_period": None if period in (None, "") else str(period),
         "source_id": src.get("id") if src else None,
-        "source_id_missing": None if src else "no entry in config/openclaw_sources.json has this (url, key)",
+        "source_id_missing": None if src else "no entry in config/data_feeds.json has this (url, key)",
         "source_class": cls, "source_class_why": why,
         "quote_hash": hashlib.sha256(str(rec.get("quote", "")).encode("utf-8")).hexdigest(),
         "card_key": row.get("card_key"), "judged_utc": row.get("judged_utc"),
@@ -415,7 +415,7 @@ def write_manifest(root: Optional[Path] = None) -> dict:
 
 def selftest() -> dict:
     res = {"integrations": {}}
-    for rel in ("config/taxonomy.json", "config/reporter_independence.json", "config/openclaw_sources.json"):
+    for rel in ("config/taxonomy.json", "config/reporter_independence.json", "config/data_feeds.json"):
         res["integrations"][rel] = "LIVE" if (REPO / rel).is_file() else "INERT (missing)"
     res["integrations"]["atoms/ on disk"] = (
         f"LIVE ({sum(1 for _ in ROOT.rglob('*.jsonl'))} atom file(s))" if ROOT.is_dir() else "INERT (no atoms/ yet)")

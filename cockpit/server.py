@@ -812,7 +812,7 @@ def api_columns():
         "lifecycle_ladder": tc.LIFECYCLE_LADDER,
         "ladder_note": ("this panel shows the SOURCE_LIFECYCLE state. There is no "
                         "SHADOW in that ladder; SHADOW is a row status in "
-                        "scripts/openclaw_axis_worker.py and is a different thing."),
+                        "scripts/data_feed_reader.py and is a different thing."),
         "records": records,
         "record_count": len(records),
         "empty_because": (None if records else

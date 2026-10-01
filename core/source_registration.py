@@ -188,10 +188,10 @@ def _iter_registered() -> list:
     import json as _json
     out = []
 
-    seed = BASE / "config" / "openclaw_sources.json"
+    seed = BASE / "config" / "data_feeds.json"
     try:
         for s in (_json.loads(seed.read_text(encoding="utf-8")).get("sources") or []):
-            out.append(("config/openclaw_sources.json", dict(s)))
+            out.append(("config/data_feeds.json", dict(s)))
     except Exception:
         pass
 

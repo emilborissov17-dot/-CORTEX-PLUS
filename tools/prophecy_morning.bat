@@ -153,7 +153,7 @@ rem both append the same card_key to memory/verified_observations.jsonl - the ve
 rem duplicate the key exists to prevent, in a file four modules count rows from.
 rem CORTEX_OpenClaw fires at 11:50, ten minutes before this task, and the judge
 rem fetches every unjudged card with a 30-second timeout each, so ten minutes is
-rem not a distance. The judge now runs as step 2 of tools/openclaw_chain.bat,
+rem not a distance. The judge now runs as step 2 of tools/feed_chain.bat,
 rem immediately after the fetch, four times a day instead of once.
 call :step "verified_corpus"        "%PY% training\verified_corpus.py"                       no
 REM --- E1 (11 Sep 2026): does knowing the other daily series help? transfer A->B and

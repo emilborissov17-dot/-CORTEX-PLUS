@@ -785,7 +785,7 @@ def selftest() -> dict:
     except Exception as exc:                                         # noqa: BLE001
         res["integrations"][f"ollama {EMBED_MODEL}"] = f"INERT ({type(exc).__name__})"
     import inspect
-    from scripts import openclaw_axis_worker as _w
+    from scripts import data_feed_reader as _w
     passes = "ingest=_kn.ingest" in inspect.getsource(_w.main)
     res["integrations"]["worker ingests every fetched page"] = (
         "LIVE" if "ingest" in inspect.signature(_w.run).parameters and passes else "INERT")

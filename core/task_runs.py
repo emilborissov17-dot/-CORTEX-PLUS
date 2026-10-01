@@ -5,7 +5,7 @@ core/task_runs.py — two rows per run, so a job that dies halfway is visible.
 
 WHY (20 September 2026)
 -----------------------
-scripts/openclaw_axis_worker.py grew a start/finish log when it was first
+scripts/data_feed_reader.py grew a start/finish log when it was first
 scheduled, because a worker that simply stops is invisible in a log that only
 records successes. Ten minutes later core/card_intake.py needed the same thing,
 and the repo's own rule is to look before writing a second one. So the
@@ -20,7 +20,7 @@ a reboot, an OOM or a closed lid writes the first and never the second, and the
 absent row is the whole signal.
 
 THE PAIR IS (task, run_id), NOT run_id ALONE, and that is not tidiness. A chain
-gives its steps ONE run_id on purpose — tools/openclaw_chain.bat exports
+gives its steps ONE run_id on purpose — tools/feed_chain.bat exports
 CORTEX_RUN_ID so the fetch and the judge can be read as one event. Keyed on
 run_id alone, a chain whose worker finished and whose judge died would show a
 start and a finish for that id and read as complete: the half-dead chain, hidden
@@ -125,8 +125,8 @@ def announce(task: str, path: Path | None = None) -> list:
 def selftest() -> dict:
     rep = {"log": str(LOG.relative_to(BASE)), "exists": LOG.exists(),
            "integrations": {}}
-    for mod, rel in (("scripts.openclaw_axis_worker",
-                      "scripts/openclaw_axis_worker.py"),
+    for mod, rel in (("scripts.data_feed_reader",
+                      "scripts/data_feed_reader.py"),
                      ("core.card_intake", "core/card_intake.py")):
         try:
             src = (BASE / rel).read_text(encoding="utf-8")

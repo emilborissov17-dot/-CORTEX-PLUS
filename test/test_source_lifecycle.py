@@ -249,7 +249,7 @@ def test_the_eonet_candidate_from_31_july_is_reachable_and_shadow_fetching():
     Four NASA-EONET sources were found on 2026-07-31 and never used. They must
     now appear in what the worker fetches, as candidates.
     """
-    from scripts.openclaw_axis_worker import all_sources
+    from scripts.data_feed_reader import all_sources
 
     sources, _ = all_sources()
     eonet = [s for s in sources if "eonet" in (s.get("url") or "").lower()]
@@ -274,7 +274,7 @@ def test_discovery_still_feeds_the_worker():
     seed is now larger by design, and the ratio no longer says anything about
     discovery. What the ratio stood for still holds and is asserted directly:
     every active JSON source data_scout found reaches the worker's source list."""
-    from scripts.openclaw_axis_worker import all_sources, load_discovered
+    from scripts.data_feed_reader import all_sources, load_discovered
 
     sources, _ = all_sources()
     found = load_discovered()

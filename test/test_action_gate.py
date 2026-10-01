@@ -1,14 +1,14 @@
-"""Tests for agents/openclaw_bridge.py (OpenClaw Phase 0).
+"""Tests for agents/action_gate.py (OpenClaw Phase 0).
 
 Every test passes explicit tmp_path-derived policy_path/audit_path/
 pending_path arguments — none of them touch the real repo's
-config/openclaw_action_policy.json or memory/openclaw_*.json.
+config/action_policy.json or memory/openclaw_*.json.
 """
 import json
 
 import pytest
 
-from agents.openclaw_bridge import classify, submit_action
+from agents.action_gate import classify, submit_action
 
 REAL_POLICY = {
     "version": 2,
@@ -62,7 +62,7 @@ def test_corrupt_policy_file_classifies_everything_level_3(tmp_path):
 
 
 def test_dry_run_never_executes(tmp_path, monkeypatch):
-    import agents.openclaw_bridge as bridge
+    import agents.action_gate as bridge
 
     calls = []
     monkeypatch.setattr(bridge, "_execute", lambda task, verdict: calls.append((task, verdict)))
@@ -82,7 +82,7 @@ def test_dry_run_never_executes(tmp_path, monkeypatch):
 
 
 def test_dry_run_false_on_level_1_reaches_execute_stub(tmp_path, monkeypatch):
-    import agents.openclaw_bridge as bridge
+    import agents.action_gate as bridge
 
     calls = []
     monkeypatch.setattr(bridge, "_execute", lambda task, verdict: calls.append((task, verdict)) or "ok")
@@ -101,7 +101,7 @@ def test_dry_run_false_on_level_1_reaches_execute_stub(tmp_path, monkeypatch):
 
 
 def test_level_3_never_reaches_execute_even_with_dry_run_false(tmp_path, monkeypatch):
-    import agents.openclaw_bridge as bridge
+    import agents.action_gate as bridge
 
     calls = []
     monkeypatch.setattr(bridge, "_execute", lambda task, verdict: calls.append((task, verdict)))
@@ -128,7 +128,7 @@ def test_level_3_never_reaches_execute_even_with_dry_run_false(tmp_path, monkeyp
 
 
 def test_blocked_never_reaches_execute_even_with_dry_run_false(tmp_path, monkeypatch):
-    import agents.openclaw_bridge as bridge
+    import agents.action_gate as bridge
 
     calls = []
     monkeypatch.setattr(bridge, "_execute", lambda task, verdict: calls.append((task, verdict)))
@@ -151,7 +151,7 @@ def test_audit_record_exists_before_any_status_change(tmp_path, monkeypatch):
     """Proves log-then-act ordering: by the time _execute (or the blocked/
     level_3 branch) runs, the audit record already exists on disk with its
     initial "pending" status — logging happens strictly before acting."""
-    import agents.openclaw_bridge as bridge
+    import agents.action_gate as bridge
 
     audit_path = tmp_path / "audit.json"
     policy_path = _write_policy(tmp_path, REAL_POLICY)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-test/test_openclaw_axis_worker.py — WHAT COMES BACK FROM OUTSIDE IS A NUMBER OR A REFUSAL.
+test/test_data_feed_reader.py — WHAT COMES BACK FROM OUTSIDE IS A NUMBER OR A REFUSAL.
 
 WHY
 ----
@@ -29,7 +29,7 @@ PURPOSE so the refusal path runs every time, not only under test.
 NO TEST HERE TOUCHES THE NETWORK. Every case injects a fake getter; the live
 run above is the evidence that the real path works, and it was done by hand.
 
-    venv\\Scripts\\python.exe -m pytest test/test_openclaw_axis_worker.py -v
+    venv\\Scripts\\python.exe -m pytest test/test_data_feed_reader.py -v
 """
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ import pathlib
 
 import pytest
 
-from scripts.openclaw_axis_worker import (Refused, all_sources, as_number,
+from scripts.data_feed_reader import (Refused, all_sources, as_number,
                                           fetch_one, load_discovered,
                                           load_sources, run as _run_raw, walk)
 
@@ -62,7 +62,7 @@ def run(**kw):
     return _run_raw(**kw)
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
-SOURCES = REPO / "config" / "openclaw_sources.json"
+SOURCES = REPO / "config" / "data_feeds.json"
 
 
 def getter_returning(payload, status=200, err=None):

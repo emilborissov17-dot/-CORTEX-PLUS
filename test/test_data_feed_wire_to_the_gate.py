@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-test/test_openclaw_wire_to_the_gate.py — the worker's output IS the gate's input.
+test/test_data_feed_wire_to_the_gate.py — the worker's output IS the gate's input.
 
 WHAT WAS WRONG (verified 20 September 2026, with tools/ask.py, not with a grep)
 ------------------------------------------------------------------------------
-scripts/openclaw_axis_worker.py wrote openclaw_queue/external_feeds.jsonl,
+scripts/data_feed_reader.py wrote openclaw_queue/external_feeds.jsonl,
 external_shadow.jsonl and external_refusals.jsonl. Asked who reads them:
 
     readers openclaw_queue/external_feeds.jsonl
-      -> scripts/openclaw_axis_worker.py:277   (its own _peer_for)
+      -> scripts/data_feed_reader.py:277   (its own _peer_for)
     readers openclaw_queue/external_shadow.jsonl
-      -> test/test_openclaw_axis_worker.py
+      -> test/test_data_feed_reader.py
     readers openclaw_queue/external_refusals.jsonl
-      -> test/test_openclaw_axis_worker.py
+      -> test/test_data_feed_reader.py
 
 core.card_intake.judge_inbox globs openclaw_queue/cards/*.jsonl and writes what
 the quote gate ACCEPTS into memory/verified_observations.jsonl, which four
@@ -22,7 +22,7 @@ its three outputs carried one run, 20 Aug 21:19 UTC, a month old.
 WHY THE TWO HALVES ARE TESTED TOGETHER HERE, AND THAT IS THE POINT
 ------------------------------------------------------------------
 Both halves were green, separately, for a month, while the pipeline delivered
-nothing. test/test_openclaw_axis_worker.py proves fetch_one produces a row;
+nothing. test/test_data_feed_reader.py proves fetch_one produces a row;
 test/test_quote_gate.py proves judge() accepts a well-formed card. Neither could
 notice that fetch_one returned no `quote` at all, so every row it produced would
 have been judged MALFORMED the moment the two were connected.
@@ -45,10 +45,10 @@ sys.path.insert(0, str(REPO))
 
 from core import card_intake as ci        # noqa: E402
 from core import quote_gate as qg         # noqa: E402
-from scripts import openclaw_axis_worker as W   # noqa: E402
+from scripts import data_feed_reader as W   # noqa: E402
 
 # A FIXTURE, and said plainly rather than called a recording: this is a body in
-# the shape config/openclaw_sources.json's `path: "count"` resolves against, and
+# the shape config/data_feeds.json's `path: "count"` resolves against, and
 # it is COMPACT on purpose. No space after the colon is the case a naive quote
 # gets wrong, and no test here may fetch, so the body is written down instead of
 # captured. The two forms below are the two the gate must handle.
@@ -180,7 +180,7 @@ def test_the_workers_card_directory_is_the_gates_inbox():
 
 
 def _run(tmp_path, state, sources=None, **kw):
-    """ISOLATED, the same three redirects test_openclaw_axis_worker.py uses.
+    """ISOLATED, the same three redirects test_data_feed_reader.py uses.
 
     Without them a test fetches the machine's live discovery list and promotes
     or demotes real sources in memory/source_lifecycle_ledger.jsonl — the 16 Aug
@@ -409,7 +409,7 @@ def test_a_torn_final_line_does_not_hide_an_open_run(tmp_path):
     W._task_row({"task": W.TASK_NAME, "event": "start", "run_id": "eee",
                  "ts": "2026-09-20T05:50:00+00:00"}, path=log)
     with open(log, "a", encoding="utf-8") as fh:
-        fh.write('{"task": "openclaw_axis_worker", "event": "fin')
+        fh.write('{"task": "data_feed_reader", "event": "fin')
     assert [r["run_id"] for r in W.unfinished_runs(path=log)] == ["eee"]
 
 
@@ -424,7 +424,7 @@ def test_a_missing_log_is_no_unfinished_runs_not_a_crash(tmp_path):
 from core import task_runs as TR        # noqa: E402
 from core import card_intake as CI      # noqa: E402
 
-CHAIN = REPO / "tools" / "openclaw_chain.bat"
+CHAIN = REPO / "tools" / "feed_chain.bat"
 
 
 def test_the_chain_runs_the_fetch_then_the_judge_in_that_order():
@@ -435,7 +435,7 @@ def test_the_chain_runs_the_fetch_then_the_judge_in_that_order():
     cmds = [ln for ln in CHAIN.read_text(encoding="utf-8", errors="replace").splitlines()
             if not ln.strip().lower().startswith(("rem", "::"))]
     body = "\n".join(cmds)
-    i = body.index("openclaw_axis_worker.py")
+    i = body.index("data_feed_reader.py")
     j = body.index("card_intake.py")
     assert i < j, "the judge is invoked before the fetch"
 
@@ -463,7 +463,7 @@ def test_exactly_one_caller_owns_the_judge():
         f"{len(callers)} callers of card_intake.py; there must be exactly one "
         f"because judge_inbox is not safe to run concurrently:\n  "
         + "\n  ".join(callers))
-    assert "openclaw_chain" in callers[0], callers[0]
+    assert "feed_chain" in callers[0], callers[0]
 
 
 def test_judge_inbox_skips_a_card_it_has_already_judged(tmp_path):
@@ -504,28 +504,28 @@ def test_a_chain_whose_judge_dies_is_still_reported_unfinished(tmp_path):
     field meant to make it legible."""
     log = tmp_path / "task_runs.jsonl"
     rid = "chain-20260920-145000"
-    TR.row("openclaw_axis_worker", "start", rid, path=log)
-    TR.row("openclaw_axis_worker", "finish", rid, path=log, ok=True)
+    TR.row("data_feed_reader", "start", rid, path=log)
+    TR.row("data_feed_reader", "finish", rid, path=log, ok=True)
     TR.row("card_intake", "start", rid, path=log)
     # ...and then the judge is killed: no finish row for it.
 
     open_runs = TR.unfinished(path=log)
     assert [r["task"] for r in open_runs] == ["card_intake"], open_runs
-    assert TR.unfinished("openclaw_axis_worker", path=log) == []
+    assert TR.unfinished("data_feed_reader", path=log) == []
 
 
 def test_both_halves_of_a_chain_carry_the_same_run_id(monkeypatch):
     """The id is shared through the environment, which is how a .bat hands one
     value to two processes."""
     monkeypatch.setenv(TR.RUN_ID_ENV, "chain-abc123")
-    assert TR.run_id("openclaw_axis_worker") == "chain-abc123"
+    assert TR.run_id("data_feed_reader") == "chain-abc123"
     assert TR.run_id("card_intake") == "chain-abc123"
 
 
 def test_a_step_run_alone_mints_its_own_id(monkeypatch):
     """Not in a chain, so it IS its own event. Two calls must not collide."""
     monkeypatch.delenv(TR.RUN_ID_ENV, raising=False)
-    a = TR.run_id("openclaw_axis_worker")
+    a = TR.run_id("data_feed_reader")
     b = TR.run_id("card_intake")
     assert a and b and a != b
     assert not a.startswith("chain-")
@@ -534,7 +534,7 @@ def test_a_step_run_alone_mints_its_own_id(monkeypatch):
 def test_the_chain_exports_the_shared_id_before_it_runs_anything():
     body = CHAIN.read_text(encoding="utf-8", errors="replace")
     set_at = body.index("CORTEX_RUN_ID=")
-    first_step = body.index("openclaw_axis_worker.py")
+    first_step = body.index("data_feed_reader.py")
     assert set_at < first_step, "the id is set after the first step starts"
 
 
@@ -624,7 +624,7 @@ def test_the_worker_records_an_interrupt_and_re_raises_it(exc, tmp_path,
         raise exc("interrupted")
 
     monkeypatch.setattr(W, "run", _boom)
-    monkeypatch.setattr(sys, "argv", ["openclaw_axis_worker.py"])
+    monkeypatch.setattr(sys, "argv", ["data_feed_reader.py"])
     with _pytest.raises(exc):
         W.main()
 

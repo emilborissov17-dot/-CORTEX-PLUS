@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""test/test_openclaw_first_fetch_card.py — a reading we can QUOTE makes a card on
+"""test/test_data_feed_first_fetch_card.py — a reading we can QUOTE makes a card on
 its first fetch (C-OC-2 Part 1, REWRITTEN 1 Oct 2026 for C-OC-3 / Emil R27).
 
 THE RULING NOW. One criterion, and it is on us: what we attribute must be on the
@@ -18,9 +18,9 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from scripts import openclaw_axis_worker as w  # noqa: E402
+from scripts import data_feed_reader as w  # noqa: E402
 
-FIX = REPO / "test" / "fixtures" / "openclaw"
+FIX = REPO / "test" / "fixtures" / "data_feeds"
 FOREST_WLD = (FIX / "wb_AG.LND.FRST.ZS_WLD_mrv1.json").read_text(encoding="utf-8")
 GOOD = {"id": "wb_forest_wld", "axis": "TAXONOMY:C2.1", "key": "forest_area_pct",
         "url": "https://api.worldbank.org/v2/country/WLD/indicator/AG.LND.FRST.ZS?format=json&mrv=1",
@@ -100,7 +100,7 @@ def test_finish_row_counts_the_populations(monkeypatch):
            "unreachable": [{}], "cards": [{}, {}, {}], "lifecycle": {}, "network_down": False, "retried": False,
            "pages": {"ingested": 4, "statements_added": 40, "skipped_same_content": 1, "needs": []}}
     monkeypatch.setattr(w, "run_with_retry", lambda runner, sleep=None: res)
-    monkeypatch.setattr(sys, "argv", ["openclaw_axis_worker.py"])
+    monkeypatch.setattr(sys, "argv", ["data_feed_reader.py"])
     w.main()
     fin = [r for r in rows if r.get("event") == "finish"][0]
     assert (fin["trusted"], fin["carded"], fin["stored"], fin["label_refused"], fin["unreachable"],

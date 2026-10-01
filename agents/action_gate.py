@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-agents/openclaw_bridge.py
+agents/action_gate.py
 OpenClaw Phase 0 — policy gate + audit-first bridge skeleton.
 
 Single entry point (`submit_action`) between CORTEX++ domain agents and the
 external OpenClaw gateway. Per docs/OPENCLAW_INTEGRATION_DESIGN.md:
 
   (a) Hard JSON policy match — classify() is a pure allowlist membership
-      lookup against config/openclaw_action_policy.json. No LLM, no
+      lookup against config/action_policy.json. No LLM, no
       substring/fuzzy matching. always_blocked is checked first, before
       level_1/2/3. Fail-closed: a missing/corrupt policy file classifies
       EVERY action as level_3 (never auto-blocked, never auto-allowed).
@@ -34,7 +34,7 @@ NotImplementedError. Wiring an actual OpenClaw gateway call is a later phase.
       strength of its label while the payload rode along unread. Phase 0 could
       not execute it, which made the hole invisible rather than absent.
 
-      config/openclaw_action_schemas.json holds one JSON Schema (Draft 2020-12)
+      config/action_schemas.json holds one JSON Schema (Draft 2020-12)
       per action_type, validated by validate_parameters(). Every string pattern
       is an ALLOWLIST of the characters that field legitimately needs, never a
       blocklist of attack strings: a blocklist of "__import__" loses to the next
@@ -64,8 +64,8 @@ import uuid
 from datetime import datetime, timezone
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[1]
-POLICY_PATH = BASE_DIR / "config" / "openclaw_action_policy.json"
-SCHEMA_PATH = BASE_DIR / "config" / "openclaw_action_schemas.json"
+POLICY_PATH = BASE_DIR / "config" / "action_policy.json"
+SCHEMA_PATH = BASE_DIR / "config" / "action_schemas.json"
 AUDIT_LOG_PATH = BASE_DIR / "memory" / "openclaw_audit_log.json"
 PENDING_L3_PATH = BASE_DIR / "memory" / "openclaw_pending_l3.json"
 

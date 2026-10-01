@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""test/test_openclaw_seed_sources.py — every seed source in
-config/openclaw_sources.json that names a subcategory is fully declared, and its
+"""test/test_data_feed_seed_sources.py — every seed source in
+config/data_feeds.json that names a subcategory is fully declared, and its
 declared subcategory is the key map's rule for its key (C-OC-1 Part 3, 1 Oct 2026).
 
 Static checks only; no network. Which candidates entered the file, and why the
@@ -18,11 +18,11 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "tools"))
-from scripts import openclaw_axis_worker as w  # noqa: E402
+from scripts import data_feed_reader as w  # noqa: E402
 from core import taxonomy as tx  # noqa: E402
 import build_taxonomy_key_map as bkm  # noqa: E402
 
-CFG = json.loads((REPO / "config" / "openclaw_sources.json").read_text(encoding="utf-8"))
+CFG = json.loads((REPO / "config" / "data_feeds.json").read_text(encoding="utf-8"))
 DECLARED = [s for s in CFG["sources"] if s.get("subcategory")]
 
 

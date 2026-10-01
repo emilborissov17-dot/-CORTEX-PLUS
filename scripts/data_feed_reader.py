@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-scripts/openclaw_axis_worker.py — THE DMZ FETCH WORKER.
+scripts/data_feed_reader.py — THE DMZ FETCH WORKER.
 
 WHAT CROSSES, AND WHAT DOES NOT
 --------------------------------
@@ -20,7 +20,7 @@ HOW IT RUNS (recorded 20 September 2026, the day it first ran at all)
 For a month nothing ran this. It was registered that day as the Windows task
 CORTEX_OpenClaw:
 
-    venv/Scripts/python.exe scripts/openclaw_axis_worker.py
+    venv/Scripts/python.exe scripts/data_feed_reader.py
     daily 05:50 local, repeating every 6h for 1 day -> 05:50 / 11:50 / 17:50 / 23:50
 
 05:50 IS NOT AN ARBITRARY HOUR. The nightly cycle starts at 03:04 and took 103,
@@ -49,7 +49,7 @@ some since 31 July, because nothing decided whether to believe them.
 A hand-written list cannot grow. What grows is a PROCESS for earning trust —
 core/source_lifecycle.py. Sources now come from BOTH places:
 
-    config/openclaw_sources.json          the seed, hand-written
+    config/data_feeds.json          the seed, hand-written
     memory/discovered_data_sources.json   data_scout's own finds
 
 and every one of them starts as a CANDIDATE. Candidates are fetched every cycle
@@ -60,8 +60,8 @@ composite as MEASURED.
 GET ONLY. The worker issues no other verb; that is asserted by a test rather
 than left to discipline.
 
-    venv/Scripts/python.exe scripts/openclaw_axis_worker.py
-    venv/Scripts/python.exe scripts/openclaw_axis_worker.py --dry-run
+    venv/Scripts/python.exe scripts/data_feed_reader.py
+    venv/Scripts/python.exe scripts/data_feed_reader.py --dry-run
 """
 from __future__ import annotations
 
@@ -80,7 +80,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
-SOURCES = BASE / "config" / "openclaw_sources.json"
+SOURCES = BASE / "config" / "data_feeds.json"
 QUEUE = BASE / "openclaw_queue"
 FEEDS = QUEUE / "external_feeds.jsonl"
 REFUSALS = QUEUE / "external_refusals.jsonl"
@@ -108,7 +108,7 @@ CARDS = QUEUE / "cards"
 # that the PROCESS ran, which is a different question and is unanswerable from
 # them — a run that died before its first fetch leaves no feed row at all.
 TASK_RUNS = BASE / "memory" / "task_runs.jsonl"
-TASK_NAME = "openclaw_axis_worker"
+TASK_NAME = "data_feed_reader"
 
 DEFAULT_TIMEOUT = 30
 
@@ -937,7 +937,7 @@ def main() -> int:
               f"(run_id {stale.get('run_id')}) — killed, rebooted or crashed "
               f"before it could write a finish row")
 
-    # THE CHAIN'S ID IF WE ARE IN ONE. tools/openclaw_chain.bat exports
+    # THE CHAIN'S ID IF WE ARE IN ONE. tools/feed_chain.bat exports
     # CORTEX_RUN_ID so the fetch and the judge that follows it read as one
     # event; run alone, this mints its own, which is correct — it IS its own
     # event then.

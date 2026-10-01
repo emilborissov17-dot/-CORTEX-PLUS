@@ -839,7 +839,7 @@
    "imported_by": [
     "fast_cycle_runner.py",
     "test/test_axis_feed.py",
-    "test/test_openclaw_axis_worker.py"
+    "test/test_data_feed_reader.py"
    ]
   },
   {
@@ -1631,7 +1631,7 @@
    ]
   },
   {
-   "module": "agents/openclaw_bridge.py",
+   "module": "agents/action_gate.py",
    "reads": [],
    "writes": [],
    "unresolved": [
@@ -1675,7 +1675,7 @@
    "loc": 141,
    "on_live_cycle_path": false,
    "imported_by": [
-    "test/test_openclaw_bridge.py"
+    "test/test_action_gate.py"
    ]
   },
   {
@@ -1998,7 +1998,7 @@
     "fast_cycle_runner.py",
     "scripts/cortex_ingest.py",
     "scripts/micro_cycle.py",
-    "scripts/openclaw_axis_worker.py",
+    "scripts/data_feed_reader.py",
     "supervisor.py",
     "test/test_alarm_bands.py",
     "test/test_backend_policy.py",
@@ -3829,7 +3829,7 @@
    "loc": 223,
    "on_live_cycle_path": false,
    "imported_by": [
-    "test/test_openclaw_axis_worker.py"
+    "test/test_data_feed_reader.py"
    ]
   },
   {
@@ -9196,7 +9196,7 @@
    "imported_by": []
   },
   {
-   "module": "scripts/openclaw_axis_worker.py",
+   "module": "scripts/data_feed_reader.py",
    "reads": [],
    "writes": [],
    "unresolved": [
@@ -9241,7 +9241,7 @@
    "loc": 285,
    "on_live_cycle_path": false,
    "imported_by": [
-    "test/test_openclaw_axis_worker.py",
+    "test/test_data_feed_reader.py",
     "test/test_source_lifecycle.py"
    ]
   },
@@ -11868,7 +11868,7 @@
    "imported_by": []
   },
   {
-   "module": "test/test_openclaw_axis_worker.py",
+   "module": "test/test_data_feed_reader.py",
    "reads": [],
    "writes": [],
    "unresolved": [
@@ -11892,14 +11892,14 @@
     "json",
     "pathlib",
     "pytest",
-    "scripts.openclaw_axis_worker"
+    "scripts.data_feed_reader"
    ],
    "loc": 202,
    "on_live_cycle_path": false,
    "imported_by": []
   },
   {
-   "module": "test/test_openclaw_bridge.py",
+   "module": "test/test_action_gate.py",
    "reads": [],
    "writes": [],
    "unresolved": [
@@ -11941,7 +11941,7 @@
     }
    ],
    "imports": [
-    "agents.openclaw_bridge",
+    "agents.action_gate",
     "json",
     "pytest"
    ],
@@ -13243,7 +13243,7 @@
     "json",
     "pathlib",
     "pytest",
-    "scripts.openclaw_axis_worker"
+    "scripts.data_feed_reader"
    ],
    "loc": 200,
    "on_live_cycle_path": false,

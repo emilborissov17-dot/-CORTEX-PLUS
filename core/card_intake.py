@@ -217,7 +217,7 @@ def main(argv=None) -> dict:
     """The judge, with its two run rows. A FUNCTION, not a __main__ block.
 
     TWO ROWS, THE SAME TWO THE WORKER WRITES (20 Sep 2026). This step runs as
-    the second half of tools/openclaw_chain.bat, which exports CORTEX_RUN_ID so
+    the second half of tools/feed_chain.bat, which exports CORTEX_RUN_ID so
     both halves carry one id and the pair reads as one event. A chain whose
     fetch finished and whose judge died leaves ("card_intake", <id>) with a
     start and no finish, which is exactly the shape core.task_runs.unfinished

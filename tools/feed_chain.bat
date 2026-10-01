@@ -1,6 +1,6 @@
 @echo off
 setlocal
-rem tools/openclaw_chain.bat - fetch, then judge, in that order, as one event.
+rem tools/feed_chain.bat - fetch, then judge, in that order, as one event.
 rem
 rem WHY THIS EXISTS (20 September 2026)
 rem --------------------------------------------------------------------------
@@ -47,8 +47,8 @@ rem with an explicit format string does not care what the short date looks like.
 for /f %%i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set "CORTEX_RUN_ID=chain-%%i"
 if not defined CORTEX_RUN_ID set "CORTEX_RUN_ID=chain-unknown-%RANDOM%"
 
-echo [CHAIN] %CORTEX_RUN_ID% step 1/2 openclaw_axis_worker
-%PY% scripts\openclaw_axis_worker.py
+echo [CHAIN] %CORTEX_RUN_ID% step 1/2 data_feed_reader
+%PY% scripts\data_feed_reader.py
 set "WORKER_RC=%ERRORLEVEL%"
 
 rem THE JUDGE RUNS EVEN IF THE FETCH RETURNED NON-ZERO, and that is deliberate:

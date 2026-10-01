@@ -667,7 +667,7 @@ def select_new(items: list, last_sweep_ts: Optional[str],
 #
 # A NOTE ON THE LADDER'S NAME. The brief says CANDIDATE -> SHADOW -> TRUSTED.
 # The ladder in this repo is CANDIDATE -> TRUSTED -> DEMOTED; there is no SHADOW
-# state. "SHADOW" exists as a ROW STATUS in scripts/openclaw_axis_worker.py, for
+# state. "SHADOW" exists as a ROW STATUS in scripts/data_feed_reader.py, for
 # a reading stored but not believed. Same idea, different layer, and the two
 # should not be conflated by a module that writes to neither by that name.
 

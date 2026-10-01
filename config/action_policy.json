@@ -57,7 +57,7 @@
   "always_blocked": {
     "description": "Никога не се изпълнява, дори с одобрение. Изисква промяна на кода.",
     "action_types": [
-      "modify_openclaw_action_policy",
+      "modify_action_policy",
       "modify_cortex_approval_server",
       "delete_merkle_archive",
       "disable_audit_log",

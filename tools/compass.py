@@ -111,7 +111,7 @@ VERIFIED, UNVERIFIED = "VERIFIED", "UNVERIFIED"
 K2_NOT_WIRED_REASON = (
     "Being TRUSTED changes which file a reading lands in, and the nightly cycle "
     "reads neither that file nor the atoms. Checked 2026-10-01 from the code, "
-    "not by counting matches: scripts/openclaw_axis_worker.py decides from the "
+    "not by counting matches: scripts/data_feed_reader.py decides from the "
     "TRUSTED state whether a reading is written to "
     "openclaw_queue/external_feeds.jsonl, and its cards become measurement "
     "atoms through core/card_intake. But step 12.68 of the nightly cycle, "

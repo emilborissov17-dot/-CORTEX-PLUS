@@ -96,11 +96,18 @@ class OpenClawBrowser:
         return d
 
     def _goto(self, url: str) -> None:
+        """Open `url` in this driver's tab. If OpenClaw's browser has gone away
+        (first real agents turn, 1 Oct 2026: "Browser profile ... is not running",
+        and every later call failed on the dead tab) it is started again ONCE and a
+        new tab opened; a second failure is raised."""
+        if self.tab is not None:
+            try:
+                self._call("navigate", url, "--target-id", self.tab)
+            except OpenClawFailed:
+                self.tab = None                         # the browser or the tab is gone: start again below
         if self.tab is None:
             self._call("start")
             self.tab = self._call("open", url).get("tabId")
-        else:
-            self._call("navigate", url, "--target-id", self.tab)
         try:
             self._call("wait", "--load", "domcontentloaded", "--target-id", self.tab)
         except OpenClawFailed:
@@ -169,7 +176,7 @@ def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, res
         s = browser.search(query)
     except OpenClawFailed as exc:
         out["errors"].append(str(exc))
-        ledger({"event": "NO_RESULTS", "need_id": need_id, "why": str(exc)})
+        ledger({"event": "SEARCHER_ERROR", "need_id": need_id, "why": str(exc)[:300]})
         return out
     if is_captcha(s.get("page") or {}):
         out["captcha"] += 1

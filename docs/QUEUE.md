@@ -138,11 +138,11 @@ ITEM 37's whole argument rested on the version below it.
 
 WHAT WAS CLAIMED: an untruncated census of the TRUSTED label returned 29 matches
 — 12 comments, 7 tools/compass.py reporting, 5 self_mirror reporting, 3
-scripts/openclaw_axis_worker.py, 4 in alignment/civilization_guard.py's own
+scripts/data_feed_reader.py, 4 in alignment/civilization_guard.py's own
 unrelated TRUSTED_SOURCES set — and the conclusion drawn was that NOTHING reads
 openclaw_queue/external_feeds.jsonl, so demoting all 20 breaks nothing.
 
-WHAT IS TRUE: external_feeds.jsonl IS read. scripts/openclaw_axis_worker.py:313
+WHAT IS TRUE: external_feeds.jsonl IS read. scripts/data_feed_reader.py:313
 sets row["measured"] = (state == TRUSTED), which decides whether a reading is
 appended to external_feeds.jsonl or diverted to external_shadow.jsonl, and
 _peer_for() at :255-286 reads that file back for the incumbent value every
@@ -150,11 +150,11 @@ contradiction check is judged against. The label gates behaviour.
 
 THE MISTAKE WAS RULE (a) IN A NEW SHAPE. The census counted MATCHES and the
 conclusion was about READERS. Grepping TRUSTED finds where the word appears, not
-where the file it governs is opened — and openclaw_axis_worker showed up as
+where the file it governs is opened — and data_feed_reader showed up as
 "3 matches", which was read as noise instead of opened.
 
 K2 IS STILL NOT_WIRED, FOR A BETTER REASON. The gated path has no production
-caller: an untruncated search for openclaw_axis_worker returns its own
+caller: an untruncated search for data_feed_reader returns its own
 docstring, two comments in core/, one cockpit string, docs/MODULE_MAP and three
 test files. No cycle, phase or scheduled task invokes run(). Promotions
 accumulate into a path the system never walks.

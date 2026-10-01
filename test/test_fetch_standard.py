@@ -230,7 +230,7 @@ def test_mutation_parking_after_one_failure_would_park_early(tmp_path, monkeypat
 
 
 def test_the_worker_skips_a_parked_source_unless_a_need_names_it(tmp_path, monkeypatch):
-    from scripts import openclaw_axis_worker as w
+    from scripts import data_feed_reader as w
     import core.source_lifecycle as life
     monkeypatch.setattr(life, "observe", lambda sid, **kw: {"state": "CANDIDATE"})
     park = tmp_path / "park.json"

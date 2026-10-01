@@ -130,3 +130,36 @@ def test_mutation_a_searcher_that_imports_requests_is_seen(tmp_path):
     f = tmp_path / "s.py"
     f.write_text("import requests\n", encoding="utf-8")
     assert "requests" in oc.imported_modules(f)
+
+
+def test_a_browser_that_went_away_is_started_again_once(monkeypatch):
+    calls = []
+
+    def fake_call(self, *args):
+        calls.append(args[0])
+        if args[0] == "navigate":
+            raise oc.OpenClawFailed('Browser profile "openclaw" is not running')
+        return {"tabId": "t9"} if args[0] == "open" else {"ok": True}
+    monkeypatch.setattr(oc.OpenClawBrowser, "_call", fake_call)
+    b = oc.OpenClawBrowser()
+    b.tab = "t1"
+    b._goto("https://x.example/")
+    assert calls[:3] == ["navigate", "start", "open"] and b.tab == "t9"
+
+
+def test_mutation_a_driver_that_kept_the_dead_tab_fails_every_call(monkeypatch):
+    def dead(self, *args):
+        raise oc.OpenClawFailed('Browser profile "openclaw" is not running')
+    monkeypatch.setattr(oc.OpenClawBrowser, "_call", dead)
+    b = oc.OpenClawBrowser()
+    b.tab = "t1"
+    with pytest.raises(oc.OpenClawFailed):
+        b._goto("https://x.example/")
+
+
+def test_a_searcher_failure_is_an_error_not_no_results(run):
+    class Broken(FakeBrowser):
+        def search(self, query):
+            raise oc.OpenClawFailed("gateway closed")
+    r = run["go"](Broken([], {}))
+    assert r["errors"] and _ev(run) == ["SEARCHED", "SEARCHER_ERROR"]

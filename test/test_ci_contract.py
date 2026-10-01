@@ -175,7 +175,7 @@ DRIVE_LETTERS_ARE_THE_POINT = {
     # The drive letter is the ATTACK, not a path this code uses: the schema gate
     # must refuse "C:\Windows\system32" as a value for a relative-path field,
     # and testing that requires writing a Windows absolute path down.
-    "test/test_openclaw_schema_gate.py",
+    "test/test_action_schema_gate.py",
 }
 
 # THE LINE-LEVEL EXEMPTION, added 20 Sep 2026 — and the reason it is per LINE.

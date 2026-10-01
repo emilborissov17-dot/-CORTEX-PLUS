@@ -9,7 +9,7 @@ Order, no cap:
   1. every open BRAIN need — the query is the brain's own question (+ place, actor, period);
   2. every open ENGINE need;
   3. the maintenance portion — subcategory cells only, N per turn;
-  4. the declared data feeds (scripts/openclaw_axis_worker.py) and the judge
+  4. the declared data feeds (scripts/data_feed_reader.py) and the judge
      (core/card_intake.py) — the work the 4-times-a-day chain used to do.
 Each open need gets one attempt per turn; a need with nothing found stays OPEN.
 The core model is put back resident before the turn ends (R18), and the reload
@@ -112,7 +112,8 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         prof = ap.load(cat, profiles_dir)
         r = oc.serve(cell["cell"], q, browser(prof.get("browser_profile") or "openclaw"), ingest, ledger, pages_dir=pages_dir, category=cat)
         ap.learn(cat, r, learned_dir)
-        return {"pages": r["pages"], "statements_added": r["statements_added"], "captcha": r["captcha"]}
+        return {"pages": r["pages"], "statements_added": r["statements_added"], "captcha": r["captcha"],
+                "errors": r["errors"]}
 
     if maintenance is None:
         from core import maintenance as mt
@@ -142,7 +143,7 @@ def _live_feeds() -> dict:
     import subprocess
     py = str(REPO / "venv" / "Scripts" / "python.exe")
     out = {}
-    for name, args in (("worker", [py, str(REPO / "scripts" / "openclaw_axis_worker.py")]),
+    for name, args in (("worker", [py, str(REPO / "scripts" / "data_feed_reader.py")]),
                        ("judge", [py, str(REPO / "core" / "card_intake.py")])):
         t0 = time.time()
         p = subprocess.run(args, cwd=str(REPO), capture_output=True, text=True, encoding="utf-8", errors="replace",

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-test/test_openclaw_schema_gate.py — THE LABEL WAS CHECKED. THE PAYLOAD WAS NOT.
+test/test_action_schema_gate.py — THE LABEL WAS CHECKED. THE PAYLOAD WAS NOT.
 
 classify() only ever read action_type — a string. Everything else in the task
 dict travelled untouched, so this was a level_1 autonomous action:
@@ -25,7 +25,7 @@ WHAT THESE TESTS PIN
     the same fields, because a rule that only stops the example is a blocklist
     wearing a schema's clothes.
 
-    venv/Scripts/python.exe -m pytest test/test_openclaw_schema_gate.py -v
+    venv/Scripts/python.exe -m pytest test/test_action_schema_gate.py -v
 """
 from __future__ import annotations
 
@@ -39,10 +39,10 @@ REPO = pathlib.Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-import agents.openclaw_bridge as bridge  # noqa: E402
+import agents.action_gate as bridge  # noqa: E402
 
-REAL_POLICY = REPO / "config" / "openclaw_action_policy.json"
-REAL_SCHEMAS = REPO / "config" / "openclaw_action_schemas.json"
+REAL_POLICY = REPO / "config" / "action_policy.json"
+REAL_SCHEMAS = REPO / "config" / "action_schemas.json"
 
 
 @pytest.fixture

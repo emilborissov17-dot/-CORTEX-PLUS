@@ -745,7 +745,7 @@ def _bindings(tree, module: str, func: str) -> tuple:
     """(aliases bound to `module`, bare names imported FROM it).
 
     WHY A NAME IS NOT ENOUGH, measured 20 Sep 2026. Asked for the callers of
-    scripts.openclaw_axis_worker.run, the first version of this matched every
+    scripts.data_feed_reader.run, the first version of this matched every
     call node named `run` and answered "188 live caller(s) outside test/" —
     subprocess.run, youtube_worker.run, a dozen unrelated run()s. An answer that
     large is not an answer, and it is worse than an empty one because it looks
@@ -805,7 +805,7 @@ def callers(dotted: str, base: Path | None = None) -> dict:
             f = node.func
             name = (f.attr if isinstance(f, ast.Attribute)
                     else f.id if isinstance(f, ast.Name) else None)
-            # AN ALIAS IS STILL THE FUNCTION. test/test_openclaw_axis_worker.py
+            # AN ALIAS IS STILL THE FUNCTION. test/test_data_feed_reader.py
             # imports `run as _run_raw` and calls _run_raw(...), so filtering on
             # the call's spelling alone loses every call the file makes — and
             # loses them SILENTLY, which reads as "nobody calls it".

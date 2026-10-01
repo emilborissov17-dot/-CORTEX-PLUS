@@ -176,7 +176,7 @@ def test_judge_inbox_writes_an_atom_for_an_accepted_card_and_counts_the_rest(tmp
 def test_selftest_reports_integrations():
     r = at.selftest()
     assert set(r["integrations"]) >= {"config/taxonomy.json", "config/reporter_independence.json",
-                                      "config/openclaw_sources.json"}
+                                      "config/data_feeds.json"}
 
 
 def test_a_judge_on_non_live_observations_never_writes_live_atoms(tmp_path, root, monkeypatch):

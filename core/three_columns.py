@@ -651,7 +651,7 @@ PIPELINE_KINDS = (HARDWARE, PEER_REVIEW, API, EDITORIAL)
 # The lifecycle state a row defaults to. NAMED HERE so nobody has to guess:
 # core/source_lifecycle.py's ladder is CANDIDATE -> TRUSTED -> DEMOTED. There is
 # no SHADOW state in it. "SHADOW" exists only as a ROW STATUS in
-# scripts/openclaw_axis_worker.py, for a reading stored but not believed. The
+# scripts/data_feed_reader.py, for a reading stored but not believed. The
 # columns panel displays the SOURCE_LIFECYCLE state, and says so in its legend.
 CANDIDATE_STATE = "CANDIDATE"
 LIFECYCLE_LADDER = "CANDIDATE -> TRUSTED -> DEMOTED (core/source_lifecycle.py)"

@@ -120,7 +120,7 @@ a JSON state file with `last_run_utc`, and a `--run-now` escape hatch.
 reasons about *code shape*, not *which file is being written*.
 
 That means a self-generated patch could, in principle, target `supervisor.py`,
-`config/openclaw_action_policy.json`, or the AST gate itself. For req 6 that is not
+`config/action_policy.json`, or the AST gate itself. For req 6 that is not
 acceptable: **the thing that grants autonomy must not be reachable by the autonomy it
 grants.** See §7.
 
@@ -349,7 +349,7 @@ That is the complete list.
 
 **MUST NOT** — not "should not", *must not*, enforced:
 - modify itself (`supervisor.py`) or its config (`config/scheduler.json`)
-- modify the guardian, the AST gate, `safety/`, or `config/openclaw_action_policy.json`
+- modify the guardian, the AST gate, `safety/`, or `config/action_policy.json`
 - generate, approve, or apply patches
 - change the cycle's *content* — it may not skip steps, reorder them, or pass different
   arguments. It may only start the cycle as configured, or kill it.
@@ -368,7 +368,7 @@ enforced. Before the supervisor ships, `execute_patches.py` must refuse to write
 ```
 supervisor.py
 config/scheduler.json
-config/openclaw_action_policy.json
+config/action_policy.json
 safety/**
 patch_guardian.py
 execute_patches.py          # the gate must not be able to rewrite the gate

@@ -26,7 +26,7 @@
         "keys": 72
       },
       "openclaw": {
-        "path": "config/openclaw_sources.json",
+        "path": "config/data_feeds.json",
         "keys": 60
       },
       "somatic": {
@@ -994,315 +994,315 @@
     },
     "severe_food_insecurity_pct": {
       "subcategory": "A1.1",
-      "rule": "declared by seed wb:SN.ITK.SVFI.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SN.ITK.SVFI.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "child_wasting_pct": {
       "subcategory": "A1.1",
-      "rule": "declared by seed wb:SH.STA.WAST.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.STA.WAST.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "safe_sanitation_pct": {
       "subcategory": "A1.2",
-      "rule": "declared by seed wb:SH.STA.SMSS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.STA.SMSS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "slum_population_pct": {
       "subcategory": "A1.3",
-      "rule": "declared by seed wb:EN.POP.SLUM.UR.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EN.POP.SLUM.UR.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "electricity_access_pct": {
       "subcategory": "A1.4",
-      "rule": "declared by seed wb:EG.ELC.ACCS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EG.ELC.ACCS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "clean_cooking_access_pct": {
       "subcategory": "A1.4",
-      "rule": "declared by seed wb:EG.CFT.ACCS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EG.CFT.ACCS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "maternal_mortality_per_100k": {
       "subcategory": "A1.5",
-      "rule": "declared by seed wb:SH.STA.MMRT:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.STA.MMRT:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "life_expectancy": {
       "subcategory": "A1.5",
-      "rule": "declared by seed wb:SP.DYN.LE00.IN:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.DYN.LE00.IN:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "vaccination_coverage_pct": {
       "subcategory": "A1.5",
-      "rule": "declared by seed wb:SH.IMM.MEAS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.IMM.MEAS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "homicide_rate": {
       "subcategory": "A2.1",
-      "rule": "declared by seed wb:VC.IHR.PSRC.P5:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:VC.IHR.PSRC.P5:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "unemployment_pct": {
       "subcategory": "A2.3",
-      "rule": "declared by seed wb:SL.UEM.TOTL.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SL.UEM.TOTL.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "tertiary_enrolment": {
       "subcategory": "A5.1",
-      "rule": "declared by seed wb:SE.TER.ENRR:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SE.TER.ENRR:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "internet_access_pct": {
       "subcategory": "A5.2",
-      "rule": "declared by seed wb:IT.NET.USER.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:IT.NET.USER.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "suicide_rate": {
       "subcategory": "A5.4",
-      "rule": "declared by seed wb:SH.STA.SUIC.P5:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.STA.SUIC.P5:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "chronic_disease_burden": {
       "subcategory": "A5.5",
-      "rule": "declared by seed wb:SH.DTH.NCOM.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.DTH.NCOM.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "military_spending": {
       "subcategory": "B1.3",
-      "rule": "declared by seed wb:MS.MIL.XPND.GD.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:MS.MIL.XPND.GD.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "arms_transfers": {
       "subcategory": "B1.3",
-      "rule": "declared by seed wb:MS.MIL.XPRT.KD:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:MS.MIL.XPRT.KD:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "employment_rate": {
       "subcategory": "B3.1",
-      "rule": "declared by seed wb:SL.EMP.TOTL.SP.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SL.EMP.TOTL.SP.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "inflation_pct": {
       "subcategory": "B3.2",
-      "rule": "declared by seed wb:FP.CPI.TOTL.ZG:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:FP.CPI.TOTL.ZG:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "trade_balance": {
       "subcategory": "B3.4",
-      "rule": "declared by seed wb:NE.RSB.GNFS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:NE.RSB.GNFS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "natural_resource_rents_pct": {
       "subcategory": "B3.7",
-      "rule": "declared by seed wb:NY.GDP.TOTL.RT.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:NY.GDP.TOTL.RT.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "road_deaths": {
       "subcategory": "B4.1",
-      "rule": "declared by seed wb:SH.STA.TRAF.P5:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.STA.TRAF.P5:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "broadband_access_pct": {
       "subcategory": "B4.3",
-      "rule": "declared by seed wb:IT.NET.BBND.P2:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:IT.NET.BBND.P2:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "mobile_coverage_pct": {
       "subcategory": "B4.3",
-      "rule": "declared by seed wb:IT.CEL.SETS.P2:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:IT.CEL.SETS.P2:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "grid_reliability": {
       "subcategory": "B4.4",
-      "rule": "declared by seed wb:EG.ELC.LOSS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EG.ELC.LOSS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "rd_spending_pct_gdp": {
       "subcategory": "B6.1",
-      "rule": "declared by seed wb:GB.XPD.RSDV.GD.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:GB.XPD.RSDV.GD.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "population": {
       "subcategory": "B7.1",
-      "rule": "declared by seed wb:SP.POP.TOTL:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.POP.TOTL:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "dependency_ratio": {
       "subcategory": "B7.1",
-      "rule": "declared by seed wb:SP.POP.DPND:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.POP.DPND:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "fertility_rate": {
       "subcategory": "B7.2",
-      "rule": "declared by seed wb:SP.DYN.TFRT.IN:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.DYN.TFRT.IN:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "crude_death_rate": {
       "subcategory": "B7.2",
-      "rule": "declared by seed wb:SP.DYN.CDRT.IN:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.DYN.CDRT.IN:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "urban_population_growth_pct": {
       "subcategory": "B7.4",
-      "rule": "declared by seed wb:SP.URB.GROW:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SP.URB.GROW:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "health_workers_per_10k": {
       "subcategory": "B8.1",
-      "rule": "declared by seed wb:SH.MED.PHYS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.MED.PHYS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "hospital_beds_per_10k": {
       "subcategory": "B8.1",
-      "rule": "declared by seed wb:SH.MED.BEDS.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:SH.MED.BEDS.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "co2_emissions_by_country": {
       "subcategory": "C1.2",
-      "rule": "declared by seed wb:EN.GHG.CO2.MT.CE.AR5:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EN.GHG.CO2.MT.CE.AR5:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "threatened_species": {
       "subcategory": "C2.2",
-      "rule": "declared by seed wb:EN.MAM.THRD.NO:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EN.MAM.THRD.NO:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "protected_marine_area_pct": {
       "subcategory": "C2.5",
-      "rule": "declared by seed wb:ER.MRN.PTMR.ZS:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:ER.MRN.PTMR.ZS:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "freshwater_per_capita": {
       "subcategory": "C3.1",
-      "rule": "declared by seed wb:ER.H2O.INTR.PC:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:ER.H2O.INTR.PC:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "arable_land_per_capita": {
       "subcategory": "C3.2",
-      "rule": "declared by seed wb:AG.LND.ARBL.HA.PC:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:AG.LND.ARBL.HA.PC:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "primary_energy_supply": {
       "subcategory": "C3.3",
-      "rule": "declared by seed wb:EG.USE.PCAP.KG.OE:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EG.USE.PCAP.KG.OE:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "pm25_exposure": {
       "subcategory": "C4.1",
-      "rule": "declared by seed wb:EN.ATM.PM25.MC.M3:WLD in config/openclaw_sources.json",
+      "rule": "declared by seed wb:EN.ATM.PM25.MC.M3:WLD in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "quake_m45_count": {
       "subcategory": "C5.1",
-      "rule": "declared by seed usgs:summary_4.5_day in config/openclaw_sources.json",
+      "rule": "declared by seed usgs:summary_4.5_day in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "significant_quakes_30d": {
       "subcategory": "C5.1",
-      "rule": "declared by seed usgs:summary_significant_month in config/openclaw_sources.json",
+      "rule": "declared by seed usgs:summary_significant_month in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "solar_storm_events": {
       "subcategory": "D1.5",
-      "rule": "declared by seed swpc:kp_1m_latest in config/openclaw_sources.json",
+      "rule": "declared by seed swpc:kp_1m_latest in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "refugees_under_unhcr_mandate": {
       "subcategory": "A2.2",
-      "rule": "declared by seed unhcr:population_latest in config/openclaw_sources.json",
+      "rule": "declared by seed unhcr:population_latest in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]
     },
     "health_coverage_index_who": {
       "subcategory": "A2.6",
-      "rule": "declared by seed who:uhc_index in config/openclaw_sources.json",
+      "rule": "declared by seed who:uhc_index in config/data_feeds.json",
       "sources": [
         "openclaw"
       ]

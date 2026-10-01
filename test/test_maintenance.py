@@ -153,3 +153,9 @@ def test_mutation_without_the_stale_hand_off_the_oldest_comes_first(p, monkeypat
     real = mt.queue
     monkeypatch.setattr(mt, "queue", lambda cells, state, due=None: real(cells, state, set()))
     assert _run(p, 1)["rows"][0]["cell"] == "src:s1"
+
+
+def test_a_searcher_error_is_not_nothing_found(p):
+    _run(p, 5, search=lambda cell, q: {"pages": 0, "errors": ["Browser profile is not running"]})
+    row = [r for r in _log(p) if r["cell"] == "sub:A1.1"][0]
+    assert row["verdict"] == "SEARCHER_ERROR"

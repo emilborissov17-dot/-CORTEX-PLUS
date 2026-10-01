@@ -61,7 +61,7 @@ INTERNAL_METRIC = ("test/test_llm_json.py::test_strips_done_thinking_marker"
 # component-specific, so the offered suites are too, and a metric naming
 # a suite offered for a different component is refused as WRONG_KIND —
 # correctly.
-INTERNAL_METRIC_EW = ("test/test_openclaw_axis_worker.py::test_a_path_that_walks_into_a_number_is_refused"
+INTERNAL_METRIC_EW = ("test/test_data_feed_reader.py::test_a_path_that_walks_into_a_number_is_refused"
                       " fails on the code as it is and passes after")
 
 GOOD_SPEC = {

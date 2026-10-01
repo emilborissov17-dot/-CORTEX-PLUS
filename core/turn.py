@@ -86,7 +86,8 @@ def _live_witness(cycle_id: str):
 
 def _live_alarm(subject: str, detail: str, dedup_key: str) -> str:
     import supervisor
-    return supervisor.alarm_human(subject, detail, dedup_key=dedup_key, cls="TURN_STUCK")
+    return supervisor.alarm_human(subject, detail, dedup_key=dedup_key, cls="TURN_STUCK",
+                                  level=supervisor.ALARM)
 
 
 def hand_over(to: str, summary: str, cycle_id: str, cause: Optional[str] = None, path=None, log_path=None,

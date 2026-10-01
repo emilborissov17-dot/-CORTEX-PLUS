@@ -15,7 +15,7 @@ THE LIVE KEYS, from six places, each read from disk at run time:
                   composed slot and of every live source in every slot). The
                   top-level keys of that file are AXIS names, not measured keys,
                   and are not enumerated.
-  openclaw        `key` of every entry in config/openclaw_sources.json "sources"
+  openclaw        `key` of every entry in config/data_feeds.json "sources"
   somatic         VECTOR_FIELDS of cockpit/somatic.py, read by AST (the module is
                   not imported: importing it would start nothing, but it would
                   also prove nothing about the literal)
@@ -48,7 +48,7 @@ SRC = {
     "metric_details": REPO / "snapshots" / "master" / "goal_score_latest.json",
     "daily_tier": REPO / "memory" / "daily_tier.jsonl",
     "composed": REPO / "memory" / "composed_indicators.json",
-    "openclaw": REPO / "config" / "openclaw_sources.json",
+    "openclaw": REPO / "config" / "data_feeds.json",
     "somatic": REPO / "cockpit" / "somatic.py",
 }
 
@@ -299,7 +299,7 @@ def rule_table(rules: list | None = None) -> dict:
 def declared_rules(sources: list, rules: dict) -> dict:
     """{key: (subcategory, why)} from openclaw seed entries that DECLARE a
     subcategory (C-OC-1 Part 3). A declaration is an explicit rule written by a
-    human into config/openclaw_sources.json, not a guess. Refused when it
+    human into config/data_feeds.json, not a guess. Refused when it
     contradicts RULES for the same key, or when two seeds declare one key
     differently."""
     out: dict = {}
@@ -312,7 +312,7 @@ def declared_rules(sources: list, rules: dict) -> dict:
                           f"RULES ({rules[key][0]})")
         if key in out and out[key][0] != sub:
             raise Refused(f"key {key!r} is declared into two subcategories ({out[key][0]}, {sub})")
-        out[key] = (sub, f"declared by seed {src.get('id')} in config/openclaw_sources.json")
+        out[key] = (sub, f"declared by seed {src.get('id')} in config/data_feeds.json")
     return out
 
 

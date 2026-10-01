@@ -102,7 +102,7 @@ def test_the_reason_is_a_finding_and_not_a_promise():
     """A placeholder that says 'not yet' teaches nothing. This one has to carry
     the measurement it rests on, so a reader can check it rather than trust it."""
     r = C.K2_NOT_WIRED_REASON
-    assert "openclaw_axis_worker" in r, "the reason names no module"
+    assert "data_feed_reader" in r, "the reason names no module"
     assert "agents/axis/axis_feed.py" in r, "the reason does not name the module whose code it rests on"
     assert "external_feeds.jsonl" in r, "the reason names no artifact"
     assert any(ch.isdigit() for ch in r), "the reason cites no line or date"

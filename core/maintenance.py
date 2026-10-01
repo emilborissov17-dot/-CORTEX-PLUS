@@ -57,7 +57,7 @@ def cells(tree: Optional[dict] = None, sources: Optional[list] = None) -> list:
     from core import taxonomy as tx
     out = [{"cell": f"sub:{s['id']}", "kind": "subcategory", "sub": s} for s in tx.world_subcategories(tree)]
     if sources is None:
-        from scripts.openclaw_axis_worker import all_sources
+        from scripts.data_feed_reader import all_sources
         sources, _ = all_sources()
     seen = set()
     for s in sources:
@@ -117,6 +117,8 @@ def _work_subcategory(cell, st, search) -> dict:
         res = search(cell, q)
     except Exception as exc:                                         # noqa: BLE001
         return {"verdict": "NOTHING_FOUND", "queries": [q], "why": f"{type(exc).__name__}: {exc}"}
+    if res.get("errors") and not res.get("pages"):
+        return {"verdict": "SEARCHER_ERROR", "queries": [q], **res}      # the searcher failed: not "nothing there"
     if not res.get("pages"):
         return {"verdict": "NOTHING_FOUND", "queries": [q], **res}
     return {"verdict": "CHANGED" if res.get("statements_added") else "UNCHANGED", "queries": [q], **res}
@@ -136,7 +138,7 @@ def _live_worker_run(source: dict) -> dict:
     import tempfile
     from core import fetch_standard as fs
     from core import knowledge as kn
-    from scripts import openclaw_axis_worker as w
+    from scripts import data_feed_reader as w
     with tempfile.TemporaryDirectory() as d:
         seed = Path(d) / "one.json"
         seed.write_text(json.dumps({"sources": [source], "timeout_sec": 30}), encoding="utf-8")
@@ -174,10 +176,10 @@ def selftest() -> dict:
     res = {"integrations": {
         "memory/maintenance_state.json": f"LIVE ({len(_load(STATE))} cells worked)" if STATE.exists()
         else "INERT (never ran)"}}
-    chain = REPO / "tools" / "openclaw_chain.bat"
+    chain = REPO / "tools" / "feed_chain.bat"
     from core.turn import bat_steps
     res["integrations"]["chain runs core.maintenance"] = (
-        "LIVE" if "maintenance.py" in bat_steps(chain) else "INERT (not in tools/openclaw_chain.bat)")
+        "LIVE" if "maintenance.py" in bat_steps(chain) else "INERT (not in tools/feed_chain.bat)")
     res["integrations"]["searcher for subcategory cells"] = "INERT (" + NO_SEARCHER + ")"
     res["ok"] = True
     return res

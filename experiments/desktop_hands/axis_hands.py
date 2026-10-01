@@ -6,7 +6,7 @@ experiments/desktop_hands/axis_hands.py — the hands of Shiva.
 Per-axis, READ-ONLY probes that let the organism reach out and FEEL the world
 (level-1, autonomous, tamper-evident). Sensing hands move freely; hands that
 CHANGE the world are classified up and REFUSED autonomous execution — they are
-logged as GATED_INTENT and wait for the human, per config/openclaw_action_policy.json.
+logged as GATED_INTENT and wait for the human, per config/action_policy.json.
 This is "earned bounded autonomy" made literal: the baby gets hands to touch and
 search, not to seize.
 
@@ -29,7 +29,7 @@ sys.path.insert(0, str(HERE))
 
 import action_ledger as ledger  # noqa: E402  (same folder — tamper-evident chain)
 
-POLICY_FILE     = REPO / "config" / "openclaw_action_policy.json"
+POLICY_FILE     = REPO / "config" / "action_policy.json"
 # sources the ORGANISM found ITSELF (core/data_scout autonomous discovery).
 # Read directly (no import) so the hands stay dependency-free.
 DISCOVERED_FILE = REPO / "memory" / "discovered_data_sources.json"
@@ -166,7 +166,7 @@ def probe_all(axes=None, timeout: int = 15) -> dict:
 if __name__ == "__main__":
     if "--classify" in sys.argv:
         for a in ("web_search", "public_api_get", "git_push", "http_post_external",
-                  "modify_openclaw_action_policy", "make_up_something"):
+                  "modify_action_policy", "make_up_something"):
             print(f"  {a:34} -> {classify(a)}")
     elif "--probe" in sys.argv:
         i = sys.argv.index("--probe")

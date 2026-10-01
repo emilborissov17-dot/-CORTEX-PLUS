@@ -9,7 +9,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from scripts import openclaw_axis_worker as w  # noqa: E402
+from scripts import data_feed_reader as w  # noqa: E402
 
 BLOB = {"SOCIAL_RELATIONS_REVIEW": {"sources": [
     {"url": "local://snapshots/master/global_indicators_latest.json#conflicts.active_armed_conflicts", "kind": "file",

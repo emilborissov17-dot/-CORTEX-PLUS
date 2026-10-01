@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "description": "Per-action-type JSON Schema (Draft 2020-12) for the PARAMETERS of an OpenClaw action. Validated by agents/openclaw_bridge.validate_parameters() BEFORE classification, and after the always_blocked check.",
+    "description": "Per-action-type JSON Schema (Draft 2020-12) for the PARAMETERS of an OpenClaw action. Validated by agents/action_gate.validate_parameters() BEFORE classification, and after the always_blocked check.",
     "why_allowlist_patterns": "Every string pattern here is an ALLOWLIST of the characters that field legitimately needs, never a blocklist of attack strings. A blocklist of '__import__' loses to the next payload; a path pattern that permits only [A-Za-z0-9_./-] refuses __import__(\"os\").system(...) because of the quotes and parentheses, and refuses everything else shaped like it too.",
     "default_is_no_parameters": "An action_type with no entry below falls to \"_default\", which permits NO parameters at all. Fail-closed: a new action type must have a schema written for it, in a commit, before it can carry data.",
     "additionalProperties": "false everywhere, on purpose. An unknown field is refused, not ignored — a field that silently does nothing is how somebody comes to believe it does something."

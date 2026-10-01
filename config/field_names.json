@@ -112,7 +112,7 @@
           "found_in": "openclaw_queue/cards/*.jsonl and atoms/**/*.jsonl",
           "example": "2023",
           "written_by": [
-            "scripts/openclaw_axis_worker.py",
+            "scripts/data_feed_reader.py",
             "core/atoms.py"
           ],
           "caveat": "the value is a year ('2023'), a day ('2026-10-01') or a datetime; tools/ask.py parses the day and datetime forms and reports a bare year as unparsable rather than guessing it",

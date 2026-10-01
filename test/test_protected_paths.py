@@ -48,7 +48,7 @@ from safety.protected_paths import (
     "safety/ast_gate.py",
     "safety/quarantine.py",
     "safety/protected_paths.py",          # the denylist protects itself
-    "config/openclaw_action_policy.json",
+    "config/action_policy.json",
     "config/dead_sources.json",
     "config/scheduler.json",
     "memory/existence_ledger.jsonl",
@@ -92,7 +92,7 @@ def test_protection_reason_explains_itself():
     "memory/../patch_guardian.py",
     "PATCH_GUARDIAN.PY",                          # case (Windows is case-insensitive)
     "Safety/Ast_Gate.py",
-    "config/../config/openclaw_action_policy.json",
+    "config/../config/action_policy.json",
 ])
 def test_evasion_attempts_are_still_protected(evasion):
     assert is_protected(evasion), f"denylist bypassed via {evasion!r}"
@@ -214,7 +214,7 @@ def test_layer2_denies_patch_targeting_patch_guardian(tmp_path, monkeypatch):
     "safety/ast_gate.py",
     "safety/protected_paths.py",
     "supervisor.py",
-    "config/openclaw_action_policy.json",
+    "config/action_policy.json",
     "memory/existence_ledger.jsonl",
     "scripts/review_quarantine.py",
 ])

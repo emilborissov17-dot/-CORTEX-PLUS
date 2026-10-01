@@ -323,7 +323,7 @@ def test_a_call_from_inside_the_defining_module_is_neither_live_nor_a_test(tmp_p
 def test_a_namesake_in_another_module_is_not_counted(tmp_path):
     """THE ANSWER THAT WAS TOO BIG TO BE ONE, measured 20 Sep 2026.
 
-    Asked for the callers of scripts.openclaw_axis_worker.run, the first version
+    Asked for the callers of scripts.data_feed_reader.run, the first version
     matched every call node named `run` and answered "188 live caller(s) outside
     test/" — subprocess.run and a dozen unrelated run()s. A count that large
     reads as evidence and is noise. The dotted path is honoured: a call counts
@@ -347,7 +347,7 @@ def test_an_aliased_import_is_still_the_same_function(tmp_path):
     """`from m import f as _f` then `_f(...)`. Filtering on the call's spelling
     loses every one of those calls, and loses them silently, which reads as
     'nobody calls it' — the worst shape of wrong answer this tool can give.
-    test/test_openclaw_axis_worker.py does exactly this with `run as _run_raw`."""
+    test/test_data_feed_reader.py does exactly this with `run as _run_raw`."""
     root = _callers_repo(tmp_path, live=False)
     (root / "core" / "aliased.py").write_text(
         "from core.cadence import load_specs as _ls\n"
