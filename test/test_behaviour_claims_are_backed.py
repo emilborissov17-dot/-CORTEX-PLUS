@@ -121,7 +121,8 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # 678 on 1 Oct (C-OC-1..3 OpenClaw/taxonomy work): seventeen added, ALL BACKED -
     # each names its test; five more sentences were deleted as false since C-OC-3
     # or unbacked. The UNBACKED count above went DOWN by one (612 -> 611).
-    assert len(accepted) <= 678, (
+    # 679 on 1 Oct (C-NEED-1 Part 1): one added, BACKED by test_observation_log.
+    assert len(accepted) <= 679, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

@@ -7,7 +7,7 @@
     "status": "DRAFT - not ratified by Emil, not attacked by Kimi. NOT LOADED BY ANY CODE YET: a loader and tests must be added in the same commit that tracks this file.",
     "shape": "domain -> category -> subcategory -> wanted_keys. A subcategory is a BUNDLE, never one number.",
     "wanted_keys": "names of indicators the subcategory needs. They are WANTS, not live keys. The mapping of live keys to subcategories lives in config/taxonomy_key_map.json (to be generated from the repo, not written by hand).",
-    "candidate_sources": "names only, NOT verified by any fetch.",
+    "source_hints_unverified": "Renamed from candidate_sources on 2026-10-01 (C-NEED-1, Emil R29). Written by Claude (cloud session) on 2026-10-01 from general knowledge; none was verified by any fetch. Hints, not a decision: no code builds a query or picks a source from them.",
     "atom_fields": [
       "value",
       "unit",
@@ -53,7 +53,7 @@
                 "ipc_phase3plus_population",
                 "food_price_index"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "FAO",
                 "FEWS NET/IPC",
                 "WFP",
@@ -69,7 +69,7 @@
                 "safe_sanitation_pct",
                 "waterborne_deaths"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO/UNICEF JMP"
               ]
             },
@@ -84,7 +84,7 @@
                 "forced_evictions",
                 "housing_cost_burden_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN-Habitat",
                 "OECD"
               ]
@@ -98,7 +98,7 @@
                 "clean_cooking_access_pct",
                 "energy_poverty_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IEA",
                 "World Bank"
               ]
@@ -116,7 +116,7 @@
                 "primary_care_access_pct",
                 "air_pollution_deaths"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "UNICEF",
                 "IHME"
@@ -142,7 +142,7 @@
                 "violence_against_children",
                 "state_violence_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UCDP",
                 "ACLED",
                 "UNODC"
@@ -158,7 +158,7 @@
                 "stateless_population",
                 "returns"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNHCR",
                 "IDMC"
               ]
@@ -175,7 +175,7 @@
                 "household_debt",
                 "basic_basket_price"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "World Bank",
                 "ILO"
               ]
@@ -190,7 +190,7 @@
                 "access_to_justice",
                 "land_property_rights"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WJP",
                 "UNODC",
                 "OHCHR"
@@ -206,7 +206,7 @@
                 "disaster_losses",
                 "early_warning_coverage"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "EM-DAT",
                 "GDACS",
                 "UNDRR"
@@ -221,7 +221,7 @@
                 "catastrophic_health_spending_pct",
                 "medicine_shortages"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "World Bank"
               ]
@@ -244,7 +244,7 @@
                 "social_support_pct",
                 "interpersonal_trust_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Gallup",
                 "World Values Survey"
               ]
@@ -257,7 +257,7 @@
                 "discrimination_by_group",
                 "hate_crimes"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "OHCHR",
                 "UN Women"
               ]
@@ -271,7 +271,7 @@
                 "freedom_of_association",
                 "civic_space"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "V-Dem",
                 "CIVICUS"
               ]
@@ -285,7 +285,7 @@
                 "migrant_detention",
                 "migrant_access_to_services"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IOM"
               ]
             }
@@ -308,7 +308,7 @@
                 "freedom_of_belief",
                 "freedom_of_movement"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "V-Dem",
                 "RSF",
                 "Freedom House"
@@ -322,7 +322,7 @@
                 "unequal_treatment",
                 "impunity"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WJP"
               ]
             },
@@ -337,7 +337,7 @@
                 "wages_below_subsistence",
                 "working_hours"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ILO"
               ]
             },
@@ -350,7 +350,7 @@
                 "prison_conditions",
                 "bribery_for_public_service"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "OHCHR",
                 "Transparency International"
               ]
@@ -366,7 +366,7 @@
                 "gender_gap",
                 "regional_gap"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WID",
                 "World Bank",
                 "UNDP"
@@ -392,7 +392,7 @@
                 "children_out_of_school",
                 "tertiary_enrolment"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNESCO UIS",
                 "OECD PISA"
               ]
@@ -406,7 +406,7 @@
                 "freedom_of_information",
                 "disinformation_exposure"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ITU",
                 "V-Dem"
               ]
@@ -420,7 +420,7 @@
                 "languages_at_risk",
                 "access_to_libraries_arts"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNESCO"
               ]
             },
@@ -434,7 +434,7 @@
                 "addiction_burden",
                 "life_satisfaction"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "IHME",
                 "Gallup"
@@ -450,7 +450,7 @@
                 "chronic_disease_burden",
                 "healthy_life_expectancy"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO"
               ]
             },
@@ -463,7 +463,7 @@
                 "unpaid_care_burden",
                 "youth_neet_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ILO",
                 "UN Women"
               ]
@@ -493,7 +493,7 @@
                 "battle_deaths",
                 "civilian_deaths"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UCDP",
                 "ACLED"
               ]
@@ -507,7 +507,7 @@
                 "commitments_kept",
                 "commitments_broken"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UCDP",
                 "Institution 0 register"
               ]
@@ -520,7 +520,7 @@
                 "military_spending",
                 "arms_transfers"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "SIPRI"
               ]
             },
@@ -532,7 +532,7 @@
                 "nuclear_warheads",
                 "wmd_incidents"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "SIPRI"
               ]
             },
@@ -544,7 +544,7 @@
                 "terror_attacks",
                 "political_violence_deaths"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ACLED",
                 "GTD"
               ]
@@ -564,7 +564,7 @@
               "wanted_keys": [
                 "rule_of_law_index"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WJP",
                 "V-Dem"
               ]
@@ -577,7 +577,7 @@
                 "corruption_index",
                 "bribery_incidence"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Transparency International"
               ]
             },
@@ -589,7 +589,7 @@
                 "electoral_democracy_index",
                 "autocratization_episodes"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "V-Dem"
               ]
             },
@@ -601,7 +601,7 @@
                 "open_budget_index",
                 "access_to_information"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Open Budget Survey"
               ]
             },
@@ -613,7 +613,7 @@
                 "state_capacity",
                 "public_service_delivery"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "World Bank"
               ]
             },
@@ -625,7 +625,7 @@
                 "public_commitments_kept",
                 "public_commitments_broken"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Institution 0 register"
               ]
             },
@@ -637,7 +637,7 @@
                 "treaty_ratifications",
                 "un_resolutions_compliance"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN"
               ]
             }
@@ -657,7 +657,7 @@
                 "gdp_growth_pct",
                 "employment_rate"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "World Bank",
                 "ILO"
               ]
@@ -671,7 +671,7 @@
                 "food_price_index",
                 "energy_price_index"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IMF",
                 "FAO"
               ]
@@ -684,7 +684,7 @@
                 "public_debt_pct_gdp",
                 "debt_distress_countries"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IMF",
                 "World Bank"
               ]
@@ -697,7 +697,7 @@
                 "trade_balance",
                 "import_dependency"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNCTAD"
               ]
             },
@@ -709,7 +709,7 @@
                 "wealth_share_top1",
                 "market_concentration"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WID"
               ]
             },
@@ -721,7 +721,7 @@
                 "food_loss_waste_pct",
                 "vacant_housing_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "FAO",
                 "national statistics"
               ]
@@ -734,7 +734,7 @@
                 "material_footprint_per_capita",
                 "adjusted_net_savings_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNEP",
                 "World Bank"
               ]
@@ -755,7 +755,7 @@
                 "transport_access",
                 "road_deaths"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "World Bank"
               ]
@@ -768,7 +768,7 @@
                 "housing_stock",
                 "housing_quality"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN-Habitat"
               ]
             },
@@ -780,7 +780,7 @@
                 "broadband_access_pct",
                 "mobile_coverage_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ITU"
               ]
             },
@@ -792,7 +792,7 @@
                 "grid_reliability",
                 "power_outages"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IEA"
               ]
             },
@@ -804,7 +804,7 @@
                 "water_infrastructure_loss",
                 "wastewater_treated_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN-Water"
               ]
             },
@@ -816,7 +816,7 @@
                 "urbanization_pct",
                 "urban_risk_exposure"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN-Habitat"
               ]
             }
@@ -837,7 +837,7 @@
                 "journalists_killed",
                 "journalists_jailed"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "RSF",
                 "CPJ"
               ]
@@ -849,7 +849,7 @@
               "wanted_keys": [
                 "media_ownership_concentration"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Media Ownership Monitor"
               ]
             },
@@ -861,7 +861,7 @@
                 "internet_shutdowns",
                 "censorship_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IODA",
                 "AccessNow"
               ]
@@ -873,7 +873,7 @@
               "wanted_keys": [
                 "state_disinformation_index"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "V-Dem"
               ]
             },
@@ -885,7 +885,7 @@
                 "surveillance_laws",
                 "spyware_incidents"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Citizen Lab"
               ]
             }
@@ -905,7 +905,7 @@
                 "rd_spending_pct_gdp",
                 "open_access_share"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNESCO",
                 "OECD"
               ]
@@ -919,7 +919,7 @@
                 "ai_compute_concentration",
                 "ai_governance_measures"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "AI Incident Database"
               ]
             },
@@ -931,7 +931,7 @@
                 "biosafety_incidents",
                 "biotech_governance"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO"
               ]
             },
@@ -942,7 +942,7 @@
               "wanted_keys": [
                 "technology_access_gap"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "ITU",
                 "World Bank"
               ]
@@ -963,7 +963,7 @@
                 "population",
                 "dependency_ratio"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN DESA"
               ]
             },
@@ -975,7 +975,7 @@
                 "fertility_rate",
                 "crude_death_rate"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN DESA"
               ]
             },
@@ -986,7 +986,7 @@
               "wanted_keys": [
                 "net_migration"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN DESA",
                 "IOM"
               ]
@@ -998,7 +998,7 @@
               "wanted_keys": [
                 "urban_population_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UN DESA"
               ]
             }
@@ -1018,7 +1018,7 @@
                 "health_workers_per_10k",
                 "hospital_beds_per_10k"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO"
               ]
             },
@@ -1029,7 +1029,7 @@
               "wanted_keys": [
                 "ihr_capacity_score"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO"
               ]
             },
@@ -1041,7 +1041,7 @@
                 "essential_medicines_availability",
                 "vaccine_supply"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "UNICEF"
               ]
@@ -1069,7 +1069,7 @@
                 "co2_ppm_mauna_loa",
                 "ch4_ppb"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NOAA"
               ]
             },
@@ -1081,7 +1081,7 @@
                 "co2_emissions_by_country",
                 "emissions_by_sector"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Global Carbon Project"
               ]
             },
@@ -1093,7 +1093,7 @@
                 "global_temp_anomaly",
                 "sea_surface_temp_anomaly"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Copernicus",
                 "NASA"
               ]
@@ -1106,7 +1106,7 @@
                 "sea_ice_extent",
                 "sea_level_rise_mm"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NSIDC",
                 "NASA"
               ]
@@ -1118,7 +1118,7 @@
               "wanted_keys": [
                 "extreme_weather_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "GDACS",
                 "EONET"
               ]
@@ -1139,7 +1139,7 @@
                 "forest_area_pct",
                 "tree_cover_loss"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Global Forest Watch",
                 "FAO"
               ]
@@ -1152,7 +1152,7 @@
                 "red_list_index",
                 "threatened_species"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IUCN"
               ]
             },
@@ -1164,7 +1164,7 @@
                 "overfished_stocks_pct",
                 "ocean_acidity"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "FAO"
               ]
             },
@@ -1175,7 +1175,7 @@
               "wanted_keys": [
                 "land_degradation_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNCCD"
               ]
             },
@@ -1187,7 +1187,7 @@
                 "protected_terrestrial_area_pct",
                 "protected_marine_area_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Protected Planet"
               ]
             }
@@ -1207,7 +1207,7 @@
                 "water_stress_pct",
                 "freshwater_per_capita"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "FAO AQUASTAT"
               ]
             },
@@ -1218,7 +1218,7 @@
               "wanted_keys": [
                 "arable_land_per_capita"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "FAO"
               ]
             },
@@ -1231,7 +1231,7 @@
                 "primary_energy_supply",
                 "fossil_reserves"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IEA"
               ]
             },
@@ -1242,7 +1242,7 @@
               "wanted_keys": [
                 "critical_minerals_supply"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "USGS"
               ]
             },
@@ -1255,7 +1255,7 @@
                 "recycling_rate_pct",
                 "circularity_rate_pct"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNEP"
               ]
             }
@@ -1274,7 +1274,7 @@
               "wanted_keys": [
                 "pm25_exposure"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "OpenAQ"
               ]
@@ -1286,7 +1286,7 @@
               "wanted_keys": [
                 "water_quality_index"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNEP"
               ]
             },
@@ -1297,7 +1297,7 @@
               "wanted_keys": [
                 "plastic_waste_leakage"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNEP"
               ]
             },
@@ -1309,7 +1309,7 @@
                 "nitrogen_surplus",
                 "chemical_incidents"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNEP",
                 "FAO"
               ]
@@ -1330,7 +1330,7 @@
                 "quake_m45_count",
                 "volcanic_eruptions"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "USGS"
               ]
             },
@@ -1343,7 +1343,7 @@
                 "drought_area",
                 "severe_storm_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "GDACS",
                 "EONET"
               ]
@@ -1356,7 +1356,7 @@
                 "wildfire_events",
                 "burned_area"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NASA FIRMS",
                 "GDACS"
               ]
@@ -1368,7 +1368,7 @@
               "wanted_keys": [
                 "zoonotic_spillover_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO",
                 "WOAH"
               ]
@@ -1388,7 +1388,7 @@
               "wanted_keys": [
                 "planetary_boundaries_crossed"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Stockholm Resilience Centre"
               ]
             },
@@ -1399,7 +1399,7 @@
               "wanted_keys": [
                 "ecological_footprint_ratio"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Global Footprint Network"
               ]
             }
@@ -1426,7 +1426,7 @@
                 "nuclear_warheads_deployed",
                 "nuclear_treaty_status"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "SIPRI"
               ]
             },
@@ -1438,7 +1438,7 @@
                 "pandemic_potential_outbreaks",
                 "high_containment_lab_incidents"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "WHO"
               ]
             },
@@ -1450,7 +1450,7 @@
                 "frontier_ai_incidents",
                 "ai_safety_commitments"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "AI Incident Database"
               ]
             },
@@ -1461,7 +1461,7 @@
               "wanted_keys": [
                 "tipping_elements_status"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "IPCC"
               ]
             },
@@ -1473,7 +1473,7 @@
                 "near_earth_object_close_approaches",
                 "solar_storm_events"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NASA CNEOS",
                 "NOAA SWPC"
               ]
@@ -1485,7 +1485,7 @@
               "wanted_keys": [
                 "supervolcano_unrest"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "USGS"
               ]
             }
@@ -1504,7 +1504,7 @@
               "wanted_keys": [
                 "orbital_launches"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "CelesTrak"
               ]
             },
@@ -1516,7 +1516,7 @@
                 "active_satellites",
                 "tracked_debris"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "CelesTrak",
                 "ESA"
               ]
@@ -1528,7 +1528,7 @@
               "wanted_keys": [
                 "space_resource_missions"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NASA",
                 "ESA"
               ]
@@ -1540,7 +1540,7 @@
               "wanted_keys": [
                 "neo_survey_completeness"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NASA CNEOS"
               ]
             },
@@ -1552,7 +1552,7 @@
                 "humans_in_orbit",
                 "off_earth_habitat_days"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "NASA"
               ]
             }
@@ -1571,7 +1571,7 @@
               "wanted_keys": [
                 "knowledge_preservation_status"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "UNESCO"
               ]
             },
@@ -1582,7 +1582,7 @@
               "wanted_keys": [
                 "critical_system_failures"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "national reports"
               ]
             }
@@ -1606,7 +1606,7 @@
               "name_en": "Energy",
               "name_bg": "Енергия",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1615,7 +1615,7 @@
               "name_en": "Thermal",
               "name_bg": "Температура",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1624,7 +1624,7 @@
               "name_en": "Compute",
               "name_bg": "Изчисление",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1633,7 +1633,7 @@
               "name_en": "Memory",
               "name_bg": "Памет",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1642,7 +1642,7 @@
               "name_en": "Storage",
               "name_bg": "Съхранение",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1651,7 +1651,7 @@
               "name_en": "Network",
               "name_bg": "Мрежа",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1660,7 +1660,7 @@
               "name_en": "Periphery",
               "name_bg": "Периферия",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1669,7 +1669,7 @@
               "name_en": "Acoustic",
               "name_bg": "Звук",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1678,7 +1678,7 @@
               "name_en": "Optic",
               "name_bg": "Светлина",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             },
@@ -1687,7 +1687,7 @@
               "name_en": "Logs",
               "name_bg": "Логове",
               "wanted_keys": [],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "cockpit/somatic.py"
               ]
             }
@@ -1706,7 +1706,7 @@
               "wanted_keys": [
                 "subcategories_seen"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "tools/taxonomy_coverage.py"
               ]
             },
@@ -1718,7 +1718,7 @@
                 "forecast_error_vs_baseline",
                 "interval_coverage"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "prophecy ledger"
               ]
             },
@@ -1729,7 +1729,7 @@
               "wanted_keys": [
                 "learner_margin_over_baseline"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "learner_progress"
               ]
             },
@@ -1741,7 +1741,7 @@
                 "requests_emitted",
                 "requests_with_effect"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "request ledger"
               ]
             }
@@ -1761,7 +1761,7 @@
                 "goal_coverage",
                 "goal_distance"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "goal_score"
               ]
             },
@@ -1772,7 +1772,7 @@
               "wanted_keys": [
                 "boundary_violations"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "witness"
               ]
             },
@@ -1785,7 +1785,7 @@
                 "patches_refused",
                 "patches_reverted"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "notary"
               ]
             },
@@ -1797,7 +1797,7 @@
                 "preregistrations_resolved",
                 "preregistrations_broken"
               ],
-              "candidate_sources": [
+              "source_hints_unverified": [
                 "Institution 0 register"
               ]
             }

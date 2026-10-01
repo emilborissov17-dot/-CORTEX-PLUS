@@ -49,6 +49,30 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 ROOT = REPO / "atoms"
+OBS_LOG = REPO / "memory" / "observation_log.jsonl"
+
+
+def obs_log_for(root) -> Path:
+    """The observation log of an atoms root: memory/observation_log.jsonl for the
+    live atoms/, a file BESIDE (never inside: read() walks every *.jsonl under the
+    root) any other root — a test, a replay."""
+    if root is None or Path(root).resolve() == ROOT.resolve():
+        return OBS_LOG
+    return Path(root).parent / "observation_log.jsonl"
+
+
+def _log_observation(root, row: dict) -> None:
+    p = obs_log_for(root)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("a", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _prior_reading(existing: list, a: dict):
+    """The newest earlier atom of the same (source_id, key, place), or None."""
+    same = [x for x in existing if x.get("kind", "atom") == "atom"
+            and (x.get("source_id"), x.get("key"), x.get("place")) == (a.get("source_id"), a.get("key"), a.get("place"))]
+    return max(same, key=lambda x: x.get("judged_utc") or "") if same else None
 SOURCES = REPO / "config" / "openclaw_sources.json"
 REQUIRED = ("value", "unit", "place", "period")
 _SAFE = re.compile(r"[^A-Za-z0-9_.\-]+")
@@ -233,19 +257,30 @@ def write(row: dict, root: Optional[Path] = None) -> dict:
     if a["card_key"] in {x.get("card_key") for x in existing}:
         return {"written": False, "why": f"card {a['card_key'][:12]} already filed"}
     ident = identity_of(a)
-    if any(x.get("kind", "atom") == "atom" and identity_of(x) == ident for x in existing):
+    now = a.get("judged_utc") or datetime.now(timezone.utc).isoformat()
+    first = [x for x in existing if x.get("kind", "atom") == "atom" and identity_of(x) == ident]
+    if first:
         seen = {"kind": "seen", "identity": list(ident), "card_key": a["card_key"],
-                "seen_utc": a.get("judged_utc") or datetime.now(timezone.utc).isoformat(),
-                "raw_period": a.get("raw_period")}
+                "seen_utc": now, "raw_period": a.get("raw_period")}
         with jf.open("a", encoding="utf-8", newline="\n") as fh:
             fh.write(json.dumps(seen, ensure_ascii=False) + "\n")
         write_manifest(root)
+        # C-NEED-1 1b: "unchanged" is a registered fact, not silence
+        _log_observation(root, {"ts": now, "verdict": "UNCHANGED", "identity": list(ident),
+                                "card_key": a["card_key"], "since": first[0].get("judged_utc")})
         return {"written": False, "seen_again": True, "why": "same observation seen again"}
+    prior = _prior_reading(existing, a)
+    if prior is not None:
+        a["changed_from"] = {"value": prior.get("value"), "period": prior.get("period"),
+                             "card_key": prior.get("card_key")}
     with jf.open("a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(a, ensure_ascii=False) + "\n")
     with mf.open("a", encoding="utf-8", newline="\n") as fh:
         fh.write(metta_line(a) + "\n")
     write_manifest(root)
+    _log_observation(root, {"ts": now, "verdict": "CHANGED" if prior is not None else "NEW",
+                            "identity": list(ident), "card_key": a["card_key"],
+                            **({"changed_from": a["changed_from"]} if prior is not None else {})})
     return {"written": True, "path": jf.relative_to(root).as_posix()}
 
 

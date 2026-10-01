@@ -707,3 +707,4 @@ test/test_taxonomy.py a85b0baa33b1  # BACKED: test_taxonomy.test_a_broken_count_
 core/atoms.py 2cd5557e7347  # BACKED: test_atoms_identity.test_a_second_fetch_with_a_new_generated_stamp_is_the_same_observation and test_mutation_identity_with_the_raw_stamp_brings_the_duplicate_back
 core/card_intake.py 65085140fc7b  # BACKED: test_observation_retractions.test_only_core_card_intake_opens_the_observations_file and test_mutation_a_module_that_opens_it_directly_is_caught
 core/fetch_standard.py ff03d0bb2682  # BACKED: test_fetch_standard.test_only_get_goes_out and the other rule tests there, each with a mutation
+test/test_observation_log.py f5746041e343  # BACKED: test_observation_log.test_an_unchanged_reading_logs_unchanged_and_writes_no_atom, test_a_changed_reading_carries_changed_from_and_logs_changed, test_a_first_reading_logs_new
