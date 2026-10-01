@@ -816,7 +816,8 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             if form == "pdf_unreadable":
                 pages["needs"].append({"source_id": sid, "need": "a PDF reader (none installed)"})
             else:
-                rep = ingest(sid, text, url=source.get("url", ""), origin="web")
+                rep = ingest(sid, text, url=source.get("url", ""), origin="web",
+                             **({"extra": {"granularity": "record"}} if form == "json" else {}))
                 if rep.get("outcome") == "SKIPPED_SAME_CONTENT":
                     pages["skipped_same_content"] += 1
                 else:

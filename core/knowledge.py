@@ -96,39 +96,51 @@ def _scalar(v) -> str:
 
 
 def flatten_json(payload, path: str = "") -> str:
-    """One line per record: "path: k=v; k=v". A dict whose values are scalars is
-    one line; nested dicts inline as dotted keys; lists recurse by index. Every
-    scalar is proven present in the output (FlattenLostValue)."""
+    """ONE LINE PER RECORD (C-TURN-1 7a): an element of an array of objects is one
+    record, written with everything nested in it as dotted keys
+    ("events.3: id=EONET_1; title=Flood; categories.0.id=floods; ..."); the root's
+    own scalars are one line. Every scalar is proven present (FlattenLostValue)."""
     lines: list = []
 
-    def inline(d, prefix=""):
+    def flat(d, prefix=""):
         parts = []
-        for k, v in d.items():
-            if isinstance(v, dict):
-                parts.extend(inline(v, f"{prefix}{k}."))
-            elif isinstance(v, list):
-                parts.append(f"{prefix}{k}=[{', '.join(_scalar(x) if not isinstance(x, (dict, list)) else json.dumps(x, ensure_ascii=False) for x in v)}]")
+        if isinstance(d, dict):
+            for k, v in d.items():
+                if isinstance(v, (dict, list)):
+                    parts.extend(flat(v, f"{prefix}{k}."))
+                else:
+                    parts.append(f"{prefix}{k}={_scalar(v)}")
+        elif isinstance(d, list):
+            if d and all(not isinstance(x, (dict, list)) for x in d):
+                parts.append(f"{prefix.rstrip('.')}=[{', '.join(_scalar(x) for x in d)}]")
             else:
-                parts.append(f"{prefix}{k}={_scalar(v)}")
+                for i, x in enumerate(d):
+                    if isinstance(x, (dict, list)):
+                        parts.extend(flat(x, f"{prefix}{i}."))
+                    else:
+                        parts.append(f"{prefix}{i}={_scalar(x)}")
         return parts
+
+    def is_records(v):
+        return isinstance(v, list) and v and any(isinstance(x, dict) for x in v)
 
     def walk(node, p):
         if isinstance(node, dict):
-            if all(not isinstance(v, list) or all(not isinstance(x, (dict, list)) for x in v) for v in node.values()):
-                lines.append(f"{p or '$'}: " + "; ".join(inline(node)))
-            else:
-                scal = {k: v for k, v in node.items() if not isinstance(v, (dict, list))}
-                if scal:
-                    lines.append(f"{p or '$'}: " + "; ".join(inline(scal)))
-                for k, v in node.items():
-                    if isinstance(v, (dict, list)):
-                        walk(v, f"{p}.{k}" if p else str(k))
+            own = {k: v for k, v in node.items() if not is_records(v)}
+            if own:
+                lines.append(f"{p or '$'}: " + "; ".join(flat(own)))
+            for k, v in node.items():
+                if is_records(v):
+                    walk(v, f"{p}.{k}" if p else str(k))
         elif isinstance(node, list):
-            if node and all(not isinstance(x, (dict, list)) for x in node):
-                lines.append(f"{p or '$'}: [{', '.join(_scalar(x) for x in node)}]")
-            else:
-                for i, x in enumerate(node):
-                    walk(x, f"{p}.{i}" if p else str(i))
+            for i, x in enumerate(node):
+                q = f"{p}.{i}" if p else str(i)
+                if isinstance(x, dict):
+                    lines.append(f"{q}: " + "; ".join(flat(x)))
+                elif isinstance(x, list):
+                    walk(x, q)
+                else:
+                    lines.append(f"{q}: {_scalar(x)}")
         else:
             lines.append(f"{p or '$'}: {_scalar(node)}")
 
@@ -239,7 +251,8 @@ def _ingest_one(source_id: str, text: str, url: str, origin: str, store: Path, s
     if h in seen:
         return {"source_id": source_id, "outcome": "SKIPPED_SAME_CONTENT", "added": 0}
     rep = st.ingest_text(source_id, text, url=url, origin=origin,
-                         extra={"host": host_of(url), "content_sha256": h, **(extra or {})})
+                         extra={"host": host_of(url), "content_sha256": h, **(extra or {})},
+                         mode="line" if (extra or {}).get("granularity") == "record" else None)
     # a CHANGED page from the same source repeats most of its sentences (a live
     # feed with one new row): those were written from the earlier page and are
     # not written again. Repeats inside ONE page are kept — that page is whole.
@@ -516,8 +529,72 @@ def _tok(s: str) -> set:
     return set(_TOK.findall((s or "").lower()))
 
 
+FIELD_INDEX = KDIR / "granularity_field.json"
+_PATH = re.compile(r"^((?:\$|[\w\-]+)(?:\.[\w\-]+)*): ")
+
+
+def record_key(sentence: str) -> Optional[str]:
+    """The record a FIELD-level JSON statement belongs to: its path up to the first
+    array index after the root ("events.0.geometry.0" -> "events.0"; "1.0" -> "1.0")."""
+    m = _PATH.match(sentence or "")
+    if not m:
+        return None
+    segs = m.group(1).split(".")
+    for i, seg in enumerate(segs):
+        if seg.isdigit() and i > 0:
+            return ".".join(segs[: i + 1])
+    return segs[0]
+
+
+def mark_field_granularity(store=None, out: Optional[Path] = None) -> dict:
+    """C-TURN-1 7a. Rows stored BEFORE a JSON record became one statement stay as
+    they are; this index marks them granularity "field" with their record key, so
+    the reader can collapse them by record. -> rows marked per source."""
+    idx, per_source = {}, {}
+    rows = statements(store)
+    # a page was a flattened JSON body when its FIRST statement is the flattener's
+    # root line ("$: ..." or "0: ..."); an HTML page's "Note: ..." is not a path
+    json_pages = {r.get("content_sha256") for r in rows
+                  if r.get("index") == 0 and re.match(r"^(\$|\d+)(\.\d+)*: ", r.get("sentence") or "")}
+    for r in rows:
+        if r.get("granularity") == "record" or r.get("content_sha256") not in json_pages:
+            continue
+        key = record_key(r.get("sentence"))
+        if key is None:
+            continue
+        idx[r["id"]] = key
+        per_source[r.get("source_id")] = per_source.get(r.get("source_id"), 0) + 1
+    o = Path(out or FIELD_INDEX)
+    o.parent.mkdir(parents=True, exist_ok=True)
+    o.write_text(json.dumps({"computed_utc": _now(), "granularity": "field", "rows": idx}), encoding="utf-8")
+    return per_source
+
+
+def collapse_fields(items: list, field_index: dict) -> list:
+    """Field-level statements of ONE record (same source, same record key) become
+    one item, at the best relevance among them."""
+    out, groups = [], {}
+    for it in items:
+        key = field_index.get(it.get("id")) if it.get("type") == "statement" else None
+        if key is None:
+            out.append(it)
+            continue
+        g = groups.get((it.get("source_id"), key))
+        if g is None:
+            g = {**it, "granularity": "field-collapsed", "record": key, "ids": [it["id"]], "texts": [it["text"]]}
+            groups[(it.get("source_id"), key)] = g
+            out.append(g)
+        else:
+            g["ids"].append(it["id"])
+            g["texts"].append(it["text"])
+            g["relevance"] = max(g["relevance"], it["relevance"])
+    for g in groups.values():
+        g["text"] = " | ".join(g.pop("texts"))
+    return out
+
+
 def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=None, ids_path=None,
-         labels_path=None, atoms_root=None, with_vectors: bool = True) -> list:
+         labels_path=None, atoms_root=None, with_vectors: bool = True, field_index: Optional[dict] = None) -> list:
     """Statements and measurement atoms for a need, ordered by relevance then
     corroboration. `need` is a subcategory id or free text. Every item is
     returned with whatever labels it has; nothing is withheld for a missing one."""
@@ -571,6 +648,9 @@ def read(need: str, k: int = 20, embed: Callable = None, store=None, vec_path=No
                                                        "source_class", "times_seen")},
                       "id": a.get("card_key"), "text": text.strip(), "value": a.get("value"),
                       "source_id": a.get("source_id")})
+    if field_index is None:
+        field_index = (_read_json(FIELD_INDEX, {}) or {}).get("rows", {}) if FIELD_INDEX.exists() else {}
+    items = collapse_fields(items, field_index)
     items.sort(key=lambda x: (-x["relevance"], -x["corroborated_by"]))
     return items[:k]
 
@@ -708,6 +788,9 @@ if __name__ == "__main__":
             sys.exit(0)
     if "--ingest-caches" in sys.argv:
         print(json.dumps(ingest_caches(), indent=1))
+        sys.exit(0)
+    if "--mark-field-granularity" in sys.argv:
+        print(json.dumps(mark_field_granularity(), indent=1))
         sys.exit(0)
     if "--label" in sys.argv:
         print(json.dumps(label_all()))

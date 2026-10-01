@@ -199,8 +199,9 @@ def _mean_sentence_words(segs: list) -> float:
 def segment(text: str, mode: str | None = None) -> tuple:
     """Normalised text -> (sentences, mode). Raises if a character went missing.
 
-    mode is "sentence" or "window"; pass it to force one, leave it None to choose
-    by measurement. Returns ([], "sentence") for empty input, which the caller
+    mode is "sentence", "window" or "line" (one statement per non-empty line: a
+    flattened JSON record, C-TURN-1 7a); pass it to force one, leave it None to
+    choose by measurement. Returns ([], "sentence") for empty input, which the caller
     reports as NO_SENTENCES.
     """
     norm = normalise(text)
@@ -208,7 +209,9 @@ def segment(text: str, mode: str | None = None) -> tuple:
         return [], "sentence"
 
     out = []
-    for line in norm.split("\n"):
+    if mode == "line":
+        out = [l.strip() for l in norm.split("\n") if l.strip()]
+    for line in ([] if mode == "line" else norm.split("\n")):
         line = line.strip()
         if not line:
             continue
@@ -247,7 +250,7 @@ def statement_id(source_id: str, index: int, sentence: str) -> str:
 
 
 def ingest_text(source_id: str, text: str, url: str = "", origin: str = "",
-                extra: dict | None = None) -> dict:
+                extra: dict | None = None, mode: str | None = None) -> dict:
     """Segment one text. Returns a report; writes nothing.
 
     origin is the PROVENANCE OF THE WORDS — "transcript", "article", "podcast".
@@ -255,7 +258,7 @@ def ingest_text(source_id: str, text: str, url: str = "", origin: str = "",
     number read off a primary source is an observation, and only the origin
     distinguishes them once both are sentences in the same store.
     """
-    sentences, seg_mode = segment(text)
+    sentences, seg_mode = segment(text, mode)
     if not sentences:
         return {"source_id": source_id, "url": url, "origin": origin,
                 "outcome": "NO_SENTENCES", "sentences": 0, "records": [],

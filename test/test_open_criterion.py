@@ -50,9 +50,9 @@ def harness(tmp_path, monkeypatch):
     store, seen = tmp_path / "statements.jsonl", tmp_path / "seen.json"
     calls = []
 
-    def ingest(source_id, text, url="", origin="web"):
+    def ingest(source_id, text, url="", origin="web", extra=None):
         calls.append(text)
-        return kn.ingest(source_id, text, url=url, origin=origin, store=store, seen_path=seen)
+        return kn.ingest(source_id, text, url=url, origin=origin, store=store, seen_path=seen, extra=extra)
 
     def run(sources, getter):
         seed = tmp_path / "seed.json"
@@ -82,7 +82,7 @@ def test_the_same_page_twice_is_ingested_once(harness):
 
 def test_a_sentence_with_no_place_period_or_unit_is_returned_by_read(harness, tmp_path):
     harness["run"]([{"id": "html1", "url": "https://example.org/report", "path": "x"}], _page(HTML, False))
-    items = kn.read("arbitrary detention", k=5, store=harness["store"], vec_path=tmp_path / "v.npy",
+    items = kn.read("arbitrary detention", k=5, store=harness["store"], vec_path=tmp_path / "v.npy", field_index={},
                     ids_path=tmp_path / "ids.json", labels_path=tmp_path / "l.json",
                     atoms_root=tmp_path / "atoms", with_vectors=False)
     assert items and items[0]["type"] == "statement" and "detention" in items[0]["text"]

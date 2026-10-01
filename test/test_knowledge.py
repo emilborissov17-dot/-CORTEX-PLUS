@@ -93,7 +93,7 @@ def test_a_low_scoring_statement_is_labelled_unplaced_and_still_read(paths, monk
                  out=paths["labels"])
     lab = list(json.loads(paths["labels"].read_text(encoding="utf-8"))["labels"].values())[0]
     assert lab["subcategory"] == "unplaced"
-    items = kn.read("anything", k=5, embed=stub_embed, store=paths["store"], vec_path=paths["vec"],
+    items = kn.read("anything", k=5, embed=stub_embed, store=paths["store"], vec_path=paths["vec"], field_index={},
                     ids_path=paths["ids"], labels_path=paths["labels"], atoms_root=paths["atoms"])
     assert [i["text"] for i in items] == ["Zzzq wibble frobnicate."], "an unplaced statement was withheld"
 
@@ -111,7 +111,7 @@ def test_read_returns_statements_and_atoms_together_and_orders_by_corroboration(
     kn.embed_pending(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"])
     kn.label_all(embed=stub_embed, store=paths["store"], vec_path=paths["vec"], ids_path=paths["ids"],
                  out=paths["labels"])
-    items = kn.read("forest area", k=10, embed=stub_embed, store=paths["store"], vec_path=paths["vec"],
+    items = kn.read("forest area", k=10, embed=stub_embed, store=paths["store"], vec_path=paths["vec"], field_index={},
                     ids_path=paths["ids"], labels_path=paths["labels"], atoms_root=paths["atoms"])
     types = {i["type"] for i in items}
     assert types == {"statement", "measurement"}
