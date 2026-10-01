@@ -86,6 +86,8 @@ SOURCES: dict[str, list[str]] = {
                 "config/target_config.json",
                 "output/wellbeing_all_countries.json"],
     "taxonomy": ["memory/taxonomy_coverage_latest.json"],
+    "turns": ["memory/turns_log.jsonl"],
+    "space": ["memory/space/base.metta"],
     "brainneeds": ["memory/vertical_ledger.jsonl"],
     "engineneeds": ["memory/vertical_ledger.jsonl"],
     "maintenance": ["memory/observation_log.jsonl"],
@@ -863,6 +865,55 @@ def _today_rows(repo: Path, rid: str, now: datetime) -> tuple:
     return src, today, rows
 
 
+def row_turns(repo: Path, now: datetime) -> dict:
+    """TURNS: full alternations completed on the UTC day (an alternation ends when
+    AGENTS hands the baton back to BRAIN), the last holder, stuck y/n."""
+    src, today, rows = _today_rows(repo, "turns", now)
+    handed = [r for r in rows if r.get("event") == "HANDED_OVER"]
+    alternations = sum(1 for r in handed if r.get("from") == "AGENTS" and r.get("to") == "BRAIN")
+    last = handed[-1].get("to") if handed else None
+    last_hand_ts = handed[-1].get("ts", "") if handed else ""
+    stuck = any(r.get("event") == "TURN_STUCK" and r.get("ts", "") >= last_hand_ts for r in rows)
+    return {
+        "id": "turns", "name": "Turns",
+        "ran": "{} hand-over(s) on {}".format(len(handed), today),
+        "headline": "TURNS alternations {} · last holder {} · stuck {}".format(
+            alternations, last or "MISSING", "yes" if stuck else "no"),
+        "detail": ["- counted over rows of {} whose ts falls on {}".format(SOURCES["turns"][0], today)],
+        "correction": "yes" if stuck or not handed else "no",
+        "why": ("a turn ended unexplained and the baton is waiting" if stuck else
+                ("no hand-over today" if not handed else "the baton moved today")),
+        "sources": [SOURCES["turns"][0]],
+    }
+
+
+def row_space(repo: Path, now: datetime) -> dict:
+    """SPACE: expressions in base / derived / proposed. A file that is absent is a
+    MISSING count, never a 0."""
+    base_p = repo / SOURCES["space"][0]
+    _require(base_p)
+    d = base_p.parent
+
+    def count(p: Path):
+        if not p.exists():
+            return None
+        return sum(1 for l in p.read_text(encoding="utf-8").splitlines() if l.startswith("("))
+    base, derived, proposed = count(base_p), count(d / "derived.metta"), count(d / "proposed.metta")
+    if not base:
+        raise SourceMissing(base_p, "holds no expression")
+    shown = ["MISSING" if c is None else c for c in (base, derived, proposed)]
+    return {
+        "id": "space", "name": "Space",
+        "ran": "base.metta written {}".format(datetime.fromtimestamp(base_p.stat().st_mtime, timezone.utc)
+                                              .isoformat(timespec="seconds")),
+        "headline": "SPACE base {} · derived {} · proposed {}".format(*shown),
+        "detail": ["- expressions counted in memory/space/base.metta, derived.metta, proposed.metta"],
+        "correction": "no" if derived is not None else "yes",
+        "why": "the rules ran" if derived is not None else "no derived.metta: the rules have not run",
+        "sources": [SOURCES["space"][0]],
+    }
+
+
 def row_brain_needs(repo: Path, now: datetime) -> dict:
     """BRAIN NEEDS emitted / served / satisfied / silence, on the UTC day, from the
     per-need ledger. Served = a brain need the finder took."""
@@ -937,6 +988,8 @@ BUILDERS = [
     ("brainneeds", "Brain needs", row_brain_needs),
     ("engineneeds", "Engine needs", row_engine_needs),
     ("maintenance", "Maintenance", row_maintenance),
+    ("turns", "Turns", row_turns),
+    ("space", "Space", row_space),
 ]
 
 

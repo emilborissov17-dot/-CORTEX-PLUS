@@ -62,6 +62,8 @@ ROW_SOURCES = [
     ("brainneeds", "memory/vertical_ledger.jsonl"),
     ("engineneeds", "memory/vertical_ledger.jsonl"),
     ("maintenance", "memory/observation_log.jsonl"),
+    ("turns", "memory/turns_log.jsonl"),
+    ("space", "memory/space/base.metta"),
 ]
 
 
@@ -196,6 +198,14 @@ def repo(tmp_path: Path) -> Path:
         {"ts": TODAY + "T03:00:00Z", "origin": "maintenance", "cell": "sub:A1.1", "verdict": "NOTHING_FOUND"},
         {"ts": TODAY + "T03:00:00Z", "origin": "maintenance", "cell": "sub:A1.2", "verdict": "CHANGED"},
         {"ts": TODAY + "T04:00:00Z", "verdict": "UNCHANGED", "identity": ["s", "k", "WLD", "2024", 1.0]}]) + "\n")
+    # turns and the space (C-TURN-1 Part 6)
+    _write(tmp_path / "memory/turns_log.jsonl", "\n".join(json.dumps(r) for r in [
+        {"ts": TODAY + "T01:00:00Z", "event": "HANDED_OVER", "from": "BRAIN", "to": "AGENTS"},
+        {"ts": TODAY + "T02:00:00Z", "event": "HANDED_OVER", "from": "AGENTS", "to": "BRAIN"},
+        {"ts": TODAY + "T03:00:00Z", "event": "HANDED_OVER", "from": "BRAIN", "to": "AGENTS"}]) + "\n")
+    _write(tmp_path / "memory/space/base.metta", "; from x\n(obs 1)\n; from y\n(obs 2)\n")
+    _write(tmp_path / "memory/space/derived.metta", "; rule r\n(stale 1)\n")
+    _write(tmp_path / "memory/space/proposed.metta", "; proposed-by m\n(proposed 1)\n")
     # taxonomy coverage: today's file, written this morning.
     _write(tmp_path / "memory/taxonomy_coverage_latest.json", json.dumps({
         "generated_utc": TODAY + "T08:55:00+00:00",
@@ -488,3 +498,18 @@ def test_cognition_and_maintenance_rows_count_today_only(repo: Path):
     assert rows["brainneeds"]["headline"] == "BRAIN NEEDS emitted 1 · served 1 · satisfied 1 · silence 0"
     assert rows["engineneeds"]["headline"] == "ENGINE NEEDS emitted 1 · served 0"
     assert rows["maintenance"]["headline"] == "MAINTENANCE cells worked 2 · unchanged 1 · changed 1 · nothing found 1"
+
+
+
+def test_turns_and_space_rows(repo: Path):
+    rows = _by_id(db.build_rows(repo, NOW))
+    assert rows["turns"]["headline"] == "TURNS alternations 1 · last holder AGENTS · stuck no"
+    assert rows["space"]["headline"] == "SPACE base 2 · derived 1 · proposed 1"
+    (repo / "memory/space/proposed.metta").unlink()
+    assert _by_id(db.build_rows(repo, NOW))["space"]["headline"].endswith("proposed MISSING")
+
+
+def test_a_stuck_turn_after_the_last_hand_over_says_stuck(repo: Path):
+    p = repo / "memory/turns_log.jsonl"
+    _write(p, p.read_text(encoding="utf-8") + json.dumps({"ts": TODAY + "T04:00:00Z", "event": "TURN_STUCK"}) + "\n")
+    assert _by_id(db.build_rows(repo, NOW))["turns"]["headline"].endswith("stuck yes")
