@@ -66,6 +66,74 @@ def _read_jsonl(p: Path) -> list[dict]:
     return out
 
 
+# ── RETRACTIONS (1 Oct 2026, C-OC-1 Part 2) ──────────────────────────────────
+# verified_observations.jsonl is append-only and is NEVER edited. A row the gate
+# accepted and that turns out false (the Forest-area 17490: the World Bank
+# header's row count) is withdrawn by APPENDING {card_key, retracted_utc, reason,
+# by} here. Every reader goes through accepted_rows(); this module is the only
+# one that opens the observations file (test_observation_retractions holds that,
+# through tools/ask.py readers).
+RETRACTIONS = REPO / "memory" / "observation_retractions.jsonl"
+
+
+class RetractionsUnreadable(RuntimeError):
+    """Raised, never swallowed: an unreadable retractions file read as 'none'
+    would silently bring every retracted row back."""
+
+
+def retracted_keys(path: Optional[Path] = None) -> set:
+    p = Path(path or RETRACTIONS)
+    if not p.exists():
+        return set()                      # nothing retracted yet - a real answer
+    try:
+        text = p.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise RetractionsUnreadable(f"{p}: {type(exc).__name__}: {exc}") from exc
+    keys = set()
+    for n, line in enumerate(text.splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise RetractionsUnreadable(f"{p} line {n}: not JSON ({exc})") from exc
+        if not isinstance(row, dict) or not row.get("card_key"):
+            raise RetractionsUnreadable(f"{p} line {n}: no card_key")
+        keys.add(row["card_key"])
+    return keys
+
+
+def accepted_rows(verdicts: tuple = ("ACCEPTED",), path: Optional[Path] = None,
+                  retractions_path: Optional[Path] = None) -> list[dict]:
+    """The rows of verified_observations.jsonl whose verdict is in `verdicts`,
+    MINUS every retracted card_key. The one way any module reads that file."""
+    gone = retracted_keys(retractions_path)
+    # A plain rebinding, not `path or ACCEPTED`: tools/ask.py follows a module
+    # constant through a local name, and this function is the one door every
+    # reader of the file goes through, so the tool has to be able to see it.
+    src = ACCEPTED
+    if path is not None:
+        src = Path(path)
+    return [r for r in _read_jsonl(src)
+            if r.get("verdict") in verdicts and r.get("card_key") not in gone]
+
+
+def retract(card_key: str, reason: str, by: str, path: Optional[Path] = None,
+            retractions_path: Optional[Path] = None) -> dict:
+    """Append one retraction. Refuses an empty reason or name, and a key that
+    was never accepted. Never touches verified_observations.jsonl."""
+    if not str(reason or "").strip() or not str(by or "").strip():
+        raise ValueError("a retraction needs a reason and the name of who retracts")
+    known = {r.get("card_key") for r in _read_jsonl(Path(path or ACCEPTED))
+             if r.get("verdict") in OK_VERDICTS}
+    if card_key not in known:
+        raise ValueError(f"card_key {card_key!r} is not an accepted row; nothing to retract")
+    row = {"card_key": card_key, "retracted_utc": datetime.now(timezone.utc).isoformat(),
+           "reason": str(reason).strip(), "by": str(by).strip()}
+    _append(Path(retractions_path or RETRACTIONS), row)
+    return row
+
+
 def _append(p: Path, rec: dict) -> None:
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("a", encoding="utf-8") as fh:

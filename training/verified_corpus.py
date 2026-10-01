@@ -35,7 +35,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-VERIFIED = REPO / "memory" / "verified_observations.jsonl"
+if str(REPO) not in sys.path:
+    sys.path.insert(0, str(REPO))
+from core import card_intake as _ci  # noqa: E402
+# Read only through core.card_intake.accepted_rows() (C-OC-1, 1 Oct 2026): a
+# retracted row never enters the training corpus.
+VERIFIED = _ci.ACCEPTED
 LEDGER = REPO / "experiments" / "prophecy" / "prophecy_ledger.jsonl"
 OUT = REPO / "training" / "verified_corpus.jsonl"
 MANIFEST = REPO / "training" / "verified_corpus.manifest.json"
@@ -90,8 +95,13 @@ def rows_from_ledger(records: list[dict]) -> list[dict]:
     return out
 
 
+def observation_rows() -> list[dict]:
+    """Corpus rows from accepted and null-with-reason cards, retractions removed."""
+    return rows_from_observations(_ci.accepted_rows(verdicts=_ci.OK_VERDICTS))
+
+
 def build(write: bool = True) -> dict:
-    rows = rows_from_observations(_jsonl(VERIFIED)) + rows_from_ledger(_jsonl(LEDGER))
+    rows = observation_rows() + rows_from_ledger(_jsonl(LEDGER))
     text = "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
     by_task: dict = {}
     for r in rows:

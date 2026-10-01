@@ -105,6 +105,19 @@ def _ledger() -> dict:
         return {"error": f"{type(exc).__name__}: {exc}", "by_kind": {}}
 
 
+def verified_counts() -> dict:
+    """Accepted cards as every reader sees them: through
+    core.card_intake.accepted_rows(), so a retracted row is not counted."""
+    if str(REPO) not in sys.path:
+        sys.path.insert(0, str(REPO))
+    from core import card_intake as ci
+    obs = REPO / ci.ACCEPTED.relative_to(ci.REPO)
+    ret = REPO / ci.RETRACTIONS.relative_to(ci.REPO)
+    return {"accepted": len(ci.accepted_rows(path=obs, retractions_path=ret)),
+            "retracted": len(ci.retracted_keys(ret)),
+            "refused": len(_jsonl(REPO / "memory" / "card_refusals.jsonl"))}
+
+
 def gather() -> dict:
     """Every number, with its source. Never raises."""
     g: dict = {}
@@ -127,8 +140,7 @@ def gather() -> dict:
         by.setdefault(r.get("indicator"), set()).add(r.get("value"))
     g["daily_tier"] = {"indicators": len(by), "moving": sum(1 for v in by.values() if len(v) > 1)}
     g["constancy"] = (_json(REPO / "memory" / "constancy_bands_latest.json", {}) or {}).get("counts", {})
-    g["verified"] = {"accepted": sum(1 for r in _jsonl(REPO / "memory" / "verified_observations.jsonl") if r.get("verdict") == "ACCEPTED"),
-                     "refused": len(_jsonl(REPO / "memory" / "card_refusals.jsonl"))}
+    g["verified"] = verified_counts()
     g["grounding"] = {"ungrounded": _md_number(REPO / "claude" / "reports" / "TARGET_GROUNDING.md", "UNGROUNDED"),
                       "grounded": _md_number(REPO / "claude" / "reports" / "TARGET_GROUNDING.md", "GROUNDED")}
     sbx = _json(REPO / "claude" / "reports" / "SANDBOX_BENCH.json", {}) or {}

@@ -65,7 +65,10 @@ CONFIG = BASE / "config" / "target_config.json"
 GOAL_SCORE = BASE / "snapshots" / "master" / "goal_score_latest.json"
 LOG = BASE / "memory" / "alarm_bands_latest.json"
 INDICATORS = BASE / "config" / "alarm_indicators.json"
-VERIFIED = BASE / "memory" / "verified_observations.jsonl"
+# Read only through core.card_intake.accepted_rows() (C-OC-1, 1 Oct 2026), so a
+# retracted row never reaches a band. This is the same path, imported, not named.
+from core import card_intake as _ci  # noqa: E402
+VERIFIED = _ci.ACCEPTED
 
 OK, ALARM, UNSET, NO_VALUE, CONFIG_ERROR = (
     "OK", "ALARM", "UNSET", "NO_VALUE", "CONFIG_ERROR")
@@ -242,18 +245,12 @@ def indicator_values(path=None) -> dict[str, list[tuple[str, float]]]:
                                    f"(is_dir={p.is_dir()})")
         return {}
     try:
-        text = p.read_text(encoding="utf-8")
-    except OSError as exc:
+        rows = _ci.accepted_rows(path=p)
+    except (OSError, UnicodeDecodeError, _ci.RetractionsUnreadable) as exc:
         raise UnreadableSeries(f"{p} could not be read: "
                                f"{type(exc).__name__}: {exc}") from exc
     out: dict[str, list[tuple[str, float]]] = {}
-    for line in text.splitlines():
-        try:
-            o = json.loads(line)
-        except Exception:
-            continue
-        if o.get("verdict") != "ACCEPTED":
-            continue
+    for o in rows:
         rec = o.get("record") or {}
         key, val = rec.get("key"), _num(rec.get("value"))
         if key and val is not None:

@@ -64,14 +64,15 @@ def test_a_refused_number_never_rings_however_large(tmp_path):
 def test_mutation_the_verdict_filter_is_load_bearing(tmp_path, monkeypatch):
     """If indicator_values stopped filtering on ACCEPTED, the refused 9999 would ring."""
     v = _verified(tmp_path, [_obs("usgs", 9999, "2026-09-10", verdict="QUOTE_NOT_ON_PAGE")])
-    src = pathlib.Path(ab.__file__).read_text(encoding="utf-8")
-    assert 'o.get("verdict") != "ACCEPTED"' in src
-    # and the same file with the filter neutered does ring — so the test sees the filter, not luck
-    import types
-    mod = types.ModuleType("ab_mut")
-    mod.__file__ = ab.__file__
-    exec(compile(src.replace('o.get("verdict") != "ACCEPTED"', "False"), "ab_mut", "exec"), mod.__dict__)
-    assert mod.sweep_indicators(_bands(tmp_path, usgs=FIXED), v)["alarms"]
+    # The filter moved on 1 Oct 2026 (C-OC-1): indicator_values reads only through
+    # core.card_intake.accepted_rows(), whose verdict filter is the one that matters.
+    assert not ab.sweep_indicators(_bands(tmp_path, usgs=FIXED), v)["alarms"]
+    from core import card_intake as ci
+    real = ci._read_jsonl
+    monkeypatch.setattr(ci, "accepted_rows",
+                        lambda verdicts=("ACCEPTED",), path=None, retractions_path=None: real(path))
+    # with the verdict filter neutered the refused 9999 rings — the test sees the filter, not luck
+    assert ab.sweep_indicators(_bands(tmp_path, usgs=FIXED), v)["alarms"]
 
 
 # ---------------------------------------------------------------------------
