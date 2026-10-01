@@ -269,12 +269,41 @@ def test_the_allowlist_keeps_one_deliberately_broken_entry():
     assert broken[0]["path"].count(".") >= 2
 
 
+def _goal_has(src: dict, known: set) -> bool:
+    """A target_config axis, or (since C-OC-1, 1 Oct 2026) 'TAXONOMY:<id>' where
+    <id> is a WORLD subcategory of config/taxonomy.json and is the seed's own
+    declared subcategory. The taxonomy is the goal's tree; anything else is a
+    number nobody asked for."""
+    axis = src.get("axis")
+    if axis in known:
+        return True
+    if isinstance(axis, str) and axis.startswith("TAXONOMY:"):
+        from core import taxonomy as tx
+        sub = axis.split(":", 1)[1]
+        try:
+            return sub == src.get("subcategory") and not tx.is_system(sub)
+        except tx.TaxonomyError:
+            return False
+    return False
+
+
 def test_every_allowlisted_axis_exists_in_target_config():
     """A feed for an axis the goal does not have is a number nobody asked for."""
     from agents.axis.axis_feed import axes_from_config
     known = set(axes_from_config())
     for s in load_sources()[0]:
-        assert s["axis"] in known, f"{s['id']} feeds unknown axis {s['axis']}"
+        assert _goal_has(s, known), f"{s['id']} feeds unknown axis {s['axis']}"
+
+
+@pytest.mark.parametrize("bad", [
+    {"id": "x", "axis": "TAXONOMY:Z9.9", "subcategory": "Z9.9"},
+    {"id": "x", "axis": "TAXONOMY:C2.1", "subcategory": "C3.3"},
+    {"id": "x", "axis": "TAXONOMY:E1.3", "subcategory": "E1.3"},
+    {"id": "x", "axis": "NOT_AN_AXIS"},
+])
+def test_an_axis_the_goal_does_not_have_is_still_refused(bad):
+    from agents.axis.axis_feed import axes_from_config
+    assert not _goal_has(bad, set(axes_from_config()))
 
 
 # ---------------------------------------------------------------------------
