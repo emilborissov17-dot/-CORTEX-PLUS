@@ -111,7 +111,11 @@ def atom_of(row: dict) -> dict:
     cls, why = _source_class(src.get("org") if src else None, rec.get("url"))
     return {
         "subcategory": sub, "key": rec.get("key"), "value": value, "unit": rec["unit"],
-        "place": rec["place"], "period": str(rec["period"]),
+        "place": rec["place"],
+        "period": (_utc_day(rec["period"]) if rec.get("period_how") == "window_end_day" and _epoch_day(rec["period"])
+                   else str(rec["period"])),
+        "period_how": rec.get("period_how"),
+        "raw_period": str(rec["period"]),
         "source_id": src.get("id") if src else None,
         "source_id_missing": None if src else "no entry in config/openclaw_sources.json has this (url, key)",
         "source_class": cls, "source_class_why": why,
@@ -126,22 +130,87 @@ def metta_line(a: dict) -> str:
                                 _metta_str(a["source_class"]), _metta_str(a["quote_hash"])]) + ")")
 
 
-def _existing_keys(p: Path) -> set:
-    if not p.exists():
-        return set()
-    out = set()
-    for line in p.read_text(encoding="utf-8").splitlines():
-        if line.strip():
-            try:
-                out.add(json.loads(line).get("card_key"))
-            except ValueError:
-                continue
+# ── IDENTITY (C-OC-3 Part 0, 1 Oct 2026) ─────────────────────────────────────
+# An observation seen again is ONE observation. Identity is
+#     (source_id, key, place, period, value)
+# and the period that enters it is never the feed's own clock. The case: USGS's
+# summary feed restamps `metadata.generated` every minute while the 24 h count
+# stays 13, and C-OC-2 filed that one reading twice.
+PROCESSING_FIELDS = ("generated", "generated_at", "updated", "updated_at", "lastupdated", "last_updated",
+                     "fetched", "fetched_at", "ts", "timestamp", "computed_at", "made_at", "cycle_ts",
+                     "cached_at", "retrieved_at", "mtime")
+
+
+def _epoch_day(raw) -> Optional[str]:
+    s = str(raw).strip()
+    if not s.isdigit():
+        return None
+    if len(s) == 13:
+        return datetime.fromtimestamp(int(s) / 1000, tz=timezone.utc).date().isoformat()
+    if len(s) == 10:
+        return datetime.fromtimestamp(int(s), tz=timezone.utc).date().isoformat()
+    return None
+
+
+def _utc_day(raw) -> Optional[str]:
+    d = _epoch_day(raw)
+    if d:
+        return d
+    try:
+        return datetime.fromisoformat(str(raw).replace("Z", "+00:00")).astimezone(timezone.utc).date().isoformat()
+    except ValueError:
+        return None
+
+
+def is_processing_field(field_path: str) -> bool:
+    last = str(field_path or "").split(".")[-1].lower()
+    return last in PROCESSING_FIELDS
+
+
+def classify_period(field_path: str, raw, rolling: bool = False) -> tuple:
+    """-> (period, how). A processing-time field is the feed's clock: for a
+    ROLLING-WINDOW count it names the window's end DAY (how="window_end_day");
+    otherwise it is kept as a label only (how="processing_time") and never
+    enters identity."""
+    if is_processing_field(field_path):
+        if rolling:
+            day = _utc_day(raw)
+            if day:
+                return day, "window_end_day"
+        return str(raw), "processing_time"
+    return str(raw), "same_record"
+
+
+def identity_of(a: dict) -> tuple:
+    how = a.get("period_how")
+    period = a.get("period")
+    if how == "processing_time":
+        period = None
+    elif how is None and _epoch_day(period):
+        period = _epoch_day(period)          # legacy lines written before period_how existed
+    return (a.get("source_id"), a.get("key"), a.get("place"), period, a.get("value"))
+
+
+def _lines(p: Path) -> list:
+    out = []
+    if p.exists():
+        for line in p.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                try:
+                    out.append(json.loads(line))
+                except ValueError:
+                    continue
     return out
 
 
+def _existing_keys(p: Path) -> set:
+    return {x.get("card_key") for x in _lines(p)}
+
+
 def write(row: dict, root: Optional[Path] = None) -> dict:
-    """File one ACCEPTED row. {"written": bool, "why"/"path"}. A row without a
-    subcategory is not migrated (written False, counted by the caller)."""
+    """File one ACCEPTED row. {"written": bool, "why"/"path"/"seen_again"}.
+    The SAME observation (same identity) appends a `seen` line instead of a new
+    atom; files stay append-only and read() derives times_seen / last_seen_utc."""
     from core import taxonomy as tx
     root = Path(root or ROOT)
     if row.get("verdict") != "ACCEPTED":
@@ -153,8 +222,18 @@ def write(row: dict, root: Optional[Path] = None) -> dict:
     folder.mkdir(parents=True, exist_ok=True)
     jf = folder / f"{_key_file(a['key'])}.jsonl"
     mf = folder / f"{_key_file(a['key'])}.metta"
-    if a["card_key"] in _existing_keys(jf):
+    existing = _lines(jf)
+    if a["card_key"] in {x.get("card_key") for x in existing}:
         return {"written": False, "why": f"card {a['card_key'][:12]} already filed"}
+    ident = identity_of(a)
+    if any(x.get("kind", "atom") == "atom" and identity_of(x) == ident for x in existing):
+        seen = {"kind": "seen", "identity": list(ident), "card_key": a["card_key"],
+                "seen_utc": a.get("judged_utc") or datetime.now(timezone.utc).isoformat(),
+                "raw_period": a.get("raw_period")}
+        with jf.open("a", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps(seen, ensure_ascii=False) + "\n")
+        write_manifest(root)
+        return {"written": False, "seen_again": True, "why": "same observation seen again"}
     with jf.open("a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(a, ensure_ascii=False) + "\n")
     with mf.open("a", encoding="utf-8", newline="\n") as fh:
@@ -163,48 +242,75 @@ def write(row: dict, root: Optional[Path] = None) -> dict:
     return {"written": True, "path": jf.relative_to(root).as_posix()}
 
 
+def _collapse(lines: list, gone: set) -> list:
+    """Atom lines + seen lines of ONE file -> one dict per identity, with
+    times_seen and last_seen_utc. Retracted card_keys are skipped."""
+    by_id: dict = {}
+    for x in lines:
+        if x.get("card_key") in gone:
+            continue
+        if x.get("kind", "atom") == "seen":
+            ident = tuple(x.get("identity") or [])
+            if ident in by_id:
+                by_id[ident]["times_seen"] += 1
+                by_id[ident]["last_seen_utc"] = max(by_id[ident]["last_seen_utc"] or "", x.get("seen_utc") or "")
+            continue
+        ident = identity_of(x)
+        if ident in by_id:
+            by_id[ident]["times_seen"] += 1
+            by_id[ident]["last_seen_utc"] = max(by_id[ident]["last_seen_utc"] or "", x.get("judged_utc") or "")
+        else:
+            by_id[ident] = {**x, "times_seen": 1, "last_seen_utc": x.get("judged_utc")}
+    return list(by_id.values())
+
+
 def read(root: Optional[Path] = None, subcategory: Optional[str] = None) -> Iterator[dict]:
-    """Every atom on disk, MINUS retracted card_keys. The one way to read atoms."""
+    """Every observation on disk, ONCE, minus retracted card_keys. The one way to
+    read atoms; duplicates on disk collapse by identity_of()."""
     from core import card_intake as ci
     root = Path(root or ROOT)
     gone = ci.retracted_keys()
     if not root.exists():
         return
     for f in sorted(root.rglob("*.jsonl")):
-        for line in f.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            a = json.loads(line)
-            if a.get("card_key") in gone:
-                continue
+        for a in _collapse(_lines(f), gone):
             if subcategory and a.get("subcategory") != subcategory:
                 continue
             yield a
 
 
 def compute_manifest(root: Optional[Path] = None) -> dict:
-    """From disk, every time: files, lines, live_lines, sha256."""
+    """From disk, every time: files, lines, live_lines (one per observation),
+    sha256, and `collapsed` = atom lines that are the same observation again."""
     from core import card_intake as ci
     root = Path(root or ROOT)
     gone = ci.retracted_keys()
-    files, live_subs = {}, set()
+    files, live_subs, collapsed, atom_lines = {}, set(), 0, 0
     for f in sorted(list(root.rglob("*.jsonl")) + list(root.rglob("*.metta"))) if root.exists() else []:
         b = f.read_bytes()
         lines = [l for l in b.decode("utf-8").splitlines() if l.strip()]
         rel = f.relative_to(root).as_posix()
         entry = {"lines": len(lines), "sha256": hashlib.sha256(b).hexdigest()}
         if f.suffix == ".jsonl":
-            live = [json.loads(l) for l in lines]
-            live = [a for a in live if a.get("card_key") not in gone]
-            entry["live_lines"] = len(live)
-            live_subs |= {a.get("subcategory") for a in live}
+            parsed = _lines(f)
+            atoms_here = [x for x in parsed if x.get("kind", "atom") == "atom"]
+            live_atoms = [x for x in atoms_here if x.get("card_key") not in gone]
+            obs = _collapse(parsed, gone)
+            entry["atom_lines"] = len(atoms_here)
+            entry["live_lines"] = len(obs)
+            collapsed += len(live_atoms) - len(obs)
+            atom_lines += len(atoms_here)
+            live_subs |= {a.get("subcategory") for a in obs}
         files[rel] = entry
     return {"computed_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "rule": "recomputed from disk on every write; retracted card_keys are on disk but not live",
+            "rule": ("recomputed from disk on every write; retracted card_keys are on disk but not live; "
+                     "atom lines with the same identity (source_id, key, place, period, value) are ONE "
+                     "observation and are counted in `collapsed`"),
             "files": files,
             "atom_files": sum(1 for k in files if k.endswith(".jsonl")),
-            "atoms_total": sum(v["lines"] for k, v in files.items() if k.endswith(".jsonl")),
+            "atoms_total": atom_lines,
             "atoms_live": sum(v.get("live_lines", 0) for v in files.values()),
+            "collapsed": collapsed,
             "subcategories_with_live_atoms": sorted(s for s in live_subs if s)}
 
 

@@ -1014,7 +1014,9 @@
         "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
         "value": 14.0,
         "period": "1790854700000"
-      }
+      },
+      "rolling_window": true,
+      "_period_note": "C-OC-3 Part 0: metadata.generated is the feed's clock, restamped every minute. This is a rolling-window count, so the period is the window's END DAY (UTC date of that stamp), how=window_end_day; the raw stamp never enters identity."
     },
     {
       "id": "usgs:summary_significant_month",
@@ -1032,7 +1034,9 @@
         "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
         "value": 8.0,
         "period": "1790854749000"
-      }
+      },
+      "rolling_window": true,
+      "_period_note": "C-OC-3 Part 0: metadata.generated is the feed's clock, restamped every minute. This is a rolling-window count, so the period is the window's END DAY (UTC date of that stamp), how=window_end_day; the raw stamp never enters identity."
     },
     {
       "id": "swpc:kp_1m_latest",

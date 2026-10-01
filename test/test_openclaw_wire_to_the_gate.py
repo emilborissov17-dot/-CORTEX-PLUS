@@ -317,7 +317,7 @@ def test_the_spelling_is_the_one_the_registry_already_carries():
     reg = json.loads((REPO / "config" / "field_names.json").read_text(encoding="utf-8"))
     known = {e["spelling"]
              for e in reg["concepts"]["OBSERVATION_DATE"]["spellings"]}
-    date_fields = [f for f in W.CARD_FIELDS if f not in qg.REQUIRED]
+    date_fields = [f for f in W.CARD_FIELDS if f not in qg.REQUIRED and f not in W.CARD_LABEL_FIELDS]
     assert date_fields, "the card carries no observation date at all"
     for f in date_fields:
         assert f in known, (

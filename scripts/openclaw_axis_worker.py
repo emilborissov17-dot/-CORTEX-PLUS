@@ -386,7 +386,10 @@ def walk(payload, path: str):
 # change per run or carry no meaning for the gate. They stay in the feed, the
 # shadow and the refusal files, which is where a reader looking for them goes.
 CARD_FIELDS = ("axis", "key", "value", "unit", "url", "quote", "data_date",
-               "subcategory", "place", "period")
+               "subcategory", "place", "period", "period_how")
+# Card fields that are LABELS about how a value is known, not observation dates.
+# test_the_spelling_is_the_one_the_registry_already_carries skips exactly these.
+CARD_LABEL_FIELDS = ("period_how",)
 
 _QUOTE_WIDTH = 90
 
@@ -616,6 +619,7 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
     # a declaration problem (the row goes to shadow), not a refusal of the number.
     undeclared = declaration_problems(source)
     period, pp = None, period_path_of(source)
+    period_how = None
     if pp and not any(u.startswith("period_path") for u in undeclared):
         try:
             got_p = walk(payload, pp)
@@ -626,7 +630,13 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
                 undeclared.append(f"period_path: {pp!r} resolved to {type(got_p).__name__} "
                                   f"{str(got_p)[:30]!r}, not a period")
             else:
-                period = str(got_p).strip()
+                # C-OC-3 Part 0: a period read from the feed's own clock
+                # (generated / updated / fetched / ts) is a processing time. For a
+                # rolling-window count it names the window's END DAY; otherwise it
+                # is kept as a label and never enters an atom's identity.
+                from core.atoms import classify_period
+                period, period_how = classify_period(pp, str(got_p).strip(),
+                                                     rolling=bool(source.get("rolling_window")))
 
     # A COMPUTED VALUE CANNOT BE QUOTED, and pretending otherwise is how the
     # first live run produced three cards whose quotes were coincidences.
@@ -663,6 +673,7 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
         "subcategory": source.get("subcategory"),
         "place": source.get("place"),
         "period": period,
+        "period_how": period_how,
         "undeclared": undeclared,
     }
 
