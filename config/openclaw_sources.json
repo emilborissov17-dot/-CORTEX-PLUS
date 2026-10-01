@@ -79,6 +79,1014 @@
       "org": "USGS",
       "_data_date_why": "NOT APPLICABLE: this source is meant to refuse, so it never produces a value to date.",
       "why": "DELIBERATELY BROKEN. The endpoint is real and answers 200; the path walks into a number as if it were an object. Kept in the allowlist on purpose so the refusal path is exercised on every run instead of only in a test."
+    },
+    {
+      "id": "wb:SN.ITK.SVFI.ZS:WLD",
+      "subcategory": "A1.1",
+      "axis": "TAXONOMY:A1.1",
+      "key": "severe_food_insecurity_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SN.ITK.SVFI.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SN.ITK.SVFI.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 10.1426518,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SH.STA.WAST.ZS:WLD",
+      "subcategory": "A1.1",
+      "axis": "TAXONOMY:A1.1",
+      "key": "child_wasting_pct",
+      "unit": "pct_children_under5",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.STA.WAST.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.STA.WAST.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 6.6,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SH.H2O.SMDW.ZS:WLD",
+      "subcategory": "A1.2",
+      "axis": "TAXONOMY:A1.2",
+      "key": "safe_water_access_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.H2O.SMDW.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.H2O.SMDW.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 73.6686144265244,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SH.STA.SMSS.ZS:WLD",
+      "subcategory": "A1.2",
+      "axis": "TAXONOMY:A1.2",
+      "key": "safe_sanitation_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.STA.SMSS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.STA.SMSS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 58.4951883486035,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:EN.POP.SLUM.UR.ZS:WLD",
+      "subcategory": "A1.3",
+      "axis": "TAXONOMY:A1.3",
+      "key": "slum_population_pct",
+      "unit": "pct_urban_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EN.POP.SLUM.UR.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EN.POP.SLUM.UR.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 23.2280234635748,
+        "period": "2022"
+      }
+    },
+    {
+      "id": "wb:EG.ELC.ACCS.ZS:WLD",
+      "subcategory": "A1.4",
+      "axis": "TAXONOMY:A1.4",
+      "key": "electricity_access_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EG.ELC.ACCS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EG.ELC.ACCS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 91.9264843853681,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:EG.CFT.ACCS.ZS:WLD",
+      "subcategory": "A1.4",
+      "axis": "TAXONOMY:A1.4",
+      "key": "clean_cooking_access_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EG.CFT.ACCS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EG.CFT.ACCS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 74.4314693135029,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:SH.DYN.MORT:WLD",
+      "subcategory": "A1.5",
+      "axis": "TAXONOMY:A1.5",
+      "key": "child_mortality_per_1000",
+      "unit": "deaths_per_1000_live_births",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.DYN.MORT?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.DYN.MORT, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 37.4,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SH.STA.MMRT:WLD",
+      "subcategory": "A1.5",
+      "axis": "TAXONOMY:A1.5",
+      "key": "maternal_mortality_per_100k",
+      "unit": "deaths_per_100000_live_births",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.STA.MMRT?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.STA.MMRT, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 197.0,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:SP.DYN.LE00.IN:WLD",
+      "subcategory": "A1.5",
+      "axis": "TAXONOMY:A1.5",
+      "key": "life_expectancy",
+      "unit": "years",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.LE00.IN?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.DYN.LE00.IN, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 73.4818184164654,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SH.IMM.MEAS:WLD",
+      "subcategory": "A1.5",
+      "axis": "TAXONOMY:A1.5",
+      "key": "vaccination_coverage_pct",
+      "unit": "pct_children_12_23m_measles",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.IMM.MEAS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.IMM.MEAS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 84.30290510832,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:VC.IHR.PSRC.P5:WLD",
+      "subcategory": "A2.1",
+      "axis": "TAXONOMY:A2.1",
+      "key": "homicide_rate",
+      "unit": "per_100000_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/VC.IHR.PSRC.P5?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI VC.IHR.PSRC.P5, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 5.2,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:SI.POV.DDAY:WLD",
+      "subcategory": "A2.3",
+      "axis": "TAXONOMY:A2.3",
+      "key": "extreme_poverty_rate_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SI.POV.DDAY?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SI.POV.DDAY, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 10.4,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SL.UEM.TOTL.ZS:WLD",
+      "subcategory": "A2.3",
+      "axis": "TAXONOMY:A2.3",
+      "key": "unemployment_pct",
+      "unit": "pct_labour_force",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SL.UEM.TOTL.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SL.UEM.TOTL.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 4.7913330740211,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SE.PRM.CMPT.ZS:WLD",
+      "subcategory": "A5.1",
+      "axis": "TAXONOMY:A5.1",
+      "key": "primary_completion_rate",
+      "unit": "pct_relevant_age_group",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SE.PRM.CMPT.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SE.PRM.CMPT.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 88.0215835571289,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SE.ADT.1524.LT.ZS:WLD",
+      "subcategory": "A5.1",
+      "axis": "TAXONOMY:A5.1",
+      "key": "literacy_rate_youth_pct",
+      "unit": "pct_people_15_24",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SE.ADT.1524.LT.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SE.ADT.1524.LT.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 93.1100006103516,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SE.TER.ENRR:WLD",
+      "subcategory": "A5.1",
+      "axis": "TAXONOMY:A5.1",
+      "key": "tertiary_enrolment",
+      "unit": "pct_gross",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SE.TER.ENRR?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SE.TER.ENRR, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 43.6151390075684,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:IT.NET.USER.ZS:WLD",
+      "subcategory": "A5.2",
+      "axis": "TAXONOMY:A5.2",
+      "key": "internet_access_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/IT.NET.USER.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI IT.NET.USER.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 73.6,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SH.STA.SUIC.P5:WLD",
+      "subcategory": "A5.4",
+      "axis": "TAXONOMY:A5.4",
+      "key": "suicide_rate",
+      "unit": "per_100000_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.STA.SUIC.P5?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.STA.SUIC.P5, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 9.13023008813063,
+        "period": "2021"
+      }
+    },
+    {
+      "id": "wb:SH.DTH.NCOM.ZS:WLD",
+      "subcategory": "A5.5",
+      "axis": "TAXONOMY:A5.5",
+      "key": "chronic_disease_burden",
+      "unit": "pct_deaths_ncd",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.DTH.NCOM.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.DTH.NCOM.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 63.3727503441103,
+        "period": "2021"
+      }
+    },
+    {
+      "id": "wb:MS.MIL.XPND.GD.ZS:WLD",
+      "subcategory": "B1.3",
+      "axis": "TAXONOMY:B1.3",
+      "key": "military_spending",
+      "unit": "pct_gdp",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/MS.MIL.XPND.GD.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI MS.MIL.XPND.GD.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 2.47357557008391,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:MS.MIL.XPRT.KD:WLD",
+      "subcategory": "B1.3",
+      "axis": "TAXONOMY:B1.3",
+      "key": "arms_transfers",
+      "unit": "tiv_constant",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/MS.MIL.XPRT.KD?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI MS.MIL.XPRT.KD, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 26995000000.0,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:NY.GDP.MKTP.KD.ZG:WLD",
+      "subcategory": "B3.1",
+      "axis": "TAXONOMY:B3.1",
+      "key": "gdp_growth_pct",
+      "unit": "pct_annual",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/NY.GDP.MKTP.KD.ZG?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI NY.GDP.MKTP.KD.ZG, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 2.92127318539153,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SL.EMP.TOTL.SP.ZS:WLD",
+      "subcategory": "B3.1",
+      "axis": "TAXONOMY:B3.1",
+      "key": "employment_rate",
+      "unit": "pct_population_15plus",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SL.EMP.TOTL.SP.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SL.EMP.TOTL.SP.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 58.0590350423143,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:FP.CPI.TOTL.ZG:WLD",
+      "subcategory": "B3.2",
+      "axis": "TAXONOMY:B3.2",
+      "key": "inflation_pct",
+      "unit": "pct_annual",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/FP.CPI.TOTL.ZG?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI FP.CPI.TOTL.ZG, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 3.0414132155654,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:NE.RSB.GNFS.ZS:WLD",
+      "subcategory": "B3.4",
+      "axis": "TAXONOMY:B3.4",
+      "key": "trade_balance",
+      "unit": "pct_gdp",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/NE.RSB.GNFS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI NE.RSB.GNFS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 0.981556772409043,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:NY.ADJ.SVNG.GN.ZS:WLD",
+      "subcategory": "B3.7",
+      "axis": "TAXONOMY:B3.7",
+      "key": "adjusted_net_savings_pct",
+      "unit": "pct_gni",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/NY.ADJ.SVNG.GN.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI NY.ADJ.SVNG.GN.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 9.63589752026536,
+        "period": "2021"
+      }
+    },
+    {
+      "id": "wb:NY.GDP.TOTL.RT.ZS:WLD",
+      "subcategory": "B3.7",
+      "axis": "TAXONOMY:B3.7",
+      "key": "natural_resource_rents_pct",
+      "unit": "pct_gdp",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/NY.GDP.TOTL.RT.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI NY.GDP.TOTL.RT.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 3.06144858257677,
+        "period": "2021"
+      }
+    },
+    {
+      "id": "wb:SH.STA.TRAF.P5:WLD",
+      "subcategory": "B4.1",
+      "axis": "TAXONOMY:B4.1",
+      "key": "road_deaths",
+      "unit": "per_100000_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.STA.TRAF.P5?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.STA.TRAF.P5, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 16.7488856927408,
+        "period": "2019"
+      }
+    },
+    {
+      "id": "wb:IT.NET.BBND.P2:WLD",
+      "subcategory": "B4.3",
+      "axis": "TAXONOMY:B4.3",
+      "key": "broadband_access_pct",
+      "unit": "per_100_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/IT.NET.BBND.P2?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI IT.NET.BBND.P2, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 20.11,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:IT.CEL.SETS.P2:WLD",
+      "subcategory": "B4.3",
+      "axis": "TAXONOMY:B4.3",
+      "key": "mobile_coverage_pct",
+      "unit": "per_100_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/IT.CEL.SETS.P2?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI IT.CEL.SETS.P2, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 111.5,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:EG.ELC.LOSS.ZS:WLD",
+      "subcategory": "B4.4",
+      "axis": "TAXONOMY:B4.4",
+      "key": "grid_reliability",
+      "unit": "pct_output_lost",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EG.ELC.LOSS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EG.ELC.LOSS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 6.50591008789478,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SP.URB.TOTL.IN.ZS:WLD",
+      "subcategory": "B4.6",
+      "axis": "TAXONOMY:B4.6",
+      "key": "urbanization_pct",
+      "unit": "pct_population",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.URB.TOTL.IN.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.URB.TOTL.IN.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 57.8251158115221,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:GB.XPD.RSDV.GD.ZS:WLD",
+      "subcategory": "B6.1",
+      "axis": "TAXONOMY:B6.1",
+      "key": "rd_spending_pct_gdp",
+      "unit": "pct_gdp",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/GB.XPD.RSDV.GD.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI GB.XPD.RSDV.GD.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 2.59737836465431,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:SP.POP.TOTL:WLD",
+      "subcategory": "B7.1",
+      "axis": "TAXONOMY:B7.1",
+      "key": "population",
+      "unit": "persons",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.POP.TOTL, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 8215424893.0,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SP.POP.DPND:WLD",
+      "subcategory": "B7.1",
+      "axis": "TAXONOMY:B7.1",
+      "key": "dependency_ratio",
+      "unit": "pct_working_age",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.DPND?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.POP.DPND, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 54.4612615249733,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SP.DYN.TFRT.IN:WLD",
+      "subcategory": "B7.2",
+      "axis": "TAXONOMY:B7.2",
+      "key": "fertility_rate",
+      "unit": "births_per_woman",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.TFRT.IN?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.DYN.TFRT.IN, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 2.18831256131236,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SP.DYN.CDRT.IN:WLD",
+      "subcategory": "B7.2",
+      "axis": "TAXONOMY:B7.2",
+      "key": "crude_death_rate",
+      "unit": "per_1000_people",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.CDRT.IN?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.DYN.CDRT.IN, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 7.55065418868632,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:SP.URB.GROW:WLD",
+      "subcategory": "B7.4",
+      "axis": "TAXONOMY:B7.4",
+      "key": "urban_population_growth_pct",
+      "unit": "pct_annual",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SP.URB.GROW?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SP.URB.GROW, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 1.36110769435221,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:SH.MED.PHYS.ZS:WLD",
+      "subcategory": "B8.1",
+      "axis": "TAXONOMY:B8.1",
+      "key": "health_workers_per_10k",
+      "unit": "physicians_per_1000",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.MED.PHYS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.MED.PHYS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 1.86093113170155,
+        "period": "2022"
+      }
+    },
+    {
+      "id": "wb:SH.MED.BEDS.ZS:WLD",
+      "subcategory": "B8.1",
+      "axis": "TAXONOMY:B8.1",
+      "key": "hospital_beds_per_10k",
+      "unit": "beds_per_1000",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/SH.MED.BEDS.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI SH.MED.BEDS.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 3.29430541419327,
+        "period": "2021"
+      }
+    },
+    {
+      "id": "wb:EN.GHG.CO2.MT.CE.AR5:WLD",
+      "subcategory": "C1.2",
+      "axis": "TAXONOMY:C1.2",
+      "key": "co2_emissions_by_country",
+      "unit": "mt_co2e",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EN.GHG.CO2.MT.CE.AR5?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EN.GHG.CO2.MT.CE.AR5, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 39632.6642185422,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "wb:AG.LND.FRST.ZS:WLD",
+      "subcategory": "C2.1",
+      "axis": "TAXONOMY:C2.1",
+      "key": "forest_area_pct",
+      "unit": "pct_land_area",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/AG.LND.FRST.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI AG.LND.FRST.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 31.0951828663057,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:EN.MAM.THRD.NO:WLD",
+      "subcategory": "C2.2",
+      "axis": "TAXONOMY:C2.2",
+      "key": "threatened_species",
+      "unit": "species",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EN.MAM.THRD.NO?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EN.MAM.THRD.NO, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 3434.0,
+        "period": "2017"
+      }
+    },
+    {
+      "id": "wb:ER.LND.PTLD.ZS:WLD",
+      "subcategory": "C2.5",
+      "axis": "TAXONOMY:C2.5",
+      "key": "protected_terrestrial_area_pct",
+      "unit": "pct_land_area",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/ER.LND.PTLD.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI ER.LND.PTLD.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 16.511660312023,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:ER.MRN.PTMR.ZS:WLD",
+      "subcategory": "C2.5",
+      "axis": "TAXONOMY:C2.5",
+      "key": "protected_marine_area_pct",
+      "unit": "pct_territorial_waters",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/ER.MRN.PTMR.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI ER.MRN.PTMR.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 17.4641679954692,
+        "period": "2025"
+      }
+    },
+    {
+      "id": "wb:ER.H2O.INTR.PC:WLD",
+      "subcategory": "C3.1",
+      "axis": "TAXONOMY:C3.1",
+      "key": "freshwater_per_capita",
+      "unit": "m3_per_capita",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/ER.H2O.INTR.PC?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI ER.H2O.INTR.PC, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 5392.94445818055,
+        "period": "2022"
+      }
+    },
+    {
+      "id": "wb:AG.LND.ARBL.HA.PC:WLD",
+      "subcategory": "C3.2",
+      "axis": "TAXONOMY:C3.2",
+      "key": "arable_land_per_capita",
+      "unit": "ha_per_person",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/AG.LND.ARBL.HA.PC?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI AG.LND.ARBL.HA.PC, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 0.171679388898311,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:EG.FEC.RNEW.ZS:WLD",
+      "subcategory": "C3.3",
+      "axis": "TAXONOMY:C3.3",
+      "key": "renewable_energy_pct",
+      "unit": "pct_final_energy",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EG.FEC.RNEW.ZS?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EG.FEC.RNEW.ZS, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 19.7355641050053,
+        "period": "2020"
+      }
+    },
+    {
+      "id": "wb:EG.USE.PCAP.KG.OE:WLD",
+      "subcategory": "C3.3",
+      "axis": "TAXONOMY:C3.3",
+      "key": "primary_energy_supply",
+      "unit": "kg_oil_eq_per_capita",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EG.USE.PCAP.KG.OE?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EG.USE.PCAP.KG.OE, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 1866.43382235569,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "wb:EN.ATM.PM25.MC.M3:WLD",
+      "subcategory": "C4.1",
+      "axis": "TAXONOMY:C4.1",
+      "key": "pm25_exposure",
+      "unit": "ug_per_m3",
+      "place": "WLD",
+      "url": "https://api.worldbank.org/v2/country/WLD/indicator/EN.ATM.PM25.MC.M3?format=json&mrv=1",
+      "path": "1.0.value",
+      "period_path": "1.0.date",
+      "org": "World Bank",
+      "why": "World Bank WDI EN.ATM.PM25.MC.M3, world aggregate, most recent value",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 32.872382373302,
+        "period": "2023"
+      }
+    },
+    {
+      "id": "usgs:summary_4.5_day",
+      "subcategory": "C5.1",
+      "axis": "TAXONOMY:C5.1",
+      "key": "quake_m45_count",
+      "unit": "events_past_day",
+      "place": "WLD",
+      "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+      "path": "metadata.count",
+      "period_path": "metadata.generated",
+      "org": "USGS",
+      "why": "USGS summary feed, M4.5+ in the past day; metadata.generated is the feed's own ms timestamp",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 14.0,
+        "period": "1790854700000"
+      }
+    },
+    {
+      "id": "usgs:summary_significant_month",
+      "subcategory": "C5.1",
+      "axis": "TAXONOMY:C5.1",
+      "key": "significant_quakes_30d",
+      "unit": "events_past_30d",
+      "place": "WLD",
+      "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson",
+      "path": "metadata.count",
+      "period_path": "metadata.generated",
+      "org": "USGS",
+      "why": "USGS summary feed, significant events in the past 30 days",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 8.0,
+        "period": "1790854749000"
+      }
+    },
+    {
+      "id": "swpc:kp_1m_latest",
+      "subcategory": "D1.5",
+      "axis": "TAXONOMY:D1.5",
+      "key": "solar_storm_events",
+      "unit": "kp_index",
+      "place": "WLD",
+      "url": "https://services.swpc.noaa.gov/json/planetary_k_index_1m.json",
+      "path": "-1.kp_index",
+      "period_path": "-1.time_tag",
+      "org": "NOAA",
+      "why": "NOAA SWPC planetary Kp, the LAST (newest) minute of the list",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 0.0,
+        "period": "2026-10-01T11:34:00"
+      }
+    },
+    {
+      "id": "unhcr:population_latest",
+      "subcategory": "A2.2",
+      "axis": "TAXONOMY:A2.2",
+      "key": "refugees_under_unhcr_mandate",
+      "unit": "persons",
+      "place": "WLD",
+      "url": "https://api.unhcr.org/population/v1/population/?limit=1&yearFrom=2024&yearTo=2024",
+      "path": "items.0.refugees",
+      "period_path": "items.0.year",
+      "org": "UNHCR",
+      "why": "UNHCR Refugee Data Finder API, global total for the year",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 30958200.0,
+        "period": "2024"
+      }
+    },
+    {
+      "id": "who:uhc_index",
+      "subcategory": "A2.6",
+      "axis": "TAXONOMY:A2.6",
+      "key": "health_coverage_index_who",
+      "unit": "index_0_100",
+      "place": "WLD",
+      "url": "https://ghoapi.azureedge.net/api/UHC_INDEX_REPORTED?$filter=SpatialDim%20eq%20'GLOBAL'&$orderby=TimeDim%20desc&$top=1",
+      "path": "value.0.NumericValue",
+      "period_path": "value.0.TimeDim",
+      "org": "WHO",
+      "why": "WHO GHO UHC service coverage index, global",
+      "_verified": {
+        "fetched": "2026-10-01, one live fetch in command C-OC-1 Part 3",
+        "value": 71.0,
+        "period": "2023"
+      }
     }
   ],
   "_record_declarations": [
@@ -115,5 +1123,15 @@
       "open_meteo_daily_arrays": "'daily.<var>' is a parallel-array series: the periods live in daily.time at the same index. That is a real shape and a different extractor; undeclared here.",
       "usgs_count_and_open_meteo_current": "scalars with no entity in the body at all — the place is in the URL. A record needs an entity the SOURCE states, so these emit zero until the declaration can name one."
     }
-  }
+  },
+  "_axis_rule": [
+    "1 Oct 2026 (C-OC-1 Part 3). A seed that declares a `subcategory` carries",
+    "axis = 'TAXONOMY:<subcategory>'. The card gate requires an axis, and these",
+    "sources were chosen by subcategory of config/taxonomy.json, not for a",
+    "target_config axis; naming a target axis they were never designed for would",
+    "be an invented relation. Every such seed also declares place, a real unit,",
+    "and a period_path in the same record as path (scripts/openclaw_axis_worker",
+    ".declaration_problems), and entered this file only after one live fetch",
+    "returned a finite number and a period from the same record (`_verified`)."
+  ]
 }

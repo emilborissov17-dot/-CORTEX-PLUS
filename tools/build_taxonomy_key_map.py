@@ -296,6 +296,26 @@ def rule_table(rules: list | None = None) -> dict:
     return out
 
 
+def declared_rules(sources: list, rules: dict) -> dict:
+    """{key: (subcategory, why)} from openclaw seed entries that DECLARE a
+    subcategory (C-OC-1 Part 3). A declaration is an explicit rule written by a
+    human into config/openclaw_sources.json, not a guess. Refused when it
+    contradicts RULES for the same key, or when two seeds declare one key
+    differently."""
+    out: dict = {}
+    for src in sources:
+        key, sub = src.get("key"), src.get("subcategory")
+        if not key or not sub:
+            continue
+        if key in rules and rules[key][0] != sub:
+            raise Refused(f"seed {src.get('id')!r} declares {key!r} -> {sub}, which contradicts "
+                          f"RULES ({rules[key][0]})")
+        if key in out and out[key][0] != sub:
+            raise Refused(f"key {key!r} is declared into two subcategories ({out[key][0]}, {sub})")
+        out[key] = (sub, f"declared by seed {src.get('id')} in config/openclaw_sources.json")
+    return out
+
+
 # ── the six enumerations ─────────────────────────────────────────────────────
 def keys_target_config(p: Path = SRC["target_config"]) -> list:
     doc = _json(p)
@@ -379,6 +399,9 @@ def live_keys() -> dict:
 def build(dry: bool = False) -> dict:
     tree = tx.load()
     rules = rule_table()
+    seeds = _json(SRC["openclaw"]).get("sources") or []
+    for key, rule in declared_rules(seeds, rules).items():
+        rules.setdefault(key, rule)
     for key, (sub, _why) in rules.items():
         tx.subcategory(sub, tree)            # an unknown target id is a refusal, not a skip
     live = live_keys()
