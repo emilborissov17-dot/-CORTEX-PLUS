@@ -52,12 +52,16 @@ from scripts import openclaw_axis_worker as W   # noqa: E402
 # it is COMPACT on purpose. No space after the colon is the case a naive quote
 # gets wrong, and no test here may fetch, so the body is written down instead of
 # captured. The two forms below are the two the gate must handle.
-USGS_BODY = '{"count":38,"maxAllowed":20000}'
-SPACED_BODY = '{"count": 38, "maxAllowed": 20000}'
+# 1 Oct 2026 (C-OC-1): the record also carries its own day, because a source
+# may only be TRUSTED when its period sits in the SAME record as the value. The
+# real fdsnws count endpoint carries no date, so the live seed falls to SHADOW.
+USGS_BODY = '{"count":38,"maxAllowed":20000,"day":"2026-09-30"}'
+SPACED_BODY = '{"count": 38, "maxAllowed": 20000, "day": "2026-09-30"}'
 
 SOURCE = {"id": "usgs_quakes_m45_24h", "axis": "DEEP_TIME_RISKS_REVIEW",
           "key": "quakes_m45_last_24h", "path": "count", "unit": "events_24h",
-          "org": "USGS", "url": "https://earthquake.usgs.gov/fdsnws/event/1/count"}
+          "org": "USGS", "url": "https://earthquake.usgs.gov/fdsnws/event/1/count",
+          "subcategory": "C5.1", "place": "WLD", "period_path": "day"}
 
 
 def _getter(body: str, status: int = 200):
@@ -148,7 +152,7 @@ def test_the_worker_never_emits_a_quote_the_gate_would_refuse():
                          27.3)):
         q = W.quote_from_body(body, value)
         assert q is not None, (body, value)
-        card = {"axis": "A", "key": "k", "value": value, "unit": "u",
+        card = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "value": value, "unit": "u",
                 "url": "https://x/y", "quote": q}
         assert qg.judge(card, body)["verdict"] == "ACCEPTED", (q, body)
 
@@ -473,7 +477,7 @@ def test_judge_inbox_skips_a_card_it_has_already_judged(tmp_path):
     # character is a colon — the same trap that made the worker's first live
     # cards VALUE_MISMATCH. The card here has to be one the gate accepts, or
     # this test measures the trap instead of the idempotence.
-    card = {"axis": "A", "key": "k", "value": 38.0, "unit": "u",
+    card = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "value": 38.0, "unit": "u",
             "url": "https://x/y", "quote": '"count": 38'}
     (inbox / "a_cards.jsonl").write_text(json.dumps(card) + "\n",
                                          encoding="utf-8")

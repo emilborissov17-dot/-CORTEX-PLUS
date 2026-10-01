@@ -19,11 +19,11 @@ PAGES = {
     "https://usgs/count": '{"count":38,"maxAllowed":20000}',
     "https://noaa/monthly": "<td>September 09:</td><td>426.62 ppm</td><td>September 07:</td><td>Unavailable</td>",
 }
-CARD_OK = {"card": 5, "axis": "DEEP_TIME_RISKS_REVIEW", "key": "usgs_m5plus_7d_count", "value": 38, "unit": "events",
+CARD_OK = {"card": 5, "subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "DEEP_TIME_RISKS_REVIEW", "key": "usgs_m5plus_7d_count", "value": 38, "unit": "events",
            "url": "https://usgs/count", "quote": '"count": 38', "observed_date": "2026-09-10"}
-CARD_INVENTED = {"card": 1, "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": 426.99, "unit": "ppm",
+CARD_INVENTED = {"card": 1, "subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": 426.99, "unit": "ppm",
                  "url": "https://noaa/monthly", "quote": "September 10:   426.99 ppm", "observed_date": "2026-09-10"}
-CARD_NULL = {"card": 2, "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": None, "unit": "ppm",
+CARD_NULL = {"card": 2, "subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": None, "unit": "ppm",
              "url": "https://noaa/monthly", "reason": "September 07: Unavailable", "quote": "September 07: Unavailable"}
 CARD_AGENT_REFUSED = {"card": 3, "refused": True, "reason": ".env lies outside this workspace"}
 CARD_UNREACHABLE = dict(CARD_OK, card=9, url="https://down/")

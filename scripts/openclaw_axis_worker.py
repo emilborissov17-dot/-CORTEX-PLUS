@@ -114,7 +114,100 @@ DEFAULT_TIMEOUT = 30
 
 
 class Refused(ValueError):
-    """This source did not produce a number. The reason is the message."""
+    """This source did not produce a number. The reason is the message.
+
+    `network` is True when the fetch never reached the source (DNS, refused
+    connection, timeout). A run in which EVERY network source fails that way is
+    a dead network, not 25 bad sources — see run() / run_with_retry()."""
+
+    def __init__(self, msg: str, network: bool = False):
+        super().__init__(msg)
+        self.network = network
+
+
+def is_network_error(exc: BaseException) -> bool:
+    """The fetch never reached the source: connection, DNS or timeout."""
+    try:
+        import requests
+        if isinstance(exc, (requests.exceptions.ConnectionError, requests.exceptions.Timeout)):
+            return True
+    except Exception:                                             # noqa: BLE001
+        pass
+    return isinstance(exc, (ConnectionError, TimeoutError))
+
+
+# ── C-OC-1 PART 1 (1 Oct 2026): A SOURCE DECLARES WHAT, WHERE AND WHEN ─────────
+# Two rows in memory/verified_observations.jsonl show why. "Forest area (% of
+# total land area)" = 17490 was the World Bank HEADER's row count, and an ISS card
+# carried a unix timestamp under a key that says latitude/longitude/altitude.
+# Both passed the quote gate because the digits were on the page. A number is
+# only evidence for a claim the SOURCE declared before the fetch:
+#   subcategory  resolves through core.taxonomy.subcategory()  (else REFUSED by name)
+#   place        ISO3 (WLD for the world) or a named point "point:<name>"
+#   unit         anything but empty / "unknown"
+#   period_path  (or data_date_path) in the SAME JSON record as `path`
+# A source missing any of these still fetches, but its row is SHADOW with the
+# missing field named, and a shadow never becomes a card.
+PLACE_RE = re.compile(r"^(?:[A-Z]{3}|point:\S.*)$")
+NETWORK_RETRY_SEC = 120
+EXIT_NETWORK_DOWN = 3
+
+
+def _parent(path: str) -> str:
+    return ".".join(str(path or "").split(".")[:-1])
+
+
+def period_path_of(source: dict) -> str | None:
+    return source.get("period_path") or source.get("data_date_path")
+
+
+def declaration_problems(source: dict) -> list:
+    """Every missing or malformed declaration, named. [] means fully declared.
+    Does NOT check that the subcategory resolves — an unresolvable one is a
+    refusal (subcategory_problem), not a shadow."""
+    out = []
+    if not source.get("subcategory"):
+        out.append("subcategory: not declared")
+    place = source.get("place")
+    if not place:
+        out.append("place: not declared")
+    elif not PLACE_RE.match(str(place)):
+        out.append(f"place: {place!r} is not ISO3, WLD or point:<name>")
+    unit = str(source.get("unit") or "").strip()
+    if not unit or unit.lower() == "unknown":
+        out.append(f"unit: {source.get('unit')!r} is not a unit")
+    path = str(source.get("path") or "")
+    pp = period_path_of(source)
+    if "#len" in path.split("."):
+        out.append("path: counts a list (#len) — there is no record to quote or to date")
+    if not pp:
+        out.append("period_path: not declared")
+    elif _parent(pp) != _parent(path):
+        out.append(f"period_path: {pp!r} is not in the same record as path {path!r}")
+    return out
+
+
+def subcategory_problem(source: dict) -> str | None:
+    """A DECLARED subcategory that does not resolve is a refusal, by name."""
+    sub = source.get("subcategory")
+    if not sub:
+        return None
+    try:
+        from core import taxonomy as _tx
+        _tx.subcategory(sub)
+    except Exception as exc:                                      # noqa: BLE001
+        return f"subcategory {sub!r} does not resolve in config/taxonomy.json ({exc})"
+    return None
+
+
+def worldbank_header_problem(payload, path: str) -> str | None:
+    """World Bank v2 bodies are [header, [rows]]. Element 0 is paging metadata
+    (page, pages, per_page, total, lastupdated) — never an observation."""
+    if (isinstance(payload, list) and len(payload) == 2 and isinstance(payload[0], dict)
+            and {"page", "pages", "total"} <= set(payload[0])
+            and str(path or "").split(".")[0] == "0"):
+        return "World Bank header, not an observation"
+    return None
 
 
 def _now() -> str:
@@ -279,7 +372,8 @@ def walk(payload, path: str):
 # ts, latency_s, source_id, org, path, trust, origin, measured and status all
 # change per run or carry no meaning for the gate. They stay in the feed, the
 # shadow and the refusal files, which is where a reader looking for them goes.
-CARD_FIELDS = ("axis", "key", "value", "unit", "url", "quote", "data_date")
+CARD_FIELDS = ("axis", "key", "value", "unit", "url", "quote", "data_date",
+               "subcategory", "place", "period")
 
 _QUOTE_WIDTH = 90
 
@@ -322,6 +416,46 @@ def quote_from_body(raw: str, value: float, width: int = _QUOTE_WIDTH) -> str | 
                 cut = raw[left:min(len(raw), end + width // 2)]
                 if _gate_sees(cut, value):
                     return cut
+            i = raw.find(cand, i + 1)
+    return None
+
+
+def quote_from_record(raw: str, payload, path: str, value: float,
+                      width: int = _QUOTE_WIDTH) -> str | None:
+    """A verbatim slice that starts AT the value and stays inside THE record the
+    path walked — never the first textual match of the digits in the body.
+
+    The record is the JSON object holding the value (the parent of `path`). Each
+    textual occurrence of the value is checked: the smallest {...} around it is
+    cut from the raw bytes, parsed, and must EQUAL the walked record. Only then is
+    the quote taken, from the value to the record's end (capped at `width`).
+    It starts at the value because compact JSON writes `"value":31.09`, and the
+    gate's standalone-number rule cannot see a number behind a colon.
+    """
+    if not raw or not isinstance(raw, str):
+        return None
+    try:
+        record = walk(payload, _parent(path)) if _parent(path) else payload
+    except Refused:
+        return None
+    if not isinstance(record, dict):
+        return None
+    from core.observation_record import _balanced_object
+    for cand in _spellings(value):
+        i = raw.find(cand)
+        while i != -1:
+            end = i + len(cand)
+            if not (_IN_NUMBER.match(raw[i - 1:i]) or _IN_NUMBER.match(raw[end:end + 1])):
+                a, b = _balanced_object(raw, i)
+                if a != -1:
+                    try:
+                        same = json.loads(raw[a:b]) == record
+                    except ValueError:
+                        same = False
+                    if same:
+                        cut = raw[i:min(b, i + width)]
+                        if _gate_sees(cut, value):
+                            return cut
             i = raw.find(cand, i + 1)
     return None
 
@@ -422,12 +556,17 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
 
     t0 = time.time()
     raw = None
+    network = False
     if getter is not None:
         # THREE OR FOUR, and the fourth is the raw body text. A getter that
         # hands back only a parsed object cannot be quoted from — there is no
         # page left to quote — so such a row gets no card and says why. The
         # live path below always has the text.
-        got = getter(url, timeout)
+        try:
+            got = getter(url, timeout)
+        except Exception as exc:  # noqa: BLE001
+            got = (None, None, f"{type(exc).__name__}: {exc}")
+            network = is_network_error(exc)
         if len(got) == 4:
             status, payload, err, raw = got
         else:
@@ -446,15 +585,35 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
                 payload, err = None, f"body is not JSON ({raw[:60]!r})"
         except Exception as exc:  # noqa: BLE001
             status, payload, err = None, None, f"{type(exc).__name__}: {exc}"
+            network = is_network_error(exc)
     latency = round(time.time() - t0, 3)
 
     if err:
-        raise Refused(f"{sid}: {err}")
+        raise Refused(f"{sid}: {err}", network=network)
     if status != 200:
         raise Refused(f"{sid}: HTTP {status}")
 
     path = source.get("path", "")
+    header = worldbank_header_problem(payload, path)
+    if header:
+        raise Refused(f"{sid}: {header} (path {path!r})")
     value = as_number(walk(payload, path), f"{sid} at path {path!r}")
+
+    # THE PERIOD, walked from the SAME record. A period that does not resolve is
+    # a declaration problem (the row goes to shadow), not a refusal of the number.
+    undeclared = declaration_problems(source)
+    period, pp = None, period_path_of(source)
+    if pp and not any(u.startswith("period_path") for u in undeclared):
+        try:
+            got_p = walk(payload, pp)
+        except Refused as exc:
+            undeclared.append(f"period_path: {pp!r} did not resolve ({exc})")
+        else:
+            if isinstance(got_p, bool) or not isinstance(got_p, (str, int)) or not str(got_p).strip():
+                undeclared.append(f"period_path: {pp!r} resolved to {type(got_p).__name__} "
+                                  f"{str(got_p)[:30]!r}, not a period")
+            else:
+                period = str(got_p).strip()
 
     # A COMPUTED VALUE CANNOT BE QUOTED, and pretending otherwise is how the
     # first live run produced three cards whose quotes were coincidences.
@@ -464,7 +623,7 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
     # because no "250" happened to be in its body; the three EONET counts did
     # not, and quoted a latitude and a magnitude array instead.
     computed = "#len" in path.split(".")
-    quote = None if computed else quote_from_body(raw, value)
+    quote = None if computed else quote_from_record(raw, payload, path, value)
     data_date, date_missing = observation_date(payload, source)
 
     return {
@@ -485,9 +644,13 @@ def fetch_one(source: dict, timeout: int, getter=None) -> dict:
             f"the value is COUNTED from the body's structure (path {path!r}), so "
             f"it appears nowhere in it verbatim and cannot be quoted" if computed
             else "no raw response text" if not raw else
-            f"the value {value!r} is not in the body verbatim"),
+            f"the value {value!r} is not in the walked record verbatim"),
         "data_date": data_date,
         "data_date_missing": date_missing,
+        "subcategory": source.get("subcategory"),
+        "place": source.get("place"),
+        "period": period,
+        "undeclared": undeclared,
     }
 
 
@@ -557,6 +720,9 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
         sid = source.get("id") or "<unnamed>"
         axis = source.get("axis")
         try:
+            sub_bad = subcategory_problem(source)
+            if sub_bad:
+                raise Refused(f"{sid}: {sub_bad}")
             row = fetch_one(source, timeout, getter)
             rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
                                peer=_peer_for(axis, source.get('key'), q),
@@ -567,8 +733,13 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             # A candidate's number is stored beside the trusted ones and marked,
             # so it can be compared later — but it is not measured, and nothing
             # downstream may read it as one.
-            row["measured"] = rec["state"] == life.TRUSTED
+            # C-OC-1: TRUSTED by the lifecycle is not enough. An undeclared
+            # source (no subcategory, place, real unit, or a period in the same
+            # record) is stored as SHADOW with the missing field named.
+            row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
             row["status"] = "PRESENT" if row["measured"] else "SHADOW"
+            if rec["state"] == life.TRUSTED and row["undeclared"]:
+                print(f"[DMZ] undeclared {sid:<31} -> SHADOW: {'; '.join(row['undeclared'])}")
             (feeds if row["measured"] else shadows).append(row)
             # A CARD ONLY FOR A TRUSTED READING. The module's own rule two lines
             # up is that a candidate's number is stored beside the trusted ones
@@ -590,7 +761,8 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
             refusals.append({"ts": _now(), "source_id": sid, "axis": axis,
                              "key": source.get("key"), "url": source.get("url"),
                              "path": source.get("path"), "origin": source.get("origin"),
-                             "status": "REFUSED", "reason": str(exc)})
+                             "status": "REFUSED", "reason": str(exc),
+                             "network": bool(getattr(exc, "network", False))})
             print(f"[DMZ] REFUSED {sid:<34} {exc}")
 
     if not dry_run:
@@ -622,9 +794,34 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
           f"({counts[life.TRUSTED]} TRUSTED, {counts[life.CANDIDATE]} CANDIDATE, "
           f"{counts[life.DEMOTED]} DEMOTED)"
           f"{' — DRY RUN, nothing written' if dry_run else ''}")
+    # A DEAD NETWORK IS NOT 25 BAD SOURCES (05:50, 1 Oct 2026: 25 of 25 refused in
+    # 0.3 s, DNS down). network_down = nothing fetched, and every source that is
+    # fetched over http(s) failed on the network.
+    net_sources = [s for s in sources if str(s.get("url", "")).lower().startswith(("http://", "https://"))]
+    net_fail = [r for r in refusals if r.get("network")
+                and str(r.get("url", "")).lower().startswith(("http://", "https://"))]
+    network_down = bool(net_sources) and not feeds and not shadows and len(net_fail) == len(net_sources)
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
             "shadows": shadows, "refusals": refusals, "cards": cards,
-            "lifecycle": counts}
+            "lifecycle": counts, "network_down": network_down}
+
+
+def run_with_retry(runner, sleep=None) -> dict:
+    """One pass; if the network was down for the whole pass, wait
+    NETWORK_RETRY_SEC and run the whole pass ONCE more. The returned result is
+    the second pass, marked retried, with the first pass's counts beside it."""
+    sleep = sleep or time.sleep
+    first = runner()
+    if not first.get("network_down"):
+        first["retried"] = False
+        return first
+    print(f"[DMZ] NETWORK DOWN: every network source failed on the connection; "
+          f"retrying the whole pass once in {NETWORK_RETRY_SEC} s")
+    sleep(NETWORK_RETRY_SEC)
+    second = runner()
+    second["retried"] = True
+    second["first_pass"] = {"sources": first["sources"], "refused": len(first["refusals"])}
+    return second
 
 
 def main() -> int:
@@ -655,8 +852,8 @@ def main() -> int:
     _task_row({"task": TASK_NAME, "event": "start", "run_id": run_id,
                "ts": _now(), "pid": os.getpid(), "dry_run": bool(a.dry_run)})
     try:
-        result = run(pathlib.Path(a.sources) if a.sources else None,
-                     dry_run=a.dry_run)
+        result = run_with_retry(lambda: run(pathlib.Path(a.sources) if a.sources else None,
+                                            dry_run=a.dry_run))
     except BaseException as exc:                                  # noqa: BLE001
         # A CRASH IS A FINISH, recorded with its reason and then RE-RAISED.
         # Nothing is swallowed here; what must stay unrecorded is a process that
@@ -689,7 +886,11 @@ def main() -> int:
                "trusted": len(result["feeds"]),
                "shadow": len(result["shadows"]),
                "refused": len(result["refusals"]),
-               "cards": len(result["cards"])})
+               "cards": len(result["cards"]),
+               "network_down": bool(result.get("network_down")),
+               "retried": bool(result.get("retried"))})
+    if result.get("network_down"):
+        return EXIT_NETWORK_DOWN
     return 0 if result["feeds"] else 1
 
 

@@ -200,11 +200,13 @@ def test_a_source_that_keeps_answering_earns_its_way_into_the_composite(tmp_path
     point of deleting the allowlist: belief is earned, not written down."""
     from core.source_lifecycle import PROMOTE_AFTER
     lstate, q = {}, tmp_path / "q"
-    sources = _sources_file(tmp_path, [SRC])
+    # Declared (C-OC-1): subcategory, place, unit and a period in the same record.
+    declared = dict(SRC, subcategory="C5.1", place="WLD", period_path="day")
+    sources = _sources_file(tmp_path, [declared])
 
     for i in range(PROMOTE_AFTER):
         result = run(sources_path=sources, queue_dir=q,
-                     getter=getter_returning({"count": 24 + i * 0.1}),
+                     getter=getter_returning({"count": 24 + i * 0.1, "day": "2026-09-30"}),
                      lifecycle_state=lstate)
 
     assert result["feeds"], "it never promoted"

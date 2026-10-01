@@ -15,7 +15,7 @@ PAGE = """<html><body><h2>Recent Daily Average Mauna Loa CO2</h2>
 <p>Last Updated: September 9, 2026</p></body></html>"""
 TEXT = qg.re.sub(r"<[^>]+>", " ", PAGE)
 
-GOOD = {"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": 426.57, "unit": "ppm",
+GOOD = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa", "value": 426.57, "unit": "ppm",
         "url": "https://gml.noaa.gov/ccgg/trends/monthly.html", "quote": "September 08:   426.57 ppm"}
 
 
@@ -45,14 +45,14 @@ def test_value_must_be_the_number_in_the_quote():
 
 
 def test_malformed_is_named():
-    v = qg.judge({"axis": "A", "key": "k", "value": "many", "unit": "x", "url": "u", "quote": "q"}, TEXT)
+    v = qg.judge({"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "value": "many", "unit": "x", "url": "u", "quote": "q"}, TEXT)
     assert v["verdict"] == "MALFORMED"
-    v = qg.judge({"axis": "A", "key": "k", "url": "u"}, TEXT)
+    v = qg.judge({"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "url": "u"}, TEXT)
     assert v["verdict"] == "MALFORMED" and "quote" in v["missing"]
 
 
 def test_a_named_absence_is_a_correct_answer():
-    v = qg.judge({"axis": "A", "key": "k", "value": None, "url": "u", "reason": "page shows Unavailable"}, TEXT)
+    v = qg.judge({"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "value": None, "url": "u", "reason": "page shows Unavailable"}, TEXT)
     assert v["verdict"] == "NULL_WITH_REASON"
 
 
@@ -72,7 +72,7 @@ def test_happy_path_whitespace_insensitive():
 
 GDACS_PAGE = ('{"features":[{"properties":{"country":"Belgium","fromdate":"2026-08-14T00:00:00","todate":"2026-08-17T00:00:00"}},'
               '{"properties":{"country":"X","fromdate":"2026-09-05T00:00:00","todate":"2026-09-06T00:00:00"}}]}')
-CARD_B = {"axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW", "key": "gdacs_wildfire_orange_red_7d_count", "value": 0, "unit": "events per 7 days",
+CARD_B = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW", "key": "gdacs_wildfire_orange_red_7d_count", "value": 0, "unit": "events per 7 days",
           "url": "u", "quote": '"Belgium","fromdate":"2026-08-14T00:00:00","todate":"2026-08-17T00:00:00"',
           "window_utc": "2026-09-04T06:56:00Z/2026-09-11T06:56:00Z"}
 
@@ -133,7 +133,7 @@ def test_the_gate_does_not_invent_a_refusal_over_html_entities():
     gate itself invents refusals"); the code did not implement it."""
     import re as _re
     stripped = _re.sub(r"<[^>]+>", " ", NOAA_RAW)          # what _fetch did before
-    assert qg.judge({"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
+    assert qg.judge({"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
                      "value": 426.62, "unit": "ppm", "url": "u", "quote": NOAA_QUOTE},
                     stripped)["verdict"] == "QUOTE_NOT_ON_PAGE", (
         "the un-decoded page must still fail — otherwise this test is not "
@@ -141,7 +141,7 @@ def test_the_gate_does_not_invent_a_refusal_over_html_entities():
 
     import html as _html
     decoded = _html.unescape(stripped)                     # what _fetch does now
-    assert qg.judge({"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
+    assert qg.judge({"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
                      "value": 426.62, "unit": "ppm", "url": "u", "quote": NOAA_QUOTE},
                     decoded)["verdict"] == "ACCEPTED"
 
@@ -160,7 +160,7 @@ def test_fetch_decodes_entities_before_judging(monkeypatch):
     page = qg._fetch("https://example.invalid/noaa")
     assert page is not None
     assert "&nbsp;" not in page, "_fetch is not decoding HTML entities"
-    rec = {"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
+    rec = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
            "value": 426.62, "unit": "ppm", "url": "https://example.invalid/noaa",
            "quote": NOAA_QUOTE}
     assert qg.judge(rec, page)["verdict"] == "ACCEPTED"
@@ -171,11 +171,11 @@ def test_decoding_entities_does_not_make_an_invention_pass():
     page does not carry must still be refused after decoding."""
     import html as _html, re as _re
     page = _html.unescape(_re.sub(r"<[^>]+>", " ", NOAA_RAW))
-    invented = {"axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
+    invented = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "CLIMATE_GLOBAL_RISK_REVIEW", "key": "co2_ppm_mauna_loa",
                 "value": 999.99, "unit": "ppm", "url": "u",
                 "quote": "September 09:   999.99 ppm"}
     assert qg.judge(invented, page)["verdict"] == "QUOTE_NOT_ON_PAGE"
     # and a quote that IS on the page but whose number was altered
-    mismatch = {"axis": "A", "key": "k", "value": 500.0, "unit": "ppm", "url": "u",
+    mismatch = {"subcategory": "C1.1", "place": "WLD", "period": "2026-09", "axis": "A", "key": "k", "value": 500.0, "unit": "ppm", "url": "u",
                 "quote": NOAA_QUOTE}
     assert qg.judge(mismatch, page)["verdict"] == "VALUE_MISMATCH"
