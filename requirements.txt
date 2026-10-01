@@ -77,10 +77,12 @@ feedparser==6.0.12
 # collects from fewer sources than the numbers in any report of ours assume.
 
 ddgs==9.14.4
-# C-TURN-1 7b: core.knowledge.pdf_text reads the text layer of PDFs fetched by OpenClaw's browser
-pypdf==6.19.0
 # fast_cycle_runner's dependency_check names it explicitly and files a proposal
 # for the human when it is missing — which it was, for weeks, before 14 Aug 2026.
+
+pypdf==6.19.0
+# C-TURN-1 7b: core.knowledge.pdf_text reads the text layer of PDFs fetched by
+# OpenClaw's browser.
 
 python-dotenv==1.2.2
 # youtube_intel.py, to read .env. Without it the API keys in .env are simply not
