@@ -118,7 +118,10 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # 661 on 26 Sep (C2d, "suite green"): twenty added, ALL BACKED - each names the
     # test that goes red when its sentence stops being true; four more sentences
     # were deleted as false or untestable. The UNBACKED count above did not move.
-    assert len(accepted) <= 661, (
+    # 678 on 1 Oct (C-OC-1..3 OpenClaw/taxonomy work): seventeen added, ALL BACKED -
+    # each names its test; five more sentences were deleted as false since C-OC-3
+    # or unbacked. The UNBACKED count above went DOWN by one (612 -> 611).
+    assert len(accepted) <= 678, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

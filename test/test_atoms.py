@@ -2,11 +2,7 @@
 """test/test_atoms.py — an accepted card becomes one atom in its subcategory
 folder (C-OC-1 Part 4, 1 Oct 2026).
 
-Refusals first: a card with no subcategory is not migrated (and is counted), a
-subcategory that does not resolve raises, a retracted card_key is skipped by
-read() and by the manifest while nothing is removed from disk, and the manifest
-is RECOMPUTED from the files — a hand-edited count does not survive the next
-write. Everything runs in tmp_path; the live atoms/ is never touched here.
+Everything runs in tmp_path; the live atoms/ is never touched here.
 """
 from __future__ import annotations
 

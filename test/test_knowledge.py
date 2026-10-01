@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""test/test_knowledge.py — core.knowledge: the store the brain reads (C-OC-3 Part 1).
+"""test/test_knowledge.py — core.knowledge (C-OC-3 Part 1).
 
 Labels order, they never remove. Every store, vector file and label file here is
 under tmp_path; the embedder is a deterministic stub (hashed bag of words), so no

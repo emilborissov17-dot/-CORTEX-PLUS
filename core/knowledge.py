@@ -6,13 +6,12 @@ core/knowledge.py — WHAT THE BRAIN CAN REACH. (C-OC-3 Part 1, 1 Oct 2026.)
 Emil, R27: "Inside there can be very valuable and important information that will
 not pass only because you set criteria that not every source meets." So the store
 has ONE criterion, and it is on us, not on the source: what we attribute to a
-source must really be in that source. Nothing else decides whether text enters.
+source must really be in that source.
 
     ingest(source_id, text, url, origin)  every fetched page, WHOLE, as statements
                                           (core.statements.ingest_text: numbered
                                           sentences with its no-loss proof) appended
-                                          to memory/statements.jsonl — the store the
-                                          brain reads. A page with the same content
+                                          to memory/statements.jsonl. A page with the same content
                                           hash as one already ingested is skipped
                                           and counted.
     flatten_json(payload)                 a JSON body as "path: k=v; k=v" lines, so

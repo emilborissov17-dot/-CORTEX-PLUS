@@ -14,8 +14,6 @@ ORDER
      measurements first; ties by Maslow level, lowest first (physiological
      before self_actualization); a category with no Maslow level after those.
 
-Counts come through core.knowledge (statement labels) and core.atoms.read
-(measurements) — the same readers the brain uses.
 """
 from __future__ import annotations
 

@@ -271,9 +271,8 @@ def _collapse(lines: list, gone: set) -> list:
     return list(by_id.values())
 
 
-# ── how current a period is, from its own granularity (moved here from
-# tools/taxonomy_coverage.py, C-OC-3 Part 4: coverage reads through core.knowledge,
-# which reads atoms) ─────────────────────────────────────────────────────────
+# ── how current a period is, from its own granularity. Moved here from
+# tools/taxonomy_coverage.py on 2026-10-01 (C-OC-3 Part 4). ─────────────────
 CURRENT_DAY_DAYS = 45
 CURRENT_MONTH_DAYS = 120
 CURRENT_YEAR_BACK = 3

@@ -273,8 +273,7 @@ def test_discovery_still_feeds_the_worker():
     verified by one live fetch, one per taxonomy subcategory it can serve — so the
     seed is now larger by design, and the ratio no longer says anything about
     discovery. What the ratio stood for still holds and is asserted directly:
-    every active JSON source data_scout found reaches the worker's source list.
-    (Under C-OC-1 an undeclared discovered source is fetched but stays SHADOW.)"""
+    every active JSON source data_scout found reaches the worker's source list."""
     from scripts.openclaw_axis_worker import all_sources, load_discovered
 
     sources, _ = all_sources()
