@@ -100,6 +100,12 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                          "pages": r["pages"], "captcha": r["captcha"], "unbacked": r["unbacked"],
                          "statements_gained": r["statements_added"], "pdfs": len(r.get("pdfs") or [])})
 
+    rows = [json.loads(l) for l in lp.read_text(encoding="utf-8").splitlines() if l.strip()] if lp.exists() else []
+    pdf_done = 0
+    for item in oc.pending_pdf_needs(rows):
+        pdf_done += 1 if oc.serve_pdf(item["need_id"], item["url"], browser("openclaw"), ingest, ledger,
+                                      pages_dir) else 0
+
     def search_cell(cell: dict, q: str) -> dict:
         cat = ap.category_of(cell)
         prof = ap.load(cat, profiles_dir)
@@ -116,7 +122,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
     res = {"utc": _now(), "seconds": round(time.time() - t0, 1), "cause": None, "per_need": per_need,
            "maintenance": {"worked": mres.get("worked"),
                            "verdicts": [x.get("verdict") for x in mres.get("rows", [])]},
-           "feeds": fres, "core_restore": rst,
+           "feeds": fres, "core_restore": rst, "pdf_needs_read": pdf_done,
            "summary": (f"agents turn: {len(per_need)} need(s) served "
                        f"({sum(p['pages'] for p in per_need)} page(s), {sum(p['captcha'] for p in per_need)} CAPTCHA, "
                        f"{sum(p['statements_gained'] for p in per_need)} statement(s) gained); "

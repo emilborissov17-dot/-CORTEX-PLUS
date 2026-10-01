@@ -43,6 +43,9 @@ CAPTCHA = re.compile(r"captcha|are you a robot|unusual traffic|verify you are (a
                      r"checking your browser|ddos-guard|attention required|anomaly-modal|bots use duckduckgo", re.I)
 _LINKS_JS = ("() => JSON.stringify(Array.from(document.querySelectorAll('a.result__a'))"
              ".map(a => ({url: a.href, title: a.innerText})))")
+_PDF_JS = ("async () => { const r = await fetch(location.href); const b = new Uint8Array(await r.arrayBuffer()); "
+           "let s = ''; for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768)); "
+           "return JSON.stringify({status: r.status, type: r.headers.get('content-type'), b64: btoa(s)}); }")
 _TEXT_JS = ("() => JSON.stringify({title: document.title, url: location.href, "
             "text: document.body ? document.body.innerText : ''})")
 
@@ -113,6 +116,15 @@ class OpenClawBrowser:
         links = self._eval(_LINKS_JS)
         return {"page": page["value"] or {}, "links": links["value"] or [], "raw": links["raw"]}
 
+    def read_pdf(self, url: str) -> dict:
+        """The PDF's bytes, fetched by OpenClaw's browser inside the PDF's own page."""
+        self._goto(url)
+        d = self._call("evaluate", "--target-id", self.tab, "--fn", _PDF_JS, "--timeout-ms", "60000")
+        v = json.loads(d.get("result") or "null") or {}
+        import base64
+        return {"bytes": base64.b64decode(v.get("b64") or ""), "status": v.get("status"), "type": v.get("type"),
+                "raw": {"ok": d.get("ok", True), "status": v.get("status"), "type": v.get("type")}}
+
     def read(self, url: str) -> dict:
         self._goto(url)
         r = self._eval(_TEXT_JS)
@@ -170,9 +182,12 @@ def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, res
         return out
     for url in links[:results]:
         if urllib.parse.urlparse(url).path.lower().endswith(".pdf"):
-            # the browser's PDF viewer exposes no page text; recorded for the PDF reader (Part 7b)
-            ledger({"event": "PDF_NEED", "need_id": need_id, "url": url})
             out.setdefault("pdfs", []).append(url)
+            got = serve_pdf(need_id, url, browser, ingest, ledger, pages_dir)
+            if got:
+                out["pages"] += 1
+                out["statements_added"] += got
+                out["hosts_gained"].append(_host(url))
             continue
         try:
             r = browser.read(url)
@@ -210,6 +225,42 @@ def imported_modules(path=None) -> set:
     tree = ast.parse(Path(path or __file__).read_text(encoding="utf-8"))
     mods = {a.name.split(".")[0] for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
     return mods | {n.module.split(".")[0] for n in ast.walk(tree) if isinstance(n, ast.ImportFrom) and n.module}
+
+
+def serve_pdf(need_id: str, url: str, browser, ingest, ledger, pages_dir=None) -> int:
+    """A PDF result: its bytes from OpenClaw's browser, its text from pypdf (C-TURN-1
+    7b). -> statements added. A PDF the browser cannot fetch, or with no text
+    layer, is recorded PDF_NEED with the reason and ingests nothing."""
+    from core import knowledge as kn
+    if not hasattr(browser, "read_pdf"):
+        ledger({"event": "PDF_NEED", "need_id": need_id, "url": url, "why": "this browser cannot fetch a PDF"})
+        return 0
+    try:
+        r = browser.read_pdf(url)
+    except OpenClawFailed as exc:
+        ledger({"event": "PDF_NEED", "need_id": need_id, "url": url, "why": str(exc)[:200]})
+        return 0
+    try:
+        text = kn.pdf_text(r.get("bytes") or b"")
+    except kn.PdfUnreadable as exc:
+        ledger({"event": "PDF_NEED", "need_id": need_id, "url": url, "why": f"pdf unreadable: {exc}"[:200]})
+        return 0
+    st = store_page(url, text, need_id, {**(r.get("raw") or {}), "pdf_bytes": len(r.get("bytes") or b"")}, pages_dir)
+    res = ingest(f"url:{url}", text, url=url, origin="openclaw-pdf", extra={"need_id": need_id, "page_sha256": st["sha256"]})
+    ledger({"event": "FETCHED", "need_id": need_id, "url": url, "sha256": st["sha256"], "statements": res.get("added", 0),
+            "form": "pdf"})
+    return res.get("added", 0)
+
+
+def pending_pdf_needs(ledger_rows: list) -> list:
+    """PDF_NEED rows (url, need) that no later FETCHED row of the same url answered."""
+    done = {r.get("url") for r in ledger_rows if r.get("event") == "FETCHED"}
+    seen, out = set(), []
+    for r in ledger_rows:
+        if r.get("event") == "PDF_NEED" and r.get("url") not in done and r.get("url") not in seen:
+            seen.add(r.get("url"))
+            out.append({"need_id": r.get("need_id"), "url": r.get("url")})
+    return out
 
 
 def selftest() -> dict:

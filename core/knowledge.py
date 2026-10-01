@@ -195,6 +195,26 @@ def body_to_text(raw: str, payload=None, content_type: str = "") -> tuple:
     return raw or "", "csv" if "csv" in ct else "text"
 
 
+class PdfUnreadable(ValueError):
+    """The bytes are not a PDF pypdf can read, or hold no text layer."""
+
+
+def pdf_text(data: bytes) -> str:
+    """The text layer of a PDF, page by page (pypdf, C-TURN-1 7b). RAISES
+    PdfUnreadable when there is none — a scanned PDF is not silently empty."""
+    import io
+    try:
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(data))
+        pages = [(pg.extract_text() or "").strip() for pg in reader.pages]
+    except Exception as exc:                                         # noqa: BLE001
+        raise PdfUnreadable(f"{type(exc).__name__}: {exc}") from exc
+    text = "\n".join(p for p in pages if p)
+    if not text.strip():
+        raise PdfUnreadable(f"no text layer in {len(pages)} page(s)")
+    return text
+
+
 # ── the store ───────────────────────────────────────────────────────────────
 def _read_json(p: Path, default):
     try:
