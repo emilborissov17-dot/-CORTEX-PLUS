@@ -692,3 +692,5 @@ test/test_brain_needs.py d95fd33a252b  # BACKED: test_brain_needs.test_mutation_
 test/test_needs_and_finder.py 4e020ae3637d  # BACKED: the _no_live autouse fixture of test_needs_and_finder (teardown _live_net.check) and test_brain_needs.test_mutation_the_net_catches_a_write_to_the_live_ledger
 core/brain_needs.py a72e4d0589e5  # BACKED: test_brain_needs.test_a_paths_dict_missing_a_key_raises_instead_of_writing_live
 core/brain_needs.py bc95f4100f58  # BACKED: test_needs_and_finder.test_the_whole_loop_ledger_and_link, test_a_garbled_review_changes_nothing_and_is_recorded, test_a_verdict_outside_the_three_is_not_recorded
+core/space.py c0521811d171  # BACKED: test_space.test_a_failing_engine_raises_and_there_is_no_fallback
+core/space.py b182e0ba6dbc  # BACKED: test_space.test_a_failing_engine_raises_and_there_is_no_fallback

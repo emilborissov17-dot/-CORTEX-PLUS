@@ -67,10 +67,16 @@ def cells(tree: Optional[dict] = None, sources: Optional[list] = None) -> list:
     return out
 
 
-def queue(all_cells: list, state: dict) -> list:
-    """Oldest-worked first; never-worked before any worked; ties by cell id.
-    Nothing else enters the order."""
-    return sorted(all_cells, key=lambda c: ((state.get(c["cell"]) or {}).get("last_worked_utc") or "", c["cell"]))
+STALE = REPO / "memory" / "space" / "stale_for_maintenance.json"
+
+
+def queue(all_cells: list, state: dict, due: Optional[set] = None) -> list:
+    """Oldest-worked first; never-worked before any worked; ties by cell id. A
+    source the space derived as STALE (core/space.py) is due: it sorts as if never
+    worked, because its reading is known to be out of date. Nothing else enters."""
+    due = due or set()
+    return sorted(all_cells, key=lambda c: ("" if c["cell"] in due else
+                                            (state.get(c["cell"]) or {}).get("last_worked_utc") or "", c["cell"]))
 
 
 def query_for(sub: dict, st: dict) -> Optional[str]:
@@ -149,7 +155,7 @@ def _live_worker_run(source: dict) -> dict:
 
 def run(n: int = 10, per_cell: int = 3, search: Optional[Callable] = None, getter=None,
         worker_run: Optional[Callable] = None, state_path=None, log_path=None, store=None, seen_path=None,
-        tree=None, sources=None) -> dict:
+        tree=None, sources=None, stale_path=None) -> dict:
     from core import atoms as at
     from scripts import openclaw_finder as fin
     search = search or fin.repo_search
@@ -157,7 +163,8 @@ def run(n: int = 10, per_cell: int = 3, search: Optional[Callable] = None, gette
     sp = Path(state_path or STATE)
     lp = Path(log_path or at.OBS_LOG)
     state = _load(sp)
-    q = queue(cells(tree, sources), state)
+    due = {f"src:{s}" for s in (_load(stale_path or STALE).get("sources") or [])}
+    q = queue(cells(tree, sources), state, due)
     taken, out = q[:n], []
     for c in taken:
         st = state.setdefault(c["cell"], {})

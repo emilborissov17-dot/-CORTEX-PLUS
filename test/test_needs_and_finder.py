@@ -57,7 +57,7 @@ def _bn_paths(p):
 def _emit(p, needs):
     reply = json.dumps({"needs": needs})
     return bn.run(think=lambda q, ev: {"text": reply, "model": "stub", "sec": 0.1}, paths=_bn_paths(p),
-                  busy=lambda: None, read=lambda q, k: [])
+                  busy=lambda: None, read=lambda q, k: [], space_run=lambda: [])
 
 
 def _find(p, search, getter, n=5):

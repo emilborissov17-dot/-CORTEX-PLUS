@@ -26,13 +26,13 @@ def p(tmp_path, monkeypatch):
     from core import taxonomy as tx
     monkeypatch.setattr(tx, "world_subcategories", lambda tree=None: TREE_SUBS)
     return {"state": tmp_path / "state.json", "log": tmp_path / "obs.jsonl", "store": tmp_path / "s.jsonl",
-            "seen": tmp_path / "seen.json"}
+            "seen": tmp_path / "seen.json", "stale": tmp_path / "stale.json"}
 
 
 def _run(p, n, search=None, getter=None, worker=None):
     return mt.run(n=n, search=search or (lambda q, k: []), getter=getter,
                   worker_run=worker or (lambda s: {"cards": [{}]}), state_path=p["state"], log_path=p["log"],
-                  store=p["store"], seen_path=p["seen"], sources=SOURCES)
+                  store=p["store"], seen_path=p["seen"], sources=SOURCES, stale_path=p["stale"])
 
 
 def _log(p):
@@ -53,7 +53,7 @@ def test_rotation_visits_every_cell_before_repeating(p, monkeypatch):
 def test_mutation_ordering_by_anything_but_age_repeats_a_cell_early(p, monkeypatch):
     clock = iter(f"2026-10-01T00:00:{i:02d}Z" for i in range(60))
     monkeypatch.setattr(mt, "_now", lambda: next(clock))
-    monkeypatch.setattr(mt, "queue", lambda cells, state: sorted(cells, key=lambda c: c["cell"]))
+    monkeypatch.setattr(mt, "queue", lambda cells, state, due=None: sorted(cells, key=lambda c: c["cell"]))
     seen = []
     for _ in range(3):
         seen += [r["cell"] for r in _run(p, 2)["rows"]]
@@ -125,3 +125,24 @@ def test_a_refused_source_says_so_and_is_not_fetched(p):
     r = _run(p, 5, worker=worker)
     src = [x for x in r["rows"] if x["cell"].startswith("src:")]
     assert all(x["verdict"] == "LABEL_REFUSED" and "header" in x["why"] for x in src)
+
+
+
+def test_a_stale_source_is_due_first(p, monkeypatch):
+    clock = iter(f"2026-10-01T00:00:{i:02d}Z" for i in range(60))
+    monkeypatch.setattr(mt, "_now", lambda: next(clock))
+    for _ in range(5):
+        _run(p, 1)                                         # every cell worked once
+    p["stale"].write_text(json.dumps({"sources": ["s2"]}), encoding="utf-8")
+    assert _run(p, 1)["rows"][0]["cell"] == "src:s2"
+
+
+def test_mutation_without_the_stale_hand_off_the_oldest_comes_first(p, monkeypatch):
+    clock = iter(f"2026-10-01T00:00:{i:02d}Z" for i in range(60))
+    monkeypatch.setattr(mt, "_now", lambda: next(clock))
+    for _ in range(5):
+        _run(p, 1)
+    p["stale"].write_text(json.dumps({"sources": ["s2"]}), encoding="utf-8")
+    real = mt.queue
+    monkeypatch.setattr(mt, "queue", lambda cells, state, due=None: real(cells, state, set()))
+    assert _run(p, 1)["rows"][0]["cell"] == "src:s1"

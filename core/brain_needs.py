@@ -120,30 +120,6 @@ def grounded_top(paths=None, n: int = TOP_GROUNDED) -> list:
     return [{k: r.get(k) for k in ("axis", "key", "value", "unit", "score", "need", "measured")} for r in rows[:n]]
 
 
-def contradictions(paths=None) -> list:
-    """Measurement atoms with the same key, place and period and different
-    values, both sources named."""
-    from core import atoms as at
-    groups: dict = {}
-    for a in at.read(root=_p(paths, "atoms_root")):
-        if a.get("period") is None:
-            continue
-        groups.setdefault((a.get("key"), a.get("place"), a.get("period")), []).append(a)
-    out = []
-    for (key, place, period), g in sorted(groups.items(), key=lambda kv: str(kv[0])):
-        # two SOURCES disagreeing; one source moving inside the period is an
-        # update (the observation log's CHANGED), not a contradiction
-        pair = next(((a, b) for i, a in enumerate(g) for b in g[i + 1:]
-                     if a.get("value") != b.get("value") and a.get("source_id") != b.get("source_id")), None)
-        if pair is None:
-            continue
-        (a1, a2) = pair
-        v1, v2 = a1.get("value"), a2.get("value")
-        out.append({"key": key, "place": place, "period": period, "value_1": v1, "source_1": a1.get("source_id"),
-                    "value_2": v2, "source_2": a2.get("source_id")})
-    return out
-
-
 def forward_rows(paths=None) -> list:
     out = []
     for f in sorted(glob.glob(_p(paths, "forward_glob"))):
@@ -171,9 +147,16 @@ def load_needs(paths=None) -> dict:
 
 
 # ── 1. the briefing ─────────────────────────────────────────────────────────
-def briefing(paths=None) -> dict:
+PER_RULE_IN_TEXT = 8      # think() keeps the last 5000 characters of evidence; the MeTTa lines keep all
+
+
+def briefing(paths=None, derived: Optional[list] = None) -> dict:
+    """`derived` is what core.space derived this turn (parsed expressions)."""
+    from core import space as sp
+    derived = derived or []
     prev = load_needs(paths)
-    sg, top, con, fwd = subgoals(), grounded_top(paths), contradictions(paths), forward_rows(paths)
+    sg, top, fwd = subgoals(), grounded_top(paths), forward_rows(paths)
+    con = [x for x in derived if x[0] == "contradiction"]
     ch = changed_since(prev.get("briefing_utc"), paths)
     mine = [n for n in prev.get("needs", []) if n.get("origin") == "brain"]
     T, M = [], []
@@ -184,12 +167,18 @@ def briefing(paths=None) -> dict:
         T.append(f"- {r['axis']} {r['key'] or '(no key)'}: value {r['value']} {r['unit'] or ''}, "
                  f"score {r['score']}, need {r['need']}{'' if r['measured'] else ' (NOT MEASURED)'}")
         M.append(f"(grounded {_m(r['axis'])} {_m(r['key'])} {_m(r['value'])} {_m(r['score'])} {_m(r['need'])})")
-    T.append("\nCONTRADICTIONS (same key, place, period; different values):" + ("" if con else " none"))
-    for c in con:
-        T.append(f"- {c['key']} {c['place']} {c['period']}: {c['value_1']} ({c['source_1']}) vs "
-                 f"{c['value_2']} ({c['source_2']})")
-        M.append(f"(contradiction {_m(c['key'])} {_m(c['place'])} {_m(c['period'])} {_m(c['value_1'])} "
-                 f"{_m(c['source_1'])} {_m(c['value_2'])} {_m(c['source_2'])})")
+    T.append("\nWHAT THE SPACE DERIVED (rules in config/space_rules.metta; premises are atom ids):"
+             + ("" if derived else " nothing"))
+    for head in ("contradiction", "unverified", "stale", "uncovered", "lacks-evidence"):
+        xs = [x for x in derived if x[0] == head]
+        if not xs:
+            continue
+        T.append(f"- {head}: {len(xs)}")
+        for x in xs[:PER_RULE_IN_TEXT]:
+            T.append(f"    {sp.render(x)}")
+        if len(xs) > PER_RULE_IN_TEXT:
+            T.append(f"    ... and {len(xs) - PER_RULE_IN_TEXT} more")
+    M += [sp.render(x) for x in derived if x[0] != "need-derived"]
     T.append("\nOPEN FORWARD ROWS (commitments being watched):" + ("" if fwd else " none"))
     for f in fwd:
         T.append(f"- {f['row']}: {f['actor']} in {f['place']}; kept if {f['condition']}; resolves {f['resolve_by']}")
@@ -286,26 +275,14 @@ def _id(origin: str, text: str) -> str:
     return ("BN-" if origin == "brain" else "EN-") + hashlib.sha256(_norm(text).encode("utf-8")).hexdigest()[:10]
 
 
-# ── 4. engine needs ─────────────────────────────────────────────────────────
-def engine_needs(b: dict) -> list:
-    out = []
-    for c in b["facts"]["contradictions"]:
-        q = (f"Verify {c['key']} for {c['place']}, period {c['period']}: {c['value_1']} ({c['source_1']}) vs "
-             f"{c['value_2']} ({c['source_2']}), from a source independent of both")
-        out.append({"question": q, "kind": "VERIFY", "why_subgoal": None,
-                    "source_ids": [s for s in (c["source_1"], c["source_2"]) if s],
-                    "about": {"place": c["place"], "actor": None, "period": c["period"]}, "would_change": None})
-    for f in b["facts"]["forward"]:
-        place = ", ".join(f["place"]) if isinstance(f["place"], list) else f["place"]
-        q = f"Find current reports on {f['actor']} in {place} for the period {time.strftime('%B %Y')}"
-        out.append({"question": q, "kind": "FIND", "why_subgoal": None, "row": f["row"],
-                    "about": {"place": place, "actor": f["actor"], "period": time.strftime("%Y-%m")},
-                    "would_change": None})
-    return out
+# ── 4. engine needs come from the space (core/space.py, C-TURN-1 Part 1d) ───
+# The Python path that computed them here was run side by side with the space on
+# one fixture (they agreed) and then removed.
 
 
 # ── 5. emit ─────────────────────────────────────────────────────────────────
-def emit(b: dict, reply: dict, paths=None) -> dict:
+def emit(b: dict, reply: dict, paths=None, engine: Optional[list] = None) -> dict:
+    """`engine` = core.space.needs_from(derived): the engine's needs, with premises."""
     doc = load_needs(paths)
     needs = doc.get("needs", [])
     by_id = {n["id"]: n for n in needs}
@@ -343,7 +320,7 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
                    "status": OPEN, **{k: n.get(k) for k in ("question", "why_subgoal", "about", "kind", "would_change")}}
             by_id[nid] = rec
             accepted.append(rec)
-    for n in engine_needs(b):
+    for n in (engine or []):
         nid = _id("engine", n["question"])
         if nid in by_id:
             continue
@@ -471,20 +448,30 @@ def model_busy() -> Optional[str]:
     return None
 
 
+def _live_space() -> list:
+    from core import space as sp
+    sp.build()
+    return sp.derive()["expressions"]
+
+
 def run(think: Optional[Callable] = None, paths=None, busy: Optional[Callable] = None,
-        read: Optional[Callable] = None) -> dict:
+        read: Optional[Callable] = None, space_run: Optional[Callable] = None) -> dict:
     """One cognition step: the brain judges what came back for its searched needs
-    (review), then a new briefing and its new needs."""
+    (review), the space is rebuilt and derived, then a new briefing and its needs.
+    core.space.SpaceEngineFailed propagates: the step stops and says so."""
+    from core import space as sp
     why = (busy or model_busy)()
     rv = None if why else review(think, paths, read=read)
-    b = briefing(paths)
+    derived = (space_run or _live_space)()
+    engine = sp.needs_from(derived)
+    b = briefing(paths, derived)
     if why:
         _append(_p(paths, "log"), {"event": "MODEL_SKIPPED", "utc": _now(), "why": why, "briefing_sha256": b["sha256"]})
         _append(_p(paths, "ledger"), {"event": "MODEL_SKIPPED", "ts": _now(), "origin": "brain", "why": why})
-        res = emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, paths)
+        res = emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, paths, engine)
         return {"briefing": b, "reply": None, "review": None, "skipped": why, **res}
     reply = ask(b, think)
-    return {"briefing": b, "reply": reply, "review": rv, **emit(b, reply, paths)}
+    return {"briefing": b, "reply": reply, "review": rv, "derived": len(derived), **emit(b, reply, paths, engine)}
 
 
 def selftest() -> dict:

@@ -58,8 +58,12 @@ def _model(reply):
     return lambda q, ev: {"text": reply if isinstance(reply, str) else json.dumps(reply), "model": "stub", "sec": 0.1}
 
 
-def _run(paths, reply):
-    return bn.run(think=_model(reply), paths=paths, busy=lambda: None)
+DERIVED = [["lacks-evidence", "F-001", "Nord Kivu province"],
+           ["need-derived", "FIND", "lacks-evidence", "F-001", "Nord Kivu province"]]
+
+
+def _run(paths, reply, derived=DERIVED):
+    return bn.run(think=_model(reply), paths=paths, busy=lambda: None, space_run=lambda: derived)
 
 
 def test_the_briefing_carries_every_fact_and_its_sha(paths):
@@ -76,7 +80,8 @@ def test_a_well_formed_reply_becomes_a_brain_need_before_engine_needs(paths):
     n = doc["needs"][0]
     assert n["question"] == GOOD["needs"][0]["question"] and n["status"] == "OPEN"
     assert n["briefing_sha256"] == r["briefing"]["sha256"]
-    assert doc["needs"][1]["kind"] == "FIND" and "AFC" in doc["needs"][1]["question"]
+    assert doc["needs"][1]["kind"] == "FIND" and "F-001" in doc["needs"][1]["question"]
+    assert doc["needs"][1]["premises"] == ["F-001"] and doc["needs"][1]["rule"] == "lacks-evidence"
 
 
 def test_garbage_is_silence_with_the_raw_reply_and_no_need_is_invented(paths):
@@ -87,7 +92,7 @@ def test_garbage_is_silence_with_the_raw_reply_and_no_need_is_invented(paths):
 
 
 def test_an_empty_reply_is_silence(paths):
-    r = bn.run(think=lambda q, ev: None, paths=paths, busy=lambda: None)
+    r = bn.run(think=lambda q, ev: None, paths=paths, busy=lambda: None, space_run=lambda: DERIVED)
     assert r["silence"]["why"] == "empty reply"
 
 
@@ -146,20 +151,10 @@ def test_value_is_never_judged_an_odd_but_well_formed_need_is_kept(paths):
     assert [a["question"] for a in r["accepted"] if a["origin"] == "brain"] == ["Why do clouds look like sheep?"]
 
 
-def test_a_contradiction_becomes_a_verify_engine_need(paths, monkeypatch):
-    from core import atoms as at
-    monkeypatch.setattr(at, "read", lambda root=None, subcategory=None: iter(
-        [{"key": "k", "place": "WLD", "period": "2024", "value": 1.0, "source_id": "a"},
-         {"key": "k", "place": "WLD", "period": "2024", "value": 2.0, "source_id": "b"}]))
-    _run(paths, GOOD)
-    doc = json.loads(paths["needs"].read_text(encoding="utf-8"))
-    v = [n for n in doc["needs"] if n["kind"] == "VERIFY"]
-    assert v and "independent of both" in v[0]["question"] and v[0]["origin"] == "engine"
-
-
 def test_the_model_step_is_skipped_and_logged_when_busy(paths):
     called = []
-    r = bn.run(think=lambda q, ev: called.append(1), paths=paths, busy=lambda: "the big cycle is running")
+    r = bn.run(think=lambda q, ev: called.append(1), paths=paths, busy=lambda: "the big cycle is running",
+               space_run=lambda: DERIVED)
     assert called == [] and r["skipped"] == "the big cycle is running"
     log = [json.loads(l) for l in paths["log"].read_text(encoding="utf-8").splitlines()]
     assert log[0]["event"] == "MODEL_SKIPPED"
@@ -176,27 +171,6 @@ def test_restating_an_open_need_is_not_a_copy_of_the_briefing(paths):
     _run(paths, GOOD)
     r = _run(paths, GOOD)
     assert not r["refused"], "the brain's own previous question was refused as a copy of the briefing"
-
-
-def test_one_source_updating_inside_a_period_is_not_a_contradiction(paths, monkeypatch):
-    from core import atoms as at
-    for ck, v in (("c1", 14.0), ("c2", 15.0)):
-        rec = {"axis": "A", "key": "quakes", "value": v, "unit": "n", "url": "https://same.org", "quote": str(v),
-               "period": "2026-10-01", "place": "WLD", "subcategory": "C5.1"}
-        at.write({"card_key": ck, "verdict": "ACCEPTED", "record": rec}, root=paths["atoms_root"])
-    monkeypatch.setattr(at, "read", lambda root=None, subcategory=None: iter(
-        [{"key": "quakes", "place": "WLD", "period": "2026-10-01", "value": 14.0, "source_id": "usgs"},
-         {"key": "quakes", "place": "WLD", "period": "2026-10-01", "value": 15.0, "source_id": "usgs"}]))
-    assert bn.contradictions(paths) == []
-
-
-def test_two_sources_disagreeing_is_a_contradiction(paths, monkeypatch):
-    from core import atoms as at
-    monkeypatch.setattr(at, "read", lambda root=None, subcategory=None: iter(
-        [{"key": "k", "place": "WLD", "period": "2024", "value": 1.0, "source_id": "a"},
-         {"key": "k", "place": "WLD", "period": "2024", "value": 2.0, "source_id": "b"}]))
-    c = bn.contradictions(paths)
-    assert len(c) == 1 and {c[0]["source_1"], c[0]["source_2"]} == {"a", "b"}
 
 
 def test_the_forward_glob_reads_rows_not_seals(paths):
@@ -220,3 +194,23 @@ def test_mutation_the_net_catches_a_write_to_the_live_ledger(_no_live_reads):
     with pytest.raises(AssertionError, match="read live data"):
         bn._append(bn.PATHS["ledger"], {"event": "x"})
     _no_live_reads.clear()
+
+
+def test_a_derived_contradiction_becomes_a_verify_need_with_its_premises(paths):
+    derived = [["contradiction", "quakes", "WLD", "2026-10-01", "a-1", "a-2"],
+               ["need-derived", "VERIFY", "contradiction", "quakes", "WLD", "2026-10-01", "a-1", "a-2"]]
+    _run(paths, GOOD, derived)
+    doc = json.loads(paths["needs"].read_text(encoding="utf-8"))
+    v = [n for n in doc["needs"] if n["kind"] == "VERIFY"][0]
+    assert v["origin"] == "engine" and v["premises"] == ["a-1", "a-2"] and "independent of both" in v["question"]
+
+
+def test_the_briefing_carries_what_the_space_derived(paths):
+    b = bn.briefing(paths, [["unverified", "a-1", "forest", "WLD", "2023"]])
+    assert '(unverified "a-1" "forest" "WLD" "2023")' in b["text"] and "(unverified" in b["metta"]
+
+
+def test_mutation_no_engine_list_no_engine_needs(paths):
+    _run(paths, GOOD, derived=[])
+    doc = json.loads(paths["needs"].read_text(encoding="utf-8"))
+    assert [n["origin"] for n in doc["needs"]] == ["brain"], "an engine need appeared without the space"
