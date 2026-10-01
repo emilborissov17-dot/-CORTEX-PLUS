@@ -224,3 +224,16 @@ def test_mutation_a_chain_without_the_finder_is_seen(tmp_path):
     lines = ["rem openclaw_finder.py in a comment", r"%PY% scripts\openclaw_axis_worker.py", r"%PY% core\card_intake.py"]
     bat.write_text(chr(10).join(lines) + chr(10), encoding="utf-8")
     assert fin.chain_steps(bat) == ["openclaw_axis_worker.py", "card_intake.py"]
+
+
+def test_re_asking_a_wrong_question_reopens_it_and_keeps_its_history(p):
+    nid = _served(p)
+    reply = json.dumps({"verdicts": [{"id": nid, "verdict": "WRONG_QUESTION", "why": "too general"}]})
+    bn.review(think=lambda q, ev: {"text": reply}, paths=_bn_paths(p), read=lambda q, k: [])
+    _emit(p, [NEED])                                   # the brain asks the very same question again
+    n = [x for x in _needs(p) if x["id"] == nid][0]
+    assert n["status"] == "OPEN"
+    assert [v["verdict"] for v in n["verdicts"]] == ["WRONG_QUESTION"], "the verdict history was erased"
+    assert len(n["reopened"]) == 1 and n["searched"] == 1
+    ev = [r["event"] for r in _ledger(p) if r.get("need_id") == nid]
+    assert ev[-1] == "REOPENED"

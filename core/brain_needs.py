@@ -311,7 +311,7 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
     by_id = {n["id"]: n for n in needs}
     five = b["facts"]["subgoals"]
     satisfied = {_norm(n["question"]) for n in needs if n.get("status") == SATISFIED}
-    accepted, refused, silence = [], [], None
+    accepted, refused, silence, reopened = [], [], None, []
     if reply.get("parsed") is None or (isinstance(reply.get("parsed"), list) and not reply["parsed"]):
         silence = {"utc": _now(), "briefing_sha256": b["sha256"], "raw": reply.get("raw"),
                    "error": reply.get("error"), "why": "empty reply" if not reply.get("raw") else
@@ -328,6 +328,16 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
             nid = _id("brain", n["question"])
             if nid in by_id and by_id[nid]["status"] in (OPEN, STILL_OPEN):
                 continue                                          # already open: not duplicated
+            if nid in by_id:
+                # asked again after the brain closed it: REOPENED, with its whole
+                # history kept (1 Oct 2026, Part 4: the second reply re-asked all five
+                # needs it had just called WRONG_QUESTION, and the record was overwritten)
+                old = by_id[nid]
+                old.setdefault("reopened", []).append({"utc": _now(), "briefing_sha256": b["sha256"],
+                                                       "was": old["status"]})
+                old["status"] = OPEN
+                reopened.append(old)
+                continue
             rec = {"id": nid, "origin": "brain", "briefing_sha256": b["sha256"], "created_utc": _now(),
                    "status": OPEN, **{k: n.get(k) for k in ("question", "why_subgoal", "about", "kind", "would_change")}}
             by_id[nid] = rec
@@ -347,7 +357,9 @@ def emit(b: dict, reply: dict, paths=None) -> dict:
     for r in accepted:
         _append(_p(paths, "ledger"), {"event": "EMITTED", "ts": _now(), "need_id": r["id"], "origin": r["origin"],
                                       "question": r["question"]})
-    return {"accepted": accepted, "refused": refused, "silence": silence, "open": sum(
+    for r in reopened:
+        _append(_p(paths, "ledger"), {"event": "REOPENED", "ts": _now(), "need_id": r["id"], "was": r["reopened"][-1]["was"]})
+    return {"accepted": accepted, "refused": refused, "reopened": reopened, "silence": silence, "open": sum(
         1 for n in ordered if n["status"] in (OPEN, STILL_OPEN))}
 
 
