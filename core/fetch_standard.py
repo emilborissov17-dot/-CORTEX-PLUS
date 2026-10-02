@@ -128,6 +128,7 @@ def get(url: str, timeout: float = TIMEOUT_S, headers: Optional[dict] = None, *,
         # module's address rule, host clock and size limit itself; DoorClosed is not
         # caught here.
         from core import openclaw_door as _door
+        _door._process_session()                  # C-DOOR-2 3a: one browser for the process
         got = _door.get_bytes(url, resolve=resolve, clock=clock, max_bytes=max_bytes)
         return {"status": got["status"],
                 "raw": got["bytes"].decode(_door._charset(got["content_type"]), errors="replace"),

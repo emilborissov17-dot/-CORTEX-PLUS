@@ -76,6 +76,9 @@ class OpenClawBrowser:
         self.timed_out, self.cdp_port = False, None
         self.procs, self.kill, self.sleep, self.ledger = procs, kill, sleep, ledger
         self.events: list = []
+        # C-DOOR-2 3a: what the last call already said, so it is not asked again
+        self.last_status: Optional[dict] = None
+        self.running_known = False
 
     def _call(self, *args) -> dict:
         if any(a is None for a in args):
@@ -109,8 +112,10 @@ class OpenClawBrowser:
                 self._call("navigate", url, "--target-id", self.tab)
             except OpenClawFailed:
                 self.tab = None                         # the browser or the tab is gone: start again below
+                self.running_known = False
         if self.tab is None:
-            self.start()
+            if not self.running_known:
+                self.start()
             self.tab = self._call("open", url).get("tabId")
             if not self.tab:
                 raise OpenClawFailed(f"openclaw browser open {url}: no tab id came back")
@@ -127,11 +132,15 @@ class OpenClawBrowser:
             d = self._call("status")
         except ProfileTimeout:
             self.timed_out = True
+            self.last_status = {}
             return False
         except OpenClawFailed:
+            self.last_status = {}
             return False
         self.cdp_port = d.get("cdpPort") or self.cdp_port
-        return bool(d.get("running"))
+        self.last_status = d
+        self.running_known = bool(d.get("running"))
+        return self.running_known
 
     def _event(self, row: dict) -> None:
         row = {"profile": self.profile, **row}
@@ -144,8 +153,10 @@ class OpenClawBrowser:
         try:
             d = self._call("status")
         except OpenClawFailed:
+            self.last_status = {}
             return {}
         self.cdp_port = d.get("cdpPort") or self.cdp_port
+        self.last_status = d
         return d
 
     def _chromes(self) -> list:
@@ -169,14 +180,17 @@ class OpenClawBrowser:
             (self.kill or _kill)(pid)
         return pids
 
-    def start(self) -> None:
+    def start(self, status: Optional[dict] = None) -> None:
         """C-DOOR-1 2a: leftovers ended first; a false "exited before adoption" survived;
-        one retry; a second failure is PROFILE_START_FAILED. No third attempt."""
+        one retry; a second failure is PROFILE_START_FAILED. No third attempt.
+        `status`: the status the caller has just read (C-DOOR-2 3a: not asked again)."""
         self.tab = None
-        if self._status().get("running") is False:
+        st = status if status is not None else self._status()
+        if st.get("running") is False:
             self._end_chromes("LEFTOVER_CHROME_ENDED")
         try:
             self._call("start")
+            self.running_known = True
             return
         except OpenClawFailed as exc:
             if ADOPTION not in str(exc):
@@ -185,10 +199,12 @@ class OpenClawBrowser:
         self.sleep(ADOPT_WAIT_S)
         if self._status().get("running"):
             self._event({"event": "START_ADOPTED_LATE", "error": str(first)[:300]})
+            self.running_known = True
             return
         self._end_chromes("LEFTOVER_CHROME_ENDED")
         try:
             self._call("start")
+            self.running_known = True
         except OpenClawFailed as second:
             raise ProfileStartFailed(f"PROFILE_START_FAILED: profile {self.profile}: first: {first}; "
                                      f"second: {second}"[:900]) from second
@@ -198,6 +214,7 @@ class OpenClawBrowser:
         ended by exact PID; one that cannot be ended raises PROFILE_STOP_FAILED. A stop
         never returns while that Chrome is alive."""
         self.tab = None
+        self.running_known = False
         try:
             self._call("stop")
         except OpenClawFailed as exc:

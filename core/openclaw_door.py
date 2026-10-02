@@ -27,6 +27,7 @@ from and nothing about how a reader parses them.
 from __future__ import annotations
 
 import base64
+import contextlib
 import json
 import socket
 import sys
@@ -66,7 +67,68 @@ class DoorFetchFailed(IOError):
     """The door is open and this one fetch failed (status, CORS, size, timeout)."""
 
 
-_STATE = {"browser": None, "gateway": None, "gateway_restarts": 0}
+def _fresh_state() -> dict:
+    return {"browser": None, "gateway": None, "gateway_restarts": 0, "ready": None, "depth": 0,
+            "process_session": False}
+
+
+_STATE = _fresh_state()
+
+
+def _known_ready(b) -> bool:
+    """C-DOOR-2 3a: this browser was started (or found running) in this session and no
+    call has failed since: a status call would only repeat that."""
+    return b is not None and _STATE.get("ready") is b
+
+
+def _default_clock():
+    from core import fetch_standard as fs
+    return fs._CLOCK
+
+
+def _register_exit(fn) -> None:
+    import atexit
+    atexit.register(fn)
+
+
+def close() -> None:
+    """Stop the browser this process uses (the end of a session)."""
+    b = _STATE.get("browser")
+    _STATE["ready"] = None
+    if b is not None:
+        b.stop()
+
+
+@contextlib.contextmanager
+def session(browser=None, gateway=None):
+    """C-DOOR-2 3a, decided: one browser for a whole run (the rule is held by
+    test/test_door_session.py)."""
+    if browser is not None:
+        _STATE["browser"] = browser
+    if gateway is not None:
+        _STATE["gateway"] = gateway
+    _STATE["depth"] = _STATE.get("depth", 0) + 1
+    try:
+        yield
+    except BaseException:
+        _STATE["depth"] -= 1
+        if _STATE["depth"] == 0:
+            try:
+                close()
+            except Exception as exc:                                 # noqa: BLE001  the first error wins
+                print(f"DOOR_STOP_FAILED while another error was raised: {type(exc).__name__}: {exc}",
+                      file=sys.stderr)
+        raise
+    _STATE["depth"] -= 1
+    if _STATE["depth"] == 0:
+        close()
+
+
+def _process_session() -> None:
+    """The readers' `http` face: one session for the whole process, stopped at exit."""
+    if not _STATE.get("process_session"):
+        _STATE["process_session"] = True
+        _register_exit(close)
 
 
 def _fetch_js(url: str) -> str:
@@ -87,27 +149,33 @@ def _live(browser=None, gateway=None):
         _STATE["browser"] = b
     if gateway is None:
         _STATE["gateway"] = gw
+    if _known_ready(b):
+        return b
     if b.alive():
+        _STATE["ready"] = b
         return b
     if not gw.healthy():
-        if _STATE["gateway_restarts"] >= MAX_GATEWAY_RESTARTS:
+        if _STATE.get("gateway_restarts", 0) >= MAX_GATEWAY_RESTARTS:
             raise DoorClosed("GATEWAY_DEAD: the OpenClaw gateway does not answer and was already restarted once")
-        _STATE["gateway_restarts"] += 1
+        _STATE["gateway_restarts"] = _STATE.get("gateway_restarts", 0) + 1
         gw.restart()
         if not gw.healthy():
             raise DoorClosed("GATEWAY_DEAD: the OpenClaw gateway does not answer after one restart")
-    if b.alive():
-        return b
+        if b.alive():                                # only after a restart can the answer have changed
+            _STATE["ready"] = b
+            return b
     try:
-        b.start()
+        # the status just read is passed on, not asked again (C-DOOR-2 3a)
+        b.start(**({"status": b.last_status} if getattr(b, "last_status", None) is not None else {}))
     except Exception as exc:                                         # noqa: BLE001
         raise DoorClosed(f"SEARCHER_DEAD: OpenClaw's browser did not start ({type(exc).__name__}: {exc})"[:400])
-    if not b.alive():
+    if not getattr(b, "running_known", False) and not b.alive():
         raise DoorClosed("SEARCHER_DEAD: OpenClaw's browser is not running after one start")
+    _STATE["ready"] = b
     return b
 
 
-def get_bytes(url: str, *, browser=None, gateway=None, resolve: Callable = socket.getaddrinfo, clock=None,
+def get_bytes(url: str, *, browser=None, gateway=None, resolve: Optional[Callable] = None, clock=None,
               max_bytes: Optional[int] = None) -> dict:
     """-> {status, bytes, content_type, final_url}. FetchRefused (core.fetch_standard)
     for what the standard forbids, DoorClosed for a closed door, DoorFetchFailed for
@@ -116,18 +184,20 @@ def get_bytes(url: str, *, browser=None, gateway=None, resolve: Callable = socke
     from core import turn as _turn
     from scripts import openclaw_browser as oc
     max_bytes = max_bytes or fs.MAX_BYTES
+    resolve = resolve or socket.getaddrinfo
     if _turn.state().get("holder") == _turn.BRAIN:
         raise fs.FetchRefused("the baton is BRAIN: no fetch in the brain's turn")
     why = fs.url_problem(url, resolve)
     if why:
         raise fs.FetchRefused(why)
-    (clock or fs._CLOCK).wait((urllib.parse.urlparse(url).hostname or "").lower())
+    (clock or _default_clock()).wait((urllib.parse.urlparse(url).hostname or "").lower())
     b = _live(browser, gateway)
     try:
         b._goto(url)
         d = b._call("evaluate", "--target-id", b.tab, "--fn", _fetch_js(url),
                     "--timeout-ms", str(int(fs.TIMEOUT_S * 1000)))
     except oc.OpenClawFailed as exc:
+        _STATE["ready"] = None                       # a failed call: the next one asks again
         try:
             _live(browser, gateway)
         except DoorClosed:
@@ -241,6 +311,7 @@ class _Http:
         if params:
             sep = "&" if urllib.parse.urlparse(url).query else "?"
             url = url + sep + urllib.parse.urlencode(params, doseq=True)
+        _process_session()
         return Response(url, get_bytes(url))
 
     class Request:
@@ -261,6 +332,7 @@ class _Http:
         for k in (getattr(req, "headers", None) or {}):
             if _credential_header(k):
                 raise fs.FetchRefused(f"header {k} carries a credential; the door sends none")
+        _process_session()
         r = Response(url, get_bytes(url))
         if not r.ok:                                 # as urllib does: HTTPError with code and body
             import io
@@ -295,12 +367,8 @@ http = _Http()
 def one_shot(url: str) -> dict:
     """A one-shot command (`python -m core.openclaw_door <url>`): the fetch, then the
     browser this process started is stopped in a `finally` (C-DOOR-1 2c)."""
-    try:
+    with session():
         return get_bytes(url)
-    finally:
-        b = _STATE["browser"]
-        if b is not None:
-            b.stop()
 
 
 def selftest() -> dict:
