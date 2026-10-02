@@ -62,6 +62,9 @@ def sandbox(tmp_path, monkeypatch):
     monkeypatch.setattr(sup, "CYCLE_LOG_DIR", tmp_path / "cycle_logs")
     monkeypatch.setattr(sup, "BODY_SENSE_DIR", tmp_path / "body_sensorium")
     monkeypatch.setattr(el, "LEDGER_PATH", tmp_path / "existence_ledger.jsonl")
+    # tick() runs metta_selfcheck(), which rewrites this file when the live one is > 6 h old
+    # (C-DOOR-2 suite, 2 Oct 2026: a live write, seen only when the file happened to be stale)
+    monkeypatch.setattr(sup, "METTA_CHECK_FILE", tmp_path / "metta_bridge_check.json")
     return tmp_path
 
 
