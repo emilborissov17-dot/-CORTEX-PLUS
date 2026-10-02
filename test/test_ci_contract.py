@@ -56,6 +56,9 @@ def _modules_with_live_requests() -> set:
 # with the reason, so that adding to this set is a decision rather than a
 # convenience.
 MOCKED_NOT_LIVE = {
+    # C-FIX-1 Part 3: requests.get is called only after it was replaced by a tripwire
+    # (test_mutation_a_reader_on_requests_hits_the_tripwire).
+    "test_openclaw_door.py",
     # Captures requests.post to prove alarm_human's send path is exercised
     # without a network; NOTIFY_CHANNEL is redirected into tmp_path so there are
     # no credentials to send with even if it tried.

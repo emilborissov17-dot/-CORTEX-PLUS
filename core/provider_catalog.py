@@ -76,7 +76,7 @@ def skipped_providers() -> list:
 # ── catalog traversal ────────────────────────────────────────────────────────
 
 def _fetch(url: str, accept: str = None, timeout: int = 180) -> str:
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 4: through the OpenClaw door
     headers = {"User-Agent": "CORTEX-provider-catalog/1.0"}
     if accept:
         headers["Accept"] = accept

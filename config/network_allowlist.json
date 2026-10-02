@@ -1,0 +1,323 @@
+{
+ "_what": "C-FIX-1 Part 4 (2 Oct 2026, Emil R43 / §20): the only files besides the OpenClaw door that may open a network connection. Read by test/test_only_openclaw_reaches_the_web.py.",
+ "_classes": {
+  "M": "a local model or a cloud model backend",
+  "O": "an outbound channel: the Telegram alarm or GitHub publication",
+  "L": "loopback only: nothing leaves the machine"
+ },
+ "_hosts": "every host a file names in a URL; a host not listed here fails the test",
+ "files": {
+  "agents/body/body_scanner.py": {
+   "class": "M",
+   "reason": "TCP reachability of the cloud model backend (api.groq.com) and the local OpenClaw gateway; no data host",
+   "hosts": []
+  },
+  "cockpit/terminal.py": {
+   "class": "L",
+   "reason": "the cockpit's own websocket server on the loopback address; nothing leaves the machine",
+   "hosts": [
+    "127.0.0.1",
+    "localhost"
+   ]
+  },
+  "core/aggressive_cleanup.py": {
+   "class": "M",
+   "reason": "unloads models from the local Ollama model on localhost:11434",
+   "hosts": [
+    "127.0.0.1"
+   ]
+  },
+  "core/brain.py": {
+   "class": "M",
+   "reason": "the local brain: local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/counterfactual_probe.py": {
+   "class": "M",
+   "reason": "cloud model backends (Groq, NVIDIA NIM) called through core.llm_door",
+   "hosts": []
+  },
+  "core/extra_calls.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/groq_backend.py": {
+   "class": "M",
+   "reason": "the cloud model backends (Groq, Cerebras, Gemini, NVIDIA, OpenRouter) and the local Ollama",
+   "hosts": [
+    "api.cerebras.ai",
+    "api.groq.com",
+    "generativelanguage.googleapis.com",
+    "github.com",
+    "integrate.api.nvidia.com",
+    "localhost",
+    "openrouter.ai"
+   ]
+  },
+  "core/interval_head.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/knowledge.py": {
+   "class": "M",
+   "reason": "embeddings from the local Ollama model on localhost:11434; www.youtube.com is only a stored link, never fetched",
+   "hosts": [
+    "localhost",
+    "www.youtube.com"
+   ]
+  },
+  "core/llm_door.py": {
+   "class": "M",
+   "reason": "the one door every model call goes through (local and cloud)",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/model_window.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/perplexity.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/reaction.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "core/self_diagnosis.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "experiments/desktop_hands/agent.py": {
+   "class": "M",
+   "reason": "cloud model backend (Gemini) for the desktop-hands agent",
+   "hosts": [
+    "generativelanguage.googleapis.com"
+   ]
+  },
+  "experiments/dreams/dream.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "experiments/institution/telegram_dispatcher.py": {
+   "class": "O",
+   "reason": "Telegram: the alarm/approval channel to Emil",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "experiments/institution/telegram_witness.py": {
+   "class": "O",
+   "reason": "Telegram: the alarm/approval channel to Emil",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "experiments/institution/witness_reader.py": {
+   "class": "O",
+   "reason": "Telegram: reads Emil's replies on the alarm/approval channel",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "experiments/kimi_duel/consult.py": {
+   "class": "M",
+   "reason": "cloud model backends (Groq, OpenRouter); github.com is only the HTTP-Referer value",
+   "hosts": [
+    "api.groq.com",
+    "github.com",
+    "openrouter.ai"
+   ]
+  },
+  "experiments/kimi_duel/duel.py": {
+   "class": "M",
+   "reason": "cloud model backend (OpenRouter); github.com is only the HTTP-Referer value",
+   "hosts": [
+    "github.com",
+    "openrouter.ai"
+   ]
+  },
+  "experiments/needs/approve_reader.py": {
+   "class": "O",
+   "reason": "Telegram: reads Emil's approvals on the alarm channel",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "experiments/needs/needs_report.py": {
+   "class": "O",
+   "reason": "Telegram alarm; ntfy.sh is an alternative carrier of the same alarm chosen in memory/notify_channel.json",
+   "hosts": [
+    "api.telegram.org",
+    "ntfy.sh"
+   ]
+  },
+  "experiments/needs/setup_telegram.py": {
+   "class": "O",
+   "reason": "Telegram: one-time setup of the alarm channel, run by hand",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "experiments/prophecy/goal_prophecy.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "experiments/pulse/local_model.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "experiments/pulse/pulse_continuum.py": {
+   "class": "M",
+   "reason": "checks that the local Ollama port 11434 is open; loopback only",
+   "hosts": []
+  },
+  "experiments/pulse/pulse_daemon.py": {
+   "class": "L",
+   "reason": "TCP reachability of the local OpenClaw gateway (127.0.0.1:18789); loopback only",
+   "hosts": []
+  },
+  "experiments/pulse/self_sense.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "experiments/selfcode/selfcode_loop.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": []
+  },
+  "fast_cycle_runner.py": {
+   "class": "M",
+   "reason": "dependency check: lists the local Ollama models and pings the Groq backend through core.llm_door",
+   "hosts": []
+  },
+  "github_publisher.py": {
+   "class": "O",
+   "reason": "GitHub: the publication channel",
+   "hosts": [
+    "api.github.com"
+   ]
+  },
+  "memory/autonomic_pulse.py": {
+   "class": "M",
+   "reason": "reachability of the cloud model backend (api.groq.com)",
+   "hosts": [
+    "api.groq.com"
+   ]
+  },
+  "memory/body_scan.py": {
+   "class": "M",
+   "reason": "reachability of the cloud model backend (api.groq.com)",
+   "hosts": [
+    "api.groq.com",
+    "localhost"
+   ]
+  },
+  "scripts/_cuda_churn_probe.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "scripts/_probe_models.py": {
+   "class": "M",
+   "reason": "lists the models offered by the cloud model backends",
+   "hosts": [
+    "api.cerebras.ai",
+    "api.groq.com",
+    "generativelanguage.googleapis.com",
+    "openrouter.ai"
+   ]
+  },
+  "scripts/test_local_brain.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "supervisor.py": {
+   "class": "O",
+   "reason": "Telegram: the supervisor's alarm to Emil",
+   "hosts": [
+    "api.telegram.org"
+   ]
+  },
+  "tools/arc_f1.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "127.0.0.1"
+   ]
+  },
+  "tools/first_bet.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "tools/morning_digest.py": {
+   "class": "O",
+   "reason": "GitHub: reads the watched repo's commits through the publication channel's API",
+   "hosts": [
+    "api.github.com"
+   ]
+  },
+  "tools/sandbox/ollama_proxy.py": {
+   "class": "M",
+   "reason": "a loopback proxy in front of the local Ollama; loopback only",
+   "hosts": [
+    "127.0.0.1"
+   ]
+  },
+  "tools/transfer_test.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "localhost"
+   ]
+  },
+  "training/l1_ollama_holdout.py": {
+   "class": "M",
+   "reason": "local Ollama model on localhost:11434",
+   "hosts": [
+    "127.0.0.1"
+   ]
+  }
+ }
+}

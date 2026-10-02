@@ -461,7 +461,7 @@ def api_forks():
                             "hint": "GET /api/forks?refresh=1 to fetch once"})
         return jsonify({**cached, "from_cache": True})
     try:
-        import requests
+        from core.openclaw_door import http as requests  # C-FIX-1 Part 4: through the OpenClaw door
         r = requests.get(FORKS_URL, timeout=10,
                          headers={"Accept": "application/vnd.github+json"})
         r.raise_for_status()
@@ -481,6 +481,15 @@ def api_forks():
                         "error": "{}: {}".format(type(e).__name__, e),
                         "stale": cached,
                         "note": "the last cache is shown if there is one"})
+    except _door_closed() as e:
+        # C-FIX-1: a closed OpenClaw door is named, never an error page and never a fallback
+        return jsonify({"ts": _now(), "offline": True, "error": "DOOR_CLOSED: {}".format(e.cause),
+                        "stale": cached, "note": "the last cache is shown if there is one"})
+
+
+def _door_closed():
+    from core.openclaw_door import DoorClosed
+    return DoorClosed
 
 
 def _age_days(ts) -> Optional[float]:

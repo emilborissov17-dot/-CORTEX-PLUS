@@ -141,13 +141,13 @@ def _processes():
         return {}
 
 def _network_latency() -> dict:
-    """Ping key external servers — measure connectivity health."""
+    """Connectivity to the two roads this repo may use (C-FIX-1 Part 4, 2 Oct 2026):
+    the cloud model backend and the local OpenClaw gateway. External data hosts are
+    not pinged - only the OpenClaw door reaches them."""
     import socket, time as _time
     targets = {
-        "groq_api":   ("api.groq.com",       443),
-        "google_dns":  ("8.8.8.8",            53),
-        "worldbank":   ("api.worldbank.org",  443),
-        "noaa":        ("gml.noaa.gov",       443),
+        "groq_api":         ("api.groq.com", 443),
+        "openclaw_gateway": ("127.0.0.1",    18789),
     }
     results = {}
     for name, (host, port) in targets.items():

@@ -189,15 +189,26 @@ def test_a_panel_with_no_file_says_no_data_and_names_it(client, monkeypatch):
 
 
 def test_forks_fails_soft_when_the_network_is_gone(client, monkeypatch):
-    import requests
+    from core import openclaw_door as door
 
     def boom(*a, **k):
-        raise requests.ConnectionError("no route to host")
+        raise door.DoorFetchFailed("no route to host")
 
-    monkeypatch.setattr(requests, "get", boom)
+    monkeypatch.setattr(door, "get_bytes", boom)
     d = client.get("/api/forks?refresh=1").get_json()
     assert d["offline"] is True
-    assert "ConnectionError" in d["error"]
+    assert "DoorFetchFailed" in d["error"]
+
+
+def test_forks_names_a_closed_door(client, monkeypatch):
+    from core import openclaw_door as door
+
+    def closed(*a, **k):
+        raise door.DoorClosed("GATEWAY_DEAD: no answer")
+
+    monkeypatch.setattr(door, "get_bytes", closed)
+    d = client.get("/api/forks?refresh=1").get_json()
+    assert d["offline"] is True and d["error"] == "DOOR_CLOSED: GATEWAY_DEAD: no answer"
 
 
 def test_the_server_binds_loopback_only():

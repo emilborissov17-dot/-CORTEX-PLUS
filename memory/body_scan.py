@@ -180,11 +180,7 @@ def _scan_network():
     results = {}
     
     endpoints = {
-        "groq_api":    "https://api.groq.com",
-        "world_bank":  "https://api.worldbank.org",
-        "noaa":        "https://gml.noaa.gov",
-        "open_meteo":  "https://api.open-meteo.com",
-        "internet":    "https://www.google.com",
+        "groq_api":    "https://api.groq.com",   # C-FIX-1 Part 4: the model backend only
     }
     
     import requests as _req

@@ -75,7 +75,7 @@ MEMORY_DIR     = REPO / "memory"
 LOCK_FILE = HERE / "pulse.lock"
 
 SAMPLE_INTERVAL_SEC = 10
-PING_HOST = ("1.1.1.1", 53)     # Cloudflare DNS: TCP connect, no ICMP privileges needed
+PING_HOST = ("127.0.0.1", 18789)  # C-FIX-1 Part 4: the OpenClaw gateway, the one door out
 PING_TIMEOUT_SEC = 2.0
 
 # A heartbeat older than this is not proof of life — see _sense_cycle().
