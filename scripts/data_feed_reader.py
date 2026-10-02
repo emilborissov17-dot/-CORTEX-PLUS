@@ -127,12 +127,9 @@ class Refused(ValueError):
 
 def is_network_error(exc: BaseException) -> bool:
     """The fetch never reached the source: connection, DNS or timeout."""
-    try:
-        import requests
-        if isinstance(exc, (requests.exceptions.ConnectionError, requests.exceptions.Timeout)):
-            return True
-    except Exception:                                             # noqa: BLE001
-        pass
+    # C-FIX-1 Part 3: no requests here any more. A fetch through the door that failed
+    # (DoorFetchFailed) is about ONE url, not a dead network; a closed door is DoorClosed,
+    # which run() stops on by name.
     return isinstance(exc, (ConnectionError, TimeoutError))
 
 
@@ -802,77 +799,89 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     feeds, carded, stored, refusals, unreachable, cards, parked = [], [], [], [], [], [], []
     pages = {"ingested": 0, "skipped_same_content": 0, "statements_added": 0,
              "page_only": 0, "needs": []}
-    for source in sources:
-        sid = source.get("id") or "<unnamed>"
-        axis = source.get("axis")
-        sub_bad = subcategory_problem(source)
-        if sub_bad:
-            # a wrong LABEL is dropped, the source is not
-            source = {**source, "subcategory": None}
-        # PARKED after 3 consecutive failures; a need that names it unparks it
-        if parking is not None and _fs.is_parked(sid, parking):
-            if sid in wanted:
-                _fs.unpark(sid, "named by a need", parking)
-            else:
-                parked.append({"ts": _now(), "source_id": sid, "status": "PARKED"})
-                continue
-        page = get_page(source, timeout, getter)
-        if parking is not None:
-            _fs.record(sid, ok=not page["err"] and page["status"] == 200,
-                       err=page["err"] or f"HTTP {page['status']}", path=parking)
-        if page["err"] or page["status"] != 200:
-            reason = page["err"] or f"HTTP {page['status']}"
-            life.observe(sid, axis=axis, ok=False, reason=reason, state=lstate, ledger=ledger)
-            unreachable.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
-                                "url": source.get("url"), "status": "UNREACHABLE", "reason": f"{sid}: {reason}",
-                                "network": bool(page["network"])})
-            print(f"[DMZ] UNREACHABLE {sid:<30} {reason[:120]}")
-            continue
-        # ── the page, WHOLE, into the store the brain reads ────────────────
-        if ingest is not None and not dry_run:
-            from core import knowledge as _kn
-            try:
-                text, form = _kn.body_to_text(page["raw"], page["payload"], page["content_type"])
-            except _kn.FlattenLostValue as exc:
-                text, form = page["raw"] or "", f"raw_text ({exc})"
-            if form == "pdf_unreadable":
-                pages["needs"].append({"source_id": sid, "need": "a PDF reader (none installed)"})
-            else:
-                rep = ingest(sid, text, url=source.get("url", ""), origin="web",
-                             **({"extra": {"granularity": "record"}} if form == "json" else {}))
-                if rep.get("outcome") == "SKIPPED_SAME_CONTENT":
-                    pages["skipped_same_content"] += 1
+    # C-FIX-1 Part 3: a closed door stops the run by name and nothing below is written
+    from core.openclaw_door import DoorClosed as _DoorClosed
+    door_closed = None
+    try:
+        for source in sources:
+            sid = source.get("id") or "<unnamed>"
+            axis = source.get("axis")
+            sub_bad = subcategory_problem(source)
+            if sub_bad:
+                # a wrong LABEL is dropped, the source is not
+                source = {**source, "subcategory": None}
+            # PARKED after 3 consecutive failures; a need that names it unparks it
+            if parking is not None and _fs.is_parked(sid, parking):
+                if sid in wanted:
+                    _fs.unpark(sid, "named by a need", parking)
                 else:
-                    pages["ingested"] += 1
-                    pages["statements_added"] += rep.get("added", 0)
-        # ── and, in addition, the measurement ─────────────────────────────
-        try:
-            row = fetch_one(source, timeout, page=page)
-        except NoMeasurement as exc:
-            pages["page_only"] += 1
-            stored.append({"ts": _now(), "source_id": sid, "url": source.get("url"),
-                           "status": "STORED", "reason": str(exc)})
-            continue
-        except Refused as exc:
-            refusals.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
-                             "url": source.get("url"), "path": source.get("path"),
-                             "status": "LABEL_REFUSED", "reason": str(exc), "network": False})
-            print(f"[DMZ] LABEL REFUSED {sid:<28} {exc} — the page itself entered as statements")
-            continue
-        rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
-                           peer=_peer_for(axis, source.get('key'), q), state=lstate, ledger=ledger)
-        row["trust"] = rec["state"]
-        row["origin"] = source.get("origin")
-        # The COMPOSITE still reads only TRUSTED and declared readings.
-        row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
-        eligible = card_eligible(row, rec["state"])
-        row["status"] = "PRESENT" if row["measured"] else ("CARDED" if eligible else "STORED")
-        (feeds if row["measured"] else carded if eligible else stored).append(row)
-        if eligible:
-            card = card_from_row(row)
-            if card is not None:
-                cards.append(card)
-        print(f"[DMZ] {row['status']:<8}{sid:<34} {row['value']} {row['unit'] or ''} [{rec['state']}]")
+                    parked.append({"ts": _now(), "source_id": sid, "status": "PARKED"})
+                    continue
+            page = get_page(source, timeout, getter)
+            if parking is not None:
+                _fs.record(sid, ok=not page["err"] and page["status"] == 200,
+                           err=page["err"] or f"HTTP {page['status']}", path=parking)
+            if page["err"] or page["status"] != 200:
+                reason = page["err"] or f"HTTP {page['status']}"
+                life.observe(sid, axis=axis, ok=False, reason=reason, state=lstate, ledger=ledger)
+                unreachable.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
+                                    "url": source.get("url"), "status": "UNREACHABLE", "reason": f"{sid}: {reason}",
+                                    "network": bool(page["network"])})
+                print(f"[DMZ] UNREACHABLE {sid:<30} {reason[:120]}")
+                continue
+            # ── the page, WHOLE, into the store the brain reads ────────────────
+            if ingest is not None and not dry_run:
+                from core import knowledge as _kn
+                try:
+                    text, form = _kn.body_to_text(page["raw"], page["payload"], page["content_type"])
+                except _kn.FlattenLostValue as exc:
+                    text, form = page["raw"] or "", f"raw_text ({exc})"
+                if form == "pdf_unreadable":
+                    pages["needs"].append({"source_id": sid, "need": "a PDF reader (none installed)"})
+                else:
+                    rep = ingest(sid, text, url=source.get("url", ""), origin="web",
+                                 **({"extra": {"granularity": "record"}} if form == "json" else {}))
+                    if rep.get("outcome") == "SKIPPED_SAME_CONTENT":
+                        pages["skipped_same_content"] += 1
+                    else:
+                        pages["ingested"] += 1
+                        pages["statements_added"] += rep.get("added", 0)
+            # ── and, in addition, the measurement ─────────────────────────────
+            try:
+                row = fetch_one(source, timeout, page=page)
+            except NoMeasurement as exc:
+                pages["page_only"] += 1
+                stored.append({"ts": _now(), "source_id": sid, "url": source.get("url"),
+                               "status": "STORED", "reason": str(exc)})
+                continue
+            except Refused as exc:
+                refusals.append({"ts": _now(), "source_id": sid, "axis": axis, "key": source.get("key"),
+                                 "url": source.get("url"), "path": source.get("path"),
+                                 "status": "LABEL_REFUSED", "reason": str(exc), "network": False})
+                print(f"[DMZ] LABEL REFUSED {sid:<28} {exc} — the page itself entered as statements")
+                continue
+            rec = life.observe(sid, axis=axis, ok=True, value=row["value"],
+                               peer=_peer_for(axis, source.get('key'), q), state=lstate, ledger=ledger)
+            row["trust"] = rec["state"]
+            row["origin"] = source.get("origin")
+            # The COMPOSITE still reads only TRUSTED and declared readings.
+            row["measured"] = rec["state"] == life.TRUSTED and not row["undeclared"]
+            eligible = card_eligible(row, rec["state"])
+            row["status"] = "PRESENT" if row["measured"] else ("CARDED" if eligible else "STORED")
+            (feeds if row["measured"] else carded if eligible else stored).append(row)
+            if eligible:
+                card = card_from_row(row)
+                if card is not None:
+                    cards.append(card)
+            print(f"[DMZ] {row['status']:<8}{sid:<34} {row['value']} {row['unit'] or ''} [{rec['state']}]")
+    except _DoorClosed as exc:
+        door_closed = exc.cause
+        print(f"[data_feed_reader] DOOR_CLOSED: {door_closed} - nothing from this run is written")
+    if door_closed:
+        return {"ts": _now(), "sources": len(sources), "door_closed": door_closed, "feeds": [],
+                "carded": [], "declared": [], "stored": [], "shadows": [], "refusals": [],
+                "unreachable": [], "parked": [], "cards": [], "pages": pages, "lifecycle": {},
+                "network_down": False, "discovered": NO_AGENT_INPUT}
 
     if not dry_run:
         q.mkdir(parents=True, exist_ok=True)

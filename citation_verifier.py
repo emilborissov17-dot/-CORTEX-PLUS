@@ -33,7 +33,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 try:
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     HAS_REQUESTS = True
 except ImportError:
     HAS_REQUESTS = False

@@ -514,8 +514,7 @@ def _semantic_rule(payload, metric: str, axis: str) -> tuple:
     """Ask the local model what the payload MEANS for this axis.
     Returns (kind, rule, reason) or (None, None, why_not)."""
     try:
-        import requests as _rq
-        # The warm core, not the strongest installed qwen3 (25 Sep 2026): five
+        from core.openclaw_door import http as _rq  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
         # qwen3:8b calls from here on the evening of 24 Sep evicted the core the
         # 03:04 cycle needed.
         try:
@@ -668,7 +667,7 @@ def probe(url: str, fmt: str = "json", timeout: int = 15) -> tuple:
     un-blacklist migration and by scripts/cortex_ingest.py; data_scout already holds
     the payload from its own validation fetch and passes it straight in."""
     try:
-        import requests
+        from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
         r = requests.get(url, timeout=timeout,
                          headers={"User-Agent": "CORTEX-registration/1.0"})
         r.raise_for_status()

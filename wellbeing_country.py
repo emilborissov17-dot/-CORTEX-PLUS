@@ -20,9 +20,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional
 
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 
 from wellbeing_profile import WellbeingProfile, compute_wellbeing_profile
 
@@ -410,18 +408,9 @@ def _save_cache(iso2: str, raw: dict) -> None:
 
 
 def _wb_session() -> requests.Session:
-    """Session with retry/backoff for transient WB API errors (429/5xx/read-timeout)."""
-    sess = requests.Session()
-    retry = Retry(
-        total=3, connect=3, read=3,
-        backoff_factor=0.7,
-        status_forcelist=[429, 500, 502, 503, 504],
-        allowed_methods=frozenset({"GET"}),
-    )
-    adapter = HTTPAdapter(max_retries=retry)
-    sess.mount("https://", adapter)
-    sess.mount("http://", adapter)
-    return sess
+    """A session on the OpenClaw door (C-FIX-1 Part 3). The urllib3 retry adapter it mounted
+    belonged to requests; the door has none, so a transient World Bank error is not retried here."""
+    return requests.Session()
 
 
 # ── Fetch ──────────────────────────────────────────────────────────────────────

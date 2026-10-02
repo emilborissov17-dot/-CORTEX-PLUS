@@ -61,7 +61,7 @@ import os
 import sys
 import time
 import urllib.error
-import urllib.request
+from core.openclaw_door import http as _door_http  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 import zipfile
 from pathlib import Path
 from typing import Iterable, Optional
@@ -138,10 +138,10 @@ class UcdpUnavailable(RuntimeError):
 
 
 def _fetch(url: str, timeout: int = 900) -> bytes:
-    req = urllib.request.Request(url, method="GET")
+    req = _door_http.Request(url, method="GET")
     req.add_header("User-Agent", USER_AGENT)
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+        with _door_http.urlopen(req, timeout=timeout) as r:
             if r.status != 200:
                 raise UcdpUnavailable("%s answered HTTP %s" % (url, r.status))
             return r.read()
@@ -269,6 +269,13 @@ def api_get(version: str, page: int = 0, pagesize: int = 1000,
     """One authenticated GET. Counted before it is sent, stopped at the cap,
     and recorded (endpoint, version, page, status, latency) whatever happens."""
     token = api_token()
+    # C-FIX-1 Part 3: every read goes through the OpenClaw door, which sends no credential.
+    # Refused HERE, before the count, so a request that never leaves is not counted as sent.
+    from core import fetch_standard as _fs
+    from core import openclaw_door as _door
+    if _door._credential_header(TOKEN_HEADER):
+        raise _fs.FetchRefused("header %s carries a credential; the door sends none - "
+                               "the UCDP API is closed under R43 (Emil, 2 Oct 2026)" % TOKEN_HEADER)
     if requests_today() >= DAILY_CAP:
         raise UcdpCapReached("%d UCDP API requests already today (UTC %s); cap %d"
                              % (requests_today(), _utc_day(), DAILY_CAP))
@@ -277,7 +284,7 @@ def api_get(version: str, page: int = 0, pagesize: int = 1000,
     url = "%s/%s?pagesize=%d&page=%d" % (base, version, pagesize, page)
     if query:
         url += "".join("&%s=%s" % (k, v) for k, v in query.items())
-    req = urllib.request.Request(url, method="GET")
+    req = _door_http.Request(url, method="GET")
     req.add_header("User-Agent", USER_AGENT)
     req.add_header(TOKEN_HEADER, token)
     row = {"ts": dt.datetime.now(dt.timezone.utc).isoformat(), "endpoint": endpoint,
@@ -286,7 +293,7 @@ def api_get(version: str, page: int = 0, pagesize: int = 1000,
            "latency_s": None, "error": None, "count_today": n}
     t0 = time.time()
     try:
-        with urllib.request.urlopen(req, timeout=300) as r:
+        with _door_http.urlopen(req, timeout=300) as r:
             body = r.read()
             row["status"] = r.status
         return json.loads(body.decode("utf-8", "replace"))

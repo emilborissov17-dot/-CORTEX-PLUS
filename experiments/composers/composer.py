@@ -49,7 +49,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-import urllib.request
+from core.openclaw_door import http as _door_http  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -138,7 +138,7 @@ def _http(url, timeout=15):
     urllib hits a proxy tunnel 403 for some domains while requests gets through
     (diagnosed 30 Jul 2026 from composer_state last_error). urllib is the fallback."""
     try:
-        import requests
+        from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
         r = requests.get(url, timeout=timeout,
                          headers={"User-Agent": "CORTEX-composer/1.0"})
         if r.status_code == 429:
@@ -150,8 +150,8 @@ def _http(url, timeout=15):
             raise RateLimited("provider throttle notice")
         return r.text
     except ImportError:
-        req = urllib.request.Request(url, headers={"User-Agent": "CORTEX-composer/1.0"})
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+        req = _door_http.Request(url, headers={"User-Agent": "CORTEX-composer/1.0"})
+        with _door_http.urlopen(req, timeout=timeout) as r:
             return r.read().decode("utf-8", errors="replace")
 
 

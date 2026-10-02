@@ -39,7 +39,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Dict, List, Optional
 
-import requests  # стандартна HTTP библиотека
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 
 from data_providers.planet.base_provider import PlanetDataProvider
 
@@ -444,7 +444,7 @@ class ClimateGlobalRiskReviewProvider(PlanetDataProvider):
 
 def fetch_noaa_co2() -> dict:
     """Реални CO2 данни от NOAA Mauna Loa — без API ключ, работи в WSL2."""
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     metrics = {}
     try:
         url = "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_weekly_mlo.csv"

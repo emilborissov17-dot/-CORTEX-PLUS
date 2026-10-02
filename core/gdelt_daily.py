@@ -99,7 +99,7 @@ def count_from_zip(raw: bytes, day: str, sqldate_filter: bool = True) -> int:
 
 def fetch_day(day: str, timeout: int = 180) -> bytes:
     """One day's export. Network; never called by the tests."""
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     r = requests.get(EVENTS_URL.format(day=day), timeout=timeout,
                      headers={"User-Agent": "CORTEX++/1.0 (research)"})
     r.raise_for_status()

@@ -240,7 +240,7 @@ def judge_record(record: dict, body_text: Optional[str]) -> dict:
 
 def _fetch(url: str, timeout: int = 30) -> Optional[str]:
     try:
-        import requests  # noqa: PLC0415
+        from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
         r = requests.get(url, timeout=timeout, headers={"User-Agent": "CORTEX++ quote_gate/1.0"})
         if r.status_code != 200:
             return None

@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import json
 import sys
-import urllib.request
+from core.openclaw_door import http as _door_http  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -79,8 +79,8 @@ def classify(action_type: str) -> str:
 
 
 def _http_get(url: str, timeout: int) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "CORTEX-axis-hand/1.0"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
+    req = _door_http.Request(url, headers={"User-Agent": "CORTEX-axis-hand/1.0"})
+    with _door_http.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8")
 
 

@@ -82,7 +82,7 @@ def complete_days(n: int = 3, today: date | None = None) -> list:
 
 def fetch_count(day: date, min_mag: float = MIN_MAG, timeout: int = 60) -> int:
     """Network; never called by the tests."""
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     r = requests.get(count_url(day, min_mag), timeout=timeout,
                      headers={"User-Agent": "CORTEX++/1.0 (research)"})
     r.raise_for_status()
@@ -122,7 +122,7 @@ def counts_from_csv(text: str, days: list) -> list:
 def series_range(days: list, text_fetcher=None, min_mag: float = MIN_MAG) -> list:
     """Same result as series(), for many days: chunked CSV queries. `text_fetcher(url)`
     injectable so the tests never touch the network."""
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     if not days:
         return []
     get = text_fetcher or (lambda u: requests.get(u, timeout=120,

@@ -2,8 +2,9 @@
 from __future__ import annotations
 from datetime import date
 from typing import Any, Dict, Optional
-import json, urllib.request
-import requests
+import json
+from core.openclaw_door import http as _door_http  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from data_providers.human.base_provider import HumanDataProvider
 
 WB_WLD = "https://api.worldbank.org/v2/country/WLD/indicator"
@@ -25,7 +26,7 @@ WB_CODES = {
 def _wgi_mean(indicator_code: str) -> Optional[float]:
     url = f"{WB_ALL}/{indicator_code}?format=json&mrv=1&per_page=300"
     try:
-        with urllib.request.urlopen(url, timeout=20) as r:
+        with _door_http.urlopen(url, timeout=20) as r:
             data = json.loads(r.read())
         values = [
             float(d["value"])

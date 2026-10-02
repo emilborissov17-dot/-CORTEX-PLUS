@@ -123,8 +123,15 @@ def get(url: str, timeout: float = TIMEOUT_S, headers: Optional[dict] = None, *,
         raise FetchRefused(f"timeout {timeout}s exceeds {TIMEOUT_S}s")
     clock = clock or _CLOCK
     if session is None:
-        import requests
-        session = requests.Session()
+        # C-FIX-1 Part 3 (2 Oct 2026, Emil R43): the bytes come through OpenClaw's
+        # browser (core/openclaw_door.py), never from requests. The door applies this
+        # module's address rule, host clock and size limit itself; DoorClosed is not
+        # caught here.
+        from core import openclaw_door as _door
+        got = _door.get_bytes(url, resolve=resolve, clock=clock, max_bytes=max_bytes)
+        return {"status": got["status"],
+                "raw": got["bytes"].decode(_door._charset(got["content_type"]), errors="replace"),
+                "content_type": got["content_type"], "final_url": got["final_url"], "bytes": len(got["bytes"])}
     session.cookies.clear()
     session.trust_env = False                      # no proxy auth, no .netrc credentials
     for _hop in range(MAX_REDIRECTS + 1):

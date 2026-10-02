@@ -101,7 +101,7 @@ def range_for_days(days: int) -> str:
 
 def fetch_chart(sym: str, timeout: int = 60, rng: str = "3mo") -> dict:
     """Network; never called by the tests."""
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     if rng not in RANGES:
         raise ValueError(f"range {rng!r} not in {RANGES}")
     r = requests.get(CHART_URL.format(sym=sym).replace("range=3mo", f"range={rng}"), timeout=timeout,

@@ -30,8 +30,7 @@ from datetime import datetime, date, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
-import requests
-
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 try:
@@ -510,12 +509,17 @@ def _ucdp_api_latest_year(headers: dict, version: str):
     what this axis was reporting. Walks back a few years because the newest year is only
     published once UCDP releases it (2026 and 2027 both answer 0 today).
     """
+    from core import fetch_standard as _fs
     uc = _ucdp_client()
     year = datetime.now(timezone.utc).year
     for _ in range(UCDP_YEAR_LOOKBACK + 1):
         try:
             data = uc.api_get(version, page=0, pagesize=1, endpoint=UCDP_RESOURCE,
                               query={"Year": year})
+        except _fs.FetchRefused as e:
+            # C-FIX-1 Part 3 (2 Oct 2026): decided - no credential goes through the door.
+            print(f"  [GI] UCDP API closed: {e}")
+            return None, None
         except uc.UcdpCapReached:
             raise
         except uc.UcdpUnavailable as e:

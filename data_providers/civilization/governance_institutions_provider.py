@@ -4,7 +4,8 @@ data_providers/civilization/governance_institutions_provider.py
 WGI — претеглено по население, от гледна точка на най-уязвимите.
 Индикаторни кодове: GOV_WGI_*.EST (World Bank source 3, v2 API).
 """
-import json, urllib.request, pathlib
+import json, pathlib
+from core.openclaw_door import http as _door_http  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from datetime import datetime, timezone
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
@@ -24,7 +25,7 @@ def fetch_indicator_weighted(indicator_code: str) -> dict:
         f"https://api.worldbank.org/v2/country/all/indicator/{indicator_code}"
         f"?format=json&mrv=1&per_page=300"
     )
-    with urllib.request.urlopen(url, timeout=20) as r:
+    with _door_http.urlopen(url, timeout=20) as r:
         data = json.loads(r.read())
 
     scores = {}
@@ -40,7 +41,7 @@ def fetch_indicator_weighted(indicator_code: str) -> dict:
         "https://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL"
         "?format=json&mrv=1&per_page=300"
     )
-    with urllib.request.urlopen(pop_url, timeout=20) as r:
+    with _door_http.urlopen(pop_url, timeout=20) as r:
         pop_data = json.loads(r.read())
 
     population = {}

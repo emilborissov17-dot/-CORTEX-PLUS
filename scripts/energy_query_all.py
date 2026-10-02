@@ -3,9 +3,7 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
-import requests
-
-
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 BASE_DIR = Path(__file__).resolve().parent
 ACTIVE_PATH = BASE_DIR / "energy_sources_active.json"
 OUTPUT_DIR = BASE_DIR / "knowledge" / "energy_snapshots"

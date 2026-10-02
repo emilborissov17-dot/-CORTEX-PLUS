@@ -3,7 +3,8 @@
 data_providers/civilization/sdg_progress_provider.py
 Реални данни за SDG прогрес от Our World in Data API.
 """
-import requests, json
+import json
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from datetime import datetime, timezone
 
 SDG_INDICATORS = {

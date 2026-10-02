@@ -153,10 +153,8 @@ def test_fetch_decodes_entities_before_judging(monkeypatch):
     class _Resp:
         status_code = 200
         text = NOAA_RAW
-    monkeypatch.setattr(qg, "requests", None, raising=False)
-    import types
-    fake = types.SimpleNamespace(get=lambda url, timeout=None, headers=None: _Resp())
-    monkeypatch.setitem(sys.modules, "requests", fake)
+    from core import openclaw_door as _door
+    monkeypatch.setattr(_door.http, "get", lambda url, timeout=None, headers=None, **k: _Resp())
     page = qg._fetch("https://example.invalid/noaa")
     assert page is not None
     assert "&nbsp;" not in page, "_fetch is not decoding HTML entities"

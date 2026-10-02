@@ -1142,6 +1142,9 @@ def _bb_step(label):
         return _bb_null()
 
 
+from core.openclaw_door import DoorClosed as _DoorClosed   # C-FIX-1 Part 3
+
+
 def _run(label, fn, free_after=False):
     # ── EVERY STEP LEAVES A SPAN, AND A KILLED ONE LEAVES ONLY ITS OPEN ──────
     # The recorder's span wraps the whole body: the `open` row is written and
@@ -1248,6 +1251,15 @@ def _run(label, fn, free_after=False):
                 fn()
             print(f"[FAST_CYCLE] {label} -> OK")
             _completed = True
+        except _DoorClosed as e:
+            # C-FIX-1 Part 3: a closed door is LOUD and writes nothing; the cycle goes on
+            print(f"[FAST_CYCLE] {label} -> DOOR_CLOSED: {e.cause}")
+            _note_night(f"{label}: DOOR_CLOSED", e.cause)
+            try:
+                from core import phase_tracker as _pt
+                _pt.note_failure(label, e)
+            except Exception:
+                pass
         except Exception as e:
             # str(e) can be empty (e.g. bare MemoryError()) — always show the
             # exception type too, so a failure never renders as a blank message.
@@ -2680,6 +2692,10 @@ def main():
         print(f"[FAST_CYCLE] global_indicators -> CO2={co2}ppm | +{temp}°C | conflicts={conf}"
               f" | {_h.get('fresh_this_cycle')} fresh, {_h.get('carried_from_a_previous_cycle')}"
               f" carried, {_h.get('missing_everywhere')} missing")
+    except _DoorClosed as e:
+        # C-FIX-1 Part 3: nothing is written; the snapshot on disk keeps its own date
+        print(f"[FAST_CYCLE] global_indicators -> DOOR_CLOSED: {e.cause}")
+        _note_night("global_indicators: DOOR_CLOSED", e.cause)
     except Exception as e:
         import traceback as _tb
         print(f"[FAST_CYCLE] global_indicators -> FAILED: {e}")
@@ -2768,6 +2784,9 @@ def main():
             except Exception as _ce:
                 print(f"[FAST_CYCLE] composer {_ax} -> FAILED: {type(_ce).__name__}: {_ce}")
         print(f"[FAST_CYCLE] composers -> {_c_ok}/{len(_c_axes)} composed (moving signal recorded)")
+    except _DoorClosed as e:
+        print(f"[FAST_CYCLE] composers -> DOOR_CLOSED: {e.cause} (no further axis composed)")
+        _note_night("composers: DOOR_CLOSED", e.cause)
     except Exception as e:
         print(f"[FAST_CYCLE] composers -> FAILED: {type(e).__name__}: {e}")
 

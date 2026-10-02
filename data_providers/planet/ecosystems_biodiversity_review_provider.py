@@ -2,7 +2,7 @@
 from __future__ import annotations
 from datetime import date, datetime, timedelta
 from typing import Any, Dict, Optional
-import requests
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from data_providers.planet.base_provider import PlanetDataProvider
 
 WB_API    = "https://api.worldbank.org/v2/country/WLD/indicator"

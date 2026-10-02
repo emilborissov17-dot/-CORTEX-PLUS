@@ -22,8 +22,7 @@ rejection of a standalone docs/LEARNING_LOOP_DESIGN.md).
 from __future__ import annotations
 
 from typing import Optional
-import requests
-
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from wellbeing_country import WB_BASE, _wb_session
 
 FALLBACK_WINDOW = 2  # years, either direction of check_year

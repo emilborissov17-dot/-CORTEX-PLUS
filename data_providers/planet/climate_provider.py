@@ -3,7 +3,8 @@
 data_providers/planet/climate_provider.py
 Реални климатични данни от NOAA + World Bank
 """
-import json, pathlib, requests
+import json, pathlib
+from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
 from datetime import datetime, timezone
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[3]

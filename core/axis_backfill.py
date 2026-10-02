@@ -121,7 +121,7 @@ def parse_noaa_annual(text: str) -> list[tuple[int, float]]:
 # ── fetching (injectable) ────────────────────────────────────────────────────
 
 def _get(url: str, timeout: int = 30) -> str:
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     r = requests.get(url, timeout=timeout, headers={"User-Agent": "CORTEX++ axis_backfill"})
     r.raise_for_status()
     return r.text

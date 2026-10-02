@@ -184,8 +184,7 @@ def test_mutation_first_textual_match_would_quote_the_wrong_field(monkeypatch):
 
 # ── 1e: network down ────────────────────────────────────────────────────────
 def _down(url, timeout):
-    import requests
-    raise requests.exceptions.ConnectionError("Failed to resolve 'x' ([Errno 11001] getaddrinfo failed)")
+    raise ConnectionError("Failed to resolve 'x' ([Errno 11001] getaddrinfo failed)")
 
 
 def test_every_source_failing_on_the_network_is_network_down_and_retried_once(monkeypatch, tmp_path):

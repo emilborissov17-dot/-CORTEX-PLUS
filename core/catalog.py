@@ -64,7 +64,7 @@ def _now() -> str:
 
 
 def _get(url: str, params: dict | None = None):
-    import requests
+    from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
     r = requests.get(url, params=params, timeout=TIMEOUT,
                      headers={"User-Agent": "CORTEX++/catalog"})
     r.raise_for_status()
@@ -237,7 +237,7 @@ def probe() -> dict:
     for name, (url, _fn) in REGISTRIES.items():
         rec = {"url": url}
         try:
-            import requests
+            from core.openclaw_door import http as requests  # C-FIX-1 Part 3: every byte through OpenClaw's browser (core/openclaw_door.py)
             r = requests.get(url, timeout=TIMEOUT,
                              headers={"User-Agent": "CORTEX++/catalog"})
             rec["http"] = r.status_code
