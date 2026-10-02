@@ -309,6 +309,61 @@ def pending_pdf_needs(ledger_rows: list) -> list:
     return out
 
 
+GATEWAY_PORT = 18789
+
+
+class Gateway:
+    """OpenClaw's gateway, the one thing every browser call goes through (C-GW-1).
+
+    healthy(): `openclaw gateway health --json` answers {"ok": true}.
+    restart(): what worked on 2 Oct 2026 (C-GW-1 0b) — `openclaw gateway stop --force`
+    failed ("port 18789 is still busy after stop"), so the process listening on the
+    port is ended (only if its command line is an openclaw gateway), then the service
+    is started with `openclaw gateway start` (the scheduled task "OpenClaw Gateway"),
+    and health is polled for up to `wait_s`."""
+
+    def __init__(self, timeout_s: int = 60, wait_s: int = 90):
+        self.timeout_s, self.wait_s = timeout_s, wait_s
+
+    @staticmethod
+    def parse_health(out: str) -> bool:
+        i = (out or "").find("{")
+        try:
+            return bool(json.loads(out[i:]).get("ok") is True) if i >= 0 else False
+        except ValueError:
+            return False
+
+    def _cli(self, *args, timeout=None) -> subprocess.CompletedProcess:
+        return subprocess.run([*openclaw_cmd(), "gateway", *args], capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", timeout=timeout or self.timeout_s)
+
+    def healthy(self) -> bool:
+        try:
+            p = self._cli("health", "--json")
+        except subprocess.TimeoutExpired:
+            return False
+        return p.returncode == 0 and self.parse_health(p.stdout)
+
+    def restart(self) -> None:
+        import psutil
+        for c in psutil.net_connections("tcp"):
+            if c.laddr and c.laddr.port == GATEWAY_PORT and c.status == "LISTEN" and c.pid:
+                try:
+                    proc = psutil.Process(c.pid)
+                    if "openclaw" in " ".join(proc.cmdline()) and "gateway" in " ".join(proc.cmdline()):
+                        proc.terminate()
+                        psutil.wait_procs([proc], timeout=15)
+                except psutil.Error:
+                    pass
+        try:
+            self._cli("start", timeout=180)
+        except subprocess.TimeoutExpired:
+            pass
+        t0 = time.time()
+        while time.time() - t0 < self.wait_s and not self.healthy():
+            time.sleep(5)
+
+
 def _on_page(sentence: str, text: str) -> bool:
     from core import knowledge as kn
     return kn._squash(sentence) in kn._squash(text)

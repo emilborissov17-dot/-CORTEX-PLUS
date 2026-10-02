@@ -44,6 +44,18 @@ def install(monkeypatch) -> list:
             raise AssertionError(f"a test read live data: {file}")
         return real_open(file, *a, **k)
     monkeypatch.setattr(builtins, "open", guarded_open)
+    # C-GW-1 (2 Oct 2026): a test without an injected gateway called the REAL
+    # `openclaw gateway health`; with a dead answer it would have restarted the live
+    # gateway. Every OpenClaw CLI call goes through openclaw_cmd(): a test reaching it fails.
+    try:
+        from scripts import openclaw_search as _oc
+
+        def no_cli():
+            attempts.append("openclaw CLI")
+            raise AssertionError("a test reached the live OpenClaw CLI")
+        monkeypatch.setattr(_oc, "openclaw_cmd", no_cli)
+    except ImportError:
+        pass
     return attempts
 
 

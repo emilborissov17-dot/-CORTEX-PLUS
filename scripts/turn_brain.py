@@ -38,15 +38,28 @@ sys.path.insert(0, str(REPO))
 RESULT = REPO / "memory" / "turn_result.json"
 RECORDS = REPO / "memory" / "turns"
 EXPECT = REPO / "memory" / "expectations.jsonl"
+GAINED = REPO / "memory" / "brain_gained.json"     # what each brain need had gained at the last brain turn
 
 
 def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+def gained_now(doc: dict) -> dict:
+    return {n["id"]: int(n.get("gained_statements") or 0) for n in doc.get("needs", []) if n.get("origin") == "brain"}
+
+
+def nothing_new(prev: Optional[dict], now: dict) -> bool:
+    """C-GW-1 1c: True when the brain's turn has a record of what its needs had gained
+    last time and none of them has gained anything since. No record -> False (ask)."""
+    if prev is None:
+        return False
+    return not any(v > int(prev.get(k) or 0) for k, v in now.items())
+
+
 def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, busy: Optional[Callable] = None,
         bn_paths=None, space_paths=None, sym_paths=None, read=None, linked=None,
-        result_path=None, expect_path=None, turn_path=None, records_dir=None) -> dict:
+        result_path=None, expect_path=None, turn_path=None, records_dir=None, gained_path=None) -> dict:
     """Also keeps the WHOLE turn — raw replies, needs accepted and refused, verdicts,
     symbols — in memory/turns/brain_<started>.json, so a turn can be read back verbatim."""
     from core import brain_needs as bn
@@ -69,9 +82,22 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
     derived = d["expressions"]
     b = bn.briefing(bn_paths, derived)
     why = (busy or bn.model_busy)()
+    gp = Path(gained_path or GAINED)
+    try:
+        prev = json.loads(gp.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        prev = None
+    now = gained_now(bn.load_needs(bn_paths))
+    out["nothing_new"] = nothing_new(prev, now)
     if why:
         em = bn.emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, bn_paths, sp.needs_from(derived))
         out.update({"model_skipped": why, "needs": em, "review": None, "symbols": None})
+    elif out["nothing_new"]:
+        # C-GW-1 1c: nothing was gained for any of its needs since its last turn -> no model call
+        bn._append(bn._p(bn_paths, "ledger"), {"event": "BRAIN_NOTHING_NEW", "ts": _now(), "origin": "brain",
+                                               "needs": len(now)})
+        em = bn.emit(b, None, bn_paths, sp.needs_from(derived))
+        out.update({"needs": em, "review": None, "symbols": None})
     else:
         # C-BRAIN-1 Part 2: old needs get their role; review FIRST (TEXT C, one call per
         # question), so a parent it closes frees its sub-goal; then the needs question,
@@ -85,6 +111,8 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
         sy = symbols.propose(items, think, engine=engine, paths=sym_paths)
         out.update({"reply": reply, "free_subgoals": free, "needs": em, "review": rv, "symbols": sy})
     doc = bn.load_needs(bn_paths)
+    gp.parent.mkdir(parents=True, exist_ok=True)
+    gp.write_text(json.dumps(gained_now(doc)), encoding="utf-8")
     open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
     ep = Path(expect_path or EXPECT)
     ep.parent.mkdir(parents=True, exist_ok=True)

@@ -71,6 +71,13 @@ class SearcherDead(RuntimeError):
     """OpenClaw's browser is not running after one start: the turn ends (5f iii)."""
 
 
+class GatewayDead(SearcherDead):
+    """OpenClaw's gateway does not answer after its one restart this turn (C-GW-1 1a)."""
+
+
+MAX_GATEWAY_RESTARTS = 1
+
+
 def _waited_since(n: dict) -> str:
     return str(n.get("last_served_utc") or n.get("created_utc") or "")
 
@@ -103,7 +110,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         bn_paths=None, ledger_path=None, result_path=None, turn_path=None, profiles_dir=None, learned_dir=None,
         feeds: Optional[Callable] = None, restore: Optional[Callable] = None, atom_sub: Optional[dict] = None,
         maintenance: Optional[Callable] = None, pages_dir=None, records_dir=None, portion_path=None,
-        store_read: Optional[Callable] = None) -> dict:
+        store_read: Optional[Callable] = None, gateway=None) -> dict:
     from core import agent_profiles as ap
     from core import brain_needs as bn
     from core import turn
@@ -129,9 +136,31 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         with lp.open("a", encoding="utf-8", newline="\n") as fh:
             fh.write(json.dumps({"ts": _now(), **row}, ensure_ascii=False) + "\n")
 
+    gw = gateway if gateway is not None else oc.Gateway()
+    gw_restarts = [0]
+
+    def ensure_gateway() -> None:
+        """C-GW-1 1a: a gateway that does not answer is not a dead browser. One health
+        check; dead -> restarted at most MAX_GATEWAY_RESTARTS per turn; still dead -> GatewayDead."""
+        if gw.healthy():
+            return
+        if gw_restarts[0] >= MAX_GATEWAY_RESTARTS:
+            raise GatewayDead("the OpenClaw gateway does not answer and was already restarted this turn")
+        gw_restarts[0] += 1
+        t1 = time.time()
+        gw.restart()
+        ok = gw.healthy()
+        ledger({"event": "GATEWAY_RESTARTED", "seconds": round(time.time() - t1, 1), "healthy_after": ok})
+        if not ok:
+            raise GatewayDead("the OpenClaw gateway does not answer after one restart")
+
     def live(profile: str):
-        """5f iii: checked before each need; dead -> started once; dead again -> SearcherDead."""
+        """5f iii: checked before each need; gateway first (C-GW-1); browser dead -> started
+        once; dead again -> SearcherDead, or GatewayDead if the gateway died meanwhile."""
         b = browser(profile)
+        if b.alive():
+            return b
+        ensure_gateway()
         if b.alive():
             return b
         ledger({"event": "BROWSER_DEAD", "profile": profile, "action": "start once"})
@@ -140,6 +169,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         except Exception as exc:                                         # noqa: BLE001
             ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
         if not b.alive():
+            ensure_gateway()
             raise SearcherDead(f"OpenClaw browser profile {profile} is not running after one start")
         return b
 
@@ -193,7 +223,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                              "statements_gained": r["statements_added"], "regions": r.get("regions"),
                              "pdfs": len(r.get("pdfs") or []), "seconds": round(time.time() - t1, 1)})
     except SearcherDead as exc:
-        cause = f"SEARCHER_DEAD: {exc}"
+        cause = f"{'GATEWAY_DEAD' if isinstance(exc, GatewayDead) else 'SEARCHER_DEAD'}: {exc}"
         ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
 
     mres, fres, pdf_done = {"worked": 0, "rows": []}, None, 0
@@ -218,7 +248,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                 maintenance = lambda n_, s: mt.run(n=n_, search=s, sources=[])      # noqa: E731  subcategory cells only
             mres = maintenance(maintenance_n, search_cell)
         except SearcherDead as exc:
-            cause = f"SEARCHER_DEAD: {exc}"
+            cause = f"{'GATEWAY_DEAD' if isinstance(exc, GatewayDead) else 'SEARCHER_DEAD'}: {exc}"
             ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
     stopped = stop_all()
     if cause is None:

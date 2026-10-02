@@ -53,6 +53,14 @@ class FakeBrowser:
         return {"page": {"title": "t", "text": "A page about it. Second sentence.", "url": url}, "raw": {"ok": True}}
 
 
+class HealthyGateway:
+    def healthy(self):
+        return True
+
+    def restart(self):
+        raise AssertionError("a healthy gateway was restarted")
+
+
 def _need(i, origin, kind, created, status="OPEN", **kw):
     return {"id": f"{origin[0].upper()}N-{i}", "origin": origin, "kind": kind, "status": status,
             "question": f"question {i}", "created_utc": created, **kw}
@@ -92,7 +100,7 @@ def t(tmp_path, monkeypatch):
                       feeds=lambda: {"worker": {"rc": 0}}, restore=lambda: {"reloaded": False, "seconds": 0.0},
                       maintenance=lambda n, s: (cells.append(n) or {"worked": n, "rows": []}),
                       pages_dir=tmp_path / "pages", records_dir=tmp_path / "records", portion_path=por,
-                      store_read=lambda q: [{"id": "s1"}, {"id": "s2"}], **kw)
+                      store_read=lambda q: [{"id": "s1"}, {"id": "s2"}], gateway=HealthyGateway(), **kw)
 
     def ledger():
         return [json.loads(l) for l in (tmp_path / "ledger.jsonl").read_text(encoding="utf-8").splitlines()]
@@ -247,7 +255,7 @@ def test_both_browser_profiles_are_stopped_at_the_end(t):
 
 
 def test_a_dead_browser_is_started_once_and_the_turn_goes_on(t):
-    t["alive"]["v"] = (False, True)
+    t["alive"]["v"] = (False, False, True)       # dead; dead after the gateway check; alive after start
     r = t["go"]()
     assert r["cause"] is None and ("start", "openclaw") in t["log"]
 

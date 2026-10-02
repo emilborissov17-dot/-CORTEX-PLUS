@@ -38,6 +38,7 @@ WITNESS = REPO / "tools" / "cycle_witness.ps1"
 PY = REPO / "venv" / "Scripts" / "python.exe"
 SCRIPTS = {"BRAIN": REPO / "scripts" / "turn_brain.py", "AGENTS": REPO / "scripts" / "turn_agents.py"}
 WAIT_S = 300
+SAME_CAUSE_TURNS = 3          # C-GW-1 1b: three agents' turns, same cause, nothing served -> stop
 
 
 def _now() -> str:
@@ -64,18 +65,83 @@ def _result_since(started: str, path=None) -> dict:
     return r if str(r.get("utc") or "") >= started else {}
 
 
+def health_for(cause: str) -> Optional[bool]:
+    """The health check of a named cause, or None when the cause has none (then the
+    loop stays stopped until it is started by hand)."""
+    from scripts import openclaw_search as oc
+    if cause.startswith("GATEWAY_DEAD"):
+        return oc.Gateway().healthy()
+    if cause.startswith("SEARCHER_DEAD"):
+        if not oc.Gateway().healthy():
+            return False
+        b = oc.OpenClawBrowser()
+        try:
+            b.start()
+            return b.alive()
+        except oc.OpenClawFailed:
+            return False
+        finally:
+            try:
+                b.stop()
+            except oc.OpenClawFailed:
+                pass
+    return None
+
+
+def _live_alarm(cause: str) -> str:
+    import supervisor
+    return supervisor.alarm_human("LOOP_STOPPED_SAME_CAUSE",
+                                  f"{SAME_CAUSE_TURNS} agents' turns in a row ended with '{cause}' and served "
+                                  f"nothing. The turns loop has stopped; it resumes when the health check of that "
+                                  f"cause passes, or by hand (tools\turns.bat).",
+                                  dedup_key=f"LOOP_STOPPED_SAME_CAUSE:{cause[:60]}", cls="TURN_STUCK",
+                                  level=supervisor.ALARM)
+
+
+def same_cause(agents: list) -> Optional[str]:
+    """The cause when the last SAME_CAUSE_TURNS agents' turns ended with the same named
+    cause and served nothing, else None."""
+    last = agents[-SAME_CAUSE_TURNS:]
+    if len(last) < SAME_CAUSE_TURNS:
+        return None
+    causes = {a.get("cause") for a in last}
+    if len(causes) != 1 or not next(iter(causes)) or any(a.get("served") for a in last):
+        return None
+    return next(iter(causes))
+
+
 def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, blocked: Optional[Callable] = None,
          sleep: Callable = time.sleep, turn_path=None, result_path=None, stop_path=None, hand=None,
-         log_path=None) -> dict:
+         log_path=None, health: Optional[Callable] = None, alarm: Optional[Callable] = None) -> dict:
     from core import turn
     run_turn = run_turn or witnessed
+    health = health or health_for
     stop = Path(stop_path or STOP)
-    done = []
+    done, agents = [], []
     while max_turns is None or len(done) < max_turns:
         if stop.exists():
             stop.unlink()
             turn.log({"event": "LOOP_STOPPED", "why": "stop flag"}, log_path)
             return {"stopped": "stop flag", "turns": done}
+        cause = same_cause(agents)
+        if cause:
+            # C-GW-1 1b (Emil, 24 Sep: knowledge, not budget): a loop that learns nothing stops
+            turn.log({"event": "LOOP_STOPPED_SAME_CAUSE", "cause": cause, "turns": SAME_CAUSE_TURNS}, log_path)
+            (alarm or _live_alarm)(cause)
+            while True:
+                if stop.exists():
+                    stop.unlink()
+                    turn.log({"event": "LOOP_STOPPED", "why": "stop flag"}, log_path)
+                    return {"stopped": "stop flag", "turns": done}
+                ok = health(cause)
+                if ok is None:
+                    return {"stopped": "same cause", "cause": cause, "turns": done}
+                if ok:
+                    turn.log({"event": "LOOP_RESUMED", "cause": cause, "why": "its health check passed"}, log_path)
+                    agents = []
+                    break
+                sleep(WAIT_S)
+            continue
         why = blocked() if blocked else turn.blocked(log_path=log_path)
         if why:
             sleep(WAIT_S)
@@ -95,6 +161,8 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
                                      cause=res.get("cause"), path=turn_path, log_path=log_path)
         done.append({"holder": holder, "cycle_id": cycle_id, "rc": rc, "seconds": round(time.time() - t0, 1),
                      "handed": h.get("handed"), "summary": res.get("summary")})
+        if holder == turn.AGENTS:
+            agents.append({"cause": res.get("cause"), "served": len(res.get("per_need") or [])})
         if not h.get("handed"):
             return {"stuck": h.get("stuck"), "turns": done}
     return {"turns": done}

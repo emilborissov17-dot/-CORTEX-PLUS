@@ -50,6 +50,14 @@ class FakeBrowser:
         return {"page": p, "raw": {"ok": True}}
 
 
+class HealthyGateway:
+    def healthy(self):
+        return True
+
+    def restart(self):
+        raise AssertionError("a healthy gateway was restarted")
+
+
 @pytest.fixture
 def t(tmp_path, monkeypatch):
     from core import turn
@@ -80,7 +88,7 @@ def t(tmp_path, monkeypatch):
                       profiles_dir=prof, learned_dir=tmp_path / "learned", atom_sub={},
                       feeds=lambda: {"worker": {"rc": 0}}, restore=lambda: {"reloaded": False, "seconds": 0.0},
                       maintenance=lambda n, s: (cells.append(n) or {"worked": 0, "rows": []}),
-                      pages_dir=tmp_path / "pages", records_dir=tmp_path / "records")
+                      pages_dir=tmp_path / "pages", records_dir=tmp_path / "records", gateway=HealthyGateway())
     return {"go": go, "seen": seen, "cells": cells, "tmp": tmp_path}
 
 
