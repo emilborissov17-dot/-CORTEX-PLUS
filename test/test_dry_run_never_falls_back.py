@@ -40,7 +40,13 @@ def test_a_dry_run_without_completions_refuses_loudly(tmp_path):
     """THE ONE THAT FIRED. A sealed bet fed back in as a fixture has no 'completions'
     key — and used to be answered by calling the model."""
     bad = tmp_path / "no_completions.json"
-    bad.write_text(json.dumps({"snippets": {"SPY": []}, "assets": {}}), encoding="utf-8")
+    from tools.market_bet import ASSETS
+    # C-FIX-1 (2 Oct 2026): the baseline is staged so no prices are fetched; the fixture
+    # still has no 'completions', which is what this test is about.
+    bad.write_text(json.dumps({"snippets": {"SPY": []}, "assets": {},
+                               "baseline": {"baseline": {s: {"sign": "UP", "to_date": "2026-09-04"} for s in ASSETS},
+                                            "last_close": {s: {"date": "2026-09-04", "adjclose": 1.0}
+                                                           for s in ASSETS}}}), encoding="utf-8")
     r = _run(["--grounded", "--dry-run", str(bad), "--out", str(tmp_path / "o.json")])
     assert r.returncode != 0
     combined = r.stdout + r.stderr

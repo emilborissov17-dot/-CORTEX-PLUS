@@ -143,9 +143,15 @@ def _seal(tmp_path, completions):
             "snippet": fact, "retrieved_utc": "2026-09-05T13:00:00+00:00",
             "source_class": "independent", "source_kind": "wire", "dated": True}
     dry = tmp_path / "dry.json"
+    from tools.market_bet import ASSETS
     dry.write_text(json.dumps({
         "snippets": {"SPY": [snip], "GLD": [], "UUP": []},
-        "completions": {"SPY": completions, "GLD": [], "UUP": []}}), encoding="utf-8")
+        "completions": {"SPY": completions, "GLD": [], "UUP": []},
+        # C-FIX-1 (2 Oct 2026): staged, so the dry run fetches no prices - without it
+        # compute_baseline() went to the live market feed.
+        "baseline": {"baseline": {s: {"sign": "UP", "to_date": "2026-09-04"} for s in ASSETS},
+                     "last_close": {s: {"date": "2026-09-04", "adjclose": 1.0} for s in ASSETS}}}),
+        encoding="utf-8")
     out = tmp_path / "bet.json"
     r = subprocess.run(
         # --deadline D: the fixture's session is fixed, not "the next session after

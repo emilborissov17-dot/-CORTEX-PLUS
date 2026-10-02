@@ -7,7 +7,7 @@ prices) come through here too (§20, decided by Emil with the cost named: when t
 gateway is down nothing new arrives — and that is LOUD, never silent).
 
 get_bytes(url) / get_text(url): the page is opened in OpenClaw's own browser
-(the gateway's direct tool calls, as scripts/openclaw_search.py uses them) and its
+(the gateway's direct tool calls, scripts/openclaw_browser.py) and its
 bytes are fetched INSIDE that page — the PDF path of C-TURN-1 — so every byte this
 repository receives from the network arrives through OpenClaw's browser.
 Under core.fetch_standard's rules: GET only, no credentials, no private
@@ -80,7 +80,7 @@ def _fetch_js(url: str) -> str:
 
 def _live(browser=None, gateway=None):
     """The browser, alive; or DoorClosed with the cause. One gateway restart per process."""
-    from scripts import openclaw_search as oc
+    from scripts import openclaw_browser as oc
     b = browser or _STATE["browser"] or oc.OpenClawBrowser(PROFILE)
     gw = gateway or _STATE["gateway"] or oc.Gateway()
     if browser is None:
@@ -114,7 +114,7 @@ def get_bytes(url: str, *, browser=None, gateway=None, resolve: Callable = socke
     one failed fetch through an open door."""
     from core import fetch_standard as fs
     from core import turn as _turn
-    from scripts import openclaw_search as oc
+    from scripts import openclaw_browser as oc
     max_bytes = max_bytes or fs.MAX_BYTES
     if _turn.state().get("holder") == _turn.BRAIN:
         raise fs.FetchRefused("the baton is BRAIN: no fetch in the brain's turn")
@@ -293,7 +293,7 @@ http = _Http()
 
 
 def selftest() -> dict:
-    from scripts import openclaw_search as oc
+    from scripts import openclaw_browser as oc
     res = {"integrations": {}}
     try:
         res["integrations"]["openclaw gateway"] = "LIVE" if oc.Gateway().healthy() else "INERT (does not answer)"

@@ -285,3 +285,12 @@ def test_the_relabel_stops_its_browser_even_when_it_fails(monkeypatch):
     with pytest.raises(RuntimeError, match="relabel failed"):
         oc.main()
     assert log == ["stop"]
+
+
+# ── the live net covers the driver where it now lives (scripts/openclaw_browser.py) ──
+def test_the_live_net_stops_the_moved_driver_from_reaching_openclaw(_no_live):
+    from scripts import openclaw_browser as ob
+    with pytest.raises(AssertionError, match="live OpenClaw CLI"):
+        ob.Gateway().healthy()
+    assert "openclaw CLI" in _no_live
+    _no_live.clear()

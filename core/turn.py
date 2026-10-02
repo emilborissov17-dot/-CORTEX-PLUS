@@ -45,6 +45,11 @@ class TurnRefused(RuntimeError):
     """The baton is held by the other side."""
 
 
+class TurnNotWired(RuntimeError):
+    """hand_over / blocked were called without their live checks. core.turn has none of
+    its own (C-FIX-1): they are in core/turn_live.py, passed in by scripts/turns_loop.py."""
+
+
 class PortionMissing(KeyError):
     """config/turn_portion.json lacks a number: refuse, never default."""
 
@@ -107,25 +112,16 @@ def take(holder: str, path=None, why: str = "") -> dict:
     return s
 
 
-def _live_witness(cycle_id: str):
-    import supervisor
-    return supervisor.witness_exit_for(cycle_id)
-
-
-def _live_alarm(subject: str, detail: str, dedup_key: str) -> str:
-    import supervisor
-    return supervisor.alarm_human(subject, detail, dedup_key=dedup_key, cls="TURN_STUCK",
-                                  level=supervisor.ALARM)
-
-
 def hand_over(to: str, summary: str, cycle_id: str, cause: Optional[str] = None, path=None, log_path=None,
               witness: Optional[Callable] = None, alarm: Optional[Callable] = None) -> dict:
     """-> {"handed": bool, ...}. Never raises for a stuck turn: it records and waits."""
     if to not in HOLDERS:
         raise ValueError(f"cannot hand to {to!r}")
+    if witness is None or alarm is None:
+        raise TurnNotWired("hand_over needs witness= and alarm= (core.turn_live.witness / .alarm)")
     s = state(path)
     frm = s.get("holder")
-    row = (witness or _live_witness)(cycle_id)
+    row = witness(cycle_id)
     why_stuck = None
     if row is None:
         why_stuck = f"no witness exit row for {cycle_id}"
@@ -135,7 +131,7 @@ def hand_over(to: str, summary: str, cycle_id: str, cause: Optional[str] = None,
         detail = f"{frm} turn seq {s.get('seq')} ended unexplained: {why_stuck}. The baton stays with {frm}."
         log({"event": "TURN_STUCK", "holder": frm, "seq": s.get("seq"), "cycle_id": cycle_id, "why": why_stuck},
             log_path)
-        delivered = (alarm or _live_alarm)("TURN_STUCK", detail, f"TURN_STUCK:{s.get('seq')}")
+        delivered = alarm("TURN_STUCK", detail, f"TURN_STUCK:{s.get('seq')}")
         return {"handed": False, "stuck": why_stuck, "alarm": delivered, "holder": frm}
     s.update({"holder": to, "seq": int(s.get("seq") or 0) + 1, "since_utc": _now(),
               "why": f"{frm} turn finished (exit {row.get('exit_code')}{', cause: ' + cause if cause else ''})",
@@ -146,27 +142,11 @@ def hand_over(to: str, summary: str, cycle_id: str, cause: Optional[str] = None,
     return {"handed": True, "holder": to, "seq": s["seq"]}
 
 
-def _live_cycle() -> Optional[str]:
-    from core import model_window as mw
-    if mw.in_cycle():
-        return "this process is inside the nightly cycle"
-    try:
-        from scripts.micro_cycle import big_cycle_running
-        running, why = big_cycle_running()
-        return why if running else None
-    except Exception as exc:                                         # noqa: BLE001
-        return f"cycle liveness could not be checked ({type(exc).__name__}) — waiting"
-
-
-def _live_body() -> Optional[str]:
-    from core import homeostasis
-    a = homeostasis.assess(verbose=False)
-    return None if a.get("can_start", True) else f"body: {a.get('abort_reason')}"
-
-
 def blocked(cycle: Optional[Callable] = None, body: Optional[Callable] = None, log_path=None) -> Optional[str]:
     """Why no turn may start now (logged), or None."""
-    why = (cycle or _live_cycle)() or (body or _live_body)()
+    if cycle is None or body is None:
+        raise TurnNotWired("blocked needs cycle= and body= (core.turn_live.cycle / .body)")
+    why = cycle() or body()
     if why:
         log({"event": "WAIT", "why": why}, log_path)
     return why

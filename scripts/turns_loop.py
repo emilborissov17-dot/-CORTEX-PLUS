@@ -114,6 +114,7 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
          sleep: Callable = time.sleep, turn_path=None, result_path=None, stop_path=None, hand=None,
          log_path=None, health: Optional[Callable] = None, alarm: Optional[Callable] = None) -> dict:
     from core import turn
+    from core import turn_live
     run_turn = run_turn or witnessed
     health = health or health_for
     stop = Path(stop_path or STOP)
@@ -142,7 +143,8 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
                     break
                 sleep(WAIT_S)
             continue
-        why = blocked() if blocked else turn.blocked(log_path=log_path)
+        why = blocked() if blocked else turn.blocked(cycle=turn_live.cycle, body=turn_live.body,
+                                                     log_path=log_path)
         if why:
             sleep(WAIT_S)
             continue
@@ -155,10 +157,11 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
         turn.log({"event": "TURN_START", "holder": holder, "seq": s.get("seq"), "cycle_id": cycle_id}, log_path)
         rc = run_turn(holder, cycle_id)
         res = _result_since(started, result_path)
+        wired = {} if hand else {"witness": turn_live.witness, "alarm": turn_live.alarm}
         h = (hand or turn.hand_over)(nxt, res.get("summary") or f"{holder} turn ended rc={rc}", cycle_id,
                                      # the turn's own named cause, whatever the witness PROCESS returned:
                                      # hand_over judges the exit code from the witness's exit row
-                                     cause=res.get("cause"), path=turn_path, log_path=log_path)
+                                     cause=res.get("cause"), path=turn_path, log_path=log_path, **wired)
         done.append({"holder": holder, "cycle_id": cycle_id, "rc": rc, "seconds": round(time.time() - t0, 1),
                      "handed": h.get("handed"), "summary": res.get("summary")})
         if holder == turn.AGENTS:

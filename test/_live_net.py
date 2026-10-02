@@ -47,12 +47,15 @@ def install(monkeypatch) -> list:
     # C-GW-1 (2 Oct 2026): a test without an injected gateway called the REAL
     # `openclaw gateway health`; with a dead answer it would have restarted the live
     # gateway. Every OpenClaw CLI call goes through openclaw_cmd(): a test reaching it fails.
+    # C-FIX-1 (2 Oct 2026): decided - both the driver module and the searcher are netted.
     try:
+        from scripts import openclaw_browser as _ob
         from scripts import openclaw_search as _oc
 
         def no_cli():
             attempts.append("openclaw CLI")
             raise AssertionError("a test reached the live OpenClaw CLI")
+        monkeypatch.setattr(_ob, "openclaw_cmd", no_cli)
         monkeypatch.setattr(_oc, "openclaw_cmd", no_cli)
     except ImportError:
         pass
