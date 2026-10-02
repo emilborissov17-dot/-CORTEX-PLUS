@@ -50,6 +50,20 @@ Every new module ships a `--selftest` that reports which of its integrations are
 which are INERT in the repo it finds itself in. A module that degrades silently lets a claim
 stay true in the docstring and false on disk.
 
+## The stop rule (Emil, 2 Oct 2026, R48)
+
+"Claude Code stops doing anything if the system does not work."
+
+  * Every step states one line `EXPECTED: <what will be observed if it works>` before it runs,
+    and one line `OBSERVED: <what was observed>` after.
+  * If OBSERVED is not EXPECTED, the work stops at once. Nothing is built on a failed step and
+    no later step is started.
+  * The evidence is printed (the exception text, the logs of that minute, the process list),
+    the cause is found, and it is removed first, with a failing test, before the step is
+    repeated. If the cause cannot be removed, the command ends there and the report gives the
+    evidence.
+  * A report never calls a step done on an observation different from the expected one.
+
 ## Two model biases — double defense
 
 TWO MODEL BIASES — DOUBLE DEFENSE (see claude/NORM_TWO_BIASES_DOUBLE_DEFENSE_7SEP.md).
