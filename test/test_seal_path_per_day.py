@@ -83,7 +83,12 @@ def test_a_second_same_day_run_without_allow_overwrite_refuses(tmp_path):
     import subprocess
 
     fixture = tmp_path / "in.json"
-    fixture.write_text(json.dumps({"snippets": {}, "completions": {}}), encoding="utf-8")
+    from tools.market_bet import ASSETS
+    # C-FIX-1 (2 Oct 2026): the baseline is staged so the dry run fetches no prices.
+    fixture.write_text(json.dumps({"snippets": {}, "completions": {},
+                                   "baseline": {"baseline": {s: {"sign": "UP", "to_date": "2026-09-04"} for s in ASSETS},
+                                                "last_close": {s: {"date": "2026-09-04", "adjclose": 1.0}
+                                                               for s in ASSETS}}}), encoding="utf-8")
     out = tmp_path / seal_path().name
 
     def run(*extra):
