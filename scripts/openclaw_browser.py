@@ -136,6 +136,10 @@ class OpenClawBrowser:
         and every later call failed on the dead tab) it is started again ONCE and a
         new tab opened; a second failure is raised."""
         self._last_url = url
+        if self.tab is None and self.direct is None and not self.running_known:
+            # started HERE, before the path is chosen: a start opens the direct line, and the
+            # page must be opened where it will be read (C-DOOR-3 Step 2d)
+            self.start()
         if self.direct is None and self.running_known and not self._direct_tried:
             self._open_direct()
         if self.direct is not None:

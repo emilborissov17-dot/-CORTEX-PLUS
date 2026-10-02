@@ -351,3 +351,14 @@ def test_mutation_without_the_origin_step_a_download_is_a_failed_fetch(monkeypat
     with pytest.raises(door.DoorFetchFailed):
         with door.session(browser=b, gateway=Gateway()):
             door.get_bytes(CSV, resolve=public, clock=Clock())
+
+
+def test_a_search_on_a_browser_not_yet_started_reads_the_page_it_opened():
+    """C-DOOR-3 Step 2d, live: serve() on a fresh driver opened the search page with the CLI
+    (`open`) and evaluated over the line in another, blank tab -> NO_RESULTS."""
+    w = World()
+    page = json.dumps({"title": "t", "url": "https://d.example/a", "text": "A page.", "html": "<p>A page.</p>"})
+    b, ws, lines = driver(w, FakeWS(value=page))
+    r = b.read("https://d.example/a")
+    assert r["page"]["text"] == "A page." and lines == [18800]
+    assert not {"open", "navigate", "wait", "evaluate"} & set(w.calls), w.calls
