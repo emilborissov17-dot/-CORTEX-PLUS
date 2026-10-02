@@ -75,7 +75,22 @@ class GatewayDead(SearcherDead):
     """OpenClaw's gateway does not answer after its one restart this turn (C-GW-1 1a)."""
 
 
+class ProfileDead(SearcherDead):
+    """One browser profile does not answer while the gateway's health does (C-FIX-1 4B-a);
+    still so after the turn's one gateway restart."""
+
+    def __init__(self, profile: str, why: str):
+        super().__init__(f"profile {profile}: {why}")
+        self.profile = profile
+
+
 MAX_GATEWAY_RESTARTS = 1
+
+
+def _cause(exc: SearcherDead) -> str:
+    if isinstance(exc, ProfileDead):
+        return f"PROFILE_DEAD:{exc.profile}"
+    return f"{'GATEWAY_DEAD' if isinstance(exc, GatewayDead) else 'SEARCHER_DEAD'}: {exc}"
 
 
 def _waited_since(n: dict) -> str:
@@ -110,7 +125,8 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         bn_paths=None, ledger_path=None, result_path=None, turn_path=None, profiles_dir=None, learned_dir=None,
         feeds: Optional[Callable] = None, restore: Optional[Callable] = None, atom_sub: Optional[dict] = None,
         maintenance: Optional[Callable] = None, pages_dir=None, records_dir=None, portion_path=None,
-        store_read: Optional[Callable] = None, gateway=None, origins: Optional[tuple] = None) -> dict:
+        store_read: Optional[Callable] = None, gateway=None, origins: Optional[tuple] = None,
+        end_chrome: Optional[Callable] = None) -> dict:
     """origins=("engine",): a turn run by hand that takes engine needs only (C-GW-1 step 4)."""
     from core import agent_profiles as ap
     from core import brain_needs as bn
@@ -155,12 +171,32 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         if not ok:
             raise GatewayDead("the OpenClaw gateway does not answer after one restart")
 
+    def recycle(profile: str, b) -> None:
+        """C-FIX-1 4B-b iii: the profile's status timed out while the gateway's health
+        answers. The recovery 4B-a found is a gateway restart - one per turn, shared with
+        ensure_gateway; still no answer -> ProfileDead."""
+        ledger({"event": "PROFILE_DEAD", "profile": profile,
+                "why": "a call for this profile timed out while the gateway's health answered"})
+        if gw_restarts[0] >= MAX_GATEWAY_RESTARTS:
+            raise ProfileDead(profile, "no answer, and the gateway was already restarted this turn")
+        gw_restarts[0] += 1
+        t1 = time.time()
+        gw.restart()
+        ledger({"event": "GATEWAY_RESTARTED", "seconds": round(time.time() - t1, 1), "healthy_after": gw.healthy(),
+                "why": f"PROFILE_DEAD:{profile}"})
+
     def live(profile: str):
         """5f iii: checked before each need; gateway first (C-GW-1); browser dead -> started
         once; dead again -> SearcherDead, or GatewayDead if the gateway died meanwhile."""
         b = browser(profile)
         if b.alive():
             return b
+        if getattr(b, "timed_out", False) and gw.healthy():
+            recycle(profile, b)
+            if b.alive():
+                return b
+            if getattr(b, "timed_out", False):
+                raise ProfileDead(profile, "no answer after one gateway restart")
         ensure_gateway()
         if b.alive():
             return b
@@ -175,83 +211,86 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         return b
 
     def stop_all() -> dict:
-        """5f ii: both browser profiles stopped at the turn's end, whatever happened."""
+        """5f ii: both browser profiles stopped at the turn's end, whatever happened; a stop
+        that times out ends that profile's Chrome by exact PID (C-FIX-1 4B-b ii)."""
         out = {}
         for prof in _profiles(profiles_dir):
             try:
-                browser(prof).stop()
-                out[prof] = "stopped"
+                out[prof] = oc.stop_browser(browser(prof), ledger, profile=prof, end_chrome=end_chrome)
             except Exception as exc:                                     # noqa: BLE001
                 out[prof] = f"{type(exc).__name__}: {exc}"[:200]
         return out
 
-    atom_sub = atom_sub if atom_sub is not None else _atom_subcategories()
-    doc = bn.load_needs(bn_paths)
-    taken, waiting = portion_of(doc.get("needs", []), por["verify_per_turn"], origins)
-    for n in waiting:
-        ledger({"event": "WAITED", "need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"),
-                "since": _waited_since(n)})
-    per_need, streak, cause = [], 0, None
+    stopped: dict = {}
     try:
-        for n in taken:
-            t1 = time.time()
-            cat = ap.category_of(n, atom_sub)
-            if n.get("kind") == "LABEL":
-                # 5e: an atom with neither place nor period — served from the store, no browser
-                items = (store_read or _store_read)(n["question"])
-                ledger({"event": "LABEL_FROM_STORE", "need_id": n["id"], "items": [i.get("id") for i in items]})
-                bn.mark_served(n["id"], "store: " + n["question"], len(items), 0, 0, bn_paths)
-                per_need.append({"need_id": n["id"], "origin": n.get("origin"), "kind": "LABEL", "category": cat,
-                                 "query": None, "store_items": len(items), "pages": 0, "captcha": 0, "unbacked": 0,
-                                 "statements_gained": 0, "seconds": round(time.time() - t1, 1)})
-                continue
-            prof = ap.load(cat, profiles_dir)
-            q = clean_query(query_for(n) if n.get("origin") == "brain" else n["question"])
-            b = live(prof.get("browser_profile") or "openclaw")
-            ledger({"event": "TAKEN", "need_id": n["id"], "origin": n.get("origin"), "query": q, "category": cat})
-            r = oc.serve(n["id"], q, b, ingest, ledger, pages_dir=pages_dir, category=cat)
-            bn.mark_served(n["id"], q, r["pages"] + r["captcha"] + r["unbacked"], r["pages"], r["statements_added"],
-                           bn_paths)
-            if cat != ap.MAIN:
-                ap.learn(cat, r, learned_dir)
-            streak = streak + 1 if r["errors"] and not r["pages"] else 0
-            if streak == FAIL_STREAK:
-                ledger({"event": "SEARCHER_FAILING", "streak": streak,
-                        "why": "the direct browser path failed three needs in a row; the next in the price order "
-                               "(an agent turn on ollama/qwen2.5:7b) is not built yet"})
-            per_need.append({"need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"), "category": cat,
-                             "query": q, "pages": r["pages"], "captcha": r["captcha"], "unbacked": r["unbacked"],
-                             "statements_gained": r["statements_added"], "regions": r.get("regions"),
-                             "pdfs": len(r.get("pdfs") or []), "seconds": round(time.time() - t1, 1)})
-    except SearcherDead as exc:
-        cause = f"{'GATEWAY_DEAD' if isinstance(exc, GatewayDead) else 'SEARCHER_DEAD'}: {exc}"
-        ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
-
-    mres, fres, pdf_done = {"worked": 0, "rows": []}, None, 0
-    if cause is None:
-        rows = [json.loads(l) for l in lp.read_text(encoding="utf-8").splitlines() if l.strip()] if lp.exists() else []
+        atom_sub = atom_sub if atom_sub is not None else _atom_subcategories()
+        doc = bn.load_needs(bn_paths)
+        taken, waiting = portion_of(doc.get("needs", []), por["verify_per_turn"], origins)
+        for n in waiting:
+            ledger({"event": "WAITED", "need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"),
+                    "since": _waited_since(n)})
+        per_need, streak, cause = [], 0, None
         try:
-            for item in oc.pending_pdf_needs(rows):
-                pdf_done += 1 if oc.serve_pdf(item["need_id"], item["url"], live("openclaw"), ingest, ledger,
-                                              pages_dir) else 0
-
-            def search_cell(cell: dict, q: str) -> dict:
-                cat = ap.category_of(cell)
+            for n in taken:
+                t1 = time.time()
+                cat = ap.category_of(n, atom_sub)
+                if n.get("kind") == "LABEL":
+                    # 5e: an atom with neither place nor period — served from the store, no browser
+                    items = (store_read or _store_read)(n["question"])
+                    ledger({"event": "LABEL_FROM_STORE", "need_id": n["id"], "items": [i.get("id") for i in items]})
+                    bn.mark_served(n["id"], "store: " + n["question"], len(items), 0, 0, bn_paths)
+                    per_need.append({"need_id": n["id"], "origin": n.get("origin"), "kind": "LABEL", "category": cat,
+                                     "query": None, "store_items": len(items), "pages": 0, "captcha": 0, "unbacked": 0,
+                                     "statements_gained": 0, "seconds": round(time.time() - t1, 1)})
+                    continue
                 prof = ap.load(cat, profiles_dir)
-                r = oc.serve(cell["cell"], clean_query(q), live(prof.get("browser_profile") or "openclaw"), ingest,
-                             ledger, pages_dir=pages_dir, category=cat)
-                ap.learn(cat, r, learned_dir)
-                return {"pages": r["pages"], "statements_added": r["statements_added"], "captcha": r["captcha"],
-                        "errors": r["errors"]}
-
-            if maintenance is None:
-                from core import maintenance as mt
-                maintenance = lambda n_, s: mt.run(n=n_, search=s, sources=[])      # noqa: E731  subcategory cells only
-            mres = maintenance(maintenance_n, search_cell)
+                q = clean_query(query_for(n) if n.get("origin") == "brain" else n["question"])
+                b = live(prof.get("browser_profile") or "openclaw")
+                ledger({"event": "TAKEN", "need_id": n["id"], "origin": n.get("origin"), "query": q, "category": cat})
+                r = oc.serve(n["id"], q, b, ingest, ledger, pages_dir=pages_dir, category=cat)
+                bn.mark_served(n["id"], q, r["pages"] + r["captcha"] + r["unbacked"], r["pages"], r["statements_added"],
+                               bn_paths)
+                if cat != ap.MAIN:
+                    ap.learn(cat, r, learned_dir)
+                streak = streak + 1 if r["errors"] and not r["pages"] else 0
+                if streak == FAIL_STREAK:
+                    ledger({"event": "SEARCHER_FAILING", "streak": streak,
+                            "why": "the direct browser path failed three needs in a row; the next in the price order "
+                                   "(an agent turn on ollama/qwen2.5:7b) is not built yet"})
+                per_need.append({"need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"), "category": cat,
+                                 "query": q, "pages": r["pages"], "captcha": r["captcha"], "unbacked": r["unbacked"],
+                                 "statements_gained": r["statements_added"], "regions": r.get("regions"),
+                                 "pdfs": len(r.get("pdfs") or []), "seconds": round(time.time() - t1, 1)})
         except SearcherDead as exc:
-            cause = f"{'GATEWAY_DEAD' if isinstance(exc, GatewayDead) else 'SEARCHER_DEAD'}: {exc}"
+            cause = _cause(exc)
             ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
-    stopped = stop_all()
+
+        mres, fres, pdf_done = {"worked": 0, "rows": []}, None, 0
+        if cause is None:
+            rows = [json.loads(l) for l in lp.read_text(encoding="utf-8").splitlines() if l.strip()] if lp.exists() else []
+            try:
+                for item in oc.pending_pdf_needs(rows):
+                    pdf_done += 1 if oc.serve_pdf(item["need_id"], item["url"], live("openclaw"), ingest, ledger,
+                                                  pages_dir) else 0
+
+                def search_cell(cell: dict, q: str) -> dict:
+                    cat = ap.category_of(cell)
+                    prof = ap.load(cat, profiles_dir)
+                    r = oc.serve(cell["cell"], clean_query(q), live(prof.get("browser_profile") or "openclaw"), ingest,
+                                 ledger, pages_dir=pages_dir, category=cat)
+                    ap.learn(cat, r, learned_dir)
+                    return {"pages": r["pages"], "statements_added": r["statements_added"], "captcha": r["captcha"],
+                            "errors": r["errors"]}
+
+                if maintenance is None:
+                    from core import maintenance as mt
+                    maintenance = lambda n_, s: mt.run(n=n_, search=s, sources=[])      # noqa: E731  subcategory cells only
+                mres = maintenance(maintenance_n, search_cell)
+            except SearcherDead as exc:
+                cause = _cause(exc)
+                ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
+    finally:
+        stopped = stop_all()
     if cause is None:
         fres = (feeds or _live_feeds)()
     rst = (restore or _live_restore)()

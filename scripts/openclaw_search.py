@@ -56,6 +56,11 @@ class OpenClawFailed(RuntimeError):
     pass
 
 
+class ProfileTimeout(OpenClawFailed):
+    """A call for one browser profile got no answer in time (C-FIX-1 4B-a: a profile
+    can stop answering inside the gateway while the gateway's own health answers)."""
+
+
 def openclaw_cmd() -> list:
     """`node <npm root>/openclaw/openclaw.mjs` — called directly, NOT through the
     openclaw.cmd shim: cmd.exe would read the `>` of a JS arrow function as a
@@ -79,6 +84,7 @@ class OpenClawBrowser:
 
     def __init__(self, profile: str = "openclaw", timeout_s: int = 60):
         self.profile, self.timeout_s, self.tab = profile, timeout_s, None
+        self.timed_out, self.cdp_port = False, None
 
     def _call(self, *args) -> dict:
         if any(a is None for a in args):
@@ -90,7 +96,8 @@ class OpenClawBrowser:
             p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace",
                                timeout=self.timeout_s)
         except subprocess.TimeoutExpired as exc:
-            raise OpenClawFailed(f"openclaw browser {args[0]} timed out after {self.timeout_s}s") from exc
+            raise ProfileTimeout(f"openclaw browser {args[0]} timed out after {self.timeout_s}s "
+                                 f"(profile {self.profile})") from exc
         out = p.stdout.strip()
         i = out.find("{")
         try:
@@ -122,11 +129,18 @@ class OpenClawBrowser:
             time.sleep(2.5)
 
     def alive(self) -> bool:
-        """OpenClaw's own status for this profile: running or not. A failed status call is not alive."""
+        """OpenClaw's own status for this profile: running or not. A failed status call is
+        not alive; one that timed out sets `timed_out` (C-FIX-1 4B-b iii)."""
+        self.timed_out = False
         try:
-            return bool(self._call("status").get("running"))
+            d = self._call("status")
+        except ProfileTimeout:
+            self.timed_out = True
+            return False
         except OpenClawFailed:
             return False
+        self.cdp_port = d.get("cdpPort") or self.cdp_port
+        return bool(d.get("running"))
 
     def start(self) -> None:
         self.tab = None
@@ -195,6 +209,20 @@ def store_page(url: str, text: str, need_id: str, tool_raw: dict, pages_dir=None
     return {"url": url, "sha256": sha, "html": "html" in doc}
 
 
+def links_of(s: dict, need_id: str, ledger) -> list:
+    """The result addresses of a search page. A result without an address is recorded
+    LINK_WITHOUT_ADDRESS and skipped (C-FIX-1 4B-b i)."""
+    out = []
+    for l in s.get("links") or []:
+        url = l.get("url") if isinstance(l, dict) else None
+        if not url:
+            ledger({"event": "LINK_WITHOUT_ADDRESS", "need_id": need_id,
+                    "text": str((l or {}).get("text") if isinstance(l, dict) else l)[:200]})
+            continue
+        out.append(unwrap(url))
+    return out
+
+
 def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, results: int = RESULTS_PER_NEED,
           category: Optional[str] = None) -> dict:
     """One attempt for one need. -> {pages, captcha, unbacked, statements_added, hosts_gained, hosts_captcha, ...}.
@@ -214,7 +242,7 @@ def serve(need_id: str, query: str, browser, ingest, ledger, pages_dir=None, res
         out["hosts_captcha"].append(_host((s.get("page") or {}).get("url") or SEARCH_URL))
         ledger({"event": "CAPTCHA", "need_id": need_id, "host": out["hosts_captcha"][-1], "at": "search page"})
         return out
-    links = [unwrap(l.get("url", "")) for l in (s.get("links") or []) if l.get("url")]
+    links = links_of(s, need_id, ledger)
     if not links:
         ledger({"event": "NO_RESULTS", "need_id": need_id, "query": query})
         return out
@@ -364,6 +392,90 @@ class Gateway:
             time.sleep(5)
 
 
+# The profile `openclaw` is not in ~/.openclaw/openclaw.json; its CDP port was read from
+# `openclaw browser status` on 2 Oct 2026 (C-FIX-1 4B-a). A status that answers overrides it.
+DEFAULT_CDP_PORTS = {"openclaw": 18800}
+
+
+def cdp_port(profile: str, browser=None) -> Optional[int]:
+    """The profile's Chrome debugging port: from its last status, its config, or the default."""
+    if browser is not None and getattr(browser, "cdp_port", None):
+        return int(browser.cdp_port)
+    try:
+        cfg = json.loads((Path.home() / ".openclaw" / "openclaw.json").read_text(encoding="utf-8"))
+        port = (((cfg.get("browser") or {}).get("profiles") or {}).get(profile) or {}).get("cdpPort")
+        if port:
+            return int(port)
+    except (OSError, ValueError):
+        pass
+    return DEFAULT_CDP_PORTS.get(profile)
+
+
+def chrome_pids_for_port(port: int, procs=None) -> list:
+    """Chrome's browser process (not a renderer or helper: no --type=) whose
+    --remote-debugging-port is exactly `port`."""
+    if procs is None:
+        import psutil
+        procs = psutil.process_iter(["pid", "name", "cmdline"])
+    flag = f"--remote-debugging-port={port}"
+    out = []
+    for p in procs:
+        info = p.info
+        args = info.get("cmdline") or []
+        if "chrome" in str(info.get("name") or "").lower() and flag in args \
+                and not any(str(a).startswith("--type=") for a in args):
+            out.append(info["pid"])
+    return out
+
+
+def _kill(pid: int) -> None:
+    import psutil
+    psutil.Process(pid).kill()                   # this PID only, never its tree
+
+
+def end_profile_chrome(profile: str, port: Optional[int], ledger, procs=None, kill=None) -> list:
+    """End this profile's Chrome by exact PID; each command line is logged before the kill."""
+    if not port:
+        ledger({"event": "PROFILE_CHROME_NOT_FOUND", "profile": profile, "why": "no debugging port known"})
+        return []
+    procs = list(procs) if procs is not None else None
+    pids = chrome_pids_for_port(port, procs)
+    if not pids:
+        ledger({"event": "PROFILE_CHROME_NOT_FOUND", "profile": profile, "port": port,
+                "why": "no Chrome process on that debugging port"})
+    by_pid = {p.info["pid"]: p.info for p in procs} if procs is not None else {}
+    for pid in pids:
+        cmd = " ".join(map(str, (by_pid.get(pid) or {}).get("cmdline") or []))
+        if not cmd:
+            try:
+                import psutil
+                cmd = " ".join(psutil.Process(pid).cmdline())
+            except Exception:                                        # noqa: BLE001
+                cmd = "?"
+        ledger({"event": "PROFILE_CHROME_ENDED", "profile": profile, "port": port, "pid": pid,
+                "cmdline": cmd[:300]})
+        (kill or _kill)(pid)
+    return pids
+
+
+def stop_browser(b, ledger, profile: Optional[str] = None, procs=None, kill=None, end_chrome=None) -> str:
+    """Stop one browser profile. A stop that times out ends the profile's Chrome by
+    exact PID (C-FIX-1 4B-b ii)."""
+    profile = profile or getattr(b, "profile", "openclaw")
+    try:
+        b.stop()
+        return "stopped"
+    except ProfileTimeout as exc:
+        port = cdp_port(profile, b)
+        if end_chrome is not None:
+            pids = end_chrome(profile, port, ledger)
+        else:
+            pids = end_profile_chrome(profile, port, ledger, procs=procs, kill=kill)
+        return f"stop timed out ({exc}); Chrome ended: {pids}"[:300]
+    except Exception as exc:                                         # noqa: BLE001
+        return f"{type(exc).__name__}: {exc}"[:200]
+
+
 def _on_page(sentence: str, text: str) -> bool:
     from core import knowledge as kn
     return kn._squash(sentence) in kn._squash(text)
@@ -453,7 +565,10 @@ def main() -> int:
     if "--relabel" in sys.argv:                  # --relabel BN-1,BN-2: re-open their pages, label regions
         b = OpenClawBrowser()
         t0 = time.time()
-        r = relabel_pages(sys.argv[sys.argv.index("--relabel") + 1].split(","), b)
+        try:
+            r = relabel_pages(sys.argv[sys.argv.index("--relabel") + 1].split(","), b)
+        finally:
+            print(json.dumps({"browser": stop_browser(b, lambda row: print(json.dumps(row, ensure_ascii=False)))}))
         print(json.dumps({"seconds": round(time.time() - t0, 1), **r}, indent=1, ensure_ascii=False))
         return 0
     print(__doc__)
