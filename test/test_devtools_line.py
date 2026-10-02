@@ -95,7 +95,7 @@ def test_navigate_and_evaluate_return_the_value():
     ln.navigate("https://d.example/x")
     ln.wait_load()
     assert json.loads(ln.evaluate("() => 1"))["status"] == 200
-    assert ws.sent[:3] == ["Page.enable", "Page.navigate", "Runtime.evaluate"]
+    assert ws.sent[:4] == ["Page.enable", "Page.setDownloadBehavior", "Page.navigate", "Runtime.evaluate"]
 
 
 def test_another_host_is_refused_before_any_socket():
@@ -287,3 +287,67 @@ def test_the_allowlist_carries_exactly_this_one_entry_with_the_ruling():
     e = files["scripts/devtools_line.py"]
     assert e["class"] == "L" and e["hosts"] == ["127.0.0.1"] and e["ruling"] == "R49" and e["quote"] == "ДА"
     assert len(files) == 45
+
+
+# ── a navigation that is a download (C-DOOR-3 Step 2b, live: FRED csv, ECB csvdata) ──
+class DownloadWS(FakeWS):
+    """Chrome's answer to a download, as read live on 3 Oct 2026: errorText net::ERR_ABORTED,
+    isDownload true, and no load event ever."""
+
+    def __init__(self, download_urls, **k):
+        super().__init__(**k)
+        self.download_urls, self.navigated, self.params = set(download_urls), [], []
+
+    def send(self, raw):
+        m = json.loads(raw)
+        self.params.append((m["method"], m.get("params") or {}))
+        if m["method"] == "Page.navigate" and m["params"]["url"] in self.download_urls:
+            self.sent.append(m["method"])
+            self.navigated.append(m["params"]["url"])
+            self.queue.append({"id": m["id"], "result": {"frameId": "F", "errorText": "net::ERR_ABORTED",
+                                                         "isDownload": True}})
+            return
+        if m["method"] == "Page.navigate":
+            self.navigated.append(m["params"]["url"])
+        super().send(raw)
+
+
+CSV = "https://d.example/graph/data.csv?id=X"
+
+
+def test_downloads_are_denied_on_the_line():
+    ln, ws = line(DownloadWS([]))
+    assert ("Page.setDownloadBehavior", {"behavior": "deny"}) in ws.params
+
+
+def test_a_download_navigation_fails_at_once_by_name_not_as_a_dropped_line():
+    ln, ws = line(DownloadWS([CSV]))
+    with pytest.raises(dl.DevToolsNavigateFailed, match="isDownload"):
+        ln.navigate(CSV)
+
+
+def test_the_driver_keeps_the_line_after_a_download_navigation():
+    w = World()
+    b, ws, lines = driver(w, DownloadWS([CSV]))
+    b.start()
+    with pytest.raises(ob.OpenClawFailed):
+        b._goto(CSV)
+    assert b.direct is not None and not [e for e in b.events if e["event"] == "DEVTOOLS_FALLBACK_CLI"]
+
+
+def test_the_door_fetches_a_download_from_its_own_origin():
+    w = World()
+    b, ws, lines = driver(w, DownloadWS([CSV]))
+    with door.session(browser=b, gateway=Gateway()):
+        r = door.get_bytes(CSV, resolve=public, clock=Clock())
+    assert r["bytes"] == BODY and ws.navigated == [CSV, "https://d.example/"]
+    assert not {"open", "navigate", "evaluate"} & set(w.calls)
+
+
+def test_mutation_without_the_origin_step_a_download_is_a_failed_fetch(monkeypatch):
+    monkeypatch.setattr(door, "_origin_of", lambda url: url)
+    w = World()
+    b, ws, lines = driver(w, DownloadWS([CSV]))
+    with pytest.raises(door.DoorFetchFailed):
+        with door.session(browser=b, gateway=Gateway()):
+            door.get_bytes(CSV, resolve=public, clock=Clock())

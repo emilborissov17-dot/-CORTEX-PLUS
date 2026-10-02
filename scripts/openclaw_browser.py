@@ -139,10 +139,13 @@ class OpenClawBrowser:
         if self.direct is None and self.running_known and not self._direct_tried:
             self._open_direct()
         if self.direct is not None:
+            from scripts import devtools_line
             try:
                 self.direct.navigate(url)
                 self.direct.wait_load()
                 return
+            except devtools_line.DevToolsNavigateFailed as exc:
+                raise OpenClawFailed(str(exc)) from exc   # the page, not the line: the line stays
             except Exception as exc:                                 # noqa: BLE001
                 self._fallback(f"navigate: {type(exc).__name__}: {exc}")
         if self.tab is not None:

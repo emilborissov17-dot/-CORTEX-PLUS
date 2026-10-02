@@ -176,6 +176,11 @@ def _live(browser=None, gateway=None):
     return b
 
 
+def _origin_of(url: str) -> str:
+    p = urllib.parse.urlparse(url)
+    return f"{p.scheme}://{p.netloc}/"
+
+
 def get_bytes(url: str, *, browser=None, gateway=None, resolve: Optional[Callable] = None, clock=None,
               max_bytes: Optional[int] = None) -> dict:
     """-> {status, bytes, content_type, final_url}. FetchRefused (core.fetch_standard)
@@ -194,7 +199,15 @@ def get_bytes(url: str, *, browser=None, gateway=None, resolve: Optional[Callabl
     (clock or _default_clock()).wait((urllib.parse.urlparse(url).hostname or "").lower())
     b = _live(browser, gateway)
     try:
-        b._goto(url)
+        try:
+            b._goto(url)
+        except oc.OpenClawFailed:
+            # C-DOOR-3 Step 2b: an address Chrome will not open as a page (a download: a CSV
+            # served as an attachment) is fetched from a page of its own origin instead.
+            origin = _origin_of(url)
+            if origin == url:
+                raise
+            b._goto(origin)
         if hasattr(b, "evaluate_fn"):               # the driver: the direct line, or the CLI with a row
             d = b.evaluate_fn(_fetch_js(url), int(fs.TIMEOUT_S * 1000))
         else:

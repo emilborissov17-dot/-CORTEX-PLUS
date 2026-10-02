@@ -34,6 +34,11 @@ class DevToolsConnectionFailed(RuntimeError):
     """DEVTOOLS_CONNECTION_FAILED: the line could not be opened, dropped, or got no answer in time."""
 
 
+class DevToolsNavigateFailed(RuntimeError):
+    """DEVTOOLS_NAVIGATE_FAILED: Chrome answered the navigation with an error (a download, an
+    unreachable address); the line itself is fine."""
+
+
 def _host_of(ws_url: str) -> str:
     rest = ws_url.split("://", 1)[-1]
     return rest.split("/", 1)[0].rsplit(":", 1)[0].strip("[]").lower()
@@ -82,6 +87,8 @@ class DirectLine:
             raise DevToolsConnectionFailed(f"DEVTOOLS_CONNECTION_FAILED: connect: {type(exc).__name__}: {exc}"[:300]) \
                 from exc
         self._call("Page.enable")
+        # C-DOOR-3 Step 2b: a navigation that is a download is written to disk by Chrome. Denied.
+        self._call("Page.setDownloadBehavior", {"behavior": "deny"})
 
     def _call(self, method: str, params: Optional[dict] = None, until_event: Optional[str] = None) -> dict:
         self._id += 1
@@ -96,8 +103,8 @@ class DirectLine:
                     answer = m.get("result") or {}
                 elif until_event and m.get("method") == until_event:
                     seen = True                      # the event may come before or after the answer
-                if answer is not None and seen:
-                    return answer
+                if answer is not None and (seen or answer.get("errorText")):
+                    return answer                    # an error answer brings no load event
         except DevToolsConnectionFailed:
             raise
         except Exception as exc:                                     # noqa: BLE001
@@ -108,7 +115,8 @@ class DirectLine:
     def navigate(self, url: str) -> None:
         r = self._call("Page.navigate", {"url": url}, until_event="Page.loadEventFired")
         if r.get("errorText"):
-            raise DevToolsConnectionFailed(f"DEVTOOLS_CONNECTION_FAILED: navigate {url}: {r['errorText']}"[:300])
+            raise DevToolsNavigateFailed(f"DEVTOOLS_NAVIGATE_FAILED: {url}: {r['errorText']}"
+                                         f"{' (isDownload)' if r.get('isDownload') else ''}"[:300])
 
     def wait_load(self) -> None:
         """navigate() returns after the page's load event; kept as the driver's wait step."""
