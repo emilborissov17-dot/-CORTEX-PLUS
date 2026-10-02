@@ -80,7 +80,7 @@ def test_without_a_searcher_a_subcategory_cell_says_so(p):
     _run(p, 5)
     row = [r for r in _log(p) if r["cell"] == "sub:A1.1"][0]
     assert row["verdict"] == "NO_SEARCHER" and row["queries"] == ["Thing 1 alpha pct"]
-    assert "Python finder was removed" in row["why"]
+    assert "no searcher was given to this run" in row["why"]
 
 
 def test_mutation_a_stand_in_searcher_would_hide_the_absence(p):

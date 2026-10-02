@@ -57,7 +57,6 @@ MODEL = "cortex-l1b-3b:latest"
 KINDS = ("FIND", "VERIFY", "EXPLAIN")
 OPEN, SATISFIED, STILL_OPEN, WRONG_QUESTION, SILENCE = "OPEN", "SATISFIED", "STILL_OPEN", "WRONG_QUESTION", "SILENCE"
 MAX_NEEDS = 5
-NO_SEARCHER = "no searcher: the Python finder was removed on Emil's order; OpenClaw search not built yet"
 TOP_GROUNDED = 5
 
 
@@ -480,21 +479,37 @@ def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = No
                 rec["none_why"] = None
             by_id[nid] = rec
             accepted.append(rec)
-    by_expr = {n.get("expression"): n for n in by_id.values()
-               if n.get("origin") == "engine" and n.get("expression") and n.get("status") in (OPEN, STILL_OPEN)}
+    by_expr = {e: n for n in by_id.values()
+               if n.get("origin") == "engine" and n.get("status") in (OPEN, STILL_OPEN) for e in _exprs(n)}
     for n in (engine or []):
         nid = _id("engine", n["question"])
-        if nid in by_id:
-            continue
         old = by_expr.get(n.get("expression"))
+        held = by_id.get(nid)
         if old is not None:
+            if old["question"] == n["question"]:
+                continue
+            if held is not None and held is not old and held.get("status") in (OPEN, STILL_OPEN):
+                # re-worded into a question another open need already asks: one need (C-GW-1 3)
+                _merge_engine(held, old)
+                old.update({"status": MERGED, "merged_into": held["id"], "merged_utc": _now()})
+                for e in _exprs(old):
+                    by_expr[e] = held
+                continue
             # the same derivation rendered as a new question (C-BRAIN-1 5e): one need, re-worded
             old.setdefault("questions", [old["question"]]).append(n["question"])
             old.update({k: n[k] for k in ("question", "kind", "about") if k in n})
             continue
+        if held is not None:
+            if held.get("origin") == "engine" and held.get("status") in (OPEN, STILL_OPEN):
+                # another atom with the same question: the need lists both (C-GW-1 3)
+                _merge_engine(held, n)
+                for e in _exprs(n):
+                    by_expr[e] = held
+            continue
         rec = {"id": nid, "origin": "engine", "briefing_sha256": b["sha256"], "created_utc": _now(),
-               "status": OPEN, **n}
+               "status": OPEN, **n, "expressions": [n["expression"]] if n.get("expression") else []}
         by_id[nid] = rec
+        by_expr.update({e: rec for e in _exprs(rec)})
         accepted.append(rec)
     resolved = resolve_engine(by_id.values(), engine, paths) if engine is not None else []
     ordered = ([n for n in by_id.values() if n["origin"] == "brain"] +
@@ -504,7 +519,6 @@ def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = No
     for r in accepted:
         _append(_p(paths, "ledger"), {"event": "EMITTED", "ts": _now(), "need_id": r["id"], "origin": r["origin"],
                                       "question": r["question"]})
-        _append(_p(paths, "ledger"), {"event": "NO_SEARCHER", "ts": _now(), "need_id": r["id"], "why": NO_SEARCHER})
     for r in reopened:
         _append(_p(paths, "ledger"), {"event": "REOPENED", "ts": _now(), "need_id": r["id"], "was": r["reopened"][-1]["was"]})
     return {"accepted": accepted, "refused": refused, "reopened": reopened, "repeats": repeats, "silence": silence,
@@ -512,6 +526,18 @@ def emit(b: dict, reply: Optional[dict], paths=None, engine: Optional[list] = No
 
 
 ENGINE_RESOLVED = "ENGINE_RESOLVED"
+MERGED = "MERGED"
+
+
+def _exprs(n: dict) -> list:
+    return list(n.get("expressions") or ([n["expression"]] if n.get("expression") else []))
+
+
+def _merge_engine(keep: dict, other: dict) -> None:
+    """`other`'s atoms and derivations join `keep` (C-GW-1 3): one need, every atom listed."""
+    keep["premises"] = list(dict.fromkeys((keep.get("premises") or []) + (other.get("premises") or [])))
+    ex = _exprs(keep)
+    keep["expressions"] = ex + [e for e in _exprs(other) if e not in ex]
 
 
 def resolve_engine(needs, engine: list, paths=None) -> list:
@@ -522,12 +548,12 @@ def resolve_engine(needs, engine: list, paths=None) -> list:
     firing = {n.get("expression") for n in engine}
     out = []
     for n in needs:
-        if (n.get("origin") == "engine" and n.get("status") in (OPEN, STILL_OPEN) and n.get("expression")
-                and n["expression"] not in firing):
+        if (n.get("origin") == "engine" and n.get("status") in (OPEN, STILL_OPEN) and _exprs(n)
+                and not any(e in firing for e in _exprs(n))):
             n["status"] = ENGINE_RESOLVED
             n["resolved_utc"] = _now()
             _append(_p(paths, "ledger"), {"event": ENGINE_RESOLVED, "ts": _now(), "need_id": n["id"],
-                                          "expression": n["expression"]})
+                                          "expressions": _exprs(n)})
             out.append(n["id"])
     return out
 
@@ -693,7 +719,8 @@ def selftest() -> dict:
         res["integrations"][f"model {MODEL}"] = "LIVE" if MODEL in brain.models() else "INERT (not installed)"
     except Exception as exc:                                         # noqa: BLE001
         res["integrations"][f"model {MODEL}"] = f"INERT ({type(exc).__name__})"
-    res["integrations"]["searcher for brain and engine needs"] = "INERT (" + NO_SEARCHER + ")"
+    res["integrations"]["searcher for brain and engine needs"] = (
+        "LIVE (scripts/openclaw_search.py)" if (REPO / "scripts" / "openclaw_search.py").exists() else "INERT")
     res["ok"] = True
     return res
 

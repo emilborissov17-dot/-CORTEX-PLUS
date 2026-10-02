@@ -102,7 +102,7 @@ def _q(sub: dict, key: str) -> str:
     return f"{sub['name_en']} {key.replace('_', ' ')}".strip()
 
 
-NO_SEARCHER = "no searcher: the Python finder was removed on Emil's order; OpenClaw search not built yet"
+NO_SEARCHER = "no searcher was given to this run (the agents' turn passes OpenClaw's; a run without one cannot search)"
 
 
 def _work_subcategory(cell, st, search) -> dict:

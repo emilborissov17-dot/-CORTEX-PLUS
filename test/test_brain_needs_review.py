@@ -74,12 +74,12 @@ def _served(p):
     return nid
 
 
-def test_a_new_need_says_there_is_no_searcher(p):
+def test_a_new_need_is_emitted_open_and_no_longer_says_there_is_no_searcher(p):
+    # C-GW-1 step 3: the NO_SEARCHER row ("OpenClaw search not built yet") was false since C-TURN-1
     _emit(p, [NEED])
     nid = _needs(p)[0]["id"]
     rows = [r for r in _ledger(p) if r.get("need_id") == nid]
-    assert [r["event"] for r in rows] == ["EMITTED", "NO_SEARCHER"]
-    assert "Python finder was removed" in rows[1]["why"] and _needs(p)[0]["status"] == "OPEN"
+    assert [r["event"] for r in rows] == ["EMITTED"] and _needs(p)[0]["status"] == "OPEN"
 
 
 def test_mark_served_counts_and_never_changes_the_status(p):
