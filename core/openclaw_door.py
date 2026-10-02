@@ -292,6 +292,17 @@ class _Http:
 http = _Http()
 
 
+def one_shot(url: str) -> dict:
+    """A one-shot command (`python -m core.openclaw_door <url>`): the fetch, then the
+    browser this process started is stopped in a `finally` (C-DOOR-1 2c)."""
+    try:
+        return get_bytes(url)
+    finally:
+        b = _STATE["browser"]
+        if b is not None:
+            b.stop()
+
+
 def selftest() -> dict:
     from scripts import openclaw_browser as oc
     res = {"integrations": {}}
@@ -309,6 +320,12 @@ if __name__ == "__main__":
         sys.exit(0)
     if len(sys.argv) > 1 and sys.argv[1].startswith("http"):
         t0 = time.time()
-        r = get_bytes(sys.argv[1])
+        try:
+            r = one_shot(sys.argv[1])
+        finally:
+            b = _STATE["browser"]
+            for row in getattr(b, "events", None) or []:
+                print(json.dumps(row, ensure_ascii=False))
         print(json.dumps({"status": r["status"], "bytes": len(r["bytes"]), "type": r["content_type"],
                           "final_url": r["final_url"], "seconds": round(time.time() - t0, 1)}))
+        print("BODY[:200] " + r["bytes"][:200].decode(_charset(r["content_type"]), errors="replace"))

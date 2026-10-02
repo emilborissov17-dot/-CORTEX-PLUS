@@ -38,8 +38,9 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 PAGES = REPO / "memory" / "openclaw_pages"
 from scripts.openclaw_browser import (GATEWAY_PORT, SEARCH_URL, _LINKS_JS, _PDF_JS,  # noqa: E402,F401  re-exported
-                                      _TEXT_JS, Gateway, OpenClawBrowser, OpenClawFailed, ProfileTimeout,
-                                      openclaw_cmd)
+                                      _TEXT_JS, DEFAULT_CDP_PORTS, Gateway, OpenClawBrowser, OpenClawFailed,
+                                      ProfileStartFailed, ProfileStopFailed, ProfileTimeout, _kill, cdp_port,
+                                      chrome_pids_for_port, end_profile_chrome, openclaw_cmd)
 RESULTS_PER_NEED = 3
 CAPTCHA = re.compile(r"captcha|are you a robot|unusual traffic|verify you are (a )?human|"
                      r"checking your browser|ddos-guard|attention required|anomaly-modal|bots use duckduckgo", re.I)
@@ -210,72 +211,6 @@ def pending_pdf_needs(ledger_rows: list) -> list:
             seen.add(r.get("url"))
             out.append({"need_id": r.get("need_id"), "url": r.get("url")})
     return out
-
-
-# The profile `openclaw` is not in ~/.openclaw/openclaw.json; its CDP port was read from
-# `openclaw browser status` on 2 Oct 2026 (C-FIX-1 4B-a). A status that answers overrides it.
-DEFAULT_CDP_PORTS = {"openclaw": 18800}
-
-
-def cdp_port(profile: str, browser=None) -> Optional[int]:
-    """The profile's Chrome debugging port: from its last status, its config, or the default."""
-    if browser is not None and getattr(browser, "cdp_port", None):
-        return int(browser.cdp_port)
-    try:
-        cfg = json.loads((Path.home() / ".openclaw" / "openclaw.json").read_text(encoding="utf-8"))
-        port = (((cfg.get("browser") or {}).get("profiles") or {}).get(profile) or {}).get("cdpPort")
-        if port:
-            return int(port)
-    except (OSError, ValueError):
-        pass
-    return DEFAULT_CDP_PORTS.get(profile)
-
-
-def chrome_pids_for_port(port: int, procs=None) -> list:
-    """Chrome's browser process (not a renderer or helper: no --type=) whose
-    --remote-debugging-port is exactly `port`."""
-    if procs is None:
-        import psutil
-        procs = psutil.process_iter(["pid", "name", "cmdline"])
-    flag = f"--remote-debugging-port={port}"
-    out = []
-    for p in procs:
-        info = p.info
-        args = info.get("cmdline") or []
-        if "chrome" in str(info.get("name") or "").lower() and flag in args \
-                and not any(str(a).startswith("--type=") for a in args):
-            out.append(info["pid"])
-    return out
-
-
-def _kill(pid: int) -> None:
-    import psutil
-    psutil.Process(pid).kill()                   # this PID only, never its tree
-
-
-def end_profile_chrome(profile: str, port: Optional[int], ledger, procs=None, kill=None) -> list:
-    """End this profile's Chrome by exact PID; each command line is logged before the kill."""
-    if not port:
-        ledger({"event": "PROFILE_CHROME_NOT_FOUND", "profile": profile, "why": "no debugging port known"})
-        return []
-    procs = list(procs) if procs is not None else None
-    pids = chrome_pids_for_port(port, procs)
-    if not pids:
-        ledger({"event": "PROFILE_CHROME_NOT_FOUND", "profile": profile, "port": port,
-                "why": "no Chrome process on that debugging port"})
-    by_pid = {p.info["pid"]: p.info for p in procs} if procs is not None else {}
-    for pid in pids:
-        cmd = " ".join(map(str, (by_pid.get(pid) or {}).get("cmdline") or []))
-        if not cmd:
-            try:
-                import psutil
-                cmd = " ".join(psutil.Process(pid).cmdline())
-            except Exception:                                        # noqa: BLE001
-                cmd = "?"
-        ledger({"event": "PROFILE_CHROME_ENDED", "profile": profile, "port": port, "pid": pid,
-                "cmdline": cmd[:300]})
-        (kill or _kill)(pid)
-    return pids
 
 
 def stop_browser(b, ledger, profile: Optional[str] = None, procs=None, kill=None, end_chrome=None) -> str:

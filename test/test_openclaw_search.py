@@ -144,7 +144,9 @@ def test_a_browser_that_went_away_is_started_again_once(monkeypatch):
     b = oc.OpenClawBrowser()
     b.tab = "t1"
     b._goto("https://x.example/")
-    assert calls[:3] == ["navigate", "start", "open"] and b.tab == "t9"
+    # C-DOOR-1: start() asks status first (a leftover Chrome is ended before a start)
+    assert [c for c in calls if c != "status"][:3] == ["navigate", "start", "open"] and b.tab == "t9"
+    assert calls.count("start") == 1 and calls.index("status") < calls.index("start")
 
 
 def test_mutation_a_driver_that_kept_the_dead_tab_fails_every_call(monkeypatch):
