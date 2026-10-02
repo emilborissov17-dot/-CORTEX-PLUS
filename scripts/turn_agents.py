@@ -82,12 +82,12 @@ def _waited_since(n: dict) -> str:
     return str(n.get("last_served_utc") or n.get("created_utc") or "")
 
 
-def portion_of(needs: list, verify_n: int) -> tuple:
+def portion_of(needs: list, verify_n: int, origins: Optional[tuple] = None) -> tuple:
     """-> (taken in order, waiting). All brain needs (children and direct; parents
     are not searchable), all engine FIND, at most `verify_n` engine VERIFY,
     longest-waiting first; LABEL needs are served from the store."""
     from core import brain_needs as bn
-    open_ = bn.searchable(needs)
+    open_ = [n for n in bn.searchable(needs) if origins is None or n.get("origin") in origins]
     brain = [n for n in open_ if n.get("origin") == "brain"]
     find = [n for n in open_ if n.get("origin") == "engine" and n.get("kind") not in ("VERIFY", "LABEL")]
     verify = sorted([n for n in open_ if n.get("origin") == "engine" and n.get("kind") == "VERIFY"], key=_waited_since)
@@ -110,7 +110,8 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         bn_paths=None, ledger_path=None, result_path=None, turn_path=None, profiles_dir=None, learned_dir=None,
         feeds: Optional[Callable] = None, restore: Optional[Callable] = None, atom_sub: Optional[dict] = None,
         maintenance: Optional[Callable] = None, pages_dir=None, records_dir=None, portion_path=None,
-        store_read: Optional[Callable] = None, gateway=None) -> dict:
+        store_read: Optional[Callable] = None, gateway=None, origins: Optional[tuple] = None) -> dict:
+    """origins=("engine",): a turn run by hand that takes engine needs only (C-GW-1 step 4)."""
     from core import agent_profiles as ap
     from core import brain_needs as bn
     from core import turn
@@ -186,7 +187,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
 
     atom_sub = atom_sub if atom_sub is not None else _atom_subcategories()
     doc = bn.load_needs(bn_paths)
-    taken, waiting = portion_of(doc.get("needs", []), por["verify_per_turn"])
+    taken, waiting = portion_of(doc.get("needs", []), por["verify_per_turn"], origins)
     for n in waiting:
         ledger({"event": "WAITED", "need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"),
                 "since": _waited_since(n)})
@@ -301,7 +302,11 @@ def _live_restore() -> dict:
 
 def main() -> int:
     n = int(sys.argv[sys.argv.index("--maintenance") + 1]) if "--maintenance" in sys.argv else None
-    r = run(maintenance_n=n)
+    # --engine-only: engine needs only; --turn-file F: a baton file of its own (a turn run by
+    # hand, the loop stopped, the real memory/turn.json untouched) — C-GW-1 step 4
+    tf = sys.argv[sys.argv.index("--turn-file") + 1] if "--turn-file" in sys.argv else None
+    r = run(maintenance_n=n, origins=("engine",) if "--engine-only" in sys.argv else None, turn_path=tf,
+            result_path=(Path(tf).with_name("turn_result_by_hand.json") if tf else None))
     print(json.dumps({k: v for k, v in r.items() if k != "per_need"}, indent=1, ensure_ascii=False, default=str))
     for p in r["per_need"]:
         print(json.dumps(p, ensure_ascii=False))

@@ -126,7 +126,7 @@ def test_a_served_verify_goes_to_the_back_of_the_rotation(t):
 def test_mutation_without_the_cap_every_verify_is_taken(t, monkeypatch):
     from scripts import turn_agents as ta
     real = ta.portion_of
-    monkeypatch.setattr(ta, "portion_of", lambda needs, n: real(needs, 99))
+    monkeypatch.setattr(ta, "portion_of", lambda needs, n, origins=None: real(needs, 99, origins))
     r = t["go"]()
     assert sum(1 for p in r["per_need"] if p["kind"] == "VERIFY") == 3
 
@@ -312,3 +312,16 @@ def test_should_wait_while_agents_hold_the_baton_or_memory_is_low(tmp_path):
     assert kn.embed_should_wait(holder="AGENTS", free=8.0, floor=1.5)
     assert kn.embed_should_wait(holder="BRAIN", free=1.0, floor=1.5)
     assert kn.embed_should_wait(holder="BRAIN", free=8.0, floor=1.5) is None
+
+
+def test_engine_only_takes_no_brain_need(t):
+    r = t["go"](origins=("engine",))
+    assert r["per_need"] and all(p["origin"] == "engine" for p in r["per_need"])
+
+
+def test_mutation_without_the_origin_filter_a_brain_need_is_taken(t, monkeypatch):
+    from scripts import turn_agents as ta
+    real = ta.portion_of
+    monkeypatch.setattr(ta, "portion_of", lambda needs, n, origins=None: real(needs, n))
+    r = t["go"](origins=("engine",))
+    assert any(p["origin"] == "brain" for p in r["per_need"])
