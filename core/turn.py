@@ -142,6 +142,68 @@ def hand_over(to: str, summary: str, cycle_id: str, cause: Optional[str] = None,
     return {"handed": True, "holder": to, "seq": s["seq"]}
 
 
+TURN_SCRIPTS = ("turns_loop.py", "turn_agents.py", "turn_brain.py")
+
+
+def _live_turn_processes(procs=None) -> list:
+    """(pid, command-line argument) of every process running a turn or the turns loop."""
+    if procs is None:
+        import psutil
+        procs = psutil.process_iter(["pid", "cmdline"])
+    out = []
+    for p in procs:
+        for a in p.info.get("cmdline") or []:
+            if str(a).replace(chr(92), "/").rsplit("/", 1)[-1] in TURN_SCRIPTS:
+                out.append((p.info["pid"], str(a)))
+                break
+    return out
+
+
+def by_hand(to: str, why: str, path=None, log_path=None, live: Optional[Callable] = None,
+            _from_cli: bool = False) -> dict:
+    """C-DOOR-2 Step 4: the baton moved by a human, said so in the log (BY_HAND); no witness
+    row is invented. Decided: only the command line may move it (test/test_turn_by_hand.py)."""
+    if not _from_cli:
+        raise TurnRefused("the baton is moved by hand only from the command line: python -m core.turn --by-hand")
+    if to not in HOLDERS:
+        raise ValueError(f"holder {to!r} is not BRAIN or AGENTS")
+    if not str(why or "").strip():
+        raise TurnRefused("--why is required: a move by hand says why")
+    alive = (live or _live_turn_processes)()
+    if alive:
+        raise TurnRefused("a turn or the turns loop is alive: "
+                          + ", ".join(f"pid {pid} {cmd}" for pid, cmd in alive))
+    s = state(path)
+    frm = s.get("holder")
+    if frm == to:
+        raise TurnRefused(f"the baton is already with {to}")
+    seq = int(s.get("seq") or 0) + 1
+    s.update({"holder": to, "seq": seq, "since_utc": _now(), "why": f"BY_HAND from {frm}: {why}"})
+    _save(s, path)
+    log({"event": "BY_HAND", "from": frm, "to": to, "why": why, "seq": seq}, log_path)
+    return {"moved": True, "holder": to, "seq": seq}
+
+
+def main(argv=None, path=None, log_path=None, live: Optional[Callable] = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if "--selftest" in argv:
+        print(json.dumps(selftest(), indent=2))
+        return 0
+    if "--by-hand" in argv:
+        i = argv.index("--by-hand")
+        to = argv[i + 1] if i + 1 < len(argv) else ""
+        why = argv[argv.index("--why") + 1] if "--why" in argv and argv.index("--why") + 1 < len(argv) else ""
+        try:
+            r = by_hand(to, why, path=path, log_path=log_path, live=live, _from_cli=True)
+        except (TurnRefused, ValueError) as exc:
+            print(f"REFUSED: {exc}")
+            return 2
+        print(json.dumps({**r, "state": state(path)}, ensure_ascii=False))
+        return 0
+    print(json.dumps(state(path), indent=1, ensure_ascii=False))
+    return 0
+
+
 def blocked(cycle: Optional[Callable] = None, body: Optional[Callable] = None, log_path=None) -> Optional[str]:
     """Why no turn may start now (logged), or None."""
     if cycle is None or body is None:
@@ -181,7 +243,4 @@ def selftest() -> dict:
 
 
 if __name__ == "__main__":
-    if "--selftest" in sys.argv:
-        print(json.dumps(selftest(), indent=2))
-        sys.exit(0)
-    print(json.dumps(state(), indent=1, ensure_ascii=False))
+    sys.exit(main())
