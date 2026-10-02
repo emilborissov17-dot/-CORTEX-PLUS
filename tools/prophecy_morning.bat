@@ -224,9 +224,11 @@ REM --- of the INPUTS. Gating on the restamped field would have left a guard tha
 REM --- cannot fire.
 call :step "wellbeing_governance"  "%PY% wellbeing_globe.py --governance-only"              no
 call :step "institution0"          "%PY% tools\institution0_morning.py --write"              no
-REM --- The reply to last morning's message. Its own offset file, its own parser;
-REM --- it never touches approve_reader's, whose refusal boundary is a feature.
-call :step "institution0_witness"  "%PY% experiments\institution\witness_reader.py"          no
+REM --- The reply to last morning's message, read by the ONE Telegram reader. C-FIX-1 Part 7
+REM --- (2 Oct 2026): this step called witness_reader.py, whose poll() was retired on 18 Sep
+REM --- (5fb7661) and raises, so it failed every morning since; the retirement names the
+REM --- dispatcher, which makes ONE fetch and routes the witness replies to witness_reader.
+call :step "institution0_witness"  "%PY% experiments\institution\telegram_dispatcher.py"     no
 REM --- TAXONOMY COVERAGE (1 Oct 2026): subcategories SEEN of 123, written to
 REM --- memory\taxonomy_coverage_latest.json, which daily_board row "Taxonomy coverage"
 REM --- reads. BEFORE daily_board for that reason. No refusal path: REFUSAL_OK stays no.
