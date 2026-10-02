@@ -145,6 +145,12 @@ def test_mutation_a_new_host_in_an_allowed_file_is_seen():
     assert hosts(src) - set(e["hosts"]) == {"api.worldbank.org"}
 
 
+def test_the_door_set_is_on_disk_and_the_door_is_what_readers_import():
+    from core import openclaw_door
+    assert all((REPO / f).exists() for f in DOOR)
+    assert callable(openclaw_door.get_bytes) and callable(openclaw_door.http.get)
+
+
 def test_the_scan_examines_the_repo():
     files = tracked_py()
     assert len(files) > 200 and "core/fetch_standard.py" in files and "fast_cycle_runner.py" in files
