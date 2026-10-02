@@ -234,7 +234,7 @@ def test_relabel_reopens_only_the_needs_pages_and_writes_the_index(p, tmp_path):
                {"id": "z", "sentence": "Home", "need_id": "BN-9", "url": "https://other.example/"}])
     br = Reader({"https://k.example/a": {"text": "Home\nAbout us\n" + ARTICLE, "html": HTML}})
     out = tmp_path / "regions.json"
-    r = oc.relabel_pages(["BN-1"], br, store=p["store"], out=out)
+    r = oc.relabel_pages(["BN-1"], br, store=p["store"], out=out, pages_dir=tmp_path / "pages")
     assert br.opened == ["https://k.example/a", "https://gone.example/"]
     idx = json.loads(out.read_text(encoding="utf-8"))["regions"]
     assert idx == {"a": "furniture", "b": "main"}
@@ -248,5 +248,15 @@ def test_mutation_without_the_still_on_the_page_check_a_vanished_sentence_is_fur
                 "url": "https://k.example/a"}])
     monkeypatch.setattr(oc, "_on_page", lambda sentence, text: True)
     r = oc.relabel_pages(["BN-1"], Reader({"https://k.example/a": {"text": ARTICLE, "html": HTML}}),
-                         store=p["store"], out=tmp_path / "regions.json")
+                         store=p["store"], out=tmp_path / "regions.json", pages_dir=tmp_path / "pages")
     assert r["counts"]["furniture"] == 1
+
+
+def test_relabel_stores_the_html_it_re_opened_beside_the_text(p, tmp_path):
+    _store(p, [{"id": "b", "sentence": "The state government opened 300 relief camps across six districts.",
+                "need_id": "BN-1", "url": "https://k.example/a"}])
+    pages = tmp_path / "pages"
+    oc.relabel_pages(["BN-1"], Reader({"https://k.example/a": {"text": ARTICLE, "html": HTML}}), store=p["store"],
+                     out=tmp_path / "regions.json", pages_dir=pages)
+    doc = json.loads(next(pages.glob("*.json")).read_text(encoding="utf-8"))
+    assert doc["html"] == HTML and doc["url"] == "https://k.example/a" and doc["need_id"] == "BN-1"

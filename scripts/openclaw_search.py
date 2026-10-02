@@ -369,7 +369,7 @@ def _on_page(sentence: str, text: str) -> bool:
     return kn._squash(sentence) in kn._squash(text)
 
 
-def relabel_pages(need_ids: list, browser, store=None, out=None) -> dict:
+def relabel_pages(need_ids: list, browser, store=None, out=None, pages_dir=None) -> dict:
     """C-BRAIN-1 3c: the pages a need's statements came from, re-opened through the
     browser, and each statement labelled main / furniture from the page's HTML now.
     Written to the region index (core.knowledge.REGIONS), never into the store.
@@ -399,6 +399,9 @@ def relabel_pages(need_ids: list, browser, store=None, out=None) -> dict:
         if not isinstance(html, str) or not html:
             row["why"] = "no HTML returned"
             continue
+        st = store_page(url, text, row["need_id"], {"relabel": True}, pages_dir, html=html,
+                        ledger=lambda r: row.update(html_too_large=r.get("bytes")))
+        row["page_sha256"], row["html_stored"] = st["sha256"], st["html"]
         main = kn.main_text(html)
         here = [dict(r) for r in recs if _on_page(r["sentence"], text)]
         row["main_unknown"] = kn.label_regions(here, main)
