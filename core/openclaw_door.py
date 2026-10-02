@@ -108,20 +108,21 @@ def session(browser=None, gateway=None):
     if gateway is not None:
         _STATE["gateway"] = gateway
     _STATE["depth"] = _STATE.get("depth", 0) + 1
+    body_ok = False
     try:
         yield
-    except BaseException:
+        body_ok = True
+    finally:
         _STATE["depth"] -= 1
         if _STATE["depth"] == 0:
-            try:
+            if body_ok:
                 close()
-            except Exception as exc:                                 # noqa: BLE001  the first error wins
-                print(f"DOOR_STOP_FAILED while another error was raised: {type(exc).__name__}: {exc}",
-                      file=sys.stderr)
-        raise
-    _STATE["depth"] -= 1
-    if _STATE["depth"] == 0:
-        close()
+            else:
+                try:
+                    close()
+                except Exception as exc:                             # noqa: BLE001  the body's error wins
+                    print(f"DOOR_STOP_FAILED while another error was raised: {type(exc).__name__}: {exc}",
+                          file=sys.stderr)
 
 
 def _process_session() -> None:
