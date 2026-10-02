@@ -263,6 +263,16 @@
     "openrouter.ai"
    ]
   },
+  "scripts/devtools_line.py": {
+   "class": "L",
+   "reason": "the door's direct line: one WebSocket to the DevTools port of the Chrome OpenClaw starts, on 127.0.0.1 only",
+   "hosts": [
+    "127.0.0.1"
+   ],
+   "ruling": "R49",
+   "quote": "ДА",
+   "question": "A direct connection to OpenClaw's own Chrome, inside the machine, opens a page in 0.13-0.28 s instead of 15 s; pages are still opened by OpenClaw's browser, OpenClaw still starts and stops it; one new file enters the exception list of the guard test, for a connection inside the machine only."
+  },
   "scripts/test_local_brain.py": {
    "class": "M",
    "reason": "local Ollama model on localhost:11434",

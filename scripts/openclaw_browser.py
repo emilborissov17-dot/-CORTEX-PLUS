@@ -71,7 +71,7 @@ class OpenClawBrowser:
     """The live driver: `openclaw browser <cmd> --json` through the gateway."""
 
     def __init__(self, profile: str = "openclaw", timeout_s: int = 60, procs=None, kill=None, sleep=time.sleep,
-                 ledger=None):
+                 ledger=None, devtools=None):
         self.profile, self.timeout_s, self.tab = profile, timeout_s, None
         self.timed_out, self.cdp_port = False, None
         self.procs, self.kill, self.sleep, self.ledger = procs, kill, sleep, ledger
@@ -79,6 +79,8 @@ class OpenClawBrowser:
         # C-DOOR-2 3a: what the last call already said, so it is not asked again
         self.last_status: Optional[dict] = None
         self.running_known = False
+        # C-DOOR-3 (Emil R49): the direct line to this profile's Chrome, opened after a start
+        self.devtools, self.direct, self._direct_tried, self._last_url = devtools, None, False, None
 
     def _call(self, *args) -> dict:
         if any(a is None for a in args):
@@ -102,11 +104,47 @@ class OpenClawBrowser:
             raise OpenClawFailed(f"openclaw browser {args[0]} failed: {(d.get('error') or p.stderr or out)!s:.300}")
         return d
 
+    def _open_direct(self) -> None:
+        """C-DOOR-3: after a start, one direct line to this profile's Chrome. The port is
+        OpenClaw's own `status` cdpPort, never a constant. A line that cannot be opened is a
+        DEVTOOLS_FALLBACK_CLI row and the CLI is used."""
+        self._direct_tried = True
+        port = (self.last_status or {}).get("cdpPort") or self._status().get("cdpPort")
+        if not port:
+            self._fallback("no cdpPort in OpenClaw's status")
+            return
+        try:
+            if self.devtools is not None:
+                self.direct = self.devtools(int(port))
+            else:
+                from scripts import devtools_line
+                self.direct = devtools_line.DirectLine(int(port))
+        except Exception as exc:                                     # noqa: BLE001
+            self._fallback(f"{type(exc).__name__}: {exc}")
+
+    def _fallback(self, cause: str) -> None:
+        """The direct line is not used from here on: said by a row, never silently."""
+        self._event({"event": "DEVTOOLS_FALLBACK_CLI", "cause": str(cause)[:300]})
+        if self.direct is not None:
+            self.direct.close()
+        self.direct = None
+        self.tab = None
+
     def _goto(self, url: str) -> None:
         """Open `url` in this driver's tab. If OpenClaw's browser has gone away
         (first real agents turn, 1 Oct 2026: "Browser profile ... is not running",
         and every later call failed on the dead tab) it is started again ONCE and a
         new tab opened; a second failure is raised."""
+        self._last_url = url
+        if self.direct is None and self.running_known and not self._direct_tried:
+            self._open_direct()
+        if self.direct is not None:
+            try:
+                self.direct.navigate(url)
+                self.direct.wait_load()
+                return
+            except Exception as exc:                                 # noqa: BLE001
+                self._fallback(f"navigate: {type(exc).__name__}: {exc}")
         if self.tab is not None:
             try:
                 self._call("navigate", url, "--target-id", self.tab)
@@ -191,6 +229,7 @@ class OpenClawBrowser:
         try:
             self._call("start")
             self.running_known = True
+            self._open_direct()
             return
         except OpenClawFailed as exc:
             if ADOPTION not in str(exc):
@@ -200,6 +239,7 @@ class OpenClawBrowser:
         if self._status().get("running"):
             self._event({"event": "START_ADOPTED_LATE", "error": str(first)[:300]})
             self.running_known = True
+            self._open_direct()
             return
         self._end_chromes("LEFTOVER_CHROME_ENDED")
         try:
@@ -208,6 +248,7 @@ class OpenClawBrowser:
         except OpenClawFailed as second:
             raise ProfileStartFailed(f"PROFILE_START_FAILED: profile {self.profile}: first: {first}; "
                                      f"second: {second}"[:900]) from second
+        self._open_direct()
 
     def stop(self) -> None:
         """C-DOOR-1 2b: stop, then status and the process list; a Chrome still alive is
@@ -215,6 +256,9 @@ class OpenClawBrowser:
         never returns while that Chrome is alive."""
         self.tab = None
         self.running_known = False
+        if self.direct is not None:
+            self.direct.close()
+        self.direct, self._direct_tried = None, False
         try:
             self._call("stop")
         except OpenClawFailed as exc:
@@ -226,8 +270,23 @@ class OpenClawBrowser:
                 raise ProfileStopFailed(f"PROFILE_STOP_FAILED: profile {self.profile}: Chrome {left} still alive "
                                         f"on port {cdp_port(self.profile, self)} after stop and end")
 
+    def evaluate_fn(self, js: str, timeout_ms: Optional[int] = None) -> dict:
+        """The page's `js` (a function) -> {"result": <its JSON string>}, through the direct
+        line when it is open; a failure there falls back to the CLI with a row."""
+        if self.direct is not None:
+            try:
+                v = self.direct.evaluate(js)
+                return {"ok": True, "result": v if isinstance(v, str) else json.dumps(v)}
+            except Exception as exc:                                 # noqa: BLE001
+                self._fallback(f"evaluate: {type(exc).__name__}: {exc}")
+                self._goto(self._last_url)
+        args = ["evaluate", "--target-id", self.tab, "--fn", js]
+        if timeout_ms:
+            args += ["--timeout-ms", str(int(timeout_ms))]
+        return self._call(*args)
+
     def _eval(self, js: str) -> dict:
-        d = self._call("evaluate", "--target-id", self.tab, "--fn", js)
+        d = self.evaluate_fn(js)
         return {"raw": d, "value": json.loads(d.get("result") or "null")}
 
     def search(self, query: str) -> dict:
@@ -239,7 +298,7 @@ class OpenClawBrowser:
     def read_pdf(self, url: str) -> dict:
         """The PDF's bytes, fetched by OpenClaw's browser inside the PDF's own page."""
         self._goto(url)
-        d = self._call("evaluate", "--target-id", self.tab, "--fn", _PDF_JS, "--timeout-ms", "60000")
+        d = self.evaluate_fn(_PDF_JS, 60000)
         v = json.loads(d.get("result") or "null") or {}
         import base64
         return {"bytes": base64.b64decode(v.get("b64") or ""), "status": v.get("status"), "type": v.get("type"),

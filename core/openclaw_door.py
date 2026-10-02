@@ -195,8 +195,11 @@ def get_bytes(url: str, *, browser=None, gateway=None, resolve: Optional[Callabl
     b = _live(browser, gateway)
     try:
         b._goto(url)
-        d = b._call("evaluate", "--target-id", b.tab, "--fn", _fetch_js(url),
-                    "--timeout-ms", str(int(fs.TIMEOUT_S * 1000)))
+        if hasattr(b, "evaluate_fn"):               # the driver: the direct line, or the CLI with a row
+            d = b.evaluate_fn(_fetch_js(url), int(fs.TIMEOUT_S * 1000))
+        else:
+            d = b._call("evaluate", "--target-id", b.tab, "--fn", _fetch_js(url),
+                        "--timeout-ms", str(int(fs.TIMEOUT_S * 1000)))
     except oc.OpenClawFailed as exc:
         _STATE["ready"] = None                       # a failed call: the next one asks again
         try:
