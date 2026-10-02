@@ -174,63 +174,13 @@ def harvest_axis_prompts() -> list:
     ]
 
 
-def _fetch_real_items(wia, axis: str, urls: list, keywords: list) -> list:
-    items = []
-    for u in urls:
-        try:
-            items.extend(wia._fetch_rss(u, max_items=4))
-        except Exception as e:
-            print(f"    [harvest] RSS {u[:50]} failed: {e}")
-        time.sleep(0.2)
-    if len(items) < 3 and getattr(wia, "HAS_DDG", False):
-        for kw in keywords[:2]:
-            try:
-                items.extend(wia._ddg_search(kw, max_results=3))
-            except Exception:
-                pass
-    return items
-
-
 def harvest_webintel_prompts() -> list:
-    """T3/T4 — capture the EXACT prompt web_intelligence_agent._analyze_for_axis
-    builds, over REAL items fetched live through the pipeline's own _fetch_rss."""
-    import web_intelligence_agent as wia
-    orig = wia.call_groq
-    wia.call_groq = _capture_call_groq
-    out = []
-    specs = [
-        ("T3", "WEB-INTEL GOAL_PROGRESS_REVIEW", "GOAL_PROGRESS_REVIEW", "cosmos",
-         ["https://www.un.org/sustainabledevelopment/feed/", "https://sdg.iisd.org/feed/"],
-         ["sustainable development goals", "SDG", "UN goals 2030"]),
-        ("T4", "WEB-INTEL LONG_TERM_FUTURE_REVIEW", "LONG_TERM_FUTURE_REVIEW", "cosmos",
-         ["https://www.lesswrong.com/feed.xml", "https://forum.effectivealtruism.org/feed.xml"],
-         ["existential risk", "civilization collapse", "future of humanity"]),
-    ]
-    try:
-        for tid, label, axis, domain, urls, kws in specs:
-            items = _fetch_real_items(wia, axis, urls, kws)
-            print(f"    [harvest] {axis}: {len(items)} real items fetched")
-            captured = None
-            try:
-                wia._analyze_for_axis(axis, items, domain)
-            except _Captured as c:
-                captured = c.prompt
-            if captured is None:
-                print(f"    [harvest] WARNING: {axis} produced no prompt "
-                      f"(no live items) — task skipped")
-                continue
-            out.append({
-                "id": tid, "kind": "web_intel_urgency", "label": label,
-                "source": "web_intelligence_agent._analyze_for_axis",
-                "n_real_items": len(items),
-                "prompt": captured, "max_tokens": 800, "json_expected": True,
-                "expected_fields": ["problem", "root_cause", "severity",
-                                    "leverage_points", "proposed_actions", "evidence",
-                                    "generalization", "summary", "risk_level"],
-            })
-    finally:
-        wia.call_groq = orig
-    return out
+    """T3/T4 captured web_intelligence_agent._analyze_for_axis's prompt over items it
+    fetched live from RSS. That collector was deleted by C-FIX-1 (2 Oct 2026, Emil R43:
+    only OpenClaw reaches the web), so these two tasks are not built: NO_AGENT_INPUT."""
+    print("    [harvest] T3/T4 skipped — NO_AGENT_INPUT: web_intelligence_agent was deleted by C-FIX-1; "
+          "the agents store no RSS items for these axes")
+    return []
 
 
 def harvest_strategist_prompt() -> list:

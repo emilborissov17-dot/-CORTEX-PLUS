@@ -72,10 +72,9 @@ def test_every_starter_goes_through_tools_ollama_serve():
             items = [ast.get_source_segment(pulse, e) for e in node.args[0].elts]
             assert '"serve"' not in items, "pulse_continuum starts `ollama serve` itself, with no log"
     assert "ollama_serve.ps1" in pulse
-    collector = (REPO / "experiments" / "collector" / "run_collector.ps1").read_text(encoding="utf-8")
-    code = [ln for ln in collector.splitlines() if not ln.lstrip().startswith("#")]
-    assert not any("-ArgumentList 'serve'" in ln for ln in code)
-    assert any("ollama_serve.ps1" in ln for ln in code)
+    # experiments/collector/run_collector.ps1 was the other starter; it was deleted with the
+    # web collectors (C-FIX-1, 2 Oct 2026).
+    assert not (REPO / "experiments" / "collector" / "run_collector.ps1").exists()
 
 
 def test_the_runner_does_not_unload_the_warm_core_at_the_end():

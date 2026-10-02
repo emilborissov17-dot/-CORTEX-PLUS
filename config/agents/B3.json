@@ -39,5 +39,68 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/B3.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "economy unemployment poverty wages",
+   "axis": "ECONOMY_WORK_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric gdp_growth_pct -> B3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "economic inequality automation labor",
+   "axis": "ECONOMY_WORK_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric gdp_growth_pct -> B3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "economic-modeling",
+   "axis": "ECONOMY_WORK_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric gdp_growth_pct -> B3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global economy recession inflation unemployment 2025",
+   "axis": "ECONOMY_WORK_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric gdp_growth_pct -> B3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "economic inequality labor rights wealth concentration",
+   "axis": "ECONOMY_WORK_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric gdp_growth_pct -> B3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "plastic waste pollution recycling",
+   "axis": "MATERIALS_WASTE_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric adjusted_net_savings_pct -> B3.7 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "circular economy waste reduction",
+   "axis": "MATERIALS_WASTE_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric adjusted_net_savings_pct -> B3.7 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "circular-economy",
+   "axis": "MATERIALS_WASTE_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric adjusted_net_savings_pct -> B3.7 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "plastic pollution circular economy recycling",
+   "axis": "MATERIALS_WASTE_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric adjusted_net_savings_pct -> B3.7 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "plastic pollution circular economy regenerative model",
+   "axis": "MATERIALS_WASTE_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric adjusted_net_savings_pct -> B3.7 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

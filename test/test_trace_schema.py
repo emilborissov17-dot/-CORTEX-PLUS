@@ -425,20 +425,21 @@ def test_a_boundary_only_step_shows_its_seconds_and_is_not_never_ran(tmp_path):
     """THE DEFECT THIS FILE EXISTS FOR. web_intelligence ran 906s on 2026-09-17,
     left a stepb span saying so, goes through no _run(), and the report called it
     "never ran" along with 30 others. A step that was measured must never read
-    as absent."""
+    as absent. (web_intelligence was deleted on 2 Oct 2026, C-FIX-1; the same check
+    runs on global_indicators, a boundary step of the same kind that still exists.)"""
     from tools import trace_report as tr
-    rows = [_hd()] + _bspan("b1", "web_intelligence", 0.0, 906.0, index="1")
+    rows = [_hd()] + _bspan("b1", "global_indicators", 0.0, 906.0, index="2.5")
     f = tr.fold(tr.load(_write(tmp_path, rows)))
 
-    assert f["ms_by_step"]["web_intelligence"] == 906000
-    assert "web_intelligence" in f["boundary_steps"]
-    assert "web_intelligence" in f["ran_boundary_only"]
-    assert "web_intelligence" not in f["never_ran"], (
+    assert f["ms_by_step"]["global_indicators"] == 906000
+    assert "global_indicators" in f["boundary_steps"]
+    assert "global_indicators" in f["ran_boundary_only"]
+    assert "global_indicators" not in f["never_ran"], (
         "a step with a boundary span was reported as never having run")
 
     text = tr.md(f, tmp_path / "b.jsonl")
     row = [l for l in text.splitlines()
-           if l.startswith("|") and " web_intelligence " in l]
+           if l.startswith("|") and " global_indicators " in l]
     assert len(row) == 1, f"expected one row, got {row}"
     assert "906.0" in row[0], f"the seconds are missing from the row: {row[0]}"
     assert "BOUNDARY ONLY" in row[0], f"not labelled boundary-only: {row[0]}"

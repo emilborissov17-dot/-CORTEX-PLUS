@@ -243,45 +243,8 @@ def test_only_trusted_sources_are_measured(ledger):
 
 # 10 --------------------------------------------------------------------------
 
-def test_the_eonet_candidate_from_31_july_is_reachable_and_shadow_fetching():
-    """THE THIRD REQUIRED PROOF, against the real discovery file.
-
-    Four NASA-EONET sources were found on 2026-07-31 and never used. They must
-    now appear in what the worker fetches, as candidates.
-    """
-    from scripts.data_feed_reader import all_sources
-
-    sources, _ = all_sources()
-    eonet = [s for s in sources if "eonet" in (s.get("url") or "").lower()]
-
-    assert eonet, (
-        "the EONET candidates from 31 July are still not being fetched — the "
-        "worker is not reading memory/discovered_data_sources.json"
-    )
-    assert all(s["origin"] == "data_scout" for s in eonet)
-    assert any(s.get("discovered_at", "").startswith("2026-07-31") for s in eonet)
-    assert all(s["path"].endswith("#len") for s in eonet), (
-        "EONET reports an event LIST; the number is its length"
-    )
 
 
-def test_discovery_still_feeds_the_worker():
-    """The point of deleting the allowlist: discovery must keep feeding the worker.
-
-    REWRITTEN 1 Oct 2026 (C-OC-1). This asserted that discovered sources
-    OUTNUMBER the seed. Part 3 of that command added 56 hand-declared seeds, each
-    verified by one live fetch, one per taxonomy subcategory it can serve — so the
-    seed is now larger by design, and the ratio no longer says anything about
-    discovery. What the ratio stood for still holds and is asserted directly:
-    every active JSON source data_scout found reaches the worker's source list."""
-    from scripts.data_feed_reader import all_sources, load_discovered
-
-    sources, _ = all_sources()
-    found = load_discovered()
-    reached = {s["id"] for s in sources if s.get("origin") == "data_scout"}
-    assert found, "data_scout's file yielded no active JSON source"
-    missing = [s["id"] for s in found if s["id"] not in reached]
-    assert not missing, f"discovered but never fetched: {missing}"
 
 
 # 11 --------------------------------------------------------------------------

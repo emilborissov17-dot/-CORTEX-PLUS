@@ -35,5 +35,38 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/D1.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "nuclear war pandemic existential risk",
+   "axis": "DEEP_TIME_RISKS_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "long term existential risk",
+   "axis": "DEEP_TIME_RISKS_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "existential-risk",
+   "axis": "DEEP_TIME_RISKS_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "pandemic risk nuclear war asteroid impact supervolcano",
+   "axis": "DEEP_TIME_RISKS_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "pandemic preparedness nuclear risk catastrophic threat",
+   "axis": "DEEP_TIME_RISKS_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

@@ -316,7 +316,9 @@ def test_self_observer_declares_the_files_its_code_really_reads():
         assert leaf in src, (
             f"self_observer declares {rel} but its source never names {leaf}")
 
-    assert "memory/web_intelligence/latest.json" in declared
+    # 2 Oct 2026 (C-FIX-1): _load_web_intelligence() no longer reads the deleted collector's
+    # latest.json (NO_AGENT_INPUT), so it is no longer declared.
+    assert "memory/web_intelligence/latest.json" not in declared
     assert "snapshots/master/dependency_check_latest.json" in declared
 
 

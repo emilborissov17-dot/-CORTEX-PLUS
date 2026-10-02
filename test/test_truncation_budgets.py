@@ -63,23 +63,8 @@ def _call_llm_json_kwargs(path: pathlib.Path) -> list:
     return out
 
 
-def test_the_axis_review_budget_is_the_one_the_retry_proved():
-    calls = _call_llm_json_kwargs(BASE / "agents" / "internet" / "internet_agent.py")
-    assert calls, "no call_llm_json call found in internet_agent.py"
-    budgets = [c.get("max_tokens") for c in calls if "max_tokens" in c]
-    assert budgets, "the call carries no explicit max_tokens"
-    assert min(budgets) >= 800, (
-        f"axis-review budget is back below 800 ({budgets}); 400 truncated ~5 "
-        f"times a night and every retry at 800 succeeded")
 
 
-def test_the_scout_budget_is_the_one_the_retry_proved():
-    calls = _call_llm_json_kwargs(BASE / "core" / "data_scout.py")
-    budgets = [c.get("max_tokens") for c in calls if "max_tokens" in c]
-    assert budgets, "the scout call carries no explicit max_tokens"
-    assert min(budgets) >= 1200, (
-        f"scout budget is back below 1200 ({budgets}); 600 truncated and every "
-        f"retry at 1200 succeeded")
 
 
 def test_the_new_budget_beats_the_old_retry_not_just_the_old_attempt():
@@ -115,21 +100,3 @@ def test_truncation_is_still_retried_rather_than_hidden():
     assert "TRUNCATED" in src
 
 
-def test_the_label_still_carries_the_axis_name():
-    """The countability the handover asked for: every one of these call sites
-    must pass a per-axis label, or the log line loses the axis and the pattern
-    becomes uncountable again."""
-    for path, expect in ((BASE / "agents" / "internet" / "internet_agent.py", "axis"),
-                         (BASE / "core" / "data_scout.py", None)):
-        calls = _call_llm_json_kwargs(path)
-        tree = ast.parse(_src(path))
-        labelled = False
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call):
-                continue
-            name = getattr(node.func, "id", None) or getattr(node.func, "attr", None)
-            if name != "call_llm_json":
-                continue
-            if any(k.arg == "label" for k in node.keywords):
-                labelled = True
-        assert labelled, f"{path.name} calls call_llm_json without a label"

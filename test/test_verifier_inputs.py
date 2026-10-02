@@ -324,11 +324,11 @@ def test_the_explanation_can_never_change_the_decision():
 
 def test_a_declared_verifier_scores_above_unknown():
     """The counter-example, so the test above is not vacuously true of every
-    step. web_intelligence is the one verifier whose inputs were declared, on
-    2026-08-31, and it is the reason publishing resumed."""
-    inputs, source = _inputs_for("web_intelligence")
+    step. It was web_intelligence until that step was deleted (C-FIX-1, 2 Oct 2026);
+    global_indicators is the verifier whose inputs are declared now."""
+    inputs, source = _inputs_for("global_indicators")
     level, why = _age_state(inputs, source)
-    assert inputs, "web_intelligence lost its declaration"
+    assert inputs, "global_indicators lost its declaration"
     assert level > 0, f"declared but still UNKNOWN: {why}"
 
 
@@ -556,90 +556,34 @@ def test_a_broken_live_declaration_is_no_declaration_at_all(tmp_path,
 
 # ── the declaration is BOUND to what the scout actually writes ──────────────
 
-def test_the_declared_fetch_records_are_the_ones_the_scout_writes():
-    """The same binding _DECLARED_VERIFIER_READS does for file inputs, for the
-    fetch records: the declaration names one file per key of scout.SOURCES, and
-    goes red if that table grows a key without the declaration following.
-
-    NOT A GREP OVER PROSE — the table is imported and read. A source added to the
-    scout and not declared here would otherwise be fetched every night and never
-    counted when the step is aged, which means the OLDEST fetch could be arbitrarily
-    stale while the step scored FULL on the one record that was declared.
-    """
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location(
-        "scout_for_test", REPO / "experiments" / "browser_scout" / "scout.py")
-    scout = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(scout)
-
-    expected = {f"memory/browse_sources/{key}.json" for key in scout.SOURCES}
-    declared = set(live_fetch_for("browser_scout")["records"])
-    assert declared == expected, (
-        f"browser_scout declares {sorted(declared)} but scout.SOURCES writes "
-        f"{sorted(expected)}. Every key of SOURCES is refreshed by run_all(), so "
-        f"every one of them is part of this step's observation date.")
 
 
-def test_the_declared_timestamp_field_is_one_the_scout_writes():
-    """Binds the field name to the record the module builds. A renamed field
-    would otherwise fail closed every night — correctly, and for a reason nobody
-    could see from the declaration."""
-    import ast
-
-    src = (REPO / "experiments" / "browser_scout" / "scout.py").read_text(
-        encoding="utf-8")
-    keys = set()
-    for node in ast.walk(ast.parse(src)):
-        if isinstance(node, ast.Dict):
-            keys |= {k.value for k in node.keys
-                     if isinstance(k, ast.Constant) and isinstance(k.value, str)}
-    field = live_fetch_for("browser_scout")["timestamp_field"]
-    assert field in keys, (
-        f"scout.py writes no {field!r} key; the declaration in "
-        f"config/step_inputs.json names a field the record does not carry")
 
 
 # ── and the step itself, on this repo, right now ────────────────────────────
 
-def test_browser_scout_is_aged_by_its_fetch_and_is_not_called_blind():
-    """The live check, on this repo. Before 20 Sep this step scored UNKNOWN(0)
-    and _blindness() named it as unable to say what it reads. It can say: it
-    reports when it last looked."""
-    from core.notary import _blindness
-
-    spec = live_fetch_for("browser_scout")
-    assert spec, "browser_scout lost its live-fetch declaration"
-    level, why = _fetch_age_state(spec)
-    assert level > 0, f"still UNKNOWN: {why}"
-    assert "теглене" in why, why
-    assert _blindness("browser_scout", {}) == "", (
-        "a step that records when it looked is not blind; it is datable")
 
 
-def test_a_live_fetch_declaration_does_not_open_the_inputs_door():
-    """The ban it was carved around stays exactly where it was: the records are
-    declared under their own key, and memory/browse_sources must never appear in
-    'inputs', where it would be the step grading itself off its own output."""
-    doc = json.loads((REPO / "config" / "step_inputs.json").read_text(
-        encoding="utf-8"))
-    entry = doc["steps"]["browser_scout"]
-    assert entry["inputs"] == [], entry["inputs"]
-    assert not any("browse_sources" in p for p in entry["inputs"])
-    assert entry["live_fetch"]["records"], "the records are declared nowhere"
 
 
-def test_the_gate_asks_the_fetch_path_and_not_the_file_path(monkeypatch):
+def test_the_gate_asks_the_fetch_path_and_not_the_file_path(monkeypatch, tmp_path):
     """MUTATION NET ON THE WIRING. The two functions can both be correct and the
     gate still never reach the new one — which is exactly what an unwired module
     looks like from the outside. vector() must consult the live-fetch path for a
     step that declares one, so removing the dispatch turns this red."""
+    from core import declared_inputs as DI
     from core import notary as _N
 
+    # A fixture step, not a live one: browser_scout, the step this net was written
+    # against, was deleted with the web collectors (C-FIX-1, 2 Oct 2026).
+    f = tmp_path / "decl.json"
+    f.write_text(json.dumps({"steps": {"s": {"inputs": [], "live_fetch": {
+        "records": ["memory/s_fetch.json"], "timestamp_field": "extracted_at"}}}}), encoding="utf-8")
+    monkeypatch.setattr(DI, "PATH", f)
     called = []
     monkeypatch.setattr(_N, "_fetch_age_state",
                         lambda spec: called.append(spec) or (3, "fetched"))
-    vec = _N.vector("browser_scout", prev_step=_N.PREV_NONE)
-    assert called, ("vector() graded browser_scout without asking "
+    vec = _N.vector("s", prev_step=_N.PREV_NONE)
+    assert called, ("vector() graded a live-fetch step without asking "
                     "_fetch_age_state — the live-fetch path is not wired in")
     assert vec["why"]["age"] == "fetched", vec["why"]["age"]

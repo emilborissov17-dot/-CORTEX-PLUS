@@ -1339,29 +1339,6 @@ def _note_night(subject: str, detail: str) -> None:
         pass
 
 
-def read_collector(name: str) -> dict:
-    """The spine's only contact with a collector (task #8 B.B, 25 Sep 2026).
-
-    web_intelligence and data_scout run in collectors_runner.py BEFORE the spine and
-    end in one manifest (core/collectors_manifest.py). This step validates and reads
-    it; it never runs a collector and never asks a model. A missing, stale or
-    malformed entry is written into the night as it is - the spine does not
-    substitute a guess for it.
-    """
-    from core.collectors_manifest import validate
-    v = validate(name)
-    print(f"[FAST_CYCLE] {name} (collector): ok={v['ok']} level={v['level']} "
-          f"fetched_at={v['fetched_at']} age_h={v['age_h']} outputs={len(v['outputs'])}")
-    if not v["ok"]:
-        for pr in v["problems"]:
-            print(f"[FAST_CYCLE] {name} (collector): {pr}")
-        _note_night(f"{name}: колекторът не е годен",
-                    "; ".join(v["problems"])[:400])
-    elif v["level"] == "UNVERIFIED":
-        _note_night(f"{name}: UNVERIFIED", "колекторът е вървял без модела си; "
-                    "изходът му е четен с това ниво")
-    return v
-
 def run_trend_tracker():
     print("[FAST_CYCLE] running trend_tracker...")
     r = subprocess.run(
@@ -1427,52 +1404,8 @@ def _check_dependencies() -> bool:
     # защото тогава мозъкът наистина не може да се произнесе: той е падналото.
     _paths = []
 
-    # ── Self-heal (14 Aug 2026): the ddgs search package was missing for weeks and
-    # web intelligence ran blind — a dependency the system can install for itself.
-    # Narrow by design: ONE hardcoded, known-safe package, own venv, logged, fail-open.
-    # This is self-maintenance inside the machine, not an action on the world.
-    # КОНСЕНСУС С KIMI, стъпка 6, 15 авг 2026: „pip install без надзор е ДУПКА,
-    # не бордюр." Съгласен съм и махам самоинсталацията. Досега липсващ пакет се
-    # доизтегляше от мрежата всяка нощ, без човек да е казал дума — тоест системата
-    # изпълняваше чужд код от интернет вътре в собствения си процес. Че пакетът е
-    # един и известен, не променя рода на действието; променя само вероятността.
-    # Сега липсата се ЗАПИСВА като предложение за човека и се вижда в известията.
-    try:
-        import ddgs  # noqa: F401
-        checks["pkg_ddgs"] = {"present": True, "level": "optional"}
-    except ImportError:
-        checks["pkg_ddgs"] = {"present": False, "level": "optional",
-                              "needs_human": "pip install ddgs"}
-        print("[DEP_CHECK] MISSING ddgs (optional) -> proposed to human, NOT self-installed")
-        try:
-            _props = BASE / "memory" / "improvement_proposals.json"
-            _cur = json.loads(_props.read_text(encoding="utf-8")) if _props.exists() else []
-            if isinstance(_cur, list) and not any(
-                    "ddgs" in str(x.get("title", "")) for x in _cur if isinstance(x, dict)):
-                _cur.append({"ts": _utc_now(), "source": "dependency_check",
-                             "title": "Липсва пакет ddgs (търсене в мрежата)",
-                             "detail": "Web intelligence върви сляпо без него. "
-                                       "Инсталацията е ЧОВЕШКО действие: pip install ddgs",
-                             "needs_human": True})
-                _props.write_text(json.dumps(_cur, ensure_ascii=False, indent=2),
-                                  encoding="utf-8")
-        except Exception:
-            pass
-
-    # ffmpeg / deno (3 Sep 2026): the two binaries yt-dlp warned about on every video
-    # for three nights. Reported in the same vocabulary as ddgs — MISSING is a proposal
-    # to the human (tools/install_media_deps.ps1), never a self-install. Fail-open.
-    try:
-        from core.media_tools import status as _mt_status, dep_check_lines as _mt_lines
-        _mt = _mt_status()
-        checks["bin_ffmpeg"] = {"present": _mt["ffmpeg_ok"], "level": "optional",
-                                "path": _mt["ffmpeg"]}
-        checks["bin_deno"] = {"present": _mt["deno_ok"], "level": "optional",
-                              "path": _mt["deno"]}
-        for _ln in _mt_lines():
-            print(_ln)
-    except Exception as _mte:
-        print(f"[DEP_CHECK] media_tools unavailable: {type(_mte).__name__}: {_mte}")
+    # The ddgs and ffmpeg/deno (yt-dlp) checks were removed by C-FIX-1 (2 Oct 2026, Emil R43: news, data, information, podcasts, YouTube, radio reach this system ONLY through OpenClaw):
+    # the only code that needed them, the web collectors, is deleted.
 
     # 1. Проверка на ключове
     key_levels = {
@@ -2661,11 +2594,7 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] needs_reanalysis scan -> FAILED: {e}")
 
-    # ── 1. Web Intelligence ──
-    beat("web_intelligence", "1")
-    # A collector now (collectors_runner.py, before the spine) - the spine
-    # validates and reads its manifest entry, nothing more (task #8 B.B).
-    read_collector("web_intelligence")
+    # Step 1 (web_intelligence) was removed by C-FIX-1 (2 Oct 2026, Emil R43: news, data, information, podcasts, YouTube, radio reach this system ONLY through OpenClaw).
 
     # NOTE (not a step boundary): step 2 USED to be here. It moved to 2.75 and
     # there is no beat(..., "2") anywhere — the header stayed behind and, because
@@ -2809,16 +2738,7 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] sensorium ingest -> FAILED: {type(e).__name__}: {e}")
 
-    # ── 2.55. Browser-scout — autonomously turn HTML pages into neutral JSON for the
-    #    DYNAMIC axes (deterministic extraction, traceable to page text). Writes
-    #    memory/browse_sources/<key>.json, which the composer reads via its "file" kind.
-    #    Runs BEFORE composers so the fresh value is available this cycle. FAIL-OPEN.
-    beat("browser_scout", "2.55")
-    try:
-        from experiments.browser_scout.scout import run_all as _scout_all
-        _scout_all()
-    except Exception as e:
-        print(f"[FAST_CYCLE] browser_scout -> FAILED: {type(e).__name__}: {e}")
+    # Step 2.55 (browser_scout) was removed by C-FIX-1 (2 Oct 2026, Emil R43: news, data, information, podcasts, YouTube, radio reach this system ONLY through OpenClaw).
 
     # ── 2.6. Composers — daily multi-source portfolio per axis = the MOVING signal.
     #    Fetches each spec'd axis's live sources, composes the indicator, appends the
@@ -3430,10 +3350,7 @@ def main():
     # stays in agents/core/daily_analysis_agent.py (run_daily.bat still runs it by
     # hand) until the risk-ledger conversion, which is postponed.
 
-    # ── 22.5. Data Scout — автономно търсене на нови реални данни ──
-    beat("data_scout", "22.5")
-    # A collector now (collectors_runner.py, before the spine) - read, not run.
-    _run("data_scout", lambda: read_collector("data_scout"))
+    # Step 22.5 (data_scout) was removed by C-FIX-1 (2 Oct 2026, Emil R43: news, data, information, podcasts, YouTube, radio reach this system ONLY through OpenClaw).
 
     # ── 23. Continuous learning ──
     beat("continuous_learning", "23")

@@ -203,7 +203,9 @@ def test_the_checkpoint_call_sits_on_the_completed_path(runner):
 # 30 -> 29 on 2026-09-26: llm_self_review_axes, an uncovered step, was
 # deleted from the cycle with its code (C3b).
 # 29 -> 28 the same day: brain_debrief, uncovered, moved to edges_runner.py (C3c).
-UNCOVERED_STEP_LIMIT = 28
+# 28 -> 26 on 2 Oct 2026: browser_scout and data_scout, both uncovered, were deleted with the
+# web collectors (C-FIX-1, Emil R43).
+UNCOVERED_STEP_LIMIT = 26
 
 
 def test_the_uncovered_steps_are_counted_and_not_growing():

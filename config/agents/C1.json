@@ -31,5 +31,38 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/C1.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "climate change CO2 emissions",
+   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric co2_ppm_mauna_loa -> C1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "climate change risk prediction",
+   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric co2_ppm_mauna_loa -> C1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "climate-model",
+   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric co2_ppm_mauna_loa -> C1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "climate change extreme weather 2025",
+   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric co2_ppm_mauna_loa -> C1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "climate breakdown extreme weather systemic failure",
+   "axis": "CLIMATE_GLOBAL_RISK_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric co2_ppm_mauna_loa -> C1.1 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

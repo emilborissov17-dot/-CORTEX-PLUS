@@ -238,9 +238,6 @@ def test_composer_preserves_human_request_across_rewrite():
     assert 'i.get("kind") == "human_sense_request"' in src
 
 
-def test_data_scout_drains_human_sense_request():
-    src = (REPO / "core" / "data_scout.py").read_text(encoding="utf-8")
-    assert '"human_sense_request"' in src, "data_scout must accept the human's demand kind"
 
 
 def test_needs_report_orders_by_human_priority(monkeypatch, tmp_path):

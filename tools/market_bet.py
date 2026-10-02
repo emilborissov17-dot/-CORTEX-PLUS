@@ -32,6 +32,41 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 from core.market_daily import ASSETS, INDICATORS  # noqa: E402
+
+
+# ── news evidence (C-FIX-1 2d, 2 Oct 2026) ───────────────────────────────────
+# core/market_news.py (Tavily news search) was a collector, deleted under Emil's R43:
+# news reaches this system ONLY through OpenClaw. Its two data types live here now,
+# unchanged; the search itself is gone, and nothing the agents store yet answers
+# "news about this asset", so every asset is refused by name (no fallback).
+from dataclasses import asdict, dataclass  # noqa: E402
+
+NO_AGENT_INPUT = ("NO_AGENT_INPUT: market news came from core/market_news.py (Tavily), deleted by C-FIX-1; "
+                  "the agents store no news for this asset yet")
+
+
+class NewsUnavailable(RuntimeError):
+    """No usable evidence, and the reason is in the message."""
+
+
+@dataclass(frozen=True)
+class Snippet:
+    title: str
+    url: str
+    host: str
+    published_utc: str
+    snippet: str
+    retrieved_utc: str
+    source_class: str = "unknown"
+    source_kind: str = "unclassified"
+    dated: bool = True
+
+    def as_dict(self) -> dict:
+        return asdict(self)
+
+
+def fetch_news(sym: str):
+    raise NewsUnavailable(NO_AGENT_INPUT)
 from tools.first_bet import MODEL_PIN, generate_completions  # noqa: E402
 
 N_COMPLETIONS = 8
@@ -1302,8 +1337,6 @@ def sha_of(sym: str, direction: str, deadline: str) -> str:
 
 def _grounded_run(a, baseline, deadline: str, dry) -> int:
     """R43. Evidence first; an asset with no fact gets NO BET and there is no fallback."""
-    from core.market_news import NewsUnavailable, fetch_news
-
     # CHECKED ONCE, UP FRONT, BEFORE ANY ASSET IS TOUCHED. Checking it per-asset was
     # too late to be a guard: every asset can refuse on evidence first, and the run
     # then seals an empty bet with a 0 exit code and never reaches the check at all.
@@ -1321,7 +1354,6 @@ def _grounded_run(a, baseline, deadline: str, dry) -> int:
         snippets, refusal, ungrounded = [], None, False
         try:
             if dry is not None and "snippets" in dry:
-                from core.market_news import Snippet
                 snippets = [Snippet(**x) for x in dry["snippets"].get(sym, [])]
                 if not snippets:
                     raise NewsUnavailable(f"dry-run: no snippets staged for {sym}")

@@ -94,7 +94,9 @@ def test_the_unverified_entries_are_carried_by_name():
     # data['summary']['error_count'] into pain_score; phase_evidence.py:470
     # counts the same list) — in the same commit that moved its phase from
     # E_PROPOSE to F_SELF, because the same diagnosis produced both.
-    assert len(unver) == 20, (
+    # 20 -> 19 on 2 Oct 2026: memory/web_intelligence/latest.json was REMOVED (not promoted):
+    # its producer, web_intelligence_agent.py, was deleted with the web collectors (C-FIX-1).
+    assert len(unver) == 19, (
         f"the UNVERIFIED count changed from 21 to {len(unver)}. If a reader was "
         f"confirmed, lower this number in the same commit; if a path was added, "
         f"confirm its reader instead of raising it.")

@@ -62,9 +62,10 @@ def _kill_lines(path: Path) -> list:
 
 
 def _step_names() -> set:
-    """Every name the repo itself recognises: step, alias or substep."""
-    from core.cycle_map import STEPS, ALIASES, SUBSTEPS
-    return ({s[0] for s in STEPS} | set(ALIASES) | set(SUBSTEPS)
+    """Every name the repo itself recognises: step, alias, substep, or a step that
+    existed and was retired (core.cycle_map.RETIRED_STEPS — its old log lines are real)."""
+    from core.cycle_map import ALIASES, RETIRED_STEPS, STEPS, SUBSTEPS
+    return ({s[0] for s in STEPS} | set(ALIASES) | set(SUBSTEPS) | set(RETIRED_STEPS)
             | {a for a in ALIASES.values()} | {s for s in SUBSTEPS.values()})
 
 

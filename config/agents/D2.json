@@ -31,5 +31,62 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/D2.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "asteroid mining space resources",
+   "axis": "COSMIC_RESOURCES_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "asteroid-mining",
+   "axis": "COSMIC_RESOURCES_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "asteroid mining space economy resources",
+   "axis": "COSMIC_RESOURCES_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "asteroid mining space resources off-world economy",
+   "axis": "COSMIC_RESOURCES_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "space exploration NASA SpaceX",
+   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "space colonization infrastructure",
+   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "space-exploration",
+   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "space exploration SpaceX NASA satellite 2025",
+   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "space exploration orbital infrastructure humanity",
+   "axis": "SPACE_INFRASTRUCTURE_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

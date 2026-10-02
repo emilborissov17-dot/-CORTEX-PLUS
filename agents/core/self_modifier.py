@@ -384,14 +384,9 @@ def _build_context(component, problem):
     the score, just not here. Two parameters that looked like inputs and were
     not, one of which was also a declared notary input holding the gate shut.
     """
+    # C-FIX-1 2d: the web-intelligence axes are not read (NO_AGENT_INPUT:).
     web_intel_axes = {}
-    try:
-        wi_path = BASE_DIR / "memory" / "web_intelligence" / "latest.json"
-        if wi_path.exists():
-            wi_data = json.loads(wi_path.read_text(encoding="utf-8"))
-            web_intel_axes = wi_data.get("axes", {})
-    except Exception:
-        pass
+    print("[SELF_MODIFIER] NO_AGENT_INPUT: memory/web_intelligence/ was written by web_intelligence_agent.py, deleted by C-FIX-1 (2 Oct 2026, Emil R43); the agents store no axis syntheses yet, so the stale tree is not read")
 
     relevant_axis_data = ""
     for axis, data in web_intel_axes.items():

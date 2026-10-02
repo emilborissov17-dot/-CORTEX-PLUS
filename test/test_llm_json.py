@@ -357,11 +357,6 @@ def test_self_observer_extract_json_array_contract():
     assert _extract_json_array('prose [{"a": 1}] prose') == [{"a": 1}]
 
 
-def test_internet_agent_parse_llm_json_contract():
-    from agents.internet.internet_agent import _parse_llm_json
-
-    got = _parse_llm_json(GPT_OSS_PREAMBLE)
-    assert got["summary"] == "Grid buildout lags demand."
 
 
 def test_cortex_llm_resource_extract_returns_dict_now():

@@ -33,7 +33,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 for _p in (REPO, REPO / "experiments" / "sensorium", REPO / "experiments" / "needs",
-           REPO / "experiments" / "symbolic_duel", REPO / "experiments" / "browser_scout"):
+           REPO / "experiments" / "symbolic_duel", HERE):
     sys.path.insert(0, str(_p))
 
 CONFIG      = REPO / "config" / "pulse.json"
@@ -429,7 +429,7 @@ def reflection(ctx: dict, frame: str) -> dict:
     if not ctx["body"].get("ollama_alive"):
         return {}
     try:
-        from autonomous_scout import _local
+        from local_model import _local
         k = len(ctx["prev"])
         lines = json.dumps(ctx["prev"][-8:], ensure_ascii=False)[:2500]
         out = _local(
@@ -581,7 +581,7 @@ def _refs_exist(refs, catalog=None) -> bool:
 
 
 def articulate(seed: dict, frame: str, catalog=None) -> dict:
-    from autonomous_scout import _local, _json_from
+    from local_model import _local, _json_from
     horizon = (datetime.now(timezone.utc) + timedelta(days=30)).date().isoformat()
     allowed = "\n".join(f"  {c}" for c in (catalog or []))
     cite = (f"These files exist in the repo and are the ONLY citations you may use. "

@@ -27,5 +27,38 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/B6.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "artificial intelligence AI regulation",
+   "axis": "TECHNOLOGY_AI_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "artificial general intelligence alignment",
+   "axis": "TECHNOLOGY_AI_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "agi-safety",
+   "axis": "TECHNOLOGY_AI_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "artificial intelligence AGI machine learning safety 2025",
+   "axis": "TECHNOLOGY_AI_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "AI safety AGI alignment algorithmic accountability",
+   "axis": "TECHNOLOGY_AI_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

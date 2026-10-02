@@ -140,11 +140,11 @@ def publish_cycle(web_intel_dir: pathlib.Path = None):
     Ако web_intel_dir не е подаден — намира последната налична папка автоматично.
     """
     if web_intel_dir is None:
-        web_intel_dir = _find_latest_web_intel_dir()
-        if web_intel_dir is None:
-            print("[GitHub] Няма налични данни за публикуване.")
-            return
-        print(f"[GitHub] Публикувам данни от: {web_intel_dir.name}")
+        # C-FIX-1 2d: the newest old folder would be published under TODAY's cycle date.
+        # Nothing is published from the deleted collector's tree; a folder passed
+        # explicitly is still published.
+        print("[GitHub] NO_AGENT_INPUT: memory/web_intelligence/ was written by web_intelligence_agent.py, deleted by C-FIX-1 (2 Oct 2026, Emil R43); the agents store no axis syntheses yet, so the stale tree is not read")
+        return
 
     # The label is the cycle's LOCAL date (Europe/Sofia); the folder - named by the
     # UTC date web_intelligence wrote it on - is only where the data is read from.

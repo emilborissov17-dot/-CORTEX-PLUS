@@ -36,6 +36,11 @@ def _now() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+# Fields a regeneration keeps from the existing file. seed_topics: the axis queries the
+# deleted web collectors held, kept as hints for the maintenance rotation (C-FIX-1 2c).
+KEEP_BY_HAND = ("openclaw_agent", "browser_profile", "skills", "plugins", "seed_topics", "_seed_topics")
+
+
 def generate(out_dir=None, tree: Optional[dict] = None) -> list:
     from core import taxonomy as tx
     tree = tree or tx.load()
@@ -52,10 +57,11 @@ def generate(out_dir=None, tree: Optional[dict] = None) -> list:
                     "learned": f"memory/agents/{cid}.json",
                     "_generated": f"from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"}
             p = d / f"{cid}.json"
-            if p.exists():                                       # keep the agent/browser fields set by hand
+            if p.exists():                                       # keep the fields set by hand
                 old = json.loads(p.read_text(encoding="utf-8"))
-                for k in ("openclaw_agent", "browser_profile", "skills", "plugins"):
-                    prof[k] = old.get(k, prof[k])
+                for k in KEEP_BY_HAND:
+                    if k in old or k in prof:
+                        prof[k] = old.get(k, prof.get(k))
             p.write_text(json.dumps(prof, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
             written.append(cid)
     return written

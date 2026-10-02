@@ -17,7 +17,6 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 import core.media_tools as M  # noqa: E402
-import youtube_intel as Y     # noqa: E402
 
 
 # ── SubtitleRateLimit ─────────────────────────────────────────────────────────
@@ -90,11 +89,6 @@ def test_default_threshold_is_the_documented_constant():
 
 # ── flags reach the yt-dlp argv ───────────────────────────────────────────────
 
-def _isolate_live_breaker(monkeypatch, tmp_path):
-    """The module-level breaker must never write memory/yt_backoff.json from a test
-    (conftest's _no_live_writes). Point it at tmp, then clear."""
-    monkeypatch.setattr(Y._SUBS_LIMIT, "state_file", tmp_path / "yt_backoff.json")
-    Y._SUBS_LIMIT.clear_park(); Y._SUBS_LIMIT.reset()
 
 
 def _capture(monkeypatch):
@@ -108,50 +102,10 @@ def _capture(monkeypatch):
     return seen
 
 
-def test_subtitle_call_carries_resolved_ffmpeg_and_deno(monkeypatch, tmp_path):
-    ff = tmp_path / "ffmpeg.exe"; ff.write_bytes(b"")
-    dn = tmp_path / "deno.exe"; dn.write_bytes(b"")
-    monkeypatch.setattr(M, "find_ffmpeg", lambda: str(ff))
-    monkeypatch.setattr(M, "find_deno", lambda: str(dn))
-    monkeypatch.setattr(M, "_runs", lambda p: True)
-    _isolate_live_breaker(monkeypatch, tmp_path)
-    seen = _capture(monkeypatch)
-    Y._get_transcript_yt_dlp("dQw4w9WgXcQ")
-    cmd = seen["cmd"]
-    assert cmd[0] == sys.executable and cmd[1:3] == ["-m", "yt_dlp"]
-    assert cmd[cmd.index("--ffmpeg-location") + 1] == str(tmp_path)
-    assert cmd[cmd.index("--js-runtimes") + 1] == f"deno:{dn}"
-    # the URL is still the last argument
-    assert cmd[-1].endswith("dQw4w9WgXcQ")
 
 
-def test_nothing_found_means_no_flags_not_a_crash(monkeypatch, tmp_path):
-    monkeypatch.setattr(M, "find_ffmpeg", lambda: None)
-    monkeypatch.setattr(M, "find_deno", lambda: None)
-    assert M.yt_dlp_extra_args() == []
-    _isolate_live_breaker(monkeypatch, tmp_path)
-    seen = _capture(monkeypatch)
-    Y._get_transcript_yt_dlp("dQw4w9WgXcQ")
-    assert "--ffmpeg-location" not in seen["cmd"] and "--js-runtimes" not in seen["cmd"]
 
 
-def test_after_parking_no_process_is_spawned(monkeypatch, capsys, tmp_path):
-    monkeypatch.setattr(M, "find_ffmpeg", lambda: None)
-    monkeypatch.setattr(M, "find_deno", lambda: None)
-    _isolate_live_breaker(monkeypatch, tmp_path)
-    calls = {"n": 0}
-
-    def fake_run(cmd, **kw):
-        calls["n"] += 1
-        return types.SimpleNamespace(returncode=1, stdout="", stderr=_429)
-
-    monkeypatch.setattr(subprocess, "run", fake_run)
-    for i in range(M.YT_SUBS_429_PARK_AFTER + 4):
-        Y._get_transcript_yt_dlp(f"vid{i:08d}")
-    assert calls["n"] == M.YT_SUBS_429_PARK_AFTER     # the rest never spawned
-    out = capsys.readouterr().out
-    assert out.count("[YT-BREAKER]") == 1
-    Y._SUBS_LIMIT.clear_park(); Y._SUBS_LIMIT.reset()   # still on tmp via the fixture
 
 
 def test_version_flag_per_binary():

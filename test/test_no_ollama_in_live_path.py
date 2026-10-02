@@ -44,10 +44,8 @@ REPO = Path(__file__).resolve().parents[1]
 # intentionally NOT here — each owns a LABELLED sovereign local fallback (Emil-approved)
 # and is checked positively below instead of by the blanket endpoint ban.
 LIVE_PATH_MODULES = [
-    "web_intelligence_agent.py",
     "fast_cycle_runner.py",
     "core/global_indicators.py",
-    "agents/internet/internet_agent.py",
     "agents/core/self_observer.py",
     "memory/trend_tracker.py",
 ]
@@ -82,12 +80,6 @@ def test_no_ollama_endpoint_in_live_module(rel):
     )
 
 
-def test_web_intelligence_agent_has_no_warmup_function():
-    """The specific regression: a warmup that failed on every single cycle."""
-    import web_intelligence_agent as wia
-
-    assert not hasattr(wia, "_warmup_ollama"), \
-        "_warmup_ollama is back; it errors every cycle because nothing listens on 11434"
 
 
 def test_groq_backend_chain_excludes_ollama():
@@ -121,16 +113,3 @@ def test_groq_backend_local_is_labelled_last_resort():
     assert "degraded" in local_src, "local answer must be labelled degraded=True"
 
 
-def test_data_scout_local_is_sovereign_fallback():
-    """data_scout may call the local model, but only as a sovereign fallback for
-    source discovery: _suggest_via_local_brain exists and is wired into _suggest_sources
-    (which tries a cloud suggestion first). It must never touch scoring."""
-    import inspect
-
-    from core import data_scout
-
-    assert hasattr(data_scout, "_suggest_via_local_brain"), \
-        "data_scout's labelled sovereign local fallback is missing"
-    src = inspect.getsource(data_scout._suggest_sources)
-    assert "_suggest_via_local_brain" in src, \
-        "local fallback must be wired into _suggest_sources as a fallback, not stray"

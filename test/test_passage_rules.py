@@ -155,9 +155,11 @@ def test_the_ratified_values_have_not_moved():
     assert rules["ceilings"] == {"execute_patches": 1}, (
         "execute_patches was capped at MINIMAL(1), BELOW irreversible_min, so "
         "may_act() refuses it. Raising this is AMENDMENT_001's business.")
+    # 2 Oct 2026 (C-FIX-1, Emil R43): browser_scout and web_intelligence left this list
+    # because the steps no longer exist - deleted with the web collectors. A NARROWING
+    # (fewer steps may break an inherited level), made visibly here as this ratchet asks.
     assert rules["verifiers"] == {"global_indicators", "sensorium_ingest",
-                                  "browser_scout", "internet_intelligence",
-                                  "web_intelligence"}
+                                  "internet_intelligence"}
     assert set(rules["level_names"]) == {0, 1, 2, 3}
     assert rules["level_names"][3].startswith("level_3")
     assert rules["level_names"][0].startswith("level_0")

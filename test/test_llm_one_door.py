@@ -44,7 +44,7 @@ NOT_A_GENERATION = {
 }
 
 OUT_OF_SCOPE_DEBT: dict = {
-    'experiments/browser_scout/autonomous_scout.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
+    'experiments/pulse/local_model.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026) - the same _local() moved verbatim from the deleted experiments/browser_scout/autonomous_scout.py (C-FIX-1, 2 Oct 2026)",
     'experiments/dreams/dream.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'experiments/kimi_duel/consult.py': "3 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'experiments/kimi_duel/duel.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",

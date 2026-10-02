@@ -39,5 +39,68 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/B2.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "government corruption institutions",
+   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric governance_institutions_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "democratic governance institutions",
+   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric governance_institutions_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "open-government",
+   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric governance_institutions_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "geopolitics war peace UN NATO 2025",
+   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric governance_institutions_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "geopolitical conflict institutional failure accountability",
+   "axis": "GOVERNANCE_INSTITUTIONS_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric governance_institutions_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "human rights democracy freedom",
+   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric governance_rights_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "human rights measurement index",
+   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric governance_rights_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "human-rights",
+   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric governance_rights_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "human rights democracy civil liberties 2025",
+   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric governance_rights_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "human rights violations democracy accountability",
+   "axis": "GOVERNANCE_RIGHTS_AT_HUMAN_LEVEL",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric governance_rights_score_global -> B2.1 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

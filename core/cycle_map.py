@@ -57,10 +57,6 @@ STEPS = [
     ("needs_reanalysis_scan", "0.7", "Кои оси са маркирани за преразглеждане. Флагът се "
      "гаси в update_master (12) с ПО-НОВ чист запис, не с изтекло време.",
      ["snapshots/master/needs_reanalysis_latest.json"], False),
-    ("web_intelligence", "1", "Свободно търсене в мрежата по осите (най-дългата). Свой "
-     "бюджет (таван-300s) в отделен процес: спира сама с частичен резултат, вместо "
-     "часовоят да убие цикъла. Редът на осите е по плана на мозъка.",
-     ["memory/web_intelligence"], False),
     ("global_indicators", "2.5", "20 секции от 14 независими хоста (7 от тях през един "
      "— World Bank). Всяко число получава произход: откъде, КОГА Е НАБЛЮДАВАНО, "
      "закъснение и доверие по обявена формула.",
@@ -72,8 +68,6 @@ STEPS = [
      ["memory/daily_tier.jsonl"], False),
     ("sensorium_ingest", "2.54", "Поглъща сензорни капки; проверява истинската верига и сянката поотделно.",
      ["memory/sensorium"], False),
-    ("browser_scout", "2.55", "Ходи по страници за смислови заключения, не само за числа.",
-     ["memory/browse_sources"], False),
     ("composers", "2.6", "Дневното портфолио на ос — движещият се сигнал.",
      ["memory/composed_indicators.json", "memory/composer_needs.json"], False),
     # Описанието беше "разминаването LLM срещу данни" — това не е вярно и никога не е
@@ -241,8 +235,6 @@ STEPS = [
     ("resolve_ideas", "20.2", "Съди хипотезите на пулса срещу наблюдаваната серия; приложение само, никога редакция на idea_stream.",
      ["memory/idea_resolutions.jsonl"], False),
     ("session_update", "21", "Обновява записа на сесията.", [], False),
-    ("data_scout", "22.5", "Търси нови източници; последен, за да не се бие за LLM лимита.",
-     ["memory/discovered_data_sources.json"], False),
     ("continuous_learning", "23", "Учи от цикъла.",
      ["memory/knowledge_base.json"], False),
     ("merklememory_commit", "24", "Merkle ангажимент на паметта — одитната верига.",
@@ -305,6 +297,14 @@ STEPS = [
     ("compass", "25.8", "Четирите стрелки: измереното тегло, доверието, консолидираните твърдения, интервалният резултат.",
      ["memory/compass_latest.json"], False),
 ]
+
+# Steps that existed and were removed: old log lines naming them are history, not a test's
+# fabrication (test/test_supervisor_log_not_poisoned.py).
+RETIRED_STEPS = {
+    "web_intelligence": "deleted with the web collectors, C-FIX-1, 2 Oct 2026 (Emil R43)",
+    "browser_scout": "deleted with the web collectors, C-FIX-1, 2 Oct 2026 (Emil R43)",
+    "data_scout": "deleted with the web collectors, C-FIX-1, 2 Oct 2026 (Emil R43)",
+}
 
 # Логовете отпреди [STEP] маркерите носят етикетите на _run(), които не съвпадат
 # с имената на стъпките. За да важи отчетът и за миналото:

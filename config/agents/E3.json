@@ -27,5 +27,38 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/E3.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "sustainable development goals SDG",
+   "axis": "GOAL_PROGRESS_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric goal_score -> E3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "sustainable development goals measurement",
+   "axis": "GOAL_PROGRESS_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric goal_score -> E3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "sustainable-development",
+   "axis": "GOAL_PROGRESS_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric goal_score -> E3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "sustainable development goals SDG 2030 UN progress",
+   "axis": "GOAL_PROGRESS_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric goal_score -> E3.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "SDG failure UN accountability development gap",
+   "axis": "GOAL_PROGRESS_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric goal_score -> E3.1 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

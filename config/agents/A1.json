@@ -31,5 +31,98 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/A1.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "food security hunger famine",
+   "axis": "FOOD_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric food_insecurity_pct -> A1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "food security machine learning",
+   "axis": "FOOD_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric food_insecurity_pct -> A1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "precision-agriculture",
+   "axis": "FOOD_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric food_insecurity_pct -> A1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "food security global hunger agriculture 2025",
+   "axis": "FOOD_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric food_insecurity_pct -> A1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "food sovereignty hunger crisis systemic failure",
+   "axis": "FOOD_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric food_insecurity_pct -> A1.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "mental health wellbeing global",
+   "axis": "HUMAN_WELL_BEING_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric child_mortality_per_1000 -> A1.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global health wellbeing index",
+   "axis": "HUMAN_WELL_BEING_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric child_mortality_per_1000 -> A1.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global-health",
+   "axis": "HUMAN_WELL_BEING_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric child_mortality_per_1000 -> A1.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global health WHO poverty inequality 2025",
+   "axis": "HUMAN_WELL_BEING_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric child_mortality_per_1000 -> A1.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global health inequality poverty dignity",
+   "axis": "HUMAN_WELL_BEING_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric child_mortality_per_1000 -> A1.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "water scarcity drinking water",
+   "axis": "WATER_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric safe_water_access_pct -> A1.2 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "water scarcity prediction",
+   "axis": "WATER_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric safe_water_access_pct -> A1.2 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "water-quality",
+   "axis": "WATER_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric safe_water_access_pct -> A1.2 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "water crisis drought freshwater scarcity",
+   "axis": "WATER_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric safe_water_access_pct -> A1.2 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "freshwater crisis water scarcity community impact",
+   "axis": "WATER_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric safe_water_access_pct -> A1.2 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

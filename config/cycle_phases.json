@@ -58,14 +58,10 @@
     "B_SENSE": {
       "purpose": "Reach the outside world. Everything downstream is an opinion about what this phase fetched.",
       "index_range": [
-        "1",
+        "2.5",
         "3.5"
       ],
       "steps": [
-        {
-          "name": "web_intelligence",
-          "index": "1"
-        },
         {
           "name": "global_indicators",
           "index": "2.5"
@@ -77,10 +73,6 @@
         {
           "name": "sensorium_ingest",
           "index": "2.54"
-        },
-        {
-          "name": "browser_scout",
-          "index": "2.55"
         },
         {
           "name": "composers",
@@ -104,7 +96,6 @@
         "memory/active_canon_frame.txt"
       ],
       "produces": [
-        "memory/web_intelligence/latest.json",
         "snapshots/master/global_indicators_latest.json",
         "memory/composed_indicators.json",
         "memory/grounding_ledger.jsonl",
@@ -140,7 +131,6 @@
         }
       ],
       "requires": [
-        "memory/web_intelligence/latest.json",
         "snapshots/master/global_indicators_latest.json"
       ],
       "produces": [
@@ -340,10 +330,6 @@
         {
           "name": "session_update",
           "index": "21"
-        },
-        {
-          "name": "data_scout",
-          "index": "22.5"
         },
         {
           "name": "continuous_learning",

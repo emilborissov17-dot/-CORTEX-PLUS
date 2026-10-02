@@ -56,7 +56,7 @@ if hasattr(sys.stderr, "reconfigure"):
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO))
-sys.path.insert(0, str(REPO / "experiments" / "browser_scout"))
+sys.path.insert(0, str(REPO / "experiments" / "pulse"))   # local_model (moved from browser_scout, C-FIX-1)
 
 RUN_LOG = REPO / "memory" / "selfcode_runs.jsonl"
 MAX_ITERATIONS = 5
@@ -204,7 +204,7 @@ def _local_at(prompt: str, temperature: float) -> str:
     "was never given room to answer differently". Retries escalate the temperature so
     the two explanations can be told apart."""
     import requests
-    from autonomous_scout import _MODEL, _OLLAMA
+    from local_model import _MODEL, _OLLAMA
     r = requests.post(f"{_OLLAMA}/api/chat", timeout=240, json={
         "model": _MODEL, "stream": False,
         "messages": [{"role": "user", "content": prompt}],
@@ -317,10 +317,10 @@ def selftest() -> int:
     except Exception as e:
         status["core.groq_backend (cloud)"] = f"INERT ({type(e).__name__})"
     try:
-        from autonomous_scout import _local  # noqa: F401
-        status["autonomous_scout._local (local)"] = "LIVE"
+        from local_model import _local  # noqa: F401
+        status["local_model._local (local)"] = "LIVE"
     except Exception as e:
-        status["autonomous_scout._local (local)"] = f"INERT ({type(e).__name__})"
+        status["local_model._local (local)"] = f"INERT ({type(e).__name__})"
 
     sandbox = Path(tempfile.mkdtemp(prefix="cortex_selfcode_selftest_"))
     try:

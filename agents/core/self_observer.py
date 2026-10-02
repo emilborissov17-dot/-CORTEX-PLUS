@@ -57,37 +57,9 @@ AGI_GOALS = """
 # ── WEB INTELLIGENCE ────────────────────────────────────────────────────────
 
 def _load_web_intelligence() -> dict:
-    latest = BASE_DIR / "memory" / "web_intelligence" / "latest.json"
-    if not latest.exists():
-        print("  [WEB_INTEL] latest.json не съществува")
-        return {}
-    try:
-        data = json.loads(latest.read_text(encoding="utf-8"))
-    except Exception as e:
-        print(f"  [WEB_INTEL] Грешка: {e}")
-        return {}
-
-    if not data.get("ready_for_self_observer"):
-        print("  [WEB_INTEL] WARN: не е маркиран като ready_for_self_observer")
-
-    age_hours = 0.0
-    ts = data.get("timestamp")
-    if ts:
-        try:
-            dt = datetime.fromisoformat(ts)
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            age_hours = (datetime.now(timezone.utc) - dt).total_seconds() / 3600
-        except Exception:
-            pass
-
-    if age_hours > WEB_INTEL_MAX_AGE_H:
-        print(f"  [WEB_INTEL] WARN: данните са {age_hours:.1f}h стари")
-    else:
-        print(f"  [WEB_INTEL] Зареден ({data.get('axes_covered', 0)} оси, {age_hours:.1f}h стар) ✓")
-
-    return data
-
+    # C-FIX-1 2d: the deleted collector's latest.json is not read as today's.
+    print("  [WEB_INTEL] NO_AGENT_INPUT: memory/web_intelligence/ was written by web_intelligence_agent.py, deleted by C-FIX-1 (2 Oct 2026, Emil R43); the agents store no axis syntheses yet, so the stale tree is not read")
+    return {}
 
 def _format_problems_for_prompt(web_intel: dict) -> str:
     """Форматира проблемите от web_intel за prompt — не risk levels."""

@@ -58,9 +58,7 @@
   "verifiers": [
     "global_indicators",
     "sensorium_ingest",
-    "browser_scout",
-    "internet_intelligence",
-    "web_intelligence"
+    "internet_intelligence"
   ],
   "_verifiers_why": "Only these check against a live external source instead of reworking what they were handed, so only these may BREAK an inherited level. The list is deliberately short and explicit: every addition widens the right to wash provenance and must be visible in a diff.",
 

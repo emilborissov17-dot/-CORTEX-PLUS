@@ -35,5 +35,68 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/A5.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "education learning children schools",
+   "axis": "COGNITION_LEARNING_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric literacy_rate_youth_pct -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education learning outcomes AI",
+   "axis": "COGNITION_LEARNING_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric literacy_rate_youth_pct -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education-ai",
+   "axis": "COGNITION_LEARNING_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric literacy_rate_youth_pct -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education future AI learning skills 2025",
+   "axis": "COGNITION_LEARNING_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric literacy_rate_youth_pct -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education inequality learning access alternatives",
+   "axis": "COGNITION_LEARNING_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric literacy_rate_youth_pct -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education access schools literacy",
+   "axis": "EDUCATION_CULTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric primary_completion_rate -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education access equity outcomes",
+   "axis": "EDUCATION_CULTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric primary_completion_rate -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "open-education",
+   "axis": "EDUCATION_CULTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric primary_completion_rate -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "global education UNESCO literacy 2025",
+   "axis": "EDUCATION_CULTURE_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric primary_completion_rate -> A5.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "education access literacy gap policy failure",
+   "axis": "EDUCATION_CULTURE_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric primary_completion_rate -> A5.1 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

@@ -171,16 +171,18 @@ def test_the_declaration_matches_what_the_publisher_opens(declaration):
     entry = declaration["steps"][DECLARED_STEP]
     src = (REPO_ROOT / "github_publisher.py").read_text(encoding="utf-8")
 
-    assert entry["inputs"] == ["memory/web_intelligence"], (
+    # 2 Oct 2026 (C-FIX-1): re-derived. publish_cycle() no longer reads memory/web_intelligence
+    # by default (its producer was deleted; NO_AGENT_INPUT); what publish_synthesis() still
+    # opens is publish_verified_hypotheses()'s cortex_memory/hypotheses/pending.json.
+    assert entry["inputs"] == ["cortex_memory/hypotheses/pending.json"], (
         f"declared inputs changed to {entry['inputs']}. Re-derive them by reading "
         f"github_publisher.publish_synthesis() and update this assertion in the same "
         f"change — do not relax it.")
 
-    # The path is assembled as BASE_DIR / "memory" / "web_intelligence", which is
-    # exactly why no literal exists for the scanner to find.
-    assert '"memory" / "web_intelligence"' in src, (
-        "github_publisher no longer builds memory/web_intelligence — the declared "
-        "input does not describe the module any more.")
+    # The path is assembled as BASE_DIR / "cortex_memory" / "hypotheses" / "pending.json".
+    assert '"cortex_memory" / "hypotheses" / "pending.json"' in src, (
+        "github_publisher no longer builds cortex_memory/hypotheses/pending.json — the "
+        "declared input does not describe the module any more.")
 
     for rel in entry["inputs"]:
         assert (REPO_ROOT / rel).exists(), (
@@ -232,7 +234,7 @@ def test_a_written_declaration_opens_the_gate(healthy_environment, fresh_inputs_
     notary = healthy_environment
     rec = notary.attest(DECLARED_STEP)
 
-    assert rec["inputs"] == ["memory/web_intelligence"], (
+    assert rec["inputs"] == ["cortex_memory/hypotheses/pending.json"], (
         f"attest() graded {DECLARED_STEP} on {rec['inputs']} — the written "
         f"declaration is not reaching the notary.")
     assert rec["vector"]["age"] == notary.FULL, (

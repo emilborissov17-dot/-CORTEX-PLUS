@@ -257,6 +257,13 @@ def unfinished_runs(path: pathlib.Path | None = None, task: str = TASK_NAME) -> 
 
 
 DISCOVERED = BASE / "memory" / "discovered_data_sources.json"
+# C-FIX-1 2d (2 Oct 2026): that list was written by core/data_scout.py, deleted under
+# Emil's R43 (only OpenClaw reaches the web). The agents store no source list yet, so
+# the default is NOT read — the stale file would pose as today's discovery. A list
+# passed explicitly (discovered_path) is still read.
+NO_AGENT_INPUT = ("NO_AGENT_INPUT: the discovered-source list came from core/data_scout.py, deleted by "
+                  "C-FIX-1; the agents store no source list yet, so memory/discovered_data_sources.json "
+                  "is not read")
 
 
 def load_sources(path: pathlib.Path | None = None) -> tuple[list[dict], int]:
@@ -338,7 +345,8 @@ def all_sources(seed_path=None, discovered_path=None) -> tuple[list[dict], int]:
     # walks into a number — so that the refusal branch runs on every fetch.
     # De-duplicating on (axis, url) alone silently ate the broken one.
     merged, seen = [], set()
-    for src in list(seed) + load_discovered(discovered_path):
+    discovered = load_discovered(discovered_path) if discovered_path is not None else []
+    for src in list(seed) + discovered:
         key = (src.get("axis"), src.get("url"), src.get("path"))
         if key in seen:
             continue
@@ -890,6 +898,8 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
           f"{len(sources)} sources; pages ingested {pages['ingested']} (+{pages['statements_added']} statements), "
           f"same content {pages['skipped_same_content']}"
           f"{' — DRY RUN, nothing written' if dry_run else ''}")
+    if discovered_path is None:
+        print(f"[data_feed_reader] {NO_AGENT_INPUT}")
     net_sources = [s for s in sources if str(s.get("url", "")).lower().startswith(("http://", "https://"))]
     net_fail = [r for r in unreachable if r.get("network")
                 and str(r.get("url", "")).lower().startswith(("http://", "https://"))]
@@ -898,7 +908,8 @@ def run(sources_path=None, queue_dir=None, getter=None, dry_run=False,
     return {"ts": _now(), "sources": len(sources), "feeds": feeds,
             "carded": carded, "declared": carded, "stored": stored, "shadows": stored,
             "refusals": refusals, "unreachable": unreachable, "parked": parked, "cards": cards, "pages": pages,
-            "lifecycle": counts, "network_down": network_down}
+            "lifecycle": counts, "network_down": network_down,
+            "discovered": (f"read from {discovered_path}" if discovered_path is not None else NO_AGENT_INPUT)}
 
 
 def run_with_retry(runner, sleep=None) -> dict:

@@ -331,9 +331,10 @@ def test_the_declaration_carries_no_trust_level_of_its_own():
 def test_the_verifiers_list_did_not_grow():
     """VERIFIERS may BREAK inherited level. Adding a step there is a way to buy
     trust without earning it, so the list is pinned to what it was."""
+    # 2 Oct 2026: browser_scout and web_intelligence left with their deleted steps
+    # (C-FIX-1, Emil R43) - the list shrank, it did not grow.
     assert N.VERIFIERS == {"global_indicators", "sensorium_ingest",
-                           "browser_scout", "internet_intelligence",
-                           "web_intelligence"}
+                           "internet_intelligence"}
 
 
 # ---------------------------------------------------------------------------

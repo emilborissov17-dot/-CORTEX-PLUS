@@ -232,7 +232,9 @@ def _a_orient(base=None) -> dict:
 def _b_sense(base=None) -> dict:
     """What the collectors brought back, and what the source registry believes."""
     ev: dict = {}
-    web = _json("memory/web_intelligence/latest.json", base)
+    # C-FIX-1 2d: the deleted web collector's latest.json is not evidence of tonight.
+    _put(ev, "web_input", "NO_AGENT_INPUT")
+    web = None
     if isinstance(web, dict):
         _put(ev, "web_axes_covered", web.get("axes_covered"))
         _put(ev, "web_total_sources", web.get("total_sources"))

@@ -31,5 +31,68 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/C2.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "biodiversity species extinction",
+   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric forest_area_pct -> C2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "biodiversity loss ecosystem",
+   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric forest_area_pct -> C2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "biodiversity",
+   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric forest_area_pct -> C2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "biodiversity loss deforestation species extinction",
+   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric forest_area_pct -> C2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "biodiversity collapse habitat destruction root causes",
+   "axis": "ECOSYSTEMS_BIODIVERSITY_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric forest_area_pct -> C2.1 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "earth resources sustainability",
+   "axis": "PLANETARY_POTENTIAL_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric protected_terrestrial_area_pct -> C2.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "earth system resilience tipping points",
+   "axis": "PLANETARY_POTENTIAL_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric protected_terrestrial_area_pct -> C2.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "earth-observation",
+   "axis": "PLANETARY_POTENTIAL_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric protected_terrestrial_area_pct -> C2.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "planetary boundaries geoengineering tipping points",
+   "axis": "PLANETARY_POTENTIAL_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric protected_terrestrial_area_pct -> C2.5 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "planetary boundaries tipping points geoengineering",
+   "axis": "PLANETARY_POTENTIAL_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric protected_terrestrial_area_pct -> C2.5 (config/taxonomy_key_map.json)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

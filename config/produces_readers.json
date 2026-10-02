@@ -290,16 +290,6 @@
       ],
       "status": "glob"
     },
-    "memory/web_intelligence/latest.json": {
-      "phases": [
-        "B_SENSE"
-      ],
-      "readers": [
-        "_diag.py",
-        "_refresh_three_axes.py"
-      ],
-      "status": "UNVERIFIED"
-    },
     "news/news_latest.json": {
       "phases": [
         "B_SENSE"

@@ -35,5 +35,68 @@
  "skills": [],
  "plugins": [],
  "learned": "memory/agents/B4.json",
- "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only"
+ "_generated": "from config/taxonomy.json by core/agent_profiles.py; edit the agent fields only",
+ "seed_topics": [
+  {
+   "topic": "cities infrastructure urban development",
+   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "primary_metric urbanization_pct -> B4.6 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "urban infrastructure resilience",
+   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "primary_metric urbanization_pct -> B4.6 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "smart-city",
+   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "primary_metric urbanization_pct -> B4.6 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "smart cities urban planning infrastructure future",
+   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "primary_metric urbanization_pct -> B4.6 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "urban inequality housing crisis infrastructure gap",
+   "axis": "INFRASTRUCTURE_CITIES_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "primary_metric urbanization_pct -> B4.6 (config/taxonomy_key_map.json)"
+  },
+  {
+   "topic": "technology internet digital access",
+   "axis": "TECHNOLOGY_INFRA_REVIEW",
+   "from": "agents/internet/internet_agent.py GDELT_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "digital infrastructure access global",
+   "axis": "TECHNOLOGY_INFRA_REVIEW",
+   "from": "agents/internet/internet_agent.py ARXIV_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "distributed-systems",
+   "axis": "TECHNOLOGY_INFRA_REVIEW",
+   "from": "agents/internet/internet_agent.py GITHUB_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "digital divide 5G semiconductor tech infrastructure",
+   "axis": "TECHNOLOGY_INFRA_REVIEW",
+   "from": "agents/internet/internet_agent.py YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  },
+  {
+   "topic": "digital divide internet access inequality",
+   "axis": "TECHNOLOGY_INFRA_REVIEW",
+   "from": "youtube_intel.py AXIS_YOUTUBE_QUERIES",
+   "placed": "by name (judgment: the axis has no primary metric)"
+  }
+ ],
+ "_seed_topics": "hints for the maintenance rotation, never a fixed list of sources (R27): the axis queries the deleted collectors held (C-FIX-1 2c, 2 Oct 2026)"
 }

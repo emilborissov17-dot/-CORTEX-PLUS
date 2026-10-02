@@ -133,15 +133,9 @@ rem The reader goes FIRST: six machines wrote their failure honestly on 13 Sep
 
 rem 2026 and nobody read one of them. A log nobody reads is a log that is not kept.
 
-rem THE PANTRY FILLER. The night stopped fetching on 13 Sep 2026 and the cycle
-
-rem was the only thing writing news/<day>/, so without this the system goes blind
-
-rem to news from the next morning. Same work, at an hour the machine can hold it.
-
-rem It asks the same survival gate the cycle asks and refuses when that refuses.
-
-call :step "fill_pantry"           "%PY% tools\fill_pantry.py"                              no
+rem The pantry filler (tools/fill_pantry.py -> agents/internet/internet_agent.py: RSS,
+rem GitHub, arXiv, YouTube) was deleted by C-FIX-1, 2 Oct 2026 - Emil R43: news, data,
+rem information, podcasts, YouTube, radio reach this system ONLY through OpenClaw.
 
 call :step "morning_read"          "%PY% tools\morning_read.py"                              no
 
