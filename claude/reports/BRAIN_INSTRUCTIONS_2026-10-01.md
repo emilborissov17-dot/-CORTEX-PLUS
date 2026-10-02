@@ -2,7 +2,49 @@
 
 ## What does not work
 
-(Step 1 of C-BRAIN-1b commits the trial record first; this section is completed in Step 4.)
+1. **The searcher has no gateway.** The OpenClaw gateway (PID 12500, running since 1 Oct
+   13:18 local) listens on 127.0.0.1:18789 but answers nothing: `status` timed out after 60 s,
+   `start` and `stop` returned `gateway timeout after 30000ms` (2 Oct, 05:5x UTC). A fresh
+   `openclaw gateway run --force` refused: "Another gateway (pid 12500) already owns this state
+   directory". `openclaw gateway stop` warned "This stops the operator's running gateway service
+   … re-run with --force if you really mean it" — **not forced: stopping the operator's service
+   is Emil's call.** To close it: `openclaw gateway stop --force`, then start the gateway the
+   usual way. Until then every agents turn ends SEARCHER_DEAD and nothing is fetched.
+2. **Part 4 was not done.** The GLiNER2 trial needs 20 main-region sentences; no page carries a
+   region label, because the Part 3c relabel cannot open a page without the gateway (and its
+   1 Oct run was killed by the harness for low memory before writing anything). The old pages
+   have no stored HTML to label offline. No extractor is wired; `agreed.jsonl` does not exist;
+   `extractor_min_free_gb` (2.0) in config/turn_portion.json is read by nothing yet.
+3. **Part 3c was not done**: main/furniture/unknown counts and the before/after ten sentences
+   for "What actions can we take to avoid high-risk situations?" are missing. The "before" list
+   was captured (below); there is no "after".
+4. **TEXT A failed its trial (1/5)** and is not wired. Parents are narrowed only by TEXT C;
+   `none_why` stays null on every parent.
+5. **The children are no narrower than their parents.** The first live review made 4 children:
+   "which specific issues are most pressing?", "which high-risk situations can we avoid?",
+   "What specific knowledge should be increased to better understand complex systems?", and
+   "which measured environmental conditions worsened most in 2025, and where?" — the last is
+   TEXT C's own Example 2 copied word for word. None names a place, actor or period. They are
+   searchable and will be searched when the browser works.
+6. **What the brain is shown is furniture.** All five reviews were shown menu lines ("Skip to
+   main content", "Toggle navigation", "GET HELP NOW") — with no region labels, main cannot come
+   before furniture. TEXT B was then asked about those same lines: 20 asked, 3 accepted, 12
+   refused (mostly "an argument is the whole sentence"), 5 NONE, 0 unreadable, 114.2 s.
+7. **The needs question was not asked** in the live turn: all five sub-goals have an open
+   parent, so ASK_SKIPPED (2d as written). No parent can close except by a SATISFIED/WRONG_QUESTION
+   review, so the brain asks nothing new until one does.
+8. **Stale ledger text:** emit still writes a `NO_SEARCHER` row ("OpenClaw search not built
+   yet") for every new need; that sentence is false since C-TURN-1.
+9. **Two LABEL needs carry the identical question** (Kp index; two atoms, one text). The
+   re-wording of the five old "none" VERIFY needs into LABEL needs also emitted one new LABEL need.
+10. **`b1-peace-and-war` reported "stopped"** at the end of both agents turns while the gateway
+    was dead; `openclaw` reported the gateway timeout. Whether b1's browser was running at all
+    is UNVERIFIED.
+11. **Bug found and fixed in the run (2ec8300):** roles were given only in the brain's turn, so
+    the agents' turn that ran first took the five old general needs as searchable; the dead
+    browser stopped it before any query.
+12. **Seconds per need in the agents turn: not measured this run** (0 needs served). The
+    portion's 94.6 s/need is from 1 Oct 18:42–20:19 UTC.
 
 ## Part 0 — read-only findings (1 Oct 2026)
 
@@ -697,4 +739,204 @@ What the numbers do not show:
 * **TEXT C**: all five STILL_OPEN; four gave a narrower question, some still vague ("which
   specific issues are most pressing?"), one copied the example's question word for word
   ("which measured environmental conditions worsened most in 2025, and where?").
+
+
+## Part 2 — wired (f376de5, fix 2ec8300)
+
+`think(json_schema=…, exact=True)` sends the schema as `format`, temperature 0, the filled
+text verbatim, no fallback model. A reply that does not fit is UNREADABLE with its raw text,
+re-validated in `brain_needs.bound`, and counted on the board. A general need is a PARENT
+(never searched, never re-emitted → REPEAT); TEXT C reviews each open parent and each searched
+need, one call per question; STILL_OPEN + narrower question → CHILD (or REPEAT); the needs
+question only for sub-goals with no open parent. TEXT B one call per sentence, at most 20, with
+a head check and a whole-sentence check. Board row on 2 Oct (from the live ledger):
+`BRAIN NEEDS emitted 0 · served 0 · satisfied 0 · silence 0 · unreadable 0 · children 4 · repeat 0`.
+
+## Part 3 — wired (0624017); 3c not run
+
+HTML is stored beside the text (5 MB cap, HTML_TOO_LARGE); trafilatura labels each statement
+main or furniture at ingest (empty extraction → all main + MAIN_UNKNOWN); the reader puts a
+need's own statements first, main before furniture. `openclaw_search.py --relabel <need ids>`
+re-opens pages and writes memory/knowledge/regions.json. **3c: not run** (see "What does not
+work" 1–3). The pages behind the five brain needs: 29 need/url pairs, 12,095 statements
+(8,272 old finder, 3,598 OpenClaw, 225 one PDF). Counts main/furniture/unknown: none — every
+statement is "unknown".
+
+The first ten sentences shown for BN-e0f5781722 "What actions can we take to avoid high-risk
+situations?" **before** (1 Oct, from `brain_needs.linked_statements()`; 1,889 linked in all):
+
+```text
+1. [unknown] The first step in reducing problematic behaviours: Avoid high-risk situations which you can avoid - Dr. Patrick Keelan, Calgary Psychologist
+2. [unknown] Skip to content
+3. [unknown] Call Dr. Pat: (403) 324-1875
+4. [unknown] Search for:
+5. [unknown] MenuCounselling ServicesAbuse, Trauma & PTSD - Counselling
+6. [unknown] Addictions - Drugs | Alcohol | Gambling | More
+7. [unknown] Anger Management - Counselling
+8. [unknown] Anxiety - GAD | OCD | Phobias | More
+9. [unknown] Cognitive Behavioural Therapy - Canadian Certified CBT Therapist
+10. [unknown] Children & Teens - Specialized Approach
+```
+
+**After:** not available — no page was labelled.
+
+## Part 4 — NOT DONE
+
+Licences were printed on 1 Oct (Part 0 above). The trial script (GLiNER2 large on CPU with
+relation types from the vocabulary heads, then TEXT B, both through the same span / whole-
+sentence / head / engine-parse checks) is written but was not run: it selects only statements
+labelled "main", and there are none. Free RAM before a model load was therefore never printed.
+
+## Part 5 — wired (db68939)
+
+config/turn_portion.json: verify_per_turn 10, maintenance_cells_per_turn 5, embed_min_free_gb
+1.5, extractor_min_free_gb 2.0, each with its measurement. Rotation by last_served_utc;
+ENGINE_RESOLVED when a derivation stops firing (0 resolved in the live brain turn); no "none" in
+any question (0 of 78 open needs on 2 Oct); 6 LABEL needs; the 20:20 crash closed (a None
+argument never reaches the CLI; `open` without a tab id raises); SEARCHER_DEAD.
+
+## Part 6 — one alternation (C-BRAIN-1b step 3), loop left running
+
+Restarted 2 Oct 06:00:44 UTC (baton AGENTS seq 3, as left by TURN_STUCK). The embedding pass
+was restarted on the Part 5 code at 05:59 (the old one had already exited).
+
+| turn | started | ended | exit | cause | baton |
+|---|---|---|---|---|---|
+| agents seq 3 | 06:00:44 | 06:03:50 | 2 | SEARCHER_DEAD | AGENTS → BRAIN (seq 4) |
+| brain seq 4 | 06:03:50 | 06:07:45 | 0 | — | BRAIN → AGENTS (seq 5); loop stopped at its flag to fix 2ec8300 |
+| agents seq 5 | 06:09:14 | 06:12:19 | 2 | SEARCHER_DEAD | AGENTS → BRAIN (seq 6) |
+
+Confirmed from memory/turns_log.jsonl, memory/vertical_ledger.jsonl and memory/turns/:
+* **The baton moved** both ways (rows above), including on a named non-zero cause.
+* **The agents took a portion:** taken 0 served (the browser was dead at the first need);
+  **waited 49** (seq 3) and **44** (seq 5) VERIFY needs, logged WAITED; seconds 184.4 and 184.0.
+* **Both browser profiles were asked to stop** at the end of each agents turn:
+  `b1-peace-and-war: stopped`, `openclaw: gateway timeout` (see "What does not work" 10).
+* **The embedding pass waited:** 19 `EMBED_WAITING "the agents hold the baton"` rows in
+  logs/knowledge_embed_pass3.out.log, 05:59:21 → 06:11:58 UTC; none while the brain held it.
+* CAPTCHA 0, pages 0, statements gained 0 (no fetch possible).
+
+### Paste (unedited, from memory/turns/)
+
+#### agents_2026-10-02T060350Z.json
+
+summary: agents turn: 0 need(s) served (0 page(s), 0 CAPTCHA, 0 statement(s) gained); 49 waited; maintenance 0 cell(s); ended: SEARCHER_DEAD: OpenClaw browser profile openclaw is not running after one start
+cause: SEARCHER_DEAD: OpenClaw browser profile openclaw is not running after one start · seconds: 184.4 · waited: 49 · seconds per need: None
+browsers stopped: {'b1-peace-and-war': 'stopped', 'openclaw': "OpenClawFailed: openclaw browser stop failed: {'type': 'cli_error', 'message': 'gateway timeout after 30000ms\\nGateway target: ws://127.0.0.1:18789\\nSource: local loopback\\nConfig: C:\\\\Users\\\\emilb\\\\."}
+portion: {'verify_per_turn': 10, 'maintenance_cells_per_turn': 5, 'embed_min_free_gb': 1.5, 'extractor_min_free_gb': 2.0}
+maintenance: {'worked': 0, 'verdicts': []} · feeds: null · core restore: {'model': 'cortex-l1b-3b:latest', 'resident_before': True, 'reloaded': False, 'seconds': 0.0}
+
+
+#### brain_2026-10-02T060351Z.json
+
+summary: brain turn: 78 open need(s) (9 brain, 69 engine); space 132261 base / 143 derived
+cause: None · seconds: 233.4 · roles given: 5 · model skipped: None
+
+PARENT/NEED BN-6dddb2e609 (role parent): What are the most pressing issues to address?
+
+shown:
+```text
+- "Global Issues | United Nations"
+- "Skip to main content"
+- "Toggle navigation"
+- "Welcome to the United Nations"
+- "العربية"
+```
+TEXT C raw reply (7.8 s):
+```json
+{"verdict": "STILL_OPEN", "narrower_question": "which specific issues are most pressing?", "why": "the provided links and text do not specify any particular issues; they seem to be general UN pages."}
+```
+-> verdict STILL_OPEN · child BN-4cdfea1c2b · repeat False · unreadable None
+
+PARENT/NEED BN-580dae4f5e (role parent): How can we improve the conditions for life?
+
+shown:
+```text
+- "Improving Conditions in Life - Criminon International"
+- "Skip to content"
+- "GET HELP NOW"
+- "RELATED SITESABLE.ORG"
+- "NARCONON.ORG"
+```
+TEXT C raw reply (6.7 s):
+```json
+{"verdict": "STILL_OPEN", "narrower_question": "which measured environmental conditions worsened most in 2025, and where?", "why": "what came back does not provide specific information about which environmental conditions worsened; it only mentions sites related to improving life."}
+```
+-> verdict STILL_OPEN · child BN-6b3b68e0b0 · repeat False · unreadable None
+
+PARENT/NEED BN-1340065e41 (role parent): What knowledge should be increased to understand complex systems better?
+
+shown:
+```text
+- "The Opposite of Complex Isn't Simple."
+- "It's Isolated"
+- "LinkedIn respects your privacy"
+- "LinkedIn and 3rd parties use essential and non-essential cookies to provide, secure, analyze and improve our Services, and to show you relevant ads (including professional and job ads) on and off LinkedIn."
+- "Learn more in our Cookie Policy."
+```
+TEXT C raw reply (5.8 s):
+```json
+{"verdict": "STILL_OPEN", "narrower_question": "What specific knowledge should be increased to better understand complex systems?", "why": "The provided information does not specify the exact knowledge needed; it only mentions a general statement about complexity."}
+```
+-> verdict STILL_OPEN · child BN-86e46101a0 · repeat False · unreadable None
+
+PARENT/NEED BN-e0f5781722 (role parent): What actions can we take to avoid high-risk situations?
+
+shown:
+```text
+- "The first step in reducing problematic behaviours: Avoid high-risk situations which you can avoid - Dr. Patrick Keelan, Calgary Psychologist"
+- "Skip to content"
+- "Call Dr. Pat: (403) 324-1875"
+- "Search for:"
+- "MenuCounselling ServicesAbuse, Trauma & PTSD - Counselling"
+```
+TEXT C raw reply (5.2 s):
+```json
+{"verdict": "STILL_OPEN", "narrower_question": "which high-risk situations can we avoid?", "why": "the answers provide advice but do not list specific high-risk situations to avoid."}
+```
+-> verdict STILL_OPEN · child BN-2a6059699b · repeat False · unreadable None
+
+PARENT/NEED BN-1bdc390518 (role parent): How can we reduce the risk of wars and collapses in sustainable civilisation?
+
+shown:
+```text
+- "A "Sustainable Civilization""
+- "A "Sustainable Civilization""
+- "If we want to be a sustainable civilization we should know what one looks like."
+- "To help visualize it, consider a sustainable international space station?"
+- "It requires oxygen, food, and energy to support six people."
+```
+TEXT C raw reply (5.1 s):
+```json
+{"verdict": "STILL_OPEN", "narrower_question": null, "why": "what came back does not provide specific actions or solutions for reducing the risk of wars and collapses in sustainable civilization."}
+```
+-> verdict STILL_OPEN · child None · repeat None · unreadable None
+
+TEXT A: not called (failed its trial, not wired). Needs question: reply null · free sub-goals []
+
+emit: accepted 1, refused 0, repeats [], resolved 0, open 78
+
+symbols: asked 20, accepted 3, refused 12, NONE 5, unreadable 0, seconds 114.2
+
+- [f4610ff05368fff2267ac325] 'Global Issues | United Nations'
+  raw {"head": "says", "args": ["Global Issues | United Nations"]} -> REFUSED: an argument is the whole sentence
+- [8a96b9d8b949424f9ad1808a] 'Skip to main content'
+  raw {"head": "NONE", "args": []} -> NONE
+- [dda1c706401e60889ab15e8e] 'Toggle navigation'
+  raw {"head": "says", "args": ["toggle navigation"]} -> REFUSED: argument 'toggle navigation' is not a span of the sentence
+- [519575308f7903a6cb9d118a] 'Welcome to the United Nations'
+  raw {"head": "says", "args": ["Welcome to the United Nations"]} -> REFUSED: an argument is the whole sentence
+- [1268a27acdaa279230e9ea32] 'العربية'
+  raw {"head": "NONE", "args": []} -> NONE
+- [5c7c3bb94780fa9ba1acadf7] 'Improving Conditions in Life - Criminon International'
+  raw {"head": "says", "args": ["Improving Conditions in Life - Criminon International"]} -> REFUSED: an argument is the whole sentence
+- [def0f2a32660d3d6fd2364df] 'Skip to content'
+  raw {"head": "NONE", "args": []} -> NONE
+- [fef768103e16308c1cd86b58] 'GET HELP NOW'
+  raw {"head": "says", "args": ["GET HELP NOW"]} -> REFUSED: an argument is the whole sentence
+- [4fffd9a0333571831a389351] 'RELATED SITESABLE.ORG'
+  raw {"head": "NONE", "args": []} -> NONE
+- [07654b6576fcfbce9827c837] 'NARCONON.ORG'
+  raw {"head": "says", "args": ["NARCONON.ORG"]} -> REFUSED: an argument is the whole sentence
+
 
