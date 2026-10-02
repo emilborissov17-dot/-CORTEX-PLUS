@@ -364,3 +364,12 @@ def test_the_agents_turn_takes_its_needs_from_searchable():
     calls = {n.func.attr for n in ast.walk(ast.parse(src)) if isinstance(n, ast.Call)
              and isinstance(n.func, ast.Attribute)}
     assert "searchable" in calls
+
+
+def test_a_general_brain_need_without_a_role_is_not_searchable():
+    # 2 Oct 2026: roles were given only in the brain's turn, so the agents' turn that ran
+    # first took the five old general needs as searchable and queried them verbatim
+    old = {"id": "BN-old", "origin": "brain", "status": "OPEN", "question": "What should we know?",
+           "about": None, "from_line": "none"}
+    specific = {**old, "id": "BN-s", "about": {"place": "Syria", "actor": None, "period": "2026"}, "from_line": "L1"}
+    assert [n["id"] for n in bn.searchable([old, specific])] == ["BN-s"]

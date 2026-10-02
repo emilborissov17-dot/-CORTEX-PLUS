@@ -344,7 +344,11 @@ def is_general(n: dict) -> bool:
 
 
 def _is_parent(n: dict) -> bool:
-    return n.get("origin") == "brain" and n.get("role") == PARENT
+    """A brain need with no role yet (written before roles) is judged by the same
+    rule, so a turn that runs before adopt_roles never searches a general need."""
+    if n.get("origin") != "brain":
+        return False
+    return n.get("role") == PARENT or (not n.get("role") and is_general(n))
 
 
 def searchable(ns: list) -> list:

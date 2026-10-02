@@ -59,7 +59,8 @@ def t(tmp_path, monkeypatch):
          "premises": ["F-001"]},
         {"id": "BN-1", "origin": "brain", "status": "OPEN", "question": "How many refugees returned to Syria in 2026?",
          "about": {"place": "Syria", "actor": "UNHCR", "period": None}},
-        {"id": "BN-2", "origin": "brain", "status": "OPEN", "question": "nothing will be found here"},
+        {"id": "BN-2", "origin": "brain", "status": "OPEN", "question": "nothing will be found here",
+         "role": "child", "parent": "BN-0"},
         {"id": "BN-3", "origin": "brain", "status": "SATISFIED", "question": "closed"}]}
     (tmp_path / "needs.json").write_text(json.dumps(needs), encoding="utf-8")
     prof = tmp_path / "agents"
