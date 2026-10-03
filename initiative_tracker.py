@@ -617,7 +617,7 @@ def run() -> list[dict]:
 
         # A-3 (c): NO action_plan at creation. It is generated once, in advance_status(),
         # the moment a human moves the initiative to IN_PROGRESS. Until then a plan
-        # is three Groq calls a night for a record nobody reads.
+        # is three model calls a night for a record nobody reads.
         action_plan = existing_action_plan
 
         record: dict = {

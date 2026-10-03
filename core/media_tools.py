@@ -8,7 +8,7 @@ WHY THIS EXISTS. Three nights of cycle logs (1-3 Sep 2026) carry, per video:
     WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is
              enabled by default; to use another runtime add --js-runtimes RUNTIME[:PATH]
 Neither binary is installed on the machine, and the consequences are not cosmetic:
-  - attempt 4 (Groq Whisper) downloads audio with `yt-dlp -x --audio-format mp3`.
+  - attempt 4 (the Whisper leg, deleted in C-CLOUD-1) downloaded audio with `yt-dlp -x --audio-format mp3`.
     `-x` IS an ffmpeg post-processor. Without ffmpeg the download exits non-zero,
     internet_agent._get_transcript_whisper returned None in silence, and the Whisper leg
     - the only one immune to the subtitle-endpoint 429 - has never produced a transcript.

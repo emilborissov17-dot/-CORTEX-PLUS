@@ -61,7 +61,9 @@ def test_reply_facts_read_every_dialect():
     assert (o["finish_reason"], o["reply_chars"], o["prompt_tokens"], o["completion_tokens"]) == ("stop", 3, 3, 4)
     l = f({"message": {"content": "abcd"}, "done_reason": "stop", "prompt_eval_count": 7, "eval_count": 8})
     assert (l["finish_reason"], l["reply_chars"], l["prompt_tokens"], l["completion_tokens"]) == ("stop", 4, 7, 8)
-    assert f({"text": "hello"})["reply_chars"] == 5
+    # C-CLOUD-2: the Whisper and Gemini reply shapes went with their providers
+    assert f({"text": "hello"}) == {}
+    assert "thoughts_tokens" not in f({"choices": [{}], "usage": {"thoughtsTokenCount": 9}})
 
 
 # Backs: core/llm_door.py, the TIMEOUTS FROM MEASUREMENT comment (recompute at boot).

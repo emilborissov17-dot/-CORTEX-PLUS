@@ -91,7 +91,6 @@ def _facts_from_dict(d) -> dict:
                                      or msg.get("reasoning_content") or ch.get("text") or ""))
         u = d.get("usage") or {}
         out["prompt_tokens"], out["completion_tokens"] = u.get("prompt_tokens"), u.get("completion_tokens")
-        out["thoughts_tokens"] = u.get("thoughtsTokenCount")
     elif "message" in d or "response" in d or "done_reason" in d:   # Ollama
         out["finish_reason"] = d.get("done_reason")
         out["reply_chars"] = len(str((d.get("message") or {}).get("content") or d.get("response") or ""))
@@ -100,8 +99,6 @@ def _facts_from_dict(d) -> dict:
         for k in ("load_duration", "prompt_eval_duration", "eval_duration"):
             if isinstance(d.get(k), (int, float)):
                 out[k + "_s"] = round(d[k] / 1e9, 3)
-    elif "text" in d:                                      # Whisper transcription
-        out["reply_chars"] = len(str(d.get("text") or ""))
     return {k: v for k, v in out.items() if v is not None}
 
 
@@ -126,8 +123,6 @@ def _tag(d, backend: str, model: str | None):
                 mark(msg, k)
     mark(d.get("message"), "content")                      # Ollama chat
     mark(d, "response")                                    # Ollama generate
-    if "text" in d and not d.get("choices"):               # Whisper
-        mark(d, "text")
     return d
 
 
