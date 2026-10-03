@@ -1,0 +1,407 @@
+diff --git a/config/engine_guard.json b/config/engine_guard.json
+index ddcd332..9cd5a04 100644
+--- a/config/engine_guard.json
++++ b/config/engine_guard.json
+@@ -1,4 +1,16 @@
+ {
+   "threshold": 400,
+-  "_threshold_why": "Kimi round 74 K1, sealed: escalate on real spaces over ~400 atoms of one shape. hyperon 0.2.10 on this machine (C-GUARD-1 Step 1, 3 Oct 2026): correct at 300 atoms of one shape, PANIC at 500, wrong binding at 5,000 / 20,000 / 130,000. A shape at or over this count refuses the run before the engine sees it (core/space.derive)."
++  "_threshold_why": "Kimi round 74 K1, sealed: escalate on real spaces over ~400 atoms of one shape. hyperon 0.2.10 on this machine (C-GUARD-1 Step 1, 3 Oct 2026): correct at 300 atoms of one shape, PANIC at 500, wrong binding at 5,000 / 20,000 / 130,000. A shape at or over this count refuses the run before the engine sees it (core/space.derive).",
++  "canary_sizes": [
++    150,
++    300,
++    390
++  ],
++  "_canary_why": "Kimi round 74 K1: known-answer canaries in the same space, before and after the rules, at sizes UNDER the threshold (each family has k atoms plus one second match). A family at or over the threshold is refused when the config is read.",
++  "probe_sizes": [
++    500,
++    5000,
++    20000
++  ],
++  "_probe_why": "Kimi round 74 K1: the defect's known sizes. Run in their own process, outside the real space, once per hyperon version; PROBE_DEFECT_ABSENT means the build changed and does not turn the guard green by itself."
+ }
+diff --git a/core/space.py b/core/space.py
+index 061fef9..78af81f 100644
+--- a/core/space.py
++++ b/core/space.py
+@@ -283,13 +283,14 @@ def parse(expr: str):
+     return one()
+ 
+ 
+-def engine_program(base: str, proposed: str, rules: str) -> str:
++def engine_program(base: str, proposed: str, rules: str, canary_atoms: str = "", canary_before: str = "",
++                   canary_after: str = "") -> str:
+     """What hyperon runs: base WITHOUT its (statement ...) lines, the brain's
+     proposed expressions, the rules. No rule reads a statement line, and with the
+     labels written there were ~130k of them: base.metta held 132,261 expressions
+     and hyperon 0.2.10 panicked (1 Oct 2026, 18:38). base.metta keeps them all."""
+     kept = [l for l in base.splitlines() if not l.startswith("(statement ")]
+-    return "\n".join(kept) + "\n" + proposed + "\n" + rules
++    return "\n".join(["\n".join(kept), canary_atoms, proposed, canary_before, rules, canary_after]) + "\n"
+ 
+ 
+ # ── the guard (C-GUARD-1, Kimi round 74 K1) ────────────────────────────────
+@@ -298,6 +299,122 @@ def guard_threshold(path=None) -> int:
+     return int(json.loads(Path(path or GUARD_CONFIG).read_text(encoding="utf-8"))["threshold"])
+ 
+ 
++def guard_config(path=None) -> dict:
++    d = json.loads(Path(path or GUARD_CONFIG).read_text(encoding="utf-8"))
++    cfg = {"threshold": int(d["threshold"]), "canary_sizes": [int(k) for k in d["canary_sizes"]],
++           "probe_sizes": [int(k) for k in d["probe_sizes"]]}
++    if any(k + 1 >= cfg["threshold"] for k in cfg["canary_sizes"]):
++        raise ValueError(f"a canary family of {cfg['canary_sizes']} (+1 second match) reaches the threshold "
++                         f"{cfg['threshold']}")
++    return cfg
++
++
++_load_guard = guard_config
++
++
++# ── known-answer canaries (C-GUARD-1 Step 3a) ───────────────────────────────
++# Each family copies a real shape under its own head, so it never feeds a rule and never adds to
++# a real shape's count: k atoms plus one more that shares the first argument of atom 7. The query
++# on that argument has exactly two answers.
++CANARY_SIZES = (150, 300, 390)
++
++
++def _canary_families(sizes=CANARY_SIZES) -> list:
++    fams = []
++    for k in sizes:
++        fams.append({"head": f"canary-obs-{k}", "k": k,
++                     "atom": lambda h, i, p, v: f'({h} "k{i}" "C0" "key" "{p}" "2023" "{v}" "u" "src")',
++                     "extra": ("P107", "v507"),
++                     "query": lambda h: f'({h} "k7" $a $b $p $c $v $d $e)', "want": [("P7", "v7"), ("P107", "v507")]})
++        fams.append({"head": f"canary-sub-{k}", "k": k,
++                     "atom": lambda h, i, p, v: f'({h} "s{i}" "{v}")',
++                     "extra": ("-", "c107"),
++                     "query": lambda h: f'({h} "s7" $v)', "want": [("-", "c7"), ("-", "c107")]})
++    return fams
++
++
++def canary_program(sizes=CANARY_SIZES) -> tuple:
++    atoms, before, after = [], [], []
++    for f in _canary_families(sizes):
++        h = f["head"]
++        if f["head"].startswith("canary-obs"):
++            atoms += [f["atom"](h, i, f"P{i}", f"v{i}") for i in range(f["k"])]
++        else:
++            atoms += [f["atom"](h, i, "-", f"c{i}") for i in range(f["k"])]
++        atoms.append(f["atom"](h, 7, *f["extra"]))
++        for phase, out in (("before", before), ("after", after)):
++            pv = "$p" if h.startswith("canary-obs") else '"-"'
++            out.append(f'!(match &self {f["query"](h)} (canary-hit "{h}" "{phase}" {pv} $v))')
++    return "\n".join(atoms), "\n".join(before), "\n".join(after)
++
++
++def expected_canary_hits(sizes=CANARY_SIZES) -> list:
++    return [f'(canary-hit "{f["head"]}" "{phase}" "{p}" "{v}")'
++            for f in _canary_families(sizes) for phase in ("before", "after") for p, v in f["want"]]
++
++
++def check_canaries(raw: list, sizes=CANARY_SIZES) -> dict:
++    """{family: problem} for every family whose answers differ from the known ones, in either phase."""
++    got: dict = {}
++    for e in raw:
++        if e.startswith("(canary-hit"):
++            x = parse(e)
++            got.setdefault((x[1], x[2]), []).append((str(x[3]), str(x[4])))
++    bad = {}
++    for f in _canary_families(sizes):
++        want = sorted(f["want"])
++        for phase in ("before", "after"):
++            have = sorted(got.get((f["head"], phase), []))
++            if have != want:
++                bad[f"{f['head']} {phase}"] = f"got {have}, want {want}"
++    return bad
++
++
++# ── the probes (C-GUARD-1 Step 3b): the defect itself, in its own process ───
++_PROBE = (
++    "import sys\n"
++    "from hyperon import MeTTa\n"
++    "k = int(sys.argv[1]); m = MeTTa(); s = m.space()\n"
++    "for i in range(k):\n"
++    "    s.add_atom(m.parse_single('(obs k%d P%d y2023 v%d)' % (i, i, i)))\n"
++    "s.add_atom(m.parse_single('(obs k7 P107 y2023 v507)'))\n"
++    "print(sorted(str(a) for a in m.run('!(match &self (obs k7 $p y2023 $v) (hit $p $v))')[0]))\n")
++
++
++def probe_verdict(returncode, stdout: str) -> str:
++    if returncode != 0:
++        return "PANIC"
++    return "CORRECT" if stdout.strip() == "['(hit P107 v507)', '(hit P7 v7)']" else "WRONG"
++
++
++def run_probe(k: int, timeout: int = 60) -> str:
++    try:
++        p = subprocess.run([str(SIDECAR_PY), "-c", _PROBE, str(k)], capture_output=True, text=True,
++                           encoding="utf-8", errors="replace", timeout=timeout)
++    except subprocess.TimeoutExpired:
++        return "TIMEOUT"
++    return probe_verdict(p.returncode, p.stdout.strip().splitlines()[-1] if p.stdout.strip() else "")
++
++
++def hyperon_version() -> str:
++    found = sorted((REPO / "venv312_metta" / "Lib" / "site-packages").glob("hyperon-*.dist-info"))
++    return found[-1].name[len("hyperon-"):-len(".dist-info")] if found else "unknown"
++
++
++def _probes(d: Path, sizes, probe: Optional[Callable]) -> dict:
++    ver = hyperon_version()
++    for row in reversed(_jsonl(d / "guard_log.jsonl")):
++        if row.get("probe"):
++            if row["probe"].get("hyperon") == ver:
++                return {**row["probe"], "read_from": row.get("ts")}
++            break
++    res = {str(k): (probe or run_probe)(k) for k in sizes}
++    vals = set(res.values())
++    outcome = ("PROBE_DEFECT_PRESENT" if vals & {"PANIC", "WRONG"} else
++               "PROBE_DEFECT_ABSENT" if vals == {"CORRECT"} else "PROBE_INCONCLUSIVE")
++    return {"hyperon": ver, "results": res, "outcome": outcome}
++
++
+ def shape_counts(program: str) -> dict:
+     """Atoms per shape ("<head>/<arity>") among the top-level expressions of the program;
+     `!` commands are not atoms, comment lines are skipped."""
+@@ -339,24 +456,42 @@ def _guard_log(d: Path, row: dict) -> None:
+         f.write(json.dumps(row, ensure_ascii=False) + "\n")
+ 
+ 
+-def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> dict:
++def derive(paths=None, engine: Optional[Callable] = None, guard_config=None,
++           probe: Optional[Callable] = None) -> dict:
+     d = Path(_p(paths, "dir"))
+     base = (d / "base.metta").read_text(encoding="utf-8")
+     proposed = Path(_p(paths, "proposed"))
+     prop = proposed.read_text(encoding="utf-8") if proposed.exists() else ""
+     rules = Path(_p(paths, "rules")).read_text(encoding="utf-8")
+-    program = engine_program(base, prop, rules)
+-    threshold = guard_threshold(guard_config)
++    cfg = _load_guard(guard_config)
++    threshold = cfg["threshold"]
++    c_atoms, c_before, c_after = canary_program(cfg["canary_sizes"])
++    program = engine_program(base, prop, rules, c_atoms, c_before, c_after)
+     counts = shape_counts(program)
+-    top = [[s, c] for s, c in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:5]]
++    top = [[s, c] for s, c in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
++           if not s.startswith("canary-")][:5]
+     over = shapes_over(counts, threshold)
+     if over:
+         why = "; ".join(f"shape {s} has {counts[s]} atoms" for s in over) + f" (threshold {threshold})"
+         _guard_log(d, {"state": "RED", "cause": "ENGINE_THRESHOLD", "why": why, "threshold": threshold, "shapes": top})
+         raise SpaceEngineFailed("ENGINE_THRESHOLD: " + why, cause="ENGINE_THRESHOLD")
++    probes = _probes(d, cfg["probe_sizes"], probe)
+     t0 = time.time()
+-    raw = (engine or hyperon_engine)(program)
++    try:
++        raw = (engine or hyperon_engine)(program)
++    except SpaceEngineFailed as exc:
++        _guard_log(d, {"state": "RED", "cause": "ENGINE_CANARY_FAILED", "why": f"the engine did not finish: {exc}",
++                       "threshold": threshold, "shapes": top, "probe": probes})
++        raise SpaceEngineFailed(f"ENGINE_CANARY_FAILED: the engine did not finish: {exc}",
++                                cause="ENGINE_CANARY_FAILED") from exc
+     secs = round(time.time() - t0, 2)
++    bad = check_canaries(raw, cfg["canary_sizes"])
++    if bad:
++        why = "; ".join(f"canary {k}: {v}" for k, v in sorted(bad.items()))
++        _guard_log(d, {"state": "RED", "cause": "ENGINE_CANARY_FAILED", "why": why, "threshold": threshold,
++                       "shapes": top, "probe": probes})
++        raise SpaceEngineFailed("ENGINE_CANARY_FAILED: " + why, cause="ENGINE_CANARY_FAILED")
++    canaries = {f"{f['head']}": "ok" for f in _canary_families(cfg["canary_sizes"])}
+     seen, derived = set(), []
+     for e in raw:
+         if not e.startswith("("):
+@@ -387,9 +522,9 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) ->
+     counts = {}
+     for x in derived:
+         counts[x[0]] = counts.get(x[0], 0) + 1
+-    _guard_log(d, {"state": "GREEN", "threshold": threshold, "shapes": top})
++    _guard_log(d, {"state": "GREEN", "threshold": threshold, "shapes": top, "canaries": canaries, "probe": probes})
+     return {"derived": len(derived), "by_rule": counts, "seconds": secs, "expressions": derived,
+-            "shapes": top, "threshold": threshold}
++            "shapes": top, "threshold": threshold, "canaries": canaries, "probe": probes}
+ 
+ 
+ def _canon(x):
+diff --git a/test/test_engine_guard.py b/test/test_engine_guard.py
+index d76a961..2f1ea4c 100644
+--- a/test/test_engine_guard.py
++++ b/test/test_engine_guard.py
+@@ -27,13 +27,15 @@ def _paths(tmp_path, base, threshold=400):
+     (d / "base.metta").write_text(base, encoding="utf-8")
+     (tmp_path / "rules.metta").write_text("!(match &self (stale $a) (stale $a))\n", encoding="utf-8")
+     cfg = tmp_path / "engine_guard.json"
+-    cfg.write_text(json.dumps({"threshold": threshold}), encoding="utf-8")
++    cfg.write_text(json.dumps({"threshold": threshold, "canary_sizes": [150, 300, 390],
++                               "probe_sizes": [500, 5000, 20000]}), encoding="utf-8")
+     return {"dir": d, "rules": tmp_path / "rules.metta", "proposed": tmp_path / "none.metta"}, cfg
+ 
+ 
+-def _derive(tmp_path, base, threshold=400, engine=None):
++def _derive(tmp_path, base, threshold=400, engine=None, probe=None):
+     paths, cfg = _paths(tmp_path, base, threshold)
+-    return sp.derive(paths, engine=engine or (lambda prog: []), guard_config=cfg)
++    return sp.derive(paths, engine=engine or (lambda prog: sp.expected_canary_hits()), guard_config=cfg,
++                     probe=probe or (lambda k: "PANIC"))
+ 
+ 
+ # ── 2. the count per shape ──────────────────────────────────────────────────
+@@ -84,3 +86,106 @@ def test_mutation_a_threshold_off_by_one_would_let_400_through():
+     assert sp.shapes_over({"obs/8": 400}, 400) == ["obs/8"]
+     off_by_one = [s for s, c in {"obs/8": 400}.items() if c > 400]
+     assert off_by_one == [], "the strict comparison passes 400 — the guard must not be written that way"
++
++
++# ── 3a. known-answer canaries, before and after the rules ───────────────────
++def _ok(prog):
++    """An injected engine that answers every canary exactly."""
++    return sp.expected_canary_hits()
++
++
++def _probe_stub(k):
++    return "PANIC"
++
++
++def test_canaries_sit_in_the_same_program_under_the_threshold(tmp_path):
++    sent = []
++    _derive(tmp_path, _obs(3), engine=lambda prog: sent.append(prog) or _ok(prog))
++    counts = sp.shape_counts(sent[0])
++    fams = {s: c for s, c in counts.items() if s.startswith("canary-")}
++    assert fams and max(fams.values()) < 400
++    assert set(fams) == {f"canary-obs-{k}/8" for k in (150, 300, 390)} | {f"canary-sub-{k}/2" for k in (150, 300, 390)}
++    assert sent[0].index("(canary-hit") < sent[0].index("(stale $a)") < sent[0].rindex("(canary-hit")
++
++
++def test_clean_canaries_let_the_run_through(tmp_path):
++    r = _derive(tmp_path, _obs(3), engine=_ok)
++    assert set(r["canaries"].values()) == {"ok"}
++
++
++def test_a_wrong_pair_stops_the_run(tmp_path):
++    def wrong(prog):
++        return [h.replace('"v507"', '"k849"') for h in _ok(prog)]
++    with pytest.raises(sp.SpaceEngineFailed, match="canary") as exc:
++        _derive(tmp_path, _obs(3), engine=wrong)
++    assert exc.value.cause == "ENGINE_CANARY_FAILED"
++    assert not (tmp_path / "space" / "derived.metta").exists()
++
++
++def test_a_missing_hit_stops_the_run(tmp_path):
++    def missing(prog):
++        hits = _ok(prog)
++        return hits[1:]
++    with pytest.raises(sp.SpaceEngineFailed) as exc:
++        _derive(tmp_path, _obs(3), engine=missing)
++    assert exc.value.cause == "ENGINE_CANARY_FAILED"
++
++
++def test_a_difference_between_before_and_after_stops_the_run(tmp_path):
++    def after_differs(prog):
++        return [h.replace('"after" "P107"', '"after" "P108"') for h in _ok(prog)]
++    with pytest.raises(sp.SpaceEngineFailed) as exc:
++        _derive(tmp_path, _obs(3), engine=after_differs)
++    assert exc.value.cause == "ENGINE_CANARY_FAILED"
++
++
++def test_a_panic_of_the_engine_stops_the_run(tmp_path):
++    def panic(prog):
++        raise sp.SpaceEngineFailed("hyperon exit 3221226505: thread caused non-unwinding panic. aborting.")
++    with pytest.raises(sp.SpaceEngineFailed) as exc:
++        _derive(tmp_path, _obs(3), engine=panic)
++    assert exc.value.cause == "ENGINE_CANARY_FAILED"
++    log = (tmp_path / "space" / "guard_log.jsonl").read_text(encoding="utf-8").splitlines()
++    assert json.loads(log[-1])["state"] == "RED"
++
++
++def test_canary_sizes_must_stay_under_the_threshold(tmp_path):
++    cfg = tmp_path / "g.json"
++    cfg.write_text(json.dumps({"threshold": 300, "canary_sizes": [150, 300]}), encoding="utf-8")
++    with pytest.raises(ValueError):
++        sp.guard_config(cfg)
++
++
++# ── 3b. the probes, outside the real space ──────────────────────────────────
++def test_a_probe_that_finds_the_defect_is_recorded_present(tmp_path):
++    r = _derive(tmp_path, _obs(3), engine=_ok, probe=lambda k: "PANIC" if k == 500 else "WRONG")
++    assert r["probe"]["outcome"] == "PROBE_DEFECT_PRESENT"
++
++
++def test_a_probe_answering_correctly_is_recorded_absent_and_does_not_decide_the_state(tmp_path):
++    r = _derive(tmp_path, _obs(3), engine=_ok, probe=lambda k: "CORRECT")
++    assert r["probe"]["outcome"] == "PROBE_DEFECT_ABSENT"
++
++
++def test_the_probe_runs_once_per_hyperon_version(tmp_path, monkeypatch):
++    calls = []
++    monkeypatch.setattr(sp, "hyperon_version", lambda: "0.2.10")
++    for _ in range(2):
++        _derive(tmp_path, _obs(3), engine=_ok, probe=lambda k: calls.append(k) or "PANIC")
++    assert calls == [500, 5000, 20000]
++    monkeypatch.setattr(sp, "hyperon_version", lambda: "0.2.11")
++    _derive(tmp_path, _obs(3), engine=_ok, probe=lambda k: calls.append(k) or "CORRECT")
++    assert calls == [500, 5000, 20000] * 2
++
++
++def test_the_real_probe_reads_a_wrong_binding_and_a_panic():
++    assert sp.probe_verdict(0, "['(hit P107 v507)', '(hit P7 v7)']") == "CORRECT"
++    assert sp.probe_verdict(0, "['(hit P107 k849)', '(hit P7 v7)']") == "WRONG"
++    assert sp.probe_verdict(3221226505, "") == "PANIC"
++
++
++# ── mutations ───────────────────────────────────────────────────────────────
++def test_mutation_without_the_canary_check_a_wrong_pair_would_pass(tmp_path, monkeypatch):
++    monkeypatch.setattr(sp, "check_canaries", lambda raw: {})
++    r = _derive(tmp_path, _obs(3), engine=lambda prog: [h.replace('"v507"', '"k849"') for h in _ok(prog)])
++    assert r["derived"] == 0, "without the check the wrong pair goes through — the check is the guard"
+diff --git a/test/test_space.py b/test/test_space.py
+index 946d7a2..004a25e 100644
+--- a/test/test_space.py
++++ b/test/test_space.py
+@@ -44,7 +44,12 @@ def _derive(tmp_path, base: str, rules: str = RULES) -> list:
+     (d / "base.metta").write_text(base, encoding="utf-8")
+     (tmp_path / "rules.metta").write_text(rules, encoding="utf-8")
+     paths = {"dir": d, "rules": tmp_path / "rules.metta", "proposed": tmp_path / "none.metta"}
+-    return sp.derive(paths)["expressions"]
++    return sp.derive(paths, probe=_probe_stub)["expressions"]
++
++
++def _probe_stub(k):
++    """C-GUARD-1: the probes are judged in test_engine_guard; here they are not run."""
++    return "PANIC"
+ 
+ 
+ def _heads(xs, head):
+@@ -167,7 +172,8 @@ def test_a_failing_engine_raises_and_there_is_no_fallback(tmp_path):
+     def broken(program):
+         raise sp.SpaceEngineFailed("hyperon exit 1")
+     with pytest.raises(sp.SpaceEngineFailed):
+-        sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"}, engine=broken)
++        sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"}, engine=broken,
++                  probe=_probe_stub)
+ 
+ 
+ def test_mutation_a_swallowing_engine_would_hide_the_failure(tmp_path):
+@@ -175,8 +181,11 @@ def test_mutation_a_swallowing_engine_would_hide_the_failure(tmp_path):
+     d.mkdir()
+     (d / "base.metta").write_text("", encoding="utf-8")
+     (tmp_path / "r.metta").write_text("", encoding="utf-8")
+-    r = sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"}, engine=lambda p: [])
+-    assert r["derived"] == 0, "a swallowing engine returns nothing — which is why derive() must not catch"
++    # C-GUARD-1: a swallowing engine returns no canary answers either, so the guard now stops it
++    with pytest.raises(sp.SpaceEngineFailed) as exc:
++        sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"},
++                  engine=lambda p: [], probe=_probe_stub)
++    assert exc.value.cause == "ENGINE_CANARY_FAILED"
+ 
+ 
+ def test_build_writes_every_family_with_provenance(tmp_path, monkeypatch):
+@@ -231,7 +240,7 @@ def test_statement_lines_stay_in_base_but_are_not_sent_to_the_engine(tmp_path):
+                                   encoding="utf-8")
+     (tmp_path / "r.metta").write_text("", encoding="utf-8")
+     sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"},
+-              engine=lambda prog: sent.append(prog) or [])
++              engine=lambda prog: sent.append(prog) or sp.expected_canary_hits(), probe=_probe_stub)
+     assert "(obs " in sent[0] and "(statement " not in sent[0]
+     assert "(statement " in (d / "base.metta").read_text(encoding="utf-8")
+ 
