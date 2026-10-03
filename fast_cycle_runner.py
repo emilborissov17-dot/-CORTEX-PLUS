@@ -1421,9 +1421,6 @@ def _check_dependencies() -> bool:
 
     # 1. Проверка на ключове
     key_levels = {
-        "GROQ_API_KEY":       "thinking_path",
-        "OPENROUTER_API_KEY": "thinking_path",
-        "GEMINI_API_KEY":     "thinking_path",
         "YOUTUBE_API_KEY":    "optional",
         "NASA_API_KEY":       "optional",
     }
@@ -1451,46 +1448,8 @@ def _check_dependencies() -> bool:
         checks["local_brain"] = {"ok": False, "error": f"{type(_oe).__name__}: {_oe}"[:140]}
         print(f"[DEP_CHECK] FAIL    local_brain: {type(_oe).__name__}")
 
-    # 2. Тестов call към Groq chat — директна HTTP заявка с requests.
-    #    429 (rate limit) = ключът е валиден, API достъпно → третираме като OK.
-    #    Не викаме call_groq() за да не задействаме 60s cooldown в главния цикъл.
-    groq_key = os.environ.get("GROQ_API_KEY", "")
-    if groq_key:
-        try:
-            import requests as _req
-            from core.groq_backend import GROQ_API_URL, GROQ_MODEL
-            from core import llm_door
-            r = llm_door.post(
-                "dependency_check:groq_ping", "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text="ping",
-                headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
-                json={"model": GROQ_MODEL, "messages": [{"role": "user", "content": "ping"}], "max_tokens": 3},
-                timeout=15,
-            )
-            # 200 = success, 429 = rate limited but key is valid and endpoint reachable
-            if r.status_code in (200, 429):
-                checks["groq_chat"] = {"ok": True, "http": r.status_code}
-                print(f"[DEP_CHECK] OK      groq_chat (HTTP {r.status_code})")
-            else:
-                checks["groq_chat"] = {"ok": False, "error": f"HTTP {r.status_code}"}
-                print(f"[DEP_CHECK] FAIL    groq_chat: HTTP {r.status_code} "
-                      f"(не е фатално — има други пътища)")
-                if "GROQ_API_KEY" in _paths:
-                    _paths.remove("GROQ_API_KEY")
-        except Exception as e:
-            checks["groq_chat"] = {"ok": False, "error": str(e)[:150]}
-            print(f"[DEP_CHECK] FAIL    groq_chat: {e} (не е фатално)")
-            if "GROQ_API_KEY" in _paths:
-                _paths.remove("GROQ_API_KEY")
-    else:
-        checks["groq_chat"] = {"ok": False, "error": "no key"}
-
-    # 3. Groq Whisper — same key as groq_chat; ако chat мина, Whisper ще мине също
-    if checks.get("groq_chat", {}).get("ok"):
-        checks["groq_whisper"] = {"ok": True, "note": "key verified via groq_chat"}
-        print("[DEP_CHECK] OK      groq_whisper (key verified via groq_chat)")
-    else:
-        checks["groq_whisper"] = {"ok": False, "note": "skipped — groq_chat failed"}
-        print("[DEP_CHECK] SKIP    groq_whisper (groq_chat failed)")
+    # C-CLOUD-1 (3 Oct 2026, R45): the Groq chat/Whisper pings are gone with the outside models;
+    # the local model above is the one path to thinking.
 
     # ЕДИНСТВЕНОТО фатално условие: нито един път до мислене.
     critical_ok = bool(_paths)

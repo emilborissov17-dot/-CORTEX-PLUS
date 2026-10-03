@@ -40,19 +40,15 @@ NOT_A_GENERATION = {
     ("core/aggressive_cleanup.py", "release_ollama"): "keep_alive=0 unload - residency control",
     ("core/interval_head.py", "embed"): "embedding, not generation",
     ("core/interval_head.py", "_selftest"): "embedding endpoint ping",
-    ("memory/autonomic_pulse.py", "_measure"): "connectivity GET of api.groq.com, no prompt",
 }
 
 OUT_OF_SCOPE_DEBT: dict = {
     'experiments/pulse/local_model.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026) - the same _local() moved verbatim from the deleted experiments/browser_scout/autonomous_scout.py (C-FIX-1, 2 Oct 2026)",
     'experiments/dreams/dream.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
-    'experiments/kimi_duel/consult.py': "3 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
-    'experiments/kimi_duel/duel.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'experiments/prophecy/goal_prophecy.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'experiments/pulse/self_sense.py': "2 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'experiments/selfcode/selfcode_loop.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'scripts/_cuda_churn_probe.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
-    'scripts/_probe_models.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'scripts/test_local_brain.py': "2 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'tools/first_bet.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",
     'tools/transfer_test.py': "1 direct call(s); outside the cycle, not converted (task #19 b, 24 Sep 2026)",

@@ -219,14 +219,14 @@ def _propose_dependency_fixes() -> list:
                 "generated_by":      "SELF_OBSERVER",
             })
         # Неуспешен connectivity тест
-        if "ok" in info and not info["ok"] and name in ("groq_chat", "groq_whisper"):
+        if "ok" in info and not info["ok"] and name == "local_brain":
             error = info.get("error", info.get("note", "unknown"))[:100]
             proposals.append({
                 "component":         "DEPENDENCY_CHECK",
                 "problem":           f"{name} тест неуспешен: {error}",
                 "solution":          (
-                    "Проверете GROQ_API_KEY на https://console.groq.com. "
-                    "Ако ключът е валиден — проверете мрежова свързаност към api.groq.com."
+                    "Проверете локалния модел (Ollama на localhost:11434): "
+                    "`ollama ps` и `ollama list`."
                 ),
                 "measurable_goal":   f"dependency_check_latest.json checks.{name}.ok == true",
                 "root_cause":        "DEPENDENCY_CHECK / network or invalid key",
@@ -309,7 +309,7 @@ def run():
             if llm_error_streak >= MAX_LLM_RETRIES:
                 print(f"[SELF_OBSERVER] ⚠️ ESCALATION: {MAX_LLM_RETRIES} поредни LLM грешки — спирам цикъла.")
                 _save_assessment(
-                    f"ESCALATION: LLM недостъпен след {MAX_LLM_RETRIES} опита. Проверете GROQ_API_KEY / мрежа.",
+                    f"ESCALATION: LLM недостъпен след {MAX_LLM_RETRIES} опита. Проверете локалния модел (Ollama).",
                     web_intel,
                 )
                 escalated = True

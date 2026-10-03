@@ -107,8 +107,6 @@ def build_self_profile() -> dict:
         return False
 
     profile["apis"] = {
-        "groq":    {"available": _has_key("GROQ_API_KEY"),    "limit": "30 req/min, free tier"},
-        "gemini":  {"available": _has_key("GEMINI_API_KEY"),  "limit": "1500 req/day, free tier"},
         "youtube": {"available": _has_key("YOUTUBE_API_KEY"), "limit": "10000 units/day"},
         "nasa":    {"available": _has_key("NASA_API_KEY"),     "limit": "1000 req/hr"},
     }
@@ -187,8 +185,6 @@ def assess(verbose: bool = True) -> dict:
 
     ram_pct    = hw.get("ram_percent", 0)
     ram_free   = hw.get("ram_free_gb", 0)
-    groq_ok    = apis.get("groq", {}).get("available", False)
-    gemini_ok  = apis.get("gemini", {}).get("available", False)
     connected  = directives.get("connectivity", "FULL") != "OFFLINE"
 
     assessment = {
@@ -226,23 +222,13 @@ def assess(verbose: bool = True) -> dict:
         assessment["skip_steps"].extend(["web_intelligence", "youtube", "rss_feeds"])
         assessment["resource_needs"].append("Network connectivity needed for full cycle")
 
-    if not groq_ok and not gemini_ok:
-        assessment["workarounds"].append("No LLM APIs — generate rule-based snapshots only")
-        assessment["skip_steps"].append("llm_synthesis")
-        assessment["resource_needs"].append("Groq or Gemini API key required for LLM synthesis")
-
     # ── Самопознание ────────────────────────────────────────────────────
     assessment["self_awareness"] = [
         f"I am running on {hw.get('ram_total_gb','?')}GB RAM laptop",
         f"RAM currently {ram_pct:.0f}% used — {ram_free:.1f}GB available",
-        f"LLM access: Groq={'yes' if groq_ok else 'no'}, Gemini={'yes' if gemini_ok else 'no'}",
+        "LLM: the local model only (C-CLOUD-1, R45)",
         f"Network: {'connected' if connected else 'OFFLINE'}",
-        f"My bottleneck: {'RAM' if ram_pct > 75 else 'LLM rate limits' if groq_ok else 'no LLM'}",
-        (
-            "I need external compute (Groq/Gemini) because I have no local GPU"
-            if not groq_ok else
-            "External LLMs available — I can delegate heavy cognition to cloud"
-        ),
+        f"My bottleneck: {'RAM' if ram_pct > 75 else 'the local model'}",
     ]
 
     if assessment["workarounds"] and verbose:

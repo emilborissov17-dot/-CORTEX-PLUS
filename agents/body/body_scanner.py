@@ -141,12 +141,10 @@ def _processes():
         return {}
 
 def _network_latency() -> dict:
-    """Connectivity to the two roads this repo may use (C-FIX-1 Part 4, 2 Oct 2026):
-    the cloud model backend and the local OpenClaw gateway. External data hosts are
-    not pinged - only the OpenClaw door reaches them."""
+    """Reachability of the local OpenClaw gateway, the door every web read goes through
+    (C-FIX-1 Part 4; C-CLOUD-1, R45: no outside model is pinged)."""
     import socket, time as _time
     targets = {
-        "groq_api":         ("api.groq.com", 443),
         "openclaw_gateway": ("127.0.0.1",    18789),
     }
     results = {}
@@ -317,26 +315,8 @@ def _derive_directives(cpu: dict, ram: dict, disk: dict,
 
 
 def _ollama_status():
-    """Проверява Groq/Gemini API конфигурация (Ollama заменен с cloud backends)."""
-    import os
-    from pathlib import Path as _P
-    def _key(name):
-        k = os.environ.get(name, "")
-        if not k:
-            env = BASE / ".env"
-            if env.exists():
-                for line in env.read_text(encoding="utf-8").splitlines():
-                    if line.startswith(name + "="):
-                        k = line.split("=", 1)[1].strip()
-        return k
-    groq_ok   = bool(_key("GROQ_API_KEY"))
-    gemini_ok = bool(_key("GEMINI_API_KEY"))
-    backends  = [b for b, ok in [("groq", groq_ok), ("gemini", gemini_ok)] if ok]
-    return {
-        "running": groq_ok or gemini_ok,
-        "backend": "groq+gemini" if (groq_ok and gemini_ok) else (backends[0] if backends else "none"),
-        "loaded_models": backends,
-    }
+    """C-CLOUD-1 (3 Oct 2026, R45): no outside backend exists; the local model is the only one."""
+    return {"running": None, "backend": "local (see memory/body_scan.py ollama_models)", "loaded_models": []}
 
 def _snapshots_count():
     snap_dir = BASE / "snapshots"
@@ -492,7 +472,7 @@ def run():
     tc = body["time_context"]
     print(f"[BODY] health={body['health']} | capacity={body['capacity_pct']}% | mode={d.get('cycle_mode')}")
     print(f"[BODY] CPU={body['cpu'].get('percent','?')}% | RAM={body['ram'].get('percent','?')}% | disk_free={body['disk'].get('free_gb','?')}GB")
-    print(f"[BODY] net={nl.get('connectivity')} | groq_latency={nl.get('groq_api')}ms | time={tc.get('time_of_day')}")
+    print(f"[BODY] net={nl.get('connectivity')} | openclaw_gateway={nl.get('openclaw_gateway')}ms | time={tc.get('time_of_day')}")
     print(f"[BODY] directives: workers={d.get('max_parallel_workers')} | llm_sleep={d.get('llm_sleep_secs')}s")
     if d.get("reasons"):
         for r in d["reasons"]:

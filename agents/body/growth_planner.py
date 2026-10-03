@@ -34,22 +34,6 @@ def _groq(prompt):
 
 # Известни външни капацитети за закачане
 EXTERNAL_CAPACITIES = {
-    "groq_api": {
-        "name": "Groq API",
-        "what": "Llama-3 70B и Mixtral с ~300 token/s — 10x по-бързо от qwen3:1.7b локално",
-        "cost": "безплатен tier: 14,400 req/ден",
-        "risk": "LOW — само допълва, не замества",
-        "install": "pip install groq && export GROQ_API_KEY=...",
-        "use_case": "тежки анализи, orchestrator, cortex_strategist синтез",
-    },
-    "openai_api": {
-        "name": "OpenAI GPT-4o",
-        "what": "Най-силният публичен модел за сложни reasoning задачи",
-        "cost": "$2.50/1M input tokens",
-        "risk": "LOW — само за критични задачи",
-        "install": "pip install openai && export OPENAI_API_KEY=...",
-        "use_case": "self_modifier верификация, стратегически план",
-    },
     "chromadb_expand": {
         "name": "ChromaDB → persistent server mode",
         "what": "Смяна от embedded към server mode — по-бърза памет, без lock файлове",

@@ -61,15 +61,15 @@ def test_all_parts_run_and_one_failure_does_not_stop_the_rest(monkeypatch):
             return _WF()
         if name == "daily_tier":
             return _Tier({"error": "snapshot unreadable: x", "written": 0})
-        raise ImportError("league missing")
+        raise ImportError(f"unexpected sibling {name}")
     monkeypatch.setattr(LW, "_load", fake_load)
     out = LW.run()
     assert out["daily_tier"]["ok"] is False and "snapshot unreadable" in out["daily_tier"]["error"]
     assert out["world_score"]["result"] == {"newly_scored": 3}
     assert out["world_predict"]["result"] == {"sealed": 2}
     assert out["learner"]["result"] == {"indicators": 2}
-    assert out["backend_league"]["ok"] is False
-    assert set(out["failed_parts"]) == {"daily_tier", "backend_league"}
+    assert "backend_league" not in out          # gone with the outside models (C-CLOUD-1, R45)
+    assert set(out["failed_parts"]) == {"daily_tier"}
     assert out["ok_parts"] == 3
 
 
@@ -157,13 +157,6 @@ def _real_tier_only(monkeypatch):
     the receipt is not written at all, so the league is the only writer left to
     stub; the guard still watches, which is why nothing here redirects it by
     hand."""
-    real_load = LW._load
-
-    def load(name, rel):
-        if name == "backend_league":
-            raise ImportError("stubbed: writes memory/backend_order_measured.json")
-        return real_load(name, rel)
-    monkeypatch.setattr(LW, "_load", load)
     return LW.run()
 
 
@@ -209,11 +202,11 @@ def test_the_step_leaves_no_receipt_on_disk(monkeypatch):
             return _WF()
         if name == "daily_tier":
             return _Tier({"written": 0, "already_on_file": 1})
-        raise ImportError("backend_league is a live writer, stubbed")
+        raise ImportError(f"unexpected sibling {name}")
     monkeypatch.setattr(LW, "_load", fake_load)
     out = LW.run()
 
-    assert out["ok_parts"] == 4 and out["failed_parts"] == ["backend_league"]
+    assert out["ok_parts"] == 4 and out["failed_parts"] == []      # the league is gone (C-CLOUD-1)
     after = receipt.stat().st_mtime if receipt.exists() else None
     assert after == before, (
         "core/learn_world.run() wrote memory/learn_world_latest.json again. The file "

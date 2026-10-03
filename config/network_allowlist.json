@@ -9,7 +9,7 @@
  "files": {
   "agents/body/body_scanner.py": {
    "class": "M",
-   "reason": "TCP reachability of the cloud model backend (api.groq.com) and the local OpenClaw gateway; no data host",
+   "reason": "TCP reachability of the local OpenClaw gateway (127.0.0.1:18789); no outside host",
    "hosts": []
   },
   "cockpit/terminal.py": {
@@ -34,11 +34,6 @@
     "localhost"
    ]
   },
-  "core/counterfactual_probe.py": {
-   "class": "M",
-   "reason": "cloud model backends (Groq, NVIDIA NIM) called through core.llm_door",
-   "hosts": []
-  },
   "core/extra_calls.py": {
    "class": "M",
    "reason": "local Ollama model on localhost:11434",
@@ -48,15 +43,9 @@
   },
   "core/groq_backend.py": {
    "class": "M",
-   "reason": "the cloud model backends (Groq, Cerebras, Gemini, NVIDIA, OpenRouter) and the local Ollama",
+   "reason": "the local model on localhost:11434 - the only language model (C-CLOUD-1, R45)",
    "hosts": [
-    "api.cerebras.ai",
-    "api.groq.com",
-    "generativelanguage.googleapis.com",
-    "github.com",
-    "integrate.api.nvidia.com",
-    "localhost",
-    "openrouter.ai"
+    "localhost"
    ]
   },
   "core/interval_head.py": {
@@ -109,13 +98,6 @@
     "localhost"
    ]
   },
-  "experiments/desktop_hands/agent.py": {
-   "class": "M",
-   "reason": "cloud model backend (Gemini) for the desktop-hands agent",
-   "hosts": [
-    "generativelanguage.googleapis.com"
-   ]
-  },
   "experiments/dreams/dream.py": {
    "class": "M",
    "reason": "local Ollama model on localhost:11434",
@@ -142,23 +124,6 @@
    "reason": "Telegram: reads Emil's replies on the alarm/approval channel",
    "hosts": [
     "api.telegram.org"
-   ]
-  },
-  "experiments/kimi_duel/consult.py": {
-   "class": "M",
-   "reason": "cloud model backends (Groq, OpenRouter); github.com is only the HTTP-Referer value",
-   "hosts": [
-    "api.groq.com",
-    "github.com",
-    "openrouter.ai"
-   ]
-  },
-  "experiments/kimi_duel/duel.py": {
-   "class": "M",
-   "reason": "cloud model backend (OpenRouter); github.com is only the HTTP-Referer value",
-   "hosts": [
-    "github.com",
-    "openrouter.ai"
    ]
   },
   "experiments/needs/approve_reader.py": {
@@ -231,18 +196,10 @@
     "api.github.com"
    ]
   },
-  "memory/autonomic_pulse.py": {
-   "class": "M",
-   "reason": "reachability of the cloud model backend (api.groq.com)",
-   "hosts": [
-    "api.groq.com"
-   ]
-  },
   "memory/body_scan.py": {
    "class": "M",
-   "reason": "reachability of the cloud model backend (api.groq.com)",
+   "reason": "the body scan's local checks (Ollama on localhost); no outside model is pinged",
    "hosts": [
-    "api.groq.com",
     "localhost"
    ]
   },
@@ -251,16 +208,6 @@
    "reason": "local Ollama model on localhost:11434",
    "hosts": [
     "localhost"
-   ]
-  },
-  "scripts/_probe_models.py": {
-   "class": "M",
-   "reason": "lists the models offered by the cloud model backends",
-   "hosts": [
-    "api.cerebras.ai",
-    "api.groq.com",
-    "generativelanguage.googleapis.com",
-    "openrouter.ai"
    ]
   },
   "scripts/devtools_line.py": {

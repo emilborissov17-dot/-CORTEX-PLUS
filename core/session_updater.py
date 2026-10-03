@@ -28,7 +28,6 @@ def update():
     if pulse_path.exists():
         try:
             pulse = json.loads(pulse_path.read_text(encoding="utf-8"))
-            state["groq"] = "ACTIVE" if pulse.get("groq_alive") else "DOWN"
             state["system_state"] = pulse.get("state", "?")
             state["snapshots"] = pulse.get("snap_count", 0)
         except Exception:

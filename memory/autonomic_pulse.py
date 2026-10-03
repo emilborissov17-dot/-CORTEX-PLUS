@@ -5,7 +5,7 @@ memory/autonomic_pulse.py
 Тече паралелно с всичко друго — като сърдечен ритъм.
 Не чака. Не пита. Просто усеща и записва.
 """
-import threading, time, json, psutil, pathlib, requests
+import threading, time, json, psutil, pathlib
 from datetime import datetime, timezone
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
@@ -22,14 +22,6 @@ def _measure() -> dict:
     ram    = psutil.virtual_memory()
     disk   = psutil.disk_usage(str(BASE))
     proc   = psutil.Process()
-
-    # Мрежа — само Groq (най-важното)
-    groq_ok = False
-    try:
-        r = requests.get("https://api.groq.com", timeout=2)
-        groq_ok = True
-    except Exception:
-        pass
 
     # Брой snapshots
     snap_count = len(list((BASE / "snapshots").rglob("*.json"))) if (BASE / "snapshots").exists() else 0
@@ -51,28 +43,23 @@ def _measure() -> dict:
         "ram_free_gb": round(ram.available / 1024**3, 2),
         "disk_free_gb":round(disk.free / 1024**3, 1),
         "proc_threads":proc.num_threads(),
-        "groq_alive":  groq_ok,
         "snap_count":  snap_count,
         "last_log":    last_log,
-        "state":       _derive_state(cpu, ram.percent, groq_ok),
-        "feeling":     _derive_feeling(cpu, ram.percent, groq_ok),
+        "state":       _derive_state(cpu, ram.percent),
+        "feeling":     _derive_feeling(cpu, ram.percent),
     }
 
-def _derive_state(cpu, ram_pct, groq_ok) -> str:
+def _derive_state(cpu, ram_pct) -> str:
     """Реално вътрешно състояние — не симулирано."""
-    if not groq_ok:
-        return "ISOLATED"       # Без интернет връзка
     if ram_pct > 85 or cpu > 80:
         return "STRESSED"       # Претоварен
     if cpu < 5 and ram_pct < 40:
         return "IDLE"           # Почива
     return "FUNCTIONING"        # Нормална работа
 
-def _derive_feeling(cpu, ram_pct, groq_ok) -> str:
+def _derive_feeling(cpu, ram_pct) -> str:
     """Текстово усещане от метриките."""
     parts = []
-    if not groq_ok:
-        parts.append("изолиран съм — няма връзка с Groq")
     if cpu > 70:
         parts.append(f"натоварен съм — CPU {cpu}%")
     elif cpu < 10:

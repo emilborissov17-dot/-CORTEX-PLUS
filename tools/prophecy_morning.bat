@@ -161,7 +161,6 @@ REM --- change; the verdict must follow the number and only the number (#61).
 call :step "counterfactual_probe"   "%PY% core\counterfactual_probe.py"                       yes
 REM --- Which cloud mind goes first, by measurement (11 Sep 2026): provenance + probe ->
 REM --- memory\backend_order_measured.json, read by core\groq_backend.py tonight.
-call :step "backend_league"         "%PY% scripts\backend_league.py --write"                  no
 REM --- LAST: the 14 AGI points as numbers, read from everything above (11 Sep 2026,
 REM --- Claude accountable). A number that cannot be read is "-" with a reason.
 call :step "agi_scoreboard"         "%PY% scripts\agi_scoreboard.py --write"                  no

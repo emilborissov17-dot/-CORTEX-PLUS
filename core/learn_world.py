@@ -14,7 +14,7 @@ debrief and the report, so all three see what was learned tonight:
   2. world_forecast.cmd_score()    score every prediction whose next value just arrived,
                                    refit alpha per indicator  (learning in a parameter)
   3. world_forecast.cmd_predict()  seal tomorrow's predictions (idempotent)
-  4. backend_league                which cloud mind goes first, from tonight's calls
+  (4. backend_league, which ordered the outside models, is gone with them: C-CLOUD-1, R45)
 
 The morning task keeps the same commands as an idempotent catch-up for a night that
 failed before this step. Self-forecast scoring stays in the morning on purpose: it
@@ -92,15 +92,6 @@ def run() -> dict:
                 return {"refused": str(why)}
         _part(out, "world_predict", _predict)
         _part(out, "learner", lambda: {"indicators": len(wf.learner_report())})
-
-    def _league():
-        bl = _load("backend_league", "scripts/backend_league.py")
-        lg = bl.league(bl._rows(bl.PROVENANCE), bl._reads(bl.PROBE))
-        bl.ORDER.parent.mkdir(parents=True, exist_ok=True)
-        bl.ORDER.write_text(json.dumps({"ts": lg["ts"], "order": lg["order"], "source": "core/learn_world.py"},
-                                       indent=1), encoding="utf-8")
-        return {"order": lg["order"]}
-    _part(out, "backend_league", _league)
 
     out["ok_parts"] = sum(1 for v in out.values() if isinstance(v, dict) and v.get("ok"))
     out["failed_parts"] = [k for k, v in out.items() if isinstance(v, dict) and v.get("ok") is False]

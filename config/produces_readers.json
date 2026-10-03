@@ -443,16 +443,6 @@
       ],
       "status": "glob"
     },
-    "memory/backend_order_measured.json": {
-      "phases": [
-        "G_LEARN"
-      ],
-      "readers": [
-        "core/groq_backend.py"
-      ],
-      "status": "named",
-      "verified": "19 Sep 2026: core/groq_backend.py:187 binds MEASURED_ORDER to this path and reads it to order the cloud tier. scripts/backend_league.py WRITES it."
-    },
     "memory/daily_tier.jsonl": {
       "phases": [
         "B_SENSE"

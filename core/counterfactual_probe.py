@@ -253,91 +253,6 @@ def brain_fast_ask(question: str, evidence: str, schema: dict, lean: bool = Fals
                        kind="counterfactual_probe", remember_it=False, fast=True, temperature=0.0, lean=lean)
 
 
-def groq_asker(model: str):
-    """An asker on GroqCloud's free plan. Only models in consult.GROQ_FREE_MODELS are allowed
-    (Law of the brain, point 4: free or local only) — anything else raises before a call."""
-    import importlib.util as _ilu
-    spec = _ilu.spec_from_file_location("consult", BASE / "experiments" / "kimi_duel" / "consult.py")
-    consult = _ilu.module_from_spec(spec)
-    spec.loader.exec_module(consult)
-    free = set(getattr(consult, "GROQ_FREE_MODELS", set()))
-    try:                      # the cycle's own workhorse runs on the same free key every night
-        import core.groq_backend as _gb
-        free.add(_gb.GROQ_MODEL)
-    except Exception:
-        pass
-    if model not in free:
-        raise ValueError(f"{model!r} is not in GROQ_FREE_MODELS {sorted(free)} — refused, nothing called")
-
-    def ask(question: str, evidence: str, schema: dict):
-        import requests
-        import core.groq_backend as gb
-        key = gb._load_key("GROQ_API_KEY")
-        if not key:
-            return None
-        fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
-        prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
-        from core import llm_door
-        r = llm_door.post("counterfactual_probe:groq_asker", "Groq", model, consult.GROQ_URL,
-                          prompt_text=prompt, timeout=60,
-                          headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                          json={"model": model, "temperature": 0, "max_tokens": 200,
-                                "response_format": {"type": "json_object"},
-                                "messages": [{"role": "user", "content": prompt}]})
-        if r.status_code != 200:
-            return None
-        d = r.json()
-        txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
-        try:
-            out = json.loads(txt)
-        except ValueError:
-            return None
-        if isinstance(out, dict):
-            out["_model"] = f"groq:{d.get('model') or model}"
-        return out
-    return ask
-
-
-def nvidia_kimi_ask(question: str, evidence: str, schema: dict):
-    """Kimi K2 on NVIDIA NIM's free developer tier (the Groq road closed 15 Apr 2026)."""
-    import requests
-    import core.groq_backend as gb
-    key = gb._load_key("NVIDIA_API_KEY")
-    if not key:
-        return None
-    model = gb._nvidia_model(key)
-    fields = "\n".join(f'  "{k}": ... // {v}' for k, v in schema.items())
-    prompt = f"{question}\n\nMATERIAL:\n{evidence}\nAnswer ONLY with JSON:\n{{\n{fields}\n}}"
-    from core import llm_door
-    r = llm_door.post("counterfactual_probe:nvidia_kimi_ask", "NVIDIA", model, gb.NVIDIA_API_URL,
-                      prompt_text=prompt, timeout=120,
-                      headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                      json={"model": model, "temperature": 0, "max_tokens": 300,
-                            "messages": [{"role": "user", "content": prompt}]})
-    if r.status_code != 200:
-        # A REFUSAL BY THE HOST IS NOT A SILENCE BY THE MIND (11 Sep 2026).
-        # This returned a bare None, identical to an unparseable reply, so the
-        # probe counted SILENT and the [PROBE] line read
-        #   nvidia-kimi n=9 answered=1 tracks_rate=1.0 ... SILENT 8
-        # which looks like a mind that would not speak. The real cause, caught by
-        # replaying the same call by hand: HTTP 429 {"title":"Too Many Requests"}.
-        # A 1.0 rate over ONE answered case is not a measurement, and blaming the
-        # model for the rate limiter is the wrong story to leave on disk.
-        return {"_unavailable": f"HTTP {r.status_code}"}
-    d = r.json()
-    txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "").strip()
-    txt = txt.split("</think>")[-1].strip()
-    if txt.startswith("```"):
-        txt = txt.strip("`").split("\n", 1)[-1]
-    try:
-        out = json.loads(txt[txt.find("{"): txt.rfind("}") + 1])
-    except ValueError:
-        return None
-    if isinstance(out, dict):
-        out["_model"] = f"nvidia:{d.get('model') or model}"
-    return out
-
-
 def local_asker(model: str, lean: bool = False):
     """A named local Ollama model through the brain's own door (e.g. local:cortex-l1-3b, the
     L1 LoRA of qwen2.5:3b). If the model is not installed, brain.think says so and falls back —
@@ -374,7 +289,7 @@ def local_asker(model: str, lean: bool = False):
 
 
 def askers(names: list[str]) -> dict:
-    """name -> ask function. 'brain' (main local model), 'brain-fast', 'nvidia-kimi', 'groq:<model>'."""
+    """name -> ask function. 'brain' (main local model), 'brain-fast', 'local:<model>'."""
     out = {}
     for n in names:
         # "<asker>+lean": the same mind asked without the self-wrapper (BODY, the five
@@ -387,10 +302,8 @@ def askers(names: list[str]) -> dict:
             out[n] = (lambda q, e, sc, _l=lean: brain_fast_ask(q, e, sc, lean=_l))
         elif base.startswith("local:"):
             out[n] = local_asker(base.split(":", 1)[1], lean=lean)
-        elif base == "nvidia-kimi":
-            out[n] = nvidia_kimi_ask
-        elif base.startswith("groq:"):
-            out[n] = groq_asker(base.split(":", 1)[1])
+        elif base == "nvidia-kimi" or base.startswith("groq:"):
+            raise ValueError(f"asker {n!r}: outside language models are gone (C-CLOUD-1, R45)")
         else:
             raise ValueError(f"unknown asker {n!r}")
     return out
@@ -483,7 +396,7 @@ if __name__ == "__main__":
                   f"flipped {vs['flipped']['value']} -> {vs['flipped']['truth']}")
         sys.exit(0)
     if "--compare" in sys.argv:
-        # e.g.  --compare brain brain-fast groq:openai/gpt-oss-120b nvidia-kimi
+        # e.g.  --compare brain brain-fast local:qwen2.5:3b
         names = [a for a in sys.argv[sys.argv.index("--compare") + 1:] if not a.startswith("--")] or ["brain", "brain-fast"]
         r = compare(names)
         for n, m in r["by_model"].items():

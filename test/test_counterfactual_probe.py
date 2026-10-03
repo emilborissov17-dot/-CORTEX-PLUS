@@ -144,10 +144,13 @@ def test_compare_runs_the_same_cases_through_several_minds(tmp_path, monkeypatch
     assert json.loads((tmp_path / "by_model.json").read_text(encoding="utf-8"))["cases"] == 2
 
 
-def test_a_groq_model_outside_the_free_list_is_refused_before_any_call():
+def test_an_outside_asker_is_refused_by_name():
+    """C-CLOUD-1 (R45): the Groq and NVIDIA askers are gone; asking for one says so."""
     import pytest
-    with pytest.raises(ValueError, match="GROQ_FREE_MODELS"):
-        CP.groq_asker("some/paid-model")
+    for name in ("groq:openai/gpt-oss-120b", "nvidia-kimi"):
+        with pytest.raises(ValueError, match="R45"):
+            CP.askers([name])
+    assert not hasattr(CP, "groq_asker") and not hasattr(CP, "nvidia_kimi_ask")
     with pytest.raises(ValueError, match="unknown asker"):
         CP.askers(["gpt-anything"])
 
