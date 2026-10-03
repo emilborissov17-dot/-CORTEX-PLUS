@@ -220,7 +220,7 @@ def substeps_for(label: str, callmap_path: pathlib.Path | None = None) -> list[d
 # The contract for the step that is running right now, or None between steps.
 #
 # WHY A MODULE GLOBAL. The thing that discovers a degradation is the LLM layer
-# (core/groq_backend.call_groq_meta), which is reached from 127 call sites across
+# (core/local_llm.call_local_llm_meta), which is reached from 127 call sites across
 # 25 files and has no idea which step it is inside. Threading a contract object
 # through all of them is a refactor with no owner and no test. A step is a serial
 # region of one process, so "the contract that is currently open" is a true

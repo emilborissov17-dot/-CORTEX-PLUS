@@ -468,7 +468,7 @@ CLOUD_EMPTY_LIMIT = cloud_empty_limit()
 #     sticky demotion again, under a longer name.
 #
 # WALL CLOCK, NOT monotonic: these expiries are compared against cooldown
-# deadlines produced by core/groq_backend with time.time(), and mixing the two
+# deadlines produced by core/local_llm with time.time(), and mixing the two
 # clocks would make the comparison meaningless.
 PROBE_FLOOR_START_SEC = 300.0
 PROBE_FLOOR_MAX_SEC = 1800.0
@@ -481,15 +481,15 @@ _probe_failures = 0
 
 
 def _now_wall() -> float:
-    """Wall clock, so it is comparable with groq_backend's cooldown deadlines."""
+    """Wall clock, so it is comparable with local_llm's cooldown deadlines."""
     return time.time()
 
 
 def note_cooldown_until(ts: float) -> float:
-    """Told by core/groq_backend whenever it sets a cooldown.
+    """C-CLOUD-1 (3 Oct 2026): its only live caller, the deleted cloud tier's _set_cooldown, is gone.
 
-    PUSHED, NOT PULLED, and the direction is forced: groq_backend imports this
-    module, so this module cannot import groq_backend to ask. _set_cooldown is
+    PUSHED, NOT PULLED, and the direction is forced: local_llm imports this
+    module, so this module cannot import local_llm to ask. _set_cooldown is
     the single place any cooldown is created, which makes it the one call site.
     Only ever moves later — the demotion must respect the LONGEST window.
     """
@@ -607,7 +607,7 @@ def run_with_ladder(step: str,
     THE LAST VIABLE TIER GETS WHAT IS LEFT, NOT A THIRD (23 Aug 2026).
     `per_tier` is B/3 whether or not three tiers exist. On the night measured
     above only two did — the 8b is offered only inside its residency window
-    (core/groq_backend passes None outside it), so the ladder was cloud, then 3b,
+    (core/local_llm passes None outside it), so the ladder was cloud, then 3b,
     then nothing. The 3b was capped at 40s of a 120s budget and timed out; 70s of
     that budget was never offered to the only tier that could have used it.
     A third of a budget is the right share when there are three claimants. When
@@ -692,7 +692,7 @@ def run_with_ladder(step: str,
 # network.
 #
 # Deliberately module-level rather than passed down: 127 call sites reach
-# call_groq_meta, across 25 files, and threading a budget object through all of
+# call_local_llm_meta, across 25 files, and threading a budget object through all of
 # them is a refactor with no owner. A step is a serial, single-threaded region of
 # one process, so a process-global "current step" is a true description of it. The
 # lock is for the daemon threads run_with_ladder abandons, not for concurrency.

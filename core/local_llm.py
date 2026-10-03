@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-groq_backend.py — the system's text model: the LOCAL model, and nothing else.
+local_llm.py — the system's text model: the LOCAL model, and nothing else.
 
 C-CLOUD-1 (3 Oct 2026, Emil R45): "Нали нямаше да имаме външни LLM-и… и щяхме да работим само
 с OpenClaw?" — "Защо го имаме изобщо… защо някой друг да мисли вместо мозъкът на системата?"
@@ -14,8 +14,8 @@ When the local model does not answer, the caller gets AllBackendsFailedError —
 failure as before — never invented text.
 
 USE (unchanged names, see the report's rename section):
-  from core.groq_backend import call_groq, AllBackendsFailedError
-  result = call_groq(prompt, max_tokens=800)
+  from core.local_llm import call_local_llm, AllBackendsFailedError
+  result = call_local_llm(prompt, max_tokens=800)
 """
 
 import os
@@ -107,7 +107,7 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
     num_predict = max(64, min(int(max_tokens), 1024))
     try:
         from core import model_window as _mw
-        model_id = _mw.guard_local(model_id, "groq_backend._call_local_as")
+        model_id = _mw.guard_local(model_id, "local_llm._call_local_as")
         keep_alive = _mw.keep_alive_for(model_id)
     except Exception:
         keep_alive = "30m"
@@ -150,7 +150,7 @@ def _call_local(prompt: str, max_tokens: int):
     keep_alive = "30m"
     try:
         from core import model_window as _mw
-        model = _mw.local_model(want_big=True, purpose="groq_backend.last_resort")
+        model = _mw.local_model(want_big=True, purpose="local_llm.last_resort")
         keep_alive = _mw.keep_alive_for(model)
     except Exception:
         pass
@@ -173,7 +173,7 @@ def _call_local(prompt: str, max_tokens: int):
     return content, {"finish_reason": "stop", "degraded": True}
 
 
-def call_groq_meta(prompt: str, max_tokens: int = 1024,
+def call_local_llm_meta(prompt: str, max_tokens: int = 1024,
                    purpose: str | None = None) -> tuple:
     """The local model, laddered 3b -> 8b (8b only while the window is open), each tier
     abandoned at its slice of the step's budget (core/step_budget).
@@ -198,12 +198,14 @@ def call_groq_meta(prompt: str, max_tokens: int = 1024,
 
     from core import step_budget as _budget
     from core import model_window as _mw
+    _small = _mw.small_model()
+    _big = _mw.big_model()
     res = _budget.run_call(
         cloud=None,
-        local_3b=_local_tier(_mw.small_model()),
+        local_3b=_local_tier(_small),
         # 8b only while the window is open: outside it, loading 8b would evict the
         # pinned 3b mid-step (core/model_window.py).
-        local_8b=_local_tier(_mw.big_model()) if _mw.is_open() else None,
+        local_8b=_local_tier(_big) if _mw.is_open() else None,
     )
     if res.outcome == _budget.OK and res.value is not None:
         return res.value
@@ -229,32 +231,32 @@ def _answer_as_llm_text(fn):
     return wrapped
 
 
-call_groq_meta = _answer_as_llm_text(call_groq_meta)
+call_local_llm_meta = _answer_as_llm_text(call_local_llm_meta)
 
 
-def call_groq(prompt: str, max_tokens: int = 1024) -> str:
+def call_local_llm(prompt: str, max_tokens: int = 1024) -> str:
     """Обратно-съвместим wrapper: връща само текста (без meta).
 
     Съществуващите caller-и не се променят. Caller-ите, които парсват JSON,
-    трябва да минават през core.llm_json (което ползва call_groq_meta и вижда
+    трябва да минават през core.llm_json (което ползва call_local_llm_meta и вижда
     finish_reason).
     """
-    content, _meta = call_groq_meta(prompt, max_tokens)
+    content, _meta = call_local_llm_meta(prompt, max_tokens)
     return content
 
 
-def call_groq_safe(prompt: str, max_tokens: int = 1024) -> str:
+def call_local_llm_safe(prompt: str, max_tokens: int = 1024) -> str:
     try:
-        return call_groq(prompt, max_tokens)
+        return call_local_llm(prompt, max_tokens)
     except AllBackendsFailedError:
         raise  # preserve specific type so callers can set needs_reanalysis
     except Exception as e:
         raise RuntimeError(f"LLM call failed: {e}") from e
 
 
-class GroqBackend:
+class LocalLLM:
     def predict(self, input_data):
-        return call_groq(str(input_data))
+        return call_local_llm(str(input_data))
 
     def call(self, prompt, max_tokens=1024):
-        return call_groq(prompt, max_tokens)
+        return call_local_llm(prompt, max_tokens)

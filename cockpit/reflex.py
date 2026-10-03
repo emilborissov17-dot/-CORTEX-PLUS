@@ -242,7 +242,7 @@ def build_prompt(phase_report: str, glyph_info: dict, top_sensors: list = None,
 
 def call_3b(prompt: str, max_tokens: int = 160) -> str:
     """The warm small model, through the existing ladder. No new call path."""
-    from core.groq_backend import _call_local_as              # noqa: PLC0415
+    from core.local_llm import _call_local_as              # noqa: PLC0415
     from core import model_window as mw                        # noqa: PLC0415
     content, _meta = _call_local_as(mw.small_model(), prompt, max_tokens)
     return content

@@ -13,7 +13,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 
-# Backs: core/groq_backend.py and core/llm_door.py, the one-row-per-path sentence.
+# Backs: core/local_llm.py and core/llm_door.py, the one-row-per-path sentence.
 def test_post_writes_one_row_on_every_path(tmp_path, monkeypatch):
     import requests
     from core import llm_door

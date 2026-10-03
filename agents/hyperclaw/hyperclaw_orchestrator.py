@@ -326,8 +326,8 @@ def main() -> None:
 
     plan_md = None
     try:
-        from core.groq_backend import call_groq, AllBackendsFailedError
-        plan_md = call_groq(prompt, max_tokens=4000)
+        from core.local_llm import call_local_llm, AllBackendsFailedError
+        plan_md = call_local_llm(prompt, max_tokens=4000)
     except AllBackendsFailedError as e:
         print(f"[HYPERCLAW] AllBackendsFailedError — всички backends изчерпани: {e}")
         _snap_dir = BASE / "snapshots" / "hyperclaw"

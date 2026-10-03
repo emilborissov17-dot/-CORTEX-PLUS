@@ -24,7 +24,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 from core import llm_door  # noqa: E402
-from core import groq_backend as gb  # noqa: E402
+from core import local_llm as gb  # noqa: E402
 
 NOW = datetime(2026, 9, 25, 3, 0, tzinfo=timezone.utc)
 
@@ -86,24 +86,6 @@ def test_a_truncated_answer_is_an_error_row():
     assert llm_door._judge(200, {"finish_reason": "stop", "reply_chars": 40}) == ("ok", None)
 
 
-def _ladder(monkeypatch, groq_replies, openrouter_reply=("fallback", {"finish_reason": "stop"})):
-    calls = []
-
-    def groq(prompt, max_tokens):
-        calls.append(("groq", max_tokens))
-        return groq_replies.pop(0)
-
-    def openrouter(prompt, max_tokens):
-        calls.append(("openrouter", max_tokens))
-        return openrouter_reply
-
-    monkeypatch.setattr(gb, "_call_groq", groq)
-    monkeypatch.setattr(gb, "_call_openrouter", openrouter)
-    monkeypatch.setattr(gb, "_call_local_as", lambda m, p, t: ("local answer", {}))
-    monkeypatch.setattr(gb, "ordered_backend_keys", lambda: ["groq", "openrouter"])
-    monkeypatch.setattr(gb, "_cooldowns", {})
-    monkeypatch.setattr(gb, "_cooldown_hits", {})
-    return calls
 
 
 
@@ -111,9 +93,9 @@ def _ladder(monkeypatch, groq_replies, openrouter_reply=("fallback", {"finish_re
 
 
 def test_no_ladder_leg_passes_its_own_timeout_to_the_door():
-    tree = ast.parse((REPO / "core" / "groq_backend.py").read_text(encoding="utf-8"))
+    tree = ast.parse((REPO / "core" / "local_llm.py").read_text(encoding="utf-8"))
     for node in ast.walk(tree):
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) \
                 and node.func.attr == "post" and getattr(node.func.value, "id", "") == "llm_door":
             assert not any(k.arg == "timeout" for k in node.keywords), \
-                f"groq_backend.py:{node.lineno} passes a literal timeout to the door"
+                f"local_llm.py:{node.lineno} passes a literal timeout to the door"

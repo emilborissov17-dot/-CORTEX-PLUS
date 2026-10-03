@@ -263,7 +263,7 @@ def _brain_diagnosis(step: str, evidence: list) -> dict | None:
     try:
         import requests as _rq
         try:
-            from core.groq_backend import _pick_local_model, _OLLAMA_URL
+            from core.local_llm import _pick_local_model, _OLLAMA_URL
             model, base = _pick_local_model(), _OLLAMA_URL
         except Exception:
             model, base = "qwen3", "http://localhost:11434"
@@ -380,7 +380,7 @@ def _local_remedy(cause: str, why: str, evidence: list, step: str) -> tuple:
     try:
         import requests as _rq
         try:
-            from core.groq_backend import _pick_local_model, _OLLAMA_URL
+            from core.local_llm import _pick_local_model, _OLLAMA_URL
             model, base = _pick_local_model(), _OLLAMA_URL
         except Exception:
             model, base = "qwen3", "http://localhost:11434"

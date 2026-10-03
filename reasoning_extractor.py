@@ -12,9 +12,9 @@ SYSTEM_PROMPT = """Извлечи reasoning структурата от разг
 {"key_insights":["..."],"reasoning_path":["стъпка1->стъпка2"],"open_questions":["..."],"principles_discovered":["..."],"direction":"...","next_step":"..."}"""
 
 def extract_reasoning(conversation_text: str) -> dict:
-    from core.groq_backend import call_groq
+    from core.local_llm import call_local_llm
     prompt = f"{SYSTEM_PROMPT}\n\nРАЗГОВОР:\n{conversation_text[:6000]}"
-    raw = call_groq(prompt, max_tokens=800)
+    raw = call_local_llm(prompt, max_tokens=800)
     if "```json" in raw: raw = raw.split("```json")[1].split("```")[0]
     elif "```" in raw: raw = raw.split("```")[1].split("```")[0]
     result = json.loads(raw.strip())

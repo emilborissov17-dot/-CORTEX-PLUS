@@ -27,10 +27,10 @@ Kimi's ruling, implemented here verbatim:
      cosmos's flat source_type - adopt cosmos's honesty pattern but add the
      backend/degradation dimension that source_type lacks."
 
-WHY IT READS step_contract AND NOT THE LLM LAYER. core/groq_backend.call_groq
+WHY IT READS step_contract AND NOT THE LLM LAYER. core/local_llm.call_local_llm
 returns a bare string: the meta carrying `degraded` and `model` is built and then
-discarded by the wrapper at groq_backend.py:861 (`content, _meta = ...`). 41
-production call sites go through that wrapper, 3 through call_groq_meta. So the
+discarded by the wrapper at local_llm.py:861 (`content, _meta = ...`). 41
+production call sites go through that wrapper, 3 through call_local_llm_meta. So the
 identity is NOT reachable at the writer through the call path — but
 _note_degraded() has already pushed it into the open StepContract, and
 step_contract.current() is a public accessor. That is the one place a writer can
@@ -48,7 +48,7 @@ as step_contract.note_degraded_on_current() returning False for "no contract"
 rather than raising.
 
 PARSE *AND* KEEP THE PROSE — the choice this docstring is required to declare.
-The contract stores a human sentence, built at groq_backend.py:826:
+The contract stores a human sentence, built at local_llm.py:826:
 
     f"answered by {res.tier} ({meta.get('model')}) after the cloud "
     f"tier was abandoned at its slice of B={res.budget_sec:.0f}s"

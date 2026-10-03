@@ -22,8 +22,8 @@ def _groq(prompt):
     import sys
     sys.path.insert(0, str(BASE))
     try:
-        from core.groq_backend import call_groq
-        text = call_groq(prompt, max_tokens=1500)
+        from core.local_llm import call_local_llm
+        text = call_local_llm(prompt, max_tokens=1500)
         if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
         return json.loads(text)

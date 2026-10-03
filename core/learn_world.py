@@ -28,7 +28,7 @@ no module, no report, no scheduled task, no page of the cockpit, and no glob ove
 (experiments/pulse/pulse_daemon.py walks memory/ for mtimes only, never contents). The
 learning this step does IS persisted, by the parts themselves and into files that do have
 named readers: memory/learner_state.json (core/brain.py), memory/daily_tier.jsonl
-(core/consolidation.py) and memory/backend_order_measured.json (core/groq_backend.py).
+(core/consolidation.py) and memory/backend_order_measured.json (core/local_llm.py).
 The receipt duplicated, on disk, a dict the caller already has in hand and prints —
 fast_cycle_runner.py step 25.43 logs ok_parts and failed_parts from the return value.
 """

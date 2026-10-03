@@ -4,7 +4,7 @@
 Emil, R45 (2 Oct 2026): "Нали нямаше да имаме външни LLM-и… и щяхме да работим само с
 OpenClaw?" — "Защо го имаме изобщо… защо някой друг да мисли вместо мозъкът на системата?"
 
-THE RULES: a call through core.groq_backend reaches only the local model, even with every
+THE RULES: a call through core.local_llm reaches only the local model, even with every
 outside key in the environment; when the local model does not answer the caller gets the
 named failure (AllBackendsFailedError), never invented text; core.llm_door.post refuses an
 address outside the machine before any socket is opened. The transport is injected.
@@ -19,7 +19,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
-from core import groq_backend as gb  # noqa: E402
+from core import local_llm as gb  # noqa: E402
 from core import llm_door  # noqa: E402
 
 OUTSIDE_KEYS = ("GROQ_API_KEY", "NVIDIA_API_KEY", "OPENROUTER_API_KEY", "GEMINI_API_KEY", "CEREBRAS_API_KEY",
@@ -54,26 +54,26 @@ def transport(monkeypatch):
 
 
 def test_a_call_with_every_outside_key_present_reaches_only_localhost(transport):
-    out = gb.call_groq("What is the capital of France? One word.", max_tokens=16)
+    out = gb.call_local_llm("What is the capital of France? One word.", max_tokens=16)
     assert str(out) == "Paris."
     assert transport["hosts"] and set(transport["hosts"]) <= {"localhost", "127.0.0.1"}, transport["hosts"]
 
 
 def test_the_meta_names_the_local_model(transport):
-    content, meta = gb.call_groq_meta("ping", max_tokens=16)
+    content, meta = gb.call_local_llm_meta("ping", max_tokens=16)
     assert str(meta["backend"]).startswith("local:")
 
 
 def test_a_silent_local_model_is_the_named_failure_never_text(transport):
     transport["reply"] = Reply(status=500)
     with pytest.raises(gb.AllBackendsFailedError):
-        gb.call_groq("ping", max_tokens=16)
+        gb.call_local_llm("ping", max_tokens=16)
 
 
 def test_an_empty_local_answer_is_the_named_failure(transport):
     transport["reply"] = Reply(content="")
     with pytest.raises(gb.AllBackendsFailedError):
-        gb.call_groq("ping", max_tokens=16)
+        gb.call_local_llm("ping", max_tokens=16)
 
 
 def test_no_outside_backend_is_left_in_the_ladder():
@@ -92,13 +92,13 @@ def test_the_door_refuses_an_address_outside_the_machine(monkeypatch):
 
 # ── mutations ───────────────────────────────────────────────────────────────
 def test_mutation_a_restored_outside_rung_is_seen_by_the_host_check(transport, monkeypatch):
-    real = gb.call_groq_meta
+    real = gb.call_local_llm_meta
 
     def with_outside_rung(prompt, max_tokens=1024, purpose=None):
         llm_door.post("restored", "Groq", "m", "https://api.groq.com/openai/v1/chat/completions", json={})
         return real(prompt, max_tokens)
-    monkeypatch.setattr(gb, "call_groq_meta", with_outside_rung)
-    gb.call_groq("ping", max_tokens=16)
+    monkeypatch.setattr(gb, "call_local_llm_meta", with_outside_rung)
+    gb.call_local_llm("ping", max_tokens=16)
     assert "api.groq.com" in transport["hosts"], "the assertion above would see an outside host"
 
 

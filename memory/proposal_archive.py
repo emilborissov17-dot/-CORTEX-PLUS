@@ -59,7 +59,7 @@ something ever genuinely needs one. It is deliberately not built now.
 
 WHAT IS NOT CAPTURED, STATED RATHER THAN INVENTED
 --------------------------------------------------
-There is no separate reasoning trace. `call_groq_meta` returns the model's final
+There is no separate reasoning trace. `call_local_llm_meta` returns the model's final
 text and nothing else; no provider in the chain is asked for a reasoning channel,
 and none is stored. What IS recoverable is the model's FULL RAW OUTPUT for the
 batch that produced a proposal — the JSON array plus whatever preamble the model

@@ -202,9 +202,8 @@ def test_outside_any_step_the_stamp_says_none_and_not_false():
 
 
 def test_an_unparseable_reason_does_not_invent_a_backend():
-    """groq_backend emits a second reason shape ('no tier answered within
-    B=...'). A parser that guessed would manufacture the very false provenance
-    this file removes."""
+    """The ladder emitted a second reason shape ('no tier answered within
+    B=...') until C-CLOUD-1. Decided: a parser never guesses a backend from it."""
     s = _with_contract(_FakeContract("no tier answered within B=900s (exhausted)"))
     assert s["degraded"] is True and s["backend"] is None and s["model"] is None, s
     assert s["why"].startswith("no tier answered"), s

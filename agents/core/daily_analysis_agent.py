@@ -16,13 +16,13 @@ NOTES_DIR    = BASE_DIR / "notes"
 DAILY_DIR    = BASE_DIR / "daily"
 sys.path.insert(0, str(BASE_DIR))
 
-from core.groq_backend import call_groq, AllBackendsFailedError
+from core.local_llm import call_local_llm, AllBackendsFailedError
 
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
 def _llm(prompt: str) -> str:
-    return call_groq(prompt)
+    return call_local_llm(prompt)
 
 def _clean_llm(text: str) -> str:
     """Премахва Thinking блокове и markdown fences."""

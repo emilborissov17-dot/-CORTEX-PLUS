@@ -3,7 +3,7 @@ test/test_log_masking.py — a key that reaches the cycle log keeps at most 4 ch
 
 Why (24 Sep 2026): the cycle log is the runner's stdout, and stdout never passes
 through core/durable.py's scrub. So the Gemini key (17 lines of
-cycle_2026-09-22_030401.log, via core/groq_backend.py's "[LLM] ... failed" print)
+cycle_2026-09-22_030401.log, via core/local_llm.py's "[LLM] ... failed" print)
 and the Telegram bot token (cycle_2026-09-23_101901.log:32, via
 experiments/needs/approve_reader.py's getUpdates-failed print) were written
 verbatim. The existing Telegram rule in core/redact.py also missed the token

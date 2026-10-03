@@ -518,7 +518,7 @@ def _semantic_rule(payload, metric: str, axis: str) -> tuple:
         # qwen3:8b calls from here on the evening of 24 Sep evicted the core the
         # 03:04 cycle needed.
         try:
-            from core.groq_backend import _OLLAMA_URL
+            from core.local_llm import _OLLAMA_URL
             from core.model_window import cycle_local_model
             model, base = cycle_local_model(), _OLLAMA_URL
         except Exception:

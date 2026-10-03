@@ -625,12 +625,12 @@ def _selftest() -> int:
         ok = False
 
     try:
-        gb = (BASE / "core" / "groq_backend.py").read_text(encoding="utf-8",
+        gb = (BASE / "core" / "local_llm.py").read_text(encoding="utf-8",
                                                            errors="replace")
         gb_wired = "model_window" in gb
     except OSError:
         gb_wired = False
-    print("  groq_backend         {}".format(
+    print("  local_llm         {}".format(
         "WIRED" if gb_wired
         else "NOT WIRED — the local last resort still picks 8b directly"))
     if not gb_wired:

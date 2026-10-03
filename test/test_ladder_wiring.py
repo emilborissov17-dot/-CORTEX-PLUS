@@ -200,7 +200,7 @@ def test_the_8b_tier_is_not_offered_while_the_window_is_shut():
     3b mid-step — the churn core/model_window.py exists to remove — and the
     ladder's own CRITICAL check is about priority, not residency.
     """
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8",
+    src = (REPO / "core" / "local_llm.py").read_text(encoding="utf-8",
                                                         errors="replace")
     assert "local_8b=_local_tier(_big) if _mw.is_open() else None" in src, (
         "the 8b tier is no longer gated on the model window being open")

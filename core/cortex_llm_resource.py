@@ -6,10 +6,10 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 try:
-    from .groq_backend import call_groq, AllBackendsFailedError
+    from .local_llm import call_local_llm, AllBackendsFailedError
     from .llm_json import extract_json
 except ImportError:
-    from groq_backend import call_groq, AllBackendsFailedError
+    from local_llm import call_local_llm, AllBackendsFailedError
     from llm_json import extract_json
 
 ENERGY_DATA_PATH = Path("data/energy/owid-energy-data.csv")
@@ -168,9 +168,9 @@ def build_dummy_json_generic(domain: str, raw_context: str, error_message: str,
 
 def _llm_run(prompt: str) -> str:
     """
-    Вика LLM чрез groq_backend (fallback chain: Groq → Gemini → Ollama).
+    Вика LLM чрез local_llm (fallback chain: Groq → Gemini → Ollama).
     """
-    return call_groq(prompt, max_tokens=2048)
+    return call_local_llm(prompt, max_tokens=2048)
 
 
 def _extract_json_object(text: str) -> dict:

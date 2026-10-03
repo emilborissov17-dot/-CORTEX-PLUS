@@ -1094,8 +1094,8 @@ def _free_ollama():
 
 def _llm(prompt):
     try:
-        from core.groq_backend import call_groq
-        text = call_groq(prompt, max_tokens=1024)
+        from core.local_llm import call_local_llm
+        text = call_local_llm(prompt, max_tokens=1024)
         if "```json" in text:
             text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:
@@ -1232,7 +1232,7 @@ def _run(label, fn, free_after=False):
         except Exception:
             _contract = None
         # ── ЕДИН БЮДЖЕТ ЗА СТЪПКАТА, ПОДЕЛЕН ОТ ВСИЧКИ ѝ ПОВИКВАНИЯ (22 авг) ───
-        # Opened here so every call_groq_meta inside fn() draws from the same B.
+        # Opened here so every call_local_llm_meta inside fn() draws from the same B.
         # daily_analysis made 24 model calls in one run on 20 Aug; giving each of
         # them B would have been a budget of 24xB, which is not a budget.
         # The step's priority decides only one thing — whether the 8b tier is on the
@@ -1435,7 +1435,7 @@ def _check_dependencies() -> bool:
     # стъпка. Пита се самият Ollama кои модели държи; отговор = път до мислене.
     try:
         import requests as _rq
-        from core.groq_backend import _OLLAMA_URL as _OL
+        from core.local_llm import _OLLAMA_URL as _OL
         _r = _rq.get(f"{_OL}/api/tags", timeout=8)
         _models = [m.get("name") for m in (_r.json().get("models") or [])] if _r.ok else []
         checks["local_brain"] = {"ok": bool(_models), "url": _OL, "models": _models[:6]}
@@ -3135,7 +3135,7 @@ def main():
         _run("github_publisher", _github_publisher)
 
     # 16. action_recommendations was RETIRED on 25 Sep 2026 (task #8): one
-    # call_groq into unmeasured advice memory; its causal log's only reader was
+    # call_local_llm into unmeasured advice memory; its causal log's only reader was
     # itself (memory.context_injector.get_causal_lessons <- core.cortex_reasoner).
 
     # ── 17. Self observer ──

@@ -14,7 +14,7 @@ import time
 import re
 from datetime import datetime, timezone, timedelta
 
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE_DIR))
@@ -28,7 +28,7 @@ except Exception:
 MAX_PROPOSALS = 50  # Максимален брой proposals в файла
 MAX_AGE_DAYS  = 7   # Изчиствай proposals по-стари от N дни
 
-MAX_LLM_RETRIES          = 3   # Макс. поредни call_groq грешки преди да спрем цикъла
+MAX_LLM_RETRIES          = 3   # Макс. поредни call_local_llm грешки преди да спрем цикъла
 LLM_RETRY_SLEEP_S         = 10
 MAX_CONSECUTIVE_PARSE_FAIL = 3  # Макс. поредни unparseable LLM outputs преди ескалация
 HISTORY_WINDOW            = 8   # Колко последни стъпки да влизат в prompt (bound token growth)
@@ -225,8 +225,7 @@ def _propose_dependency_fixes() -> list:
                 "component":         "DEPENDENCY_CHECK",
                 "problem":           f"{name} тест неуспешен: {error}",
                 "solution":          (
-                    "Проверете локалния модел (Ollama на localhost:11434): "
-                    "`ollama ps` и `ollama list`."
+                    "Проверете локалния модел: `ollama ps` и `ollama list`."
                 ),
                 "measurable_goal":   f"dependency_check_latest.json checks.{name}.ok == true",
                 "root_cause":        "DEPENDENCY_CHECK / network or invalid key",
@@ -301,7 +300,7 @@ def run():
         )
 
         try:
-            raw = call_groq(prompt, max_tokens=300)
+            raw = call_local_llm(prompt, max_tokens=300)
             llm_error_streak = 0
         except Exception as e:
             llm_error_streak += 1
@@ -449,13 +448,13 @@ def _build_problem_proposals(history: list, web_intel: dict, merkle_essence: str
     )
     raw = ""
     try:
-        # call_groq_meta, not call_groq: the archive must record WHICH model and
+        # call_local_llm_meta, not call_local_llm: the archive must record WHICH model and
         # provider produced a proposal. The wrapper throws that away, and a
         # proposal whose author is unknown cannot be weighed against the others
         # later. `raw` is kept too — it is the model's full output for this
         # batch, which is the only thing resembling reasoning that any provider
         # in the chain actually returns. See memory/proposal_archive.py.
-        from core.groq_backend import call_groq_meta as _call_meta
+        from core.local_llm import call_local_llm_meta as _call_meta
         raw, _meta = _call_meta(prompt, max_tokens=700)
         proposals = _extract_json_array(raw)
 

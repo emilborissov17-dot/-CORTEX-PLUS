@@ -56,7 +56,7 @@ def _groq(prompt: str) -> dict:
     import sys
     sys.path.insert(0, str(BASE))
     from core.llm_json import call_llm_json, LLMJSONError
-    from core.groq_backend import AllBackendsFailedError
+    from core.local_llm import AllBackendsFailedError
     try:
         return call_llm_json(prompt, max_tokens=1500, expect=dict,
                              label="STRATEGIST")

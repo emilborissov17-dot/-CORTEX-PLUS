@@ -636,9 +636,9 @@ _SCRIPT_EXT = (".bat", ".ps1", ".cmd", ".exe")
 # Имена, чието ПОВИКВАНЕ или ВНАСЯНЕ значи модел. Търсят се идентификатори през
 # AST, не подниз в текста: докстринговете тук споменават ollama и groq, докато
 # обещават да НЕ ги викат, и подниз не отличава обещание от повикване.
-_MODEL_CALLS = {"think", "_llm", "call_groq", "call_groq_meta", "ask_groq",
+_MODEL_CALLS = {"think", "_llm", "call_local_llm", "call_local_llm_meta", "ask_groq",
                 "ask_model", "chat", "generate"}
-_MODEL_MODULES = {"groq_backend", "ollama_backend", "brain", "model_window",
+_MODEL_MODULES = {"local_llm", "ollama_backend", "brain", "model_window",
                   "backend_policy", "cortex_reasoner", "ollama", "openai",
                   "groq", "anthropic"}
 

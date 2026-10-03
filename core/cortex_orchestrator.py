@@ -12,7 +12,7 @@ from datetime import datetime
 BASE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE))
 
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 def _read_file(path, default=""):
     try:
@@ -159,7 +159,7 @@ def assess_attention(state):
         '"main_opportunity": "...", "immediate_action": "...", "reasoning": "..."}'
     )
     try:
-        response = call_groq(prompt, max_tokens=600)
+        response = call_local_llm(prompt, max_tokens=600)
         if 'done thinking.' in response:
             response = response.split('done thinking.')[-1].strip()
         if '</think>' in response:
@@ -207,7 +207,7 @@ def generate_strategic_plan(attention, state):
   "next_evolution_step": "..."}}
 """
     try:
-        response = call_groq(prompt, max_tokens=1500)
+        response = call_local_llm(prompt, max_tokens=1500)
         if 'done thinking.' in response:
             response = response.split('done thinking.')[-1].strip()
         if '</think>' in response:

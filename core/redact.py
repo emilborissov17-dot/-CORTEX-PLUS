@@ -16,7 +16,7 @@ characters, `AIza` + 35, the exact Google format — in nine places:
 
 Nobody wrote a key into a log. The provider did: a Gemini error message echoes
 the request URL, the URL carries `?key=...`, and the backend stored the error
-text verbatim. `_log_failure` in core/groq_backend.py records
+text verbatim. `_log_failure` in core/local_llm.py records
 `f"{type(exc).__name__}: {exc}"` because a failure with no message is useless —
 and that is right. What was missing is that provider text is UNTRUSTED INPUT,
 and a log line is a thing that gets committed.

@@ -428,11 +428,11 @@ def test_the_verifier_calls_no_model_and_evaluates_nothing():
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
             assert node.func.id not in banned, f"{node.func.id} at line {node.lineno}"
         if isinstance(node, ast.ImportFrom) and node.module:
-            for bad in ("groq", "openai", "ollama", "cortex_llm", "call_groq"):
+            for bad in ("groq", "openai", "ollama", "cortex_llm", "call_local_llm"):
                 assert bad not in node.module, f"model import: {node.module}"
 
     # AST, not the raw text: the module's own docstring names subprocess and
-    # call_groq precisely to say it does NOT use them, and a grep cannot tell a
+    # call_local_llm precisely to say it does NOT use them, and a grep cannot tell a
     # promise from a call. Identifiers and imports only.
     imported = set()
     for node in ast.walk(tree):
@@ -445,7 +445,7 @@ def test_the_verifier_calls_no_model_and_evaluates_nothing():
 
     called = {n.func.id for n in ast.walk(tree)
               if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
-    assert "call_groq" not in called, "core/earning.py calls a model"
+    assert "call_local_llm" not in called, "core/earning.py calls a model"
 
 
 def test_the_verifier_never_appends_to_the_development_journal():

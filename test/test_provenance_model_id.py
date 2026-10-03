@@ -51,7 +51,7 @@ from core import brain            # noqa: E402
 # --------------------------------------------------------------------------- #
 
 def _model_for():
-    """_model_for is a closure inside call_groq_meta; reach it the way the
+    """_model_for is a closure inside call_local_llm_meta; reach it the way the
     provenance writer does — by exercising the public surface — or, failing
     that, read the mapping off the module constants it wraps."""
     return {

@@ -82,7 +82,7 @@ def test_no_file_names_an_outside_model_host_or_imports_its_sdk():
 
 def test_the_scan_examines_the_system():
     files = tracked()
-    assert len(files) > 300 and "core/groq_backend.py" in files and "config/network_allowlist.json" in files
+    assert len(files) > 300 and "core/local_llm.py" in files and "config/network_allowlist.json" in files
 
 
 def test_every_pattern_carries_the_ruling_and_the_quote():
@@ -91,9 +91,9 @@ def test_every_pattern_carries_the_ruling_and_the_quote():
 
 # ── mutations ───────────────────────────────────────────────────────────────
 def test_mutation_an_outside_url_in_a_core_file_fails():
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
+    src = (REPO / "core" / "local_llm.py").read_text(encoding="utf-8")
     src += '\nGROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"\n'
-    assert findings("core/groq_backend.py", src), "the line above must be found"
+    assert findings("core/local_llm.py", src), "the line above must be found"
 
 
 def test_mutation_an_sdk_import_fails():

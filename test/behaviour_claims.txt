@@ -124,12 +124,12 @@ core/gdelt_daily.py 7da4041392df  # THE ONE LINE FOR TOMORROW, and this module d
 core/global_indicators.py 8c23a7c09a27  # arXiv: total cs.AI papers (Atom XML); max_results=1 required — 0 returns 500
 core/global_indicators.py 9539f8648287  # The key now names the CONCEPT and the line lives in the provenance, so the next revision does not make the field name a lie again.
 core/global_indicators.py db12d9a6c323  # Prefers the explicit UCDP_LOCAL_CSV path; otherwise globs UCDP_LOCAL_DIR for any *.csv whose name starts with 'ucdpprioconflict' (case-insensitively) 
-core/groq_backend.py 48b578f7cb76  # THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads memory/llm_provenance.jsonl (success, truncation, 429s, latency) an
-core/groq_backend.py 5e5719938599  # It served 440 calls 15-18 Aug with the best median reply of the four, then returned 402 payment_required on every completion from ~22 Aug.
-core/groq_backend.py ac896e674891  # This file only READS it, only accepts known keys, and falls back to the default below if the file is absent, stale, or malformed.
-core/groq_backend.py e544b7c18496  # Outside it, handing step_budget a callable that loads 8b would evict the pinned 3b mid-step — the exact churn core/model_window.py exists to stop — an
-core/groq_backend.py e76dd691e2a1  # That is the shape of all six internet_intelligence kills in the existence ledger. core/step_budget.py spends the step's budget B in thirds and never b
-core/groq_backend.py ff43da0f60e1  # A one-message completion against BOTH models returns 402 with {"type":"payment_required_error","param":"quota"}.
+core/local_llm.py 48b578f7cb76  # THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads memory/llm_provenance.jsonl (success, truncation, 429s, latency) an
+core/local_llm.py 5e5719938599  # It served 440 calls 15-18 Aug with the best median reply of the four, then returned 402 payment_required on every completion from ~22 Aug.
+core/local_llm.py ac896e674891  # This file only READS it, only accepts known keys, and falls back to the default below if the file is absent, stale, or malformed.
+core/local_llm.py e544b7c18496  # Outside it, handing step_budget a callable that loads 8b would evict the pinned 3b mid-step — the exact churn core/model_window.py exists to stop — an
+core/local_llm.py e76dd691e2a1  # That is the shape of all six internet_intelligence kills in the existence ledger. core/step_budget.py spends the step's budget B in thirds and never b
+core/local_llm.py ff43da0f60e1  # A one-message completion against BOTH models returns 402 with {"type":"payment_required_error","param":"quota"}.
 core/halt.py 0478d43aedaa  # So this asks core/survival_gate.check(), which delegates straight to homeostasis.evaluate(): the same module, the same thresholds, no writes, no subpr
 core/halt.py 1307abba4bee  # A halt writes CYCLE_HALTED_SELF and exits with HALT_EXIT_CODE, which is neither zero nor the code of a crash. venv\Scripts\python.exe core\halt.py --s
 core/halt.py 3d5400e3924e  # Raises VoluntaryHalt, or returns and the cycle walks on.
@@ -232,7 +232,7 @@ core/step_budget.py 3fa9e1ce71e9  # No MIN_BUDGET_SEC floor here, and that is th
 core/step_budget.py 6a133bf6031c  # The existence ledger shows what that costs — 11 kills, concentrated on two steps: kills_by_step internet_intelligence 6, daily_analysis 5 Both are LLM
 core/step_budget.py a339f0bae2d0  # Below this a step's account counts as empty — see run_call().
 core/step_budget.py ba943d37f4df  # A worker killed by a BaseException — a client library that calls sys.exit() on a hard error — leaves `done` unset, so it is reported RAISED instead of
-core/step_budget.py f638f7bf603e  # Told by core/groq_backend whenever it sets a cooldown.
+core/step_budget.py f638f7bf603e  # Told by core/local_llm whenever it sets a cooldown.
 core/step_budget.py fd6e555c8053  # B = learned p95 x factor, CLAMPED to the human ceiling, or the ceiling itself when there is no history. p95 needs at least two runs (core/step_contrac
 core/step_contract.py 5065bd6de30d  # OK it wrote what it normally writes NO_EFFECT it returned without raising and touched nothing it usually touches — the quiet failure SLOW past its lea
 core/survival_gate.py 00c8a16f9808  # If this module raises — a missing config, an unreadable sensor, an import that is not there — the cycle STARTS.
@@ -260,7 +260,7 @@ test/test_alarm_indicators.py 8e37ff60e5a9  # MUTATION NET on the contract. swee
 test/test_alarm_indicators.py f173dacbe3a7  # So exists() said True, read_text raised PermissionError, and it escaped through sweep_indicators, whose docstring promises "Never raises".
 test/test_alarm_levels.py ddf2416aeaf1  # The real call four hundred lines below passes level=supervisor.ALARM.
 test/test_alarm_levels.py fc49928387db  # Line numbers of real supervisor.alarm_human(...) calls with no level=.
-test/test_answered_by_stamp.py 301bda87f52d  # groq_backend emits a second reason shape ('no tier answered within B=...').
+test/test_answered_by_stamp.py 301bda87f52d  # local_llm emits a second reason shape ('no tier answered within B=...').
 test/test_answered_by_stamp.py cdab321e69f8  # A test that reads only the ORIGINAL name cannot see an aliased import; the binding is a PAIR, (original, local), and the local name is what appears at
 test/test_assessment_guards.py 9e1a73d7fc26  # Fake local model: impact read -> impact_json; relevance gate -> always relevant here (it has its own suite); sign-skeptic -> holds verdict.
 test/test_axis_feed.py 3f2178006bc0  # Remove the isinstance check in check_number and it passes silently, which is the whole defect. venv\Scripts\python.exe -m pytest test/test_axis_feed.p
@@ -439,7 +439,7 @@ test/test_learner_bridge.py 50f9a44c236a  # test/test_learner_bridge.py — the 
 test/test_level_reconciler.py 74cb55272678  # HIGH on an axis named GLOBAL_RISK reads as danger and means the opposite.
 test/test_level_reconciler.py e5c64c9fc13c  # WHAT WENT WRONG ---------------- auto_levels writes a level word from its own thresholds. goal_score_calculator writes a 0..1 score from the measured 
 test/test_llm_models_exist.py 0cbd86b70eba  # --------------------------------------------------------------------------- Reading the configuration — as text, never by importing ------------------
-test/test_llm_models_exist.py a303e9bd5131  # Both ids sat in core/groq_backend.py as string literals, and the calls 404'd inside the retry path — three nights running, eating the 45-minute step c
+test/test_llm_models_exist.py a303e9bd5131  # Both ids sat in core/local_llm.py as string literals, and the calls 404'd inside the retry path — three nights running, eating the 45-minute step c
 test/test_machine_guard.py 2ea86f9d39ba  # THE GUARD WAS NEVER REACHED FROM market_bet.py, which imports only MODEL_PIN and generate_completions and never calls first_bet.main().
 test/test_machine_guard.py 7f539caed9e1  # NOT a subprocess writing a real memory/cycle.lock: conftest's live-write guard refuses that, and it is right to.
 test/test_measured_flag_seam.py 8fcc7ddd34f7  # It does not prove the two agree about what the flag MEANS — and every other test on both sides hand-writes the flag, so both could drift together and 
@@ -656,8 +656,8 @@ test/test_provenance_model_id.py cbe07ee07729  # BACKED: test_llm_one_door.test_
 test/test_spine_llm_reach.py 78cc733314cc  # BACKED: test_spine_llm_reach.test_the_spine_reaches_the_llm_stack_only_through_named_edges is that definition
 test/test_survival_wiring.py cf85dcc3ca2e  # BACKED: test_survival_wiring.test_a_witnessed_unexplained_death_latches_the_survival_profile
 test/test_warm_core_restore.py 57b932d35aa9  # BACKED: test_warm_core_restore: preflight_loads/does_nothing, 8b_outside_a_cycle_ends_with_the_core_restored, source_registration_asks_the_core
-core/groq_backend.py 852a01d0a74b  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door
-core/groq_backend.py 2f53258191b0  # BACKED: test_claims_backed_26sep.test_post_writes_one_row_on_every_path (ok, HTTP 500, empty reply, exception)
+core/local_llm.py 852a01d0a74b  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door
+core/local_llm.py 2f53258191b0  # BACKED: test_claims_backed_26sep.test_post_writes_one_row_on_every_path (ok, HTTP 500, empty reply, exception)
 core/llm_door.py 6bc411fed0c1  # BACKED: test_llm_one_door.test_every_model_call_goes_through_the_door
 core/llm_door.py 296819bc410a  # BACKED: test_claims_backed_26sep.test_reply_facts_read_every_dialect
 core/llm_door.py b6e3f075994b  # BACKED: test_llm_dead_legs.test_a_dead_leg_is_probed_once_a_night_then_skipped_with_one_row

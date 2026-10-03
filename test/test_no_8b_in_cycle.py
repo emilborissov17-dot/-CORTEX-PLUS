@@ -19,7 +19,7 @@ sys.path.insert(0, str(REPO))
 
 import requests  # noqa: E402
 
-from core import brain, groq_backend, model_window  # noqa: E402
+from core import brain, local_llm, model_window  # noqa: E402
 
 BIG = "qwen3:8b"
 
@@ -63,8 +63,8 @@ def test_inside_a_cycle_the_model_sent_to_ollama_is_never_8b(tmp_path, monkeypat
 
     brain.think("judge of phase X", "is it fine?", remember_it=False)
     brain.attend("some_step")
-    groq_backend._call_local_as(BIG, "hello", 64)
-    groq_backend._call_local("hello", 64)
+    local_llm._call_local_as(BIG, "hello", 64)
+    local_llm._call_local("hello", 64)
     assert model_window.local_model(want_big=True, purpose="t") == local
 
     assert sent, "nothing reached the (mocked) Ollama endpoint"

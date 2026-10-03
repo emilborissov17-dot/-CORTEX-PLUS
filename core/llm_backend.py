@@ -2,20 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 core/llm_backend.py
-Primary: Groq API (llama-3.3-70b) — безплатно, бързо
-Fallback: Ollama qwen3:1.7b — локално
+call_internal_llm: the local model through core/local_llm (C-CLOUD-1, R45: no outside model).
+call_ollama_fallback: the Ollama CLI directly.
 """
 from __future__ import annotations
 import subprocess, os
 from pathlib import Path
 
 MODEL_NAME   = "qwen3:1.7b"  # fallback
-GROQ_TIMEOUT = 60
 OLLAMA_TIMEOUT = 300
-
-def call_groq_primary(prompt: str) -> str:
-    from core.groq_backend import call_groq
-    return call_groq(prompt, max_tokens=1024)
 
 def call_ollama_fallback(prompt: str) -> str:
     r = subprocess.run(
@@ -34,6 +29,6 @@ def call_ollama_fallback(prompt: str) -> str:
     return text
 
 def call_internal_llm(prompt: str) -> str:
-    """Groq → Gemini fallback via groq_backend. Ollama removed."""
-    from core.groq_backend import call_groq
-    return call_groq(prompt, max_tokens=1024)
+    """The local model via core/local_llm."""
+    from core.local_llm import call_local_llm
+    return call_local_llm(prompt, max_tokens=1024)

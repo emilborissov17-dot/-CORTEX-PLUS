@@ -6,7 +6,7 @@ REDESIGN: Генерира patches за решаване на РЕАЛНИ ПР�
 """
 import json, pathlib, sys, os, re, textwrap
 from datetime import datetime, timezone
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 from safety.safe_path import UnsafePath, safe_path
 from alignment.civilization_guard import evaluate_proposal_alignment
 from safety.ast_gate import check_code
@@ -118,7 +118,7 @@ AVAILABLE_MODULES = """
 - memory.body_scan: full_scan(), find_in_self()
 - memory.existence_model: am_i_alive()
 - memory.semantic_memory: remember(), query()
-- core.groq_backend: call_groq()
+- core.local_llm: call_local_llm()
 - json, pathlib, datetime, os, sys — стандартни
 
 НЕ използвай: SemanticMemory клас, pandas, sklearn, requests, urllib
@@ -478,7 +478,7 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
     )
 
     try:
-        raw = call_groq(prompt, max_tokens=1000)
+        raw = call_local_llm(prompt, max_tokens=1000)
 
         if not raw or len(raw.strip()) < 10:
             return {"success": False, "reason": "Groq върна празен отговор"}

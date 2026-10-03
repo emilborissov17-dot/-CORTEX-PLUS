@@ -41,7 +41,7 @@
     "localhost"
    ]
   },
-  "core/groq_backend.py": {
+  "core/local_llm.py": {
    "class": "M",
    "reason": "the local model on localhost:11434 - the only language model (C-CLOUD-1, R45)",
    "hosts": [

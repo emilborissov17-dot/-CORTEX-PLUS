@@ -40,7 +40,7 @@ def _local(prompt: str, timeout: int = 120, num_predict: int = 300) -> str:
     # THE ENVIRONMENT VARIABLE IS SET TOO, AND THEY HAVE DIFFERENT JOBS.
     # OLLAMA_KEEP_ALIVE=0 (user scope) governs any caller that FORGETS to send
     # one — it is the net under the next unknown case, and it is irrelevant to
-    # the 41 call_groq sites that override it per request. This line is the
+    # the 41 call_local_llm sites that override it per request. This line is the
     # opposite: it states the intent AT THE SITE and does not depend on the
     # machine's environment, so a clone, a container or a reset profile behaves
     # the same. The variable defends against the unknown; the constant fixes the

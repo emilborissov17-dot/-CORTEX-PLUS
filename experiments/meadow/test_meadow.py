@@ -362,7 +362,7 @@ def test_run_writes_only_under_the_meadow_out_dirs(fake, tmp_path):
 
 
 def test_imports_no_live_pipeline_module():
-    """Isolation: the only repo-internal import permitted is core.groq_backend, the
+    """Isolation: the only repo-internal import permitted is core.local_llm, the
     shared brain. No scorer, agent, gate, tracker, memory.* or the cycle runner."""
     src = Path(md.__file__).read_text(encoding="utf-8")
     tree = ast.parse(src)
@@ -377,7 +377,7 @@ def test_imports_no_live_pipeline_module():
     for mod in imported:
         top = mod.split(".")[0]
         if top in repo_pkgs:
-            assert mod == "core.groq_backend", \
+            assert mod == "core.local_llm", \
                 f"meadow imports a live-path module it must not: {mod}"
 
 

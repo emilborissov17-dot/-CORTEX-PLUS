@@ -4,7 +4,7 @@ agents/core/self_observer.py
 LLM сам решава какво да наблюдава — спрямо AGI цели.
 """
 import json, sys, pathlib, time, re
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE_DIR))
@@ -127,7 +127,7 @@ def run():
 
         time.sleep(2)
         try:
-            raw = call_groq(prompt, max_tokens=300)
+            raw = call_local_llm(prompt, max_tokens=300)
         except Exception as e:
             print(f"  [Стъпка {step+1}] LLM грешка: {e}")
             time.sleep(10)
@@ -203,7 +203,7 @@ def _build_agi_proposals(history: list) -> list:
     )
 
     try:
-        raw = call_groq(prompt, max_tokens=600)
+        raw = call_local_llm(prompt, max_tokens=600)
         raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
         if "```" in raw:
             raw = raw.split("```")[1].split("```")[0].strip()

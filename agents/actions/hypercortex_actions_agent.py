@@ -9,7 +9,7 @@ import subprocess
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
 
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 REPORTS_DIR = BASE_DIR / "reports"
@@ -73,7 +73,7 @@ def _strip_markdown_code(text: str) -> str:
 # ---------- LLM helper (Groq → Gemini → Ollama fallback chain) ----------
 
 def call_llm_refactor(prompt: str, max_tokens: int = 4096) -> str:
-    return call_groq(prompt, max_tokens=max_tokens)
+    return call_local_llm(prompt, max_tokens=max_tokens)
 
 
 # ---------- Actions: run_script / modify_config / llm_refactor ----------

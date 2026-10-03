@@ -573,7 +573,7 @@ def test_supervisor_is_in_the_protected_denylist():
 def test_supervisor_makes_no_llm_call():
     """It cannot form an intention; it can only observe a clock and a file."""
     src = open(sup.__file__, encoding="utf-8").read()
-    for forbidden in ("call_groq", "groq_backend", "openai", "llm", "MerkleMemory"):
+    for forbidden in ("call_local_llm", "local_llm", "openai", "llm", "MerkleMemory"):
         assert forbidden not in src.replace("# ", ""), \
             f"supervisor must not reference {forbidden}"
 

@@ -86,8 +86,8 @@ def test_the_spine_report_imports_no_brain_and_the_edges_add_its_words(tmp_path,
 
 def test_body_scan_sets_the_pace_without_the_ladder():
     src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
-    assert "import core.groq_backend as _gb" not in src
-    from core import llm_pacing, groq_backend as gb
+    assert "import core.local_llm as _gb" not in src
+    from core import llm_pacing, local_llm as gb
     llm_pacing.set_sleep(0.25)
     try:
         assert gb._pace() == 0.25

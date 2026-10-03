@@ -31,7 +31,7 @@ MEMORY_FILE     = BASE / "memory" / "predictor_memory.json"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -176,7 +176,7 @@ SCORE: {score}/100 — КРИТИЧНО НИСКО
 }}"""
 
     try:
-        raw = call_groq(prompt, max_tokens=600)
+        raw = call_local_llm(prompt, max_tokens=600)
         # Изчисти markdown
         for fence in ("```json", "```"):
             if fence in raw:
@@ -240,7 +240,7 @@ def generate_civilization_summary(scores: dict, critical: list) -> str:
 Бъди конкретен, честен и ориентиран към действие. На български."""
 
     try:
-        return call_groq(prompt, max_tokens=300)
+        return call_local_llm(prompt, max_tokens=300)
     except Exception:
         return f"Средна оценка: {avg}/100. Критични оси: {len(low)}."
 

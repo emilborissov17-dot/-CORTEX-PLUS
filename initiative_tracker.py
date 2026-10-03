@@ -16,9 +16,9 @@ if str(_BASE_FOR_IMPORT) not in sys.path:
     sys.path.insert(0, str(_BASE_FOR_IMPORT))
 
 try:
-    from core.groq_backend import call_groq as _call_groq
+    from core.local_llm import call_local_llm as _call_local_llm
 except Exception:
-    _call_groq = None
+    _call_local_llm = None
 
 BASE              = pathlib.Path(__file__).resolve().parent
 PROPOSALS_PATH    = BASE / "memory" / "improvement_proposals.json"
@@ -130,8 +130,8 @@ def _proposal_id(proposal: dict) -> str:
 
 def _generate_action_plan(problem: str, solution: str, target_date: str) -> list[dict]:
     """Call Groq to generate 3-5 concrete, measurable steps for this initiative."""
-    if _call_groq is None:
-        print("[INITIATIVE_TRACKER] call_groq недостъпен — action_plan пропуснат")
+    if _call_local_llm is None:
+        print("[INITIATIVE_TRACKER] call_local_llm недостъпен — action_plan пропуснат")
         return []
     prompt = (
         "Ти си стратегически планировчик за AGI система с глобална мисия.\n\n"
@@ -150,7 +150,7 @@ def _generate_action_plan(problem: str, solution: str, target_date: str) -> list
     )
     for attempt in range(2):
         try:
-            raw = _call_groq(prompt, max_tokens=600)
+            raw = _call_local_llm(prompt, max_tokens=600)
             raw = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
             if "```" in raw:
                 parts = raw.split("```")

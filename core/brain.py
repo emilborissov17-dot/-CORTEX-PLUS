@@ -457,7 +457,7 @@ def numeric_judge() -> str | None:
 
 def _pick_model() -> tuple:
     try:
-        from core.groq_backend import _pick_local_model, _OLLAMA_URL
+        from core.local_llm import _pick_local_model, _OLLAMA_URL
         return _pick_local_model(), _OLLAMA_URL
     except Exception:
         return "qwen3", "http://localhost:11434"

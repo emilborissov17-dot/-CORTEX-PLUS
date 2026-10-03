@@ -7,7 +7,7 @@ agents/core/goal_planner.py
 """
 import json, pathlib, sys, os
 from datetime import datetime, timezone
-from core.groq_backend import call_groq
+from core.local_llm import call_local_llm
 
 BASE_DIR = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(BASE_DIR))
@@ -138,7 +138,7 @@ def generate_tasks(goal: str, score_data: dict, predictor: dict, levels: dict) -
 - Извикване на World Bank API, NOAA API
 - Записване на анализи в memory/
 - Генериране на доклади в reports/
-- Извикване на call_groq() за анализ
+- Извикване на call_local_llm() за анализ
 
 ПРАВИЛА:
 1. Генерирай точно 3 задачи
@@ -159,7 +159,7 @@ def generate_tasks(goal: str, score_data: dict, predictor: dict, levels: dict) -
 ]"""
 
     try:
-        raw = call_groq(prompt, max_tokens=1000)
+        raw = call_local_llm(prompt, max_tokens=1000)
         if "```json" in raw:
             raw = raw.split("```json")[1].split("```")[0]
         elif "```" in raw:

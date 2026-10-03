@@ -21,7 +21,7 @@ in exactly one place:
     _generate_solution()     lines 423-512
       :436-448   the prompt turns from describing the problem to demanding
                  "Напиши Python patch"
-      :486       call_groq(prompt, max_tokens=1000)  <-- one model does both
+      :486       call_local_llm(prompt, max_tokens=1000)  <-- one model does both
 
 Everything before line 335 is specification. Everything after is code
 generation. Today the SAME ladder call serves both, so the model that knows this
@@ -118,7 +118,7 @@ class SpecAxisUnstable(SpecInvalid):
     """SPEC_AXIS_UNSTABLE — repeated asks did not agree on an axis.
 
     The local model's temperature is 0.4 and fixed in production
-    (groq_backend._call_local_as), which this experiment must not change. So
+    (local_llm._call_local_as), which this experiment must not change. So
     determinism is bought with CONSENSUS instead: ask N times and require a
     majority. No majority means the model does not know, and saying so is the
     honest output.
@@ -844,12 +844,12 @@ def _require_grounded_metric(spec: dict, problem: dict | None = None,
 def _local_brain(prompt: str, max_tokens: int = 700) -> str:
     """The LOCAL model, and only the local model.
 
-    NO CLOUD FALLBACK, deliberately. core.groq_backend.call_groq would answer
+    NO CLOUD FALLBACK, deliberately. core.local_llm.call_local_llm would answer
     and the spec would look fine — and the experiment, which is about WHICH model
     does this job, would be silently over. If the local brain is down this
     raises, and that is the honest outcome.
     """
-    from core.groq_backend import _call_local
+    from core.local_llm import _call_local
     content, _meta = _call_local(prompt, max_tokens)
     return content
 
@@ -1270,7 +1270,7 @@ def require(problem: dict, brain=None, axes: set | None = None,
 
     RETRY-TO-CONSENSUS, and why it is consensus rather than a temperature knob:
     the local model runs at temperature 0.4, hardcoded in
-    core.groq_backend._call_local_as, which is PRODUCTION and not this
+    core.local_llm._call_local_as, which is PRODUCTION and not this
     experiment's to change. So determinism is bought by asking N times and
     requiring a majority on goal_axis — the field that wandered across four
     different answers in five live runs on one problem.
@@ -1373,8 +1373,8 @@ def _selftest() -> int:
           f"(experimental, not memory/)")
 
     try:
-        from core.groq_backend import _call_local  # noqa: F401
-        print("  local brain entry         : LIVE (core.groq_backend._call_local)")
+        from core.local_llm import _call_local  # noqa: F401
+        print("  local brain entry         : LIVE (core.local_llm._call_local)")
     except Exception as exc:                                     # noqa: BLE001
         print(f"  local brain entry         : INERT ({type(exc).__name__}: {exc})")
 

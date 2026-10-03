@@ -285,7 +285,7 @@ def test_the_observations_own_critical_axes_are_NOT_used_as_the_allowlist():
 
 def test_consensus_requires_a_majority_on_the_DOMAIN():
     """Determinism without touching production. The local temperature is 0.4 and
-    hardcoded in core.groq_backend._call_local_as, which this experiment must not
+    hardcoded in core.local_llm._call_local_as, which this experiment must not
     change — so agreement is bought by asking three times.
 
     THE VOTE MOVED TO THE DOMAIN (8 Sep 2026). Categories are a multi-select, so
@@ -533,20 +533,20 @@ def test_a_brain_that_returns_prose_instead_of_json_is_refused():
 # ---------------------------------------------------------------------------
 
 def test_the_requirer_never_reaches_for_the_cloud_ladder():
-    """STRUCTURAL, on the AST. A silent upgrade to call_groq when the local brain
+    """STRUCTURAL, on the AST. A silent upgrade to call_local_llm when the local brain
     is down would make the spec look fine and end the experiment without saying
     so. If the local brain is unavailable this module must RAISE."""
     tree = ast.parse((REPO / "core" / "self_improve" / "requirer.py")
                      .read_text(encoding="utf-8"))
     for node in ast.walk(tree):
-        if isinstance(node, ast.ImportFrom) and node.module == "core.groq_backend":
+        if isinstance(node, ast.ImportFrom) and node.module == "core.local_llm":
             names = {a.name for a in node.names}
             assert names == {"_call_local"}, (
                 f"the requirer imports {names} from the ladder; it may use the "
                 f"LOCAL brain only")
     called = {n.func.id for n in ast.walk(tree)
               if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
-    assert "call_groq" not in called and "call_groq_meta" not in called
+    assert "call_local_llm" not in called and "call_local_llm_meta" not in called
 
 
 def test_the_prompt_states_the_rules_it_will_be_judged_by():

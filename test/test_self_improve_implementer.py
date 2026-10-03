@@ -215,9 +215,9 @@ def test_the_implementer_uses_the_cloud_ladder_and_not_the_local_model():
     tree = ast.parse((REPO / "core" / "self_improve" / "implementer.py")
                      .read_text(encoding="utf-8"))
     for node in ast.walk(tree):
-        if isinstance(node, ast.ImportFrom) and node.module == "core.groq_backend":
+        if isinstance(node, ast.ImportFrom) and node.module == "core.local_llm":
             names = {a.name for a in node.names}
-            assert names == {"call_groq"}, (
+            assert names == {"call_local_llm"}, (
                 f"the implementer imports {names}; it may use the CLOUD ladder "
                 f"only — _call_local would put the 0/3 model back on this job")
     called = {n.func.id for n in ast.walk(tree)

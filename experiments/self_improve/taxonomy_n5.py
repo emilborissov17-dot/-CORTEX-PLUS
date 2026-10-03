@@ -9,7 +9,7 @@ against the REAL local model on the REAL journal problem. No mocks anywhere.
 WHY THE BAR IS NOT "IDENTICAL ANSWERS"
 ---------------------------------------
 The local model runs at temperature 0.4, hardcoded in production
-(core.groq_backend._call_local_as), so identical answers were never the standard.
+(core.local_llm._call_local_as), so identical answers were never the standard.
 The standard is that the answer lands in the right PLACE every time:
 
     * domain == "internal" on every run — a JSON parser is a fault in the

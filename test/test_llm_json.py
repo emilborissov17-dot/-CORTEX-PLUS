@@ -14,7 +14,7 @@ code, not guessed:
   1. agents/internet/internet_agent.py already special-cased the literal
      string 'done thinking.' before this module existed — that marker is a
      real Cerebras gpt-oss artifact somebody hit in production.
-  2. core/groq_backend._call_cerebras did `msg.get("content") or
+  2. core/local_llm._call_cerebras did `msg.get("content") or
      msg.get("reasoning")`. When max_tokens truncates before the model
      finishes reasoning, "content" is empty and the RAW REASONING TEXT is
      what reaches the parser. That is the mechanism that produces
@@ -47,7 +47,7 @@ done thinking.
 {"summary": "Grid buildout lags demand.", "sentiment": "NEGATIVE", "urgency": "HIGH", "key_developments": ["IEA flags investment gap"]}'''
 
 # The nastier case: max_tokens cut the model mid-reasoning, content was empty,
-# groq_backend fell back to `reasoning`, and the parser got pure prose.
+# local_llm fell back to `reasoning`, and the parser got pure prose.
 GPT_OSS_PURE_REASONING = '''The user asks: suggest 3 free data endpoints for BIODIVERSITY.
 We need URLs that require no API key. Let me recall: GBIF has an occurrence API,
 IUCN has a red list API but that needs a token, so probably not. Let me think about'''
@@ -178,7 +178,7 @@ def test_truncated_json_raises_truncated_error():
 
 
 def test_pure_reasoning_is_reported_as_truncated_not_garbage():
-    """content was empty -> groq_backend used `reasoning` -> no JSON at all.
+    """content was empty -> local_llm used `reasoning` -> no JSON at all.
 
     This must be TRUNCATED (retryable), not a generic parse error, otherwise
     nobody retries and the axis silently degrades.
@@ -200,7 +200,7 @@ def test_provider_finish_reason_length_wins_even_if_text_looks_closed():
 
 
 def test_reasoning_fallback_flag_forces_truncated_classification():
-    """groq_backend telling us "content was empty, this IS the reasoning" is
+    """local_llm telling us "content was empty, this IS the reasoning" is
     definitive — even for text with no reasoning fingerprints at all."""
     with pytest.raises(TruncatedJSONError) as ei:
         extract_json(
@@ -274,7 +274,7 @@ def test_llmjson_error_is_a_valueerror():
 def test_call_llm_json_retries_once_on_truncation_and_doubles_budget(monkeypatch):
     """First call is truncated; the retry must go out with 2x max_tokens
     and its result must be the one returned."""
-    import core.groq_backend as gb
+    import core.local_llm as gb
     calls = []
 
     def fake(prompt, max_tokens=1024):
@@ -289,7 +289,7 @@ def test_call_llm_json_retries_once_on_truncation_and_doubles_budget(monkeypatch
             "finish_reason": "stop",
         }
 
-    monkeypatch.setattr(gb, "call_groq_meta", fake)
+    monkeypatch.setattr(gb, "call_local_llm_meta", fake)
 
     from core.llm_json import call_llm_json
 
@@ -300,14 +300,14 @@ def test_call_llm_json_retries_once_on_truncation_and_doubles_budget(monkeypatch
 
 def test_call_llm_json_does_not_retry_on_plain_garbage(monkeypatch):
     """Garbage is not retryable — one call only, then raise."""
-    import core.groq_backend as gb
+    import core.local_llm as gb
     calls = []
 
     def fake(prompt, max_tokens=1024):
         calls.append(max_tokens)
         return "I will not answer.", {"backend": "Groq", "finish_reason": "stop"}
 
-    monkeypatch.setattr(gb, "call_groq_meta", fake)
+    monkeypatch.setattr(gb, "call_local_llm_meta", fake)
 
     from core.llm_json import call_llm_json
 
@@ -319,7 +319,7 @@ def test_call_llm_json_does_not_retry_on_plain_garbage(monkeypatch):
 def test_call_llm_json_raises_if_retry_also_truncated(monkeypatch):
     """Two strikes: propagate TruncatedJSONError so the caller can mark
     the snapshot TRUNCATED rather than silently writing junk."""
-    import core.groq_backend as gb
+    import core.local_llm as gb
     calls = []
 
     def fake(prompt, max_tokens=1024):
@@ -329,7 +329,7 @@ def test_call_llm_json_raises_if_retry_also_truncated(monkeypatch):
             "used_reasoning_fallback": True,
         }
 
-    monkeypatch.setattr(gb, "call_groq_meta", fake)
+    monkeypatch.setattr(gb, "call_local_llm_meta", fake)
 
     from core.llm_json import call_llm_json
 

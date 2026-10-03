@@ -18,7 +18,7 @@ to find what repeats, what contradicts, what is signal and what is noise.
 
 ## Two phases, one script
 
-**DIVERGE** — build the slice, send it to the best available brain (`call_groq`, full
+**DIVERGE** — build the slice, send it to the best available brain (`call_local_llm`, full
 fallback chain), write the reply **verbatim** to `notebook/YYYY-MM-DD.md`. No parsing,
 no validation, no PASS/FAIL. A small header records which slice it saw (sources, seed,
 counts) so a future reader knows exactly what a page was written from.
@@ -45,7 +45,7 @@ a past day, and the recorded seed is meaningful.
 
 1. **Isolation** like pulse/dreams: own dir, reads `news/ snapshots/ memory/ output/`
    as data only, writes only under `experiments/meadow/`. The one sanctioned live
-   import is `core.groq_backend.call_groq` — the shared brain, a one-way dependency.
+   import is `core.local_llm.call_local_llm` — the shared brain, a one-way dependency.
 2. **DIVERGE output is unjudged.** There is no `check.py` and there must never be one.
    Any mechanical quality gate would be judgement, and judgement is what the meadow
    exists to be free of. The only quality signal is Emil reading the notebook.

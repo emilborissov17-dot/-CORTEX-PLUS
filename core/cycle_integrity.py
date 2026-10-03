@@ -56,7 +56,7 @@ FAILED_VERDICTS = frozenset({"RAISED", "MISSING", "NO_EFFECT"})
 DEGRADED_VERDICTS = frozenset({"DEGRADED", "SLOW"})
 
 # THE ONLY STEPS ALLOWED TO ANSWER FROM A LOCAL MODEL AND STILL COUNT AS FULL.
-# Sourced from test/test_no_ollama_in_live_path.py, where groq_backend.py and
+# Sourced from test/test_no_ollama_in_live_path.py, where local_llm.py and
 # data_scout.py are named as owning "a LABELLED sovereign local fallback
 # (Emil-approved)". Everything else answering locally has fallen back, and a
 # fallback is not the work that was asked for.

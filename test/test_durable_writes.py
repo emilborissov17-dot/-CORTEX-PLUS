@@ -36,7 +36,7 @@ def _own_buffer_only():
     durable._pending is a module-level set, and that is CORRECT in production:
     one process, one cycle, one buffer, flushed at every beat(). A test suite has
     no beats, so any earlier test that made a batched write — core/brain.py:643,
-    1167, 1312 and core/groq_backend.py:767 all do — leaves an entry in it, and
+    1167, 1312 and core/local_llm.py:767 all do — leaves an entry in it, and
     `assert durable.pending() == ["b.jsonl"]` then fails on a name this file
     never wrote.
 
@@ -263,7 +263,7 @@ def test_the_named_writers_no_longer_hand_roll_their_appends():
     import ast
     checks = {
         "core/brain.py": 3,          # journal, provenance, step log x2 -> 4 calls
-        # the provenance writer moved from groq_backend into the one door (d7cf655)
+        # the provenance writer moved from local_llm into the one door (d7cf655)
         "core/llm_door.py": 1,
     }
     for rel, minimum in checks.items():

@@ -1,7 +1,7 @@
 """Permanent guard: no Ollama calls in the live cycle path (item 7).
 
 Ollama was removed from the LLM fallback chain on 2026-07-04 (see
-core/groq_backend.py): there is not a single model pulled locally, so it was a
+core/local_llm.py): there is not a single model pulled locally, so it was a
 dead safety net that only masked AllBackendsFailedError. Per CLAUDE.md
 convention, any remaining subprocess/HTTP Ollama call in the live cycle path is
 a bug.
@@ -18,7 +18,7 @@ EXCEPTIONS (30 Jul 2026, Emil-approved). The box now runs Ollama with real model
 fallbacks. So the convention shifted: not "no Ollama anywhere" but "no SILENT/MASKING
 Ollama; LABELLED sovereign fallbacks are allowed". Two modules are checked POSITIVELY
 below instead of by the blanket ban:
-  - core/groq_backend.py (task #16): local model as an explicit LAST RESORT, only when
+  - core/local_llm.py (task #16): local model as an explicit LAST RESORT, only when
     all four cloud backends are cooling, answer labelled backend="local:<model>",
     degraded=True. Keeps an axis alive instead of dying with LLM_FAILED.
   - core/data_scout.py: local model as a SOVEREIGN fallback for source discovery —
@@ -40,7 +40,7 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 
-# Modules that run as part of a normal cycle. groq_backend.py and data_scout.py are
+# Modules that run as part of a normal cycle. local_llm.py and data_scout.py are
 # intentionally NOT here — each owns a LABELLED sovereign local fallback (Emil-approved)
 # and is checked positively below instead of by the blanket endpoint ban.
 LIVE_PATH_MODULES = [

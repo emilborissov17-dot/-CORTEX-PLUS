@@ -11,7 +11,7 @@ format — in nine log lines:
     memory/diagnosis_history.jsonl   4   /evidence[]
 
 Nobody logged a key. A Gemini error echoed the request URL, the URL carries
-`?key=...`, and core/groq_backend._log_failure stored the provider's text
+`?key=...`, and core/local_llm._log_failure stored the provider's text
 verbatim — correctly, because a failure with no message is useless. What was
 missing is that provider text is untrusted input and a log line gets committed.
 
@@ -287,7 +287,7 @@ def test_an_nvidia_nim_key_is_removed():
 
 
 def test_the_nvidia_prefix_alone_is_not_a_key():
-    """NEGATIVE CONTROL, and it is the live case: core/groq_backend.py carries the
+    """NEGATIVE CONTROL, and it is the live case: core/local_llm.py carries the
     comment `(NVIDIA_API_KEY in .env, "nvapi-...")`. Redacting documentation that
     merely names the prefix would rewrite source comments."""
     doc = '# (NVIDIA_API_KEY in .env, "nvapi-...")'
@@ -297,11 +297,11 @@ def test_the_nvidia_prefix_alone_is_not_a_key():
 def test_every_backend_the_chain_calls_has_a_pattern():
     """THE NET BEHIND THE INSTRUCTION. Adding a backend without adding its key
     shape is what happened on 11 Sep. This fails when a *_API_KEY that
-    groq_backend loads has no corresponding rule here, so the next provider
+    local_llm loads has no corresponding rule here, so the next provider
     cannot be added silently."""
     import pathlib
     import re as _re
-    src = (BASE / "core" / "groq_backend.py").read_text(encoding="utf-8", errors="replace")
+    src = (BASE / "core" / "local_llm.py").read_text(encoding="utf-8", errors="replace")
     loaded = set(_re.findall(r'_load_key\(\s*["\']([A-Z0-9_]+)["\']', src))
     # env var -> the pattern name that covers it
     covered = {
@@ -318,7 +318,7 @@ def test_every_backend_the_chain_calls_has_a_pattern():
     missing = sorted(k for k in loaded
                      if covered.get(k) is None or covered[k] not in names)
     assert not missing, (
-        f"core/groq_backend.py loads {missing} and core/redact.py has no pattern "
+        f"core/local_llm.py loads {missing} and core/redact.py has no pattern "
         f"for them. A backend added without its key shape is a key that reaches a "
         f"log: add the rule in the same commit as the backend.")
 

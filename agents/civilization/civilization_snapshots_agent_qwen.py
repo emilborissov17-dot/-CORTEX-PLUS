@@ -46,8 +46,8 @@ def _inject_memory(axis: str, prompt: str) -> str:
 def _llm_fallback(prompt, axis="CIVILIZATION"):
     prompt = _inject_memory(axis, prompt)
     try:
-        from core.groq_backend import call_groq, AllBackendsFailedError
-        text = call_groq(prompt, max_tokens=1024)
+        from core.local_llm import call_local_llm, AllBackendsFailedError
+        text = call_local_llm(prompt, max_tokens=1024)
         if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
         elif "```" in text:   text = text.split("```")[1].split("```")[0].strip()
         if "</think>" in text: text = text.split("</think>")[-1].strip()
@@ -55,7 +55,7 @@ def _llm_fallback(prompt, axis="CIVILIZATION"):
     except Exception as e:
         result = {"error": str(e)}
         try:
-            from core.groq_backend import AllBackendsFailedError
+            from core.local_llm import AllBackendsFailedError
             if isinstance(e, AllBackendsFailedError):
                 result["needs_reanalysis"] = True
         except ImportError:

@@ -24,9 +24,9 @@ if hasattr(sys.stderr, "reconfigure"):
 from citation_verifier import verify_hypothesis
 
 try:
-    from core.groq_backend import call_groq as _call_groq_causal
+    from core.local_llm import call_local_llm as _call_local_llm_causal
 except Exception:
-    _call_groq_causal = None
+    _call_local_llm_causal = None
 
 TRENDS_PATH        = os.path.join("cortex_memory", "abstractions", "trends.json")
 PENDING_PATH       = os.path.join("cortex_memory", "hypotheses", "pending.json")
@@ -338,7 +338,7 @@ def generate_causal_hypothesis(
     now = datetime.now(timezone.utc)
     record_id = f"causal_{indicator_path.replace('.', '_')}_{now.strftime('%Y%m%d_%H%M%S')}"
 
-    if _call_groq_causal is None:
+    if _call_local_llm_causal is None:
         return {
             "id":                  record_id,
             "type":                "causal_hypothesis",
@@ -355,7 +355,7 @@ def generate_causal_hypothesis(
             "evidence_strength":   "none",
             "created_at":          now.isoformat(),
             "verification_status": "SKIPPED",
-            "verification_reason": "call_groq unavailable",
+            "verification_reason": "call_local_llm unavailable",
         }
 
     delta      = round(current_value - baseline_value, 4)
@@ -387,7 +387,7 @@ def generate_causal_hypothesis(
 
     raw = ""
     try:
-        raw = _call_groq_causal(prompt, max_tokens=1200)
+        raw = _call_local_llm_causal(prompt, max_tokens=1200)
         import re as _re
         raw = _re.sub(r"<think>.*?</think>", "", raw, flags=_re.DOTALL).strip()
         if "```" in raw:

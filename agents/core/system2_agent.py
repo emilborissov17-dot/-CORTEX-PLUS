@@ -1,14 +1,14 @@
 from memory.semantic_memory import SemanticMemory
-from core.groq_backend import GroqBackend
+from core.local_llm import LocalLLM
 
 class ClimateRiskModel:
-    def __init__(self, semantic_memory, groq_backend):
+    def __init__(self, semantic_memory, local_llm):
         self.semantic_memory = semantic_memory
-        self.groq_backend = groq_backend
+        self.local_llm = local_llm
 
     def predict_climate_risks(self, input_data):
         # използване на модели за прогноза на климатичните промени
-        climate_risks = self.groq_backend.predict(input_data)
+        climate_risks = self.local_llm.predict(input_data)
         return climate_risks
 
     def assess_climate_impacts(self, climate_risks):

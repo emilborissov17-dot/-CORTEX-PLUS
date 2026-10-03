@@ -36,7 +36,7 @@ sys.path.insert(0, str(BASE))
 
 import agents.cortex_strategist.cortex_strategist_agent as S  # noqa: E402
 from core import llm_json as LJ  # noqa: E402
-from core.groq_backend import AllBackendsFailedError  # noqa: E402
+from core.local_llm import AllBackendsFailedError  # noqa: E402
 
 
 # --------------------------------------------------------------------------- #
@@ -151,7 +151,7 @@ def test_provenance_records_the_prompt_size(tmp_path, monkeypatch):
     """A 413 is ABOUT a length, and until today no row carried one: five 413s
     between 2 and 10 Sep are unattributable because prompt_sha1 identifies a
     prompt and prompt_head shows 80 chars of it, and neither is a size."""
-    from core import groq_backend as G
+    from core import local_llm as G
     rows = []
 
     import core.durable as D
@@ -170,13 +170,13 @@ def test_provenance_records_the_prompt_size(tmp_path, monkeypatch):
 
 
 def _find_log_provenance(G):
-    """_log_provenance is nested inside call_groq_meta, so it is reached the
+    """_log_provenance is nested inside call_local_llm_meta, so it is reached the
     only way a closure can be: rebuild it from its code object, supplying its
     one free variable (_model_for, also nested) as a stub. Driving the whole of
-    call_groq_meta instead would need the budget ladder, the backend policy and
+    call_local_llm_meta instead would need the budget ladder, the backend policy and
     the model window, and would test those rather than this row."""
     import types
-    for const in G.call_groq_meta.__code__.co_consts:
+    for const in G.call_local_llm_meta.__code__.co_consts:
         if isinstance(const, types.CodeType) and const.co_name == "_log_provenance":
             assert const.co_freevars == ("_model_for",), (
                 f"the closure's free variables changed: {const.co_freevars}")

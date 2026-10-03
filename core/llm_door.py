@@ -2,7 +2,7 @@
 core/llm_door.py — THE ONE DOOR every LLM call in the cycle passes through.
 
 Emil, 19 Sep 2026; built 24 Sep 2026 after phase 1 of task #19 measured it: 12 call
-sites reached a model without going through core.groq_backend.call_groq, 11 of them
+sites reached a model without going through core.local_llm.call_local_llm, 11 of them
 wrote no provenance, and the two writers that did used two schemas — one recorded
 outcome and finish_reason but timed only successes, the other recorded neither.
 
@@ -57,7 +57,7 @@ CONNECT_S = 10.0
 TRUNCATED = ("length", "MAX_TOKENS")
 _warm: set = set()
 _ROTATE_BYTES = 5_000_000
-_SKIP_FRAMES = ("llm_door.py", "groq_backend.py", "llm_json.py", "step_budget.py")
+_SKIP_FRAMES = ("llm_door.py", "local_llm.py", "llm_json.py", "step_budget.py")
 
 
 def _caller_from_stack() -> str:
@@ -441,11 +441,11 @@ def _selftest() -> int:
     print("core/llm_door.py --selftest")
     print(f"  provenance file      {PROVENANCE} exists={PROVENANCE.exists()}")
     try:
-        import core.groq_backend as gb
+        import core.local_llm as gb
         src = inspect.getsource(gb)
-        print(f"  groq_backend legs    {'LIVE ' if 'llm_door.post(' in src else 'INERT'} (legs call llm_door.post)")
+        print(f"  local_llm legs    {'LIVE ' if 'llm_door.post(' in src else 'INERT'} (legs call llm_door.post)")
     except Exception as e:  # noqa: BLE001
-        print(f"  groq_backend legs    UNKNOWN ({type(e).__name__}: {e})")
+        print(f"  local_llm legs    UNKNOWN ({type(e).__name__}: {e})")
     try:
         import core.brain as br
         print(f"  brain                {'LIVE ' if 'llm_door.post(' in inspect.getsource(br) else 'INERT'}")

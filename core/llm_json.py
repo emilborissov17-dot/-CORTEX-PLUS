@@ -14,7 +14,7 @@ FAILURE MODES THIS HANDLES
 --------------------------
 1. Reasoning preambles. Cerebras gpt-oss-120b is a reasoning model:
    the answer lives in message["content"], the chain-of-thought in
-   message["reasoning"]. groq_backend._call_cerebras falls back to
+   message["reasoning"]. local_llm._call_cerebras falls back to
    `content or reasoning` when content is empty (which is exactly what
    happens when max_tokens truncates before the model finishes thinking).
    The parser then receives raw reasoning prose — "The user asks: ...",
@@ -237,7 +237,7 @@ def extract_json(
                     always attributable ("which model gave us this garbage?").
     finish_reason — from the API when available; "length" means the provider
                     itself told us the response was cut short.
-    used_reasoning_fallback — True when groq_backend had to fall back to the
+    used_reasoning_fallback — True when local_llm had to fall back to the
                     Cerebras "reasoning" field because "content" was empty.
                     That is definitive proof the model never emitted a payload,
                     so a parse failure here is truncation, not garbage.
@@ -345,11 +345,11 @@ def call_llm_json(
     # Local import: avoids an import cycle, and mirrors the dual
     # package/script import style used elsewhere in core/.
     try:
-        from core.groq_backend import call_groq_meta
+        from core.local_llm import call_local_llm_meta
     except ImportError:  # running from inside core/ as a script
-        from groq_backend import call_groq_meta
+        from local_llm import call_local_llm_meta
 
-    raw, meta = call_groq_meta(prompt, max_tokens=max_tokens)
+    raw, meta = call_local_llm_meta(prompt, max_tokens=max_tokens)
     try:
         return extract_json(
             raw,
@@ -366,7 +366,7 @@ def call_llm_json(
             f"  [{label}] TRUNCATED from {first.backend} "
             f"(max_tokens={max_tokens}) — retrying once at {bigger}"
         )
-        raw2, meta2 = call_groq_meta(prompt, max_tokens=bigger)
+        raw2, meta2 = call_local_llm_meta(prompt, max_tokens=bigger)
         return extract_json(
             raw2,
             expect=expect,

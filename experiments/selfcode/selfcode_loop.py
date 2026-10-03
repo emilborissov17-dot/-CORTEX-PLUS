@@ -217,8 +217,8 @@ def _ask(prompt: str, backend: str, iteration: int = 1) -> str:
     if backend == "local":
         # 0.1 on the first attempt, then widen: 0.1, 0.35, 0.6, 0.85, capped at 1.0
         return _local_at(prompt, min(0.1 + 0.25 * (iteration - 1), 1.0))
-    from core.groq_backend import call_groq
-    return call_groq(prompt, max_tokens=1500)
+    from core.local_llm import call_local_llm
+    return call_local_llm(prompt, max_tokens=1500)
 
 
 def _run_test(sandbox: Path, code: str, test_src: str) -> tuple[bool, str]:
@@ -312,10 +312,10 @@ def selftest() -> int:
     print("selfcode_loop --selftest")
     status = {}
     try:
-        from core.groq_backend import call_groq  # noqa: F401
-        status["core.groq_backend (cloud)"] = "LIVE"
+        from core.local_llm import call_local_llm  # noqa: F401
+        status["core.local_llm (cloud)"] = "LIVE"
     except Exception as e:
-        status["core.groq_backend (cloud)"] = f"INERT ({type(e).__name__})"
+        status["core.local_llm (cloud)"] = f"INERT ({type(e).__name__})"
     try:
         from local_model import _local  # noqa: F401
         status["local_model._local (local)"] = "LIVE"

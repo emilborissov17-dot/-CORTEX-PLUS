@@ -32,7 +32,7 @@ ISOLATION (like pulse/dreams — see RULES in README)
 * Reads news/, snapshots/, memory/, output/ as PLAIN FILES. It imports NO live-path
   pipeline module — not a scorer, agent, gate or tracker — so a change here cannot
   break the cycle and a change there cannot silently break the meadow.
-* The ONE sanctioned exception is core.groq_backend.call_groq: the shared brain, a
+* The ONE sanctioned exception is core.local_llm.call_local_llm: the shared brain, a
   declared drop-in stable API, and a one-way dependency (meadow → core, never the
   reverse). Re-implementing its four-provider fallback chain would be strictly worse
   than importing it, and DIVERGE is thinking — it must use the best brain available.
@@ -91,7 +91,7 @@ REPO = HERE.parent.parent                        # experiments/meadow -> repo ro
 sys.path.insert(0, str(REPO))
 
 # ── The ONE sanctioned live import: the shared brain. See ISOLATION above. ──
-from core.groq_backend import call_groq, AllBackendsFailedError  # noqa: E402
+from core.local_llm import call_local_llm, AllBackendsFailedError  # noqa: E402
 
 # ── Plain-file inputs. Deliberately paths, not imports. See ISOLATION above. ──
 NEWS_LATEST      = REPO / "news" / "news_latest.json"
@@ -855,7 +855,7 @@ def commit_phase(notebook_text: str, llm: Callable[..., str]) -> tuple[Optional[
 
 
 def run(day: str, dry_run: bool, src: Optional[Sources] = None,
-        llm: Callable[..., str] = call_groq) -> int:
+        llm: Callable[..., str] = call_local_llm) -> int:
     src = src or Sources()
     bundle, meta = assemble_bundle(src, day)
 
@@ -986,7 +986,7 @@ def run_blindtest(day: str, dry_run: bool, src: Sources, llm: Callable[..., str]
 
 
 def run_challenge(name: str, day: str, dry_run: bool,
-                  src: Optional[Sources] = None, llm: Callable[..., str] = call_groq) -> int:
+                  src: Optional[Sources] = None, llm: Callable[..., str] = call_local_llm) -> int:
     """Run one gauntlet challenge. Same infrastructure, different provocation; the reply
     is DIVERGE-class and written raw and unjudged as a `## challenge:` section."""
     src = src or Sources()

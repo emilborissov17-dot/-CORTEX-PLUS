@@ -245,7 +245,7 @@ def test_the_cockpit_calls_no_model():
     for mod in ("server", "expression", "lexicon", "somatic", "datasources",
                 "snapshot", "terminal"):
         src = (REPO / "cockpit" / "{}.py".format(mod)).read_text(encoding="utf-8")
-        for forbidden in ("groq_backend", "call_groq", "ollama", "openai"):
+        for forbidden in ("local_llm", "call_local_llm", "ollama", "openai"):
             assert forbidden not in src, "{} reaches a model".format(mod)
 
 

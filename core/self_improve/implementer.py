@@ -9,7 +9,7 @@ diff as text and never touches the working tree, git, or any tracked file.
 
 WHICH MODEL, AND WHY THIS ONE
 ------------------------------
-core/groq_backend.call_groq — the cloud ladder (Groq -> OpenRouter -> Gemini),
+core/local_llm.call_local_llm — the cloud ladder (Groq -> OpenRouter -> Gemini),
 the same entry agents/core/self_modifier.py:486 already uses. Measured
 2026-08-04: the cloud model closes the write -> test -> fix loop 3 times out of
 3; the local model closes it 0 out of 3, with identical retries at any
@@ -205,14 +205,14 @@ def build_prompt(spec: dict, context: str = "", feedback: str = "") -> str:
 def _ladder(prompt: str, max_tokens: int = 1400) -> str:
     """The CLOUD ladder, and only the cloud ladder.
 
-    NO LOCAL FALLBACK. core.groq_backend.call_groq already falls back Groq ->
+    NO LOCAL FALLBACK. core.local_llm.call_local_llm already falls back Groq ->
     OpenRouter -> Gemini internally; if all three are cooling it raises
     AllBackendsFailedError and that is the honest outcome. Reaching for the local
     model here would silently put the 0/3 model back on the job this module
     exists to take away from it.
     """
-    from core.groq_backend import call_groq
-    return call_groq(prompt, max_tokens=max_tokens)
+    from core.local_llm import call_local_llm
+    return call_local_llm(prompt, max_tokens=max_tokens)
 
 
 def _strip_fences(text: str) -> str:
@@ -259,8 +259,8 @@ def _selftest() -> int:
 
     print("core/self_improve/implementer.py --selftest")
     try:
-        from core.groq_backend import call_groq  # noqa: F401
-        print("  cloud ladder entry : LIVE (core.groq_backend.call_groq)")
+        from core.local_llm import call_local_llm  # noqa: F401
+        print("  cloud ladder entry : LIVE (core.local_llm.call_local_llm)")
     except Exception as exc:                                     # noqa: BLE001
         print(f"  cloud ladder entry : INERT ({type(exc).__name__}: {exc})")
         return 1
