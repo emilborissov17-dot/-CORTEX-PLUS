@@ -1,0 +1,4 @@
+{
+  "threshold": 400,
+  "_threshold_why": "Kimi round 74 K1, sealed: escalate on real spaces over ~400 atoms of one shape. hyperon 0.2.10 on this machine (C-GUARD-1 Step 1, 3 Oct 2026): correct at 300 atoms of one shape, PANIC at 500, wrong binding at 5,000 / 20,000 / 130,000. A shape at or over this count refuses the run before the engine sees it (core/space.derive)."
+}

@@ -58,11 +58,16 @@ PATHS = {
     "proposed": MEM / "space" / "proposed.metta",
 }
 SIDECAR_PY = REPO / "venv312_metta" / "Scripts" / "python.exe"
+GUARD_CONFIG = REPO / "config" / "engine_guard.json"
 DERIVED_HEADS = ("contradiction", "unverified", "stale", "uncovered", "lacks-evidence", "need-derived")
 
 
 class SpaceEngineFailed(RuntimeError):
-    """hyperon did not run; the turn stops and says so."""
+    """hyperon did not run, or the guard refused it; the turn stops and says so (cause)."""
+
+    def __init__(self, msg: str, cause: Optional[str] = None):
+        super().__init__(msg)
+        self.cause = cause
 
 
 class PathMissing(KeyError):
@@ -287,14 +292,70 @@ def engine_program(base: str, proposed: str, rules: str) -> str:
     return "\n".join(kept) + "\n" + proposed + "\n" + rules
 
 
-def derive(paths=None, engine: Optional[Callable] = None) -> dict:
+# ── the guard (C-GUARD-1, Kimi round 74 K1) ────────────────────────────────
+def guard_threshold(path=None) -> int:
+    """The sealed count per shape (config/engine_guard.json)."""
+    return int(json.loads(Path(path or GUARD_CONFIG).read_text(encoding="utf-8"))["threshold"])
+
+
+def shape_counts(program: str) -> dict:
+    """Atoms per shape ("<head>/<arity>") among the top-level expressions of the program;
+    `!` commands are not atoms, comment lines are skipped."""
+    text = "\n".join(l for l in program.splitlines() if not l.lstrip().startswith(";"))
+    counts: dict = {}
+    depth, bang, cur = 0, False, None
+    for t in _TOK.findall(text):
+        if t == "(":
+            if depth == 0:
+                cur, bang = {"bang": bang, "n": 0, "head": None}, False
+            elif depth == 1:
+                cur["n"] += 1
+                if cur["n"] == 1:
+                    cur["head"] = "(expr)"
+            depth += 1
+        elif t == ")":
+            depth -= 1
+            if depth == 0 and cur is not None:
+                if not cur["bang"]:
+                    key = f"{cur['head']}/{max(cur['n'] - 1, 0)}"
+                    counts[key] = counts.get(key, 0) + 1
+                cur = None
+        elif depth == 0:
+            bang = t == "!"
+        elif depth == 1:
+            cur["n"] += 1
+            if cur["n"] == 1:
+                cur["head"] = t
+    return counts
+
+
+def shapes_over(counts: dict, threshold: int) -> list:
+    return sorted(s for s, c in counts.items() if c >= threshold)
+
+
+def _guard_log(d: Path, row: dict) -> None:
+    row = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), **row}
+    with (d / "guard_log.jsonl").open("a", encoding="utf-8") as f:
+        f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> dict:
     d = Path(_p(paths, "dir"))
     base = (d / "base.metta").read_text(encoding="utf-8")
     proposed = Path(_p(paths, "proposed"))
     prop = proposed.read_text(encoding="utf-8") if proposed.exists() else ""
     rules = Path(_p(paths, "rules")).read_text(encoding="utf-8")
+    program = engine_program(base, prop, rules)
+    threshold = guard_threshold(guard_config)
+    counts = shape_counts(program)
+    top = [[s, c] for s, c in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:5]]
+    over = shapes_over(counts, threshold)
+    if over:
+        why = "; ".join(f"shape {s} has {counts[s]} atoms" for s in over) + f" (threshold {threshold})"
+        _guard_log(d, {"state": "RED", "cause": "ENGINE_THRESHOLD", "why": why, "threshold": threshold, "shapes": top})
+        raise SpaceEngineFailed("ENGINE_THRESHOLD: " + why, cause="ENGINE_THRESHOLD")
     t0 = time.time()
-    raw = (engine or hyperon_engine)(engine_program(base, prop, rules))
+    raw = (engine or hyperon_engine)(program)
     secs = round(time.time() - t0, 2)
     seen, derived = set(), []
     for e in raw:
@@ -326,7 +387,9 @@ def derive(paths=None, engine: Optional[Callable] = None) -> dict:
     counts = {}
     for x in derived:
         counts[x[0]] = counts.get(x[0], 0) + 1
-    return {"derived": len(derived), "by_rule": counts, "seconds": secs, "expressions": derived}
+    _guard_log(d, {"state": "GREEN", "threshold": threshold, "shapes": top})
+    return {"derived": len(derived), "by_rule": counts, "seconds": secs, "expressions": derived,
+            "shapes": top, "threshold": threshold}
 
 
 def _canon(x):
