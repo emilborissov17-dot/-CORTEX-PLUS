@@ -27,13 +27,5 @@
     "model": "qwen2.5:3b",
     "max_lines": 40,
     "timeout_sec": 20
-  },
-  "perplexity": {
-    "enabled": false,
-    "what": "the model states its own condition from the cycle vector and the perplexity of that statement is published as a receptor",
-    "cost": "one model call per phase boundary, ~63 per cycle",
-    "model": "qwen2.5:3b",
-    "num_predict": 24,
-    "timeout_sec": 20
   }
 }

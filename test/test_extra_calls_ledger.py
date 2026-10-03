@@ -134,7 +134,7 @@ def test_the_first_cycle_cannot_breach(sandbox):
 def test_a_phase_never_seen_before_has_no_baseline_even_late(sandbox):
     for i in range(5):
         _cycle(sandbox, "C%d" % i, 1000, 100.0, phase="E_PROPOSE")
-    r = led.record("COMPLETED", "C9", "G_LEARN", "perplexity",
+    r = led.record("COMPLETED", "C9", "G_LEARN", "reaction",
                    phase_total_time_ms=50000, path=sandbox["path"])
     assert r["baseline_phase_time_ms"] is None, (
         "one phase's history was used as another phase's baseline")
@@ -172,7 +172,7 @@ def test_a_cycle_is_not_its_own_baseline(sandbox):
     _cycle(sandbox, "C1", 1000, 100.0)
     led.record("COMPLETED", "C2", "E_PROPOSE", "reaction",
                phase_total_time_ms=5000, path=sandbox["path"])
-    r = led.record("COMPLETED", "C2", "E_PROPOSE", "perplexity",
+    r = led.record("COMPLETED", "C2", "E_PROPOSE", "reaction",
                    phase_total_time_ms=5000, path=sandbox["path"])
     assert r["baseline_phase_time_ms"] == 1000.0, (
         "the second call in a phase was measured against the first one, so a "

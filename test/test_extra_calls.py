@@ -1,8 +1,8 @@
 """One guarded door, and the GPU is clean when it closes.
 
-Reaction and perplexity each make a model call at EVERY phase boundary — about
-63 a night, each — which is the shape that produced AllBackendsFailedError.
-Before this, both built their own Ollama request and NEITHER PASSED keep_alive
+Reaction makes a model call at EVERY phase boundary — about 63 a night —
+which is the shape that produced AllBackendsFailedError. Before this, it built
+its own Ollama request and NEITHER PASSED keep_alive
 AT ALL. Ollama does not cancel inference when the HTTP request times out, so a
 timed-out extra call left the model resident and the GPU busy for whatever
 regular step ran next: the timeout protected the caller and handed the cost to
@@ -14,6 +14,7 @@ being reachable around — a door with a way past it is a corridor.
 from __future__ import annotations
 
 import ast
+import inspect
 import json
 import pathlib
 import sys
@@ -82,29 +83,9 @@ def test_the_call_passes_num_predict_keep_alive_and_a_timeout():
     assert sink[1]["_timeout"] == 15.0
 
 
-def test_a_caller_cannot_override_the_guards():
-    """extra_body exists for logprobs, not for widening the door."""
-    for field in ("keep_alive", "stream", "model", "prompt"):
-        sink = []
-        r = ec.guarded_extra_call("x", "hi", extra_body={field: "anything"},
-                                  opener=_answer(sink), sleep=lambda *_: None)
-        assert r["outcome"] == ec.FAILED, (
-            f"a caller overrode {field!r} and the call still went out")
-        assert field in r["why"]
-
-
-def test_extra_body_may_add_but_not_replace_num_predict():
-    sink = []
-    ec.guarded_extra_call("perplexity", "hi",
-                          extra_body={"logprobs": True,
-                                      "options": {"temperature": 0,
-                                                  "num_predict": 99999}},
-                          opener=_answer(sink), sleep=lambda *_: None)
-    body = sink[0]
-    assert body["logprobs"] is True, "extra_body could not add a field"
-    assert body["options"]["temperature"] == 0
-    assert body["options"]["num_predict"] == 128, (
-        "a caller raised num_predict past the guard")
+def test_a_caller_cannot_widen_the_door():
+    """C-CLOUD-2: the extra_body leg went with perplexity; nothing may add fields."""
+    assert "extra_body" not in inspect.signature(ec._attempt).parameters
 
 
 # ── (d) the breaker ─────────────────────────────────────────────────────────
@@ -212,9 +193,9 @@ def test_ollama_not_answering_is_not_treated_as_busy(monkeypatch):
 # ── nothing builds an Ollama request for these purposes outside the door ────
 
 def test_nothing_outside_extra_calls_builds_an_ollama_request_for_these():
-    """ast: reaction and perplexity must not hand-roll a request any more."""
+    """ast: reaction must not hand-roll a request any more."""
     offenders = []
-    for rel in ("core/reaction.py", "core/perplexity.py"):
+    for rel in ("core/reaction.py",):
         tree = ast.parse((REPO / rel).read_text(encoding="utf-8-sig"))
         for n in ast.walk(tree):
             if isinstance(n, ast.Call):
@@ -230,8 +211,8 @@ def test_nothing_outside_extra_calls_builds_an_ollama_request_for_these():
         f"guards: {offenders}")
 
 
-def test_both_callers_go_through_the_door():
-    for rel in ("core/reaction.py", "core/perplexity.py"):
+def test_the_caller_goes_through_the_door():
+    for rel in ("core/reaction.py",):
         src = (REPO / rel).read_text(encoding="utf-8-sig")
         assert "guarded_extra_call" in src, f"{rel} does not use the door"
 
@@ -271,4 +252,3 @@ def test_the_switch_file_is_still_protected_and_still_off():
     assert is_protected("config/reactions.json") is True
     d = json.loads((REPO / "config" / "reactions.json").read_text(encoding="utf-8"))
     assert d["reaction"]["enabled"] is False
-    assert d["perplexity"]["enabled"] is False

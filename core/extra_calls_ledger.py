@@ -8,9 +8,9 @@ in numbers, on every attempt including the ones that never became a call —
 because "we skipped it" is a claim about cost too, and a skip that took four
 seconds of polling is not free.
 
-WHAT IS ACTUALLY BEING DEFENDED. Reaction and perplexity fire at every phase
-boundary, ~63 each a night. The fear is not that one call is slow; it is that
-126 of them quietly add a fifth to the night and nobody notices because no
+WHAT IS ACTUALLY BEING DEFENDED. Reaction fires at every phase boundary, ~63
+a night. The fear is not that one call is slow; it is that 63 of them quietly
+add a fifth to the night and nobody notices because no
 single line looks wrong. So the unit of judgement is the PHASE and the CYCLE,
 not the call.
 
@@ -272,7 +272,7 @@ def _raise_pending(seal: dict, proposals_path=None) -> Optional[str]:
                      .format(seal.get("cycle_id"))),
         "measurable_goal": ("phase delta back under {}% and cycle delta under "
                             "{}%".format(PHASE_BREACH_PCT, CYCLE_BREACH_PCT)),
-        "root_cause": "reaction and perplexity fire at every phase boundary",
+        "root_cause": "reaction fires at every phase boundary",
         "priority": "HIGH",
         "real_world_signal": True,
         "generated_by": "EXTRA_CALLS_BREACH",

@@ -176,7 +176,6 @@ core/orchestrator_grounded.py d1d4c17cfe5f  # IT MAY NOT REORDER. --------------
 core/orchestrator_grounded.py e93e5987669b  # THREAT / OPPORTUNITY / WATCH as disjoint sets, by construction.
 core/passage_rules.py dd1ff780e833  # FAIL CLOSED ----------- If the file is missing, unparseable or fails validation, load() returns FAILSAFE: irreversible_min = UNREACHABLE, so may_act()
 core/passage_rules.py f8e5ccd365b7  # So the rules move into config/passage_rules.json, notary READS them to judge, and the SAME actor_block text is injected into every gated actor's instr
-core/perplexity.py fedf74e1dc7e  # WHAT IS ACTUALLY MEASURED, AND WHAT IS NOT -------------------------------------------- Ollama 0.24.0 returns `logprobs` for the tokens it GENERATED.
 core/phase_debrief.py 22ec16700a73  # Uses core/language_gate.py so the tag and the 24-hour purity ratio cannot disagree about the same text — two independent judgements of "is this Englis
 core/phase_debrief.py 3a603a17bd01  # Never raises. `own_numbers` are the numbers unique to this phase (see core/phase_evidence.own_numbers).
 core/phase_debrief.py 5d2dbac44320  # Applies only when a caller passes must_cite; every other phase is unaffected.

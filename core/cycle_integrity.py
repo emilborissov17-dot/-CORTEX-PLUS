@@ -189,12 +189,7 @@ def scalars(steps=None, contract_path=None, baseline_path=None,
             local_planned=LOCAL_PLANNED) -> dict:
     """The five, computed independently. No product, no composite, no band.
 
-    NAMED scalars(), NOT measure(). test_perplexity.py bans every call to a
-    method named `measure` outside core/perplexity.py, because that one makes a
-    model call and must sit behind an enabled() check. A second, unrelated
-    measure() would have made that guard ambiguous — and a guard that cannot
-    tell a model call from an arithmetic one is not a guard. This function makes
-    no call to anything; it reads two files.
+    This function makes no call to anything; it reads two files.
     """
     if steps is None:
         try:

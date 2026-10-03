@@ -3,9 +3,9 @@
 """
 core/extra_calls.py — ONE GUARDED DOOR, AND THE GPU IS CLEAN WHEN IT CLOSES.
 
-Reaction and perplexity each make a model call at EVERY phase boundary — about
-63 a night, each. That is the shape that produced AllBackendsFailedError, and it
-is why both switches in config/reactions.json are still false.
+Reaction makes a model call at EVERY phase boundary — about 63 a night. That
+is the shape that produced AllBackendsFailedError. (Perplexity, its twin, was
+deleted in C-CLOUD-2 on 3 Oct 2026: disabled, and nothing read its number.)
 
 Four guards, from Kimi round 24, and no others. Adding a fifth here without a
 decision behind it is how a guard becomes a ritual.
@@ -24,7 +24,7 @@ decision behind it is how a guard becomes a ritual.
       cancel inference when the HTTP request times out. Without keep_alive=0 the
       model stays resident and the GPU stays busy into the next regular step —
       the timeout protects the caller and hands the cost to whatever runs next.
-      0.3 found neither reaction.py nor perplexity.py passed keep_alive at all.
+      0.3 found that reaction.py did not pass keep_alive at all.
 
   (d) BREAKER. Two consecutive FAILED/TIMEOUT outcomes disable extra calls FOR
       THE REMAINDER OF THIS CYCLE ONLY. The state lives in this process and
@@ -224,7 +224,6 @@ def _attempt(kind: str, prompt: str, model: str = "qwen2.5:3b",
                        url: str = OLLAMA_GENERATE, ps_url: str = OLLAMA_PS,
                        num_predict: int = NUM_PREDICT,
                        timeout: float = HTTP_TIMEOUT_SEC,
-                       extra_body: Optional[dict] = None,
                        sleep=time.sleep, opener=None) -> dict:
     """The four guards. Reached only through guarded_extra_call()."""
     global _consecutive_failures, _breaker_open
@@ -269,22 +268,6 @@ def _attempt(kind: str, prompt: str, model: str = "qwen2.5:3b",
         "keep_alive": KEEP_ALIVE,
         "options": {"num_predict": num_predict},
     }
-    # extra_body exists so perplexity can ask for logprobs WITHOUT a second
-    # door. It may add fields; it may NOT override the three guards, because a
-    # caller that can raise its own keep_alive is a caller outside the guard.
-    for k, v in (extra_body or {}).items():
-        if k in ("keep_alive", "stream", "model", "prompt"):
-            rec.update(outcome=FAILED,
-                       why="a caller tried to override {!r}, which is one of "
-                           "the guards".format(k))
-            return rec
-        if k == "options" and isinstance(v, dict):
-            merged = dict(body["options"])
-            merged.update({ok_: ov for ok_, ov in v.items()
-                           if ok_ != "num_predict"})
-            body["options"] = merged
-        else:
-            body[k] = v
     payload = json.dumps(body).encode("utf-8")
 
     try:

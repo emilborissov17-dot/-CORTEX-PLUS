@@ -77,13 +77,6 @@
     "localhost"
    ]
   },
-  "core/perplexity.py": {
-   "class": "M",
-   "reason": "local Ollama model on localhost:11434",
-   "hosts": [
-    "localhost"
-   ]
-  },
   "core/reaction.py": {
    "class": "M",
    "reason": "local Ollama model on localhost:11434",
