@@ -381,3 +381,4 @@ memory/agents/
 memory/openclaw_pages/
 memory/turns_loop.pid
 memory/turns_loop.stop
+experiments/kill_probe/out/
