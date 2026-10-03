@@ -280,12 +280,11 @@ def _llm_provenance_to_tmp(monkeypatch, tmp_path):
     try:
         from core import llm_door as _door
         monkeypatch.setattr(_door, "PROVENANCE", tmp_path / "llm_provenance.jsonl")
-        # and the two other files the door keeps (task #19 c, d): measured
-        # timeouts (absent -> the seed) and the per-night dead-leg state
+        # the measured timeouts (absent -> the seed). The dead-leg state (LEG_STATE, _ok_cache,
+        # _alive) went with the outside legs in C-CLOUD-1; the three lines that still set it here
+        # raised AttributeError into the except below and silently skipped every stub after
+        # them, from 3fd67da until C-CLOUD-2 (found by its Step 5 net).
         monkeypatch.setattr(_door, "TIMEOUTS", tmp_path / "llm_timeouts.json")
-        monkeypatch.setattr(_door, "LEG_STATE", tmp_path / "llm_leg_state.json")
-        monkeypatch.setattr(_door, "_ok_cache", {})
-        monkeypatch.setattr(_door, "_alive", set())
         monkeypatch.setattr(_door, "_warm", set())
         # task #8: inside a cycle the door asks Ollama's /api/ps what is resident.
         # No test may reach the real server for that: by default nothing is
@@ -316,7 +315,7 @@ class OllamaWriteRefused(RuntimeError):
 
 
 @pytest.fixture(autouse=True)
-def _no_ollama_writes(monkeypatch):
+def _no_ollama_writes(monkeypatch, request):
     """25 Sep 2026, the SECOND eviction the same morning: test_supervisor's dead-
     cycle paths reach supervisor -> core.aggressive_cleanup.release_ollama(apply=True),
     which POSTs keep_alive=0 for every resident model to the REAL server. At 09:23:58
@@ -330,6 +329,7 @@ def _no_ollama_writes(monkeypatch):
         target = url.full_url if isinstance(url, _ur.Request) else str(url)
         body = data if data is not None else getattr(url, "data", None)
         if ":11434/" in target and body is not None:
+            model_net_hits(request.node).append(target)
             raise OllamaWriteRefused(f"test POST to the live Ollama refused: {target}")
         return real(url, data, *a, **k)
 
@@ -341,12 +341,24 @@ def _no_ollama_writes(monkeypatch):
 
         def guarded_req(self, method, url, *a, **k):
             if ":11434/" in str(url) and str(method).upper() == "POST":
+                model_net_hits(request.node).append(str(url))
                 raise OllamaWriteRefused(f"test POST to the live Ollama refused: {url}")
             return real_req(self, method, url, *a, **k)
 
         monkeypatch.setattr(_rs.Session, "request", guarded_req)
     except Exception:
         pass
+    if request.node.get_closest_marker("real_model"):
+        if os.environ.get("CORTEX_REAL_MODEL") != "1":
+            pytest.skip("real_model: set CORTEX_REAL_MODEL=1 to run it")
+    else:
+        monkeypatch.setenv("CORTEX_NO_REAL_MODEL", "1")
+    yield
+    left = _MODEL_NET_HITS.pop(request.node.nodeid, [])
+    if left:
+        pytest.fail("THIS TEST SENT A REQUEST TO THE LOCAL MODEL (C-CLOUD-2): " + "; ".join(left)
+                    + " - inject a transport; a test that needs the real model carries "
+                      "@pytest.mark.real_model")
 
 
 @pytest.fixture(autouse=True)
@@ -564,6 +576,21 @@ def _no_live_writes(monkeypatch, request):
             "is genuinely intended, it does not belong in a test.")
 
 
+
+
+
+# ── NO TEST REACHES A REAL MODEL (C-CLOUD-2 Step 5, 3 Oct 2026) ─────────────────────────────
+# Every full suite made two real calls to the local model: test_registration_wall, run as a
+# subprocess by test_script_suite, where the nets of this file do not exist. Three additions to
+# _no_ollama_writes below: (1) each refusal is recorded and fails the test at teardown even if the
+# code swallowed it; (2) CORTEX_NO_REAL_MODEL=1, which core/llm_door honours and test_script_suite
+# passes to its subprocesses; (3) a test that needs the real model carries @pytest.mark.real_model
+# and is skipped unless CORTEX_REAL_MODEL=1.
+_MODEL_NET_HITS: dict = {}
+
+
+def model_net_hits(node) -> list:
+    return _MODEL_NET_HITS.setdefault(node.nodeid, [])
 
 
 @pytest.fixture(scope="session", autouse=True)

@@ -311,6 +311,10 @@ def _enforced_timeout(backend: str, model: str | None, asked):
     return (min(CONNECT_S, t), t)
 
 
+class RealModelRefused(RuntimeError):
+    pass                      # C-CLOUD-2 Step 5
+
+
 class OutsideModelRefused(RuntimeError):
     """OUTSIDE_MODEL_REFUSED (R45): a language model is reached only on this machine."""
 
@@ -333,6 +337,15 @@ def post(caller: str | None, backend: str, model: str | None, url: str, *,
     if outside is not None:
         raise OutsideModelRefused(f"OUTSIDE_MODEL_REFUSED (R45): {outside} is not this machine; "
                                   f"only the local model answers")
+    if os.environ.get("CORTEX_NO_REAL_MODEL") == "1":
+        import requests as _rq
+        _rq_s = sys.modules.get("requests.sessions")
+        _sess_req = getattr(getattr(_rq_s, "Session", None), "request", None)
+        # the genuine transport (a socket would open) unless a test injected one at either level
+        if (getattr(getattr(_rq, "post", None), "__module__", "") == "requests.api"
+                and getattr(_sess_req, "__module__", "") == "requests.sessions"):
+            raise RealModelRefused(f"REAL_MODEL_REFUSED: CORTEX_NO_REAL_MODEL=1 - no model request "
+                                   f"leaves this process ({caller or '?'} -> {url})")
     # Imported per call, not at module import: a module-level binding would keep
     # whatever `requests` was in sys.modules the first time this module loaded
     # (a test's stand-in, once), for the life of the process.

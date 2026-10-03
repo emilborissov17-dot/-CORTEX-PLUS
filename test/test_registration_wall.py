@@ -32,6 +32,11 @@ sys.path.insert(0, str(REPO / "experiments" / "composers"))
 sys.path.insert(0, str(REPO / "experiments" / "needs"))
 
 from core import source_registration as SR   # noqa: E402
+
+# C-CLOUD-2 Step 5: build_candidate() asks the model first (_semantic_rule); this script reached the
+# real local model twice a run. The semantic leg answers "no suggestion" here, so the walls below are
+# tested on the deterministic path, and nothing leaves the process.
+SR._semantic_rule = lambda payload, metric, axis: (None, None, "semantic: not asked in this test")
 import composer as C                          # noqa: E402
 
 FAILS = []

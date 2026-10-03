@@ -20,6 +20,14 @@ import pytest
 import supervisor as sup
 
 
+@pytest.fixture(autouse=True)
+def _no_model_release(monkeypatch):
+    """C-CLOUD-2 Step 5, decided: the model release after a death is injected in this file
+    (test_no_ollama_writes_from_tests judges the release itself)."""
+    from core import aggressive_cleanup as _ac
+    monkeypatch.setattr(_ac, "release_ollama", lambda apply=False, **k: {"released": [], "skipped": "stubbed in test"})
+
+
 CFG = {
     "daily_hour": 3,
     "catchup_grace_hours": 20,

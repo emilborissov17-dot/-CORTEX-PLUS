@@ -56,6 +56,9 @@ def _modules_with_live_requests() -> set:
 # with the reason, so that adding to this set is a decision rather than a
 # convenience.
 MOCKED_NOT_LIVE = {
+    # C-CLOUD-2 Step 5: requests.post to the local model's port is the net's own test; the conftest
+    # net refuses it before a socket opens, and the test asserts that refusal.
+    "test_no_real_model_in_tests.py",
     # C-FIX-1 Part 3: requests.get is called only after it was replaced by a tripwire
     # (test_mutation_a_reader_on_requests_hits_the_tripwire).
     "test_openclaw_door.py",

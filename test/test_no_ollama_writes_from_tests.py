@@ -14,6 +14,9 @@ from __future__ import annotations
 import urllib.request as ur
 
 import pytest
+import sys as _sys
+from pathlib import Path as _P
+_sys.path.insert(0, str(_P(__file__).resolve().parent))
 
 NOT_A_MODEL = "no-such-model-for-tests:0"
 
@@ -21,21 +24,25 @@ from core import aggressive_cleanup as ac
 from core import model_window as mw
 
 
-def test_a_post_to_ollama_raises_in_tests():
+def test_a_post_to_ollama_raises_in_tests(request):
+    import conftest
     req = ur.Request("http://127.0.0.1:11434/api/generate", data=('{"model":"%s","keep_alive":0}' % NOT_A_MODEL).encode(),
                      headers={"Content-Type": "application/json"})
     with pytest.raises(RuntimeError, match="live Ollama refused"):
         ur.urlopen(req, timeout=1)
+    conftest.model_net_hits(request.node).clear()     # made on purpose (C-CLOUD-2 teardown net)
 
 
-def test_a_requests_post_to_ollama_raises_in_tests():
+def test_a_requests_post_to_ollama_raises_in_tests(request):
     import requests
+    import conftest
     with pytest.raises(RuntimeError, match="live Ollama refused"):
         requests.post("http://127.0.0.1:11434/api/generate",
                       json={"model": NOT_A_MODEL, "keep_alive": 0}, timeout=1)
+    conftest.model_net_hits(request.node).clear()     # made on purpose (C-CLOUD-2 teardown net)
 
 
-def test_release_ollama_cannot_unload_from_a_test(monkeypatch):
+def test_release_ollama_cannot_unload_from_a_test(monkeypatch, request):
     monkeypatch.setattr(mw, "is_open", lambda: False)
 
     class _PS:
@@ -55,3 +62,5 @@ def test_release_ollama_cannot_unload_from_a_test(monkeypatch):
     rec = ac.release_ollama(apply=True)
     assert rec["released"] == []
     assert rec.get("errors") == [f"{NOT_A_MODEL}: OllamaWriteRefused"]
+    import conftest
+    conftest.model_net_hits(request.node).clear()     # made on purpose (C-CLOUD-2 teardown net)

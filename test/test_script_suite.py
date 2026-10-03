@@ -25,7 +25,8 @@ from _script_style import SCRIPT_STYLE     # the single source of the split  # n
 
 @pytest.mark.parametrize("script", SCRIPT_STYLE)
 def test_script_style_suite(script):
-    env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8")
+    # CORTEX_NO_REAL_MODEL for the child too (C-CLOUD-2 decision; test_no_real_model_in_tests holds it)
+    env = dict(os.environ, PYTHONPATH=str(REPO), PYTHONIOENCODING="utf-8", CORTEX_NO_REAL_MODEL="1")
     proc = subprocess.run([sys.executable, str(REPO / script)],
                           cwd=str(REPO), env=env, capture_output=True,
                           text=True, encoding="utf-8", errors="replace", timeout=900)
