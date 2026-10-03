@@ -44,7 +44,7 @@ def _sent(monkeypatch):
 
 def test_load_and_prompt_eval_durations_reach_the_row(monkeypatch):
     _sent(monkeypatch)
-    llm_door.post("t", "local:m", "m", "http://x/api/chat", json={"model": "m"})
+    llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat", json={"model": "m"})
     row = json.loads(llm_door.PROVENANCE.read_text(encoding="utf-8").splitlines()[-1])
     assert row["load_duration_s"] == 7.25 and row["prompt_eval_duration_s"] == 1.5
     assert row["eval_duration_s"] == 0.9
@@ -54,12 +54,12 @@ def test_one_keep_alive_policy_is_applied_to_every_local_request(monkeypatch):
     bodies = _sent(monkeypatch)
     local = model_window.cycle_local_model()
     monkeypatch.setenv("CORTEX_IN_CYCLE", "c")
-    llm_door.post("t", f"local:{local}", local, "http://x/api/chat", json={"model": local, "keep_alive": "30m"})
-    llm_door.post("t", "local:other", "other", "http://x/api/chat", json={"model": "other", "keep_alive": "30m"})
+    llm_door.post("t", f"local:{local}", local, "http://localhost:11434/api/chat", json={"model": local, "keep_alive": "30m"})
+    llm_door.post("t", "local:other", "other", "http://localhost:11434/api/chat", json={"model": "other", "keep_alive": "30m"})
     monkeypatch.delenv("CORTEX_IN_CYCLE")
     monkeypatch.delenv("CORTEX_CYCLE_ID", raising=False)
-    llm_door.post("t", f"local:{local}", local, "http://x/api/chat", json={"model": local, "keep_alive": 0})
-    llm_door.post("t", "local:other", "other", "http://x/api/chat", json={"model": "other", "keep_alive": -1})
+    llm_door.post("t", f"local:{local}", local, "http://localhost:11434/api/chat", json={"model": local, "keep_alive": 0})
+    llm_door.post("t", "local:other", "other", "http://localhost:11434/api/chat", json={"model": "other", "keep_alive": -1})
     # the warm core's model is held (-1) inside a cycle AND outside it - no caller
     # unloads it; any other model: 0 in a cycle, the policy's outside_cycle outside
     assert [b["keep_alive"] for b in bodies] == [-1, 0, -1, 0], bodies

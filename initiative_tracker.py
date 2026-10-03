@@ -287,14 +287,6 @@ def _measure_progress(initiative: dict, indicators: dict) -> dict:
     delta_changed = abs((current_value - baseline_value) - existing_delta) > 1e-4
     needs_explanation = (existing_explanation is None) or delta_changed
 
-    if needs_explanation:
-        try:
-            from core.groq_backend import _is_cooling
-            if _is_cooling("groq") and _is_cooling("gemini"):
-                needs_explanation = False
-        except Exception:
-            pass
-
     if False and needs_explanation:  # TODO: causal-hypothesis gate is string-length-only
                                       # (len(text)>50 and len(action)>30 -> ACCEPTED), not
                                       # citation_verifier.verify_hypothesis() — produced 24

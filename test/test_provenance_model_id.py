@@ -34,35 +34,16 @@ if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
 from core import brain            # noqa: E402
-from core import groq_backend as gb   # noqa: E402
 
 
 # --------------------------------------------------------------------------- #
 # The ids we call are the ids the providers serve
 # --------------------------------------------------------------------------- #
 
-def test_every_configured_id_is_a_non_empty_literal():
-    for name in ("GROQ_MODEL", "OPENROUTER_MODEL"):
-        value = getattr(gb, name)
-        assert isinstance(value, str) and value.strip(), name
 
 
-def test_the_retired_llama_id_is_gone_from_the_call_path():
-    """llama-3.3-70b-versatile was decommissioned upstream 2026-08-16 and
-    produced the 471-line 404 loop. It must not be a model literal anywhere in
-    the calling code again — a docstring naming it as history is fine."""
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    for line in src.splitlines():
-        if "llama-3.3-70b-versatile" not in line:
-            continue
-        stripped = line.strip()
-        assert stripped.startswith("#") or '"""' in src.split(line)[0][-2000:], (
-            f"a retired model id is on a code line: {stripped}")
-    assert gb.GROQ_MODEL != "llama-3.3-70b-versatile"
 
 
-def test_gemini_takes_its_id_from_the_url_so_the_two_cannot_drift():
-    assert gb.GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
 
 
 # --------------------------------------------------------------------------- #
@@ -79,11 +60,6 @@ def _model_for():
     }
 
 
-@pytest.mark.parametrize("label,expected", sorted(_model_for().items()))
-def test_each_backend_label_resolves_to_its_configured_id(label, expected):
-    src = (REPO / "core" / "groq_backend.py").read_text(encoding="utf-8")
-    assert f'if backend_label == "{label}":' in src
-    assert expected
 
 
 class _CloudReply:
@@ -98,24 +74,6 @@ class _CloudReply:
                 "usage": {"prompt_tokens": 5, "completion_tokens": 1}}
 
 
-@pytest.mark.parametrize("leg,label,model_attr", [
-    ("_call_groq", "Groq", "GROQ_MODEL"), ("_call_openrouter", "OpenRouter", "OPENROUTER_MODEL")])
-def test_the_cloud_row_names_the_exact_model_and_keeps_the_backend_label(
-        monkeypatch, tmp_path, leg, label, model_attr):
-    """Since 24 Sep the row is written by core/llm_door.py for every leg. The
-    exact id is on it (the 18-20 Aug 404 loop), and `backend` keeps the label
-    core/phase_report._provenance_between() groups by."""
-    from core import llm_door
-    prov = tmp_path / "llm_provenance.jsonl"
-    monkeypatch.setattr(llm_door, "PROVENANCE", prov)
-    monkeypatch.setattr(gb, "_load_key", lambda name: "test-key")
-    monkeypatch.setattr(gb, "_SLEEP_SECS", 0)
-    import requests
-    monkeypatch.setattr(requests, "post", lambda *a, **k: _CloudReply())
-    getattr(gb, leg)("кажи жив", 16)
-    row = json.loads(prov.read_text(encoding="utf-8").splitlines()[-1])
-    assert row["backend"] == label and row["model"] == getattr(gb, model_attr), row
-    assert row["outcome"] == "ok" and row["finish_reason"] == "stop" and row["latency_s"] is not None
 
 
 # --------------------------------------------------------------------------- #
@@ -144,7 +102,7 @@ def test_the_local_path_records_the_model_and_what_was_requested(monkeypatch,
     monkeypatch.setattr(llm_door, "PROVENANCE", prov)
     monkeypatch.setattr(brain, "JOURNAL", tmp_path / "brain_journal.jsonl")
     monkeypatch.setattr(brain, "models", lambda: ["qwen2.5:3b", "qwen3:8b"])
-    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://x"))
+    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://localhost:11434"))
 
     import requests
     monkeypatch.setattr(requests, "post", lambda *a, **k: _Reply())
@@ -171,7 +129,7 @@ def test_a_silent_fallback_to_a_smaller_model_is_visible(monkeypatch, tmp_path):
     monkeypatch.setattr(llm_door, "PROVENANCE", prov)
     monkeypatch.setattr(brain, "JOURNAL", tmp_path / "brain_journal.jsonl")
     monkeypatch.setattr(brain, "models", lambda: ["qwen2.5:3b", "qwen3:8b"])
-    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://x"))
+    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen3:8b", "http://localhost:11434"))
     monkeypatch.setattr(brain, "_smaller", lambda cur: "qwen2.5:3b")
 
     calls = {"n": 0}

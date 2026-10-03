@@ -51,10 +51,10 @@ def test_what_launders_it_is_stated_not_hidden():
 ])
 def test_call_returns_the_answer_as_llm_text(reply, path, monkeypatch):
     monkeypatch.setenv("CORTEX_STEP", "s1")
-    d = llm_door.call("t", "Groq", "m", lambda: reply)
+    d = llm_door.call("t", "local:m", "m", lambda: reply)
     for k in path:
         d = d[k]
-    assert isinstance(d, LLMText) and d.backend == "Groq" and d.model == "m" and d.step == "s1"
+    assert isinstance(d, LLMText) and d.backend == "local:m" and d.model == "m" and d.step == "s1"
 
 
 def test_post_hands_back_a_response_whose_json_is_marked(monkeypatch):
@@ -66,7 +66,7 @@ def test_post_hands_back_a_response_whose_json_is_marked(monkeypatch):
         def json(self):
             return {"choices": [{"message": {"content": "hello"}, "finish_reason": "stop"}]}
     monkeypatch.setattr(requests, "post", lambda url, **kw: R())
-    r = llm_door.post("t", "Groq", "m", "https://example.invalid/v1")
+    r = llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat")
     assert isinstance(r.json()["choices"][0]["message"]["content"], LLMText)
 
 

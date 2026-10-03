@@ -246,11 +246,3 @@ def test_a_step_with_all_four_backends_broken_finishes_fast():
           f"\n    without policy {without_policy:6.2f}s  cloud attempts {cloud_off}")
 
 
-def test_the_chain_consults_the_policy():
-    """Wiring guard: the module can be perfect and unreferenced."""
-    import pathlib
-    src = (pathlib.Path(__file__).resolve().parents[1] /
-           "core" / "groq_backend.py").read_text(encoding="utf-8")
-    for needle in ("backend_policy", "cloud_allowed", "note_failure",
-                   "note_all_cloud_failed", "is_disabled"):
-        assert needle in src, f"call_groq_meta never calls {needle}"

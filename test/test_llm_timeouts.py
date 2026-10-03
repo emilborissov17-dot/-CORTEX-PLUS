@@ -52,15 +52,14 @@ def test_recompute_is_max_floor_or_p95_times_1_5_over_ok_untruncated_rows(tmp_pa
 
 def test_the_seed_applies_until_something_is_measured(tmp_path, monkeypatch):
     monkeypatch.setattr(llm_door, "TIMEOUTS", tmp_path / "absent.json")
-    assert llm_door.timeout_for("Groq") == 25.0
-    assert llm_door.timeout_for("OpenRouter") == 45.0
     assert llm_door.timeout_for("local:x") == 60.0
-    assert llm_door.timeout_for("Groq-Whisper") is None
+    # C-CLOUD-1 (R45): no outside leg has a seed any more
+    assert llm_door.timeout_for("Groq") is None and llm_door.timeout_for("OpenRouter") is None
 
 
 def test_the_door_enforces_the_measured_timeout_over_the_callers(tmp_path, monkeypatch):
     t = tmp_path / "t.json"
-    t.write_text(json.dumps({"legs": {"Groq": {"timeout_s": 25.0}, "local": {"timeout_s": 20.0}}}), encoding="utf-8")
+    t.write_text(json.dumps({"legs": {"local:m": {"timeout_s": 25.0}, "local": {"timeout_s": 20.0}}}), encoding="utf-8")
     monkeypatch.setattr(llm_door, "TIMEOUTS", t)
     monkeypatch.setattr(llm_door, "_warm", set())
     got = []
@@ -74,11 +73,11 @@ def test_the_door_enforces_the_measured_timeout_over_the_callers(tmp_path, monke
 
     import requests
     monkeypatch.setattr(requests, "post", lambda url, **k: got.append(k.get("timeout")) or _R())
-    llm_door.post("t", "Groq", "m", "https://x", timeout=(10, 60))
-    llm_door.post("t", "local:m", "m", "http://x", timeout=300)
-    llm_door.post("t", "local:m", "m", "http://x", timeout=300)
-    llm_door.post("t", "Groq-Whisper", "w", "https://x", timeout=(10, 600))
-    assert got == [(10.0, 25.0), (10.0, 300.0), (10.0, 20.0), (10, 600)], got
+    llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat", timeout=300)
+    llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat", timeout=300)
+    llm_door.post("t", "local:n", "n", "http://localhost:11434/api/chat", timeout=300)
+    llm_door.post("t", "whisper", "w", "http://localhost:9000/asr", timeout=(10, 600))
+    assert got == [(10.0, 300.0), (10.0, 25.0), (10.0, 300.0), (10, 600)], got
 
 
 def test_a_truncated_answer_is_an_error_row():
@@ -107,20 +106,8 @@ def _ladder(monkeypatch, groq_replies, openrouter_reply=("fallback", {"finish_re
     return calls
 
 
-def test_truncated_once_is_retried_on_the_same_leg_with_twice_the_room(monkeypatch):
-    calls = _ladder(monkeypatch, [("cut", {"finish_reason": "length"}), ("whole", {"finish_reason": "stop"})])
-    out = gb.call_groq_meta("p", 100)
-    text = out[0] if isinstance(out, tuple) else out
-    assert text == "whole"
-    assert calls == [("groq", 100), ("groq", 200)], calls
 
 
-def test_truncated_twice_moves_to_the_next_leg_and_is_never_returned(monkeypatch):
-    calls = _ladder(monkeypatch, [("cut", {"finish_reason": "length"}), ("cut again", {"finish_reason": "length"})])
-    out = gb.call_groq_meta("p", 100)
-    text = out[0] if isinstance(out, tuple) else out
-    assert text == "fallback"
-    assert calls == [("groq", 100), ("groq", 200), ("openrouter", 100)], calls
 
 
 def test_no_ladder_leg_passes_its_own_timeout_to_the_door():

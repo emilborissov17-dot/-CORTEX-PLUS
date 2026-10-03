@@ -67,20 +67,6 @@ def _call_llm_json_kwargs(path: pathlib.Path) -> list:
 
 
 
-def test_the_new_budget_beats_the_old_retry_not_just_the_old_attempt():
-    """The point is to stop the SECOND call, so the first attempt must now be at
-    least as generous as the retry used to be. 800 -> 2400 vs the old retry's
-    2400: equal, which is exactly the threshold that landed."""
-    from core import groq_backend as G
-    old_first = G._reasoning_budget(400, G.GROQ_BUDGET_MULT, G.GROQ_BUDGET_FLOOR,
-                                    G.GROQ_BUDGET_CAP)
-    old_retry = G._reasoning_budget(800, G.GROQ_BUDGET_MULT, G.GROQ_BUDGET_FLOOR,
-                                    G.GROQ_BUDGET_CAP)
-    new_first = old_retry
-    assert old_first == 1500, (
-        "GROQ_BUDGET_FLOOR no longer lifts 400 to 1500 — the measurement in this "
-        "file's docstring was made under that floor and needs redoing")
-    assert new_first > old_first, "the new first attempt is no bigger than the old one"
 
 
 def test_truncation_is_still_retried_rather_than_hidden():

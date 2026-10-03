@@ -82,34 +82,7 @@ def test_no_ollama_endpoint_in_live_module(rel):
 
 
 
-def test_groq_backend_chain_excludes_ollama():
-    """Ollama must not be a normal step in the 4-backend cloud chain."""
-    import inspect
-
-    from core import groq_backend
-
-    src = inspect.getsource(groq_backend.call_groq_meta)
-    assert "_call_ollama" not in src, "the old dead _call_ollama is back"
-    # the local model must NOT be one of the primary chain entries
-    chain_src = src.split("last_error", 1)[0]  # the `backends = [...]` region + loop start
-    assert "_call_local" not in chain_src, \
-        "local model must be last-resort AFTER the cloud loop, not a chain entry"
 
 
-def test_groq_backend_local_is_labelled_last_resort():
-    """The task #16 fallback: local model allowed, but only as an explicit,
-    degraded-labelled last resort reached after the cloud loop."""
-    import inspect
-
-    from core import groq_backend
-
-    src = inspect.getsource(groq_backend.call_groq_meta)
-    assert "_call_local" in src, "the last-resort local fallback is missing (task #16)"
-    # it must come AFTER the cloud backends loop, not before
-    assert src.index("for label, key, fn in backends") < src.index("_call_local"), \
-        "local fallback must be reached only after the cloud loop"
-
-    local_src = inspect.getsource(groq_backend._call_local)
-    assert "degraded" in local_src, "local answer must be labelled degraded=True"
 
 

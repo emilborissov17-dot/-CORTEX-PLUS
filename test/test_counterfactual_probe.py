@@ -287,7 +287,7 @@ def test_the_lean_prompt_drops_the_self_blocks_and_keeps_the_numbers(monkeypatch
             return _R()
 
     monkeypatch.setitem(sys.modules, "requests", _RQ)
-    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen2.5:3b", "http://x"))
+    monkeypatch.setattr(brain, "_pick_model", lambda: ("qwen2.5:3b", "http://localhost:11434"))
     monkeypatch.setattr(brain, "remember", lambda *a, **k: None)
     brain.think("probe", "Is 39 past 38?", evidence="value: 39\nline: 38", schema=CP.SCHEMA,
                 kind="counterfactual_probe", remember_it=False, lean=True)

@@ -93,18 +93,3 @@ def test_the_approve_reader_print_and_state_file_are_masked(tmp_path, monkeypatc
     assert not _leaks(tok, state), state
 
 
-def test_the_llm_failure_print_goes_through_the_mask():
-    """Structural: the '[LLM] ... failed' print in groq_backend must be wrapped in
-    mask_secrets(...). Checked on the AST (identifiers), not on comments."""
-    tree = ast.parse((REPO / "core" / "groq_backend.py").read_text(encoding="utf-8"))
-    found = masked = 0
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Call) and getattr(node.func, "id", None) == "print":
-            text = ast.unparse(node)
-            if "failed (" in text and "-- next" in text:
-                found += 1
-                arg = node.args[0] if node.args else None
-                if isinstance(arg, ast.Call) and getattr(arg.func, "id", None) == "mask_secrets":
-                    masked += 1
-    assert found >= 1, "the '[LLM] ... failed' print was not found — test is stale"
-    assert masked == found, "an '[LLM] ... failed' print writes provider text unmasked"

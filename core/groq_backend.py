@@ -1,228 +1,38 @@
 #!/usr/bin/env python3
 """
-groq_backend.py — LLM backend с 3-степенен fallback chain
-==========================================================
-Ред на опити (моделите са верифицирани срещу живите листинги на 20 август 2026;
-двата reasoning пътя минават през _reasoning_budget — виж него):
-  1. Groq       (openai/gpt-oss-120b)                  — reasoning, бърз, безплатен
-  2. OpenRouter (nvidia/nemotron-3-super-120b-a12b:free) — openrouter.ai
-  3. Gemini     (gemini-3.5-flash)                     — reasoning, 1500 req/day
+groq_backend.py — the system's text model: the LOCAL model, and nothing else.
 
-CEREBRAS WAS THE FOURTH AND IS RETIRED (31 Aug 2026, Emil's call: it is not
-free and it is not ours). It served 440 calls 15-18 Aug with the best median
-reply of the four, then returned 402 payment_required on every completion from
-~22 Aug. Verified 2026-08-28: GET /v1/models answers 200, completions answer
-402 with param=quota on BOTH listed models, so it is the ACCOUNT, not the model
-or any parameter — no swap reopens it. It was skipped by name for three days
-before removal; the chain has been three legs wide in fact since 28 Aug, and
-now says so. To bring it back, restore this file from before this commit.
+C-CLOUD-1 (3 Oct 2026, Emil R45): "Нали нямаше да имаме външни LLM-и… и щяхме да работим само
+с OpenClaw?" — "Защо го имаме изобщо… защо някой друг да мисли вместо мозъкът на системата?"
+Every outside backend (Groq, NVIDIA/Kimi, OpenRouter, Gemini — and Cerebras before them) is
+DELETED from this file, with its URLs, keys, cooldowns and ordering. The git history keeps them;
+nothing here can reach them. The ladder is the local model over Ollama HTTP (:11434): the 3b,
+and the 8b while core/model_window's window is open, each charged to the step's budget by
+core/step_budget.
 
-Ollama беше премахнат от веригата (2026-07-04) като ТИХ safety net, който
-маскираше AllBackendsFailedError. Това остава в сила: локалният модел НЕ е
-обикновена стъпка във веригата и НЕ маскира тихо нищо.
-ИЗКЛЮЧЕНИЕ (30 юли 2026, задача #16, изрично одобрено от Емил): локалният
-модел се връща като ЯВНА последна инстанция САМО когато и четирите облачни
-backend-а са в cooldown (пълен blackout). Отговорът е маркиран
-backend="local:<model>", degraded=True — видимо, не тихо. Целта е жива-но-
-деградирала оса вместо мъртва (LLM_FAILED) при едновременен blackout.
+When the local model does not answer, the caller gets AllBackendsFailedError — the same named
+failure as before — never invented text.
 
-При rate limit → веднага следващ backend, БЕЗ дълго чакане.
-Cooldown прогресивен с капак 180s (60/120/180) — край на 10-мин blackout,
-който гладеше цикъла; hit-броячът се нулира при успешен отговор.
-
-При изчерпване на всички backends → вдига AllBackendsFailedError,
-която caller-ите могат да уловят и да маркират snapshot с
-needs_reanalysis: True за приоритетен повторен анализ.
-
-УПОТРЕБА: Drop-in replacement, API не се променя.
+USE (unchanged names, see the report's rename section):
   from core.groq_backend import call_groq, AllBackendsFailedError
   result = call_groq(prompt, max_tokens=800)
-
-.env:
-  GROQ_API_KEY=gsk_...
-  OPENROUTER_API_KEY=sk-or-...
-  GEMINI_API_KEY=AIza...
 """
 
 import os
-import re
 import time
-import json
-from datetime import datetime, timezone
-import threading
-import requests
 from pathlib import Path
+
+import requests
 
 from core.llm_text import LLMText   # task #29
 
-# ---------------------------------------------------------------------------
-# URLs и модели
-# ---------------------------------------------------------------------------
-
-GROQ_API_URL    = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL      = "openai/gpt-oss-120b"
-
-# CEREBRAS_* constants removed 31 Aug 2026 with the backend. The reasoning-token
-# FLOOR they introduced is the part that mattered and it lives on in
-# GROQ_BUDGET_FLOOR below: Groq serves the SAME model (openai/gpt-oss-120b), so
-# the measurement that justified the floor still applies to a live backend.
-
-# 20 август 2026 — СЪЩИЯТ трансформ, сега и за Groq и за Gemini.
-#
-# Groq вече сервира openai/gpt-oss-120b — точно моделът, за който подът горе беше
-# въведен при Cerebras. Gemini сервира gemini-3.5-flash. И двата МИСЛЯТ, и при
-# двата мисленето се брои В бюджета на отговора. Измерено днес, не предположено:
-#
-#   Groq   gpt-oss-120b     completion_tokens=150 при content 549 знака
-#                           + отделно поле "reasoning" -> мисленето е вътре
-#   Gemini gemini-3.5-flash maxOutputTokens=100 -> thoughts=93 candidates=3  MAX_TOKENS
-#                           maxOutputTokens=300 -> thoughts=285 candidates=11 MAX_TOKENS
-#                           maxOutputTokens=1024-> thoughts=460 candidates=62 STOP
-#
-# Тоест thoughts + candidates <= тавана: мисленето изяжда бюджета ПРЕДИ отговора.
-# Call site-овете тук са оразмерени за llama-3.3-70b (80..4096) — при 80 токена
-# gpt-oss/gemini свършват бюджета още в мисленето и връщат отрязан или празен
-# отговор. Точно това се случи в цикъла от 17:05: 29 отрязвания, 19 Groq и
-# 10 Gemini, докато Cerebras (който има пода) не отряза нито веднъж.
-GROQ_BUDGET_MULT  = float(os.environ.get("GROQ_BUDGET_MULT",  "3"))
-GROQ_BUDGET_FLOOR = int(os.environ.get("GROQ_BUDGET_FLOOR", "1500"))
-GROQ_BUDGET_CAP   = int(os.environ.get("GROQ_BUDGET_CAP",   "8192"))
-
-GEMINI_BUDGET_MULT  = float(os.environ.get("GEMINI_BUDGET_MULT",  "3"))
-# THE 1500 FLOOR WAS NOT ENOUGH. Measured in cycle 2026-08-28T08:05:00, not
-# assumed: Gemini cut 14 of 19 answers (finishReason=MAX_TOKENS). The truncated
-# reply lengths in characters, from memory/llm_provenance.jsonl:
-#
-#   77 171 174 182 191 193 239 256 258 271 293 519 1348 1382   median 247.5
-#
-# Eleven of the fourteen came back under 300 characters — the model spent the
-# whole budget thinking and emitted a stub. For comparison the two COMPLETE
-# answers at the same call site were 1711 and 1764 characters, about 430-440
-# output tokens, so thinking took ~1060-1070 of the 1500 there. In the fourteen
-# it took all of it.
-#
-# 4000 leaves room for a full answer after the longest thinking observed and
-# stays under half the 8192 cap. The value lives IN CODE, not in .env: a
-# threshold that exists only in an untracked file is invisible to git and to
-# every future reader.
-GEMINI_BUDGET_FLOOR = int(os.environ.get("GEMINI_BUDGET_FLOOR", "4000"))
-GEMINI_BUDGET_CAP   = int(os.environ.get("GEMINI_BUDGET_CAP",   "8192"))
-# ── PROVIDERS DECLARED DEAD (23 Aug 2026) ───────────────────────────────────
-# A provider that cannot serve this system is skipped BY NAME, with the reason
-# written down, and its code path is left exactly where it is. Deleting the path
-# would make the decision unreviewable: nobody reading this file later could
-# tell "we tried it and it does not work for us" from "nobody ever wired it".
-#
-# The reason is a literal string and it travels into the log line, so the
-# question "why is there no Cerebras in this run" is answered in the run's own
-# output rather than in somebody's memory.
-#
-# To bring one back: delete its entry here. Nothing else has to change.
-# CEREBRAS IS NO LONGER LISTED HERE — IT IS GONE (31 Aug 2026). The block below
-# is kept as the decision record this section demands, because that is the whole
-# argument for skipping-by-name rather than deleting: a later reader must be able
-# to tell "we tried it and it does not work for us" from "nobody ever wired it".
-# This IS that record. The dict is empty and the mechanism stays, for the next
-# provider that dies while the chain is still walking to it.
-#
-# THE REASON WAS WRONG FOR FIVE DAYS, AND THE FILE ITSELF SAID SO.
-#
-# This entry read "reasoning tokens consume max_tokens" until 28 Aug 2026. That
-# was never the failure. The reasoning-token problem was real in July and was
-# FIXED by CEREBRAS_BUDGET_FLOOR above — the header at line ~87 records the
-# measurement: "Cerebras (който има пода) не отряза нито веднъж", and
-# memory/llm_provenance.jsonl holds 440 successful Cerebras calls between
-# 15 and 18 Aug with a median reply of 1208 chars, the best of the four.
-#
-# What actually happens is 402, in three cycle logs:
-#   memory/cycle_logs/cycle_2026-08-22_145127.log:179-180
-#   [POLICY] cerebras DISABLED for this run — permanent: 402 Client Error:
-#   Payment Required for url: https://api.cerebras.ai/v1/chat/completions
-#
-# ACCOUNT-SCOPED, VERIFIED 2026-08-28. Probed directly rather than assumed:
-# GET /v1/models returns 200 and lists ['gpt-oss-120b', 'gemma-4-31b'], so the
-# key is valid and the account is reachable. A one-message completion against
-# BOTH models returns 402 with {"type":"payment_required_error","param":"quota"}.
-# It is the quota, not the model — so no model swap and no parameter change can
-# reopen this door, and zai-glm-4.7, the alternative this file names at line 60,
-# is not even in the account's list. The question is closed until somebody pays.
-DECLARED_DEAD: dict[str, str] = {}
-
-OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_MODEL   = "nvidia/nemotron-3-super-120b-a12b:free"  # 120B, верифициран безплатен
-
-GEMINI_API_URL  = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent"
-
-# KIMI, BACK IN THE CHAIN, AND ON A ROAD THAT IS OPEN (11 Sep 2026, Emil: "why is Kimi
-# not part of the system?"). Checked before writing, not assumed: Groq SHUT DOWN
-# moonshotai/kimi-k2-instruct-0905 on 15 Apr 2026 (console.groq.com/docs/deprecations,
-# replacement named: openai/gpt-oss-120b — the model already first here), and free Kimi
-# left OpenRouter earlier. NVIDIA's NIM API serves the Kimi K2 line on its free developer
-# tier, OpenAI-compatible, at integrate.api.nvidia.com. The key is the human's to create
-# (NVIDIA_API_KEY in .env, "nvapi-..."); until it exists this leg is NOT in the chain at
-# all — no failure rows, no cooldowns, nothing pretending. The model id is not hard-coded:
-# NIM renames (k2-instruct -> k2.5 -> k2.6), so the first call lists /v1/models and takes
-# the newest Kimi it serves, and provenance records exactly which one answered.
-NVIDIA_API_URL    = "https://integrate.api.nvidia.com/v1/chat/completions"
-NVIDIA_MODELS_URL = "https://integrate.api.nvidia.com/v1/models"
-#   k3 FIRST, AND IT WAS MISSING (11 Sep 2026). This tuple opened at "kimi-k2.6"
-#   and had no k3 entry at all, so _nvidia_model returned kimi-k2.6 while its own
-#   docstring promised "the newest Kimi the NIM account serves". Measured against
-#   the live /v1/models on this key: the account serves BOTH
-#       ['moonshotai/kimi-k2.6', 'moonshotai/kimi-k3']
-#   and the preference list picked the older one. The generic fallback below
-#   (sorted(kimis)[-1]) would have chosen k3 correctly, but it is never reached
-#   while an earlier pref matches — a list meant to express "newest first" that
-#   silently pinned the system to last month's model.
-#   The rule for the next rename: add the new id at the FRONT, or delete the list
-#   and let the sorted fallback decide.
-NVIDIA_KIMI_PREFS = ("kimi-k3", "kimi-k3-instruct", "kimi-k2.6", "kimi-k2-6",
-                     "kimi-k2.5", "kimi-k2-5", "kimi-k2-thinking", "kimi-k2-instruct")
-_NVIDIA_MODEL: str | None = None
-
-# THE ORDER IS MEASURED, NOT DECLARED (11 Sep 2026). scripts/backend_league.py reads
-# memory/llm_provenance.jsonl (success, truncation, 429s, latency) and the counterfactual
-# probe's per-model verdict, and writes memory/backend_order_measured.json. This file
-# only READS it, only accepts known keys, and falls back to the default below if the file
-# is absent, stale, or malformed. The default is the pre-11-Sep order with Kimi second.
-DEFAULT_ORDER = ("groq", "nvidia", "openrouter", "gemini")
-MEASURED_ORDER = Path(__file__).resolve().parents[1] / "memory" / "backend_order_measured.json"
-ORDER_MAX_AGE_DAYS = 8
-
-# Ollama константите и _call_ollama/_get_ollama_model са премахнати (2026-07-13).
-# Ollama излезе от веригата на 2026-07-04 (виж docstring-а горе) — оттогава кодът
-# беше мъртъв: нищо не го викаше, но URL-ите стояха и подвеждаха, че локален
-# backend още е опция. По конвенция (CLAUDE.md) Ollama няма място в живия цикъл.
-
-# ---------------------------------------------------------------------------
-# Custom exception — raised when every backend is exhausted
-# ---------------------------------------------------------------------------
 
 class AllBackendsFailedError(RuntimeError):
-    """Raised when the full fallback chain (Groq→OpenRouter→Gemini→local_3b)
-    has been exhausted without a successful response.  Callers that write
-    snapshots should catch this and set needs_reanalysis=True on the output."""
+    """Raised when the local model gave no usable answer within the step's budget.
+    Callers that write snapshots should catch this and set needs_reanalysis=True."""
     pass
 
 
-# Cooldown при rate limit — ПРОГРЕСИВЕН, но с КАПАК (30 юли 2026, задача #16).
-# Старо: 2-ри hit → 600s "session blackout". Диагнозата показа, че точно това
-# причинява LLM-глада: Groq пада 2 пъти рано → изпада за 10 мин → товарът се
-# излива на другите 3 → каскаден blackout → осите връщат LLM_FAILED. Ново: 60/120/180s
-# с капак 180s — backend се възстановява В РАМКИТЕ на цикъла вместо да изпада за 10 мин.
-# При успешен отговор hit-броячът се нулира (виж call_groq_meta), за да не се третира
-# вечно като хронично падащ.
-_COOLDOWN_SECS_FIRST = 60
-_COOLDOWN_SECS_MAX   = 180
-_cooldowns:     dict = {}
-_cooldown_hits: dict = {}     # брои колко пъти е hit-нат всеки backend
-_cd_lock = threading.Lock()
-
-# Local last-resort brain (Ollama HTTP :11434) — качва се САМО когато и четирите
-# облачни backend-а са в cooldown (пълен blackout). Изрично решение на Емил (30 юли
-# 2026) да се отпусне конвенцията "Ollama мъртъв в scoring" ЗА ПОСЛЕДНАТА ИНСТАНЦИЯ:
-# жива-но-деградирала оса > мъртва оса. Отговорът се маркира degraded=True/backend=
-# "local:<model>", за да е видно в самомодела, че е локален, не облачен.
 _OLLAMA_URL  = os.environ.get("CORTEX_OLLAMA_URL", "http://localhost:11434")
 
 def _pick_local_model() -> str:
@@ -252,70 +62,10 @@ _LOCAL_MODEL = _pick_local_model()
 _SLEEP_SECS: float = 10.0
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def _load_key(name: str) -> str:
-    """Зарежда API ключ от environment или .env файл."""
-    key = os.environ.get(name, "")
-    if not key:
-        for candidate in [
-            Path(__file__).resolve().parents[1] / ".env",
-            Path(__file__).resolve().parents[2] / ".env",
-        ]:
-            if candidate.exists():
-                for line in candidate.read_text(encoding="utf-8").splitlines():
-                    if line.startswith(name + "="):
-                        key = line.split("=", 1)[1].strip()
-                        break
-            if key:
-                break
-    return key
-
-
 def _system_msg() -> str:
     p = Path(__file__).resolve().parent / "cortex_system_prompt.txt"
     return p.read_text(encoding="utf-8") if p.exists() else "You are CORTEX++ AGI."
 
-
-def _is_cooling(name: str) -> bool:
-    with _cd_lock:
-        return time.time() < _cooldowns.get(name, 0)
-
-
-def _set_cooldown(name: str) -> None:
-    with _cd_lock:
-        hits = _cooldown_hits.get(name, 0) + 1
-        _cooldown_hits[name] = hits
-        secs = min(_COOLDOWN_SECS_FIRST * hits, _COOLDOWN_SECS_MAX)  # 60/120/180, capped
-        _cooldowns[name] = time.time() + secs
-        until = _cooldowns[name]
-    # ITEM 44.1: TELL THE BUDGET WHEN THIS WINDOW ENDS. The cloud demotion is
-    # tied to the LONGEST active cooldown so a transient 429 cannot outlive its
-    # own recovery signal. Pushed rather than pulled because this module imports
-    # step_budget, so step_budget cannot import back to ask; and here rather than
-    # anywhere else because this is the single place a cooldown is created.
-    # FAIL-OPEN: bookkeeping must never break the chain.
-    try:
-        from core import step_budget as _sb
-        _sb.note_cooldown_until(until)
-    except Exception:
-        pass
-    print(f"  [LLM] {name} cooldown {secs}s (hit #{hits})")
-
-
-def _clear_cooldown(name: str) -> None:
-    """A backend answered → it's healthy again. Reset its hit count so a past
-    rate-limit streak doesn't keep escalating its future cooldowns."""
-    with _cd_lock:
-        _cooldown_hits.pop(name, None)
-        _cooldowns.pop(name, None)
-
-
-# ---------------------------------------------------------------------------
-# Backend извиквания
-# ---------------------------------------------------------------------------
 
 def _pace() -> float:
     """The body scan's directive (core/llm_pacing) if the cycle set one, else ours."""
@@ -326,217 +76,6 @@ def _pace() -> float:
     except Exception:
         pass
     return _SLEEP_SECS
-
-
-def _call_groq(prompt: str, max_tokens: int):
-    key = _load_key("GROQ_API_KEY")
-    if not key:
-        raise ValueError("GROQ_API_KEY не е намерен")
-
-    print(f"  [LLM] Groq {GROQ_MODEL}...")
-    headers = {
-        "Authorization": f"Bearer {key}",
-        "Content-Type": "application/json",
-    }
-    # gpt-oss-120b е reasoning модел: мисленето се брои В бюджета на отговора,
-    # точно както при Cerebras. max_completion_tokens е полето, което покрива
-    # двете заедно; "max_tokens" е наследеният псевдоним.
-    budget = _reasoning_budget(max_tokens, GROQ_BUDGET_MULT,
-                               GROQ_BUDGET_FLOOR, GROQ_BUDGET_CAP)
-    payload = {
-        "model": GROQ_MODEL,
-        "messages": [
-            {"role": "system", "content": _system_msg()},
-            {"role": "user",   "content": prompt},
-        ],
-        "max_completion_tokens": budget,
-    }
-    time.sleep(_pace())  # adaptive: set by body_scanner directives (default 2s)
-    from core import llm_door
-    r = llm_door.post(None, "Groq", GROQ_MODEL, GROQ_API_URL, prompt_text=prompt,
-                      headers=headers, json=payload)   # timeout: llm_door, measured
-
-    if r.status_code == 429:
-        _set_cooldown("groq")
-        raise RuntimeError("Groq rate limit")
-
-    r.raise_for_status()
-    choice = r.json()["choices"][0]
-    return choice["message"]["content"], {"finish_reason": choice.get("finish_reason")}
-
-
-def _reasoning_budget(max_tokens: int, mult: float, floor: int, cap: int) -> int:
-    """Бюджет за модел, който МИСЛИ вътре в бюджета на отговора.
-
-    Един и същ трансформ за двата reasoning backend-а (Groq, Gemini).
-    Подът е същината: 3 x 80 = 240 не стига дори за мисленето, така че малките
-    call site-ове (media_intel_worker подава 80) получават пода, не кратното.
-    """
-    return min(cap, max(floor, int(max_tokens * mult)))
-
-
-def _call_openrouter(prompt: str, max_tokens: int):
-    key = _load_key("OPENROUTER_API_KEY")
-    if not key:
-        raise ValueError("OPENROUTER_API_KEY не е намерен")
-
-    print(f"  [LLM] OpenRouter {OPENROUTER_MODEL}...")
-    headers = {
-        "Authorization": f"Bearer {key}",
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/cortex-agi",
-    }
-    payload = {
-        "model": OPENROUTER_MODEL,
-        "messages": [
-            {"role": "system", "content": _system_msg()},
-            {"role": "user",   "content": prompt},
-        ],
-        "max_tokens": max_tokens,
-    }
-    time.sleep(_pace())
-    from core import llm_door
-    r = llm_door.post(None, "OpenRouter", OPENROUTER_MODEL, OPENROUTER_API_URL, prompt_text=prompt,
-                      headers=headers, json=payload)   # timeout: llm_door, measured
-
-    if r.status_code == 429:
-        _set_cooldown("openrouter")
-        raise RuntimeError("OpenRouter rate limit")
-
-    r.raise_for_status()
-    choice = r.json()["choices"][0]
-    content = choice["message"]["content"] or ""
-    # Някои OpenRouter модели могат да връщат <think>...</think> блокове.
-    # (core/llm_json.strip_reasoning прави същото и покрива още варианти —
-    # тук го оставяме за callers, които не минават през llm_json.)
-    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
-    return content, {"finish_reason": choice.get("finish_reason")}
-
-
-def _nvidia_model(key: str) -> str:
-    """The newest Kimi the NIM account serves, resolved once per process."""
-    global _NVIDIA_MODEL
-    if _NVIDIA_MODEL:
-        return _NVIDIA_MODEL
-    r = requests.get(NVIDIA_MODELS_URL, headers={"Authorization": f"Bearer {key}"}, timeout=(10, 30))
-    r.raise_for_status()
-    ids = [str(m.get("id") or "") for m in (r.json().get("data") or [])]
-    for pref in NVIDIA_KIMI_PREFS:
-        hit = [i for i in ids if i.lower().endswith(pref) or f"/{pref}" in i.lower()]
-        if hit:
-            _NVIDIA_MODEL = sorted(hit)[-1]
-            return _NVIDIA_MODEL
-    kimis = sorted(i for i in ids if "kimi" in i.lower())
-    if not kimis:
-        raise ValueError(f"NVIDIA NIM lists no Kimi model ({len(ids)} models listed)")
-    _NVIDIA_MODEL = kimis[-1]
-    return _NVIDIA_MODEL
-
-
-def _call_nvidia_kimi(prompt: str, max_tokens: int):
-    key = _load_key("NVIDIA_API_KEY")
-    if not key:
-        raise ValueError("NVIDIA_API_KEY не е намерен")
-    model = _nvidia_model(key)
-    print(f"  [LLM] NVIDIA {model}...")
-    payload = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": _system_msg()},
-            {"role": "user",   "content": prompt},
-        ],
-        "max_tokens": max_tokens,
-        "temperature": 0.3,
-    }
-    from core import llm_door
-    r = llm_door.post(None, "NVIDIA", model, NVIDIA_API_URL, prompt_text=prompt,
-                      json=payload,   # timeout: llm_door, measured
-                      headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
-                               "Accept": "application/json"})
-    if r.status_code == 429:
-        _set_cooldown("nvidia")
-        raise RuntimeError("NVIDIA NIM rate limit")
-    r.raise_for_status()
-    d = r.json()
-    choice = (d.get("choices") or [{}])[0]
-    content = ((choice.get("message") or {}).get("content") or "")
-    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
-    usage = d.get("usage") or {}
-    return content, {"finish_reason": choice.get("finish_reason"),
-                     "prompt_tokens": usage.get("prompt_tokens"), "total_tokens": usage.get("total_tokens")}
-
-
-def ordered_backend_keys(path: Path | None = None, now: datetime | None = None) -> list[str]:
-    """The chain order: measured if a fresh, well-formed league file exists, else DEFAULT_ORDER.
-    Every known key appears exactly once; unknown keys are ignored. Never raises."""
-    order = list(DEFAULT_ORDER)
-    try:
-        d = json.loads((path or MEASURED_ORDER).read_text(encoding="utf-8"))
-        ts = datetime.fromisoformat(str(d.get("ts", "")).replace("Z", "+00:00"))
-        age = ((now or datetime.now(timezone.utc)) - ts).days
-        got = [k for k in (d.get("order") or []) if k in DEFAULT_ORDER]
-        if age <= ORDER_MAX_AGE_DAYS and got:
-            order = got + [k for k in DEFAULT_ORDER if k not in got]
-    except Exception:
-        pass
-    return order
-
-
-def _call_gemini(prompt: str, max_tokens: int):
-    key = _load_key("GEMINI_API_KEY")
-    if not key:
-        raise ValueError("GEMINI_API_KEY не е намерен")
-
-    model_name = GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
-    print(f"  [LLM] Gemini {model_name}...")
-    url = f"{GEMINI_API_URL}?key={key}"
-    # Измерено 20 август 2026 срещу gemini-3.5-flash: thoughts + candidates <=
-    # maxOutputTokens. При 100 -> thoughts=93, candidates=3, finishReason=
-    # MAX_TOKENS. Мисленето изяжда бюджета преди отговора, точно както при
-    # Groq и Cerebras, затова същият под важи и тук.
-    budget = _reasoning_budget(max_tokens, GEMINI_BUDGET_MULT,
-                               GEMINI_BUDGET_FLOOR, GEMINI_BUDGET_CAP)
-    payload = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"maxOutputTokens": budget},
-    }
-    time.sleep(_pace())
-    from core import llm_door
-    r = llm_door.post(None, "Gemini", model_name, url, prompt_text=prompt,
-                      json=payload)   # timeout: llm_door, measured
-
-    if r.status_code == 429:
-        _set_cooldown("gemini")
-        raise RuntimeError("Gemini rate limit")
-
-    r.raise_for_status()
-    body = r.json()
-    candidates = body.get("candidates", [])
-    if not candidates:
-        raise ValueError("Gemini: празен отговор")
-    cand = candidates[0]
-    # Gemini казва "MAX_TOKENS" там, където OpenAI-съвместимите казват "length".
-    # Нормализираме към "length", за да има llm_json един-единствен признак.
-    raw_reason = (cand.get("finishReason") or "").upper()
-    finish_reason = "length" if raw_reason == "MAX_TOKENS" else raw_reason.lower() or None
-    # THE SPLIT IS MEASURED, NOT INFERRED (28 Aug 2026). Gemini returns
-    # usageMetadata with thoughtsTokenCount and candidatesTokenCount — thinking
-    # and answer, separately — and this function read the text and the finish
-    # reason and threw the rest away. So when 14 answers were cut short the only
-    # evidence left on disk was reply LENGTH IN CHARACTERS, and the size of the
-    # thinking that ate the budget had to be estimated from it. Carried now, so
-    # the next person reads the number instead of reconstructing it.
-    usage = body.get("usageMetadata") or {}
-    meta = {"finish_reason": finish_reason}
-    for src, dst in (("thoughtsTokenCount", "thoughts_tokens"),
-                     ("candidatesTokenCount", "answer_tokens"),
-                     ("promptTokenCount", "prompt_tokens"),
-                     ("totalTokenCount", "total_tokens")):
-        if isinstance(usage.get(src), int):
-            meta[dst] = usage[src]
-    if "thoughts_tokens" in meta or "answer_tokens" in meta:
-        meta["budget"] = budget
-    return cand["content"]["parts"][0]["text"], meta
 
 
 def _note_degraded(reason: str) -> None:
@@ -592,9 +131,8 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
 
 
 def _call_local(prompt: str, max_tokens: int):
-    """Last-resort sovereign brain over Ollama HTTP (:11434). Called ONLY when all
-    four cloud backends are cooling. Returns (content, meta) or raises. No external
-    API — this is the local model, deliberately, so a full-blackout cycle stays alive."""
+    """The local model over Ollama HTTP (:11434), the one core/model_window allows now.
+    Returns (content, meta) or raises."""
     # 15 Aug 2026 — измерено на машината (scripts/test_local_brain.py): СТУДЕНО
     # първо повикване на qwen3:8b върху 4GB VRAM не се вмества в 60-90s, а топлите
     # минават за ~48s. С 60s таймаут последната инстанция мълчеше точно когато е
@@ -635,254 +173,44 @@ def _call_local(prompt: str, max_tokens: int):
     return content, {"finish_reason": "stop", "degraded": True}
 
 
-# ---------------------------------------------------------------------------
-# Публичен интерфейс — API не се променя
-# ---------------------------------------------------------------------------
-
 def call_groq_meta(prompt: str, max_tokens: int = 1024,
                    purpose: str | None = None) -> tuple:
+    """The local model, laddered 3b -> 8b (8b only while the window is open), each tier
+    abandoned at its slice of the step's budget (core/step_budget).
+
+    Decided (R45): nothing answered -> AllBackendsFailedError, never text
+    (test/test_ladder_local_only.py). `purpose` is kept for the callers' signature.
     """
-    Fallback chain: Groq → OpenRouter → Gemini (→ local_3b, explicit last resort)
-
-    Връща (content, meta), където meta съдържа:
-      backend                 — кой backend отговори ("Groq", "OpenRouter", ...)
-      finish_reason           — "length" ако отговорът е отрязан (нормализирано
-                                през всички providers), иначе "stop"/None
-      used_reasoning_fallback — вдига се от reasoning backend, чийто "content"
-                                е празен и е взет суровият "reasoning" текст.
-                                Въведено за Cerebras (retired 31 Aug 2026);
-                                полето остава, защото core/llm_json.py го чете
-
-    core/llm_json.py ползва точно тези две полета, за да различи "отрязан
-    отговор" (→ retry) от "моделът върна боклук" (→ грешка).
-
-    При rate limit на даден backend → веднага следващ (без дълго чакане).
-    Backend с активен cooldown се прескача докато cooldown-ът не изтече.
-    При изчерпване на всички → вдига AllBackendsFailedError (subclass на
-    RuntimeError, съвместима с всички съществуващи except-клаузи).
-    """
-    _by_key = {
-        "groq":       ("Groq",        "groq",       _call_groq),
-        "nvidia":     ("NVIDIA-Kimi", "nvidia",     _call_nvidia_kimi),
-        "openrouter": ("OpenRouter",  "openrouter", _call_openrouter),
-        "gemini":     ("Gemini",      "gemini",     _call_gemini),
-    }
-    # A leg without its key is not in the chain (no failure rows for a door never opened).
-    _has_nvidia = bool(_load_key("NVIDIA_API_KEY"))
-    backends = [_by_key[k] for k in ordered_backend_keys() if k in _by_key and (k != "nvidia" or _has_nvidia)]
-
-    def _model_for(backend_label: str) -> str:
-        """Which model actually answered — for provenance.
-
-        Added 17 Aug 2026: meta already said WHICH BACKEND replied but never
-        which model, so anything archiving a verdict could record "Groq" and not
-        the id it actually called. Gemini's name is parsed out of GEMINI_API_URL
-        (.../models/<id>:generateContent) rather than duplicated into a constant,
-        so the two cannot drift apart.
-
-        MOVED ABOVE _log_provenance ON 21 AUG 2026, because for four days it was
-        computed and then thrown away — see the note there.
-        """
-        if backend_label == "Groq":
-            return GROQ_MODEL
-        if backend_label == "OpenRouter":
-            return OPENROUTER_MODEL
-        if backend_label == "NVIDIA-Kimi":
-            return _NVIDIA_MODEL or "nvidia:kimi (unresolved)"
-        if backend_label == "Gemini":
-            try:
-                return GEMINI_API_URL.rsplit("/", 1)[-1].split(":")[0]
-            except Exception:
-                return "gemini (model in GEMINI_API_URL)"
-        if backend_label.startswith("local:"):
-            return backend_label.split(":", 1)[1]
-        return backend_label
-
-    # PROVENANCE IS WRITTEN BY core/llm_door.py (24 Sep 2026). Each leg's HTTP
-    # request goes through llm_door.post(), which writes one schema-2 row on every
-    # path - success, HTTP error, exception, empty reply - with latency on error
-    # too. The two writers that stood here (_log_provenance, _log_failure) used a
-    # second schema and timed successes only; they would now double every row.
-
-    last_error = None
-
-    # ── THE POLICY GATE (20 Aug 2026) ───────────────────────────────────────
-    # Not every failure is the same failure. See core/backend_policy.py: a 402
-    # is an account that will not serve this run, a 429 is a window that will
-    # reopen, and a step that has already watched all four die three times over
-    # should stop spending its ceiling proving it again.
-    from core import backend_policy as _policy
-    _cloud_ok, _why = _policy.cloud_allowed(purpose)
-    if not _cloud_ok:
-        print(f"  [LLM] cloud skipped -- {_why}")
-        backends = []
-
-    # ── THE LADDER (22 Aug 2026) ────────────────────────────────────────────
-    # Until today this function walked cloud -> cloud -> cloud -> cloud -> local
-    # with no timeout the CALLER controlled. A provider that accepts a connection
-    # and then says nothing blocks here for as long as its own socket timeout
-    # allows; the step stops beating; the ceiling passes; the watchdog kills the
-    # whole cycle for one step's unavailable model. That is the shape of all six
-    # internet_intelligence kills in the existence ledger.
-    #
-    # core/step_budget.py spends the step's budget B in thirds and never blocks
-    # past a slice. The three tiers are the same three that were always here —
-    # what changes is that each one is ABANDONED at its slice instead of waited
-    # on, and that running out means DEGRADED rather than a dead cycle.
-    #
-    # The cloud tier below is the ENTIRE original chain, unchanged, moved into a
-    # closure: cooldowns, the policy gate, provenance, per-backend logging. This
-    # is a change to how long it may take, not to how it chooses.
-
-    def _cloud_chain():
-        nonlocal last_error
-        for label, key, fn in backends:
-            # A DECLARED SKIP. The dict is EMPTY as of 31 Aug 2026 - Cerebras
-            # was its only entry and was removed outright, not skipped - so this
-            # branch is currently inert. It stays because the next provider to
-            # die mid-life needs somewhere to be named while the chain still
-            # walks past it, and a skip that says why beats a silent absence.
-            if key in DECLARED_DEAD:
-                print(f"  [LLM] {label} -- {DECLARED_DEAD[key]}")
-                continue
-            if _policy.is_disabled(key):
-                print(f"  [LLM] {label} disabled for this run -- skipping")
-                continue
-            if _is_cooling(key):
-                print(f"  [LLM] {label} in cooldown -- skipping")
-                continue
-            from core import llm_door as _door
-            _gate = _door.leg_gate(label, _model_for(label))
-            if _gate == "skip":
-                print(f"  [LLM] {label} -- {_door.SKIPPED}, probed already tonight -- skipping")
-                continue
-            if _gate == "probe":
-                print(f"  [LLM] {label} -- {_door.SKIPPED}; tonight's one probe")
-            try:
-                _t0 = time.monotonic()
-                result, meta = fn(prompt, max_tokens)
-                # TRUNCATED IS AN ERROR (24 Sep 2026, task #19 c). 7 of 91 cloud
-                # "ok" answers on the 15:14 cycle were cut at max_tokens and were
-                # used as if whole. Once more on the same leg with twice the
-                # room; cut again -> this leg failed, the next one is asked.
-                from core import llm_door as _door
-                if (meta or {}).get("finish_reason") in _door.TRUNCATED:
-                    print(f"  [LLM] {label} truncated (finish_reason={meta.get('finish_reason')}) "
-                          f"-- once more with max_tokens={max_tokens * 2}")
-                    result, meta = fn(prompt, max_tokens * 2)
-                    if (meta or {}).get("finish_reason") in _door.TRUNCATED:
-                        raise ValueError(f"{label} truncated twice "
-                                         f"(finish_reason={meta.get('finish_reason')})")
-                if result and result.strip():
-                    _door.note_ok(label)
-                    _clear_cooldown(key)  # healthy again → reset its escalation
-                    meta = dict(meta or {})
-                    meta["latency_s"] = round(time.monotonic() - _t0, 2)
-                    meta["backend"] = label
-                    meta["model"] = _model_for(label)
-                    if meta.get("used_reasoning_fallback"):
-                        print(f"[LLM] {label} OK (внимание: празен content, ползван е reasoning)")
-                    else:
-                        print(f"[LLM] {label} OK")
-                    _policy.note_cloud_success()
-                    return result, meta
-                raise ValueError(f"Empty response from {label}")
-            except Exception as e:
-                kind = _policy.note_failure(key, e)
-                # A FAILURE IS AN EVENT, NOT AN ABSENCE. Until now provenance
-                # recorded successes only — 3425 rows, not one of them an error
-                # — which is exactly why nine 402s from Cerebras were invisible
-                # in the one file whose job is to say what the backends did, and
-                # why the DECLARED_DEAD reason above stayed wrong for five days.
-                # Reading a gap as "nothing happened" is the same defect as a
-                # guardrail that skips and writes nothing down.
-                # The provider's error text echoes the request URL, and a Gemini
-                # URL carries ?key=. This line goes to the cycle log (stdout),
-                # which core/durable.py's scrub never sees — mask it here.
-                from core.redact import mask_secrets
-                print(mask_secrets(f"  [LLM] {label} failed ({e}) -- next..."))
-                last_error = e
-        return None                      # None => this tier declined, next tier
+    nonlocal_err: list = []
 
     def _local_tier(model_id: str):
         def _go():
             try:
                 result, meta = _call_local_as(model_id, prompt, max_tokens)
-            except Exception as e:
+            except Exception as e:                                   # noqa: BLE001
                 nonlocal_err.append(e)
                 return None
             meta = dict(meta or {})
             meta["backend"] = f"local:{model_id}"
             meta["model"] = model_id
-            meta["degraded"] = True
             return result, meta
         return _go
 
-    nonlocal_err: list = []
-
     from core import step_budget as _budget
     from core import model_window as _mw
-    _small = _mw.small_model()
-    _big = _mw.big_model()
-
-    # Read BEFORE the ladder: run_call may clear eligibility as a side effect of
-    # the attempt itself, and asking afterwards would always answer "no".
-    _cs = _budget.cloud_state()
-    _probing = bool(_cs.get("tripped") and not _cs.get("demoted"))
-
     res = _budget.run_call(
-        cloud=_cloud_chain,
-        local_3b=_local_tier(_small),
-        # The 8b tier is offered only when the window is open. Outside it, handing
-        # step_budget a callable that loads 8b would evict the pinned 3b mid-step —
-        # the exact churn core/model_window.py exists to stop — and the ladder's
-        # own CRITICAL check is about priority, not residency.
-        local_8b=_local_tier(_big) if _mw.is_open() else None,
+        cloud=None,
+        local_3b=_local_tier(_mw.small_model()),
+        # 8b only while the window is open: outside it, loading 8b would evict the
+        # pinned 3b mid-step (core/model_window.py).
+        local_8b=_local_tier(_mw.big_model()) if _mw.is_open() else None,
     )
-
-    # ITEM 44.1: WAS THIS CALL THE RE-PROBE? A demotion that has outlived its
-    # cooldowns lets exactly one cloud attempt through; its outcome decides
-    # whether the demotion clears or re-arms with a longer floor. Reported here
-    # because this is where the tier that answered is known.
-    if _probing:
-        try:
-            if res.outcome == _budget.OK and res.tier == _budget.CLOUD:
-                _budget.note_probe_succeeded()
-            else:
-                _budget.note_probe_failed()
-        except Exception:
-            pass
-
     if res.outcome == _budget.OK and res.value is not None:
-        result, meta = res.value
-        if res.tier != _budget.CLOUD:
-            _note_degraded(
-                f"answered by {res.tier} ({meta.get('model')}) after the cloud "
-                f"tier was abandoned at its slice of B={res.budget_sec:.0f}s")
-            print(f"[LLM] cloud abandoned -> {res.tier} {meta.get('model')} OK "
-                  f"(DEGRADED)")
-        return result, meta
-
-    # Nothing answered inside B. The step is TOLD, and then the original exception
-    # is raised so that 127 existing call sites keep the contract they were written
-    # against (a string, or AllBackendsFailedError). What is new is that the
-    # degradation is on the record BEFORE the raise — _run()'s `except Exception`
-    # prints one line and carries on, and a step that carried on without a model
-    # used to be indistinguishable from one that worked.
-    if _cloud_ok:
-        # Only count it when the cloud was actually attempted. A call that
-        # skipped the cloud by policy must not push the counter further.
-        _policy.note_all_cloud_failed()
-    if nonlocal_err:
-        last_error = nonlocal_err[-1]
-    _note_degraded("no tier answered within B={:.0f}s ({})".format(
-        res.budget_sec, res.reason))
-    print(f"  [LLM] DEGRADED: {res.reason}")
-
-    raise AllBackendsFailedError(
-        f"All LLM backends failed ({'/'.join(b[0] for b in backends) or 'cloud skipped'} + local). "
-        f"Last error: {last_error}"
-    )
+        return res.value
+    last_error = nonlocal_err[-1] if nonlocal_err else None
+    _note_degraded("the local model gave no answer within B={:.0f}s ({})".format(res.budget_sec, res.reason))
+    print(f"  [LLM] NO ANSWER: {res.reason}")
+    raise AllBackendsFailedError(f"The local model gave no answer. Last error: {last_error}")
 
 
 def _answer_as_llm_text(fn):
@@ -929,4 +257,4 @@ class GroqBackend:
         return call_groq(str(input_data))
 
     def call(self, prompt, max_tokens=1024):
-        return call_groq(prompt, max_tokens)
+        return call_groq(prompt, max_tokens)

@@ -36,7 +36,7 @@ def test_post_writes_one_row_on_every_path(tmp_path, monkeypatch):
     for resp, want in cases:
         monkeypatch.setattr(requests, "post", lambda url, _r=resp, **kw: _r)
         n = len(rows())
-        llm_door.post("t", "Groq", "m", "https://example.invalid/v1")
+        llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat")
         got = rows()
         assert len(got) == n + 1 and got[-1]["outcome"] == want and got[-1]["schema"] == 2
         assert isinstance(got[-1]["latency_s"], float)
@@ -46,7 +46,7 @@ def test_post_writes_one_row_on_every_path(tmp_path, monkeypatch):
     monkeypatch.setattr(requests, "post", boom)
     n = len(rows())
     try:
-        llm_door.post("t", "Groq", "m", "https://example.invalid/v1")
+        llm_door.post("t", "local:m", "m", "http://localhost:11434/api/chat")
     except requests.ConnectionError:
         pass
     got = rows()
