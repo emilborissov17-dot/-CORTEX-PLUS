@@ -369,6 +369,32 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
             continue
         seen.add(key)
         derived.append(x)
+    # ── the second witness (C-GUARD-1 Step 4): plain Python over base + proposed, both directions
+    from core import space_witness as W
+    kept = "\n".join(l for l in base.splitlines() if not l.startswith("(statement "))
+    expected = {}
+    for x in W.witness(kept + "\n" + prop):
+        expected.setdefault(_canon(x), x)
+    eng = {_canon(x): x for x in derived}
+    unconfirmed = [eng[k] for k in eng if k not in expected]
+    missing = [expected[k] for k in expected if k not in eng]
+    witness = {"derived": len(eng), "confirmed": len(eng) - len(unconfirmed), "unconfirmed": len(unconfirmed),
+               "missing": len(missing)}
+    if missing:
+        why = f"{len(missing)} derivation(s) the engine did not make, first: " + \
+              "; ".join(render(x) for x in missing[:5])
+        _guard_log(d, {"state": "RED", "cause": "ENGINE_MISSED_DERIVATION", "why": why, "threshold": threshold,
+                       "shapes": top, "witness": witness})
+        raise SpaceEngineFailed("ENGINE_MISSED_DERIVATION: " + why, cause="ENGINE_MISSED_DERIVATION")
+    if unconfirmed:
+        ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        with (d / "derivation_refused.jsonl").open("a", encoding="utf-8") as f:
+            for x in unconfirmed:
+                f.write(json.dumps({"ts": ts, "rule": x[2] if x[0] == "need-derived" else x[0],
+                                    "premises": premises(x), "expression": render(x),
+                                    "reason": "UNCONFIRMED: the plain-Python witness does not derive it from "
+                                              "base.metta + proposed.metta"}, ensure_ascii=False) + "\n")
+        derived = [x for x in derived if _canon(x) in expected]
     lines = []
     for x in derived:
         lines.append(f"; rule {x[1] if x[0] == 'need-derived' else x[0]} premises {premises(x)}")
@@ -387,9 +413,11 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
     counts = {}
     for x in derived:
         counts[x[0]] = counts.get(x[0], 0) + 1
-    _guard_log(d, {"state": "GREEN", "threshold": threshold, "shapes": top})
+    # Decided (C-GUARD-1, 3 Oct 2026): no run is GREEN or TRUSTED while the canaries (Step 3) are stopped
+    _guard_log(d, {"state": "UNTRUSTED", "why": "threshold and witness passed; canaries not built (Step 3 stopped)",
+                   "threshold": threshold, "shapes": top, "witness": witness})
     return {"derived": len(derived), "by_rule": counts, "seconds": secs, "expressions": derived,
-            "shapes": top, "threshold": threshold}
+            "shapes": top, "threshold": threshold, "witness": witness, "state": "UNTRUSTED"}
 
 
 def _canon(x):

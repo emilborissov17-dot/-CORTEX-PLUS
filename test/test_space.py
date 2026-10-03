@@ -47,6 +47,14 @@ def _derive(tmp_path, base: str, rules: str = RULES) -> list:
     return sp.derive(paths)["expressions"]
 
 
+def _missed(tmp_path, base, rule_marker, head):
+    """C-GUARD-1 Step 4: with a rule deleted the engine no longer derives it, and the plain-Python
+    witness (core/space_witness.py) stops the run naming the derivation it misses."""
+    with pytest.raises(sp.SpaceEngineFailed) as exc:
+        _derive(tmp_path, base, _without(rule_marker))
+    assert exc.value.cause == "ENGINE_MISSED_DERIVATION" and f"({head} " in str(exc.value)
+
+
 def _heads(xs, head):
     return [x for x in xs if x[0] == head]
 
@@ -73,7 +81,7 @@ def test_one_source_moving_is_not_a_contradiction(tmp_path):
 
 
 def test_mutation_without_the_contradiction_rule(tmp_path):
-    assert not _heads(_derive(tmp_path, TWO_SOURCES, _without("contradiction")), "contradiction")
+    _missed(tmp_path, TWO_SOURCES, "contradiction", "contradiction")
 
 
 SELF = '''
@@ -93,7 +101,7 @@ def test_an_independent_reading_beside_it_clears_unverified(tmp_path):
 
 
 def test_mutation_without_the_unverified_rule(tmp_path):
-    assert not _heads(_derive(tmp_path, SELF, _without("unverified")), "unverified")
+    _missed(tmp_path, SELF, "unverified", "unverified")
 
 
 STALE = '''
@@ -112,7 +120,7 @@ def test_stale_by_granularity(tmp_path):
 
 
 def test_mutation_without_the_stale_rule(tmp_path):
-    assert not _heads(_derive(tmp_path, STALE, _without("stale")), "stale")
+    _missed(tmp_path, STALE, "stale", "stale")
 
 
 UNCOVERED = '''
@@ -130,7 +138,7 @@ def test_uncovered_subgoal(tmp_path):
 
 
 def test_mutation_without_the_uncovered_rule(tmp_path):
-    assert not _heads(_derive(tmp_path, UNCOVERED, _without("uncovered")), "uncovered")
+    _missed(tmp_path, UNCOVERED, "uncovered", "uncovered")
 
 
 COMMIT = '''
@@ -148,7 +156,7 @@ def test_lacks_evidence_for_a_commitment_with_no_current_obs(tmp_path):
 
 
 def test_mutation_without_the_commitment_rule(tmp_path):
-    assert not _heads(_derive(tmp_path, COMMIT, _without("commitment-evidence")), "lacks-evidence")
+    _missed(tmp_path, COMMIT, "commitment-evidence", "lacks-evidence")
 
 
 def test_derived_needs_carry_their_premises(tmp_path):
