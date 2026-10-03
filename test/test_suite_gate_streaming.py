@@ -267,4 +267,5 @@ def test_the_real_command_asks_pytest_where_the_time_went():
     # NOT cmd.index("-m"): the first -m is `python -m pytest`. The marker
     # selector is the LAST one, and conflating them is how this assertion
     # first read "pytest" and went red.
-    assert cmd[len(cmd) - 1 - cmd[::-1].index("-m") + 1] == "not live_state"
+    # C-GATE-1 (3 Oct 2026): training_stack leaves the gate by name, beside live_state
+    assert cmd[len(cmd) - 1 - cmd[::-1].index("-m") + 1] == "not live_state and not training_stack"

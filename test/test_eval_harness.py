@@ -24,16 +24,9 @@ failure. Test 1 exists for that one line.
 
 WHERE THIS RUNS — and where it does NOT
 ---------------------------------------
-`training/eval_adapter.py` imports torch and transformers at module level. The
-main suite runs under `venv/`, which has numpy but **no torch, peft or
-transformers** — the training stack was deliberately installed in `venv_train/`
-only. So this whole file SKIPS under the suite and is INERT there.
-
-    venv_train\\Scripts\\python.exe -m pytest test/test_eval_harness.py -v
-
-is the only invocation that executes it. Said out loud here rather than left to
-be discovered, because a test that silently does not run is worse than one that
-does not exist.
+Decided C-GATE-1 (3 Oct 2026): the tests that build the real BitsAndBytesConfig carry
+@pytest.mark.training_stack; the gate deselects them by that marker and
+tools/run_training_stack_tests.ps1 runs them under venv_train. The rest run in the gate.
 """
 from __future__ import annotations
 
@@ -46,9 +39,12 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
-torch = pytest.importorskip("torch", reason="training stack lives in venv_train only")
-pytest.importorskip("transformers", reason="training stack lives in venv_train only")
-pytest.importorskip("peft", reason="training stack lives in venv_train only")
+# C-GATE-1 (3 Oct 2026): plain imports, no importorskip. A missing training stack is a loud
+# collection error, never a silent skip. The tests that need bitsandbytes carry
+# @pytest.mark.training_stack and run in tools/run_training_stack_tests.ps1 under venv_train.
+import torch  # noqa: E402
+import transformers  # noqa: E402,F401
+import peft  # noqa: E402,F401
 
 import training.eval_adapter as ea            # noqa: E402
 
@@ -255,6 +251,7 @@ def test_example_nll_refuses_an_empty_target(tiny):
     assert "empty target" in str(exc.value)
 
 
+@pytest.mark.training_stack
 @pytest.mark.parametrize("target", ["", "   ", "\n", "\t "])
 def test_main_skips_blank_targets_before_the_model_is_touched(target, monkeypatch, tmp_path):
     """The second layer. main() filters on `not str(target).strip()`, so a blank
@@ -370,6 +367,7 @@ def test_exit_2_when_the_holdout_is_empty(monkeypatch, tmp_path, capsys):
     assert "holdout is empty" in capsys.readouterr().out
 
 
+@pytest.mark.training_stack
 def test_exit_2_when_the_adapter_is_missing(monkeypatch, tmp_path, capsys):
     rec = _run_main(monkeypatch, tmp_path, holdout=_corpus(3),
                     train=[{"target": "z"}], adapter_exists=False)
@@ -377,6 +375,7 @@ def test_exit_2_when_the_adapter_is_missing(monkeypatch, tmp_path, capsys):
     assert "no adapter at" in capsys.readouterr().out
 
 
+@pytest.mark.training_stack
 def test_exit_0_only_when_an_UNSEEN_stratum_IMPROVED(monkeypatch, tmp_path):
     rec = _run_main(monkeypatch, tmp_path, holdout=_corpus(40),
                     train=[{"target": "unrelated"}], delta=0.30)
@@ -384,6 +383,7 @@ def test_exit_0_only_when_an_UNSEEN_stratum_IMPROVED(monkeypatch, tmp_path):
     assert rec["code"] == 0
 
 
+@pytest.mark.training_stack
 def test_exit_1_when_the_adapter_did_nothing(monkeypatch, tmp_path):
     rec = _run_main(monkeypatch, tmp_path, holdout=_corpus(40),
                     train=[{"target": "unrelated"}], delta=0.0)
@@ -391,6 +391,7 @@ def test_exit_1_when_the_adapter_did_nothing(monkeypatch, tmp_path):
     assert rec["code"] == 1
 
 
+@pytest.mark.training_stack
 def test_exit_1_when_the_adapter_made_it_WORSE(monkeypatch, tmp_path):
     rec = _run_main(monkeypatch, tmp_path, holdout=_corpus(40),
                     train=[{"target": "unrelated"}], delta=-0.30)
@@ -398,6 +399,7 @@ def test_exit_1_when_the_adapter_made_it_WORSE(monkeypatch, tmp_path):
     assert rec["code"] == 1
 
 
+@pytest.mark.training_stack
 def test_exit_1_when_the_UNSEEN_bucket_is_too_small_to_grade(monkeypatch, tmp_path):
     """UNRESOLVABLE must NOT be reported as success, however large the delta."""
     rec = _run_main(monkeypatch, tmp_path, holdout=_corpus(29),
@@ -406,6 +408,7 @@ def test_exit_1_when_the_UNSEEN_bucket_is_too_small_to_grade(monkeypatch, tmp_pa
     assert rec["code"] == 1
 
 
+@pytest.mark.training_stack
 def test_improvement_on_SEEN_alone_does_not_earn_exit_0(monkeypatch, tmp_path):
     """THE MEMORISATION TRAP, as an exit code. Every target is already in train,
     so the gain lands entirely in the SEEN table and the UNSEEN table is empty.

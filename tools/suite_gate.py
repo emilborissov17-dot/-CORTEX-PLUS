@@ -416,7 +416,7 @@ def run(pytest_args=None, write_record: bool = True,
     # entry that has gone green is indistinguishable from one that never ran.
     cmd = command or [sys.executable, "-m", "pytest", "-q", "-rA",
                       "--durations=25",
-                      "-m", "not live_state",
+                      "-m", "not live_state and not training_stack",
                       *(pytest_args or [])]
     proc = _stream_command(cmd, str(BASE))
     after = read_state(lock, heartbeat, last_sealed)

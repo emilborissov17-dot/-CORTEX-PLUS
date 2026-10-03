@@ -643,3 +643,25 @@ def sandbox(tmp_path, monkeypatch):
     (tmp_path / "data" / "patch_guardian" / "results").mkdir(parents=True)
     monkeypatch.setenv("CORTEX_BASE", str(tmp_path))
     return tmp_path
+
+
+# ── DESELECTED BY NAME (C-GATE-1, 3 Oct 2026) ───────────────────────────────────────────────
+GATE_MARKERS = ("live_state", "training_stack")
+_DESELECTED_BY_MARKER: dict = {}
+
+
+def pytest_deselected(items):
+    for item in items:
+        for name in GATE_MARKERS:
+            if item.get_closest_marker(name):
+                _DESELECTED_BY_MARKER[name] = _DESELECTED_BY_MARKER.get(name, 0) + 1
+
+
+def deselected_line(counts) -> str:
+    return "deselected by marker: " + ", ".join(f"{name} {counts[name]}" for name in GATE_MARKERS
+                                                 if counts.get(name))
+
+
+def pytest_terminal_summary(terminalreporter):
+    if _DESELECTED_BY_MARKER:
+        terminalreporter.write_line(deselected_line(_DESELECTED_BY_MARKER))

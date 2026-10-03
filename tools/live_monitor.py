@@ -186,7 +186,7 @@ def selftest() -> int:
     want(n > 0, f"the marker selects something ({n} test(s) carry it)", str(n))
 
     gate = (BASE / "tools" / "suite_gate.py").read_text(encoding="utf-8")
-    want('"not live_state"' in gate,
+    want('"not live_state' in gate,
          "and tools/suite_gate.py EXCLUDES exactly this marker — otherwise the "
          "two suites overlap and the split means nothing")
 

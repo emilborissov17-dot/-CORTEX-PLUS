@@ -41,7 +41,7 @@ $log = "claude\reports\SUITE_FULL_$stamp$suffix.log"
 # -rf so the summary names every failure; --continue-on-collection-errors so one
 # module that cannot even be imported does not hide the other five thousand
 # tests, which is exactly what test_origin_honesty did until this morning.
-$pytestArgs = '-m pytest ' + $Target + ' -q -rf -m "not live_state" --continue-on-collection-errors'
+$pytestArgs = '-m pytest ' + $Target + ' -q -rf -m "not live_state and not training_stack" --continue-on-collection-errors'
 
 & (Join-Path $repo "tools\launch_detached.ps1") `
     -Exe "venv\Scripts\python.exe" `
