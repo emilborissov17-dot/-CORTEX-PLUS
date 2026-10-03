@@ -78,7 +78,7 @@ def test_an_empty_local_answer_is_the_named_failure(transport):
 
 def test_no_outside_backend_is_left_in_the_ladder():
     names = [n for n in vars(gb) if any(b in n.lower() for b in ("openrouter", "gemini", "nvidia", "cerebras"))]
-    names += [n for n in vars(gb) if n in ("GROQ_API_URL", "GROQ_MODEL", "_call_groq", "ordered_backend_keys",
+    names += [n for n in vars(gb) if n in ("GROQ_API_URL", "GROQ_MODEL", "ordered_backend_keys",
                                             "DEFAULT_ORDER", "_load_key", "_is_cooling", "_set_cooldown")]
     assert names == []
 

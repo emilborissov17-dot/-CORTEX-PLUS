@@ -163,12 +163,12 @@ def build_dummy_json_generic(domain: str, raw_context: str, error_message: str,
 
 
 # ======================================================================
-#  GROQ API ВИКАНЕ + JSON ЕКСТРАКЦИЯ (Groq → Gemini → Ollama fallback)
+#  LLM ВИКАНЕ + JSON ЕКСТРАКЦИЯ (локалният модел през core/local_llm)
 # ======================================================================
 
 def _llm_run(prompt: str) -> str:
     """
-    Вика LLM чрез local_llm (fallback chain: Groq → Gemini → Ollama).
+    Вика локалния модел чрез core/local_llm.
     """
     return call_local_llm(prompt, max_tokens=2048)
 
@@ -331,7 +331,7 @@ def build_generic_prompt(domain: str, raw_context: str) -> str:
 
 def call_ollama_json(domain: str, raw_context: str) -> dict:
     """
-    Вика LLM (Groq → Gemini → Ollama fallback) със system+user prompt.
+    Вика локалния модел (core/local_llm) със system+user prompt.
     ENERGY: новият формат с оси + action_plan; други домейни: старият generic формат.
     """
     base_dir = Path(__file__).resolve().parent

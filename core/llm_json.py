@@ -12,11 +12,10 @@ different subset of the failure modes:
 
 FAILURE MODES THIS HANDLES
 --------------------------
-1. Reasoning preambles. Cerebras gpt-oss-120b is a reasoning model:
-   the answer lives in message["content"], the chain-of-thought in
-   message["reasoning"]. local_llm._call_cerebras falls back to
-   `content or reasoning` when content is empty (which is exactly what
-   happens when max_tokens truncates before the model finishes thinking).
+1. Reasoning preambles. A reasoning model puts the answer in message["content"] and the
+   chain-of-thought in message["reasoning"]; when max_tokens truncates before the model
+   finishes thinking, only reasoning comes back. (Written for the Cerebras leg, deleted in
+   C-CLOUD-1; local reasoning models emit the same shapes.)
    The parser then receives raw reasoning prose — "The user asks: ...",
    "We need to produce JSON ...", often ending in "done thinking."
    with no JSON at all, or with a half-written JSON sketch.
@@ -108,8 +107,8 @@ _THINK_OPEN_RE = re.compile(r"<(think|thinking|reasoning)>", re.IGNORECASE)
 # A dangling close tag with no open tag: everything BEFORE it is reasoning.
 _THINK_CLOSE_RE = re.compile(r"</(think|thinking|reasoning)>", re.IGNORECASE)
 
-# Cerebras gpt-oss end-of-reasoning marker. Already special-cased in
-# internet_agent.py before this module existed.
+# The "done thinking." end-of-reasoning marker (Ollama's CLI prints it for local reasoning
+# models; first seen on the deleted Cerebras leg).
 _DONE_THINKING_RE = re.compile(r"done thinking\.?", re.IGNORECASE)
 
 # Fingerprints of leaked chain-of-thought. When the output contains these AND
@@ -145,7 +144,7 @@ def strip_reasoning(raw: str) -> str:
     if open_match:
         text = text[: open_match.start()]
 
-    # 4. Cerebras "done thinking." — payload follows the last occurrence.
+    # 4. "done thinking." — payload follows the last occurrence.
     if _DONE_THINKING_RE.search(text):
         text = _DONE_THINKING_RE.split(text)[-1]
 

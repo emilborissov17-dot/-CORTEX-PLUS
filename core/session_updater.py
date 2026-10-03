@@ -34,7 +34,6 @@ def update():
             pass
 
     achievements = prev.get("achievements", [
-        "Groq llama-3.3-70b интегриран",
         "Internet agent за 17 оси",
         "World Bank реални данни",
         "autonomic_pulse heartbeat активен",

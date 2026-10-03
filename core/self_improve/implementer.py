@@ -9,7 +9,7 @@ diff as text and never touches the working tree, git, or any tracked file.
 
 WHICH MODEL, AND WHY THIS ONE
 ------------------------------
-core/local_llm.call_local_llm — the cloud ladder (Groq -> OpenRouter -> Gemini),
+core/local_llm.call_local_llm — since C-CLOUD-1 (3 Oct 2026, R45) the LOCAL model, the only one;
 the same entry agents/core/self_modifier.py:486 already uses. Measured
 2026-08-04: the cloud model closes the write -> test -> fix loop 3 times out of
 3; the local model closes it 0 out of 3, with identical retries at any
@@ -203,11 +203,11 @@ def build_prompt(spec: dict, context: str = "", feedback: str = "") -> str:
 
 
 def _ladder(prompt: str, max_tokens: int = 1400) -> str:
-    """The CLOUD ladder, and only the cloud ladder.
+    """core.local_llm.call_local_llm — since C-CLOUD-1 (R45) the local model, the only one.
 
-    NO LOCAL FALLBACK. core.local_llm.call_local_llm already falls back Groq ->
-    OpenRouter -> Gemini internally; if all three are cooling it raises
-    AllBackendsFailedError and that is the honest outcome. Reaching for the local
+    The premise below was written when this was the cloud ladder; it no longer holds: the
+    local model is the one measured 0/3 on write -> test -> fix (2026-08-04). Open item for
+    Emil (CLOUD2 report). When it gives no answer it raises AllBackendsFailedError. Reaching for the local
     model here would silently put the 0/3 model back on the job this module
     exists to take away from it.
     """

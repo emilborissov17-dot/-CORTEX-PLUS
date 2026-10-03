@@ -186,7 +186,7 @@
   },
   "fast_cycle_runner.py": {
    "class": "M",
-   "reason": "dependency check: lists the local Ollama models and pings the Groq backend through core.llm_door",
+   "reason": "dependency check: lists the local Ollama models (localhost)",
    "hosts": []
   },
   "github_publisher.py": {

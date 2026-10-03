@@ -22,8 +22,8 @@ MODEL = "qwen3:1.7b"
 PROMPT_CHAR_CAP = 60000
 
 
-def _groq(prompt: str) -> dict:
-    """Fallback chain: Groq -> OpenRouter -> Gemini -> local_3b.
+def _ask_local_model(prompt: str) -> dict:
+    """The local model (core/local_llm; the only one since C-CLOUD-1, R45).
 
     ── WHAT THE 10 SEP LOG ACTUALLY SAYS (STEP 6b), AND IT IS NOT WHAT IT SAID ──
     The night of 10 Sep printed, in this order:
@@ -343,14 +343,14 @@ Return ONLY this JSON:
 
 Be specific. Reference actual filenames. Return ONLY valid JSON."""
 
-    result = _groq(_cap(prompt))
+    result = _ask_local_model(_cap(prompt))
     if result and "error" not in result:
         print("[STRATEGIST] LLM: OK")
         return result
     # The reason travels. Replacing it with a generic sentence here is what put
     # "All LLM backends failed" in the 10 Sep log over a parse error (STEP 6b).
     return result if isinstance(result, dict) and result.get("error") else {
-        "error": "no result and no reason — _groq returned "
+        "error": "no result and no reason — _ask_local_model returned "
                  f"{result!r}, which is itself the defect"}
 
 def save(result):

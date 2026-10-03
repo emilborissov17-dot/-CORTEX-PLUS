@@ -18,7 +18,7 @@ MODEL = "qwen3:1.7b"
 def _utc_now():
     return datetime.now(timezone.utc).isoformat()
 
-def _groq(prompt):
+def _ask_local_model(prompt):
     import sys
     sys.path.insert(0, str(BASE))
     try:
@@ -28,7 +28,7 @@ def _groq(prompt):
         elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
         return json.loads(text)
     except Exception as e:
-        print(f"[GROWTH] Groq failed: {e}")
+        print(f"[GROWTH] local model failed: {e}")
         return None
 
 
@@ -152,9 +152,9 @@ Return ONLY this JSON:
 
 Return ONLY valid JSON."""
 
-    result = _groq(prompt)
+    result = _ask_local_model(prompt)
     if result and "error" not in result:
-        print("[GROWTH] LLM: Groq ✅")
+        print("[GROWTH] LLM: local model ✅")
         return result
     return {"error": "All LLM backends failed"}
 

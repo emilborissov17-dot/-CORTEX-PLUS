@@ -567,10 +567,10 @@ def _body_items():
     if "rate limit" in aware or "bottleneck: llm" in aware:
         out.append(_item(
             "BODY", "high", "LLM rate limits are the bottleneck",
-            "the organism names this itself in homeostasis; free-tier cloud quotas (Groq 30/min) "
+            "the organism names this itself in homeostasis; the local model answers one call at a time and "
             "throttle when many axes call at once, so heavy synthesis can stall mid-cycle",
             "PROPOSE: adaptive scheduling — spread calls, route light work to the local model, "
-            "reserve cloud quota for heavy synthesis (Progress task #16); measurable target LLM_FAILED < 5/cycle",
+            "keep heavy synthesis for the 8b window (Progress task #16); measurable target LLM_FAILED < 5/cycle",
             "auto->human"))
     if homeo.get("can_start") is False:
         out.append(_item("BODY", "high", "cannot start a cycle safely",

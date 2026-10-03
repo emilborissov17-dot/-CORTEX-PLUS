@@ -268,7 +268,7 @@ def _derive_directives(cpu: dict, ram: dict, disk: dict,
         directives["max_parallel_workers"] = 3
 
     # ── LLM call pacing ──────────────────────────────────────────────────
-    # Min 10s in FULL mode → 25 axes × 10s = ~4min spacing, avoids Groq/Gemini cooldowns
+    # Min 10s in FULL mode → 25 axes × 10s = ~4min spacing, spaces the local model's calls
     if ram_pct > 80 or cpu_pct > 80:
         directives["llm_sleep_secs"] = 15
         reasons.append("High load → slow LLM pacing to 15s")

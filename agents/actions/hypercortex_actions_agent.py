@@ -70,7 +70,7 @@ def _strip_markdown_code(text: str) -> str:
     return text.strip()
 
 
-# ---------- LLM helper (Groq → Gemini → Ollama fallback chain) ----------
+# ---------- LLM helper (the local model, core/local_llm) ----------
 
 def call_llm_refactor(prompt: str, max_tokens: int = 4096) -> str:
     return call_local_llm(prompt, max_tokens=max_tokens)

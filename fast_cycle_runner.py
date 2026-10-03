@@ -1385,7 +1385,7 @@ def update_master():
 
 
 def _check_dependencies() -> bool:
-    """Step 0 — проверява API ключове и Groq свързаност преди цикъла."""
+    """Step 0 — проверява ключовете и локалния модел преди цикъла."""
     out_path = BASE / "snapshots" / "master" / "dependency_check_latest.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -2788,7 +2788,7 @@ def main():
 
     # ── 3.5. CortexStrategist — MUST run early before token budget is depleted by snapshots ──
     beat("cortexstrategist", "3.5")
-    # Groq free tier: 100K tokens/day. Steps 4-11 consume ~90K tokens.
+    # Written for the Groq free tier (100K tokens/day), gone since C-CLOUD-1; the order stays.
     # CortexStrategist needs ~7K tokens — running it here ensures budget is available.
     _run("cortex_strategist_agent", lambda: __import__(
         "agents.cortex_strategist.cortex_strategist_agent", fromlist=["run"]).run(), free_after=True)

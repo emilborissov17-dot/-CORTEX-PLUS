@@ -41,7 +41,7 @@ ACTION           = "ACTION"            # a well-formed proposed action (+approva
 BLOCKED_ACTION   = "BLOCKED_ACTION"    # hit the hard blocked-list
 BLOCKED_SCREEN   = "BLOCKED_SCREEN"    # foreground-title gate tripped (pre-screenshot)
 MALFORMED        = "MALFORMED"         # model reply was not valid action JSON
-QUOTA_EXHAUSTED  = "QUOTA_EXHAUSTED"   # Gemini free-tier quota hit — clean stop
+QUOTA_EXHAUSTED  = "QUOTA_EXHAUSTED"   # the deleted Gemini agent's quota stop (C-CLOUD-1); value kept for old rows
 
 
 def _utc_now() -> str:

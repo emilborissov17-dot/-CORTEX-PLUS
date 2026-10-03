@@ -481,12 +481,12 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
         raw = call_local_llm(prompt, max_tokens=1000)
 
         if not raw or len(raw.strip()) < 10:
-            return {"success": False, "reason": "Groq върна празен отговор"}
+            return {"success": False, "reason": "локалният модел върна празен отговор"}
 
         try:
             err_check = json.loads(raw)
             if "error" in err_check:
-                return {"success": False, "reason": f"Groq API грешка: {str(err_check['error'])[:100]}"}
+                return {"success": False, "reason": f"грешка на локалния модел: {str(err_check['error'])[:100]}"}
         except (json.JSONDecodeError, TypeError):
             pass
 
@@ -500,11 +500,11 @@ def _generate_solution(problem, solution, root_cause, measurable_goal, component
             print(f"  [WARN] Отговорът не изглежда като код: {raw[:80]}")
 
         target = f"agents/core/{component.lower()}_patch.py"
-        print(f"  Groq: WRITE_PYTHON -> {target}")
+        print(f"  local model: WRITE_PYTHON -> {target}")
         return _write_python(target, raw, proposal)
 
     except Exception as e:
-        return {"success": False, "reason": f"Groq грешка: {str(e)[:120]}"}
+        return {"success": False, "reason": f"грешка на локалния модел: {str(e)[:120]}"}
 
 
 def _inject_base(content: str) -> str:

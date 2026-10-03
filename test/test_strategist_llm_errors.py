@@ -53,7 +53,7 @@ def test_a_reasoning_preamble_now_parses_instead_of_being_called_an_outage(monke
              '"critical_gaps": [], "immediate_actions": []}')
     monkeypatch.setattr(LJ, "call_llm_json",
                         lambda p, **k: LJ.extract_json(reply, expect=dict))
-    out = S._groq("anything")
+    out = S._ask_local_model("anything")
     assert "error" not in out, f"a parseable reply was reported as an error: {out}"
     assert out["system_health"] == "FAIR"
 
@@ -65,7 +65,7 @@ def test_a_backend_that_answered_is_never_reported_as_no_backend(monkeypatch):
         raise LJ.LLMJSONError("We need to analyze the system and output JSON",
                               "no JSON object found", backend="OpenRouter")
     monkeypatch.setattr(LJ, "call_llm_json", boom)
-    out = S._groq("anything")
+    out = S._ask_local_model("anything")
     assert "error" in out
     assert "did not parse" in out["error"]
     assert "All LLM backends failed" not in out["error"], (
@@ -80,7 +80,7 @@ def test_no_backend_answering_says_exactly_that(monkeypatch):
         raise AllBackendsFailedError("All LLM backends failed (Groq/OpenRouter"
                                      "/Gemini + local). Last error: timeout")
     monkeypatch.setattr(LJ, "call_llm_json", boom)
-    out = S._groq("anything")
+    out = S._ask_local_model("anything")
     assert "error" in out
     assert "no backend answered" in out["error"]
     assert "did not parse" not in out["error"]
@@ -96,17 +96,17 @@ def test_the_two_reasons_are_not_the_same_string(monkeypatch):
     def chain_fail(prompt, **kw):
         raise AllBackendsFailedError("nothing answered")
     monkeypatch.setattr(LJ, "call_llm_json", parse_fail)
-    a = S._groq("x")["error"]
+    a = S._ask_local_model("x")["error"]
     monkeypatch.setattr(LJ, "call_llm_json", chain_fail)
-    b = S._groq("x")["error"]
+    b = S._ask_local_model("x")["error"]
     assert a != b, "a parse failure and an exhausted chain report the same thing"
 
 
 def test_synthesize_never_invents_a_reason_it_was_not_given(monkeypatch):
     """The generic sentence used to be added at the CALL SITE, discarding
-    whatever _groq had said. Whatever reason arrives must survive to the
+    whatever _ask_local_model had said. Whatever reason arrives must survive to the
     caller."""
-    monkeypatch.setattr(S, "_groq", lambda p: {"error": "reply did not parse as JSON: prose only"})
+    monkeypatch.setattr(S, "_ask_local_model", lambda p: {"error": "reply did not parse as JSON: prose only"})
     monkeypatch.setattr(S, "scan_project", lambda: {
         "goals": "", "agents": [], "memory_modules": [], "snapshots_summary": {},
         "predictions": [], "self_modifier_patches": [], "missing_integrations": [],
