@@ -41,6 +41,13 @@ def _ok_engine(program):
     return ["ok"]
 
 
+def _space_engine(program):
+    """C-GUARD-1 Step 4: derive() checks the engine against the plain-Python witness, so an engine
+    injected into a whole turn answers what the rules derive from the fixture base."""
+    from core import space_witness as W
+    return [sp.render(x) for x in W.witness(program)]
+
+
 def _propose(sp_paths, head=None, args=None, engine=_ok_engine, reply=None, items=None, calls=None):
     """TEXT B is asked once per sentence; the stub answers {"head", "args"} (or `reply` as given)."""
     def think(prompt, evidence, schema):
@@ -189,17 +196,22 @@ def _model(calls):
 def test_the_brain_turn_runs_in_order_and_writes_its_result(turn_paths):
     from scripts import turn_brain as tb
     calls = []
-    r = tb.run(think=_model(calls), engine=lambda prog: [], busy=lambda: None, bn_paths=turn_paths["bn"],
+    r = tb.run(think=_model(calls), engine=_space_engine, busy=lambda: None, bn_paths=turn_paths["bn"],
                space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
                result_path=turn_paths["result"], expect_path=turn_paths["expect"],
                records_dir=turn_paths["result"].parent / "records",
                gained_path=turn_paths["result"].parent / "gained.json")
-    assert r["exit"] == 0 and r["open_needs"] == 1 and r["space"]["base"] > 0
+    # C-GUARD-1 Step 4: the fixture base has a positive gap for SAFETY with no covering obs, so the
+    # rules derive (need-derived FIND uncovered "SAFETY") beside the model's need; the old empty
+    # engine stub hid it
+    assert r["exit"] == 0 and r["open_needs"] == 2 and r["space"]["base"] > 0
     assert calls[0].startswith("Read the briefing"), "the needs were not asked first"
-    need = json.loads(turn_paths["bn"]["needs"].read_text(encoding="utf-8"))["needs"][0]
+    needs = json.loads(turn_paths["bn"]["needs"].read_text(encoding="utf-8"))["needs"]
+    assert sorted(n.get("origin") for n in needs) == ["brain", "engine"]
+    need = next(n for n in needs if n.get("origin") == "brain")
     assert need["from_line"] == "L1" and need["expects"] == "a UNHCR count for 2026"
     assert _jsonl(turn_paths["expect"])[0]["expects"] == "a UNHCR count for 2026"
-    assert json.loads(turn_paths["result"].read_text(encoding="utf-8"))["open_needs"] == 1
+    assert json.loads(turn_paths["result"].read_text(encoding="utf-8"))["open_needs"] == 2
 
 
 def test_a_failed_engine_stops_the_turn_with_a_named_cause(turn_paths):
@@ -229,7 +241,7 @@ def test_the_briefing_numbers_its_fact_lines():
 
 def test_the_whole_brain_turn_is_kept_for_reading_back(turn_paths):
     from scripts import turn_brain as tb
-    tb.run(think=_model([]), engine=lambda prog: [], busy=lambda: None, bn_paths=turn_paths["bn"],
+    tb.run(think=_model([]), engine=_space_engine, busy=lambda: None, bn_paths=turn_paths["bn"],
            space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
            result_path=turn_paths["result"], expect_path=turn_paths["expect"],
            records_dir=turn_paths["result"].parent / "records",
