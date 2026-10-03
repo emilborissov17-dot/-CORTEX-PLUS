@@ -1,0 +1,67 @@
+PART 2 of 2 — do not answer before part 2
+ 86  def unverified(ix) -> list:
+ 87      classes = ix.get("source-class", [])
+ 88      indep = {r[0] for r in ix.get("independent-src", []) if r}
+ 89      obs = _obs(ix)
+ 90      out = []
+ 91      for a in obs:
+ 92          for src, cls in ((r[0], r[1]) for r in classes if len(r) == 2):
+ 93              if src != a[7] or cls not in ("self_reported", "unknown"):
+ 94                  continue
+ 95              backed = any(b[2] == a[2] and b[3] == a[3] and b[4] == a[4] and b[7] in indep for b in obs)
+ 96              if not backed:
+ 97                  out.append(["unverified", a[0], a[2], a[3], a[4]])
+ 98      return out
+ 99  
+100  
+101  def stale(ix) -> list:
+102      out = []
+103      for r in ix.get("period-age", []):
+104          if len(r) == 3 and _num(r[2]) is not None:
+105              if (r[1] == "day" and r[2] > 45) or (r[1] == "month" and r[2] > 120):
+106                  out.append(["stale", r[0]])
+107      for r in ix.get("period-year", []):
+108          for t in ix.get("this-year", []):
+109              if len(r) == 2 and _num(r[1]) is not None and t and _num(t[0]) is not None and r[1] < t[0] - 3:
+110                  out.append(["stale", r[0]])
+111      return out
+112  
+113  
+114  def uncovered(ix) -> list:
+115      obs_subs = {o[1] for o in _obs(ix)}
+116      subs_of: dict = {}
+117      for r in ix.get("subcategory", []):
+118          if len(r) == 2:
+119              subs_of.setdefault(r[1], set()).add(r[0])
+120      out = []
+121      for ax, sg in (r for r in ix.get("axis-serves", []) if len(r) == 2):
+122          for g in ix.get("gap", []):
+123              if len(g) == 3 and g[0] == ax and _num(g[1]) is not None and g[1] > 0:
+124                  cats = {r[0] for r in ix.get("serves", []) if len(r) == 2 and r[1] == sg}
+125                  if not any(s in obs_subs for c in cats for s in subs_of.get(c, ())):
+126                      out.append(["uncovered", sg])
+127      return out
+128  
+129  
+130  def lacks_evidence(ix, stale_list) -> list:
+131      stale_ids = {x[1] for x in stale_list}
+132      out = []
+133      for r in ix.get("commitment-place", []):
+134          if len(r) == 2 and not any(o[3] == r[1] and o[0] not in stale_ids for o in _obs(ix)):
+135              out.append(["lacks-evidence", r[0], r[1]])
+136      return out
+137  
+138  
+139  def need_from(contra, unver, uncov, lacks) -> list:
+140      return ([["need-derived", "VERIFY", "contradiction", *x[1:]] for x in contra]
+141              + [["need-derived", "VERIFY", "unverified", x[2], x[3], x[4], x[1]] for x in unver]
+142              + [["need-derived", "FIND", "uncovered", x[1]] for x in uncov]
+143              + [["need-derived", "FIND", "lacks-evidence", x[1], x[2]] for x in lacks])
+144  
+145  
+146  def witness(text: str) -> list:
+147      """Every expression the six rules must derive from this base (+ proposed) text."""
+148      ix = index(text)
+149      c, u, s, v = contradiction(ix), unverified(ix), stale(ix), uncovered(ix)
+150      le = lacks_evidence(ix, s)
+151      return c + u + s + v + le + need_from(c, u, v, le)

@@ -1,0 +1,86 @@
+PART 1 of 2 — do not answer before part 2
+  1  # -*- coding: utf-8 -*-
+  2  """core/space_witness.py — a second witness over every derivation of the space, in plain Python
+  3  (C-GUARD-1 Step 4, Kimi round 74 K1: "every derived atom re-checked in plain Python against the base").
+  4  
+  5  One function per rule of config/space_rules.metta: contradiction, unverified, stale, uncovered,
+  6  lacks_evidence (commitment-evidence), need_from. Each recomputes, from base.metta + proposed.metta
+  7  WITHOUT the engine, the expressions that rule must produce. core/space.derive compares the two sets
+  8  in both directions. Decided: this module imports no hyperon and no other CORTEX module — its
+  9  tokenizer and parser are its own, so a defect in core/space's parser cannot agree with itself here.
+ 10  
+ 11  The stale rule reads no clock: its day counts (period-age) and `this-year` are atoms that
+ 12  core/space.build wrote from its own `today`; the witness reads the same atoms.
+ 13  """
+ 14  from __future__ import annotations
+ 15  
+ 16  import re
+ 17  
+ 18  _TOK = re.compile(r'\(|\)|"(?:[^"\\]|\\.)*"|[^\s()"]+')
+ 19  
+ 20  
+ 21  def _value(t: str):
+ 22      if t.startswith('"'):
+ 23          body = t[1:-1]
+ 24          return bytes(body, "utf-8").decode("unicode_escape") if "\\" in body else body
+ 25      try:
+ 26          return float(t)
+ 27      except ValueError:
+ 28          return t
+ 29  
+ 30  
+ 31  def forms(text: str) -> list:
+ 32      """The top-level expressions of a MeTTa text as nested lists; `!` commands and comment lines skipped."""
+ 33      toks = _TOK.findall("\n".join(l for l in text.splitlines() if not l.lstrip().startswith(";")))
+ 34      out, stack, bang = [], [], False
+ 35      for t in toks:
+ 36          if t == "(":
+ 37              if not stack:
+ 38                  cur_bang, bang = bang, False
+ 39                  stack.append(([], cur_bang))
+ 40              else:
+ 41                  stack.append(([], False))
+ 42          elif t == ")":
+ 43              lst, b = stack.pop()
+ 44              if stack:
+ 45                  stack[-1][0].append(lst)
+ 46              elif not b:
+ 47                  out.append(lst)
+ 48          elif not stack:
+ 49              bang = t == "!"
+ 50          else:
+ 51              stack[-1][0].append(_value(t))
+ 52      return out
+ 53  
+ 54  
+ 55  def index(text: str) -> dict:
+ 56      ix: dict = {}
+ 57      for x in forms(text):
+ 58          if x and isinstance(x[0], str):
+ 59              ix.setdefault(x[0], []).append(x[1:])
+ 60      return ix
+ 61  
+ 62  
+ 63  def _obs(ix):
+ 64      """(obs a sub key place period value unit source), 8 arguments."""
+ 65      return [o for o in ix.get("obs", []) if len(o) == 8]
+ 66  
+ 67  
+ 68  def _num(v):
+ 69      return v if isinstance(v, float) else None
+ 70  
+ 71  
+ 72  # ── one function per rule ───────────────────────────────────────────────────
+ 73  def contradiction(ix) -> list:
+ 74      out = []
+ 75      by_kpp: dict = {}
+ 76      for o in _obs(ix):
+ 77          by_kpp.setdefault((repr(o[2]), repr(o[3]), repr(o[4])), []).append(o)
+ 78      for group in by_kpp.values():
+ 79          for a in group:
+ 80              for b in group:
+ 81                  if a[5] != b[5] and a[7] != b[7]:
+ 82                      out.append(["contradiction", a[2], a[3], a[4], a[0], b[0]])
+ 83      return out
+ 84  
+ 85  
