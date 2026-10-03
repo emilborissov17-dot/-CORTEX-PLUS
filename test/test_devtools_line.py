@@ -286,7 +286,8 @@ def test_the_allowlist_carries_exactly_this_one_entry_with_the_ruling():
     files = json.loads((REPO / "config" / "network_allowlist.json").read_text(encoding="utf-8"))["files"]
     e = files["scripts/devtools_line.py"]
     assert e["class"] == "L" and e["hosts"] == ["127.0.0.1"] and e["ruling"] == "R49" and e["quote"] == "ДА"
-    assert len(files) == 45
+    # exactly one entry carries R49 (the total moves with unrelated work: 45 -> 39 in C-CLOUD-1)
+    assert [f for f, v in files.items() if v.get("ruling") == "R49"] == ["scripts/devtools_line.py"]
 
 
 # ── a navigation that is a download (C-DOOR-3 Step 2b, live: FRED csv, ECB csvdata) ──
