@@ -11,9 +11,7 @@ At the end of each phase the brain writes four things and nothing else:
     risk      what could go wrong next because of what just happened
     do        the one thing a human should consider doing
 
-LOCAL MODEL ONLY. This is a self-directed call in the sense of
-core/backend_policy.SELF_DIRECTED: it must work precisely when the cloud is
-gone, because a dead cloud is the thing most worth debriefing. It also must not
+LOCAL MODEL ONLY (the only model since C-CLOUD-1, R45). It also must not
 charge its latency to a step's ceiling.
 
 WHY "what" MUST CARRY A NUMBER
@@ -157,7 +155,7 @@ CJK = re.compile(r"[぀-ヿ㐀-䶿一-鿿豈-﫿가-힯]")
 
 NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
 
-PURPOSE = "phase_debrief"   # core/backend_policy.SELF_DIRECTED
+PURPOSE = "phase_debrief"
 
 
 def _now() -> str:

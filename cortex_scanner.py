@@ -120,7 +120,6 @@ def scan():
             state["session"] = {
                 "date": s.get("date"),
                 "chromadb_memories": cs.get("chromadb_memories"),
-                "groq": cs.get("groq"),
                 "achievements": s.get("achievements", [])[:5]
             }
         except Exception: pass

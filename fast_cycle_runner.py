@@ -2346,8 +2346,6 @@ def main():
     # цикъла, но се затваря до следващата нощ. Пренесено през цикли, това щеше
     # да е политика, която никой не е задавал.
     try:
-        from core import step_budget as _sb0
-        _was = _sb0.reset_cycle()
         # ONE CYCLE, ONE WINDOW. The step contract used to accumulate across
         # nights, so "this cycle's steps" included steps from three nights ago.
         # Emptied here, at boot, with the old contents filed under their own
@@ -2362,11 +2360,8 @@ def main():
                   + (f" ({_w['why']})" if _w['why'] else ""))
         except Exception as _e:
             print(f"[FAST_CYCLE] step window NOT opened: {type(_e).__name__}: {_e}")
-        if _was.get("cloud_demoted"):
-            print(f"[FAST_CYCLE] step_budget: cloud demotion from the previous "
-                  f"run cleared ({_was['cloud_empty']} empty tiers)")
     except Exception as e:
-        print(f"[FAST_CYCLE] step_budget.reset_cycle -> {type(e).__name__}: {e}")
+        print(f"[FAST_CYCLE] step window -> {type(e).__name__}: {e}")
 
     # ── 0. Body scan → adaptive directives (runs FIRST, before everything) ──
     beat("body_scan", "0")

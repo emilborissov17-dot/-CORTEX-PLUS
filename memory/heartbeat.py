@@ -138,16 +138,6 @@ def beat(step: str, step_index: Optional[int] = None, cycle_id: Optional[str] = 
     # да мине покрай него, и не се налага 48 отделни закърпвания.
     # Редът е нарочен: пулсът се записва ПЪРВО (той пази живота на цикъла), чак
     # после мисли мозъкът. FAIL-OPEN: мълчащ или бавен мозък не убива цикъл.
-    # A new step gets a fresh chance at the cloud: a rate-limit window can
-    # expire between steps, so the per-step give-up counter must reset here.
-    # beat() is the only path all 53 steps pass through — same reason the brain
-    # hangs off it. See core/backend_policy.py.
-    try:
-        from core.backend_policy import begin_step as _begin_step
-        _begin_step(step)
-    except Exception:
-        pass  # a policy that cannot load must not kill the cycle
-
     # ── ФАЗАТА СЕ ЗАТВАРЯ, ЩОМ ЦИКЪЛЪТ Я НАПУСНЕ (21 авг 2026) ─────────────
     # config/cycle_phases.json групира 54-те стъпки в 7 фази, phase_report може
     # да съди една, phase_debrief може да я разкаже, а supervisor може да я

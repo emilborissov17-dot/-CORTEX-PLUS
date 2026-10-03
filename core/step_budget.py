@@ -81,7 +81,6 @@ MIN_TIER_SEC = 1.0
 OK = "OK"
 DEGRADED = "DEGRADED"
 
-CLOUD = "cloud"
 LOCAL_3B = "local_3b"
 LOCAL_8B = "local_8b"
 
@@ -346,255 +345,13 @@ class LadderResult:
 
 
 # ---------------------------------------------------------------------------
-# STICKY CLOUD DEMOTION — CYCLE-SCOPED, RESET AT BOOT
-# ---------------------------------------------------------------------------
-#
-# MEASURED, cycle 2026-08-22 11:22. Three steps produced nothing while 48-80s of
-# their budget sat unused, and all three failed the same way:
-#
-#   cortex_strategist_agent  50s of B=120s   cloud=EMPTY local_3b=TIMEOUT
-#   hyperclaw_orchestrator   40s of B=120s   cloud=EMPTY local_3b=TIMEOUT
-#   cortex_reasoner          72s of B=120s   cloud=EMPTY local_3b=TIMEOUT
-#
-# EMPTY on the cloud tier means every provider was rate-limited or in cooldown —
-# a declined answer, not a slow one. By the third such step the cloud is not
-# coming back this cycle, and it was still being handed the first slice of every
-# ladder while the local model, the only tier that could actually answer, was
-# held to a third.
-#
-# So: after CLOUD_EMPTY_LIMIT empty cloud tiers in one cycle the cloud stops
-# receiving a slice for the rest of that cycle. Sticky, because the condition it
-# describes (a rate-limit window) does not clear inside a cycle; cycle-scoped and
-# reset at boot, because it does clear overnight. In-memory on purpose: a cycle
-# is one process, and a demotion that outlived the process would be a policy
-# nobody set.
-
-# ── ITEM 44.1 item 5 (30 Aug 2026): THE LIMIT IS A POLICY, SO IT LIVES IN CONFIG
-#
-# HUMAN APPROVAL (Emil Borissov, 29 August 2026), quoted here because
-# config/scheduler.json is a GUARDED file:
-#   "I approve moving CLOUD_EMPTY_LIMIT out of core/step_budget.py into
-#    config/scheduler.json. The value stays 3 until measured evidence justifies
-#    changing it. It is a policy parameter that decides how much of a cycle runs
-#    on a 3B local model, and it belongs where a human can see it and set it."
-#
-# ABSENT KEY -> 3, SILENTLY. That is the documented default and absence is not an
-# error; a fresh clone with no key must behave exactly as this file did before.
-#
-# PRESENT BUT UNREADABLE -> RAISE, LOUDLY. Defaulting to 3 on a malformed value
-# would hide a broken policy file behind correct-looking behaviour, which is the
-# defect this repository keeps finding in other shapes. A typo in a parameter
-# that decides how much of a night runs on a 3B model must not be absorbed.
-#
-# RESOLVED AT IMPORT AND AGAIN AT reset_cycle(), NOT INSIDE THE LADDER. The one
-# consumer, _note_cloud_outcome(), runs inside run_with_ladder() with no try
-# around it — raising there would take down a step two hours into a night because
-# of a config typo. Failing at import, and again at the boot step, puts the error
-# where a policy-file error belongs: at the start, before anything depends on it.
-CLOUD_EMPTY_LIMIT_DEFAULT = 3
-_CLOUD_EMPTY_KEY = "cloud_empty_limit"
-
-
-def cloud_empty_limit(cfg: Optional[dict] = None) -> int:
-    """How many EMPTY cloud tiers trip the demotion. `cfg` is injectable so a
-    test can pass its own dict and never touch the guarded file."""
-    if cfg is None:
-        cfg = _load_json(BASE / "config" / "scheduler.json")
-    if _CLOUD_EMPTY_KEY not in (cfg or {}):
-        return CLOUD_EMPTY_LIMIT_DEFAULT
-    raw = cfg[_CLOUD_EMPTY_KEY]
-    if isinstance(raw, bool):                      # bool is an int in Python
-        raise ValueError(
-            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}, a boolean. "
-            f"It must be a whole number >= 1.")
-    if isinstance(raw, float) and not raw.is_integer():
-        # int(2.7) == 2 would silently truncate a policy value. A number that
-        # does not mean what it says is the same defect as a malformed one.
-        raise ValueError(
-            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}. It counts "
-            f"whole cloud tiers; {raw!r} would silently become {int(raw)}.")
-    try:
-        value = int(raw)
-    except (TypeError, ValueError):
-        raise ValueError(
-            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {raw!r}, which is not "
-            f"a number. Remove the key to accept the default of "
-            f"{CLOUD_EMPTY_LIMIT_DEFAULT}, or set a whole number >= 1. It is NOT "
-            f"defaulted, because a malformed policy value that behaves like the "
-            f"default is a broken file nobody notices.") from None
-    if value < 1:
-        raise ValueError(
-            f"config/scheduler.json: {_CLOUD_EMPTY_KEY} is {value}, which would "
-            f"demote the cloud before a single empty tier. Must be >= 1.")
-    return value
-
-
-CLOUD_EMPTY_LIMIT = cloud_empty_limit()
-
-# ── ITEM 44.1 (29 Aug 2026): THE DEMOTION STOPS OUTLIVING ITS OWN CAUSE ─────
-#
-# WHAT THE STICKY VERSION DID, measured from the cycle of 2026-08-29. Groq was
-# rate-limited early, three cloud tiers came back EMPTY, and the cloud was
-# demoted "for the rest of this cycle" at 14:5x. From that moment 66 of the
-# cycle's 71 local answers had NO cloud rung attempted, and the log holds ZERO
-# cloud attempts for the remaining 2h20m. The cooldowns that caused it are
-# 60/120/180s, capped at 180 — THE DEMOTION OUTLIVED THEM BY TWO HOURS.
-#
-# Kimi: "Tie demotion lifetime to the longest active cooldown expiry. Criterion:
-# transient failures (429s) should not outlast their own recovery signal. When
-# the last cooldown expires, re-probe the cloud tier before permanently
-# defaulting to local."
-#
-# HIS OBJECTION, AND WHERE IT IS ANSWERED: "Re-probing after cooldown expiry
-# risks hammering a rate-limited backend, getting the free tier banned or
-# IP-blocked, turning a transient rate limit into permanent account loss."
-#
-# The answer is NOT the backoff — it is the PRECONDITION on the line
-# `if now < _cooldown_until: return True`. A probe can only happen once EVERY
-# backend's own signalled window has already elapsed, so no probe is ever sent
-# into a window a provider told us about. That is the opposite of hammering: it
-# is waiting exactly as long as we were asked to, and no longer.
-#
-# The exponential floor below covers the one case the precondition cannot: the
-# provider's REAL window was longer than the one it declared. 300s doubling to
-# 600, 1200, capped at 1800.
-#   * why 300 to start — it must exceed the cooldown cap of 180s, or the floor
-#     would add nothing over the precondition that already holds;
-#   * why doubling — a provider still refusing after 5 minutes is not 5 minutes
-#     from recovering, and each failure is evidence the declared window was
-#     wrong;
-#   * why a 1800s cap — over a 2h20m cycle the worst case is ~5 probes, which is
-#     not a burst by any reading; an uncapped floor would silently become the
-#     sticky demotion again, under a longer name.
-#
-# WALL CLOCK, NOT monotonic: these expiries are compared against cooldown
-# deadlines produced by core/local_llm with time.time(), and mixing the two
-# clocks would make the comparison meaningless.
-PROBE_FLOOR_START_SEC = 300.0
-PROBE_FLOOR_MAX_SEC = 1800.0
-
-_cloud_empty = 0
-_cloud_demoted_at = None          # the empty-count at which it tripped
-_cooldown_until = 0.0             # the LONGEST active cooldown, pushed in
-_probe_floor_until = 0.0          # a failed probe holds the demotion this long
-_probe_failures = 0
-
-
-def _now_wall() -> float:
-    """Wall clock, so it is comparable with local_llm's cooldown deadlines."""
-    return time.time()
-
-
-def note_cooldown_until(ts: float) -> float:
-    """C-CLOUD-1 (3 Oct 2026): its only live caller, the deleted cloud tier's _set_cooldown, is gone.
-
-    PUSHED, NOT PULLED, and the direction is forced: local_llm imports this
-    module, so this module cannot import local_llm to ask. _set_cooldown is
-    the single place any cooldown is created, which makes it the one call site.
-    Only ever moves later — the demotion must respect the LONGEST window.
-    """
-    global _cooldown_until
-    with _step_lock:
-        _cooldown_until = max(_cooldown_until, float(ts))
-        return _cooldown_until
-
-
-def reset_cycle() -> dict:
-    """Forget the demotion. Called from the runner's boot step, once per cycle."""
-    global _cloud_empty, _cloud_demoted_at, _cooldown_until
-    global _probe_floor_until, _probe_failures
-    global CLOUD_EMPTY_LIMIT
-    # Re-read at boot: a human who edits the policy during the day should see it
-    # take effect on the next cycle without a restart, and a malformed edit
-    # should stop THAT cycle at its first step rather than midway through.
-    CLOUD_EMPTY_LIMIT = cloud_empty_limit()
-    was = {"cloud_empty": _cloud_empty,
-           "cloud_demoted": _cloud_demoted_at is not None}
-    _cloud_empty, _cloud_demoted_at = 0, None
-    _cooldown_until, _probe_floor_until, _probe_failures = 0.0, 0.0, 0
-    return was
-
-
-def cloud_demoted() -> bool:
-    """Is the cloud excluded RIGHT NOW? Time-bounded, not cycle-bounded.
-
-    False here does not mean "healthy" — it means ELIGIBLE FOR ONE PROBE. The
-    caller that acts on it must report the outcome through note_probe_failed()
-    or note_probe_succeeded(), or the next call will probe again.
-    """
-    if _cloud_demoted_at is None:
-        return False
-    now = _now_wall()
-    if now < _cooldown_until:
-        return True                  # a backend's own window is still open
-    if now < _probe_floor_until:
-        return True                  # a probe already failed; serve its floor
-    return False
-
-
-def probe_floor_sec() -> float:
-    """The floor the NEXT failed probe would impose. Reads only."""
-    return min(PROBE_FLOOR_START_SEC * (2 ** _probe_failures),
-               PROBE_FLOOR_MAX_SEC)
-
-
-def note_probe_failed() -> float:
-    """The one probe came back EMPTY. Re-arm with a longer floor; return it."""
-    global _probe_failures, _probe_floor_until
-    with _step_lock:
-        floor = min(PROBE_FLOOR_START_SEC * (2 ** _probe_failures),
-                    PROBE_FLOOR_MAX_SEC)
-        _probe_failures += 1
-        _probe_floor_until = _now_wall() + floor
-    print("[BUDGET] cloud re-probe FAILED; demotion re-armed for {:.0f}s "
-          "(failure #{})".format(floor, _probe_failures))
-    return floor
-
-
-def note_probe_succeeded() -> None:
-    """The cloud answered. Clear the demotion AND the empty counter.
-
-    The counter must go too: leaving it at the limit would let the very next
-    empty tier re-trip a demotion the probe has just disproved.
-    """
-    global _cloud_empty, _cloud_demoted_at, _probe_floor_until, _probe_failures
-    with _step_lock:
-        _cloud_empty, _cloud_demoted_at = 0, None
-        _probe_floor_until, _probe_failures = 0.0, 0
-    print("[BUDGET] cloud re-probe SUCCEEDED; demotion cleared, "
-          "normal laddering resumes")
-
-
-def cloud_state() -> dict:
-    now = _now_wall()
-    return {"cloud_empty": _cloud_empty, "demoted": cloud_demoted(),
-            # TRIPPED is a fact about the past; DEMOTED is a question about the
-            # clock. Before ITEM 44.1 they were the same boolean, which is how a
-            # 180s cooldown became a two-hour exclusion.
-            "tripped": _cloud_demoted_at is not None,
-            "limit": CLOUD_EMPTY_LIMIT,
-            "cooldown_until_in": round(max(0.0, _cooldown_until - now), 1),
-            "probe_floor_in": round(max(0.0, _probe_floor_until - now), 1),
-            "probe_failures": _probe_failures}
-
-
-def _note_cloud_outcome(outcome: str) -> None:
-    """Count empty cloud tiers; trip the demotion once, out loud."""
-    global _cloud_empty, _cloud_demoted_at
-    if outcome != EMPTY:
-        return
-    _cloud_empty += 1
-    if _cloud_demoted_at is None and _cloud_empty >= CLOUD_EMPTY_LIMIT:
-        _cloud_demoted_at = _cloud_empty
-        print("[BUDGET] cloud tier DEMOTED for the rest of this cycle: "
-              "{} empty cloud tiers (limit {}). The local tiers get the whole "
-              "budget from here.".format(_cloud_empty, CLOUD_EMPTY_LIMIT))
+# C-CLOUD-2 (3 Oct 2026, R45): the cloud tier, its EMPTY count, the sticky demotion and the
+# re-probe are deleted with the outside models; the git history keeps them.
 
 
 def run_with_ladder(step: str,
                     priority: str,
                     budget: Budget,
-                    cloud: Optional[Callable] = None,
                     local_3b: Optional[Callable] = None,
                     local_8b: Optional[Callable] = None,
                     now: Callable = time.monotonic) -> LadderResult:
@@ -620,10 +377,7 @@ def run_with_ladder(step: str,
     started = now()
     attempts: list = []
 
-    demoted = cloud_demoted()
     tiers = [
-        (CLOUD, cloud, not demoted,
-         "cloud demoted this cycle after {} empty tiers".format(_cloud_empty)),
         (LOCAL_3B, local_3b, True, ""),
         (LOCAL_8B, local_8b, priority == CRITICAL,
          "priority is {}, 8b is CRITICAL-only".format(priority)),
@@ -662,8 +416,6 @@ def run_with_ladder(step: str,
 
         outcome, value, error, elapsed = call_with_timeout(fn, slice_sec)
         attempts.append(Attempt(tier, outcome, round(elapsed, 3), error))
-        if tier == CLOUD:
-            _note_cloud_outcome(outcome)
 
         if outcome == DONE:
             return LadderResult(
@@ -758,8 +510,7 @@ def remaining_sec() -> Optional[float]:
         return max(0.0, _open_step["budget"].seconds - _open_step["spent"])
 
 
-def run_call(cloud: Optional[Callable] = None,
-             local_3b: Optional[Callable] = None,
+def run_call(local_3b: Optional[Callable] = None,
              local_8b: Optional[Callable] = None,
              now: Callable = time.monotonic) -> LadderResult:
     """One model call, laddered, charged to the OPEN STEP's account.
@@ -772,7 +523,7 @@ def run_call(cloud: Optional[Callable] = None,
     if state is None:
         return run_with_ladder("_no_step", NORMAL,
                                Budget("_no_step", MIN_BUDGET_SEC * 2, "default", 0),
-                               cloud, local_3b, local_8b, now)
+                               local_3b, local_8b, now)
 
     left = remaining_sec() or 0.0
     # WHY NOT `left <= 0` (measured, not reasoned): each call spends a THIRD of
@@ -792,7 +543,7 @@ def run_call(cloud: Optional[Callable] = None,
         # keeps running, it just stops being allowed to wait for models.
         res = LadderResult(
             state["step"], DEGRADED, None, None, state["budget"].seconds, 0.0,
-            [Attempt(CLOUD, SKIPPED, 0.0, "step budget exhausted")],
+            [Attempt(LOCAL_3B, SKIPPED, 0.0, "step budget exhausted")],
             "step budget of {:.0f}s already spent by {} earlier call(s); this one "
             "degrades without waiting".format(state["budget"].seconds,
                                               state["calls"]))
@@ -812,7 +563,7 @@ def run_call(cloud: Optional[Callable] = None,
     call_budget = Budget(state["step"], left,
                          state["budget"].source, state["budget"].runs_seen)
     res = run_with_ladder(state["step"], state["priority"], call_budget,
-                          cloud, local_3b, local_8b, now)
+                          local_3b, local_8b, now)
     _charge(res.elapsed_sec, res)
     return res
 
@@ -826,10 +577,6 @@ def _charge(seconds: float, res: LadderResult) -> None:
         if res.outcome == DEGRADED:
             # Nothing answered. Still degraded, and ALSO its own distinct fact.
             _open_step["no_tier_calls"] += 1
-            _open_step["degraded_calls"] += 1
-        elif res.tier is not None and res.tier != CLOUD:
-            # A local tier answered. The step contract already calls this
-            # DEGRADED; until now the ledger did not.
             _open_step["degraded_calls"] += 1
         if res.tier:
             _open_step["tiers"][res.tier] = _open_step["tiers"].get(res.tier, 0) + 1
@@ -885,15 +632,14 @@ def _selftest() -> int:
                   "source={} runs={}".format(name, b.seconds, b.per_tier,
                                              b.source, b.runs_seen))
 
-    # A dead cloud must degrade, not hang.
+    # A tier that returns None must degrade, not hang.
     b = Budget("selftest", 3.0, "ceiling", 0)
     t0 = time.monotonic()
-    res = run_with_ladder("selftest", NORMAL, b,
-                          cloud=lambda: None, local_3b=lambda: None)
+    res = run_with_ladder("selftest", NORMAL, b, local_3b=lambda: None)
     took = time.monotonic() - t0
     assert res.outcome == DEGRADED and res.value is None, res
-    assert took < 2.0, "a None-returning cloud must not consume its slice"
-    print("  dead-cloud smoke     DEGRADED in {:.3f}s, value=None".format(took))
+    assert took < 2.0, "a None-returning tier must not consume its slice"
+    print("  dead-tier smoke      DEGRADED in {:.3f}s, value=None".format(took))
     return 0 if ok else 1
 
 

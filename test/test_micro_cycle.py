@@ -9,8 +9,7 @@ holds it:
   * every step declares its outputs, and the declaration is not empty
   * a file outside the declaration is a VIOLATION, named
   * one step cannot shelter behind another step's declaration
-  * the cloud is off by mechanism, through the same gate every other cloud
-    decision passes (core.backend_policy), not by hoping no step reaches for it
+  * (the cloud gate it once closed is gone with the outside models: C-CLOUD-2, R45)
   * it refuses to run beside the big cycle, and fails CLOSED when it cannot tell
 """
 from __future__ import annotations
@@ -28,7 +27,6 @@ _spec = importlib.util.spec_from_file_location(
 mc = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(mc)
 
-from core import backend_policy  # noqa: E402
 
 
 # --------------------------------------------------------------------------- #
@@ -118,40 +116,10 @@ def test_in_window_is_exact():
 # (c) local only, by mechanism
 # --------------------------------------------------------------------------- #
 
-def test_block_cloud_shuts_the_same_gate_everything_else_passes_through():
-    backend_policy.reset_for_tests()
-    try:
-        assert backend_policy.cloud_allowed("ordinary_work")[0] is True
-        backend_policy.block_cloud("test")
-        allowed, why = backend_policy.cloud_allowed("ordinary_work")
-        assert allowed is False
-        assert "local-only" in why
-        # and it outranks everything, including a purpose that would normally pass
-        assert backend_policy.cloud_allowed(None)[0] is False
-    finally:
-        backend_policy.reset_for_tests()
 
 
-def test_reset_clears_the_local_only_flag():
-    """NEGATIVE CONTROL for the test harness itself: a flag that survived
-    reset_for_tests would silently disable cloud for every later test."""
-    backend_policy.block_cloud("test")
-    backend_policy.reset_for_tests()
-    assert backend_policy.local_only()[0] is False
-    assert backend_policy.cloud_allowed("ordinary_work")[0] is True
 
 
-def test_the_run_blocks_cloud_before_it_does_anything(monkeypatch):
-    """The block must happen before the first step, not after — a step that
-    already reached the cloud cannot be un-reached."""
-    calls = []
-    monkeypatch.setattr(backend_policy, "block_cloud",
-                        lambda reason: calls.append(reason))
-    monkeypatch.setattr(mc, "big_cycle_running",
-                        lambda: (True, "pretend the big cycle holds the lock"))
-    out = mc.run()
-    assert out["ran"] is False              # refused, so no step ran
-    assert calls, "block_cloud was not called before the refusal check"
 
 
 # --------------------------------------------------------------------------- #

@@ -20,10 +20,8 @@ scripts/micro_cycle.py — МАЛКИЯТ КРЪГ: 10-15 МИНУТИ, БЕЗ �
     consolidate          шестте наблюдения се сгъват в един траен запис
     mirror_row           един ред в дневника на огледалото
 
-БЕЗ ОБЛАЧЕН МОДЕЛ — И ТОВА Е МЕХАНИЗЪМ, НЕ ОБЕЩАНИЕ.
-core.backend_policy.block_cloud() се вика ПЪРВО и изключва облака за целия
-процес през същата врата, през която минава всяко облачно решение. Обещание,
-което се пази с надежда, е обещание без механизъм.
+БЕЗ ОБЛАЧЕН МОДЕЛ: от C-CLOUD-1 (R45) облачен модел няма; core/llm_door отказва всеки
+адрес извън машината.
 
 ВСЯКА СТЪПКА ОБЯВЯВА КАКВО ПИПА, И СЕ СЪДИ ПО ТОВА.
 core/step_contract.py мери следата; тук следата се сравнява с ОБЯВЕНИЯ списък.
@@ -271,10 +269,7 @@ def in_window(hour: int | None = None) -> bool:
 # ---------------------------------------------------------------------------
 
 def run(dry: bool = False, force: bool = False) -> dict:
-    from core import backend_policy
     from core.step_contract import StepContract
-
-    backend_policy.block_cloud("scripts/micro_cycle.py is local-only by design")
 
     busy, why = big_cycle_running()
     if busy and not force:
@@ -390,16 +385,6 @@ def _selftest() -> int:
     checks.append(("in_window is true at a declared hour",
                    in_window(WINDOWS_LOCAL_HOUR[0]) is True))
     checks.append(("in_window is false at 04:00", in_window(4) is False))
-
-    # (4) Облакът наистина се изключва през общата врата.
-    from core import backend_policy
-    backend_policy.reset_for_tests()
-    before = backend_policy.cloud_allowed("ordinary")[0]
-    backend_policy.block_cloud("selftest")
-    after = backend_policy.cloud_allowed("ordinary")[0]
-    backend_policy.reset_for_tests()
-    checks.append((f"cloud allowed before block ({before})", before is True))
-    checks.append((f"cloud refused after block ({after})", after is False))
 
     # (5) Отказът при зает голям цикъл — проверява се на живо.
     busy, why = big_cycle_running()

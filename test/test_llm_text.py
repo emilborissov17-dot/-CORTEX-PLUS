@@ -44,8 +44,6 @@ def test_what_launders_it_is_stated_not_hidden():
 @pytest.mark.parametrize("reply,path", [
     ({"choices": [{"message": {"content": "a"}, "finish_reason": "stop"}]},
      ("choices", 0, "message", "content")),
-    ({"candidates": [{"content": {"parts": [{"text": "a"}]}}]},
-     ("candidates", 0, "content", "parts", 0, "text")),
     ({"message": {"content": "a"}, "done_reason": "stop"}, ("message", "content")),
     ({"response": "a", "done_reason": "stop"}, ("response",)),
 ])

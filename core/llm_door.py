@@ -15,8 +15,8 @@ THE SCHEMA (schema=2), one for every backend:
   ts, schema, caller, step, backend, model, outcome (ok|error|refused),
   finish_reason, latency_s (also on error), prompt_tokens, completion_tokens,
   http_status, error, prompt_sha1, prompt_chars, reply_chars
-`backend` keeps the labels core/phase_report groups by ("Groq", "OpenRouter",
-"NVIDIA", "Gemini", "local:<model>").
+`backend` is "local:<model>" (C-CLOUD-1, R45); rows written before 3 Oct 2026 carry the
+labels of the deleted outside backends and stay as they are.
 
 test/test_llm_one_door.py fails on any HTTP call to a model endpoint outside this
 module in the cycle's code paths.
@@ -91,13 +91,6 @@ def _facts_from_dict(d) -> dict:
                                      or msg.get("reasoning_content") or ch.get("text") or ""))
         u = d.get("usage") or {}
         out["prompt_tokens"], out["completion_tokens"] = u.get("prompt_tokens"), u.get("completion_tokens")
-    elif "candidates" in d:                                # Gemini
-        c = (d.get("candidates") or [{}])[0] or {}
-        out["finish_reason"] = c.get("finishReason")
-        parts = ((c.get("content") or {}).get("parts") or [])
-        out["reply_chars"] = sum(len(str(p.get("text") or "")) for p in parts)
-        u = d.get("usageMetadata") or {}
-        out["prompt_tokens"], out["completion_tokens"] = u.get("promptTokenCount"), u.get("candidatesTokenCount")
         out["thoughts_tokens"] = u.get("thoughtsTokenCount")
     elif "message" in d or "response" in d or "done_reason" in d:   # Ollama
         out["finish_reason"] = d.get("done_reason")
@@ -131,9 +124,6 @@ def _tag(d, backend: str, model: str | None):
             msg = ch.get("message")
             for k in ("content", "reasoning", "reasoning_content"):
                 mark(msg, k)
-    for c in d.get("candidates") or []:                    # Gemini
-        for part in ((c or {}).get("content") or {}).get("parts") or []:
-            mark(part, "text")
     mark(d.get("message"), "content")                      # Ollama chat
     mark(d, "response")                                    # Ollama generate
     if "text" in d and not d.get("choices"):               # Whisper

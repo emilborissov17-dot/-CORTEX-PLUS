@@ -196,13 +196,6 @@ def test_the_brain_returning_nothing_is_a_rejection_not_a_crash(tmp_path):
     assert "returned nothing" in " ".join(rec["rejected_because"])
 
 
-def test_the_debrief_is_declared_self_directed():
-    """It must never reach the cloud: the cloud being gone is the thing most
-    worth debriefing, and its latency must not be charged to a step."""
-    from core import backend_policy
-    from core.phase_debrief import PURPOSE
-    assert PURPOSE in backend_policy.SELF_DIRECTED
-    assert backend_policy.cloud_allowed(PURPOSE)[0] is False
 
 
 def test_console_is_english_and_telegram_is_bulgarian():

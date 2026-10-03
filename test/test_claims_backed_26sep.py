@@ -59,9 +59,6 @@ def test_reply_facts_read_every_dialect():
     o = f({"choices": [{"message": {"content": "abc"}, "finish_reason": "stop"}],
            "usage": {"prompt_tokens": 3, "completion_tokens": 4}})
     assert (o["finish_reason"], o["reply_chars"], o["prompt_tokens"], o["completion_tokens"]) == ("stop", 3, 3, 4)
-    g = f({"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": "ab"}]}}],
-           "usageMetadata": {"promptTokenCount": 5, "candidatesTokenCount": 6}})
-    assert (g["finish_reason"], g["reply_chars"], g["prompt_tokens"], g["completion_tokens"]) == ("STOP", 2, 5, 6)
     l = f({"message": {"content": "abcd"}, "done_reason": "stop", "prompt_eval_count": 7, "eval_count": 8})
     assert (l["finish_reason"], l["reply_chars"], l["prompt_tokens"], l["completion_tokens"]) == ("stop", 4, 7, 8)
     assert f({"text": "hello"})["reply_chars"] == 5

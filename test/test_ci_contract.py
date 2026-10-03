@@ -64,8 +64,6 @@ MOCKED_NOT_LIVE = {
     # no credentials to send with even if it tried.
     "test_supervisor.py",
     "test_phase_telegram.py",
-    # Poisons requests.post to prove the backend policy refuses BEFORE the call.
-    "test_backend_policy.py",
     # Script-style; run as a subprocess by test_script_suite.py.
     "test_needs_approvals.py",
     # Listed because its only requests.post targets 127.0.0.1:11434 and must be

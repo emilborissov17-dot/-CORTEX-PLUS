@@ -51,8 +51,7 @@ still lands, the restart still happens, and the record says which parts failed.
 
 THE DEATH DEBRIEF
 ------------------
-After a kill the local brain (never the cloud — a dead machine cannot reach it,
-and core.backend_policy.SELF_DIRECTED already forbids it for purpose "autopsy")
+After a kill the local brain (the only model since C-CLOUD-1, R45)
 is given the autopsy numbers and asked for three sentences. It gets 60 seconds
 of wall clock, enforced by a daemon thread that the caller abandons on timeout.
 If it says nothing, the alarm goes out without it. The alarm is the point; the
@@ -90,7 +89,7 @@ DEATH_EVENTS = frozenset({
 # the alarm must not wait for it.
 POSTMORTEM_BUDGET_SEC = 60
 
-PURPOSE = "autopsy"          # core/backend_policy.SELF_DIRECTED
+PURPOSE = "autopsy"
 
 # One line per event, in Bulgarian: this arrives on Emil's phone.
 _HEADLINE = {
@@ -203,12 +202,6 @@ def post_mortem(f: dict, budget_sec: float = POSTMORTEM_BUDGET_SEC,
 
     def _work() -> None:
         try:
-            from core import backend_policy
-            backend_policy.block_cloud(
-                "core/death_bell.py post-mortem is local-only by design")
-        except Exception:
-            pass                       # a missing policy module must not stop it
-        try:
             from core.brain import think
             said = (thinker or think)(
                 role="патоанатом на собствения си цикъл",
@@ -313,8 +306,7 @@ def _selftest() -> int:
 
     # INTEGRATIONS — LIVE or INERT in the repo this file finds itself in.
     for name, mod in (("supervisor.alarm_human", "supervisor"),
-                      ("core.brain.think", "core.brain"),
-                      ("core.backend_policy", "core.backend_policy")):
+                      ("core.brain.think", "core.brain")):
         try:
             __import__(mod)
             print(f"  LIVE    {name}")

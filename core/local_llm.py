@@ -127,7 +127,7 @@ def _call_local_as(model_id: str, prompt: str, max_tokens: int):
     content = ((r.json().get("message") or {}).get("content") or "").strip()
     if not content:
         raise ValueError("empty response from local model")
-    return content, {"finish_reason": "stop", "degraded": True}
+    return content, {"finish_reason": "stop"}
 
 
 def _call_local(prompt: str, max_tokens: int):
@@ -170,7 +170,7 @@ def _call_local(prompt: str, max_tokens: int):
     content = ((r.json().get("message") or {}).get("content") or "").strip()
     if not content:
         raise ValueError("empty response from local model")
-    return content, {"finish_reason": "stop", "degraded": True}
+    return content, {"finish_reason": "stop"}
 
 
 def call_local_llm_meta(prompt: str, max_tokens: int = 1024,
@@ -201,7 +201,6 @@ def call_local_llm_meta(prompt: str, max_tokens: int = 1024,
     _small = _mw.small_model()
     _big = _mw.big_model()
     res = _budget.run_call(
-        cloud=None,
         local_3b=_local_tier(_small),
         # 8b only while the window is open: outside it, loading 8b would evict the
         # pinned 3b mid-step (core/model_window.py).

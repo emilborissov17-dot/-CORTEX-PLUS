@@ -10,7 +10,8 @@ the morning, that the night ran on a weaker footing.
 
 The three claims:
 
-  * A CLOUD THAT NEVER ANSWERS COSTS B, NOT THE CYCLE. The old chain had no
+  * A TIER THAT NEVER ANSWERS COSTS B, NOT THE CYCLE (written for the cloud tier,
+    deleted in C-CLOUD-2; the local tier is held to the same rule). The old chain had no
     caller-controlled timeout: a provider that accepts the connection and then
     says nothing blocked until its own socket gave up, the step stopped beating,
     and the watchdog killed the cycle. All six internet_intelligence kills in
@@ -75,7 +76,7 @@ def test_every_call_in_a_step_draws_from_one_budget(monkeypatch):
     sb.begin_step("unit_step", sb.NORMAL)
 
     for _ in range(3):
-        sb.run_call(cloud=lambda: (time.sleep(0.6), "x")[1])
+        sb.run_call(local_3b=lambda: (time.sleep(0.6), "x")[1])
 
     spent = sb.end_step()
     assert spent["calls"] == 3
@@ -83,31 +84,26 @@ def test_every_call_in_a_step_draws_from_one_budget(monkeypatch):
 
 
 def test_once_the_budget_is_gone_further_calls_degrade_without_waiting(monkeypatch):
-    """Note the shape: one call cannot drain the account.
-
-    A hanging cloud is abandoned at its slice, B/3, so with no local tier
-    configured each call spends a third and it takes three to empty the budget.
-    That is the ladder working as designed, not a leak — it is written down here
-    because the first version of this test assumed one call would do it.
-    """
+    """C-CLOUD-2: with the cloud tier gone the 3b is the last viable tier of a NORMAL
+    step, so a hanging call is handed the whole remainder and one call drains the
+    account (it took three while the cloud took B/3 first)."""
     monkeypatch.setattr(sb, "budget_for",
-                        lambda s, b=None, c=None, factor=1.5: sb.Budget(s, 9.0, "unit", 0))
+                        lambda s, b=None, c=None, factor=1.5: sb.Budget(s, 1.5, "unit", 0))
     sb.begin_step("unit_step", sb.NORMAL)
-    for _ in range(4):
-        sb.run_call(cloud=lambda: time.sleep(30.0))
+    sb.run_call(local_3b=lambda: time.sleep(30.0))
 
     assert sb.remaining_sec() / 3.0 < sb.MIN_TIER_SEC, (
-        f"four abandoned calls left {sb.remaining_sec():.2f}s, still enough for a "
+        f"an abandoned call left {sb.remaining_sec():.2f}s, still enough for a "
         f"tier slice; the account decays by a third each time and never reaches "
         f"zero, which is why emptiness is defined by MIN_TIER_SEC")
 
     called = []
     t0 = time.monotonic()
-    res = sb.run_call(cloud=lambda: called.append("ran"))
+    res = sb.run_call(local_3b=lambda: called.append("ran"))
     took = time.monotonic() - t0
 
     assert res.outcome == sb.DEGRADED
-    assert called == [], "the cloud was called after the step's budget was spent"
+    assert called == [], "the tier was called after the step's budget was spent"
     assert took < 0.3, f"an exhausted budget still waited {took:.2f}s"
     assert "already spent" in res.reason
     assert any("budget exhausted" in (a.error or "") for a in res.attempts), (
@@ -124,7 +120,7 @@ def test_a_call_may_not_exceed_what_the_step_has_left(monkeypatch):
                         lambda s, b=None, c=None, factor=1.5: sb.Budget(s, 1.0, "unit", 0))
     sb.begin_step("unit_step", sb.NORMAL)
     t0 = time.monotonic()
-    sb.run_call(cloud=lambda: time.sleep(30))
+    sb.run_call(local_3b=lambda: time.sleep(30))
     took = time.monotonic() - t0
     assert took < sb.MIN_BUDGET_SEC, (
         f"one call took {took:.1f}s from a step budget of 1.0s; a budget a call "
@@ -133,7 +129,7 @@ def test_a_call_may_not_exceed_what_the_step_has_left(monkeypatch):
 
 def test_a_call_outside_any_step_still_works():
     """Scripts and selftests call the model too, and must not be blocked."""
-    res = sb.run_call(cloud=lambda: "an answer")
+    res = sb.run_call(local_3b=lambda: "an answer")
     assert res.outcome == sb.OK and res.value == "an answer"
 
 
@@ -209,7 +205,7 @@ def test_the_8b_tier_is_not_offered_while_the_window_is_shut():
 def test_a_normal_step_never_reaches_the_8b_tier():
     b = sb.Budget("unit_step", 3.0, "unit", 0)
     res = sb.run_with_ladder("unit_step", sb.NORMAL, b,
-                             cloud=lambda: None, local_3b=lambda: None,
+                             local_3b=lambda: None,
                              local_8b=lambda: "the big model answered")
     assert res.outcome == sb.DEGRADED
     assert res.value != "the big model answered"
@@ -218,7 +214,7 @@ def test_a_normal_step_never_reaches_the_8b_tier():
 def test_a_critical_step_may_reach_the_8b_tier():
     b = sb.Budget("unit_step", 3.0, "unit", 0)
     res = sb.run_with_ladder("unit_step", sb.CRITICAL, b,
-                             cloud=lambda: None, local_3b=lambda: None,
+                             local_3b=lambda: None,
                              local_8b=lambda: "the big model answered")
     assert res.outcome == sb.OK and res.value == "the big model answered"
 
@@ -227,18 +223,18 @@ def test_a_critical_step_may_reach_the_8b_tier():
 # The step path no longer blocks
 # ---------------------------------------------------------------------------
 
-def test_a_hanging_cloud_costs_the_budget_and_not_the_cycle(monkeypatch):
+def test_a_hanging_tier_costs_the_budget_and_not_the_cycle(monkeypatch):
     monkeypatch.setattr(sb, "budget_for",
                         lambda s, b=None, c=None, factor=1.5: sb.Budget(s, 1.2, "unit", 0))
     sb.begin_step("internet_intelligence", sb.NORMAL)
 
     t0 = time.monotonic()
-    res = sb.run_call(cloud=lambda: time.sleep(600))
+    res = sb.run_call(local_3b=lambda: time.sleep(600))
     took = time.monotonic() - t0
 
     assert res.outcome == sb.DEGRADED
     assert took < 3.0, (
-        f"a cloud that never answers held the step for {took:.1f}s. This is the "
+        f"a tier that never answers held the step for {took:.1f}s. This is the "
         f"shape of all six internet_intelligence kills in the existence ledger")
 
 

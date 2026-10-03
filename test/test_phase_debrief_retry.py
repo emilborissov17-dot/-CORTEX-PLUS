@@ -187,12 +187,6 @@ def test_the_model_is_a_declared_knob():
     assert "debrief_prompt" in ALLOWED_KNOBS
 
 
-def test_the_debrief_never_asks_the_cloud():
-    """A self-directed call. It has to work precisely when the cloud is gone."""
-    from core import backend_policy
-    assert pd.PURPOSE in backend_policy.SELF_DIRECTED
-    allowed, why = backend_policy.cloud_allowed(pd.PURPOSE)
-    assert allowed is False
 
 
 # --------------------------------------------------------------------------- #
