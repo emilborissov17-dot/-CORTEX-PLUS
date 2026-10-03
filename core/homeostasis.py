@@ -49,6 +49,23 @@ def _detect_gpu():
         return None
 
 
+# C-CLOUD-2 (3 Oct 2026, defect class A): every capability names the module that backs it;
+# test/test_self_profile_truth.py fails when one of them is missing from the tree.
+CAPABILITIES = (
+    ("real data (NOAA CO2, NASA GISTEMP, World Bank WDI, GBIF) through the OpenClaw door",
+     "core/global_indicators.py"),
+    ("web reading only through OpenClaw's own browser", "core/openclaw_door.py"),
+    ("text synthesis by the local model", "core/local_llm.py"),
+    ("self-modification via the self_modifier agent", "agents/core/self_modifier.py"),
+    ("snapshot history and trend tracking", "memory/trend_tracker.py"),
+)
+
+
+def missing_capability_modules(caps=CAPABILITIES) -> list:
+    """The modules named by `caps` that are not in the tree."""
+    return [module for _text, module in caps if not (BASE / module).exists()]
+
+
 def build_self_profile() -> dict:
     """
     Изгражда пълен профил на системата — хардуер, APIs, възможности, лимити.
@@ -95,32 +112,12 @@ def build_self_profile() -> dict:
     except Exception:
         pass
 
-    # APIs
-    env_file = BASE / ".env"
-    def _has_key(name):
-        import os
-        if os.environ.get(name):
-            return True
-        if env_file.exists():
-            return any(l.startswith(name + "=") and len(l) > len(name) + 2
-                       for l in env_file.read_text(encoding="utf-8").splitlines())
-        return False
+    # No code makes a request with an API key any more (the web through OpenClaw, the model
+    # local): nothing to list (C-CLOUD-2).
+    profile["apis"] = {}
 
-    profile["apis"] = {
-        "youtube": {"available": _has_key("YOUTUBE_API_KEY"), "limit": "10000 units/day"},
-        "nasa":    {"available": _has_key("NASA_API_KEY"),     "limit": "1000 req/hr"},
-    }
-
-    # Статични възможности
-    profile["capabilities"] = [
-        "monitor 25 civilization axes via web intelligence",
-        "LLM synthesis via Groq (llama-3.3-70b) + Gemini fallback",
-        "audio transcription via Groq Whisper API",
-        "real data: NOAA CO2, NASA GISTEMP, World Bank WDI, GBIF",
-        "self-modification via self_modifier agent",
-        "autonomous data discovery via data_scout",
-        "snapshot history and trend tracking",
-    ]
+    profile["capabilities"] = [f"{text} — {module}" for text, module in CAPABILITIES
+                               if (BASE / module).exists()]
 
     # Динамични ограничения (от текущите vitals)
     lims = []
@@ -133,8 +130,6 @@ def build_self_profile() -> dict:
         lims.append(f"RAM at {hw.get('ram_percent','?')}% — parallel workers reduced to 1-2")
     if not vitals.get("can_run_chromadb"):
         lims.append("Insufficient free RAM for ChromaDB — semantic memory degraded")
-    if not profile["apis"]["groq"]["available"]:
-        lims.append("No Groq API key — LLM synthesis unavailable")
     gpu = hw.get("gpu")
     if gpu:
         vram_gb = round(gpu.get("vram_total_mb", 0) / 1024, 1)
@@ -145,7 +140,7 @@ def build_self_profile() -> dict:
             lims.append(f"GPU VRAM limited ({vram_gb}GB) — only small models (<=3B) with "
                         f"quantization/LoRA; no full fine-tune of large models")
     else:
-        lims.append("No local GPU — all inference via cloud APIs (rate-limited)")
+        lims.append("No local GPU — the local model runs on the CPU (slow)")
     lims.append("No persistent process — cycle must be triggered manually or via scheduler")
 
     profile["limitations"] = lims

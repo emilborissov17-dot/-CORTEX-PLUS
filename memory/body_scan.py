@@ -188,8 +188,7 @@ def _scan_network():
 
 def _scan_power():
     """Какво може системата — мощност и капацитет."""
-    groq_path = BASE_DIR / "core" / "local_llm.py"
-    groq_available = groq_path.exists()
+    local_llm_available = (BASE_DIR / "core" / "local_llm.py").exists()
     
     auto_levels_path = BASE_DIR / "memory" / "auto_levels.json"
     axes_measured = 0
@@ -203,7 +202,7 @@ def _scan_power():
             pass
     
     return {
-        "groq_available":     groq_available,
+        "local_llm_available": local_llm_available,
         "axes_measured":      axes_measured,
         "axes_total":         26,
         "axes_coverage_pct":  round(axes_measured/26*100, 1),
