@@ -55,6 +55,9 @@ def no_real_logs(tmp_path, monkeypatch):
     """
     monkeypatch.setattr(ac, "LOG", tmp_path / "cleanup.jsonl")
     monkeypatch.setattr(da, "SWEEP_LOG", tmp_path / "sweep.jsonl")
+    # C-CLOUD-2 Step 8, decided: the model release is injected in this file
+    # (test_no_ollama_writes_from_tests judges the release itself)
+    monkeypatch.setattr(ac, "release_ollama", lambda apply=False: {"applied": False, "injected": True})
 
 
 @pytest.fixture
