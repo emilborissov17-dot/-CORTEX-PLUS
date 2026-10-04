@@ -142,6 +142,14 @@ def test_the_readme_carries_the_vision_and_a_missing_vision_publishes_nothing(mo
     assert pushed == [], "a missing vision must abort the README, not publish an empty Vision section"
 
 
+# (6) write protection is on the real file (Emil "ДА" 4 Oct)
+def test_the_canonical_vision_file_is_write_protected():
+    from safety.protected_paths import is_protected
+    assert is_protected("core/civilization_vision.txt")
+    assert is_protected(VS.VISION_PATH.relative_to(REPO).as_posix())
+    assert is_protected(str(VS.VISION_PATH.relative_to(REPO)))
+
+
 # ── mutation of the static check itself ─────────────────────────────────────
 def test_mutation_the_static_check_sees_a_path_built_from_the_literal():
     assert _builds_path_from_literal(ast.parse('VISION = BASE / "civilization_vision.txt"\n'))

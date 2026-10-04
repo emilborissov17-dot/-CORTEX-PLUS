@@ -147,7 +147,7 @@ def test_budget_holds_even_when_the_goal_is_huge(monkeypatch):
 # ── 3. the protected-path lane ───────────────────────────────────────────────
 
 CANON_PROTECTED = ["BOUNDARIES.md", "core/canon.py",
-                   "civilization_goal.txt", "civilization_vision.txt"]
+                   "civilization_goal.txt", "core/civilization_vision.txt"]
 
 
 @pytest.mark.parametrize("path", CANON_PROTECTED)

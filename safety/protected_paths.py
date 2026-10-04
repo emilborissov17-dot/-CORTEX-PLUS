@@ -69,7 +69,8 @@ PROTECTED_FILES = frozenset({
     "BOUNDARIES.md",
     "core/canon.py",
     "civilization_goal.txt",
-    "civilization_vision.txt",
+    # The vision lives in core/ (one canonical path, core/vision_source.py). The root entry named a file that did not exist - Emil "ДА" 4 Oct 2026.
+    "core/civilization_vision.txt",
 
     # ── The gates and the guardian ───────────────────────────────────────────
     "patch_guardian.py",
