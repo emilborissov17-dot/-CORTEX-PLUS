@@ -44,7 +44,7 @@
     },
     "memory/axis_history.json": {
       "phases": [
-        "B_SENSE"
+        "D_SCORE"
       ],
       "readers": [
         "cockpit/server.py",
@@ -283,7 +283,7 @@
     },
     "memory/trends_latest.json": {
       "phases": [
-        "B_SENSE"
+        "D_SCORE"
       ],
       "readers": [
         "core/phase_evidence.py"

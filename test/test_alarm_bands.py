@@ -274,8 +274,12 @@ def test_a_citation_number_is_not_proposed_as_a_threshold():
 # (g) Wiring
 # ---------------------------------------------------------------------------
 
-def test_the_sweep_runs_right_after_scoring():
+def test_the_sweep_runs_after_the_score_it_reads():
+    """It reads snapshots/master/goal_score_latest.json, written at 12.6. Before it
+    the sweep judged last night's number under tonight's stamp (DEFECT-C, Kimi R56)."""
     src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
-    assert '"alarm_bands", "12.42"' in src
-    assert src.index('beat("scoring_engine", "12.4")') < \
-        src.index('beat("alarm_bands", "12.42")')
+    assert '"alarm_bands", "12.61"' in src
+    g = src.index('beat("goal_score_calculator", "12.6")')
+    a = src.index('beat("alarm_bands", "12.61")')
+    d = src.index('beat("deduction", "12.65")')
+    assert g < a < d

@@ -322,18 +322,19 @@ def test_the_flagged_channel_is_empty_now_and_that_is_the_point():
 def test_the_runner_calls_it_after_auto_levels():
     """A reconciler nobody calls is a comment about level drift."""
     src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
-    assert '"level_reconcile", "12.55"' in src
+    assert '"level_reconcile", "12.62"' in src
     assert "core.level_reconciler" in src
 
 
-def test_it_runs_between_the_levels_and_the_score():
-    """Order matters: it corrects the word auto_levels just wrote, before
-    anything downstream reads it."""
+def test_it_runs_after_the_score_and_before_the_first_reader():
+    """The number it corrects against is goal_score_latest.json, written at 12.6;
+    the first reader of the corrected word is deduction (12.65). DEFECT-C, Kimi R56."""
     src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
     a = src.index('beat("auto_levels", "12.5")')
-    r = src.index('beat("level_reconcile", "12.55")')
     g = src.index('beat("goal_score_calculator", "12.6")')
-    assert a < r < g
+    r = src.index('beat("level_reconcile", "12.62")')
+    d = src.index('beat("deduction", "12.65")')
+    assert a < g < r < d
 
 
 # 10 --------------------------------------------------------------------------

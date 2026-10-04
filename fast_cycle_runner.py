@@ -2777,10 +2777,6 @@ def main():
     # their code: no live code read what they wrote. The two cosmos snapshots 2.75
     # wrote are rewritten by cosmos_snapshots at 8 the same night.
 
-    # ── 3. Trend tracker ──
-    beat("trend_tracker", "3")
-    run_trend_tracker()
-
     # ── 3.5. CortexStrategist — MUST run early before token budget is depleted by snapshots ──
     beat("cortexstrategist", "3.5")
     # Written for the Groq free tier (100K tokens/day), gone since C-CLOUD-1; the order stays.
@@ -2872,16 +2868,12 @@ def main():
     except Exception as e:
         print(f"[FAST_CYCLE] scoring_engine -> FAILED: {e}")
 
-    # ── 12.42. ЧЕРВЕНИТЕ ЛИНИИ ────────────────────────────────────────────
-    # Веднага след скоринга, защото аларма, която чака сутрешния дайджест, е
-    # доклад, а не аларма. Пресичане ЗВЪНИ веднага и минава през тихите часове.
-    # Днес всичките 25 прага са null — нищо не звъни, а броячът
-    # AWAITING_HUMAN_VALUES стои в доклада като открит въпрос към Емил.
-    beat("alarm_bands", "12.42")
-    def _alarm_bands():
-        from core.alarm_bands import run as _sweep
-        _sweep()
-    _run("alarm_bands", _alarm_bands)
+    # ── 12.41. Trend tracker ──
+    # After scoring_engine (12.4): it reads output/cortex_scores_latest.json, written
+    # at 12.4, and the master snapshot of update_master (12). Until 4 Oct 2026 it ran
+    # at 3 and read last night's scores under tonight's stamp (DEFECT-C, Kimi R56).
+    beat("trend_tracker", "12.41")
+    run_trend_tracker()
 
     # ── 12.45. Facade self-check — did each real scorer consume real data, or
     #           default to a constant? Fails LOUD instead of silent. FAIL-OPEN. ──
@@ -2916,19 +2908,6 @@ def main():
         print(f"[FAST_CYCLE] auto_levels -> {len(levels)} оси | {len(corrections)} корекции | {len(alerts)} alerts")
     except Exception as e:
         print(f"[FAST_CYCLE] auto_levels -> FAILED: {e}")
-
-    # ── 12.55. ДУМАТА СЛЕДВА ЧИСЛОТО ──────────────────────────────────────
-    # auto_levels пише дума по свои прагове; goal_score пише число от измерена
-    # стойност спрямо цел и посока. Никой не ги сравняваше и се разминаха: на
-    # 21 авг SOCIAL_RELATIONS стоеше MEDIUM при 3.4/100. Където двете спорят и
-    # значението на резултата е ЗАКОВАНО, числото печели. Двете _RISK_ оси са
-    # нарочно незаковани — там LOW може да значи „нисък РИСК", обратната
-    # полярност — и се само ОТБЕЛЯЗВАТ, никога не се поправят.
-    beat("level_reconcile", "12.55")
-    def _level_reconcile():
-        from core.level_reconciler import run as _reconcile
-        _reconcile()
-    _run("level_reconcile", _level_reconcile)
 
     # ── 12.56. THE INDICATOR HISTORY STARTS TONIGHT (6 Sep 2026) ──────────
     # proposal_intake admitted "WATER_REVIEW +1.2 by 2026-09-10" because the
@@ -2984,6 +2963,35 @@ def main():
         from goal_score_calculator import persist as _persist_goal
         _persist_goal(gs_result)
     _run("goal_score_calculator", _goal_score_calculator)
+
+    # ── 12.61. ЧЕРВЕНИТЕ ЛИНИИ ────────────────────────────────────────────
+    # След goal_score_calculator (12.6), защото чете snapshots/master/goal_score_latest.json,
+    # който 12.6 пише; до 4 окт 2026 стоеше на 12.42 и съдеше вчерашното число
+    # (DEFECT-C, Kimi R56). Аларма, която чака сутрешния дайджест, е
+    # доклад, а не аларма. Пресичане ЗВЪНИ веднага и минава през тихите часове.
+    # Днес всичките 25 прага са null — нищо не звъни, а броячът
+    # AWAITING_HUMAN_VALUES стои в доклада като открит въпрос към Емил.
+    beat("alarm_bands", "12.61")
+    def _alarm_bands():
+        from core.alarm_bands import run as _sweep
+        _sweep()
+    _run("alarm_bands", _alarm_bands)
+
+    # ── 12.62. ДУМАТА СЛЕДВА ЧИСЛОТО ──────────────────────────────────────
+    # auto_levels пише дума по свои прагове; goal_score пише число от измерена
+    # стойност спрямо цел и посока. Никой не ги сравняваше и се разминаха: на
+    # 21 авг SOCIAL_RELATIONS стоеше MEDIUM при 3.4/100. Където двете спорят и
+    # значението на резултата е ЗАКОВАНО, числото печели. Двете _RISK_ оси са
+    # нарочно незаковани — там LOW може да значи „нисък РИСК", обратната
+    # полярност — и се само ОТБЕЛЯЗВАТ, никога не се поправят.
+    # Тук, след goal_score_calculator (12.6): числото, срещу което поправя думата, е
+    # goal_score_latest.json от 12.6; първият, който чете поправената дума, е deduction
+    # (12.65). До 4 окт 2026 стоеше на 12.55, преди числото (DEFECT-C, Kimi R56).
+    beat("level_reconcile", "12.62")
+    def _level_reconcile():
+        from core.level_reconciler import run as _reconcile
+        _reconcile()
+    _run("level_reconcile", _level_reconcile)
 
     # ── 12.65. Deduction layer v1 (14 Aug 2026) — symbolic conclusions with premises
     #    from auto_levels + trends + measured scores. Read by daily_analysis (human),
@@ -3216,36 +3224,6 @@ def main():
         from core.hypothesis_intake import run as _hi_run, summary_line as _hi_line
         print(_hi_line(_hi_run(write=True)))
     _run("hypothesis_intake", _hypothesis_intake_step)
-
-    # ── 20.08. Output contracts — the judge finally gets invited to the trial ──
-    # core/output_contracts.py has existed and been green for days with NOBODY
-    # CALLING IT: step_audit listed it among the unscheduled producers, which is
-    # the politest possible way of saying a check that never runs is a check that
-    # does not exist. It writes memory/output_contracts_latest.json.
-    #
-    # PLACED HERE, AND NOT "right after consolidation", because there is no
-    # consolidation step: core/consolidation.run() is called only by
-    # experiments/pulse/pulse_continuum.py, and the cycle merely CONSUMES what the
-    # pulse left, at 20.06 above. So this sits immediately after the step that eats
-    # the queue, which is the nearest thing the cycle has to "after consolidation".
-    #
-    # A VIOLATION DOES NOT STOP THE NIGHT. check_all() catches each contract's own
-    # exception and records it as a violation rather than raising, and _run() would
-    # catch a raise anyway. The contract judges; it does not sentence. Losing the
-    # remaining steps because a check found something would trade a whole cycle for
-    # a line of text that is already on disk.
-    beat("output_contracts", "20.08")
-
-    def _output_contracts_step():
-        from core.output_contracts import check_all as _oc_check
-        from core.output_contracts import summary_line as _oc_line
-        rec = _oc_check()
-        print(_oc_line(rec))
-        for v in rec["violations"][:10]:
-            tag = "NOTE" if v.get("severity") == "note" else "VIOLATION"
-            print(f"  CONTRACT {tag} {v.get('contract')}: {str(v.get('why'))[:200]}")
-
-    _run("output_contracts", _output_contracts_step)
 
     # ── 20.1. K1 — THE FIRST NEEDLE (ITEM 7.1, 28 Aug 2026) ────────────────
     # memory/measurement_honesty_latest.json had not been written since
@@ -3597,6 +3575,35 @@ def main():
     # 25.46 read_the_mirror and 25.5 brain_debrief run in edges_runner.py since
     # 26 Sep 2026 (C3c): both ask the model, and nothing later in this spine
     # reads what they write.
+
+    # ── 25.47. Output contracts — the judge finally gets invited to the trial ──
+    # core/output_contracts.py has existed and been green for days with NOBODY
+    # CALLING IT: step_audit listed it among the unscheduled producers, which is
+    # the politest possible way of saying a check that never runs is a check that
+    # does not exist. It writes memory/output_contracts_latest.json.
+    #
+    # PLACED HERE (25.47: after self_mirror, before cycle_report) since 4 Oct 2026. It
+    # judges memory/merkle_verify_latest.json (merkle_verify 24.1) and the learner state
+    # of learn_world (25.43); at 20.08 it judged last night's files under tonight's
+    # stamp (DEFECT-C, Kimi R56).
+    #
+    # A VIOLATION DOES NOT STOP THE NIGHT. check_all() catches each contract's own
+    # exception and records it as a violation rather than raising, and _run() would
+    # catch a raise anyway. The contract judges; it does not sentence. Losing the
+    # remaining steps because a check found something would trade a whole cycle for
+    # a line of text that is already on disk.
+    beat("output_contracts", "25.47")
+
+    def _output_contracts_step():
+        from core.output_contracts import check_all as _oc_check
+        from core.output_contracts import summary_line as _oc_line
+        rec = _oc_check()
+        print(_oc_line(rec))
+        for v in rec["violations"][:10]:
+            tag = "NOTE" if v.get("severity") == "note" else "VIOLATION"
+            print(f"  CONTRACT {tag} {v.get('contract')}: {str(v.get('why'))[:200]}")
+
+    _run("output_contracts", _output_contracts_step)
 
     # ── ОТЧЕТЪТ ПРЕД ЧОВЕКА, НАПИСАН ОТ САМАТА СИСТЕМА (Емил, 15 авг 2026) ──
     # Стъпка по стъпка: за какво служи, какво каза самата тя, удържа ли обещания
