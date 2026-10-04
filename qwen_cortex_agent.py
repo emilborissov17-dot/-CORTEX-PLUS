@@ -24,6 +24,10 @@ def load_recent_context() -> str:
         "goal_summary_short.txt",
         "core_role.txt",
     ]:
+        if fname == "civilization_vision.txt":   # C-VISION-3: the one path, fail loud
+            from core.vision_source import load_vision
+            parts.append(f"=== {fname} ===\n{load_vision()}\n")
+            continue
         p = ROOT / fname
         if p.exists():
             try:

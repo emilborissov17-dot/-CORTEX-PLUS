@@ -20,7 +20,8 @@ def _read_file(path, default=""):
     except Exception:
         return default
 
-VISION = _read_file(BASE / "civilization_vision.txt", "Sustainable civilization for all.")
+from core.vision_source import load_vision  # C-VISION-3: a missing vision fails the import
+VISION = load_vision()
 GOAL   = _read_file(BASE / "civilization_goal.txt",   "AGI in transparent service of humanity.")
 
 def _utc_now():

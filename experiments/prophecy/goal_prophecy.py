@@ -69,7 +69,7 @@ PULSE_SELF_STATE  = REPO / "experiments" / "pulse" / "self_state.jsonl"
 # external world + moral core (the mind must sense the world and hold the values)
 GLOBAL_IND_FILE   = REPO / "snapshots" / "master" / "global_indicators_latest.json"
 CIV_GOAL_FILE     = REPO / "civilization_goal.txt"
-CIV_VISION_FILE   = REPO / "civilization_vision.txt"
+from core.vision_source import VISION_PATH as CIV_VISION_FILE, load_vision  # C-VISION-4: the one path  # noqa: E402
 EXISTENCE_LEDGER  = REPO / "memory" / "existence_ledger.jsonl"
 
 # hard moral boundary — the organism may search freely for solutions toward the
@@ -433,11 +433,7 @@ def _moral_core() -> str:
         goal = CIV_GOAL_FILE.read_text(encoding="utf-8").strip()
     except Exception:
         goal = "Maximize the sustainability and long-term viability of intelligent life, Earth first, minimal risk of harm."
-    vision = ""
-    try:
-        vision = CIV_VISION_FILE.read_text(encoding="utf-8").strip()
-    except Exception:
-        pass
+    vision = load_vision()   # C-VISION-4: a missing vision raises, never an empty excerpt
     # distilled non-negotiables (the boundary), stated explicitly for the mind
     boundary = ("BOUNDARY (never violate): human dignity and the equal worth of every person above "
                 "profit or power; stay within the planet's ecological limits; no domination, coercion, "

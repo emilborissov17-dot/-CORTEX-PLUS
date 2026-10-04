@@ -24,7 +24,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 GOAL_FILE      = REPO / "civilization_goal.txt"
-VISION_FILE    = REPO / "civilization_vision.txt"
+from core.vision_source import VISION_PATH as VISION_FILE, load_vision  # C-VISION-3: the one path
 WEIGHTS_FILE   = REPO / "config" / "goal_dimension_weights.json"
 INVARIANTS     = REPO / "memory" / "canon_invariants.json"   # consolidated stable lessons
 
@@ -131,7 +131,7 @@ def load_canon() -> dict:
     inv = _load(INVARIANTS, {"invariants": []}).get("invariants", [])
     return {
         "goal": _read(GOAL_FILE),
-        "vision": _read(VISION_FILE),
+        "vision": load_vision(),
         "dimensions": DIMENSIONS,
         "dimension_weights": {d: float(weights.get(d, 1.0)) for d in DIMENSIONS},
         "invariants": inv,   # stable lessons consolidated from experience

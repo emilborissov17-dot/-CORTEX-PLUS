@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 NOTES_DIR = BASE_DIR / "notes"
 
 CIVILIZATION_GOAL_PATH = NOTES_DIR / "civilization_goal.txt"
-CIVILIZATION_VISION_PATH = NOTES_DIR / "civilization_vision.txt"
+from core.vision_source import VISION_PATH as CIVILIZATION_VISION_PATH, load_vision  # C-VISION-3
 GOAL_SUMMARY_PATH = NOTES_DIR / "goal_summary.txt"
 GOAL_SUMMARY_SHORT_PATH = NOTES_DIR / "goal_summary_short.txt"
 CORE_ROLE_PATH = NOTES_DIR / "core_role.txt"
@@ -36,7 +36,7 @@ def load_global_goal() -> str:
 
 
 def load_civilization_vision() -> str:
-    return _safe_read(CIVILIZATION_VISION_PATH, "CIVILIZATION_VISION")
+    return load_vision()
 
 
 def load_goal_summary() -> str:

@@ -45,7 +45,7 @@ GITHUB_API    = "https://api.github.com"
 REPO_OWNER    = "emilborissov17-dot"
 REPO_NAME     = "cortex-civilization-watch"
 BASE_DIR      = pathlib.Path(__file__).resolve().parent
-VISION_FILE   = BASE_DIR / "civilization_vision.txt"
+from core.vision_source import VISION_PATH as VISION_FILE, load_vision  # C-VISION-3
 GOAL_FILE     = BASE_DIR / "civilization_goal.txt"
 
 
@@ -554,7 +554,7 @@ def publish_institution0(files: dict, message: str, expected: dict | None = None
 
 def publish_vision():
     try:
-        vision = VISION_FILE.read_text(encoding="utf-8") if VISION_FILE.exists() else ""
+        vision = load_vision()   # C-VISION-3: a missing vision aborts the README, never an empty section
         goal = GOAL_FILE.read_text(encoding="utf-8") if GOAL_FILE.exists() else ""
 
         readme = "# CORTEX++ — Civilization Watch\n\n"

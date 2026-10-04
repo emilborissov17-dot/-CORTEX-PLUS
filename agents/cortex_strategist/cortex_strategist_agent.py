@@ -196,8 +196,9 @@ def synthesize(ctx):
     missing_str = "\n".join(f"  - {m}" for m in ctx["missing_integrations"][:20]) or "(none)"
     goal_score_str = json.dumps(ctx.get("goal_score", {}), ensure_ascii=False, indent=2)[:500] or "(not available)"
 
-    vision_file = BASE / "core" / "civilization_vision.txt"
-    vision_text = vision_file.read_text(encoding="utf-8", errors="ignore") if vision_file.exists() else "(vision not found)"
+    sys.path.insert(0, str(BASE))
+    from core.vision_source import load_vision   # C-VISION-3: the one path, fail loud
+    vision_text = load_vision()
 
     # Load homeostatic self-awareness block
     homeo_block = ""
