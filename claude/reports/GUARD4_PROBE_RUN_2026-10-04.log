@@ -1,0 +1,89 @@
+arity 1 stale size 100 rep 1: CLEAN 0.15s
+arity 1 stale size 100 rep 2: CLEAN 0.14s
+arity 1 stale size 100 rep 3: CLEAN 0.13s
+arity 1 stale size 250 rep 1: CLEAN 0.13s
+arity 1 stale size 250 rep 2: CLEAN 0.13s
+arity 1 stale size 250 rep 3: CLEAN 0.13s
+arity 1 stale size 390 rep 1: CLEAN 0.13s
+arity 1 stale size 390 rep 2: CLEAN 0.14s
+arity 1 stale size 390 rep 3: CLEAN 0.14s
+arity 2 subcategory size 100 rep 1: CLEAN 0.13s
+arity 2 subcategory size 100 rep 2: CLEAN 0.14s
+arity 2 subcategory size 100 rep 3: CLEAN 0.13s
+arity 2 subcategory size 250 rep 1: CLEAN 0.13s
+arity 2 subcategory size 250 rep 2: CLEAN 0.13s
+arity 2 subcategory size 250 rep 3: CLEAN 0.13s
+arity 2 subcategory size 390 rep 1: CLEAN 0.15s
+arity 2 subcategory size 390 rep 2: CLEAN 0.13s
+arity 2 subcategory size 390 rep 3: CLEAN 0.13s
+arity 3 gap size 100 rep 1: CLEAN 0.13s
+arity 3 gap size 100 rep 2: CLEAN 0.13s
+arity 3 gap size 100 rep 3: CLEAN 0.13s
+arity 3 gap size 250 rep 1: CLEAN 0.13s
+arity 3 gap size 250 rep 2: CLEAN 0.13s
+arity 3 gap size 250 rep 3: CLEAN 0.14s
+arity 3 gap size 390 rep 1: CLEAN 0.13s
+arity 3 gap size 390 rep 2: CLEAN 0.14s
+arity 3 gap size 390 rep 3: CLEAN 0.13s
+arity 4 unverified size 100 rep 1: CLEAN 0.13s
+arity 4 unverified size 100 rep 2: CLEAN 0.13s
+arity 4 unverified size 100 rep 3: CLEAN 0.13s
+arity 4 unverified size 250 rep 1: CLEAN 0.14s
+arity 4 unverified size 250 rep 2: CLEAN 0.13s
+arity 4 unverified size 250 rep 3: CLEAN 0.13s
+arity 4 unverified size 390 rep 1: CLEAN 0.13s
+arity 4 unverified size 390 rep 2: CLEAN 0.13s
+arity 4 unverified size 390 rep 3: CLEAN 0.13s
+arity 5 contradiction size 100 rep 1: CLEAN 0.13s
+arity 5 contradiction size 100 rep 2: CLEAN 0.14s
+arity 5 contradiction size 100 rep 3: CLEAN 0.13s
+arity 5 contradiction size 250 rep 1: CLEAN 0.13s
+arity 5 contradiction size 250 rep 2: CLEAN 0.15s
+arity 5 contradiction size 250 rep 3: CLEAN 0.13s
+arity 5 contradiction size 390 rep 1: CLEAN 0.15s
+arity 5 contradiction size 390 rep 2: CLEAN 0.14s
+arity 5 contradiction size 390 rep 3: CLEAN 0.13s
+arity 6 need-derived size 100 rep 1: CLEAN 0.13s
+arity 6 need-derived size 100 rep 2: CLEAN 0.13s
+arity 6 need-derived size 100 rep 3: CLEAN 0.14s
+arity 6 need-derived size 250 rep 1: CLEAN 0.13s
+arity 6 need-derived size 250 rep 2: CLEAN 0.13s
+arity 6 need-derived size 250 rep 3: CLEAN 0.13s
+arity 6 need-derived size 390 rep 1: CLEAN 0.13s
+arity 6 need-derived size 390 rep 2: CLEAN 0.13s
+arity 6 need-derived size 390 rep 3: CLEAN 0.13s
+arity 7 need-derived size 100 rep 1: CLEAN 0.13s
+arity 7 need-derived size 100 rep 2: CLEAN 0.13s
+arity 7 need-derived size 100 rep 3: CLEAN 0.13s
+arity 7 need-derived size 250 rep 1: CLEAN 0.13s
+arity 7 need-derived size 250 rep 2: CLEAN 0.13s
+arity 7 need-derived size 250 rep 3: CLEAN 0.13s
+arity 7 need-derived size 390 rep 1: CLEAN 0.13s
+arity 7 need-derived size 390 rep 2: CLEAN 0.13s
+arity 7 need-derived size 390 rep 3: CLEAN 0.14s
+arity 8 obs size 100 rep 1: CLEAN 0.13s
+arity 8 obs size 100 rep 2: CLEAN 0.13s
+arity 8 obs size 100 rep 3: CLEAN 0.13s
+arity 8 obs size 250 rep 1: CLEAN 0.13s
+arity 8 obs size 250 rep 2: CLEAN 0.13s
+arity 8 obs size 250 rep 3: CLEAN 0.13s
+arity 8 obs size 390 rep 1: CLEAN 0.13s
+arity 8 obs size 390 rep 2: CLEAN 0.13s
+arity 8 obs size 390 rep 3: CLEAN 0.13s
+RESULT arity 1 (stale): budget 390, tried [100, 250, 390]
+RESULT arity 2 (subcategory): budget 390, tried [100, 250, 390]
+RESULT arity 3 (gap): budget 390, tried [100, 250, 390]
+RESULT arity 4 (unverified): budget 390, tried [100, 250, 390]
+RESULT arity 5 (contradiction): budget 390, tried [100, 250, 390]
+RESULT arity 6 (need-derived): budget 390, tried [100, 250, 390]
+RESULT arity 7 (need-derived): budget 390, tried [100, 250, 390]
+RESULT arity 8 (obs): budget 390, tried [100, 250, 390]
+four families obs-150 sub-150 obs-300 sub-300 rep 1: CLEAN 0.14s
+four families obs-150 sub-150 obs-300 sub-300 rep 2: CLEAN 0.14s
+four families obs-150 sub-150 obs-300 sub-300 rep 3: CLEAN 0.14s
+real heads obs/8 150 + subcategory/2 300 rep 1: PANIC 3.98s
+real heads obs/8 150 + subcategory/2 300 rep 2: PANIC 3.73s
+real heads obs/8 150 + subcategory/2 300 rep 3: PANIC 3.71s
+real heads obs/8 100 + subcategory/2 100 rep 1: CLEAN 0.14s
+real heads obs/8 100 + subcategory/2 250 rep 1: CLEAN 0.14s
+MIXED [{"case": "four families obs-150 sub-150 obs-300 sub-300", "rep": 1, "outcome": "CLEAN", "seconds": 0.14}, {"case": "four families obs-150 sub-150 obs-300 sub-300", "rep": 2, "outcome": "CLEAN", "seconds": 0.14}, {"case": "four families obs-150 sub-150 obs-300 sub-300", "rep": 3, "outcome": "CLEAN", "seconds": 0.14}, {"case": "real heads obs/8 150 + subcategory/2 300", "rep": 1, "outcome": "PANIC", "seconds": 3.98}, {"case": "real heads obs/8 150 + subcategory/2 300", "rep": 2, "outcome": "PANIC", "seconds": 3.73}, {"case": "real heads obs/8 150 + subcategory/2 300", "rep": 3, "outcome": "PANIC", "seconds": 3.71}, {"case": "real heads obs/8 100 + subcategory/2 100", "rep": 1, "outcome": "CLEAN", "seconds": 0.14}, {"case": "real heads obs/8 100 + subcategory/2 250", "rep": 1, "outcome": "CLEAN", "seconds": 0.14}]
