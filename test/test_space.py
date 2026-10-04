@@ -24,6 +24,15 @@ pytestmark = pytest.mark.skipif(not sp.SIDECAR_PY.exists(), reason="venv312_mett
 
 
 @pytest.fixture(autouse=True)
+def _open_budgets(tmp_path, monkeypatch):
+    """C-GUARD-4: this file judges the rules and the turn, not the budgets (test_engine_guard does)."""
+    import json as _json
+    cfg = tmp_path / "engine_guard_open.json"
+    cfg.write_text(_json.dumps({"budgets": {str(a): 390 for a in range(1, 9)}, "probed": {}}), encoding="utf-8")
+    monkeypatch.setattr(sp, "GUARD_CONFIG", cfg)
+
+
+@pytest.fixture(autouse=True)
 def _no_live(monkeypatch):
     attempts = _live_net.install(monkeypatch)
     yield attempts

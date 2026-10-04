@@ -292,10 +292,14 @@ def engine_program(base: str, proposed: str, rules: str) -> str:
     return "\n".join(kept) + "\n" + proposed + "\n" + rules
 
 
-# ── the guard (C-GUARD-1, Kimi round 74 K1) ────────────────────────────────
-def guard_threshold(path=None) -> int:
-    """The sealed count per shape (config/engine_guard.json)."""
-    return int(json.loads(Path(path or GUARD_CONFIG).read_text(encoding="utf-8"))["threshold"])
+# ── the guard (C-GUARD-1 / C-GUARD-4, Kimi rounds 74-77) ───────────────────
+def guard_config(path=None) -> dict:
+    d = json.loads(Path(path or GUARD_CONFIG).read_text(encoding="utf-8"))
+    return {"budgets": {int(a): int(v) for a, v in d["budgets"].items()},
+            "probed": {int(a): r for a, r in d["probed"].items()}}
+
+
+_load_guard = guard_config
 
 
 def shape_counts(program: str) -> dict:
@@ -329,8 +333,43 @@ def shape_counts(program: str) -> dict:
     return counts
 
 
-def shapes_over(counts: dict, threshold: int) -> list:
-    return sorted(s for s, c in counts.items() if c >= threshold)
+def predicted_forms(expressions: list) -> dict:
+    """head/arity of the DISTINCT expressions the witness predicts."""
+    out: dict = {}
+    for x in {_canon(x): x for x in expressions}.values():
+        f = f"{x[0]}/{len(x) - 1}"
+        out[f] = out.get(f, 0) + 1
+    return out
+
+
+def statement_rows(counts: dict) -> int:
+    return sum(n for f, n in counts.items() if f.startswith("statement/"))
+
+
+_SEVERITY = {"FORBIDDEN_ARITY": 0, "UNPROBED_ARITY": 1, "ENGINE_BUDGET": 2}
+
+
+def preflight(hist: dict, cfg: dict) -> list:
+    """Kimi round 77 B1/B2: every form with a count > 0 against the budget of its OWN arity.
+    Refused at count >= budget; an arity with budget 0 and no probe record is UNPROBED; a probe
+    record that says forbidden is FORBIDDEN."""
+    out = []
+    for form, n in sorted(hist.items()):
+        if n <= 0:
+            continue
+        a = int(form.rsplit("/", 1)[1])
+        rec = cfg["probed"].get(a)
+        budget = cfg["budgets"].get(a, 0)
+        if rec and rec.get("budget") == "forbidden":
+            cause = "FORBIDDEN_ARITY"
+        elif budget == 0 and not rec:
+            cause = "UNPROBED_ARITY"
+        elif n >= budget:
+            cause = "ENGINE_BUDGET"
+        else:
+            continue
+        out.append({"form": form, "count": n, "budget": budget, "cause": cause})
+    return sorted(out, key=lambda r: (_SEVERITY[r["cause"]], r["form"]))
 
 
 def _guard_log(d: Path, row: dict) -> None:
@@ -346,14 +385,36 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
     prop = proposed.read_text(encoding="utf-8") if proposed.exists() else ""
     rules = Path(_p(paths, "rules")).read_text(encoding="utf-8")
     program = engine_program(base, prop, rules)
-    threshold = guard_threshold(guard_config)
+    cfg = _load_guard(guard_config)
+    budgets = {str(a): b for a, b in sorted(cfg["budgets"].items())}
     counts = shape_counts(program)
-    top = [[s, c] for s, c in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))[:5]]
-    over = shapes_over(counts, threshold)
-    if over:
-        why = "; ".join(f"shape {s} has {counts[s]} atoms" for s in over) + f" (threshold {threshold})"
-        _guard_log(d, {"state": "RED", "cause": "ENGINE_THRESHOLD", "why": why, "threshold": threshold, "shapes": top})
-        raise SpaceEngineFailed("ENGINE_THRESHOLD: " + why, cause="ENGINE_THRESHOLD")
+    # Kimi round 76 B4: no statement row reaches the engine; the check is a row of every run
+    n_st = statement_rows(counts)
+    _guard_log(d, {"check": "STATEMENT_ROWS", "statement_rows": n_st})
+    if n_st:
+        why = f"{n_st} (statement ...) row(s) in the engine program"
+        _guard_log(d, {"state": "RED", "cause": "STATEMENT_IN_ENGINE_PROGRAM", "why": why, "budgets": budgets})
+        raise SpaceEngineFailed("STATEMENT_IN_ENGINE_PROGRAM: " + why, cause="STATEMENT_IN_ENGINE_PROGRAM")
+    # Kimi round 77 B1: the witness predicts every derived form BEFORE the engine runs
+    from core import space_witness as W
+    kept = "\n".join(l for l in base.splitlines() if not l.startswith("(statement "))
+    try:
+        predicted_list = W.witness(kept + "\n" + prop)
+    except Exception as exc:                                         # noqa: BLE001  a RED with its cause
+        why = f"the witness raised {type(exc).__name__}: {exc}"
+        _guard_log(d, {"state": "RED", "cause": "WITNESS_FAILED", "why": why, "budgets": budgets})
+        raise SpaceEngineFailed("WITNESS_FAILED: " + why, cause="WITNESS_FAILED") from exc
+    predicted = predicted_forms(predicted_list)
+    hist = dict(counts)
+    for f, n in predicted.items():
+        hist[f] = hist.get(f, 0) + n
+    top = [[s, c] for s, c in sorted(hist.items(), key=lambda kv: (-kv[1], kv[0]))[:5]]
+    refusals = preflight(hist, cfg)
+    if refusals:
+        why = "; ".join(f"{r['cause']} {r['form']} count {r['count']} budget {r['budget']}" for r in refusals)
+        _guard_log(d, {"state": "RED", "cause": refusals[0]["cause"], "why": why, "refusals": refusals,
+                       "budgets": budgets, "shapes": top, "forms": counts, "predicted": predicted})
+        raise SpaceEngineFailed(f"{refusals[0]['cause']}: " + why, cause=refusals[0]["cause"])
     t0 = time.time()
     raw = (engine or hyperon_engine)(program)
     secs = round(time.time() - t0, 2)
@@ -370,10 +431,8 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
         seen.add(key)
         derived.append(x)
     # ── the second witness (C-GUARD-1 Step 4): plain Python over base + proposed, both directions
-    from core import space_witness as W
-    kept = "\n".join(l for l in base.splitlines() if not l.startswith("(statement "))
     expected = {}
-    for x in W.witness(kept + "\n" + prop):
+    for x in predicted_list:
         expected.setdefault(_canon(x), x)
     eng = {_canon(x): x for x in derived}
     unconfirmed = [eng[k] for k in eng if k not in expected]
@@ -383,7 +442,7 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
     if missing:
         why = f"{len(missing)} derivation(s) the engine did not make, first: " + \
               "; ".join(render(x) for x in missing[:5])
-        _guard_log(d, {"state": "RED", "cause": "ENGINE_MISSED_DERIVATION", "why": why, "threshold": threshold,
+        _guard_log(d, {"state": "RED", "cause": "ENGINE_MISSED_DERIVATION", "why": why, "budgets": budgets,
                        "shapes": top, "witness": witness})
         raise SpaceEngineFailed("ENGINE_MISSED_DERIVATION: " + why, cause="ENGINE_MISSED_DERIVATION")
     if unconfirmed:
@@ -414,10 +473,11 @@ def derive(paths=None, engine: Optional[Callable] = None, guard_config=None) -> 
     for x in derived:
         counts[x[0]] = counts.get(x[0], 0) + 1
     # Decided (C-GUARD-1, 3 Oct 2026): no run is GREEN or TRUSTED while the canaries (Step 3) are stopped
-    _guard_log(d, {"state": "UNTRUSTED", "why": "threshold and witness passed; canaries not built (Step 3 stopped)",
-                   "threshold": threshold, "shapes": top, "witness": witness})
+    _guard_log(d, {"state": "UNTRUSTED", "why": "pre-flight and witness passed; GREEN is not built yet",
+                   "budgets": budgets, "shapes": top, "forms": dict(sorted(shape_counts(program).items())),
+                   "predicted": predicted, "witness": witness})
     return {"derived": len(derived), "by_rule": counts, "seconds": secs, "expressions": derived,
-            "shapes": top, "threshold": threshold, "witness": witness, "state": "UNTRUSTED"}
+            "shapes": top, "budgets": budgets, "predicted": predicted, "witness": witness, "state": "UNTRUSTED"}
 
 
 def _canon(x):

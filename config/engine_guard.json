@@ -1,4 +1,20 @@
 {
-  "threshold": 400,
-  "_threshold_why": "Kimi round 74 K1, sealed: escalate on real spaces over ~400 atoms of one shape. hyperon 0.2.10 on this machine (C-GUARD-1 Step 1, 3 Oct 2026): correct at 300 atoms of one shape, PANIC at 500, wrong binding at 5,000 / 20,000 / 130,000. A shape at or over this count refuses the run before the engine sees it (core/space.derive)."
+  "budgets": {
+    "1": 0,
+    "2": 250,
+    "3": 0,
+    "4": 300,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 300
+  },
+  "_budgets_why": {
+    "2": "Kimi round 77 B2: 250, temporary until the arity ladder measures it (390 was the earlier figure; the ladder decides).",
+    "4": "Kimi round 77 B2: 300, temporary; the ladder decides (up to 390). The panic at 500 recorded earlier as 'arity 2' was a 4-argument form (repro_trie_bug.py: (obs k P y v)).",
+    "8": "Kimi round 75 Q4 / round 77 B2: 300 (341 atoms panic on this machine, 340 clean).",
+    "other": "Kimi round 77 B2: 0 = unprobed; a queried or predicted form of that arity is refused (UNPROBED_ARITY) until the ladder gives a budget."
+  },
+  "_rule": "Kimi round 77 B1: derive() refuses BEFORE the engine when the count the witness predicts (program forms + predicted derived forms, head/arity) is >= the budget of the form's own arity.",
+  "probed": {}
 }

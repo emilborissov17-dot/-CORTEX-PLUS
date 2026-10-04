@@ -15,6 +15,15 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "test"))
 import _live_net  # noqa: E402
 from core import space as sp  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _open_budgets(tmp_path, monkeypatch):
+    """C-GUARD-4: this file judges the rules and the turn, not the budgets (test_engine_guard does)."""
+    import json as _json
+    cfg = tmp_path / "engine_guard_open.json"
+    cfg.write_text(_json.dumps({"budgets": {str(a): 390 for a in range(1, 9)}, "probed": {}}), encoding="utf-8")
+    monkeypatch.setattr(sp, "GUARD_CONFIG", cfg)
 from core import symbols  # noqa: E402
 
 SENT = "UNHCR says 1.2 million refugees returned to Syria in 2026."

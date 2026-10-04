@@ -100,7 +100,7 @@ def _derive(tmp_path, base, engine_out):
     (d / "base.metta").write_text(base, encoding="utf-8")
     (tmp_path / "r.metta").write_text("", encoding="utf-8")
     cfg = tmp_path / "g.json"
-    cfg.write_text(json.dumps({"threshold": 400}), encoding="utf-8")
+    cfg.write_text(json.dumps({"budgets": {str(a): 390 for a in range(1, 9)}, "probed": {}}), encoding="utf-8")
     return sp.derive({"dir": d, "rules": tmp_path / "r.metta", "proposed": tmp_path / "n.metta"},
                      engine=lambda prog: engine_out, guard_config=cfg)
 
