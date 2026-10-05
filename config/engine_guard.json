@@ -1,20 +1,115 @@
 {
   "budgets": {
-    "1": 0,
+    "1": 390,
     "2": 250,
-    "3": 0,
+    "3": 390,
     "4": 300,
-    "5": 0,
-    "6": 0,
-    "7": 0,
+    "5": 390,
+    "6": 390,
+    "7": 390,
     "8": 300
   },
   "_budgets_why": {
     "2": "Kimi round 77 B2: 250, temporary until the arity ladder measures it (390 was the earlier figure; the ladder decides).",
     "4": "Kimi round 77 B2: 300, temporary; the ladder decides (up to 390). The panic at 500 recorded earlier as 'arity 2' was a 4-argument form (repro_trie_bug.py: (obs k P y v)).",
     "8": "Kimi round 75 Q4 / round 77 B2: 300 (341 atoms panic on this machine, 340 clean).",
-    "other": "Kimi round 77 B2: 0 = unprobed; a queried or predicted form of that arity is refused (UNPROBED_ARITY) until the ladder gives a budget."
+    "other": "Kimi round 77 B2: 0 = unprobed; a queried or predicted form of that arity is refused (UNPROBED_ARITY) until the ladder gives a budget.",
+    "1": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
+    "3": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
+    "5": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
+    "6": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
+    "7": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number."
   },
   "_rule": "Kimi round 77 B1: derive() refuses BEFORE the engine when the count the witness predicts (program forms + predicted derived forms, head/arity) is >= the budget of the form's own arity.",
-  "probed": {}
+  "probed": {
+    "1": {
+      "head": "stale",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "2": {
+      "head": "subcategory",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "3": {
+      "head": "gap",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "4": {
+      "head": "unverified",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "5": {
+      "head": "contradiction",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "6": {
+      "head": "need-derived",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "7": {
+      "head": "need-derived",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    },
+    "8": {
+      "head": "obs",
+      "clean_sizes": [
+        100,
+        250,
+        390
+      ],
+      "repetitions": 3,
+      "date": "2026-10-04",
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+    }
+  },
+  "_mixed": "Kimi R77 B2: for mixed forms the minimum of the participating budgets binds (250 today). Measured 4 Oct: obs/8 100 + subcategory/2 250 clean; obs/8 150 + subcategory/2 300 panic 3/3. Real space 5 Oct: subcategory/2 123, obs/8 77, largest form 123."
 }
