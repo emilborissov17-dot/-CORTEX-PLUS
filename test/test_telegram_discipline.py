@@ -230,6 +230,7 @@ DIRECT_SENDERS = {
     "experiments/needs/approve_reader.py": "reply to the human's own OK/SIGN message (sign_request)",
     "experiments/needs/setup_telegram.py": "human-run setup; one test message to the human running it",
     "experiments/institution/telegram_witness.py": "gated: institution_witness is refused",
+    "control/gate.py": "Kimi R72 Q1(i): every block of Claude Code goes to Emil at once; the control does not ask the system it controls",
 }
 
 

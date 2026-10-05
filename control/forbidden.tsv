@@ -1,0 +1,51 @@
+# CORTEX++ FORBIDDEN LIST. One check per line, TAB-separated: id, ruling, Emil's words, kind, pattern, scope.
+# Source: claude/FORBIDDEN_LIST_2026-10-04_TWO_EXTRACTIONS.md - what two independent extractions from the words
+# column of the rulings register both found, plus D1 D2 D3 D5 D8 D9 approved by Emil (R61, 4 Oct 2026).
+# kind: lit = the text appears (case-insensitive); re = Python regular expression (case-insensitive).
+# scope: cmd = a shell command Claude Code runs; code = text written into a code/config file (.py .ps1 .bat .cmd
+# .sh .js .ts .toml requirements*.txt, anything under config/); path = the path of a file written; net = cmd, code
+# and any URL fetched; text = a .md report written; needs = code written under a path containing "needs".
+# This file is sealed by hash in control/SEAL.json. Claude cannot change it: only Emil, after Kimi.
+F01	R45	"Нали нямаше да имаме външни LLM-и"	lit	api.groq.com	net
+F02	R45	"Нали нямаше да имаме външни LLM-и"	lit	generativelanguage.googleapis.com	net
+F03	R45	"Нали нямаше да имаме външни LLM-и"	lit	openrouter.ai	net
+F04	R45	"Нали нямаше да имаме външни LLM-и"	lit	integrate.api.nvidia.com	net
+F05	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.openai.com	net
+F06	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.anthropic.com	net
+F07	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.mistral.ai	net
+F08	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.together.xyz	net
+F09	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.cerebras.ai	net
+F10	R45	"Нали нямаше да имаме външни LLM-и" (D1)	lit	api.deepseek.com	net
+F11	R45	"Нали нямаше да имаме външни LLM-и"	re	^\s*(import|from)\s+(groq|openai|anthropic|mistralai|together|cerebras|google\.generativeai|google\.genai)\b	code
+F12	R45	"Нали нямаше да имаме външни LLM-и"	re	pip3?(\.exe)?\s+install\b[^\n]*\b(groq|openai|anthropic|mistralai|together|google-generativeai|google-genai|cerebras-cloud-sdk)\b	cmd
+F13	R45	"Нали нямаше да имаме външни LLM-и"	re	\b(GROQ|GEMINI|GOOGLE|OPENROUTER|NVIDIA)_API_KEY\b	code
+F14	R43	"за новини, данни, информация, подкасти, YouTube, радиа — само през OpenClaw"	re	\b(youtube\.com|youtu\.be|googleapis\.com/youtube)\b	code
+F15	R43	"за новини, данни, информация, подкасти, YouTube, радиа — само през OpenClaw"	re	(youtube[_-]transcript[_-]api|yt[_-]dlp|\bpytube\b|\bfeedparser\b|\bnewspaper\b)	net
+F16	R32	"искаме само OpenClaw да търси" (D2)	re	(duckduckgo_search|\bddgs\b|\bgooglesearch\b|\bserpapi\b|\btavily\b)	net
+F17	R32	"искаме само OpenClaw да търси" (D2)	lit	html.duckduckgo.com	net
+F18	R32	"искаме само OpenClaw да търси" (D2)	lit	lite.duckduckgo.com	net
+F19	R32	"искаме само OpenClaw да търси" (D2)	lit	google.com/search	net
+F20	R32	"искаме само OpenClaw да търси" (D2)	lit	bing.com/search	net
+F21	R32	"искаме само OpenClaw да търси" (D2)	lit	search.brave.com	net
+F22	R34	"изтрий старото недоразумение openclaw_finder"	lit	openclaw_finder	net
+F23	R34	"изтрий старото недоразумение openclaw_finder"	lit	openclaw_finder	path
+F24	R46	"имена, които имитират известни търсачки"	re	(^|/)[^/]*(perplexity|google|bing|duckduckgo|yahoo|yandex|baidu|brave)[^/]*\.py$	path
+F25	R2	"нищо не се трие наведнъж"	re	\brm\s+-[a-zA-Z]*[rR]	cmd
+F26	R2	"нищо не се трие наведнъж"	re	\bgit\s+rm\s+[^\n]*-r\b	cmd
+F27	R2	"нищо не се трие наведнъж" (D8)	re	\bgit\s+clean\s+-[a-zA-Z]*f	cmd
+F28	R2	"нищо не се трие наведнъж"	re	Remove-Item\b[^\n]*-Recurse	cmd
+F29	R2	"нищо не се трие наведнъж"	re	\b(rmdir|rd|del)\s+[^\n]*/s\b	cmd
+F30	R2	"нищо не се трие наведнъж"	lit	shutil.rmtree	code
+F31	R18	"8b/7b забранени в цикъла" (narrowed to model names, R61)	re	\b(qwen[\w.]*|llama[\w.]*|mistral[\w.]*|gemma[\w.]*|deepseek[\w.-]*|phi[\w.]*)[:_ -]?(7|8)b\b	code
+F32	R18	"8b/7b забранени в цикъла" (narrowed to model names, R61)	re	\b(qwen[\w.]*|llama[\w.]*|mistral[\w.]*|gemma[\w.]*|deepseek[\w.-]*|phi[\w.]*)[:_ -]?(7|8)b\b	cmd
+F33	R24	"без срокове на заявките"	re	\b(deadline|expires_at|ttl)\b	needs
+F34	R24	"без фиксиран списък и без „4 пъти дневно""	lit	4 пъти дневно	code
+F35	R24	"без фиксиран списък и без „4 пъти дневно""	lit	0 */6 * * *	code
+F36	R44	"не се ограничавай само с английски и български" (D3)	re	\[\s*['"]en['"]\s*,\s*['"]bg['"]\s*\]	code
+F37	R44	"не се ограничавай само с английски и български" (D3)	re	\blang(uage)?s?\s*=\s*\[?\s*['"]en['"]\s*\]?\s*[,)]	code
+F38	R6	"автономна ПО СТАНДАРТ, не „никога не действа""	re	(never acts|никога не действа)	code
+F39	R6	"автономна ПО СТАНДАРТ, не „никога не действа""	re	(never acts|никога не действа)	text
+F40	R9	"„дух" → ВОЛЯ (will)"	re	(\bspirit\b|\bдух\b)	code
+F41	R1	"Целта е визията, не измервателен уред"	re	(измервателен уред|measurement instrument|monitoring instrument)	text
+F42	R50	"Престани да започваш отговорите си с какво не работи и с какво работи"	re	\A\s*(#+\s*)?[^\n]{0,80}?(what does not work|what doesn't work|what works|какво не работи|какво работи)	text
+F43	R59	"никой генериран код или патч да не може да пише във визията"	lit	core/civilization_vision.txt	path

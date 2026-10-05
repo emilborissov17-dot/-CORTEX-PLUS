@@ -1,0 +1,13 @@
+{
+  "files": {
+    "control/forbidden.tsv": "294db750700589509d31bbe36e9c39d0e03b31c9089239b9caa8bcca5327ac10",
+    "control/gate.py": "9fbd449a77199f0cd5e87c57248033387c6459a9799828aa60d6c8da67d07526",
+    "control/hooks/post-commit": "648b8b02254317b889099395d76b2ce8e874899c450d6dfdbf582bd8daf52910",
+    "control/hooks/pre-commit": "3c660ed39a40fea2679b370a8f71172edc56196359c014df56c272f0a3dcbe6b",
+    "control/hooks/pre-push": "3078fba62c5544941227eff6194c3856752ceebbd4ffef897e57628e66b6995e",
+    "control/install_protection.bat": "88cf1521bddda949282d0a200037875f8899eae986e202567f2a6093311dad32",
+    "control/nightly_reviewer.ps1": "e84aef4184ad6c611c51510c18f61d56a134f45fd4ddaca300380c5f83aaa295",
+    "control/settings.json": "3b3c515ec355fba4a2cab0a59ebd4abf75f900bd387f0dd82102e767f66c7bd4"
+  },
+  "sealed": "2026-10-05T17:33:16+0300"
+}

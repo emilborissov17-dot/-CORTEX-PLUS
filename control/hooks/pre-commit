@@ -1,0 +1,7 @@
+#!/bin/sh
+# CORTEX++ control gate (C-CONTROL-1, Kimi R72 Q1(ii)). Fail-closed: no gate or no interpreter = no commit.
+r="$(git rev-parse --show-toplevel)"
+g="$r/control/gate.py"; p="$r/venv/Scripts/python.exe"
+[ -f "$p" ] || p="$r/venv/bin/python"
+if [ ! -f "$g" ] || [ ! -f "$p" ]; then echo "CONTROL GATE MISSING - commit blocked (fail-closed)" >&2; exit 1; fi
+exec "$p" "$g" pre-commit

@@ -14,3 +14,6 @@ experiments/institution/forward/*.jsonl text eol=lf
 *.cmd  text eol=crlf
 *.bat  text eol=crlf
 *.vbs  text eol=crlf
+# The control's sealed files (C-CONTROL-1): the seal hashes their exact bytes, so git must never
+# convert their line endings. Last, so it overrides *.bat eol=crlf for control/install_protection.bat.
+control/** -text

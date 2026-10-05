@@ -268,6 +268,13 @@
    "hosts": [
     "127.0.0.1"
    ]
+  },
+  "control/gate.py": {
+   "class": "O",
+   "reason": "Telegram: every block of the control gate goes to Emil at once (Kimi R72 Q1(i), Emil R62)",
+   "hosts": [
+    "api.telegram.org"
+   ]
   }
  }
 }

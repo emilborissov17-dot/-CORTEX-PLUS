@@ -1,0 +1,7 @@
+#!/bin/sh
+# CORTEX++ control gate (C-CONTROL-1). Records every commit in the gate ledger; the pre-push gate refuses commits it has no row for.
+r="$(git rev-parse --show-toplevel)"
+g="$r/control/gate.py"; p="$r/venv/Scripts/python.exe"
+[ -f "$p" ] || p="$r/venv/bin/python"
+if [ ! -f "$g" ] || [ ! -f "$p" ]; then echo "CONTROL GATE MISSING - commit not recorded" >&2; exit 0; fi
+exec "$p" "$g" post-commit
