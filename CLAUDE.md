@@ -160,3 +160,10 @@ sentence that does.
 - reporter independence org→class table: `config/reporter_independence.json`.
 - creative tick / ideation: `experiments/pulse/pulse_continuum.py` (SPEC_penumbra_pulse.md
   Part B item 7), fired by the `CORTEX_Pulse` scheduled task, writes `memory/idea_stream.jsonl`.
+
+## Claude's public error ledger (Emil, 4 Oct 2026: "I want your errors published publicly")
+- When a command stops because OBSERVED differs from EXPECTED, append ONE row to
+  claude/reports/CLAUDE_ERRORS.jsonl before writing the report: n (next number), date, class (D1-D13 of the
+  project instructions, or "unknown"), what (one sentence), caught_by "claude_code", cost, mechanism
+  "pending", source (the command file). Then commit and push that file on its own.
+- Never edit or remove an existing row; test/test_claude_errors_ledger.py fails if a committed row changes.
