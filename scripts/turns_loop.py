@@ -66,37 +66,73 @@ def _result_since(started: str, path=None) -> dict:
     return r if str(r.get("utc") or "") >= started else {}
 
 
-def health_for(cause: str) -> Optional[bool]:
+def health_for(cause: str, oc=None, log: Optional[Callable] = None) -> Optional[bool]:
     """The health check of a named cause, or None when the cause has none (then the
-    loop stays stopped until it is started by hand)."""
-    from scripts import openclaw_search as oc
-    if cause.startswith("GATEWAY_DEAD"):
-        return oc.Gateway().healthy()
-    if cause.startswith("SEARCHER_DEAD"):
-        if not oc.Gateway().healthy():
-            return False
+    loop stays stopped until it is started by hand).
+
+    C-GW-2 (8 Oct 2026): for GATEWAY_DEAD and SEARCHER_DEAD alike the check is a REAL
+    browser start, never `gateway health` alone (health said ok for 36 h on 5-7 Oct and
+    for 21 h on 7-8 Oct while every start timed out). A start that the CLI answers with
+    "gateway timeout" gets ONE gateway restart in this check and one more start; each is a
+    row in the turns log. Still failing -> False, and the next check (WAIT_S later) may
+    restart once again: the gateway is to run always and its fall is to be loud (Emil R66,
+    R43), so the loop keeps trying and keeps saying so."""
+    if oc is None:
+        from scripts import openclaw_search as oc
+    if log is None:
+        from core import turn
+        log = turn.log
+    if not (cause.startswith("GATEWAY_DEAD") or cause.startswith("SEARCHER_DEAD")):
+        return None
+    gw = oc.Gateway()
+    if not gw.healthy():
+        return False
+
+    def start() -> bool:
         b = oc.OpenClawBrowser()
         try:
             b.start()
-            return b.alive()
-        except oc.OpenClawFailed:
-            return False
+            return bool(b.alive())
         finally:
             try:
                 b.stop()
             except oc.OpenClawFailed:
                 pass
-    return None
+
+    try:
+        return start()
+    except oc.GatewayTimeout as exc:
+        log({"event": "GATEWAY_TIMEOUT", "where": "health check", "cause": cause[:60], "error": str(exc)[:300]})
+    except oc.OpenClawFailed:
+        return False
+    t1 = time.time()
+    gw.restart()
+    log({"event": "GATEWAY_RESTARTED", "by": "health check", "seconds": round(time.time() - t1, 1),
+         "healthy_after": gw.healthy()})
+    try:
+        return start()
+    except oc.OpenClawFailed as exc:
+        log({"event": "BROWSER_START_FAILED", "where": "health check after the gateway restart",
+             "error": f"{type(exc).__name__}: {exc}"[:300]})
+        return False
 
 
-def _live_alarm(cause: str) -> str:
+def _live_alarm(cause: str, seq=None) -> str:
+    """C-GW-2 (8 Oct 2026): the stop reaches the phone. Until now it went with
+    cls="TURN_STUCK", which supervisor.telegram_refusal keeps files-only, so the stops of
+    5 Oct 18:27 UTC and 7 Oct 08:06 UTC were "refused" and nobody was told (R43, R66: the
+    gateway's fall is to be loud). The dedup key carries the baton's seq, so a second stop
+    with the same cause is not swallowed as a repeat of the first."""
     import supervisor
-    return supervisor.alarm_human("LOOP_STOPPED_SAME_CAUSE",
-                                  f"{SAME_CAUSE_TURNS} agents' turns in a row ended with '{cause}' and served "
-                                  f"nothing. The turns loop has stopped; it resumes when the health check of that "
-                                  f"cause passes, or by hand (tools\turns.bat).",
-                                  dedup_key=f"LOOP_STOPPED_SAME_CAUSE:{cause[:60]}", cls="TURN_STUCK",
-                                  level=supervisor.ALARM)
+    if seq is None:
+        from core import turn
+        seq = turn.state().get("seq")
+    return supervisor.alarm_human(
+        "LOOP_STOPPED_SAME_CAUSE",
+        f"{SAME_CAUSE_TURNS} agents' turns in a row ended with '{cause}' and served nothing. The turns loop "
+        f"has stopped at seq {seq}; it resumes when the health check of that cause passes, or by hand "
+        f"(tools\turns.bat).",
+        dedup_key=f"LOOP_STOPPED_SAME_CAUSE:{seq}:{cause[:60]}", cls="alarm", level=supervisor.ALARM)
 
 
 def same_cause(agents: list) -> Optional[str]:

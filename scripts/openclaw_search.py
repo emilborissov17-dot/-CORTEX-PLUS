@@ -38,8 +38,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 PAGES = REPO / "memory" / "openclaw_pages"
 from scripts.openclaw_browser import (GATEWAY_PORT, SEARCH_URL, _LINKS_JS, _PDF_JS,  # noqa: E402,F401  re-exported
-                                      _TEXT_JS, DEFAULT_CDP_PORTS, Gateway, OpenClawBrowser, OpenClawFailed,
-                                      ProfileStartFailed, ProfileStopFailed, ProfileTimeout, _kill, cdp_port,
+                                      _TEXT_JS, DEFAULT_CDP_PORTS, Gateway, GatewayTimeout, OpenClawBrowser,
+                                      OpenClawFailed, ProfileStartFailed, ProfileStopFailed, ProfileTimeout, _kill, cdp_port,
                                       chrome_pids_for_port, end_profile_chrome, openclaw_cmd)
 RESULTS_PER_NEED = 3
 CAPTCHA = re.compile(r"captcha|are you a robot|unusual traffic|verify you are (a )?human|"

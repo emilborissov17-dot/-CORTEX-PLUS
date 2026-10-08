@@ -171,6 +171,7 @@ EXPECTED_TELEGRAM_CALLS = {
     ("experiments/institution/publish_revisions.py", "sign_request"),      # C4 B revision SIGN requests
     ("experiments/institution/deliver.py", "alarm"),                    # 27 Sep: published bytes do not verify
     ("tools/morning_digest.py", "morning_digest"),
+    ("scripts/turns_loop.py", "alarm"),            # C-GW-2, 8 Oct: the baton's stop reaches the phone (R43, R66)
 }
 
 

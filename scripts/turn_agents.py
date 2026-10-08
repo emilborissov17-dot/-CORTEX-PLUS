@@ -186,9 +186,50 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         ledger({"event": "GATEWAY_RESTARTED", "seconds": round(time.time() - t1, 1), "healthy_after": gw.healthy(),
                 "why": f"PROFILE_DEAD:{profile}"})
 
+    def gateway_timed_out(profile: str, where: str) -> None:
+        """C-GW-2 (8 Oct 2026): the CLI said "gateway timeout" for a browser call while
+        `gateway health` answers. That IS a dead gateway for the browser (5 and 7 Oct: the
+        turn ended SEARCHER_DEAD three times and the baton stood for 36 h, then 21 h). The
+        recovery is the same one restart per turn, shared with ensure_gateway and recycle;
+        a second timeout after it ends the turn GATEWAY_DEAD, whose health check is real."""
+        ledger({"event": "GATEWAY_TIMEOUT", "profile": profile, "where": where,
+                "health": "answers" if gw.healthy() else "does not answer"})
+        if gw_restarts[0] >= MAX_GATEWAY_RESTARTS:
+            raise GatewayDead(f"the OpenClaw gateway times out on browser {where} for profile {profile} "
+                              f"and was already restarted this turn")
+        gw_restarts[0] += 1
+        t1 = time.time()
+        gw.restart()
+        ledger({"event": "GATEWAY_RESTARTED", "seconds": round(time.time() - t1, 1), "healthy_after": gw.healthy(),
+                "why": f"GATEWAY_TIMEOUT:{where}:{profile}"})
+
+    def start_once(profile: str, b) -> None:
+        """One start; a gateway timeout on it is the gateway's fault, not the profile's:
+        one restart (if the turn still has it), then the start is tried once more."""
+        ledger({"event": "BROWSER_DEAD", "profile": profile, "action": "start once"})
+        try:
+            b.start()
+            return
+        except oc.GatewayTimeout as exc:
+            ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
+            gateway_timed_out(profile, "start")
+        except Exception as exc:                                         # noqa: BLE001
+            ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
+            return
+        ledger({"event": "BROWSER_DEAD", "profile": profile, "action": "start again after the gateway restart"})
+        try:
+            b.start()
+        except oc.GatewayTimeout as exc:
+            ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
+            raise GatewayDead(f"the OpenClaw gateway times out on browser start for profile {profile} "
+                              f"after one restart") from exc
+        except Exception as exc:                                         # noqa: BLE001
+            ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
+
     def live(profile: str):
         """5f iii: checked before each need; gateway first (C-GW-1); browser dead -> started
-        once; dead again -> SearcherDead, or GatewayDead if the gateway died meanwhile."""
+        once; dead again -> SearcherDead, or GatewayDead if the gateway died meanwhile.
+        C-GW-2: a "gateway timeout" on status or start is a dead gateway: one restart."""
         b = browser(profile)
         if b.alive():
             return b
@@ -198,18 +239,27 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                 return b
             if getattr(b, "timed_out", False):
                 raise ProfileDead(profile, "no answer after one gateway restart")
+        if getattr(b, "gateway_timed_out", False):
+            gateway_timed_out(profile, "status")
+            if b.alive():
+                return b
+            if getattr(b, "gateway_timed_out", False):
+                raise GatewayDead(f"the OpenClaw gateway times out on browser status for profile {profile} "
+                                  f"after one restart")
         ensure_gateway()
         if b.alive():
             return b
-        ledger({"event": "BROWSER_DEAD", "profile": profile, "action": "start once"})
-        try:
-            b.start()
-        except Exception as exc:                                         # noqa: BLE001
-            ledger({"event": "BROWSER_START_FAILED", "profile": profile, "error": f"{type(exc).__name__}: {exc}"[:300]})
-        if not b.alive():
-            ensure_gateway()
-            raise SearcherDead(f"OpenClaw browser profile {profile} is not running after one start")
-        return b
+        start_once(profile, b)
+        if b.alive():
+            return b
+        if getattr(b, "gateway_timed_out", False):
+            gateway_timed_out(profile, "status after start")
+            if b.alive():
+                return b
+            raise GatewayDead(f"the OpenClaw gateway times out on browser status for profile {profile} "
+                              f"after its start and the turn's one restart")
+        ensure_gateway()
+        raise SearcherDead(f"OpenClaw browser profile {profile} is not running after one start")
 
     def stop_all() -> dict:
         """5f ii: both browser profiles stopped at the turn's end, whatever happened; a stop

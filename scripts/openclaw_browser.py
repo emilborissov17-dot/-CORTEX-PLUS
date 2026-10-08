@@ -40,6 +40,16 @@ class ProfileTimeout(OpenClawFailed):
     can stop answering inside the gateway while the gateway's own health answers)."""
 
 
+class GatewayTimeout(OpenClawFailed):
+    """The CLI answered "gateway timeout": the gateway's socket did not answer the browser
+    call in time, while `gateway health` may still say ok (C-GW-2, 8 Oct 2026: turns 93-97
+    of 5 Oct and 103-107 of 7 Oct ended SEARCHER_DEAD on exactly this, with no restart)."""
+
+
+# The CLI's own words for a browser call the gateway did not answer (C-GW-2).
+GATEWAY_TIMEOUT = "gateway timeout"
+
+
 class ProfileStartFailed(OpenClawFailed):
     """PROFILE_START_FAILED: the profile did not start after the one retry (C-DOOR-1)."""
 
@@ -73,7 +83,7 @@ class OpenClawBrowser:
     def __init__(self, profile: str = "openclaw", timeout_s: int = 60, procs=None, kill=None, sleep=time.sleep,
                  ledger=None, devtools=None):
         self.profile, self.timeout_s, self.tab = profile, timeout_s, None
-        self.timed_out, self.cdp_port = False, None
+        self.timed_out, self.gateway_timed_out, self.cdp_port = False, False, None
         self.procs, self.kill, self.sleep, self.ledger = procs, kill, sleep, ledger
         self.events: list = []
         # C-DOOR-2 3a: what the last call already said, so it is not asked again
@@ -101,7 +111,10 @@ class OpenClawBrowser:
         except ValueError:
             d = {}
         if p.returncode != 0 or not d.get("ok", True):
-            raise OpenClawFailed(f"openclaw browser {args[0]} failed: {(d.get('error') or p.stderr or out)!s:.300}")
+            msg = f"openclaw browser {args[0]} failed: {(d.get('error') or p.stderr or out)!s:.300}"
+            if GATEWAY_TIMEOUT in msg.lower():
+                raise GatewayTimeout(msg)
+            raise OpenClawFailed(msg)
         return d
 
     def _open_direct(self) -> None:
@@ -172,11 +185,15 @@ class OpenClawBrowser:
     def alive(self) -> bool:
         """OpenClaw's own status for this profile: running or not. A failed status call is
         not alive; one that timed out sets `timed_out` (C-FIX-1 4B-b iii)."""
-        self.timed_out = False
+        self.timed_out = self.gateway_timed_out = False
         try:
             d = self._call("status")
         except ProfileTimeout:
             self.timed_out = True
+            self.last_status = {}
+            return False
+        except GatewayTimeout:
+            self.gateway_timed_out = True
             self.last_status = {}
             return False
         except OpenClawFailed:
