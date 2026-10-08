@@ -7,12 +7,12 @@
     "5": 390,
     "6": 390,
     "7": 390,
-    "8": 300
+    "8": 340
   },
   "_budgets_why": {
     "2": "Kimi round 77 B2: 250, temporary until the arity ladder measures it (390 was the earlier figure; the ladder decides).",
     "4": "Kimi round 77 B2: 300, temporary; the ladder decides (up to 390). The panic at 500 recorded earlier as 'arity 2' was a 4-argument form (repro_trie_bug.py: (obs k P y v)).",
-    "8": "Kimi round 75 Q4 / round 77 B2: 300 (341 atoms panic on this machine, 340 clean).",
+    "8": "Perplexity round 81B В6 / 81C В4 (8 Oct 2026): ceiling = min over the forms of arity 8: all-distinct ladder 390 (4 Oct); realistic obs/8 with constant columns measured 300: 3/3 clean, 340: 3/3 clean, 341: 0/3 clean, 390: 0/3 clean -> 340; ceiling 340. Earlier: Kimi round 75 Q4 / 77 B2: 300 (341 atoms panic on this machine, 340 clean, 3 Oct).",
     "other": "Kimi round 77 B2: 0 = unprobed; a queried or predicted form of that arity is refused (UNPROBED_ARITY) until the ladder gives a budget.",
     "1": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
     "3": "Emil R67 (5 Oct): the ladder of 4 Oct measured this arity clean at 100/250/390 x3 with a real head; Kimi R76 B1 rule: budget = the largest wholly clean size. What a probe must contain is still open to Kimi (round 78); his answer may change this number.",
@@ -108,7 +108,96 @@
       ],
       "repetitions": 3,
       "date": "2026-10-04",
-      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)"
+      "source": "claude/reports/GUARD4_PROBE_RUN_2026-10-04.log (tools/engine_probe.py, 06148fb)",
+      "realistic": {
+        "arity": 8,
+        "head": "obs",
+        "form": "obs/8 realistic: constant columns C0/key/2023/u/src, varying id/place/value",
+        "budget": 340,
+        "sizes_tried": [
+          300,
+          340,
+          341,
+          390
+        ],
+        "runs": [
+          {
+            "size": 300,
+            "rep": 1,
+            "outcome": "CLEAN",
+            "seconds": 0.12
+          },
+          {
+            "size": 300,
+            "rep": 2,
+            "outcome": "CLEAN",
+            "seconds": 0.12
+          },
+          {
+            "size": 300,
+            "rep": 3,
+            "outcome": "CLEAN",
+            "seconds": 0.12
+          },
+          {
+            "size": 340,
+            "rep": 1,
+            "outcome": "CLEAN",
+            "seconds": 0.12
+          },
+          {
+            "size": 340,
+            "rep": 2,
+            "outcome": "CLEAN",
+            "seconds": 0.11
+          },
+          {
+            "size": 340,
+            "rep": 3,
+            "outcome": "CLEAN",
+            "seconds": 0.12
+          },
+          {
+            "size": 341,
+            "rep": 1,
+            "outcome": "PANIC",
+            "seconds": 0.21
+          },
+          {
+            "size": 341,
+            "rep": 2,
+            "outcome": "PANIC",
+            "seconds": 0.22
+          },
+          {
+            "size": 341,
+            "rep": 3,
+            "outcome": "PANIC",
+            "seconds": 0.21
+          },
+          {
+            "size": 390,
+            "rep": 1,
+            "outcome": "PANIC",
+            "seconds": 0.23
+          },
+          {
+            "size": 390,
+            "rep": 2,
+            "outcome": "PANIC",
+            "seconds": 0.24
+          },
+          {
+            "size": 390,
+            "rep": 3,
+            "outcome": "PANIC",
+            "seconds": 0.23
+          }
+        ],
+        "hyperon": "0.2.10",
+        "utc_date": "2026-10-08",
+        "reason": "Perplexity round 81B В6 / 81C В4 (8 Oct 2026, Emil R73): per-form probe with the real content; ceiling = minimum over the forms of the arity"
+      }
     }
   },
   "_mixed": "Kimi R77 B2: for mixed forms the minimum of the participating budgets binds (250 today). Measured 4 Oct: obs/8 100 + subcategory/2 250 clean; obs/8 150 + subcategory/2 300 panic 3/3. Real space 5 Oct: subcategory/2 123, obs/8 77, largest form 123."

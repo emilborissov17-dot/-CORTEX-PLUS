@@ -5,6 +5,27 @@ civilization in which every person has a dignified life — and an AI that helps
 build it while staying human-centric, transparent and correctable. That is the
 direction of the project. It is not a claim about what the code can do today.
 
+**What is measured, and what is not.** The system measures violations of dignity —
+concrete, verifiable acts that cause humiliation, deprivation or violence — not
+dignity itself; any scoring of actors rests only on public, verified data (e.g.
+UCDP), and any scoring that would itself produce humiliation (e.g. through stale or
+fabricated atoms) is excluded by construction, through the pre-registration gate
+and the notary: fail-closed, no defaults, UCDP as the sole source of resolution.
+*(Оригинал, Perplexity кръг 81B В7, 8 окт 2026: „Системата измерва нарушения на
+достойнството (конкретни, проверими действия, които причиняват унижение, лишения
+или насилие), не самото достойнство; всяко скориране на актьори се основава само на
+публични, верифицирани данни (напр. UCDP), и всяко скориране, което би произвело
+унижение (напр. чрез застояли или изфабрикувани атоми), е изключено по конструкция
+чрез портата за пред-регистрация и нотариуса: fail-closed, без подразбирания, с UCDP
+като единствен източник за резолюция.“)*
+Assertions behind this sentence (the rule in CLAUDE.md: prose that asserts behaviour needs
+an assertion that fails when it stops being true): `test/test_prereg_gate.py` — a missing or
+mismatched signature, an edited row, a broken chain, an undeclared predecessor, a contradiction
+and a silent engine are each REFUSED (fail-closed); `test/test_institution0.py` — an unmapped
+reporter class is refused, never defaulted; `test/test_resolve_forward_rows.py::`
+`test_res_source_refuses_another_source_or_a_missing_field` — a resolution from any source but
+UCDP, or with a missing field, is refused.
+
 **AGI is a parallel horizon inside that goal**: something we want to happen, and
 the means by which the goal is pursued. Alignment, corrigibility and
 interpretability are not part of our definition of AGI — an unaligned AGI is
