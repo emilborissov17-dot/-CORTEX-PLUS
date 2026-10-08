@@ -1125,6 +1125,46 @@ def api_stream():
                                                  "text": "STREAM ERROR"}})
 
 
+# ── THE BATON, AS IT SPEAKS (Emil R60, 5 Oct 2026) ──────────────────────────
+# core/narration.py writes one row per event of a baton turn into
+# memory/narration/<turn>.jsonl while the turn runs. This hands the rows over
+# from `since` on and adds nothing: the row's own "line" is what the LIVE tab
+# prints, so the page and the turn's log say the same sentence. A last line
+# with no newline is still being written and is not served. GET only; it
+# opens nothing for writing and calls nothing that thinks.
+NARRATION_DIR = None          # None: <BASE>/memory/narration. A test points it at tmp_path.
+BATON_STATE = None            # None: <BASE>/memory/turn.json
+
+
+@app.get("/api/narration")
+def api_narration():
+    from core import narration as nr
+    d = pathlib.Path(NARRATION_DIR) if NARRATION_DIR else ds.BASE / "memory" / "narration"
+    bp = pathlib.Path(BATON_STATE) if BATON_STATE else ds.BASE / "memory" / "turn.json"
+    try:
+        since = max(0, int(request.args.get("since", "0") or 0))
+    except ValueError:
+        return jsonify({"error": "since must be a whole number"}), 400
+    want = request.args.get("turn", "latest") or "latest"
+    try:
+        baton = json.loads(bp.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        baton = {"error": "{}: {}".format(type(e).__name__, e)}
+    turns = nr.turns(d)
+    if not turns:
+        return jsonify({"turn": None, "rows": [], "next": 0, "turns": [], "baton": baton,
+                        "why": "no turn has narrated yet: memory/narration/ is empty. The narrator writes "
+                               "there from the first baton turn that runs core/narration.py (C-NARRATE-2)."})
+    tid = turns[0]["turn"] if want == "latest" else want
+    if nr.safe_id(tid) != tid or not nr.path_for(tid, d).exists():
+        return jsonify({"error": "no narration for turn {!r}".format(tid), "turns": turns, "baton": baton}), 404
+    try:
+        r = nr.read(tid, since, d)
+    except OSError as e:
+        return jsonify({"error": "{}: {}".format(type(e).__name__, e), "turns": turns, "baton": baton})
+    return jsonify({**r, "turns": turns, "baton": baton}), 200, {"Cache-Control": "no-store"}
+
+
 # ── THE HEAD, WHILE IT IS LEARNING (28 Aug 2026) ───────────────────────────
 # out/brain_scan.json is written by core/interval_head.py — once at the end of a
 # run, and every 5 epochs DURING one, atomically. This hands it over verbatim

@@ -724,8 +724,12 @@ PAGE = REPO / "cockpit" / "templates" / "cockpit.html"
 # BRAIN added 28 Aug 2026, after GLASS and still before TERMINAL, for the same
 # two reasons: TERMINAL keeps the last slot, and BRAIN goes at the end of the
 # read-only tabs rather than in the middle, so no existing digit shortcut moves.
+#
+# LIVE added 5 Oct 2026 (Emil R60), AFTER TERMINAL: inserting it anywhere
+# else would move a digit shortcut, and ten tabs leave the tenth without one.
+# The baton's narration is read, not typed into, so it can live without a key.
 TAB_IDS = ("overview", "cycle", "world", "body", "expression", "pending",
-           "glass", "brain", "terminal")
+           "glass", "brain", "terminal", "live")
 
 
 # ---------------------------------------------------------------------------

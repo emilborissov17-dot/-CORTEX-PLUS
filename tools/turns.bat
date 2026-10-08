@@ -11,4 +11,7 @@ rem   state:  venv\Scripts\python.exe -m core.turn
 rem
 rem Started at logon by the scheduled task CORTEX_Turns.
 cd /d "%~dp0.."
+rem 5 Oct 2026: a test switch set in this window reaches every turn. Refuse, and say so here.
+if defined CORTEX_NO_REAL_MODEL (echo REFUSED: CORTEX_NO_REAL_MODEL is set in this window - every turn would inherit it. Open a new window. & exit /b 4)
+if defined CONTROL_NO_TELEGRAM (echo REFUSED: CONTROL_NO_TELEGRAM is set in this window - every turn would inherit it. Open a new window. & exit /b 4)
 powershell -NoProfile -ExecutionPolicy Bypass -File tools\launch_detached.ps1 -Exe venv\Scripts\python.exe -Arguments "scripts\turns_loop.py" -Log logs\turns\turns_loop.log

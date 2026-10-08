@@ -524,6 +524,17 @@ def _schema_reply(txt: str, json_schema: dict, model: str, took: float, kind, ro
     return {**out, "data": d}
 
 
+def _narrate(role: str, mdl, question: str, exact: bool, reply, secs: float, error) -> None:
+    """One model call, said on the open turn's narration (core/narration.py, Emil R60).
+    Outside a baton turn nothing is written. Never raises."""
+    try:
+        from core import narration as _nr
+        if _nr.is_open():
+            _nr.model(role, mdl, _nr.asked_part(question) if exact else question, reply, round(secs, 1), error)
+    except Exception:                                                    # noqa: BLE001
+        pass
+
+
 def think(role: str, question: str, evidence: str = "", schema: dict | None = None,
           require_quote: bool = False, kind: str = "thought",
           remember_it: bool = True, temperature: float = 0.2,
@@ -658,6 +669,7 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
         if mdl in _tried:          # inside a cycle both rungs are the one model
             break
         _tried.add(mdl)
+        _t1 = time.time()
         try:
             body["model"] = mdl
             from core import llm_door
@@ -668,9 +680,12 @@ def think(role: str, question: str, evidence: str = "", schema: dict | None = No
             t = ((r.json().get("message") or {}).get("content") or "").strip()
             txt = t.split("</think>")[-1].strip() if "</think>" in t else t
             model = mdl
+            _narrate(role, mdl, question, exact, txt, time.time() - _t1, None)
             if txt:
                 break
-        except Exception:
+        except Exception as _e:
+            # SAID, not swallowed: until 5 Oct 2026 a refused call became a silent "no reply"
+            _narrate(role, mdl, question, exact, None, time.time() - _t1, f"{type(_e).__name__}: {_e}")
             continue          # таймаут/грешка -> опитай по-малкия мозък
     if not txt:
         return None

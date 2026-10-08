@@ -53,7 +53,8 @@ def witnessed(holder: str, cycle_id: str) -> int:
             "-Exe", str(PY), "-ArgsB64", args_b64, "-Log", str(LOGS / f"{cycle_id.replace(':', '')}.log"),
             "-WitnessLog", str(REPO / "memory" / "witness.jsonl"), "-CycleId", cycle_id, "-WorkDir", str(REPO),
             "-Role", f"turn-{holder.lower()}"]
-    env = {**os.environ, "PYTHONIOENCODING": "utf-8"}
+    # CORTEX_TURN_ID: the narrator (core/narration.py, R60) names the turn's file by the witness's cycle id
+    env = {**os.environ, "PYTHONIOENCODING": "utf-8", "CORTEX_TURN_ID": cycle_id}
     return subprocess.run(argv, cwd=str(REPO), env=env, stdin=subprocess.DEVNULL).returncode
 
 
@@ -171,12 +172,28 @@ def loop(max_turns: Optional[int] = None, run_turn: Optional[Callable] = None, b
     return {"turns": done}
 
 
+TEST_SWITCHES = ("CORTEX_NO_REAL_MODEL", "CONTROL_NO_TELEGRAM")
+
+
+def live_switches(env=None) -> list:
+    """The test switches set in `env` (default: this process), as NAME=value. A live loop
+    refuses to start while any is set, whatever its value."""
+    env = os.environ if env is None else env
+    return [f"{k}={env[k]}" for k in TEST_SWITCHES if k in env]
+
+
 def main() -> int:
     if "--stop" in sys.argv:
         STOP.parent.mkdir(parents=True, exist_ok=True)
         STOP.write_text(_now(), encoding="utf-8")
         print(f"stop flag written: the loop stops after the current turn ({STOP})")
         return 0
+    bad = live_switches()
+    if bad:
+        print(f"REFUSED: {', '.join(bad)} is set in this environment. Every turn of a loop started here "
+              f"inherits it (5 Oct 2026: CORTEX_NO_REAL_MODEL=1 from a test window reached two brain turns "
+              f"and no request reached the local model). Start the loop from a window where it is not set.")
+        return 4
     if PID.exists():
         # psutil, NOT os.kill(pid, 0): on Windows that call terminates the process
         import psutil

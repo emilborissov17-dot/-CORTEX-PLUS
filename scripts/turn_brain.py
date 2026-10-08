@@ -57,12 +57,35 @@ def nothing_new(prev: Optional[dict], now: dict) -> bool:
     return not any(v > int(prev.get(k) or 0) for k, v in now.items())
 
 
+def _paths_of(mod, paths, keys) -> list:
+    """The files a step is declared to read, for its narration row. Never raises."""
+    out = []
+    for k in keys:
+        try:
+            v = mod._p(paths, k)
+        except Exception:                                                # noqa: BLE001
+            continue
+        if v and "*" not in str(v):
+            out.append(v)
+    return out
+
+
+def _counted(xs) -> dict:
+    out: dict = {}
+    for x in xs:
+        out[str(x)] = out.get(str(x), 0) + 1
+    return out
+
+
 def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, busy: Optional[Callable] = None,
         bn_paths=None, space_paths=None, sym_paths=None, read=None, linked=None,
         result_path=None, expect_path=None, turn_path=None, records_dir=None, gained_path=None) -> dict:
     """Also keeps the WHOLE turn — raw replies, needs accepted and refused, verdicts,
-    symbols — in memory/turns/brain_<started>.json, so a turn can be read back verbatim."""
+    symbols — in memory/turns/brain_<started>.json, so a turn can be read back verbatim.
+    Every step says what it does while it runs (core.narration, Emil R60); outside an
+    open narration the steps are silent and the turn is the same."""
     from core import brain_needs as bn
+    from core import narration as nr
     from core import space as sp
     from core import symbols
     from core import turn
@@ -70,8 +93,17 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
     t0 = time.time()
     out = {"started_utc": _now()}
     try:
-        b0 = sp.build(space_paths)
-        d = sp.derive(space_paths, engine=engine)
+        with nr.step("space.build", "turn what the system holds (atoms, targets, needs, labels, statements) into "
+                                    "MeTTa expressions",
+                     reads=_paths_of(sp, space_paths, ("target_config", "needs", "labels", "store", "obs_log",
+                                                       "grounded", "atoms_root"))) as s:
+            b0 = sp.build(space_paths)
+            s.said(f"{b0['expressions']} expressions in {b0['seconds']} s")
+        with nr.step("space.derive", "run the rules on the MeTTa engine: pre-flight against the arity budgets, "
+                                     "then the witness cross-check",
+                     reads=_paths_of(sp, space_paths, ("rules", "proposed")) + [sp.GUARD_CONFIG]) as s:
+            d = sp.derive(space_paths, engine=engine)
+            s.said(f"{d['derived']} derived {d['by_rule']}; state {d.get('state')}; engine {d['seconds']} s")
     except sp.SpaceEngineFailed as exc:
         res = {"utc": _now(), "summary": f"brain turn stopped: the space engine did not run ({exc})",
                "open_needs": None, "cause": f"hyperon did not run: {exc}", "seconds": round(time.time() - t0, 1)}
@@ -80,7 +112,11 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
     out["space"] = {"base": b0["expressions"], "build_seconds": b0["seconds"], "derived": d["derived"],
                     "by_rule": d["by_rule"], "engine_seconds": d["seconds"]}
     derived = d["expressions"]
-    b = bn.briefing(bn_paths, derived)
+    with nr.step("briefing", "what the brain is shown: its sub-goals, where it is furthest from its targets, "
+                             "its open needs and what the space derived",
+                 reads=_paths_of(bn, bn_paths, ("needs", "grounded", "obs_log"))) as s:
+        b = bn.briefing(bn_paths, derived)
+        s.said(f"{len(str((b or {}).get('text') or ''))} characters shown")
     why = (busy or bn.model_busy)()
     gp = Path(gained_path or GAINED)
     try:
@@ -90,45 +126,75 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
     now = gained_now(bn.load_needs(bn_paths))
     out["nothing_new"] = nothing_new(prev, now)
     if why:
-        em = bn.emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, bn_paths, sp.needs_from(derived))
+        nr.note(f"the model is not asked this turn: {why}")
+        with nr.step("emit", "record the engine's needs; the brain's own question was skipped") as s:
+            em = bn.emit(b, {"raw": None, "parsed": [], "error": f"model step skipped: {why}"}, bn_paths,
+                         sp.needs_from(derived))
+            s.said(f"open {em.get('open')}")
         out.update({"model_skipped": why, "needs": em, "review": None, "symbols": None})
     elif out["nothing_new"]:
         # C-GW-1 1c: nothing was gained for any of its needs since its last turn -> no model call
+        nr.note("nothing was gained for any brain need since the last brain turn: the model is not asked")
         bn._append(bn._p(bn_paths, "ledger"), {"event": "BRAIN_NOTHING_NEW", "ts": _now(), "origin": "brain",
                                                "needs": len(now)})
-        em = bn.emit(b, None, bn_paths, sp.needs_from(derived))
+        with nr.step("emit", "record the engine's needs; nothing new for the brain's own") as s:
+            em = bn.emit(b, None, bn_paths, sp.needs_from(derived))
+            s.said(f"open {em.get('open')}")
         out.update({"needs": em, "review": None, "symbols": None})
     else:
         # C-BRAIN-1 Part 2: old needs get their role; review FIRST (TEXT C, one call per
         # question), so a parent it closes frees its sub-goal; then the needs question,
         # only for the sub-goals with no open parent; then TEXT B per sentence shown.
         out["roles_given"] = bn.adopt_roles(bn_paths)
-        rv = bn.review(think, bn_paths, read=read, linked=linked)
-        reply, free = bn.ask_free(b, think, bn_paths)
-        em = bn.emit(b, reply, bn_paths, sp.needs_from(derived), free)
+        with nr.step("review", "for each open need it asked, the brain judges what came back "
+                               "(TEXT C, one 3B call per need)",
+                     reads=_paths_of(bn, bn_paths, ("needs",))) as s:
+            rv = bn.review(think, bn_paths, read=read, linked=linked)
+            for c in rv.get("calls") or []:
+                nr.note(f"{c.get('need_id')}: {c.get('question')} -> "
+                        f"{c.get('verdict') or 'UNREADABLE: ' + str(c.get('unreadable'))}")
+            s.said(f"{rv.get('shown', 0)} need(s) shown; verdicts "
+                   f"{_counted(v.get('verdict') for v in rv.get('verdicts') or [])}")
+        with nr.step("ask", "the brain's own needs, asked only for the sub-goals with no open parent "
+                            "(one 3B call)") as s:
+            reply, free = bn.ask_free(b, think, bn_paths)
+            s.said("not asked: every sub-goal has an open parent" if reply is None else
+                   f"asked for {len(free)} free sub-goal(s); "
+                   + ("reply read" if reply.get("parsed") is not None else f"reply unreadable: {reply.get('unreadable')}"))
+        with nr.step("emit", "record the needs: the brain's accepted or refused, the engine's from the space",
+                     reads=_paths_of(bn, bn_paths, ("needs",))) as s:
+            em = bn.emit(b, reply, bn_paths, sp.needs_from(derived), free)
+            s.said(f"accepted {len(em.get('accepted') or [])}, refused {len(em.get('refused') or [])}, "
+                   f"open {em.get('open')}")
         items = [{"id": it.get("id"), "text": it.get("text")} for its in (rv.get("items") or {}).values()
                  for it in its if it.get("type") == "statement"]
-        sy = symbols.propose(items, think, engine=engine, paths=sym_paths)
+        with nr.step("symbols", "each sentence it was shown becomes one expression "
+                                "(TEXT B, one 3B call per sentence, at most 20)") as s:
+            sy = symbols.propose(items, think, engine=engine, paths=sym_paths)
+            s.said(f"asked {sy.get('asked')}, accepted {len(sy.get('accepted') or [])}, "
+                   f"refused {len(sy.get('refused') or [])}")
         out.update({"reply": reply, "free_subgoals": free, "needs": em, "review": rv, "symbols": sy})
-    doc = bn.load_needs(bn_paths)
-    gp.parent.mkdir(parents=True, exist_ok=True)
-    gp.write_text(json.dumps(gained_now(doc)), encoding="utf-8")
-    open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
-    ep = Path(expect_path or EXPECT)
-    ep.parent.mkdir(parents=True, exist_ok=True)
-    with ep.open("a", encoding="utf-8", newline="\n") as fh:
-        for n in open_:
-            if n.get("origin") == "brain":
-                fh.write(json.dumps({"ts": _now(), "need_id": n["id"], "expects": n.get("expects")},
-                                    ensure_ascii=False) + "\n")
-    res = {"utc": _now(), "open_needs": len(open_), "cause": None, "seconds": round(time.time() - t0, 1),
-           "summary": f"brain turn: {len(open_)} open need(s) "
-                      f"({sum(1 for n in open_ if n.get('origin') == 'brain')} brain, "
-                      f"{sum(1 for n in open_ if n.get('origin') == 'engine')} engine); "
-                      f"space {out['space']['base']} base / {out['space']['derived']} derived"}
-    _write(result_path or RESULT, res)
-    record = {**out, **res, "exit": 0}
-    _write(Path(records_dir or RECORDS) / f"brain_{out['started_utc'].replace(':', '')}.json", record)
+    with nr.step("record", "what it expects back per open need, and the turn's result for the loop") as s:
+        doc = bn.load_needs(bn_paths)
+        gp.parent.mkdir(parents=True, exist_ok=True)
+        gp.write_text(json.dumps(gained_now(doc)), encoding="utf-8")
+        open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
+        ep = Path(expect_path or EXPECT)
+        ep.parent.mkdir(parents=True, exist_ok=True)
+        with ep.open("a", encoding="utf-8", newline="\n") as fh:
+            for n in open_:
+                if n.get("origin") == "brain":
+                    fh.write(json.dumps({"ts": _now(), "need_id": n["id"], "expects": n.get("expects")},
+                                        ensure_ascii=False) + "\n")
+        res = {"utc": _now(), "open_needs": len(open_), "cause": None, "seconds": round(time.time() - t0, 1),
+               "summary": f"brain turn: {len(open_)} open need(s) "
+                          f"({sum(1 for n in open_ if n.get('origin') == 'brain')} brain, "
+                          f"{sum(1 for n in open_ if n.get('origin') == 'engine')} engine); "
+                          f"space {out['space']['base']} base / {out['space']['derived']} derived"}
+        _write(result_path or RESULT, res)
+        record = {**out, **res, "exit": 0}
+        _write(Path(records_dir or RECORDS) / f"brain_{out['started_utc'].replace(':', '')}.json", record)
+        s.said(res["summary"])
     return record
 
 
@@ -149,7 +215,14 @@ def main() -> int:
     if "--selftest" in sys.argv:
         print(json.dumps(selftest(), indent=2))
         return 0
-    r = run()
+    from core import narration as nr
+    nr.open_turn("BRAIN")
+    r = None
+    try:
+        r = run()
+    finally:
+        nr.close_turn(r["exit"] if r else "none (the turn raised; its traceback is in the turn's log)",
+                      (r or {}).get("summary") or "")
     print(json.dumps({k: v for k, v in r.items() if k not in ("review", "reply", "symbols", "needs")},
                      indent=1, ensure_ascii=False, default=str))
     return r["exit"]

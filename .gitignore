@@ -382,3 +382,5 @@ memory/openclaw_pages/
 memory/turns_loop.pid
 memory/turns_loop.stop
 experiments/kill_probe/out/
+# runtime output of core/narration.py (R60), like memory/cycle_trace/
+memory/narration/

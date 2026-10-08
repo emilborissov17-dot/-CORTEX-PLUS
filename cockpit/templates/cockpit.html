@@ -291,6 +291,11 @@
               border-bottom:none;border-radius:3px 3px 0 0;padding:3px 8px;min-height:20px}
   .b-green{color:var(--grn)} .b-amber{color:var(--yel)} .b-red{color:var(--red)}
   .foot{color:var(--dim);font-size:11px;padding:4px 0}
+  .lrow{font-family:ui-monospace,Consolas,monospace;font-size:11px;white-space:pre-wrap;padding:1px 0;border-bottom:1px solid var(--line)}
+  .lrow.lbad{color:var(--red)}
+  .lrow.lk-OPEN,.lrow.lk-CLOSE{color:var(--blu)}
+  .lrow.lk-MODEL{color:var(--mag)}
+  .lwhy{color:var(--dim);font-size:12px;margin-top:6px}
 </style>
 </head>
 <body>
@@ -357,6 +362,7 @@ const TABS = [
   {id:'glass',      name:'GLASS'},
   {id:'brain',      name:'BRAIN'},
   {id:'terminal',   name:'TERMINAL'},
+  {id:'live',       name:'LIVE'},
 ];
 const KEY = 'cortex.cockpit.tab';
 const SESSION_TOKEN = '__COCKPIT_TOKEN__';   // injected by the server
@@ -1122,7 +1128,7 @@ async function tabBrain(){
 
 const RENDER = {overview:tabOverview, cycle:tabCycle, world:tabWorld, body:tabBody,
                 expression:tabExpression, pending:tabPending, glass:tabGlass,
-                brain:tabBrain, terminal:tabTerminal};
+                brain:tabBrain, terminal:tabTerminal, live:tabLive};
 
 
 /* ── GLASS — a window, not a sense ──────────────────────────────────────────
@@ -1448,6 +1454,74 @@ let tickCount = 0;
    because its content is already out of date by the time it arrives. */
 let renderSeq = 0;
 
+/* ── LIVE — the baton, as it speaks (Emil R60, 5 Oct 2026) ─────────────────
+   core/narration.py writes one row per event of a baton turn (OPEN, START,
+   MODEL, NOTE, END, CLOSE) into memory/narration/<turn>.jsonl while the turn
+   runs, and the same sentence into the turn's log. /api/narration hands the
+   rows over from `since` on. This tab shows the newest turn, newest row first,
+   and follows the next turn when it starts. Built only while open and polled
+   every 2 s only while open, the same rule as GLASS. It has no control: a
+   reader reads. A row that is not a success (a step that did not end OK, a
+   model call that did not reply, a turn that opened with a test switch set,
+   a turn that closed non-zero) is red. */
+let liveTurn = null, liveNext = 0, liveTimer = null;
+
+function stopLive(){ if(liveTimer){ clearInterval(liveTimer); liveTimer = null; } }
+
+function liveBad(r){
+  const k = r.kind || '';
+  return (k === 'END' && r.status !== 'OK') || (k === 'MODEL' && r.outcome !== 'REPLIED')
+    || (k === 'OPEN' && /WARNING/.test(r.line || '')) || (k === 'CLOSE' && String(r.exit) !== '0')
+    || k === 'UNREADABLE';
+}
+
+function liveRow(r){
+  return `<div class="lrow lk-${esc(r.kind||'')}${liveBad(r)?' lbad':''}"><span class="meta">${esc(String(r.t||'').slice(11,19))}</span> ${esc(r.line||'')}</div>`;
+}
+
+function liveAgeText(d){
+  return `turn ${d.turn||'none'} · last row written ${d.age_s} s ago · ${d.next} row(s)`;
+}
+
+async function tabLive(){
+  stopLive();
+  const d = await get('/api/narration?turn=latest&since=0');
+  if(d.error) return `<div class="grid">${panel('Baton - live narration',
+    `<div class="invalid">${esc(d.error)}</div>`, true)}</div>`;
+  const b = d.baton || {};
+  const head = `<div class="meta">baton: holder <b>${esc(b.holder||'?')}</b> · seq ${esc(b.seq)} · since ${esc(b.since_utc||'?')}</div>
+    <div class="meta">${esc(b.last_summary||'')}</div>`;
+  if(!d.turn){
+    liveTurn = null; liveNext = 0;
+    return `<div class="grid">${panel('Baton - live narration', head + `<div class="lwhy">${esc(d.why||'nothing narrated yet')}</div>`, true)}</div>`;
+  }
+  liveTurn = d.turn; liveNext = d.next || 0;
+  const rows = (d.rows || []).slice().reverse().map(liveRow).join('');
+  const recent = (d.turns || []).map(t => `<div class="lrow">${esc(t.turn)} <span class="meta">(${esc(t.age_s)} s ago)</span></div>`).join('');
+  return `<div class="grid">
+    ${panel('Baton - live narration', head + `<div class="meta" id="liveAge">${esc(liveAgeText(d))}</div>
+      <div id="liveRows">${rows || '<div class="lwhy">this turn has written no row yet</div>'}</div>`, true)}
+    ${panel('Recent turns', recent || '<div class="lwhy">none</div>', true)}
+  </div>`;
+}
+
+async function drawLive(){
+  const el = document.getElementById('liveRows');
+  if(!el || active !== 'live'){ stopLive(); return; }
+  try{
+    const d = await get(`/api/narration?turn=${encodeURIComponent(liveTurn||'latest')}&since=${liveNext}`);
+    if(d.error){ return; }
+    const newest = (d.turns || [])[0];
+    if(!liveTurn || (newest && newest.turn !== liveTurn)){ render(); return; }
+    const age = document.getElementById('liveAge');
+    if(age) age.textContent = liveAgeText(d);
+    if(d.rows && d.rows.length){
+      el.insertAdjacentHTML('afterbegin', d.rows.slice().reverse().map(liveRow).join(''));
+      liveNext = d.next;
+    }
+  }catch(e){}
+}
+
 async function render(){
   const seq = ++renderSeq;
   const view = $('#view');
@@ -1547,6 +1621,8 @@ function wirePanel(){
     drawEntropy();
   }
   else { stopStream(); stopBlocked(); }
+  if(active === 'live'){ stopLive(); liveTimer = setInterval(drawLive, 2000); }
+  else { stopLive(); }
   document.querySelectorAll('.fbtn').forEach(b =>
     b.onclick = () => { exFilter = b.dataset.f; render(); });
   const tlc = $('#tlcycle');

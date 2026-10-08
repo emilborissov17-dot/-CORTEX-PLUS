@@ -132,6 +132,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
     from core import brain_needs as bn
     from core import turn
     from scripts import openclaw_search as oc
+    from core import narration as nr
     turn.take(turn.AGENTS, turn_path, why="the agents' turn")
     t0 = time.time()
     por = turn.portion(portion_path)
@@ -226,6 +227,11 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         atom_sub = atom_sub if atom_sub is not None else _atom_subcategories()
         doc = bn.load_needs(bn_paths)
         taken, waiting = portion_of(doc.get("needs", []), por["verify_per_turn"], origins)
+        nr.begin("needs", "fetch what the open needs ask for: the brain's needs with its own question, engine "
+                          "FIND, the longest-waiting VERIFY, LABEL from the store (OpenClaw is the only searcher, R42)",
+                 reads=[bn._p(bn_paths, "needs")])
+        nr.note(f"portion: {len(taken)} need(s) taken, {len(waiting)} waiting for a later turn",
+                taken=[x.get("id") for x in taken])
         for n in waiting:
             ledger({"event": "WAITED", "need_id": n["id"], "origin": n.get("origin"), "kind": n.get("kind"),
                     "since": _waited_since(n)})
@@ -238,6 +244,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                     # 5e: an atom with neither place nor period — served from the store, no browser
                     items = (store_read or _store_read)(n["question"])
                     ledger({"event": "LABEL_FROM_STORE", "need_id": n["id"], "items": [i.get("id") for i in items]})
+                    nr.note(f"{n['id']} LABEL from the store: {len(items)} item(s) for {n['question']!r}")
                     bn.mark_served(n["id"], "store: " + n["question"], len(items), 0, 0, bn_paths)
                     per_need.append({"need_id": n["id"], "origin": n.get("origin"), "kind": "LABEL", "category": cat,
                                      "query": None, "store_items": len(items), "pages": 0, "captcha": 0, "unbacked": 0,
@@ -247,6 +254,7 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                 q = clean_query(query_for(n) if n.get("origin") == "brain" else n["question"])
                 b = live(prof.get("browser_profile") or "openclaw")
                 ledger({"event": "TAKEN", "need_id": n["id"], "origin": n.get("origin"), "query": q, "category": cat})
+                nr.note(f"{n['id']} ({n.get('origin')} {n.get('kind') or ''}, {cat}): searching {q!r}")
                 r = oc.serve(n["id"], q, b, ingest, ledger, pages_dir=pages_dir, category=cat)
                 bn.mark_served(n["id"], q, r["pages"] + r["captcha"] + r["unbacked"], r["pages"], r["statements_added"],
                                bn_paths)
@@ -261,11 +269,18 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
                                  "query": q, "pages": r["pages"], "captcha": r["captcha"], "unbacked": r["unbacked"],
                                  "statements_gained": r["statements_added"], "regions": r.get("regions"),
                                  "pdfs": len(r.get("pdfs") or []), "seconds": round(time.time() - t1, 1)})
+                nr.note(f"{n['id']} served in {per_need[-1]['seconds']} s: {r['pages']} page(s), {r['captcha']} "
+                        f"CAPTCHA, {r['statements_added']} statement(s) gained"
+                        + (f"; errors: {str(r.get('errors'))[:200]}" if r.get("errors") else ""))
         except SearcherDead as exc:
             cause = _cause(exc)
             ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
 
+        nr.end(f"{len(per_need)} need(s) served, {sum(p['statements_gained'] for p in per_need)} statement(s) "
+               f"gained", status="OK" if cause is None else "STOPPED", error=cause)
         mres, fres, pdf_done = {"worked": 0, "rows": []}, None, 0
+        nr.begin("maintenance", "read the PDFs the pages pointed to, then search the oldest subcategory cells "
+                                "(R29)" if cause is None else "skipped: the needs phase stopped")
         if cause is None:
             rows = [json.loads(l) for l in lp.read_text(encoding="utf-8").splitlines() if l.strip()] if lp.exists() else []
             try:
@@ -289,11 +304,14 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
             except SearcherDead as exc:
                 cause = _cause(exc)
                 ledger({"event": "SEARCHER_DEAD", "why": str(exc), "served": len(per_need)})
+        nr.end(f"{pdf_done} PDF need(s) read; maintenance {mres.get('worked')} cell(s)",
+               status="OK" if cause is None else "STOPPED", error=cause)
     finally:
         stopped = stop_all()
     if cause is None:
         fres = (feeds or _live_feeds)()
     rst = (restore or _live_restore)()
+    nr.note(f"browsers stopped: {stopped}; feeds: {fres}; core model: {rst}"[:800])
     searched = [p for p in per_need if p.get("kind") != "LABEL"]
     res = {"utc": _now(), "seconds": round(time.time() - t0, 1), "cause": cause, "per_need": per_need,
            "waited": len(waiting), "portion": por, "browsers_stopped": stopped,
@@ -344,8 +362,15 @@ def main() -> int:
     # --engine-only: engine needs only; --turn-file F: a baton file of its own (a turn run by
     # hand, the loop stopped, the real memory/turn.json untouched) — C-GW-1 step 4
     tf = sys.argv[sys.argv.index("--turn-file") + 1] if "--turn-file" in sys.argv else None
-    r = run(maintenance_n=n, origins=("engine",) if "--engine-only" in sys.argv else None, turn_path=tf,
-            result_path=(Path(tf).with_name("turn_result_by_hand.json") if tf else None))
+    from core import narration as nr
+    nr.open_turn("AGENTS")
+    r = None
+    try:
+        r = run(maintenance_n=n, origins=("engine",) if "--engine-only" in sys.argv else None, turn_path=tf,
+                result_path=(Path(tf).with_name("turn_result_by_hand.json") if tf else None))
+    finally:
+        nr.close_turn(r["exit"] if r else "none (the turn raised; its traceback is in the turn's log)",
+                      (r or {}).get("summary") or "")
     print(json.dumps({k: v for k, v in r.items() if k != "per_need"}, indent=1, ensure_ascii=False, default=str))
     for p in r["per_need"]:
         print(json.dumps(p, ensure_ascii=False))
