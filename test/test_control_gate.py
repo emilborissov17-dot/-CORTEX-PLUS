@@ -170,7 +170,7 @@ def test_commit_and_push_go_through_the_gate(box):
 
 
 def _bash():
-    """POSIX bash on Linux; on Windows only Git Bash counts (the bash.exe on the Windows PATH is WSL)."""
+    """Decided: POSIX bash on Linux; on Windows only Git Bash."""
     if os.name != "nt":
         return shutil.which("bash")
     pf = os.environ.get("ProgramFiles")

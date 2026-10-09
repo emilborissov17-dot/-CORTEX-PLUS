@@ -275,8 +275,8 @@ def test_a_citation_number_is_not_proposed_as_a_threshold():
 # ---------------------------------------------------------------------------
 
 def test_the_sweep_runs_after_the_score_it_reads():
-    """It reads snapshots/master/goal_score_latest.json, written at 12.6. Before it
-    the sweep judged last night's number under tonight's stamp (DEFECT-C, Kimi R56)."""
+    """Before this order the sweep judged last night's number under tonight's stamp
+    (DEFECT-C, Kimi R56)."""
     src = (REPO / "fast_cycle_runner.py").read_text(encoding="utf-8")
     assert '"alarm_bands", "12.61"' in src
     g = src.index('beat("goal_score_calculator", "12.6")')

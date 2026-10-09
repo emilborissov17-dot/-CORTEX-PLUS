@@ -122,7 +122,11 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # each names its test; five more sentences were deleted as false since C-OC-3
     # or unbacked. The UNBACKED count above went DOWN by one (612 -> 611).
     # 679 on 1 Oct (C-NEED-1 Part 1): one added, BACKED by test_observation_log.
-    assert len(accepted) <= 679, (
+    # 682 on 9 Oct: three added, ALL BACKED (test_gateway_timeout's fake Browser,
+    # test_vision_source and core/vision_source, each naming its tests); two more
+    # sentences were deleted as unbacked (test_alarm_bands, test_control_gate).
+    # The UNBACKED count above did not move.
+    assert len(accepted) <= 682, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 
