@@ -12,7 +12,15 @@ sentence and answers {"head", "args"}. Checks, all by code, and nothing else:
   4. PARSE: the repo's hyperon parses the expression (core.space.hyperon_engine).
 The head is free: config/space_vocabulary.json only SUGGESTS heads; an unknown
 head is accepted and counted in memory/space/new_relations.jsonl.
-Accepted   -> memory/space/proposed.metta as (proposed "<statement id>" "cortex-l1b-3b" <expr>).
+Accepted   -> memory/space/proposed.metta as (proposed "<statement id>" "cortex-l1b-3b" <expr>),
+              ONCE: a proposal whose line is already in that file is not written again, and is
+              counted as "already" (9 Oct 2026). Until then every brain turn appended its
+              proposals blindly: by 9 Oct the file held 397 lines for 13 distinct statements, one
+              line repeated 39 times, the shape proposed/3 crossed the arity-3 budget of 390, and
+              core.space.derive refused the brain's turn (ENGINE_BUDGET, guard state RED, brain
+              turn 164 exit 2). The file is a SET of proposals, not a log of proposing; what the
+              3B was shown each turn is a separate question. tools/dedup_proposed.py repairs a
+              file written by the old code.
 Refused    -> memory/space/proposed_refused.jsonl with the reason.
 NONE       -> head "NONE": the sentence states nothing; counted, nothing written.
 UNREADABLE -> a schema-invalid reply, recorded with its raw text; no expression
@@ -128,18 +136,30 @@ def _known_counts(paths) -> dict:
     return out
 
 
+def existing_proposals(path) -> set:
+    """The (proposed …) lines already in the file, as a set. A missing or unreadable file is an
+    EMPTY set: nothing is known, so nothing is suppressed."""
+    try:
+        return {l.strip() for l in Path(path).read_text(encoding="utf-8").splitlines()
+                if l.startswith("(proposed ")}
+    except (OSError, ValueError):
+        return set()
+
+
 def propose(items: list, think: Optional[Callable] = None, engine: Optional[Callable] = None, paths=None) -> dict:
     """items: [{"id": statement id, "text": sentence}] (at most MAX_PER_TURN are used).
-    TEXT B once per sentence. -> per-call record with the raw reply."""
+    TEXT B once per sentence. -> per-call record with the raw reply. A proposal identical to one
+    already in proposed.metta is counted in "already" and not written a second time."""
     from core import brain_needs as bn
     from core import brain_texts as T
     from core import space as sp
     engine = engine or sp.hyperon_engine
     items = [i for i in items if i.get("id") and i.get("text")][:MAX_PER_TURN]
-    out = {"asked": len(items), "accepted": [], "refused": [], "none": [], "unreadable": [], "new_heads": {},
-           "calls": []}
+    out = {"asked": len(items), "accepted": [], "refused": [], "none": [], "unreadable": [], "already": [],
+           "new_heads": {}, "calls": []}
     if not items:
         return out
+    seen = existing_proposals(_p(paths, "proposed"))
     vocab = json.loads(Path(_p(paths, "vocabulary")).read_text(encoding="utf-8")).get("suggested_heads", [])
     heads = ", ".join(vocab)
     known = _known_counts(paths)
@@ -180,16 +200,23 @@ def propose(items: list, think: Optional[Callable] = None, engine: Optional[Call
             out["new_heads"][head] = known[head]
             _append(_p(paths, "new_relations"), {"head": head, "count": known[head], "statement": sid})
         line = f'(proposed "{sid}" "{MODEL.split(":")[0]}" {sp.render(expr)})'
+        if line in seen:
+            # the same proposal for the same statement is no new expression: it is not written
+            out["already"].append({"statement": sid, "expression": sp.render(expr), "head": head})
+            call["outcome"] = "ALREADY PROPOSED"
+            continue
         pp = Path(_p(paths, "proposed"))
         pp.parent.mkdir(parents=True, exist_ok=True)
         with pp.open("a", encoding="utf-8", newline="\n") as fh:
             fh.write(f"; proposed-by {MODEL} for statement {sid} at {_now()}\n{line}\n")
+        seen.add(line)
         out["accepted"].append({"statement": sid, "expression": sp.render(expr), "head": head})
         call["outcome"] = "ACCEPTED"
     out["sec"] = round(time.time() - t0, 1)
     _append(_p(paths, "log"), {"event": "PROPOSED", "asked": len(items), "accepted": len(out["accepted"]),
                                "refused": len(out["refused"]), "none": len(out["none"]),
-                               "unreadable": len(out["unreadable"]), "new_heads": out["new_heads"]})
+                               "unreadable": len(out["unreadable"]), "already": len(out["already"]),
+                               "new_heads": out["new_heads"]})
     return out
 
 
