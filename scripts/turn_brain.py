@@ -62,17 +62,46 @@ def filled_rows(doc: dict, prev: Optional[dict], rv: Optional[dict]) -> list:
     """One row per brain need for memory/needs_filled.jsonl: the gain since the last brain
     turn (no record -> the whole count), "stale" when that gain is 0 (81I point 5: a need
     that gains nothing is marked, never retired — R24), the review verdict of this turn if
-    any, the status, and would_change copied as information (81I F3)."""
+    any, the status, and would_change copied as information (81I F3).
+    C-SHOWN-1 (Perplexity 82B) adds what the review did with that need this turn: how many
+    statements it has of its own, how many context items it was shown instead, which item ids
+    were shown, how many times the agents have searched it, and whether the 3B was not asked
+    because there was nothing it had not already been shown."""
     verdict_of = {v.get("id"): v.get("verdict") for v in (rv or {}).get("verdicts") or []}
+    per_need = (rv or {}).get("per_need") or {}
     out = []
     for n in doc.get("needs", []):
         if n.get("origin") != "brain":
             continue
         got = int(n.get("gained_statements") or 0)
         before = int((prev or {}).get(n["id"]) or 0)
+        pn = per_need.get(n["id"]) or {}
         out.append({"id": n["id"], "gained_statements": got, "gained_since_last_brain_turn": got - before,
                     "stale": got - before <= 0, "review_verdict": verdict_of.get(n["id"]),
-                    "status": n.get("status"), "would_change": n.get("would_change")})
+                    "status": n.get("status"), "would_change": n.get("would_change"),
+                    "linked_count": pn.get("linked_count"), "context_count": pn.get("context_count"),
+                    "shown_ids": pn.get("shown_ids"), "search_attempts": pn.get("search_attempts"),
+                    "reviewed_no_new_context": pn.get("reviewed_no_new_context")})
+    return out
+
+
+SYMBOL_ITEMS = 20                # the cap on 3B symbol calls per turn (unchanged; Perplexity 82 В5 lists it
+                                 # among the numbers that need a measurement before they are called right)
+
+
+def round_robin(shown: dict, cap: int = SYMBOL_ITEMS) -> list:
+    """The items for the symbol step, taken ONE PER NEED in turn until the cap (Perplexity 82
+    В2.4 / В5 defect 3). Before 9 Oct the first `cap` items of the flattened dict were taken,
+    which on the machine meant the first four needs in the file's order and nothing else: 190
+    items shown, 20 asked, the same 13 sentences for a week."""
+    lists = [[it for it in (v or []) if (it or {}).get("type") == "statement"] for v in (shown or {}).values()]
+    out = []
+    for i in range(max((len(x) for x in lists), default=0)):
+        for xs in lists:
+            if i < len(xs):
+                out.append(xs[i])
+                if len(out) >= cap:
+                    return out
     return out
 
 
@@ -192,8 +221,8 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
             em = bn.emit(b, reply, bn_paths, sp.needs_from(derived), free)
             s.said(f"accepted {len(em.get('accepted') or [])}, refused {len(em.get('refused') or [])}, "
                    f"open {em.get('open')}")
-        items = [{"id": it.get("id"), "text": it.get("text")} for its in (rv.get("items") or {}).values()
-                 for it in its if it.get("type") == "statement"]
+        items = [{"id": it.get("id"), "text": it.get("text"), "region": it.get("region")}
+                 for it in round_robin(rv.get("items") or {})]
         with nr.step("symbols", "each sentence it was shown becomes one expression "
                                 "(TEXT B, one 3B call per sentence, at most 20)") as s:
             sy = symbols.propose(items, think, engine=engine, paths=sym_paths)

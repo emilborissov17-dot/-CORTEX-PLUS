@@ -45,6 +45,7 @@ PATHS = {"proposed": SPACE / "proposed.metta", "refused": SPACE / "proposed_refu
          "ledger": REPO / "memory" / "vertical_ledger.jsonl"}
 MODEL = "cortex-l1b-3b:latest"
 MAX_PER_TURN = 20
+FURNITURE_REGIONS = ("furniture",)     # 82C В1: never an input to a symbol proposal
 
 class PathMissing(KeyError):
     pass
@@ -166,6 +167,14 @@ def propose(items: list, think: Optional[Callable] = None, engine: Optional[Call
     t0 = time.time()
     for it in items:
         sid, sentence = it["id"], it["text"]
+        if it.get("region") in FURNITURE_REGIONS:
+            # 82C В1: page furniture is never an input to a symbol, whatever hands it over
+            row = {"statement": sid, "expression": None, "reason": f"region {it.get('region')!r} is page furniture"}
+            out["refused"].append(row)
+            _append(_p(paths, "refused"), row)
+            out["calls"].append({"statement": sid, "sentence": sentence, "raw": None, "sec": None,
+                                 "outcome": "REFUSED: page furniture"})
+            continue
         try:
             r = (think or _think)(T.TEXT_B.format(heads=heads, sentence=sentence), "", T.SCHEMA_B)
         except Exception as exc:                                         # noqa: BLE001

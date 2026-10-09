@@ -194,21 +194,56 @@ def test_mutation_without_need_id_relevance_alone_orders(p):
     assert [i["id"] for i in items if i["type"] == "statement"][0] == "x1"
 
 
-def test_linked_statements_put_main_before_furniture(p, tmp_path):
+def test_linked_statements_label_the_region_and_do_not_order_by_it(p, tmp_path):
+    """C-SHOWN-1 (Perplexity 82 В5 defect 2, 82C В1): linked_statements LABELS each statement
+    with its page region and leaves the order alone — the selection is core.shown.unseen, which
+    drops furniture and uses the region only to break a tie on the ingestion time. Until 9 Oct
+    the region was the ONLY order, and the first five were shown every turn for a week."""
     from core import brain_needs as bn
     _store(p, ROWS)
     idx = tmp_path / "regions.json"
     idx.write_text(json.dumps({"regions": {"u1": "main"}}), encoding="utf-8")
     got = bn.linked_statements(p["store"], regions_path=idx)["BN-1"]
-    assert [(g["id"], g["region"]) for g in got] == [("m1", "main"), ("u1", "main"), ("f1", "furniture")]
+    assert {(g["id"], g["region"]) for g in got} == {("m1", "main"), ("u1", "main"), ("f1", "furniture")}
+    assert all("ingested_at" in g for g in got)
 
 
-def test_mutation_without_the_sort_furniture_leads(p, tmp_path, monkeypatch):
-    from core import brain_needs as bn
-    _store(p, ROWS)
-    monkeypatch.setattr(kn, "REGION_ORDER", {})
-    got = bn.linked_statements(p["store"], regions_path=tmp_path / "none.json")["BN-1"]
-    assert got[0]["id"] == "f1"
+def test_furniture_is_never_shown_and_main_beats_unknown_only_on_a_tie(tmp_path):
+    """82C В1: furniture out of the candidates entirely (measured reason: 'toggle navigation' and
+    'Skip to content' among the 752 refused proposals); the primary order is the ingestion time,
+    newest first; main before unknown only when the time is equal — the real case, because a
+    page's furniture and its main text are ingested in the same second."""
+    from core import shown as sh
+    same = "2026-10-09T05:00:00Z"
+    items = [{"id": "f1", "region": "furniture", "ingested_at": same},
+             {"id": "u1", "region": "unknown", "ingested_at": same},
+             {"id": "m1", "region": "main", "ingested_at": same}]
+    assert [i["id"] for i in sh.unseen(items, set(), 5)] == ["m1", "u1"]
+    # a NEWER unknown beats an older main: the region is a tie-breaker, never the criterion
+    items2 = [{"id": "m-old", "region": "main", "ingested_at": "2026-10-01T15:22:23Z"},
+              {"id": "u-new", "region": "unknown", "ingested_at": "2026-10-09T06:00:00Z"},
+              {"id": "f-newest", "region": "furniture", "ingested_at": "2026-10-09T07:00:00Z"}]
+    assert [i["id"] for i in sh.unseen(items2, set(), 5)] == ["u-new", "m-old"]
+
+
+def test_a_furniture_statement_can_never_become_a_symbol(tmp_path):
+    """82C В1: whatever hands it over, page furniture is refused before the 3B is asked."""
+    from core import symbols
+    v = tmp_path / "vocab.json"
+    v.write_text(json.dumps({"suggested_heads": ["says"]}), encoding="utf-8")
+    paths = {"proposed": tmp_path / "proposed.metta", "refused": tmp_path / "refused.jsonl",
+             "new_relations": tmp_path / "new.jsonl", "log": tmp_path / "log.jsonl", "vocabulary": v,
+             "ledger": tmp_path / "ledger.jsonl"}
+    asked = []
+
+    def think(prompt, evidence, schema):
+        asked.append(prompt)
+        d = {"head": "says", "args": ["Home"]}
+        return {"data": d, "raw": json.dumps(d), "sec": 0.1}
+    r = symbols.propose([{"id": "f1", "text": "Home", "region": "furniture"}], think=think,
+                        engine=lambda prog: ["ok"], paths=paths)
+    assert asked == [] and r["accepted"] == [] and len(r["refused"]) == 1
+    assert "page furniture" in r["refused"][0]["reason"] and not (tmp_path / "proposed.metta").exists()
 
 
 # ── 3c: old pages re-opened and labelled into the index ─────────────────────

@@ -77,7 +77,7 @@ def t(tmp_path, monkeypatch):
     b1["browser_profile"] = "b1-peace-and-war"
     (prof / "B1.json").write_text(json.dumps(b1), encoding="utf-8")
     seen, cells = [], []
-    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log")}
+    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log", "shown")}
     paths.update({"needs": tmp_path / "needs.json", "ledger": tmp_path / "ledger.jsonl",
                   "forward_glob": str(tmp_path / "none" / "*.json"), "atoms_root": tmp_path / "atoms"})
 

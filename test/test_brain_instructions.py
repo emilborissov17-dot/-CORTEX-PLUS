@@ -50,6 +50,7 @@ def p(tmp_path, monkeypatch):
     (tmp_path / "grounded.json").write_text(json.dumps({"ranking": []}), encoding="utf-8")
     return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
             "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl",
             "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
             "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
 
@@ -74,8 +75,29 @@ def model(needs=None, verdicts=None, calls=None):
     return think
 
 
+_AUTO = [0]
+
+
+def fresh_linked(p):
+    """One statement NEVER SHOWN BEFORE for each open brain need, as linked_statements() returns
+    them. C-SHOWN-1 (Perplexity 82/82B): review() shows only what has not been shown for that
+    need, so a turn with no new material asks the 3B nothing — these tests are about what the
+    brain DOES with a verdict, so each run gives it something new. The empty case has its own
+    tests in test/test_brain_needs_review.py."""
+    _AUTO[0] += 1
+    i = _AUTO[0]
+    try:
+        doc = json.loads(Path(p["needs"]).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return {n["id"]: [{"type": "statement", "text": f"fetched for it {i}", "id": f"s-auto-{i}-{n['id']}",
+                       "linked": True, "region": "main", "ingested_at": f"2026-10-09T0{i % 10}:00:00Z"}]
+            for n in doc.get("needs", []) if n.get("origin") == "brain"}
+
+
 def run(p, think, read=lambda q, k: [], linked=None):
-    return bn.run(think=think, paths=p, busy=lambda: None, read=read, space_run=lambda: [], linked=linked or {})
+    return bn.run(think=think, paths=p, busy=lambda: None, read=read, space_run=lambda: [],
+                  linked=linked if linked is not None else fresh_linked(p))
 
 
 def needs(p):
@@ -266,12 +288,20 @@ def test_the_brain_is_told_which_sub_goals_are_free(p):
 
 # ── 2c: review by TEXT C, one call per question ─────────────────────────────
 def test_review_asks_text_c_once_per_question_verbatim(p):
+    """C-SHOWN-1 (82B): each shown item now carries its source as a label — LINKED_STATEMENT for
+    the need's own statements, CONTEXT_RETRIEVED for the store read a need with none of its own
+    falls back to — so the 3B cannot read context as evidence for the need. TEXT C itself is
+    unchanged and still asked once per question, verbatim."""
     run(p, model(needs=[GENERAL]))
+    pid = by_q(p, GENERAL["question"])["id"]
     calls = []
-    run(p, model(calls=calls), read=lambda q, k: [{"type": "statement", "text": "Wear a seatbelt.", "id": "s1"}])
+    run(p, model(calls=calls), read=lambda q, k: [],
+        linked={pid: [{"type": "statement", "text": "Wear a seatbelt.", "id": "s1", "linked": True,
+                       "region": "main", "ingested_at": "2026-10-09T05:00:00Z"}]})
     cs = [c for c in calls if c["schema"] is T.SCHEMA_C]
     assert len(cs) == 1
-    assert cs[0]["prompt"] == T.TEXT_C.format(question=GENERAL["question"], items='- "Wear a seatbelt."')
+    assert cs[0]["prompt"] == T.TEXT_C.format(question=GENERAL["question"],
+                                              items='- [LINKED_STATEMENT] "Wear a seatbelt."')
     assert cs[0]["evidence"] == ""
 
 
@@ -336,12 +366,17 @@ def test_an_unsearched_direct_need_is_not_reviewed(p):
     assert not [c for c in calls if c["schema"] is T.SCHEMA_C]
 
 
-def test_the_needs_own_statements_are_shown_first(p):
+def test_only_the_needs_own_statements_are_shown_when_it_has_any(p):
+    """C-SHOWN-1 (82B В2): the store read is the fallback for a need with NO linked statements;
+    it no longer fills the free slots beside them. Before 9 Oct it did, and the same five
+    items were shown every turn."""
     run(p, model(needs=[GENERAL]))
     pid = by_q(p, GENERAL["question"])["id"]
     rv = bn.review(model(), p, read=lambda q, k: [{"type": "statement", "text": "store item", "id": "s9"}],
-                   linked={pid: [{"type": "statement", "text": "fetched for it", "id": "s1"}]})
-    assert [i["text"] for i in rv["items"][pid]] == ["fetched for it", "store item"]
+                   linked={pid: [{"type": "statement", "text": "fetched for it", "id": "s1", "linked": True,
+                                  "region": "main", "ingested_at": "2026-10-09T05:00:00Z"}]})
+    assert [i["text"] for i in rv["items"][pid]] == ["fetched for it"]
+    assert rv["per_need"][pid]["context_count"] == 0
 
 
 # ── the agents never search a parent ───────────────────────────────────────

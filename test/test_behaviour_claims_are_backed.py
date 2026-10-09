@@ -126,7 +126,15 @@ def test_the_baseline_only_shrinks_unless_a_commit_says_otherwise():
     # test_vision_source and core/vision_source, each naming its tests); two more
     # sentences were deleted as unbacked (test_alarm_bands, test_control_gate).
     # The UNBACKED count above did not move.
-    assert len(accepted) <= 682, (
+    # 687 on 9 Oct (C-SHOWN-1): five added, ALL BACKED - the selection of what the brain is shown
+    # (unseen-only per need, newest by ingestion time, the context read labelled as retrieved) is
+    # asserted by test_brain_instructions, test_brain_needs_review and test_gateway_and_stopping.
+    # The UNBACKED count above did not move.
+    # 692 on 9 Oct (C-SHOWN-1, after the R65 verifier): five added, ALL BACKED - the failure paths
+    # the verifier found unguarded (an unreadable record read as nothing-shown, an unknown label
+    # written as the need's own, the context pool exhausting after four turns, a measurement atom
+    # recorded as a statement, the furniture-only dead end), each with its test and its mutation.
+    assert len(accepted) <= 692, (
         "the accepted-claims baseline grew to %d. Prose that asserts behaviour "
         "is not evidence; a bigger number here means more of it." % len(accepted))
 

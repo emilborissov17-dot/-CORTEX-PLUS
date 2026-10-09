@@ -173,6 +173,7 @@ def turn_paths(tmp_path, monkeypatch, sp_paths):
     (tmp_path / "tc.json").write_text(json.dumps({"SAFETY": {"SOCIAL": {}}}), encoding="utf-8")
     bn_paths = {"needs": tmp_path / "needs.json", "refused": tmp_path / "nrefused.jsonl", "log": tmp_path / "nlog.jsonl",
                 "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl",
                 "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
                 "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
     space_paths = {"dir": tmp_path / "space", "rules": sp.PATHS["rules"], "atoms_root": tmp_path / "atoms",
@@ -263,3 +264,20 @@ def test_the_whole_brain_turn_is_kept_for_reading_back(turn_paths):
                   filled_path=turn_paths["result"].parent / "needs_filled.jsonl")
     rec = json.loads(next((turn_paths["result"].parent / "records").glob("brain_*.json")).read_text(encoding="utf-8"))
     assert "How many refugees" in rec["reply"]["raw"] and rec["needs"]["accepted"]
+
+
+def test_the_symbol_items_are_a_round_robin_across_needs_and_capped_at_twenty():
+    """82B: the 20 items the symbol step asks about are taken ONE PER NEED in turn, not the first
+    need's twenty. Until 9 Oct the step took the first 20 of the 190 items shown, which were the
+    first four needs' items every turn - 13 distinct sentences in a week. The cap is
+    turn_brain.SYMBOL_ITEMS; it is a cap, not a target, and a short need does not stall the rota."""
+    from scripts import turn_brain as tb
+    shown = {f"BN-{n}": [{"type": "statement", "id": f"{n}-{i}"} for i in range(10)] for n in (1, 2, 3)}
+    out = tb.round_robin(shown)
+    assert len(out) == tb.SYMBOL_ITEMS == 20
+    assert [it["id"] for it in out[:6]] == ["1-0", "2-0", "3-0", "1-1", "2-1", "3-1"]
+    assert len({it["id"] for it in out}) == 20
+    short = {"BN-1": [{"type": "statement", "id": "1-0"}],
+             "BN-2": [{"type": "statement", "id": f"2-{i}"} for i in range(3)]}
+    assert [it["id"] for it in tb.round_robin(short)] == ["1-0", "2-0", "2-1", "2-2"]
+    assert tb.round_robin({"BN-1": [{"type": "fragment", "id": "f"}]}) == []

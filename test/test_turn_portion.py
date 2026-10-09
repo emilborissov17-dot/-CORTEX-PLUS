@@ -88,7 +88,7 @@ def t(tmp_path, monkeypatch):
     b1["browser_profile"] = "b1-peace-and-war"
     (prof / "B1.json").write_text(json.dumps(b1), encoding="utf-8")
     log, cells, alive = [], [], {"v": (True,)}
-    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log")}
+    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log", "shown")}
     paths.update({"needs": tmp_path / "needs.json", "ledger": tmp_path / "ledger.jsonl",
                   "forward_glob": str(tmp_path / "none" / "*.json"), "atoms_root": tmp_path / "atoms"})
 
@@ -199,6 +199,7 @@ def bp(tmp_path, monkeypatch):
     (tmp_path / "grounded.json").write_text(json.dumps({"ranking": []}), encoding="utf-8")
     return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
             "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl",
             "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
             "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
 

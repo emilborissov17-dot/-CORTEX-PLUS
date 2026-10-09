@@ -133,7 +133,7 @@ def t(tmp_path, monkeypatch):
     prof = tmp_path / "agents"
     ap.generate(prof)
     state = {"log": [], "wedged_gw": True, "running": False}
-    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log")}
+    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log", "shown")}
     paths.update({"needs": tmp_path / "needs.json", "ledger": tmp_path / "ledger.jsonl",
                   "forward_glob": str(tmp_path / "none" / "*.json"), "atoms_root": tmp_path / "atoms"})
 

@@ -85,7 +85,7 @@ def t(tmp_path, monkeypatch):
     prof = tmp_path / "agents"
     ap.generate(prof)
     log, alive = [], {"v": False}
-    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log")}
+    paths = {k: tmp_path / f"{k}.x" for k in ("refused", "log", "briefings", "grounded", "obs_log", "shown")}
     paths.update({"needs": tmp_path / "needs.json", "ledger": tmp_path / "ledger.jsonl",
                   "forward_glob": str(tmp_path / "none" / "*.json"), "atoms_root": tmp_path / "atoms"})
 
@@ -249,6 +249,7 @@ def bt(tmp_path, monkeypatch):
     v.write_text(json.dumps({"suggested_heads": ["says"]}), encoding="utf-8")
     bn_paths = {"needs": tmp_path / "needs.json", "refused": tmp_path / "nrefused.jsonl", "log": tmp_path / "nlog.jsonl",
                 "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl",
                 "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
                 "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
     space_paths = {"dir": tmp_path / "space", "rules": sp.PATHS["rules"], "atoms_root": tmp_path / "atoms",
@@ -338,7 +339,12 @@ def test_every_brain_turn_writes_one_needs_filled_row_with_the_stale_marker(bt):
     first, second = rows[0]["needs"][0], rows[1]["needs"][0]
     assert first["id"] == "BN-1" and first["gained_since_last_brain_turn"] == 4 and first["stale"] is False
     assert second["gained_since_last_brain_turn"] == 3 and second["stale"] is False
-    assert second["review_verdict"] == "STILL_OPEN" and "would_change" in second
+    assert "would_change" in second
+    # C-SHOWN-1 (82B): this fixture's need has no linked statements and the store read is empty,
+    # so the 3B is not asked about it and the row says so, with the counts
+    assert second["reviewed_no_new_context"] is True and second["review_verdict"] is None
+    assert (second["linked_count"], second["context_count"], second["shown_ids"]) == (0, 0, [])
+    assert second["search_attempts"] == 1
     bt["go"]()
     third = [json.loads(l) for l in bt["filled"].read_text(encoding="utf-8").splitlines()][2]["needs"][0]
     assert third["gained_since_last_brain_turn"] == 0 and third["stale"] is True

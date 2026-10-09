@@ -34,6 +34,7 @@ def p(tmp_path, monkeypatch):
     (tmp_path / "grounded.json").write_text(json.dumps({"ranking": []}), encoding="utf-8")
     return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
             "ledger": tmp_path / "ledger.jsonl", "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl",
             "grounded": tmp_path / "grounded.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
             "obs_log": tmp_path / "obs.jsonl", "atoms_root": tmp_path / "atoms"}
 

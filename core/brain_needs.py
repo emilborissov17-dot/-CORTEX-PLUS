@@ -48,6 +48,7 @@ PATHS = {
     "log": MEM / "brain_needs_log.jsonl",
     "ledger": MEM / "vertical_ledger.jsonl",
     "briefings": MEM / "brain_briefings.jsonl",
+    "shown": MEM / "shown_to_brain.jsonl",      # C-SHOWN-1: what the brain has been shown, per need
     "grounded": MEM / "orchestration_grounded_latest.json",
     "forward_glob": str(REPO / "experiments" / "institution" / "forward" / "F-[0-9]*.json"),
     "obs_log": MEM / "observation_log.jsonl",
@@ -581,26 +582,46 @@ VERDICTS = (SATISFIED, STILL_OPEN, WRONG_QUESTION)
 
 
 def linked_statements(store=None, regions_path=None) -> dict:
-    """need_id -> statements ingested for that need (core.knowledge records carry need_id)."""
+    """need_id -> statements ingested for that need (core.knowledge records carry need_id), each
+    with its ingested_at. The list is NOT sorted here: review() selects from it by what has not
+    been shown for that need, newest by ingestion time first (Perplexity 82 В2 under Emil R73).
+    Until 9 Oct the only order was the page region, and the first five were shown every turn
+    for a week — the region is kept on the item for the record, never as the selection."""
     from core import knowledge as kn
     idx = kn.region_index(regions_path)
     out: dict = {}
     for r in kn.statements(store):
         if r.get("need_id"):
             out.setdefault(r["need_id"], []).append({"type": "statement", "text": r.get("sentence"), "id": r.get("id"),
-                                                     "linked": True, "region": kn.region_of(r, idx)})
-    for v in out.values():                       # main before furniture (C-BRAIN-1 3b); nothing removed
-        v.sort(key=lambda x: kn.REGION_ORDER.get(x.get("region"), 1))
+                                                     "linked": True, "region": kn.region_of(r, idx),
+                                                     "ingested_at": r.get("ingested_at")})
     return out
 
 
+CONTEXT_CANDIDATES = 4                 # the context read asks for k * this many, to have unseen ones to pick from
+
+
 def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optional[Callable] = None,
-           linked: Optional[dict] = None) -> dict:
+           linked: Optional[dict] = None, shown_map: Optional[dict] = None) -> dict:
     """TEXT C, ONE call per question (C-BRAIN-1 2c), for every open parent and every
-    open need that has been searched. Shown: what was fetched for the need first,
-    then what the store returns for its question, k items in all. Code records the
-    verdict and never overrules it. STILL_OPEN with a narrower question creates a
-    CHILD (or a REPEAT); an UNREADABLE reply leaves the need as it was."""
+    open need that has been searched. Code records the verdict and never overrules it.
+    STILL_OPEN with a narrower question creates a CHILD (or a REPEAT); an UNREADABLE reply
+    leaves the need as it was.
+
+    WHAT IS SHOWN (Perplexity 82 and 82B under Emil R73, 9 Oct 2026):
+      * the need's OWN statements that have not been shown for it yet, newest by ingestion
+        time first, k of them (core.shown);
+      * for a need with no linked statements of its own LEFT TO SHOW — none at all, or only page
+        furniture, which is never shown — the store-wide relevance read instead, statements only,
+        again only what has not been shown for it, labelled CONTEXT_RETRIEVED in the prompt and
+        in the ledger so it is marked as context rather than as evidence for the need (82B В1);
+        the read widens with the number already shown, so the pool does not run out after four
+        turns while the store holds hundreds of thousands of statements;
+      * nothing new: the 3B is NOT called for that need this turn, the need stays open and
+        unchanged, and the turn records reviewed_no_new_context with the counts.
+    Until this change the first five ever ingested were shown every turn, the 3B repeated one
+    verdict (269 STILL_OPEN, 0 closed since 1 Oct) and the symbol step saw the same 13
+    sentences; the store held 679 438 statements."""
     from core import brain_texts as T
     from core import knowledge as kn
     read = read or (lambda q, kk: kn.read(q, k=kk))
@@ -609,14 +630,51 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
             and (_is_parent(n) or n.get("searched", 0) > 0)]
     if not mine:
         return {"shown": 0, "verdicts": [], "calls": [], "items": {}}
+    from core import shown as sh
     linked = linked if linked is not None else linked_statements()
+    seen_all = shown_map if shown_map is not None else sh.shown_ids(_p(paths, "shown"))
     calls, recorded, shown_items, t0 = [], [], {}, time.time()
+    per_need: dict = {}
     for n in mine:
-        own = (linked.get(n["id"]) or [])[:k]
-        items = own + [it for it in read(n["question"], k) if it.get("id") not in {o.get("id") for o in own}][:k - len(own)]
+        own_all = linked.get(n["id"]) or []
+        seen = seen_all.get(n["id"]) or set()
+        # the branch is decided on what is SHOWABLE, not on what was fetched: a need served only a
+        # page menu has linked statements and nothing to show, and before this it then got neither
+        # its own items nor the fallback and went silently inert (R65 verifier, 9 Oct)
+        own_show = [it for it in own_all if (it or {}).get("region") not in sh.DROP_REGIONS]
+        pool: list = []
+        if own_show:
+            items = sh.unseen(own_show, seen, k)
+            kind = sh.LINKED
+        else:
+            # 82B: the conditional fallback, only for a need with no statements of its own to show.
+            # +len(seen): the read returns the top matches, so a fixed pool is exhausted after
+            # k * CONTEXT_CANDIDATES / k turns and every later turn finds nothing new.
+            pool = [it for it in read(n["question"], k * CONTEXT_CANDIDATES + len(seen))
+                    if (it or {}).get("type") == "statement"]
+            items = sh.unseen(pool, seen, k)
+            kind = sh.CONTEXT
+        for it in items:
+            it["shown_as"] = kind
+        per_need[n["id"]] = {"linked_count": len(own_all), "context_count": len(items) if kind == sh.CONTEXT else 0,
+                             "already_shown": len(seen), "shown_ids": [it.get("id") for it in items],
+                             "furniture_dropped": len(own_all) - len(own_show), "context_pool": len(pool),
+                             "search_attempts": n.get("searched", 0), "reviewed_no_new_context": not items}
+        if not items:
+            # nothing this need has not already been shown: the 3B is not asked about it again
+            _append(_p(paths, "ledger"), {"event": "NO_NEW_FOR_NEED", "ts": _now(), "need_id": n["id"],
+                                          "linked": len(own_all), "already_shown": len(seen),
+                                          "furniture_dropped": len(own_all) - len(own_show),
+                                          "context_pool": len(pool), "kind": kind,
+                                          "searched": n.get("searched", 0)})
+            shown_items[n["id"]] = []
+            recorded.append({"id": n["id"], "verdict": None, "recorded": False, "why_not": "no new material"})
+            continue
         shown_items[n["id"]] = items
-        _append(_p(paths, "ledger"), {"event": "SHOWN", "ts": _now(), "need_id": n["id"], "items": len(items)})
-        lines = "\n".join(f'- "{str(it.get("text"))[:300]}"' for it in items) or "(nothing came back)"
+        _append(_p(paths, "ledger"), {"event": "SHOWN", "ts": _now(), "need_id": n["id"], "items": len(items),
+                                      "kind": kind, "ids": [it.get("id") for it in items]})
+        lines = "\n".join(f'- [{"CONTEXT_RETRIEVED" if it.get("shown_as") == sh.CONTEXT else "LINKED_STATEMENT"}] '
+                          f'"{str(it.get("text"))[:300]}"' for it in items)
         prompt = T.TEXT_C.format(question=n["question"], items=lines)
         try:
             r = (think or _think)(prompt, "", T.SCHEMA_C)
@@ -627,10 +685,14 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
                 "sec": (r or {}).get("sec")}
         calls.append(call)
         if d is None:
+            # NOT recorded as shown: the brain never read these items, so they come back next turn.
+            # Recording before the call lost them for good - under the no-new rule the need was
+            # then never reviewed again (R65 verifier, 9 Oct).
             unreadable("review", why, raw, paths, need_id=n["id"])
             call["unreadable"] = why
             recorded.append({"id": n["id"], "verdict": None, "recorded": False, "why_not": why})
             continue
+        sh.record(n["id"], items, path=_p(paths, "shown"))      # read by the brain: now it is shown
         verdict = d["verdict"]
         n.setdefault("verdicts", []).append({"utc": _now(), "verdict": verdict, "why": d.get("why"),
                                              "narrower_question": d.get("narrower_question")})
@@ -644,7 +706,9 @@ def review(think: Optional[Callable] = None, paths=None, k: int = 5, read: Optio
             call["repeat"] = ch is None
         recorded.append({"id": n["id"], "verdict": verdict, "recorded": True})
     _save_needs(doc, paths)
-    return {"shown": len(mine), "verdicts": recorded, "calls": calls, "items": shown_items,
+    asked = [nid for nid, v in per_need.items() if not v["reviewed_no_new_context"]]
+    return {"shown": len(asked), "reviewed": len(mine), "no_new": len(mine) - len(asked),
+            "verdicts": recorded, "calls": calls, "items": shown_items, "per_need": per_need,
             "sec": round(time.time() - t0, 1)}
 
 

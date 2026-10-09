@@ -49,7 +49,8 @@ def paths(tmp_path, monkeypatch):
     (fw / "F-001.json").write_text(json.dumps(FORWARD), encoding="utf-8")
     return {"needs": tmp_path / "needs.json", "refused": tmp_path / "refused.jsonl", "log": tmp_path / "log.jsonl",
             "ledger": tmp_path / "ledger.jsonl",
-            "briefings": tmp_path / "briefings.jsonl", "grounded": tmp_path / "grounded.json",
+            "briefings": tmp_path / "briefings.jsonl",
+            "shown": tmp_path / "shown_to_brain.jsonl", "grounded": tmp_path / "grounded.json",
             "forward_glob": str(fw / "F-[0-9]*.json"), "obs_log": tmp_path / "obs.jsonl",
             "atoms_root": tmp_path / "atoms"}
 
