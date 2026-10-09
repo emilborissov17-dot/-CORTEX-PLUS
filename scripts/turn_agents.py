@@ -126,8 +126,9 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
         feeds: Optional[Callable] = None, restore: Optional[Callable] = None, atom_sub: Optional[dict] = None,
         maintenance: Optional[Callable] = None, pages_dir=None, records_dir=None, portion_path=None,
         store_read: Optional[Callable] = None, gateway=None, origins: Optional[tuple] = None,
-        end_chrome: Optional[Callable] = None) -> dict:
-    """origins=("engine",): a turn run by hand that takes engine needs only (C-GW-1 step 4)."""
+        end_chrome: Optional[Callable] = None, turns_log=None, alarm: Optional[Callable] = None) -> dict:
+    """origins=("engine",): a turn run by hand that takes engine needs only (C-GW-1 step 4).
+    turns_log / alarm: the loop's log and the alarm sender for the five-turn stall (C-BRAIN-ASK-1)."""
     from core import agent_profiles as ap
     from core import brain_needs as bn
     from core import turn
@@ -363,7 +364,9 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
     rst = (restore or _live_restore)()
     nr.note(f"browsers stopped: {stopped}; feeds: {fres}; core model: {rst}"[:800])
     searched = [p for p in per_need if p.get("kind") != "LABEL"]
+    stall = _stall_alarm(turns_log, lp, alarm)
     res = {"utc": _now(), "seconds": round(time.time() - t0, 1), "cause": cause, "per_need": per_need,
+           "stall": stall,
            "waited": len(waiting), "portion": por, "browsers_stopped": stopped,
            "seconds_per_need": round(sum(p["seconds"] for p in searched) / len(searched), 1) if searched else None,
            "maintenance": {"worked": mres.get("worked"),
@@ -382,6 +385,45 @@ def run(browser_for: Optional[Callable] = None, ingest: Optional[Callable] = Non
     (rd / f"agents_{res['utc'].replace(':', '')}.json").write_text(
         json.dumps(res, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
     return {**res, "exit": 2 if cause else 0}
+
+
+def _stall_alarm(turns_log, ledger_path, alarm: Optional[Callable]) -> Optional[dict]:
+    """C-BRAIN-ASK-1 (Perplexity 81E point 4, 81F Q3 counting (i), 81I F5): after this
+    turn's needs step, the last five agents' turns are read from the loop's log and the
+    vertical ledger (this turn included — its GAINED rows are already written). When none
+    of the five has a GAINED row with statements > 0 for a need it took, ONE alarm goes to
+    the phone (cls "alarm"; the dedup key is the seq of the first empty turn of the run, kept
+    in supervisor's alarm stamp file, so a stall that goes on is told once and a new stall
+    is told again). No second threshold. Never raises: the turn's result does not depend on
+    the phone."""
+    from core import needs_gain as ng
+    from core import turn
+    try:
+        turns = ng.last_turns(ng.STALL_LOOKBACK, turns_log or turn.LOG, ledger_path)
+        st = ng.stalled(turns)
+        if st is not None and st["run_length"] == len(turns):
+            # the run of empty turns reaches the edge of the lookback: read every turn, so the
+            # key is the run's true first seq and does not slide once the stall outlives 50 turns
+            turns = ng.last_turns(ng.ALL_TURNS, turns_log or turn.LOG, ledger_path)
+            st = ng.stalled(turns)
+    except Exception as exc:                                             # noqa: BLE001
+        return {"error": f"{type(exc).__name__}: {exc}"[:200]}
+    if st is None:
+        return None
+    detail = (f"{st['run_length']} agents' turns in a row (the last {st['turns']}: seq {st['seqs']}, from "
+              f"{st['first_start']} to {st['last_start']}) brought no statement for any need they took; causes seen: "
+              f"{st['causes'] or 'none named'}. "
+              f"The brain's 3B is not asked while this goes on (core.needs_gain). The loop keeps running.")
+    try:
+        sent = (alarm or _live_alarm)("NEEDS_STALLED_5_TURNS", detail, f"NEEDS_STALLED:{st['run_start_seq']}")
+    except Exception as exc:                                             # noqa: BLE001
+        sent = f"failed: {type(exc).__name__}: {exc}"[:200]
+    return {**st, "sent": sent}
+
+
+def _live_alarm(subject: str, detail: str, dedup_key: str) -> str:
+    import supervisor
+    return supervisor.alarm_human(subject, detail, dedup_key=dedup_key, cls="alarm", level=supervisor.ALARM)
 
 
 def _store_read(question: str) -> list:

@@ -172,6 +172,7 @@ EXPECTED_TELEGRAM_CALLS = {
     ("experiments/institution/deliver.py", "alarm"),                    # 27 Sep: published bytes do not verify
     ("tools/morning_digest.py", "morning_digest"),
     ("scripts/turns_loop.py", "alarm"),            # C-GW-2, 8 Oct: the baton's stop reaches the phone (R43, R66)
+    ("scripts/turn_agents.py", "alarm"),           # C-BRAIN-ASK-1, 8 Oct: five agents' turns with no gain (Perplexity 81E p.4)
 }
 
 

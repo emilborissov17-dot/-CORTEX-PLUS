@@ -209,7 +209,9 @@ def test_the_brain_turn_runs_in_order_and_writes_its_result(turn_paths):
                space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
                result_path=turn_paths["result"], expect_path=turn_paths["expect"],
                records_dir=turn_paths["result"].parent / "records",
-               gained_path=turn_paths["result"].parent / "gained.json")
+               gained_path=turn_paths["result"].parent / "gained.json",
+                  turns_log=turn_paths["result"].parent / "turns_log.jsonl",
+                  filled_path=turn_paths["result"].parent / "needs_filled.jsonl")
     # C-GUARD-1 Step 4: the fixture base has a positive gap for SAFETY with no covering obs, so the
     # rules derive (need-derived FIND uncovered "SAFETY") beside the model's need; the old empty
     # engine stub hid it
@@ -231,7 +233,9 @@ def test_a_failed_engine_stops_the_turn_with_a_named_cause(turn_paths):
     r = tb.run(think=_model([]), engine=broken, busy=lambda: None, bn_paths=turn_paths["bn"],
                space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], result_path=turn_paths["result"],
                expect_path=turn_paths["expect"], records_dir=turn_paths["result"].parent / "records",
-               gained_path=turn_paths["result"].parent / "gained.json")
+               gained_path=turn_paths["result"].parent / "gained.json",
+                  turns_log=turn_paths["result"].parent / "turns_log.jsonl",
+                  filled_path=turn_paths["result"].parent / "needs_filled.jsonl")
     assert r["exit"] == 2 and "hyperon" in json.loads(turn_paths["result"].read_text(encoding="utf-8"))["cause"]
 
 
@@ -254,6 +258,8 @@ def test_the_whole_brain_turn_is_kept_for_reading_back(turn_paths):
            space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
            result_path=turn_paths["result"], expect_path=turn_paths["expect"],
            records_dir=turn_paths["result"].parent / "records",
-               gained_path=turn_paths["result"].parent / "gained.json")
+               gained_path=turn_paths["result"].parent / "gained.json",
+                  turns_log=turn_paths["result"].parent / "turns_log.jsonl",
+                  filled_path=turn_paths["result"].parent / "needs_filled.jsonl")
     rec = json.loads(next((turn_paths["result"].parent / "records").glob("brain_*.json")).read_text(encoding="utf-8"))
     assert "How many refugees" in rec["reply"]["raw"] and rec["needs"]["accepted"]

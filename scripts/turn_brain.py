@@ -12,9 +12,17 @@ Order:
      question), shown first what was fetched for each; STILL_OPEN with a narrower
      question makes a child need (C-BRAIN-1 Part 2);
   4. the brain's needs (cortex-l1b-3b, schema-bound), asked only for the
-     sub-goals with no open parent, and the engine's needs from the space;
+     sub-goals with no open parent, and the engine's needs from the space.
+     The 3B is asked every brain turn, except after two agents' turns in a
+     row that gained no statement (core.needs_gain; Perplexity 81E/81F under
+     Emil R73, C-BRAIN-ASK-1, 8 Oct 2026) — the old one-turn rule (C-GW-1 1c,
+     the brain's own counters) is gone;
   5. symbols for what it was shown (core.symbols, TEXT B per sentence, at most 20);
-  6. what it expects back, per open need, into memory/expectations.jsonl;
+  6. what it expects back, per open need, into memory/expectations.jsonl, and
+     one row per brain turn into memory/needs_filled.jsonl: per brain need its
+     gain since the last brain turn, "stale" when that gain is 0, the review
+     verdict, the status, would_change as INFORMATION only (81I F3: never a
+     verdict), and the new needs and symbols of the turn;
   7. memory/turn_result.json {summary, open_needs, cause} for the loop, which
      hands the baton to AGENTS once the witness has the exit row.
 
@@ -39,6 +47,7 @@ RESULT = REPO / "memory" / "turn_result.json"
 RECORDS = REPO / "memory" / "turns"
 EXPECT = REPO / "memory" / "expectations.jsonl"
 GAINED = REPO / "memory" / "brain_gained.json"     # what each brain need had gained at the last brain turn
+FILLED = REPO / "memory" / "needs_filled.jsonl"    # one row per brain turn: what each brain need gained (81E point 2)
 
 
 def _now() -> str:
@@ -49,12 +58,22 @@ def gained_now(doc: dict) -> dict:
     return {n["id"]: int(n.get("gained_statements") or 0) for n in doc.get("needs", []) if n.get("origin") == "brain"}
 
 
-def nothing_new(prev: Optional[dict], now: dict) -> bool:
-    """C-GW-1 1c: True when the brain's turn has a record of what its needs had gained
-    last time and none of them has gained anything since. No record -> False (ask)."""
-    if prev is None:
-        return False
-    return not any(v > int(prev.get(k) or 0) for k, v in now.items())
+def filled_rows(doc: dict, prev: Optional[dict], rv: Optional[dict]) -> list:
+    """One row per brain need for memory/needs_filled.jsonl: the gain since the last brain
+    turn (no record -> the whole count), "stale" when that gain is 0 (81I point 5: a need
+    that gains nothing is marked, never retired — R24), the review verdict of this turn if
+    any, the status, and would_change copied as information (81I F3)."""
+    verdict_of = {v.get("id"): v.get("verdict") for v in (rv or {}).get("verdicts") or []}
+    out = []
+    for n in doc.get("needs", []):
+        if n.get("origin") != "brain":
+            continue
+        got = int(n.get("gained_statements") or 0)
+        before = int((prev or {}).get(n["id"]) or 0)
+        out.append({"id": n["id"], "gained_statements": got, "gained_since_last_brain_turn": got - before,
+                    "stale": got - before <= 0, "review_verdict": verdict_of.get(n["id"]),
+                    "status": n.get("status"), "would_change": n.get("would_change")})
+    return out
 
 
 def _paths_of(mod, paths, keys) -> list:
@@ -79,13 +98,15 @@ def _counted(xs) -> dict:
 
 def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, busy: Optional[Callable] = None,
         bn_paths=None, space_paths=None, sym_paths=None, read=None, linked=None,
-        result_path=None, expect_path=None, turn_path=None, records_dir=None, gained_path=None) -> dict:
+        result_path=None, expect_path=None, turn_path=None, records_dir=None, gained_path=None,
+        turns_log=None, filled_path=None) -> dict:
     """Also keeps the WHOLE turn — raw replies, needs accepted and refused, verdicts,
     symbols — in memory/turns/brain_<started>.json, so a turn can be read back verbatim.
     Every step says what it does while it runs (core.narration, Emil R60); outside an
     open narration the steps are silent and the turn is the same."""
     from core import brain_needs as bn
     from core import narration as nr
+    from core import needs_gain as ng
     from core import space as sp
     from core import symbols
     from core import turn
@@ -123,8 +144,14 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
         prev = json.loads(gp.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         prev = None
-    now = gained_now(bn.load_needs(bn_paths))
-    out["nothing_new"] = nothing_new(prev, now)
+    # C-BRAIN-ASK-1 (81F Q1 formulation A, counting (i)): the agents' last two turns, read
+    # from the loop's log and the vertical ledger — not from the brain's own counters
+    turns = ng.last_turns(ng.SKIP_AFTER_EMPTY_TURNS, turns_log or turn.LOG, bn._p(bn_paths, "ledger"))
+    ask, ask_why = ng.ask_model(turns)
+    out["ask_model"] = {"asked": ask, "why": ask_why, "agents_turns": turns}
+    rv = None
+    em = None
+    sy = None
     if why:
         nr.note(f"the model is not asked this turn: {why}")
         with nr.step("emit", "record the engine's needs; the brain's own question was skipped") as s:
@@ -132,12 +159,11 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
                          sp.needs_from(derived))
             s.said(f"open {em.get('open')}")
         out.update({"model_skipped": why, "needs": em, "review": None, "symbols": None})
-    elif out["nothing_new"]:
-        # C-GW-1 1c: nothing was gained for any of its needs since its last turn -> no model call
-        nr.note("nothing was gained for any brain need since the last brain turn: the model is not asked")
-        bn._append(bn._p(bn_paths, "ledger"), {"event": "BRAIN_NOTHING_NEW", "ts": _now(), "origin": "brain",
-                                               "needs": len(now)})
-        with nr.step("emit", "record the engine's needs; nothing new for the brain's own") as s:
+    elif not ask:
+        nr.note(f"the model is not asked this turn: {ask_why}")
+        bn._append(bn._p(bn_paths, "ledger"), {"event": "BRAIN_NOT_ASKED", "ts": _now(), "origin": "brain",
+                                               "why": ask_why, "agents_turns": [t.get("seq") for t in turns]})
+        with nr.step("emit", "record the engine's needs; the brain's own question waits for a gain") as s:
             em = bn.emit(b, None, bn_paths, sp.needs_from(derived))
             s.said(f"open {em.get('open')}")
         out.update({"needs": em, "review": None, "symbols": None})
@@ -174,10 +200,22 @@ def run(think: Optional[Callable] = None, engine: Optional[Callable] = None, bus
             s.said(f"asked {sy.get('asked')}, accepted {len(sy.get('accepted') or [])}, "
                    f"refused {len(sy.get('refused') or [])}")
         out.update({"reply": reply, "free_subgoals": free, "needs": em, "review": rv, "symbols": sy})
-    with nr.step("record", "what it expects back per open need, and the turn's result for the loop") as s:
+    with nr.step("record", "what it expects back per open need, what each brain need gained "
+                           "(memory/needs_filled.jsonl), and the turn's result for the loop") as s:
         doc = bn.load_needs(bn_paths)
+        now = gained_now(doc)
+        fp = Path(filled_path or FILLED)
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        with fp.open("a", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps({"ts": _now(), "turn_seq": turn.state(turn_path).get("seq"),
+                                 "started_utc": out["started_utc"], "asked": ask and not why,
+                                 "not_asked_why": why or (None if ask else ask_why),
+                                 "needs": filled_rows(doc, prev, rv),
+                                 "new_needs": [a.get("id") for a in (em or {}).get("accepted") or []],
+                                 "new_symbols": len((sy or {}).get("accepted") or [])},
+                                ensure_ascii=False, default=str) + "\n")
         gp.parent.mkdir(parents=True, exist_ok=True)
-        gp.write_text(json.dumps(gained_now(doc)), encoding="utf-8")
+        gp.write_text(json.dumps(now), encoding="utf-8")
         open_ = [n for n in doc.get("needs", []) if n.get("status") in (bn.OPEN, bn.STILL_OPEN)]
         ep = Path(expect_path or EXPECT)
         ep.parent.mkdir(parents=True, exist_ok=True)

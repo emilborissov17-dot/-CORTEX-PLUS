@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """test/test_gateway_and_stopping.py — C-GW-1 Step 1: a dead gateway is restarted
-once; a loop that learns nothing stops; a brain with nothing new makes no call.
+once; a loop that learns nothing stops; the brain's 3B is asked unless two agents'
+turns in a row gained nothing (C-BRAIN-ASK-1, 8 Oct 2026, replacing C-GW-1 1c).
 Gateway, browsers, turns and the model are injected; every path is under tmp_path.
 
 A REFUSAL here: a gateway that is still dead after its one restart ends the turn
 GATEWAY_DEAD (never a second restart, never "no results"); three agents' turns with
-the same cause and nothing served stop the loop with one alarm; a brain turn with
-nothing gained calls no model.
+the same cause and nothing served stop the loop with one alarm; two empty agents'
+turns in a row and the brain turn calls no model.
 """
 from __future__ import annotations
 
@@ -92,6 +93,7 @@ def t(tmp_path, monkeypatch):
         from scripts import turn_agents as ta
         return ta.run(browser_for=lambda p: Browser(p, log, alive), ingest=lambda *a, **k: {"added": 2},
                       bn_paths=paths, ledger_path=tmp_path / "ledger.jsonl", result_path=tmp_path / "result.json",
+                      turns_log=tmp_path / "turns_log.jsonl",
                       profiles_dir=prof, learned_dir=tmp_path / "learned", atom_sub={},
                       feeds=lambda: {}, restore=lambda: {}, maintenance=lambda n, s: {"worked": 0, "rows": []},
                       pages_dir=tmp_path / "pages", records_dir=tmp_path / "records", portion_path=por,
@@ -269,7 +271,8 @@ def bt(tmp_path, monkeypatch):
         return tb.run(think=think, engine=lambda prog: [], busy=lambda: None, bn_paths=bn_paths,
                       space_paths=space_paths, sym_paths=sym, read=lambda q, k: [], linked={},
                       result_path=tmp_path / "result.json", expect_path=tmp_path / "expect.jsonl",
-                      records_dir=tmp_path / "records", gained_path=tmp_path / "gained.json")
+                      records_dir=tmp_path / "records", gained_path=tmp_path / "gained.json",
+                      turns_log=tmp_path / "turns_log.jsonl", filled_path=tmp_path / "needs_filled.jsonl")
 
     def gain(n):
         d = json.loads((tmp_path / "needs.json").read_text(encoding="utf-8"))
@@ -279,32 +282,74 @@ def bt(tmp_path, monkeypatch):
     def ledger():
         p = tmp_path / "ledger.jsonl"
         return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines()] if p.exists() else []
-    return {"go": go, "calls": calls, "gain": gain, "ledger": ledger}
+
+    counter = {"n": 0}
+
+    def agents_turns(gains):
+        """C-BRAIN-ASK-1: one agents' turn per entry in `gains` (statements the turn's GAINED
+        row carries; 0 = a turn that gained nothing), written as the loop's log and the
+        vertical ledger write them."""
+        tl = tmp_path / "turns_log.jsonl"
+        lg = tmp_path / "ledger.jsonl"
+        with tl.open("a", encoding="utf-8") as ft, lg.open("a", encoding="utf-8") as fl:
+            for g in gains:
+                i = counter["n"]
+                counter["n"] += 1
+                t0 = f"2026-10-08T10:{i:02d}:00Z"
+                ft.write(json.dumps({"ts": t0, "event": "TURN_START", "holder": "AGENTS", "seq": 100 + i}) + "\n")
+                fl.write(json.dumps({"ts": f"2026-10-08T10:{i:02d}:20Z", "event": "TAKEN", "need_id": "BN-1",
+                                     "origin": "brain"}) + "\n")
+                fl.write(json.dumps({"ts": f"2026-10-08T10:{i:02d}:30Z", "event": "GAINED", "need_id": "BN-1",
+                                     "statements": g, "pages": 1}) + "\n")
+                ft.write(json.dumps({"ts": f"2026-10-08T10:{i:02d}:59Z", "event": "HANDED_OVER", "from": "AGENTS",
+                                     "to": "BRAIN", "seq": 101 + i}) + "\n")
+    return {"go": go, "calls": calls, "gain": gain, "ledger": ledger, "agents_turns": agents_turns,
+            "filled": tmp_path / "needs_filled.jsonl"}
 
 
-def test_the_first_brain_turn_asks_and_a_second_with_nothing_gained_does_not(bt):
-    bt["go"]()
-    first = len(bt["calls"])
+def test_the_brain_is_asked_with_no_agents_turn_on_record_and_again_after_a_gain(bt):
+    """C-BRAIN-ASK-1 (Perplexity 81F Q1, formulation A): asked by default; the one-turn
+    rule of C-GW-1 1c (the brain's own counters) is gone — a second brain turn with the
+    counters unchanged still asks."""
     r = bt["go"]()
-    assert first > 0 and len(bt["calls"]) == first and r["nothing_new"] is True and r["exit"] == 0
-    assert any(x["event"] == "BRAIN_NOTHING_NEW" for x in bt["ledger"]())
-
-
-def test_something_gained_means_the_brain_is_asked_again(bt):
-    bt["go"]()
     first = len(bt["calls"])
+    assert first > 0 and r["ask_model"]["asked"] is True
+    r = bt["go"]()
+    assert len(bt["calls"]) == 2 * first and r["ask_model"]["asked"] is True
+    assert not any(x["event"] in ("BRAIN_NOTHING_NEW", "BRAIN_NOT_ASKED") for x in bt["ledger"]())
+
+
+def test_two_empty_agents_turns_in_a_row_skip_the_model_and_one_gain_asks_again(bt):
+    bt["agents_turns"]([5, 0, 0])
+    r = bt["go"]()
+    assert r["ask_model"]["asked"] is False and len(bt["calls"]) == 0 and r["exit"] == 0
+    assert any(x["event"] == "BRAIN_NOT_ASKED" for x in bt["ledger"]())
+    bt["agents_turns"]([3])
+    r = bt["go"]()
+    assert r["ask_model"]["asked"] is True and len(bt["calls"]) > 0
+
+
+def test_every_brain_turn_writes_one_needs_filled_row_with_the_stale_marker(bt):
+    bt["go"]()
     bt["gain"](3)
     bt["go"]()
-    assert len(bt["calls"]) > first
+    rows = [json.loads(l) for l in bt["filled"].read_text(encoding="utf-8").splitlines()]
+    assert len(rows) == 2 and [r["asked"] for r in rows] == [True, True]
+    first, second = rows[0]["needs"][0], rows[1]["needs"][0]
+    assert first["id"] == "BN-1" and first["gained_since_last_brain_turn"] == 4 and first["stale"] is False
+    assert second["gained_since_last_brain_turn"] == 3 and second["stale"] is False
+    assert second["review_verdict"] == "STILL_OPEN" and "would_change" in second
+    bt["go"]()
+    third = [json.loads(l) for l in bt["filled"].read_text(encoding="utf-8").splitlines()][2]["needs"][0]
+    assert third["gained_since_last_brain_turn"] == 0 and third["stale"] is True
 
 
-def test_mutation_without_the_nothing_new_check_the_model_is_called_again(bt, monkeypatch):
-    from scripts import turn_brain as tb
-    monkeypatch.setattr(tb, "nothing_new", lambda prev, now: False)
+def test_mutation_without_the_two_turn_check_the_model_is_asked_after_two_empty_turns(bt, monkeypatch):
+    from core import needs_gain as ng
+    monkeypatch.setattr(ng, "ask_model", lambda turns: (True, "mutated"))
+    bt["agents_turns"]([0, 0])
     bt["go"]()
-    first = len(bt["calls"])
-    bt["go"]()
-    assert len(bt["calls"]) > first
+    assert len(bt["calls"]) > 0
 
 
 def test_the_net_stops_a_test_that_reaches_the_live_openclaw_cli(_no_live):

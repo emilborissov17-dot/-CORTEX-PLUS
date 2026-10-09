@@ -96,6 +96,7 @@ def t(tmp_path, monkeypatch):
         from scripts import turn_agents as ta
         return ta.run(browser_for=lambda p: FakeBrowser(p, log, alive["v"]), ingest=lambda *a, **k: {"added": 2},
                       bn_paths=paths, ledger_path=tmp_path / "ledger.jsonl", result_path=tmp_path / "result.json",
+                      turns_log=tmp_path / "turns_log.jsonl",
                       profiles_dir=prof, learned_dir=tmp_path / "learned", atom_sub={},
                       feeds=lambda: {"worker": {"rc": 0}}, restore=lambda: {"reloaded": False, "seconds": 0.0},
                       maintenance=lambda n, s: (cells.append(n) or {"worked": n, "rows": []}),

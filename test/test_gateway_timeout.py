@@ -141,6 +141,7 @@ def t(tmp_path, monkeypatch):
         from scripts import turn_agents as ta
         return ta.run(browser_for=lambda p: Browser(p, state), ingest=lambda *a, **k: {"added": 2},
                       bn_paths=paths, ledger_path=tmp_path / "ledger.jsonl", result_path=tmp_path / "result.json",
+                      turns_log=tmp_path / "turns_log.jsonl",
                       profiles_dir=prof, learned_dir=tmp_path / "learned", atom_sub={},
                       feeds=lambda: {}, restore=lambda: {}, maintenance=lambda n, s: {"worked": 0, "rows": []},
                       pages_dir=tmp_path / "pages", records_dir=tmp_path / "records", portion_path=por,

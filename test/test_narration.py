@@ -215,7 +215,9 @@ def _brain_turn(turn_paths, engine=_space_engine):
                   space_paths=turn_paths["space"], sym_paths=turn_paths["sym"], read=lambda q, k: [], linked={},
                   result_path=turn_paths["result"], expect_path=turn_paths["expect"],
                   records_dir=turn_paths["result"].parent / "records",
-                  gained_path=turn_paths["result"].parent / "gained.json")
+                  gained_path=turn_paths["result"].parent / "gained.json",
+                  turns_log=turn_paths["result"].parent / "turns_log.jsonl",
+                  filled_path=turn_paths["result"].parent / "needs_filled.jsonl")
 
 
 def test_the_brain_turn_says_each_step_in_order(turn_paths, tmp_path):
