@@ -259,3 +259,35 @@ def test_mutation_sending_everything_would_include_the_statements(tmp_path):
     base = '(statement "s1" "A1.1" "who.int")\n'
     (d / "base.metta").write_text(base, encoding="utf-8")
     assert "(statement " in base and "(statement " not in sp.engine_program(base, "", "")
+
+
+# ── C-ENGINE-2 (10 Oct 2026): the program that panicked hyperon 0.2.10 ──────────────────────────
+
+PANIC = (REPO / "test" / "fixtures" / "engine_panic_2026-10-10.metta").read_text(encoding="utf-8")
+PANIC_BASE, PANIC_PROPOSED = PANIC.split(";; PROPOSED\n")
+
+
+def _derive_panic(tmp_path, rules: str) -> list:
+    d = tmp_path / "space"
+    d.mkdir(exist_ok=True)
+    (d / "base.metta").write_text(PANIC_BASE, encoding="utf-8")
+    (tmp_path / "proposed.metta").write_text(PANIC_PROPOSED, encoding="utf-8")
+    (tmp_path / "rules.metta").write_text(rules, encoding="utf-8")
+    return sp.derive({"dir": d, "rules": tmp_path / "rules.metta", "proposed": tmp_path / "proposed.metta"})
+
+
+def test_the_program_that_panicked_on_10_oct_runs_and_derives_as_before(tmp_path):
+    """Brain turn 184 (10 Oct 2026 07:55Z) died in hyperon's index with this input and the rules adding
+    to &self. With the derivations written to &derived it runs, and derive() itself checks every
+    derivation against the plain-Python witness in both directions (none missed, none unconfirmed)."""
+    r = _derive_panic(tmp_path, RULES)
+    assert r["witness"]["missing"] == 0 and r["witness"]["unconfirmed"] == 0
+    assert len(r["expressions"]) == 166
+
+
+def test_mutation_the_old_form_adding_to_self_panics_the_engine(tmp_path):
+    """The same input with the rules in their old form (derived atoms added to &self). If this stops
+    failing, the engine changed under us - read its release notes before relying on it."""
+    old = RULES.replace("!(bind! &derived (new-space))\n", "").replace("&derived", "&self")
+    with pytest.raises(sp.SpaceEngineFailed, match="hyperon exit"):
+        _derive_panic(tmp_path, old)
