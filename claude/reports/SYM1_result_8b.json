@@ -1,0 +1,612 @@
+{
+ "set_sha12": "b9060644452f",
+ "arm": "8b",
+ "hyperon": "0.2.10",
+ "seconds": {
+  "total": 785.43,
+  "translator": 785.13,
+  "engine": 0.3
+ },
+ "counts": {
+  "candidate": 6,
+  "accepted": 0,
+  "refused": 48,
+  "filled": 0
+ },
+ "candidate": [
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "Virgin Islands, British",
+   "2025",
+   19.7,
+   "none"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "global",
+   "2025",
+   20.7,
+   "none"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Nauru",
+   "1990",
+   0.92,
+   "none"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Mali",
+   "1990",
+   1.92,
+   "none"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Türkiye",
+   "2023",
+   1.9,
+   "none"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Spain",
+   "2023",
+   2.9,
+   "none"
+  ]
+ ],
+ "accepted": [],
+ "refused": [
+  [
+   "8b:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:85989f0be426593504afa26d",
+   "85989f0be426593504afa26d",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:8f9a832dbed37c5585dd348e",
+   "8f9a832dbed37c5585dd348e",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:cdc56a3216ca4fab26e6f419",
+   "cdc56a3216ca4fab26e6f419",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:1809b70c6785fc0b30ea6d26",
+   "1809b70c6785fc0b30ea6d26",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:0b9a237fd5338f2909c5b9db",
+   "0b9a237fd5338f2909c5b9db",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:dfe1e56d9f386bba56efc475",
+   "dfe1e56d9f386bba56efc475",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:8ae2f18534f2412b3ad49ca6",
+   "8ae2f18534f2412b3ad49ca6",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:f167a25254be7213c1009804",
+   "f167a25254be7213c1009804",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:f764a8da7ad4de36382bf078",
+   "f764a8da7ad4de36382bf078",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:71b722bf5a3b752c03a90c50",
+   "71b722bf5a3b752c03a90c50",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:739a9a2117d821cfcaba0b77",
+   "739a9a2117d821cfcaba0b77",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:63aede32989b48f2296b66e9",
+   "63aede32989b48f2296b66e9",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:ea972e1def70937c6d284731",
+   "ea972e1def70937c6d284731",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:48fc3a7651fe2a062d2ef000",
+   "48fc3a7651fe2a062d2ef000",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:7f217ba1d5cc94c52d804749",
+   "7f217ba1d5cc94c52d804749",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:b63bc8ad4d744338a516f2c1",
+   "b63bc8ad4d744338a516f2c1",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:4665fbed9fc5f20bfa1e75af",
+   "4665fbed9fc5f20bfa1e75af",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:76d9071519ed05cfdd975908",
+   "76d9071519ed05cfdd975908",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:1d2429bff50b00cb7b57aaee",
+   "1d2429bff50b00cb7b57aaee",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:249bd860b41fc72b0f5c9607",
+   "249bd860b41fc72b0f5c9607",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:6b0c2ff2514a8ba982548b9e",
+   "6b0c2ff2514a8ba982548b9e",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:c11b98e755a04f3e5881280b",
+   "c11b98e755a04f3e5881280b",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:155373eed9195071d21d098c",
+   "155373eed9195071d21d098c",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:90e4f5a34ca020b407b27f29",
+   "90e4f5a34ca020b407b27f29",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:f8afbd1b3e52e7dd431da1e8",
+   "f8afbd1b3e52e7dd431da1e8",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:8e13c3f4f3208c74d41e855e",
+   "8e13c3f4f3208c74d41e855e",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:0c59d34034a96847bd03dec6",
+   "0c59d34034a96847bd03dec6",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:e304a10dfbfe1f0e614f8588",
+   "e304a10dfbfe1f0e614f8588",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:3a4104252c1fc4c593da6c68",
+   "3a4104252c1fc4c593da6c68",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:d8c66fa83f67f65d317ee8b3",
+   "d8c66fa83f67f65d317ee8b3",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:bfb336925d7502e080e09ae2",
+   "bfb336925d7502e080e09ae2",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:d96710fff6dd55c0eba7363b",
+   "d96710fff6dd55c0eba7363b",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:709cdcb450684210fbfae2cb",
+   "709cdcb450684210fbfae2cb",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:bfb336925d7502e080e09ae2-noprov",
+   "bfb336925d7502e080e09ae2-noprov",
+   "translator gave no usable reply: no reply"
+  ],
+  [
+   "8b:c16f8b37283b17372c01a3df-noprov",
+   "c16f8b37283b17372c01a3df-noprov",
+   "the translator stated no measurement"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "place is not a span of the sentence"
+  ]
+ ],
+ "filled": [],
+ "translator_log": [
+  {
+   "sid": "c16f8b37283b17372c01a3df-noprov",
+   "model": "qwen3:8b",
+   "sec": 178.9,
+   "raw": "{\n  \"quantity\": \"first private college to teach civil engineering\",\n  \"place\": \"United States\",\n  \"period\": \"1819\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
+  },
+  {
+   "sid": "bfb336925d7502e080e09ae2-noprov",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "709cdcb450684210fbfae2cb",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "d96710fff6dd55c0eba7363b",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "bfb336925d7502e080e09ae2",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "62caa8770982510a98db7615",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "d8c66fa83f67f65d317ee8b3",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "b092e1289c5704b4ccf1380f",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "3a4104252c1fc4c593da6c68",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "e304a10dfbfe1f0e614f8588",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "0c59d34034a96847bd03dec6",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "8e13c3f4f3208c74d41e855e",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "f8afbd1b3e52e7dd431da1e8",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "90e4f5a34ca020b407b27f29",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "155373eed9195071d21d098c",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "c11b98e755a04f3e5881280b",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "6b0c2ff2514a8ba982548b9e",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "249bd860b41fc72b0f5c9607",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "1d2429bff50b00cb7b57aaee",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "76d9071519ed05cfdd975908",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "4665fbed9fc5f20bfa1e75af",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "b63bc8ad4d744338a516f2c1",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "7f217ba1d5cc94c52d804749",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "48fc3a7651fe2a062d2ef000",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "ea972e1def70937c6d284731",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "c16f8b37283b17372c01a3df",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "63aede32989b48f2296b66e9",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "739a9a2117d821cfcaba0b77",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "71b722bf5a3b752c03a90c50",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "f764a8da7ad4de36382bf078",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "f167a25254be7213c1009804",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "8ae2f18534f2412b3ad49ca6",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "dfe1e56d9f386bba56efc475",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "e8a187b99b5e1193fdbc06ff",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "0b9a237fd5338f2909c5b9db",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "1809b70c6785fc0b30ea6d26",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "052f4bcd9bdd0fb5123a9b8a",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "cdc56a3216ca4fab26e6f419",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "8f9a832dbed37c5585dd348e",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "85989f0be426593504afa26d",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "17d86275dc9d84c15ccfc269",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  },
+  {
+   "sid": "3dd982032c1cdf8b09f44d57",
+   "model": null,
+   "sec": null,
+   "raw": null,
+   "unreadable": "no reply"
+  }
+ ]
+}

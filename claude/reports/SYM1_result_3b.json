@@ -1,0 +1,638 @@
+{
+ "set_sha12": "b9060644452f",
+ "arm": "3b",
+ "hyperon": "0.2.10",
+ "seconds": {
+  "total": 298.48,
+  "translator": 298.18,
+  "engine": 0.3
+ },
+ "counts": {
+  "candidate": 8,
+  "accepted": 1,
+  "refused": 47,
+  "filled": 0
+ },
+ "candidate": [
+  [
+   "3b:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   "660",
+   "Equatorial Guinea",
+   "2017",
+   660.0,
+   "none"
+  ],
+  [
+   "3b:f167a25254be7213c1009804",
+   "f167a25254be7213c1009804",
+   "20",
+   "liberalforum.eu/wp-content/uploads/2024/03/",
+   "2024-03",
+   20.0,
+   "none"
+  ],
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "Virgin Islands, British",
+   "2025",
+   19.7,
+   "none"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "global",
+   "2025",
+   20.7,
+   "none"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Nauru",
+   "1990",
+   0.92,
+   "none"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Mali",
+   "1990",
+   1.92,
+   "none"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Türkiye",
+   "2023",
+   1.9,
+   "none"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Spain",
+   "2023",
+   2.9,
+   "none"
+  ]
+ ],
+ "accepted": [
+  [
+   "3b:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   [
+    "measure",
+    "660",
+    "GNQ",
+    "2017",
+    660.0,
+    "none"
+   ]
+  ]
+ ],
+ "refused": [
+  [
+   "3b:f167a25254be7213c1009804",
+   "f167a25254be7213c1009804",
+   "period is not a span of the sentence"
+  ],
+  [
+   "3b:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:85989f0be426593504afa26d",
+   "85989f0be426593504afa26d",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:8f9a832dbed37c5585dd348e",
+   "8f9a832dbed37c5585dd348e",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:cdc56a3216ca4fab26e6f419",
+   "cdc56a3216ca4fab26e6f419",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:1809b70c6785fc0b30ea6d26",
+   "1809b70c6785fc0b30ea6d26",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:0b9a237fd5338f2909c5b9db",
+   "0b9a237fd5338f2909c5b9db",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:dfe1e56d9f386bba56efc475",
+   "dfe1e56d9f386bba56efc475",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:8ae2f18534f2412b3ad49ca6",
+   "8ae2f18534f2412b3ad49ca6",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:f764a8da7ad4de36382bf078",
+   "f764a8da7ad4de36382bf078",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:71b722bf5a3b752c03a90c50",
+   "71b722bf5a3b752c03a90c50",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:739a9a2117d821cfcaba0b77",
+   "739a9a2117d821cfcaba0b77",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:63aede32989b48f2296b66e9",
+   "63aede32989b48f2296b66e9",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:ea972e1def70937c6d284731",
+   "ea972e1def70937c6d284731",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:48fc3a7651fe2a062d2ef000",
+   "48fc3a7651fe2a062d2ef000",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:7f217ba1d5cc94c52d804749",
+   "7f217ba1d5cc94c52d804749",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:b63bc8ad4d744338a516f2c1",
+   "b63bc8ad4d744338a516f2c1",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:4665fbed9fc5f20bfa1e75af",
+   "4665fbed9fc5f20bfa1e75af",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:76d9071519ed05cfdd975908",
+   "76d9071519ed05cfdd975908",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:1d2429bff50b00cb7b57aaee",
+   "1d2429bff50b00cb7b57aaee",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:249bd860b41fc72b0f5c9607",
+   "249bd860b41fc72b0f5c9607",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:6b0c2ff2514a8ba982548b9e",
+   "6b0c2ff2514a8ba982548b9e",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:c11b98e755a04f3e5881280b",
+   "c11b98e755a04f3e5881280b",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:155373eed9195071d21d098c",
+   "155373eed9195071d21d098c",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:90e4f5a34ca020b407b27f29",
+   "90e4f5a34ca020b407b27f29",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:f8afbd1b3e52e7dd431da1e8",
+   "f8afbd1b3e52e7dd431da1e8",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:8e13c3f4f3208c74d41e855e",
+   "8e13c3f4f3208c74d41e855e",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:0c59d34034a96847bd03dec6",
+   "0c59d34034a96847bd03dec6",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:e304a10dfbfe1f0e614f8588",
+   "e304a10dfbfe1f0e614f8588",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:3a4104252c1fc4c593da6c68",
+   "3a4104252c1fc4c593da6c68",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:d8c66fa83f67f65d317ee8b3",
+   "d8c66fa83f67f65d317ee8b3",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:bfb336925d7502e080e09ae2",
+   "bfb336925d7502e080e09ae2",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:d96710fff6dd55c0eba7363b",
+   "d96710fff6dd55c0eba7363b",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:709cdcb450684210fbfae2cb",
+   "709cdcb450684210fbfae2cb",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:bfb336925d7502e080e09ae2-noprov",
+   "bfb336925d7502e080e09ae2-noprov",
+   "the translator stated no measurement"
+  ],
+  [
+   "3b:c16f8b37283b17372c01a3df-noprov",
+   "c16f8b37283b17372c01a3df-noprov",
+   "the translator stated no measurement"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "place is not a span of the sentence"
+  ]
+ ],
+ "filled": [],
+ "translator_log": [
+  {
+   "sid": "c16f8b37283b17372c01a3df-noprov",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 10.8,
+   "raw": "{\"quantity\": \"Norwich University\", \"place\": \"the United States\", \"period\": \"1819\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "bfb336925d7502e080e09ae2-noprov",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 6.2,
+   "raw": "{\"quantity\": \"2.90 1.73 1.62 33 8 4\", \"place\": \"Brunei Darussalam\", \"period\": \"2005\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "709cdcb450684210fbfae2cb",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.6,
+   "raw": "{\"quantity\": \"2332a\", \"place\": null, \"period\": null, \"number\": null, \"unit\": \"a\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "d96710fff6dd55c0eba7363b",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.6,
+   "raw": "{\"quantity\": \"oped by the ISACA IT Governance Institute.\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "bfb336925d7502e080e09ae2",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.9,
+   "raw": "{\"quantity\": \"2.90 1.73 1.62 33 8 4\", \"place\": \"Brunei Darussalam\", \"period\": \"2005\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "62caa8770982510a98db7615",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.9,
+   "raw": "{\"quantity\": \"660\", \"place\": \"Equatorial Guinea\", \"period\": \"2017\", \"number\": 660, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "d8c66fa83f67f65d317ee8b3",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.5,
+   "raw": "{\"quantity\": \"Malicious AI agents\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "b092e1289c5704b4ccf1380f",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.5,
+   "raw": "{\"quantity\": \"19.7 billion\", \"place\": null, \"period\": \"2025 vs 2024; highest since 2022\", \"number\": null, \"unit\": \"billion\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "3a4104252c1fc4c593da6c68",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 6.3,
+   "raw": "{\"quantity\": \"45,709 19,456 9,022 862 -255 55,536 672\", \"place\": \"Germany\", \"period\": \"2017\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "e304a10dfbfe1f0e614f8588",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.4,
+   "raw": "{\"quantity\": \"low- and lower-middle-income\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "0c59d34034a96847bd03dec6",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.7,
+   "raw": "{\"quantity\": \"26th\", \"place\": null, \"period\": \"2017.\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "8e13c3f4f3208c74d41e855e",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.1,
+   "raw": "{\"quantity\": \"Climate Crisis\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "f8afbd1b3e52e7dd431da1e8",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.3,
+   "raw": "{\"quantity\": \"TFR\", \"place\": null, \"period\": null, \"number\": null, \"unit\": \"%\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "90e4f5a34ca020b407b27f29",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.6,
+   "raw": "{\"quantity\": \"the number of high-security laboratories\", \"place\": \"worldwide\", \"period\": \"years\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "155373eed9195071d21d098c",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.4,
+   "raw": "{\"quantity\": \"residential and other improvements\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "c11b98e755a04f3e5881280b",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.5,
+   "raw": "{\"quantity\": \"traditional feature-based detection techniques\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "6b0c2ff2514a8ba982548b9e",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.6,
+   "raw": "{\"quantity\": \"(7 - 9)\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "249bd860b41fc72b0f5c9607",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.2,
+   "raw": "{\"quantity\": \"comprehensive coverage\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "1d2429bff50b00cb7b57aaee",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 6.0,
+   "raw": "{\"quantity\": \"1,000 vs 1,500; 2030 vs 2035\", \"place\": null, \"period\": \"2030 vs 2035\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "76d9071519ed05cfdd975908",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.9,
+   "raw": "{\"quantity\": \"fertility\", \"place\": null, \"period\": \"2024-2100\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "4665fbed9fc5f20bfa1e75af",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.5,
+   "raw": "{\"quantity\": \"agencies\", \"place\": \"other foreign banks located in\", \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "b63bc8ad4d744338a516f2c1",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.8,
+   "raw": "{\"quantity\": \"128\", \"place\": \"Myanmar\", \"period\": \"March 2026\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "7f217ba1d5cc94c52d804749",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.8,
+   "raw": "{\"quantity\": \"13,943\", \"place\": \"Argentina\", \"period\": \"2017\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "48fc3a7651fe2a062d2ef000",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.3,
+   "raw": "{\"quantity\": \"Mapping General Education Outcomes\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "ea972e1def70937c6d284731",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.6,
+   "raw": "{\"quantity\": \"your sobriety, your life\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "c16f8b37283b17372c01a3df",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.1,
+   "raw": "{\"quantity\": \"Norwich University\", \"place\": \"the United States\", \"period\": \"1819\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "63aede32989b48f2296b66e9",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.3,
+   "raw": "{\"quantity\": \"depository institutions\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "739a9a2117d821cfcaba0b77",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.6,
+   "raw": "{\"quantity\": \"LQ\", \"place\": \"fiJXUH :RPHQ DQG JLUOV IDFH D PXFK ORZHU\", \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "71b722bf5a3b752c03a90c50",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.9,
+   "raw": "{\"quantity\": \"2.5 years\", \"place\": \"null\", \"period\": \"20 years\", \"number\": null, \"unit\": \"years\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "f764a8da7ad4de36382bf078",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.4,
+   "raw": "{\"quantity\": \"Launch costs\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "f167a25254be7213c1009804",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.6,
+   "raw": "{\"quantity\": \"20\", \"place\": \"liberalforum.eu/wp-content/uploads/2024/03/\", \"period\": \"2024-03\", \"number\": 20, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "8ae2f18534f2412b3ad49ca6",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.7,
+   "raw": "{\"quantity\": \"971\", \"place\": \"Papua New Guinea\", \"period\": \"2017\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "dfe1e56d9f386bba56efc475",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.7,
+   "raw": "{\"quantity\": \"cyber #1 (42%)\", \"place\": null, \"period\": null, \"number\": null, \"unit\": \"%\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "e8a187b99b5e1193fdbc06ff",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.2,
+   "raw": "{\"quantity\": \"2·6%\", \"place\": null, \"period\": \"2010-2021\", \"number\": 2.6, \"unit\": \"%\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "0b9a237fd5338f2909c5b9db",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.8,
+   "raw": "{\"quantity\": \"91%\", \"place\": null, \"period\": \"2023\", \"number\": null, \"unit\": \"%\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "1809b70c6785fc0b30ea6d26",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 6.4,
+   "raw": "{\"quantity\": \"Faso, Chad, Mali, Mauritania and the Niger\", \"place\": \"Faso, Chad, Mali, Mauritania and the Niger\", \"period\": \"1 January 1997 abd 17\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "052f4bcd9bdd0fb5123a9b8a",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 5.3,
+   "raw": "{\"quantity\": \"0.92; 0.14\", \"place\": \"Mali; United States\", \"period\": \"1990\", \"number\": null, \"unit\": \"null\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "cdc56a3216ca4fab26e6f419",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.4,
+   "raw": "{\"quantity\": \"recovery position\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "8f9a832dbed37c5585dd348e",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.9,
+   "raw": "{\"quantity\": \"Meeting\", \"place\": \"Washington, D.C.\", \"period\": \"22-25 April 2020\", \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "85989f0be426593504afa26d",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.5,
+   "raw": "{\"quantity\": \"Tree plantings, community gardens, green roofs\", \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
+  },
+  {
+   "sid": "17d86275dc9d84c15ccfc269",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.7,
+   "raw": "{\"quantity\": \"600 million\", \"place\": null, \"period\": \"2023\", \"number\": null, \"unit\": \"million\"}",
+   "unreadable": null
+  },
+  {
+   "sid": "3dd982032c1cdf8b09f44d57",
+   "model": "cortex-l1b-3b:latest",
+   "sec": 4.8,
+   "raw": "{\"quantity\": \"1.9%\", \"place\": null, \"period\": \"2023\", \"number\": 1.9, \"unit\": \"%\"}",
+   "unreadable": null
+  }
+ ]
+}

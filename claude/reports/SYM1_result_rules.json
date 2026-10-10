@@ -1,0 +1,624 @@
+{
+ "set_sha12": "b9060644452f",
+ "arm": "rules",
+ "hyperon": "0.2.10",
+ "seconds": {
+  "total": 1.5,
+  "translator": 0.15,
+  "engine": 1.35
+ },
+ "counts": {
+  "candidate": 26,
+  "accepted": 18,
+  "refused": 30,
+  "filled": 0
+ },
+ "candidate": [
+  [
+   "rules:c16f8b37283b17372c01a3df-noprov",
+   "c16f8b37283b17372c01a3df-noprov",
+   "was Norwich University, founded in",
+   "United States",
+   "1905",
+   1819.0,
+   "none"
+  ],
+  [
+   "rules:bfb336925d7502e080e09ae2-noprov",
+   "bfb336925d7502e080e09ae2-noprov",
+   "Brunei Darussalam",
+   "Brunei Darussalam",
+   "2005",
+   2.9,
+   "none"
+  ],
+  [
+   "rules:bfb336925d7502e080e09ae2",
+   "bfb336925d7502e080e09ae2",
+   "Brunei Darussalam",
+   "Brunei Darussalam",
+   "2005",
+   2.9,
+   "none"
+  ],
+  [
+   "rules:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   "Equatorial Guinea 2017",
+   "Equatorial Guinea",
+   "2017",
+   660.0,
+   "none"
+  ],
+  [
+   "rules:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "cost the global economy $",
+   "global",
+   "2025",
+   19.7,
+   "none"
+  ],
+  [
+   "rules:3a4104252c1fc4c593da6c68",
+   "3a4104252c1fc4c593da6c68",
+   "Germany 2017",
+   "Germany",
+   "2017",
+   45709.0,
+   "none"
+  ],
+  [
+   "rules:0c59d34034a96847bd03dec6",
+   "0c59d34034a96847bd03dec6",
+   "In: Proceedings of the",
+   "world",
+   "2017",
+   26.0,
+   "none"
+  ],
+  [
+   "rules:1d2429bff50b00cb7b57aaee",
+   "1d2429bff50b00cb7b57aaee",
+   "with projections of more than",
+   "China",
+   "2030",
+   1000.0,
+   "none"
+  ],
+  [
+   "rules:76d9071519ed05cfdd975908",
+   "76d9071519ed05cfdd975908",
+   "Over the longer period 2024-",
+   "global",
+   "2024",
+   2100.0,
+   "none"
+  ],
+  [
+   "rules:7f217ba1d5cc94c52d804749",
+   "7f217ba1d5cc94c52d804749",
+   "Argentina 2017",
+   "Argentina",
+   "2017",
+   11024.0,
+   "none"
+  ],
+  [
+   "rules:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   "was Norwich University, founded in",
+   "United States",
+   "1905",
+   1819.0,
+   "none"
+  ],
+  [
+   "rules:8ae2f18534f2412b3ad49ca6",
+   "8ae2f18534f2412b3ad49ca6",
+   "Papua New Guinea 2017 *",
+   "Papua New Guinea",
+   "2017",
+   971.0,
+   "none"
+  ],
+  [
+   "rules:dfe1e56d9f386bba56efc475",
+   "dfe1e56d9f386bba56efc475",
+   "Barometer 2026 lists cyber #",
+   "globally",
+   "2026",
+   1.0,
+   "none"
+  ],
+  [
+   "rules:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   "relatively stable between 2010 and",
+   "globally",
+   "2010",
+   2021.0,
+   "none"
+  ],
+  [
+   "rules:0b9a237fd5338f2909c5b9db",
+   "0b9a237fd5338f2909c5b9db",
+   "In 2023,",
+   "global",
+   "2023",
+   91.0,
+   "%"
+  ],
+  [
+   "rules:1809b70c6785fc0b30ea6d26",
+   "1809b70c6785fc0b30ea6d26",
+   "Mauritania and the Niger between",
+   "Mauritania",
+   "1997",
+   1.0,
+   "none"
+  ],
+  [
+   "rules:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "A study across",
+   "United States",
+   "1990",
+   85.0,
+   "none"
+  ],
+  [
+   "rules:8f9a832dbed37c5585dd348e",
+   "8f9a832dbed37c5585dd348e",
+   "Meeting, Washington, D.C.,",
+   "Washington",
+   "2020",
+   22.0,
+   "none"
+  ],
+  [
+   "rules:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   "in 2023 stabilised at around",
+   "Ethiopia",
+   "2023",
+   600.0,
+   "none"
+  ],
+  [
+   "rules:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "has dropped sharply, representing just",
+   "Spain",
+   "2023",
+   1.9,
+   "%"
+  ],
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "Virgin Islands, British",
+   "2025",
+   19.7,
+   "none"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "global",
+   "2025",
+   20.7,
+   "none"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Nauru",
+   "1990",
+   0.92,
+   "none"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Mali",
+   "1990",
+   1.92,
+   "none"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Türkiye",
+   "2023",
+   1.9,
+   "none"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "electricity generation",
+   "Spain",
+   "2023",
+   2.9,
+   "none"
+  ]
+ ],
+ "accepted": [
+  [
+   "rules:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   [
+    "measure",
+    "has dropped sharply, representing just",
+    "ESP",
+    "2023",
+    1.9,
+    "%"
+   ]
+  ],
+  [
+   "rules:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   [
+    "measure",
+    "in 2023 stabilised at around",
+    "ETH",
+    "2023",
+    600.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:8f9a832dbed37c5585dd348e",
+   "8f9a832dbed37c5585dd348e",
+   [
+    "measure",
+    "Meeting, Washington, D.C.,",
+    "US-WA",
+    "2020",
+    22.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   [
+    "measure",
+    "A study across",
+    "USA",
+    "1990",
+    85.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:1809b70c6785fc0b30ea6d26",
+   "1809b70c6785fc0b30ea6d26",
+   [
+    "measure",
+    "Mauritania and the Niger between",
+    "MRT",
+    "1997",
+    1.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:0b9a237fd5338f2909c5b9db",
+   "0b9a237fd5338f2909c5b9db",
+   [
+    "measure",
+    "In 2023,",
+    "WLD",
+    "2023",
+    91.0,
+    "%"
+   ]
+  ],
+  [
+   "rules:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   [
+    "measure",
+    "relatively stable between 2010 and",
+    "WLD",
+    "2010",
+    2021.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:dfe1e56d9f386bba56efc475",
+   "dfe1e56d9f386bba56efc475",
+   [
+    "measure",
+    "Barometer 2026 lists cyber #",
+    "WLD",
+    "2026",
+    1.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:8ae2f18534f2412b3ad49ca6",
+   "8ae2f18534f2412b3ad49ca6",
+   [
+    "measure",
+    "Papua New Guinea 2017 *",
+    "PNG",
+    "2017",
+    971.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   [
+    "measure",
+    "was Norwich University, founded in",
+    "USA",
+    "1905",
+    1819.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:7f217ba1d5cc94c52d804749",
+   "7f217ba1d5cc94c52d804749",
+   [
+    "measure",
+    "Argentina 2017",
+    "ARG",
+    "2017",
+    11024.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:76d9071519ed05cfdd975908",
+   "76d9071519ed05cfdd975908",
+   [
+    "measure",
+    "Over the longer period 2024-",
+    "WLD",
+    "2024",
+    2100.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:1d2429bff50b00cb7b57aaee",
+   "1d2429bff50b00cb7b57aaee",
+   [
+    "measure",
+    "with projections of more than",
+    "CHN",
+    "2030",
+    1000.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:0c59d34034a96847bd03dec6",
+   "0c59d34034a96847bd03dec6",
+   [
+    "measure",
+    "In: Proceedings of the",
+    "WLD",
+    "2017",
+    26.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:3a4104252c1fc4c593da6c68",
+   "3a4104252c1fc4c593da6c68",
+   [
+    "measure",
+    "Germany 2017",
+    "DEU",
+    "2017",
+    45709.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   [
+    "measure",
+    "cost the global economy $",
+    "WLD",
+    "2025",
+    19.7,
+    "none"
+   ]
+  ],
+  [
+   "rules:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   [
+    "measure",
+    "Equatorial Guinea 2017",
+    "GNQ",
+    "2017",
+    660.0,
+    "none"
+   ]
+  ],
+  [
+   "rules:bfb336925d7502e080e09ae2",
+   "bfb336925d7502e080e09ae2",
+   [
+    "measure",
+    "Brunei Darussalam",
+    "BRN",
+    "2005",
+    2.9,
+    "none"
+   ]
+  ]
+ ],
+ "refused": [
+  [
+   "rules:bfb336925d7502e080e09ae2-noprov",
+   "bfb336925d7502e080e09ae2-noprov",
+   "no provenance record"
+  ],
+  [
+   "rules:c16f8b37283b17372c01a3df-noprov",
+   "c16f8b37283b17372c01a3df-noprov",
+   "no provenance record"
+  ],
+  [
+   "rules:85989f0be426593504afa26d",
+   "85989f0be426593504afa26d",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:cdc56a3216ca4fab26e6f419",
+   "cdc56a3216ca4fab26e6f419",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:f167a25254be7213c1009804",
+   "f167a25254be7213c1009804",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:f764a8da7ad4de36382bf078",
+   "f764a8da7ad4de36382bf078",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:71b722bf5a3b752c03a90c50",
+   "71b722bf5a3b752c03a90c50",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:739a9a2117d821cfcaba0b77",
+   "739a9a2117d821cfcaba0b77",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:63aede32989b48f2296b66e9",
+   "63aede32989b48f2296b66e9",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:ea972e1def70937c6d284731",
+   "ea972e1def70937c6d284731",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:48fc3a7651fe2a062d2ef000",
+   "48fc3a7651fe2a062d2ef000",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:b63bc8ad4d744338a516f2c1",
+   "b63bc8ad4d744338a516f2c1",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:4665fbed9fc5f20bfa1e75af",
+   "4665fbed9fc5f20bfa1e75af",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:249bd860b41fc72b0f5c9607",
+   "249bd860b41fc72b0f5c9607",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:6b0c2ff2514a8ba982548b9e",
+   "6b0c2ff2514a8ba982548b9e",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:c11b98e755a04f3e5881280b",
+   "c11b98e755a04f3e5881280b",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:155373eed9195071d21d098c",
+   "155373eed9195071d21d098c",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:90e4f5a34ca020b407b27f29",
+   "90e4f5a34ca020b407b27f29",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:f8afbd1b3e52e7dd431da1e8",
+   "f8afbd1b3e52e7dd431da1e8",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:8e13c3f4f3208c74d41e855e",
+   "8e13c3f4f3208c74d41e855e",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:e304a10dfbfe1f0e614f8588",
+   "e304a10dfbfe1f0e614f8588",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:d8c66fa83f67f65d317ee8b3",
+   "d8c66fa83f67f65d317ee8b3",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:d96710fff6dd55c0eba7363b",
+   "d96710fff6dd55c0eba7363b",
+   "the translator stated no measurement"
+  ],
+  [
+   "rules:709cdcb450684210fbfae2cb",
+   "709cdcb450684210fbfae2cb",
+   "the translator stated no measurement"
+  ],
+  [
+   "corrupt-number:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "place is not a span of the sentence"
+  ],
+  [
+   "corrupt-number:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "number is not in the sentence"
+  ],
+  [
+   "corrupt-place:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "place is not a span of the sentence"
+  ]
+ ],
+ "filled": [],
+ "translator_log": []
+}
