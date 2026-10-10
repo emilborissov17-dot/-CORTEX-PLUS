@@ -1,0 +1,138 @@
+{
+ "start": "2026-10-10T13:22:35Z",
+ "window_end": null,
+ "window_closed": false,
+ "takes": [],
+ "candidates": 0,
+ "items": [],
+ "sample_for_emil": [],
+ "raw_ledger_rows": [
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T13:23:25Z",
+   "need_id": "BN-6b3b68e0b0",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "70d116bbcfa694f4635e836d",
+    "bb25d7485809bd56f1981a7d",
+    "f8bf077fb1e612565a3f7fd2",
+    "95ca94ae8c642e4aee920b79",
+    "9d217125a99221bb103e7e9a"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T13:23:34Z",
+   "need_id": "BN-6b3b68e0b0",
+   "why": "the provided statements do not specify which exact environmental condition worsened most, only that dust storms affected many places."
+  },
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T13:34:06Z",
+   "need_id": "BN-0e1657dcc6",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "840f187682493da1fbc4241f",
+    "f900abd8762cfc6b9ebc7bb1",
+    "03f8544bee7bc125fbee8b3d",
+    "f342ab5e7a317a8ae97e8c4e",
+    "ad9752cb6281d6997269cf31"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T13:34:15Z",
+   "need_id": "BN-0e1657dcc6",
+   "why": "it does not differentiate between visibility and respiratory problems; it only mentions that both are affected by air pollution."
+  },
+  {
+   "event": "MADE_PARENT",
+   "ts": "2026-10-10T13:34:15Z",
+   "need_id": "BN-0e1657dcc6",
+   "why": "narrowed by review"
+  },
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T14:50:07Z",
+   "need_id": "BN-6b3b68e0b0",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "d1ba757aa5f93199e9f868cf",
+    "29d4d4dbb952ac37e6029f23",
+    "89425196ac313c5ddfe46657",
+    "b244a3fa170a9c685c0000c7",
+    "bec37af697191116cbd37d08"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T14:50:16Z",
+   "need_id": "BN-6b3b68e0b0",
+   "why": "what came back does not provide specific information about which environmental conditions worsened; it mentions people and authors but not the data or measurements."
+  },
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T15:00:39Z",
+   "need_id": "BN-0e1657dcc6",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "e427cde898e10457662b026b",
+    "e00f9ba02b373f0797500bba",
+    "6919102dfe448e0e37a70355",
+    "51bec63e9c31685485a0e24f",
+    "90579b7c834256f59d896266"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T15:00:47Z",
+   "need_id": "BN-0e1657dcc6",
+   "why": "it discusses interventions and economic impacts but does not compare specific conditions like visibility vs respiratory problems."
+  },
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T16:28:42Z",
+   "need_id": "BN-6b3b68e0b0",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "51304ae0c3dfa519c21204b5",
+    "ab6a1ddb5e949daed314748d",
+    "da865b579f85c39a47b3a557",
+    "407f4631495cf07ce289bc3d",
+    "32d4357c40e9d4d57610fc47"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T16:28:55Z",
+   "need_id": "BN-6b3b68e0b0",
+   "why": "[LINKED_STATEMENT] \"In fact, 2025 was the warmest year without an El Niño.\": it mentions that 2025 was warmer than usual but does not specify which specific conditions worsened; [LINKED_STATEMENT] \"At the time of writing, halfway through 2026, there are indications of an extremely strong El Niño forming.\": it talks about future predictions rather than past conditions. No clear answer is provided."
+  },
+  {
+   "event": "SHOWN",
+   "ts": "2026-10-10T16:40:42Z",
+   "need_id": "BN-0e1657dcc6",
+   "items": 5,
+   "kind": "LINKED",
+   "ids": [
+    "96d222e9928435904a3a9219",
+    "372689c3013700187e5c0a4a",
+    "7c8031ae2b07ac99cd2599ac",
+    "32d3bf32b264a9d96d7b2f7d",
+    "ab87f28ae4e75553cd3715c5"
+   ]
+  },
+  {
+   "event": "STILL_OPEN",
+   "ts": "2026-10-10T16:40:49Z",
+   "need_id": "BN-0e1657dcc6",
+   "why": "it provides information about air pollution sources but does not compare the severity of visibility vs respiratory problems."
+  }
+ ],
+ "note": "candidates are heuristic numeric-fact candidates, not validated measurements"
+}
