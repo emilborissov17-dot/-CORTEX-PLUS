@@ -1,25 +1,26 @@
 # SYM-1 RESULT — the engine decides, the translator proposes (course step 2; R81)
 
-Counted 2026-10-10T19:26:41+00:00; run file sha b9060644452f.
+Counted 2026-10-11T08:55:14+00:00; run file sha b9060644452f.
 
-## Arm: 8b (hyperon 0.2.10; seconds {'total': 785.43, 'translator': 785.13, 'engine': 0.3})
+## Arm: 8b (hyperon 0.2.10; seconds {'total': 5068.18, 'translator': 5066.72, 'engine': 1.46})
 - M1 provenance: accepted without a record 0; '-noprov' copies refused 2 of 2 — PASS
 - M2 corruptions accepted: 0 of 6 — PASS
-- M3 extraction against the independent labels: 37 correct of 40
-- M4 filling: answerable needs filled with the expected number 0 of 3; near needs falsely filled 0 of 3
+- TRANSLATOR SILENCE: 0 of 42 calls gave no usable reply
+- M3 extraction against the independent labels: 33 correct of 40 (a silent statement counts as wrong)
+- M4 filling: answerable needs filled with the expected number 2 of 3; near needs falsely filled 0 of 3
 
 | statement | label (independent labeller) | accepted by the engine (quantity / place / period / number / unit) | |
 |---|---|---|---|
-| 3dd982032c1c | electricity generation / ESP / 2023 / 1.9 | — | WRONG |
+| 3dd982032c1c | electricity generation / ESP / 2023 / 1.9 | use in electricity generation / ESP / 2023 / 1.9 / % | correct |
 | 17d86275dc9d | НЕ | — | correct |
 | 85989f0be426 | НЕ | — | correct |
 | 8f9a832dbed3 | НЕ | — | correct |
 | cdc56a3216ca | НЕ | — | correct |
-| 052f4bcd9bdd | education Gini index / MLI / 1990 / 0.92 | — | WRONG |
+| 052f4bcd9bdd | education Gini index / MLI / 1990 / 0.92 | education Gini index / MLI / 1990 / 0.92 / none | correct |
 | 1809b70c6785 | НЕ | — | correct |
-| 0b9a237fd533 | НЕ | — | correct |
+| 0b9a237fd533 | НЕ | global businesses / WLD / 2023 / 91.0 / % | WRONG |
 | e8a187b99b5e | НЕ | — | correct |
-| dfe1e56d9f38 | НЕ | — | correct |
+| dfe1e56d9f38 | НЕ | cyber / WLD / 2026 / 42.0 / % | WRONG |
 | 8ae2f18534f2 | НЕ | — | correct |
 | f167a25254be | НЕ | — | correct |
 | f764a8da7ad4 | НЕ | — | correct |
@@ -30,10 +31,10 @@ Counted 2026-10-10T19:26:41+00:00; run file sha b9060644452f.
 | ea972e1def70 | НЕ | — | correct |
 | 48fc3a7651fe | НЕ | — | correct |
 | 7f217ba1d5cc | НЕ | — | correct |
-| b63bc8ad4d74 | НЕ | — | correct |
+| b63bc8ad4d74 | НЕ | floods typhoon Yagi / MMR / 2026-03 / 128.0 / none | WRONG |
 | 4665fbed9fc5 | НЕ | — | correct |
 | 76d9071519ed | НЕ | — | correct |
-| 1d2429bff50b | НЕ | — | correct |
+| 1d2429bff50b | НЕ | nuclear arsenal / CHN / 2035 / 1500.0 / warheads | WRONG |
 | 249bd860b41f | НЕ | — | correct |
 | 6b0c2ff2514a | НЕ | — | correct |
 | c11b98e755a0 | НЕ | — | correct |
@@ -43,10 +44,10 @@ Counted 2026-10-10T19:26:41+00:00; run file sha b9060644452f.
 | 8e13c3f4f320 | НЕ | — | correct |
 | 0c59d34034a9 | НЕ | — | correct |
 | e304a10dfbfe | НЕ | — | correct |
-| 3a4104252c1f | НЕ | — | correct |
+| 3a4104252c1f | НЕ | 45,709 / DEU / 2017 / 45709.0 / none | WRONG |
 | b092e1289c57 | deliberate shutdowns / WLD / 2025 / 19.7 | — | WRONG |
 | d8c66fa83f67 | НЕ | — | correct |
-| 62caa8770982 | НЕ | — | correct |
+| 62caa8770982 | НЕ | Equatorial Guinea / GNQ / 2017 / 660.0 / 660 | WRONG |
 | bfb336925d75 | НЕ | — | correct |
 | d96710fff6dd | НЕ | — | correct |
 | 709cdcb45068 | НЕ | — | correct |
@@ -54,7 +55,8 @@ Counted 2026-10-10T19:26:41+00:00; run file sha b9060644452f.
 ## Arm: 3b (hyperon 0.2.10; seconds {'total': 298.48, 'translator': 298.18, 'engine': 0.3})
 - M1 provenance: accepted without a record 0; '-noprov' copies refused 2 of 2 — PASS
 - M2 corruptions accepted: 0 of 6 — PASS
-- M3 extraction against the independent labels: 36 correct of 40
+- TRANSLATOR SILENCE: 0 of 42 calls gave no usable reply
+- M3 extraction against the independent labels: 36 correct of 40 (a silent statement counts as wrong)
 - M4 filling: answerable needs filled with the expected number 0 of 3; near needs falsely filled 0 of 3
 
 | statement | label (independent labeller) | accepted by the engine (quantity / place / period / number / unit) | |
@@ -103,7 +105,8 @@ Counted 2026-10-10T19:26:41+00:00; run file sha b9060644452f.
 ## Arm: rules (hyperon 0.2.10; seconds {'total': 1.5, 'translator': 0.15, 'engine': 1.35})
 - M1 provenance: accepted without a record 0; '-noprov' copies refused 2 of 2 — PASS
 - M2 corruptions accepted: 0 of 6 — PASS
-- M3 extraction against the independent labels: 24 correct of 40
+- TRANSLATOR SILENCE: 0 of 0 calls gave no usable reply
+- M3 extraction against the independent labels: 24 correct of 40 (a silent statement counts as wrong)
 - M4 filling: answerable needs filled with the expected number 0 of 3; near needs falsely filled 0 of 3
 
 | statement | label (independent labeller) | accepted by the engine (quantity / place / period / number / unit) | |

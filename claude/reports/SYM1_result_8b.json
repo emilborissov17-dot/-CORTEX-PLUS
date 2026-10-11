@@ -3,17 +3,172 @@
  "arm": "8b",
  "hyperon": "0.2.10",
  "seconds": {
-  "total": 785.43,
-  "translator": 785.13,
-  "engine": 0.3
+  "total": 5068.18,
+  "translator": 5066.72,
+  "engine": 1.46
  },
  "counts": {
-  "candidate": 6,
-  "accepted": 0,
-  "refused": 48,
-  "filled": 0
+  "candidate": 20,
+  "accepted": 8,
+  "refused": 40,
+  "filled": 2
  },
+ "overrides": {
+  "read_timeout_s": 600.0,
+  "keep_alive": "30m",
+  "core_restored": "once, at the end of the phase",
+  "core_unloaded_at_start": true
+ },
+ "phase": {
+  "calls_seen": 42,
+  "reloads_after_first": 0,
+  "latency_s_median": 91.11,
+  "latency_s_max": 324.97,
+  "residency": {
+   "before": [
+    "qwen3:8b"
+   ],
+   "phase_start": [
+    "qwen3:8b"
+   ],
+   "phase_end": [
+    "qwen3:8b"
+   ],
+   "after_restore": [
+    "cortex-l1b-3b:latest"
+   ]
+  },
+  "core_left_on_card_at_start": false,
+  "verdict": "PHASE HELD"
+ },
+ "no_reply": 0,
  "candidate": [
+  [
+   "8b:c16f8b37283b17372c01a3df-noprov",
+   "c16f8b37283b17372c01a3df-noprov",
+   "first private college",
+   "Norwich University",
+   "1819",
+   1819.0,
+   "none"
+  ],
+  [
+   "8b:62caa8770982510a98db7615",
+   "62caa8770982510a98db7615",
+   "Equatorial Guinea",
+   "Equatorial Guinea",
+   "2017",
+   660.0,
+   "660"
+  ],
+  [
+   "8b:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "deliberate shutdowns",
+   "global economy",
+   "2025",
+   19.7,
+   "billion"
+  ],
+  [
+   "8b:3a4104252c1fc4c593da6c68",
+   "3a4104252c1fc4c593da6c68",
+   "45,709",
+   "Germany",
+   "2017",
+   45709.0,
+   "none"
+  ],
+  [
+   "8b:1d2429bff50b00cb7b57aaee",
+   "1d2429bff50b00cb7b57aaee",
+   "nuclear arsenal",
+   "China",
+   "2035",
+   1500.0,
+   "warheads"
+  ],
+  [
+   "8b:b63bc8ad4d744338a516f2c1",
+   "b63bc8ad4d744338a516f2c1",
+   "floods typhoon Yagi",
+   "Myanmar",
+   "March 2026",
+   128.0,
+   "none"
+  ],
+  [
+   "8b:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   "first private college",
+   "Norwich University",
+   "1819",
+   1819.0,
+   "none"
+  ],
+  [
+   "8b:71b722bf5a3b752c03a90c50",
+   "71b722bf5a3b752c03a90c50",
+   "grey matter differences",
+   "temporal, parietal, and occipital lobes",
+   "up to 20 years",
+   2.5,
+   "years"
+  ],
+  [
+   "8b:dfe1e56d9f386bba56efc475",
+   "dfe1e56d9f386bba56efc475",
+   "cyber",
+   "globally",
+   "2026",
+   42.0,
+   "%"
+  ],
+  [
+   "8b:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   "All-cause, age-standardised YLD rates",
+   "globally",
+   "between 2010 and 2021",
+   2.6,
+   "%"
+  ],
+  [
+   "8b:0b9a237fd5338f2909c5b9db",
+   "0b9a237fd5338f2909c5b9db",
+   "global businesses",
+   "global",
+   "2023",
+   91.0,
+   "%"
+  ],
+  [
+   "8b:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   "education Gini index",
+   "Mali",
+   "1990",
+   0.92,
+   "none"
+  ],
+  [
+   "8b:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   "people without electricity",
+   "Ethiopia, Kenya, and Nigeria",
+   "2023",
+   600.0,
+   "million"
+  ],
+  [
+   "8b:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   "use in electricity generation",
+   "Spain",
+   "2023",
+   1.9,
+   "%"
+  ],
   [
    "corrupt-place:b092e1289c5704b4ccf1380f",
    "b092e1289c5704b4ccf1380f",
@@ -69,216 +224,273 @@
    "none"
   ]
  ],
- "accepted": [],
- "refused": [
+ "accepted": [
   [
    "8b:3dd982032c1cdf8b09f44d57",
    "3dd982032c1cdf8b09f44d57",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:17d86275dc9d84c15ccfc269",
-   "17d86275dc9d84c15ccfc269",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:85989f0be426593504afa26d",
-   "85989f0be426593504afa26d",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:8f9a832dbed37c5585dd348e",
-   "8f9a832dbed37c5585dd348e",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:cdc56a3216ca4fab26e6f419",
-   "cdc56a3216ca4fab26e6f419",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "use in electricity generation",
+    "ESP",
+    "2023",
+    1.9,
+    "%"
+   ]
   ],
   [
    "8b:052f4bcd9bdd0fb5123a9b8a",
    "052f4bcd9bdd0fb5123a9b8a",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:1809b70c6785fc0b30ea6d26",
-   "1809b70c6785fc0b30ea6d26",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "education Gini index",
+    "MLI",
+    "1990",
+    0.92,
+    "none"
+   ]
   ],
   [
    "8b:0b9a237fd5338f2909c5b9db",
    "0b9a237fd5338f2909c5b9db",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:e8a187b99b5e1193fdbc06ff",
-   "e8a187b99b5e1193fdbc06ff",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "global businesses",
+    "WLD",
+    "2023",
+    91.0,
+    "%"
+   ]
   ],
   [
    "8b:dfe1e56d9f386bba56efc475",
    "dfe1e56d9f386bba56efc475",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:8ae2f18534f2412b3ad49ca6",
-   "8ae2f18534f2412b3ad49ca6",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:f167a25254be7213c1009804",
-   "f167a25254be7213c1009804",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:f764a8da7ad4de36382bf078",
-   "f764a8da7ad4de36382bf078",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:71b722bf5a3b752c03a90c50",
-   "71b722bf5a3b752c03a90c50",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:739a9a2117d821cfcaba0b77",
-   "739a9a2117d821cfcaba0b77",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:63aede32989b48f2296b66e9",
-   "63aede32989b48f2296b66e9",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:c16f8b37283b17372c01a3df",
-   "c16f8b37283b17372c01a3df",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:ea972e1def70937c6d284731",
-   "ea972e1def70937c6d284731",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:48fc3a7651fe2a062d2ef000",
-   "48fc3a7651fe2a062d2ef000",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:7f217ba1d5cc94c52d804749",
-   "7f217ba1d5cc94c52d804749",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "cyber",
+    "WLD",
+    "2026",
+    42.0,
+    "%"
+   ]
   ],
   [
    "8b:b63bc8ad4d744338a516f2c1",
    "b63bc8ad4d744338a516f2c1",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:4665fbed9fc5f20bfa1e75af",
-   "4665fbed9fc5f20bfa1e75af",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:76d9071519ed05cfdd975908",
-   "76d9071519ed05cfdd975908",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "floods typhoon Yagi",
+    "MMR",
+    "2026-03",
+    128.0,
+    "none"
+   ]
   ],
   [
    "8b:1d2429bff50b00cb7b57aaee",
    "1d2429bff50b00cb7b57aaee",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:249bd860b41fc72b0f5c9607",
-   "249bd860b41fc72b0f5c9607",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:6b0c2ff2514a8ba982548b9e",
-   "6b0c2ff2514a8ba982548b9e",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:c11b98e755a04f3e5881280b",
-   "c11b98e755a04f3e5881280b",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:155373eed9195071d21d098c",
-   "155373eed9195071d21d098c",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:90e4f5a34ca020b407b27f29",
-   "90e4f5a34ca020b407b27f29",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:f8afbd1b3e52e7dd431da1e8",
-   "f8afbd1b3e52e7dd431da1e8",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:8e13c3f4f3208c74d41e855e",
-   "8e13c3f4f3208c74d41e855e",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:0c59d34034a96847bd03dec6",
-   "0c59d34034a96847bd03dec6",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:e304a10dfbfe1f0e614f8588",
-   "e304a10dfbfe1f0e614f8588",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "nuclear arsenal",
+    "CHN",
+    "2035",
+    1500.0,
+    "warheads"
+   ]
   ],
   [
    "8b:3a4104252c1fc4c593da6c68",
    "3a4104252c1fc4c593da6c68",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:b092e1289c5704b4ccf1380f",
-   "b092e1289c5704b4ccf1380f",
-   "translator gave no usable reply: no reply"
-  ],
-  [
-   "8b:d8c66fa83f67f65d317ee8b3",
-   "d8c66fa83f67f65d317ee8b3",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "45,709",
+    "DEU",
+    "2017",
+    45709.0,
+    "none"
+   ]
   ],
   [
    "8b:62caa8770982510a98db7615",
    "62caa8770982510a98db7615",
-   "translator gave no usable reply: no reply"
+   [
+    "measure",
+    "Equatorial Guinea",
+    "GNQ",
+    "2017",
+    660.0,
+    "660"
+   ]
+  ]
+ ],
+ "refused": [
+  [
+   "8b:17d86275dc9d84c15ccfc269",
+   "17d86275dc9d84c15ccfc269",
+   "place does not resolve"
   ],
   [
-   "8b:bfb336925d7502e080e09ae2",
-   "bfb336925d7502e080e09ae2",
-   "translator gave no usable reply: no reply"
+   "8b:e8a187b99b5e1193fdbc06ff",
+   "e8a187b99b5e1193fdbc06ff",
+   "number is not in the sentence"
   ],
   [
-   "8b:d96710fff6dd55c0eba7363b",
-   "d96710fff6dd55c0eba7363b",
-   "translator gave no usable reply: no reply"
+   "8b:71b722bf5a3b752c03a90c50",
+   "71b722bf5a3b752c03a90c50",
+   "place does not resolve"
   ],
   [
-   "8b:709cdcb450684210fbfae2cb",
-   "709cdcb450684210fbfae2cb",
-   "translator gave no usable reply: no reply"
+   "8b:c16f8b37283b17372c01a3df",
+   "c16f8b37283b17372c01a3df",
+   "place does not resolve"
   ],
   [
-   "8b:bfb336925d7502e080e09ae2-noprov",
-   "bfb336925d7502e080e09ae2-noprov",
-   "translator gave no usable reply: no reply"
+   "8b:b092e1289c5704b4ccf1380f",
+   "b092e1289c5704b4ccf1380f",
+   "place does not resolve"
   ],
   [
    "8b:c16f8b37283b17372c01a3df-noprov",
    "c16f8b37283b17372c01a3df-noprov",
+   "place does not resolve"
+  ],
+  [
+   "8b:85989f0be426593504afa26d",
+   "85989f0be426593504afa26d",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:8f9a832dbed37c5585dd348e",
+   "8f9a832dbed37c5585dd348e",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:cdc56a3216ca4fab26e6f419",
+   "cdc56a3216ca4fab26e6f419",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:1809b70c6785fc0b30ea6d26",
+   "1809b70c6785fc0b30ea6d26",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:8ae2f18534f2412b3ad49ca6",
+   "8ae2f18534f2412b3ad49ca6",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:f167a25254be7213c1009804",
+   "f167a25254be7213c1009804",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:f764a8da7ad4de36382bf078",
+   "f764a8da7ad4de36382bf078",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:739a9a2117d821cfcaba0b77",
+   "739a9a2117d821cfcaba0b77",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:63aede32989b48f2296b66e9",
+   "63aede32989b48f2296b66e9",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:ea972e1def70937c6d284731",
+   "ea972e1def70937c6d284731",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:48fc3a7651fe2a062d2ef000",
+   "48fc3a7651fe2a062d2ef000",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:7f217ba1d5cc94c52d804749",
+   "7f217ba1d5cc94c52d804749",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:4665fbed9fc5f20bfa1e75af",
+   "4665fbed9fc5f20bfa1e75af",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:76d9071519ed05cfdd975908",
+   "76d9071519ed05cfdd975908",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:249bd860b41fc72b0f5c9607",
+   "249bd860b41fc72b0f5c9607",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:6b0c2ff2514a8ba982548b9e",
+   "6b0c2ff2514a8ba982548b9e",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:c11b98e755a04f3e5881280b",
+   "c11b98e755a04f3e5881280b",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:155373eed9195071d21d098c",
+   "155373eed9195071d21d098c",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:90e4f5a34ca020b407b27f29",
+   "90e4f5a34ca020b407b27f29",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:f8afbd1b3e52e7dd431da1e8",
+   "f8afbd1b3e52e7dd431da1e8",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:8e13c3f4f3208c74d41e855e",
+   "8e13c3f4f3208c74d41e855e",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:0c59d34034a96847bd03dec6",
+   "0c59d34034a96847bd03dec6",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:e304a10dfbfe1f0e614f8588",
+   "e304a10dfbfe1f0e614f8588",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:d8c66fa83f67f65d317ee8b3",
+   "d8c66fa83f67f65d317ee8b3",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:bfb336925d7502e080e09ae2",
+   "bfb336925d7502e080e09ae2",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:d96710fff6dd55c0eba7363b",
+   "d96710fff6dd55c0eba7363b",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:709cdcb450684210fbfae2cb",
+   "709cdcb450684210fbfae2cb",
+   "the translator stated no measurement"
+  ],
+  [
+   "8b:bfb336925d7502e080e09ae2-noprov",
+   "bfb336925d7502e080e09ae2-noprov",
    "the translator stated no measurement"
   ],
   [
@@ -312,301 +524,314 @@
    "place is not a span of the sentence"
   ]
  ],
- "filled": [],
+ "filled": [
+  [
+   "ANS-02",
+   "8b:052f4bcd9bdd0fb5123a9b8a",
+   "052f4bcd9bdd0fb5123a9b8a",
+   0.92
+  ],
+  [
+   "ANS-01",
+   "8b:3dd982032c1cdf8b09f44d57",
+   "3dd982032c1cdf8b09f44d57",
+   1.9
+  ]
+ ],
  "translator_log": [
   {
    "sid": "c16f8b37283b17372c01a3df-noprov",
    "model": "qwen3:8b",
-   "sec": 178.9,
-   "raw": "{\n  \"quantity\": \"first private college to teach civil engineering\",\n  \"place\": \"United States\",\n  \"period\": \"1819\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "sec": 211.0,
+   "raw": "{\n  \"quantity\": \"first private college\",\n  \"place\": \"Norwich University\",\n  \"period\": \"1819\",\n  \"number\": 1819,\n  \"unit\": null\n}",
    "unreadable": null
   },
   {
    "sid": "bfb336925d7502e080e09ae2-noprov",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 279.5,
+   "raw": "{\"quantity\": null, \"place\": \"Brunei Darussalam\", \"period\": \"2005\", \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "709cdcb450684210fbfae2cb",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 65.5,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "d96710fff6dd55c0eba7363b",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 48.0,
+   "raw": "{\n  \"quantity\": null,\n  \"place\": null,\n  \"period\": null,\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "bfb336925d7502e080e09ae2",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 266.6,
+   "raw": "{\"quantity\": null, \"place\": \"Brunei Darussalam\", \"period\": \"2005\", \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "62caa8770982510a98db7615",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 258.7,
+   "raw": "{\n  \"quantity\": \"Equatorial Guinea\",\n  \"place\": \"Equatorial Guinea\",\n  \"period\": \"2017\",\n  \"number\": 660,\n  \"unit\": \"660\"\n}",
+   "unreadable": null
   },
   {
    "sid": "d8c66fa83f67f65d317ee8b3",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 43.3,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "b092e1289c5704b4ccf1380f",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 196.1,
+   "raw": "{\n  \"quantity\": \"deliberate shutdowns\",\n  \"place\": \"global economy\",\n  \"period\": \"2025\",\n  \"number\": 19.7,\n  \"unit\": \"billion\"\n}",
+   "unreadable": null
   },
   {
    "sid": "3a4104252c1fc4c593da6c68",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 163.8,
+   "raw": "{\n  \"quantity\": \"45,709\",\n  \"place\": \"Germany\",\n  \"period\": \"2017\",\n  \"number\": 45709,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "e304a10dfbfe1f0e614f8588",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 34.1,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "0c59d34034a96847bd03dec6",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 162.3,
+   "raw": "{\n  \"quantity\": null,\n  \"place\": \"Proceedings of the 26th international conference on world wide web companion\",\n  \"period\": \"2017\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "8e13c3f4f3208c74d41e855e",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 39.7,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "f8afbd1b3e52e7dd431da1e8",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 53.0,
+   "raw": "{\n  \"quantity\": \"total fertility rate (TFR)\",\n  \"place\": null,\n  \"period\": null,\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "90e4f5a34ca020b407b27f29",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 78.8,
+   "raw": "{\n  \"quantity\": \"number of high-security laboratories\",\n  \"place\": \"Institute of Global Health at the University of Geneva (Switzerland)\",\n  \"period\": \"for years\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "155373eed9195071d21d098c",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 72.0,
+   "raw": "{\n  \"quantity\": \"residential and other improvements\",\n  \"place\": null,\n  \"period\": null,\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "c11b98e755a04f3e5881280b",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 46.7,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "6b0c2ff2514a8ba982548b9e",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 91.1,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "249bd860b41fc72b0f5c9607",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 38.7,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "1d2429bff50b00cb7b57aaee",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 119.0,
+   "raw": "{\n  \"quantity\": \"nuclear arsenal\",\n  \"place\": \"China\",\n  \"period\": \"2035\",\n  \"number\": 1500,\n  \"unit\": \"warheads\"\n}",
+   "unreadable": null
   },
   {
    "sid": "76d9071519ed05cfdd975908",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 100.4,
+   "raw": "{\n  \"quantity\": \"relative contribution of fertility\",\n  \"place\": null,\n  \"period\": \"longer period 2024-2100\",\n  \"number\": null,\n  \"unit\": \"%\"\n}",
+   "unreadable": null
   },
   {
    "sid": "4665fbed9fc5f20bfa1e75af",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 34.3,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "b63bc8ad4d744338a516f2c1",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 71.9,
+   "raw": "{\n  \"quantity\": \"floods typhoon Yagi\",\n  \"place\": \"Myanmar\",\n  \"period\": \"March 2026\",\n  \"number\": 128,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "7f217ba1d5cc94c52d804749",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 175.2,
+   "raw": "{\n  \"quantity\": \"11,024\",\n  \"place\": \"Argentina\",\n  \"period\": \"2017\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "48fc3a7651fe2a062d2ef000",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 49.9,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "ea972e1def70937c6d284731",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 39.3,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "c16f8b37283b17372c01a3df",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 217.5,
+   "raw": "{\n  \"quantity\": \"first private college\",\n  \"place\": \"Norwich University\",\n  \"period\": \"1819\",\n  \"number\": 1819,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "63aede32989b48f2296b66e9",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 67.1,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "739a9a2117d821cfcaba0b77",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 134.2,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "71b722bf5a3b752c03a90c50",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 325.0,
+   "raw": "{\n  \"quantity\": \"grey matter differences\",\n  \"place\": \"temporal, parietal, and occipital lobes\",\n  \"period\": \"up to 20 years\",\n  \"number\": 2.5,\n  \"unit\": \"years\"\n}",
+   "unreadable": null
   },
   {
    "sid": "f764a8da7ad4de36382bf078",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 47.0,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "f167a25254be7213c1009804",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 45.9,
+   "raw": "{\"quantity\": \"null\", \"place\": \"null\", \"period\": \"null\", \"number\": null, \"unit\": \"null\"}",
+   "unreadable": null
   },
   {
    "sid": "8ae2f18534f2412b3ad49ca6",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 298.7,
+   "raw": "{\"quantity\": null, \"place\": \"Papua New Guinea\", \"period\": \"2017\", \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "dfe1e56d9f386bba56efc475",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 167.4,
+   "raw": "{\"quantity\": \"cyber\", \"place\": \"globally\", \"period\": \"2026\", \"number\": 42, \"unit\": \"%\"}",
+   "unreadable": null
   },
   {
    "sid": "e8a187b99b5e1193fdbc06ff",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 60.6,
+   "raw": "{\n  \"quantity\": \"All-cause, age-standardised YLD rates\",\n  \"place\": \"globally\",\n  \"period\": \"between 2010 and 2021\",\n  \"number\": 2.6,\n  \"unit\": \"%\"\n}",
+   "unreadable": null
   },
   {
    "sid": "0b9a237fd5338f2909c5b9db",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 138.8,
+   "raw": "{\n  \"quantity\": \"global businesses\",\n  \"place\": \"global\",\n  \"period\": \"2023\",\n  \"number\": 91,\n  \"unit\": \"%\"\n}",
+   "unreadable": null
   },
   {
    "sid": "1809b70c6785fc0b30ea6d26",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 188.8,
+   "raw": "{\"quantity\": null, \"place\": \"Faso, Chad, Mali, Mauritania and the Niger\", \"period\": \"between 1 January 1997 abd 17\", \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "052f4bcd9bdd0fb5123a9b8a",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 170.7,
+   "raw": "{\n  \"quantity\": \"education Gini index\",\n  \"place\": \"Mali\",\n  \"period\": \"1990\",\n  \"number\": 0.92,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "cdc56a3216ca4fab26e6f419",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 41.7,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "8f9a832dbed37c5585dd348e",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 122.5,
+   "raw": "{\n  \"quantity\": \"Meeting\",\n  \"place\": \"Washington, D.C.\",\n  \"period\": \"22-25 April 2020\",\n  \"number\": null,\n  \"unit\": null\n}",
+   "unreadable": null
   },
   {
    "sid": "85989f0be426593504afa26d",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 37.5,
+   "raw": "{\"quantity\": null, \"place\": null, \"period\": null, \"number\": null, \"unit\": null}",
+   "unreadable": null
   },
   {
    "sid": "17d86275dc9d84c15ccfc269",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 122.1,
+   "raw": "{\n  \"quantity\": \"people without electricity\",\n  \"place\": \"Ethiopia, Kenya, and Nigeria\",\n  \"period\": \"2023\",\n  \"number\": 600,\n  \"unit\": \"million\"\n}",
+   "unreadable": null
   },
   {
    "sid": "3dd982032c1cdf8b09f44d57",
-   "model": null,
-   "sec": null,
-   "raw": null,
-   "unreadable": "no reply"
+   "model": "qwen3:8b",
+   "sec": 55.2,
+   "raw": "{\n  \"quantity\": \"use in electricity generation\",\n  \"place\": \"Spain\",\n  \"period\": \"2023\",\n  \"number\": 1.9,\n  \"unit\": \"%\"\n}",
+   "unreadable": null
   }
  ]
 }
