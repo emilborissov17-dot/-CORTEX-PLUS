@@ -291,3 +291,77 @@ def test_mutation_the_old_form_adding_to_self_panics_the_engine(tmp_path):
     old = RULES.replace("!(bind! &derived (new-space))\n", "").replace("&derived", "&self")
     with pytest.raises(sp.SpaceEngineFailed, match="hyperon exit"):
         _derive_panic(tmp_path, old)
+
+
+# ── needs in the space: one per family (Emil R86, 11 Oct 2026) ──────────────
+def _build_with_needs(tmp_path, monkeypatch, needs):
+    import json
+    from core import atoms as at
+    monkeypatch.setattr(at, "read", lambda root=None, subcategory=None: iter([]))
+    (tmp_path / "needs.json").write_text(json.dumps({"needs": needs}), encoding="utf-8")
+    paths = {"dir": tmp_path / "space", "atoms_root": None, "obs_log": tmp_path / "none.jsonl",
+             "grounded": tmp_path / "none.json", "forward_glob": str(tmp_path / "none" / "F-*.json"),
+             "witness_glob": str(tmp_path / "none" / "*.json"), "needs": tmp_path / "needs.json",
+             "labels": tmp_path / "none_labels.json", "store": tmp_path / "none.jsonl",
+             "target_config": tmp_path / "none_tc.json"}
+    r = sp.build(paths)
+    text = (tmp_path / "space" / "base.metta").read_text(encoding="utf-8")
+    lines = [l for l in text.splitlines() if l.startswith("(need ")]
+    fam = json.loads((tmp_path / "space" / "need_families.json").read_text(encoding="utf-8"))
+    return r, lines, fam
+
+
+def _n(i, status="OPEN", parent=None, origin="brain", kind="FIND", sub="SAFETY", expr=None):
+    d = {"id": i, "origin": origin, "kind": kind, "why_subgoal": sub, "status": status}
+    if parent:
+        d["parent"] = parent
+    if expr is not None:
+        d["expression"] = expr
+    return d
+
+
+def test_a_lineage_of_open_needs_is_one_need_in_the_space(tmp_path, monkeypatch):
+    r, lines, fam = _build_with_needs(tmp_path, monkeypatch, [
+        _n("BN-1", "STILL_OPEN"), _n("BN-2", "OPEN", "BN-1"), _n("BN-3", "STILL_OPEN", "BN-2")])
+    assert len(lines) == 1 and '"BN-1"' in lines[0], lines
+    assert fam["families"][0]["members"] == ["BN-1", "BN-2", "BN-3"]
+    assert r["needs"] == {"total": 3, "open": 3, "level": "lineage", "families": 1}
+
+
+def test_a_lineage_under_a_closed_root_is_still_one_need_named_by_the_root(tmp_path, monkeypatch):
+    _, lines, fam = _build_with_needs(tmp_path, monkeypatch, [
+        _n("BN-1", "SATISFIED"), _n("BN-2", "OPEN", "BN-1"), _n("BN-3", "OPEN", "BN-1")])
+    assert len(lines) == 1 and '"BN-1"' in lines[0] and '"OPEN"' in lines[0], lines
+    assert fam["families"][0]["members"] == ["BN-2", "BN-3"]
+
+
+def test_closed_needs_do_not_enter_the_space(tmp_path, monkeypatch):
+    r, lines, fam = _build_with_needs(tmp_path, monkeypatch, [
+        _n("BN-8", "WRONG_QUESTION"), _n("BN-9", "SATISFIED")])
+    assert lines == [] and fam["families"] == []
+    assert r["needs"]["total"] == 2 and r["needs"]["open"] == 0
+
+
+def test_engine_needs_that_differ_only_by_atom_ids_are_one(tmp_path, monkeypatch):
+    e = '(need-derived VERIFY unverified "k" "WLD" "2024" "a-{}")'
+    _, lines, fam = _build_with_needs(tmp_path, monkeypatch, [
+        _n("EN-2", origin="engine", kind="VERIFY", expr=e.format("2222")),
+        _n("EN-1", origin="engine", kind="VERIFY", expr=e.format("1111")),
+        _n("EN-3", origin="engine", kind="VERIFY", expr=e.format("3333").replace('"k"', '"other"'))])
+    assert len(lines) == 2, lines
+    assert {f["id"]: f["members"] for f in fam["families"]} == {"EN-1": ["EN-1", "EN-2"], "EN-3": ["EN-3"]}
+
+
+def test_over_the_engine_budget_the_families_merge_by_category(tmp_path, monkeypatch):
+    real = sp.guard_config
+    monkeypatch.setattr(sp, "guard_config", lambda path=None: {**real(path), "budgets": {**real(path)["budgets"], 5: 2}})
+    r, lines, fam = _build_with_needs(tmp_path, monkeypatch, [
+        _n("BN-1"), _n("BN-2"), _n("BN-3"), _n("BN-4", sub="KNOWLEDGE_UNDERSTANDING")])
+    assert r["needs"]["level"] == "category" and len(lines) == 2, lines
+    assert {f["id"]: f["members"] for f in fam["families"]} == {
+        "category:brain:FIND:KNOWLEDGE_UNDERSTANDING": ["BN-4"], "category:brain:FIND:SAFETY": ["BN-1", "BN-2", "BN-3"]}
+
+
+def test_under_the_budget_the_families_stay_lineages(tmp_path, monkeypatch):
+    r, lines, _ = _build_with_needs(tmp_path, monkeypatch, [_n("BN-1"), _n("BN-2"), _n("BN-3")])
+    assert r["needs"]["level"] == "lineage" and len(lines) == 3

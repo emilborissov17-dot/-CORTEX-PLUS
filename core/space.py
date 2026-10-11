@@ -202,9 +202,15 @@ def build(paths=None, today: Optional[date] = None, tree: Optional[dict] = None)
         if w.get("row_id"):
             add(f"(commitment-witness {lit(w['row_id'])} {lit(w.get('verdict'))})", Path(f).name)
 
-    for n in (_read(_p(paths, "needs"), {}) or {}).get("needs", []):
-        add(f"(need {lit(n['id'])} {lit(n.get('origin'))} {lit(n.get('kind'))} {lit(n.get('why_subgoal'))} "
-            f"{lit(n.get('status'))})", "memory/brain_needs.json " + n["id"])
+    try:
+        need_budget = guard_config()["budgets"].get(5)
+    except (OSError, ValueError, KeyError):
+        need_budget = None                   # the guard itself then refuses the run, loudly
+    fam = need_families((_read(_p(paths, "needs"), {}) or {}).get("needs", []), need_budget)
+    for f in fam["families"]:
+        shown = ", ".join(f["members"][:5]) + (f" +{len(f['members']) - 5}" if len(f["members"]) > 5 else "")
+        add(f"(need {lit(f['id'])} {lit(f['origin'])} {lit(f['kind'])} {lit(f['subgoal'])} {lit('OPEN')})",
+            f"memory/brain_needs.json family of {len(f['members'])} open need(s) [{fam['level']}]: {shown}")
 
     labels = ((_read(_p(paths, "labels"), {}) or {}).get("labels") or {})
     placed = {i: l for i, l in labels.items() if l.get("subcategory") not in (None, "unplaced", "pending_vector")}
@@ -220,8 +226,68 @@ def build(paths=None, today: Optional[date] = None, tree: Optional[dict] = None)
     d = Path(_p(paths, "dir"))
     d.mkdir(parents=True, exist_ok=True)
     (d / "base.metta").write_text(text, encoding="utf-8")
+    (d / "need_families.json").write_text(json.dumps(fam, ensure_ascii=False, indent=1), encoding="utf-8")
     n = sum(1 for l in L if not l.startswith(";"))
-    return {"expressions": n, "seconds": round(time.time() - t0, 2), "path": str(d / "base.metta")}
+    return {"expressions": n, "seconds": round(time.time() - t0, 2), "path": str(d / "base.metta"),
+            "needs": {k: fam[k] for k in ("total", "open", "level")} | {"families": len(fam["families"])}}
+
+
+# ── needs in the space: one per family (Emil R86, 11 Oct 2026) ──────────────
+OPEN_STATUSES = ("OPEN", "STILL_OPEN")
+_ATOM_ID = re.compile(r'"a-[0-9a-f]+"')
+
+
+def need_families(needs: list, budget: Optional[int] = None) -> dict:
+    """The needs as the engine holds them: "НЕКА НУЖДИТЕ ДА ОТГОВАРЯТ НА ВЪЗМОЖНОСТИТЕ НА ДВИГАТЕЛЯ (И ТАМ
+    КЪДЕТО ИМА БЛИЗКИ НУЖДИ, ИЛИ ПОПАДАТ В ОПРЕДЕЛЕНА КАТЕГОРИЯ, ДА СЕ ОБЕДИНЯВАТ)" (Emil, 11 Oct).
+    Brain turn 198 (10 Oct 19:26Z) stopped on ENGINE_BUDGET need/5 447 > 390: every need, closed or
+    open, was one (need ...) atom, and 372 brain needs were five lineages of narrower children.
+
+    Only OPEN and STILL_OPEN needs enter. Level "lineage": a brain need and its open descendants are ONE
+    need, named by the lineage's root; engine needs that differ only by atom ids are one. If the families
+    still exceed the engine's budget for need/5, level "category": one need per (origin, kind, sub-goal).
+    brain_needs.json is not changed; the families and their members are written beside base.metta."""
+    by_id = {n["id"]: n for n in needs if n.get("id")}
+
+    def root(n):
+        seen = set()
+        while n.get("parent") in by_id and n["id"] not in seen:
+            seen.add(n["id"])
+            n = by_id[n["parent"]]
+        return n
+
+    fams: dict = {}
+    total = open_n = 0
+    for n in needs:
+        if not n.get("id"):
+            continue
+        total += 1
+        if n.get("status") not in OPEN_STATUSES:
+            continue
+        open_n += 1
+        if n.get("origin") == "engine":
+            key = ("engine", _ATOM_ID.sub("A", n.get("expression") or "") or n.get("question") or n["id"])
+            head = None
+        else:
+            head = root(n)
+            key = ("lineage", head["id"])
+        f = fams.setdefault(key, {"members": [], "head": head})
+        f["members"].append(n["id"])
+        if head is None and (f["head"] is None or n["id"] < f["head"]["id"]):
+            f["head"] = n
+    out = [{"id": f["head"]["id"], "origin": f["head"].get("origin"), "kind": f["head"].get("kind"),
+            "subgoal": f["head"].get("why_subgoal"), "members": sorted(f["members"])} for f in fams.values()]
+    level = "lineage"
+    if budget is not None and len(out) > budget:
+        cats: dict = {}
+        for f in out:
+            c = cats.setdefault((f["origin"], f["kind"], f["subgoal"]), {"members": []})
+            c["members"] += f["members"]
+        out = [{"id": f"category:{o}:{k}:{s}", "origin": o, "kind": k, "subgoal": s, "members": sorted(c["members"])}
+               for (o, k, s), c in cats.items()]
+        level = "category"
+    out.sort(key=lambda f: f["id"])
+    return {"level": level, "total": total, "open": open_n, "budget": budget, "families": out}
 
 
 # ── the engine ──────────────────────────────────────────────────────────────
