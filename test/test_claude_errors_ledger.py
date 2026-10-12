@@ -31,10 +31,14 @@ def test_every_row_is_complete_and_numbered_in_order():
 
 @pytest.mark.skipif(shutil.which("git") is None, reason="git not on PATH")
 def test_no_committed_row_was_ever_changed_or_removed():
-    log = subprocess.run(["git", "log", "--format=%H", "--", REL], cwd=REPO, capture_output=True, text=True)
+    # encoding="utf-8": the ledger is UTF-8; without it git output is decoded in the locale (cp1252 on
+    # Windows) and the first non-ASCII row (n 52, "§") made this fail with no row changed (11 Oct 2026).
+    log = subprocess.run(["git", "log", "--format=%H", "--", REL], cwd=REPO, capture_output=True, text=True,
+                         encoding="utf-8")
     current = (REPO / REL).read_text(encoding="utf-8").splitlines()
     for sha in log.stdout.split():
-        old = subprocess.run(["git", "show", f"{sha}:{REL}"], cwd=REPO, capture_output=True, text=True)
+        old = subprocess.run(["git", "show", f"{sha}:{REL}"], cwd=REPO, capture_output=True, text=True,
+                         encoding="utf-8")
         if old.returncode != 0:
             continue
         lines = old.stdout.splitlines()
